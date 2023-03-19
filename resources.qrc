@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/i18n">
+        <file>quran_companion_ar.qm</file>
+    </qresource>
+    <qresource prefix="/assets">
+        <file>bismillah/abdul-basit.mp3</file>
+        <file>bismillah/alafasy.mp3</file>
+        <file>bismillah/husary.mp3</file>
+        <file>bismillah/menshawi.mp3</file>
+        <file>images/app-icon.ico</file>
+        <file>images/download.png</file>
+        <file>images/download-manager.png</file>
+        <file>images/pause.png</file>
+        <file>images/play.png</file>
+        <file>images/prefs.png</file>
+        <file>images/stop.png</file>
+        <file>images/sura_box.png</file>
+        <file>images/zoom-in.png</file>
+        <file>images/zoom-out.png</file>
+    </qresource>
+</RCC>

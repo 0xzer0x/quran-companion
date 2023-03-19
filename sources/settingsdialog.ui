@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingsDialog</class>
+ <widget class="QDialog" name="SettingsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>692</width>
+    <height>392</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="tabPosition">
+      <enum>QTabWidget::West</enum>
+     </property>
+     <property name="tabShape">
+      <enum>QTabWidget::Rounded</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="generalTab">
+      <attribute name="title">
+       <string>General</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="lbTheme">
+           <property name="text">
+            <string>Theme</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmbTheme">
+           <item>
+            <property name="text">
+             <string>Light</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Dark</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="lbLang">
+           <property name="text">
+            <string>Language</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmbLang">
+           <item>
+            <property name="text">
+             <string>English</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>العربية</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="lbTafsir">
+           <property name="text">
+            <string>Tafsir</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmbTafsir">
+           <item>
+            <property name="text">
+             <string>Al-Muyassar</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Al-Baghawy</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Earab</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Indonesian</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Ibn-Katheer</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Al-Qortoby</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Russian</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Al-Sa'ady</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Al-Tabary</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Tafheem-ul-Quran</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Ibn-Ashoor</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Al-Tafsir Al-Waseet</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QLabel" name="lbTrans">
+           <property name="text">
+            <string>Translation</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmbTranslation">
+           <item>
+            <property name="text">
+             <string>عربي - معاني الكلمات</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Bengali - Muhiuddin Khan</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Bosanski - Korkut</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Deutsch - Bubenheim &amp; Elyas</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>English - Sahih International</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Español - Abdel Ghani Navio</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Français - Hamidullah</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Hausa - Gumi</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Indonesian - Bahasa Indonesia</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Italiano - Piccardo</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>كوردى - برهان محمد أمين</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Malayalam - Abdul Hameed and Kunhi</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Melayu - Basmeih</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Dutch - Sofian Siregar</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>فارسى - حسین تاجی گله داری</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Português - El Hayek</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Russian - Elmir Kuliev</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Somali - Abduh</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shqiptar - Efendi Nahi</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Swedish - Bernström</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Swahili - Al-Barwani</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Tamil - Jan Turst Foundation</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ภาษาไทย - ภาษาไทย</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Türkçe - Diyanet Isleri</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>اردو - جالندربرى</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Uzbek - Мухаммад Содик</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>中国语文 - Ma Jian</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <item>
+          <widget class="QLabel" name="lbAudioDevice">
+           <property name="text">
+            <string>Audio output device</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmbAudioDevices"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="readerTab">
+      <attribute name="title">
+       <string>Reader</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QGroupBox" name="grpQuranPage">
+         <property name="title">
+          <string>Quran page</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="lbQuranFontSz">
+              <property name="text">
+               <string>Font size</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cmbQuranFontSz">
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+              <item>
+               <property name="text">
+                <string>10</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>11</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>12</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>14</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>16</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>18</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>20</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>22</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>24</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>28</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>36</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>48</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>72</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="chkCopyVerseOnClick">
+              <property name="text">
+               <string>Copy verse to clipboard on click</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="grpSideCont">
+         <property name="title">
+          <string>Side content</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <item>
+             <widget class="QLabel" name="lbSideFont">
+              <property name="text">
+               <string>Font Family</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFontComboBox" name="fntCmbSide"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <widget class="QLabel" name="lbSideFontSz">
+              <property name="text">
+               <string>Font size</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cmbSideFontSz">
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+              <item>
+               <property name="text">
+                <string>6</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>7</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>8</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>9</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>10</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>11</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>12</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>14</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>16</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>18</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>20</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>22</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>24</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>28</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>36</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>48</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>72</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="lbSideContent">
+              <property name="text">
+               <string>Side content</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cmbSideContent">
+              <item>
+               <property name="text">
+                <string>Tafsir</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Translation</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
