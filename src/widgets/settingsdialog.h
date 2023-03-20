@@ -9,7 +9,7 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QSettings>
-#include "../verseplayer.h"
+#include "../utils/verseplayer.h"
 
 namespace Ui {
 class SettingsDialog;

@@ -7,14 +7,14 @@
 #include <QScrollBar>
 #include <QSettings>
 #include <QShortcut>
-#include "../dbmanager.h"
-#include "../pageconstructor.h"
-#include "../verseplayer.h"
-#include "clickablelabel.h"
-#include "downloaderdialog.h"
-#include "settingsdialog.h"
-#include "verseframe.h"
-typedef VersePlayer::Verse Verse;
+#include "../utils/dbmanager.h"
+#include "../utils/pageconstructor.h"
+#include "../utils/verseplayer.h"
+#include "../widgets/clickablelabel.h"
+#include "../widgets/downloaderdialog.h"
+#include "../widgets/settingsdialog.h"
+#include "../widgets/verseframe.h"
+typedef DBManager::Verse Verse;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

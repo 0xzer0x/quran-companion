@@ -20,6 +20,20 @@ class DBManager : public QObject
 public:
     explicit DBManager(QObject *parent = nullptr);
 
+    struct Verse
+    {
+        int surah;
+        int number;
+        int page;
+        Verse() {}
+        Verse(int page, int surah, int num)
+        {
+            this->page = page;
+            this->surah = surah;
+            this->number = num;
+        }
+    };
+
     enum Database { quran, tafsir, translation };
     enum Tafsir {
         muyassar,
@@ -86,7 +100,8 @@ public:
     QString getVerseGlyphs(const int sIdx, const int vIdx);
     QString getTafsir(const int sIdx, const int vIdx);
     QString getTranslation(const int sIdx, const int vIdx);
-    QList<QMap<int, QString>> searchVerses(QString searchText);
+    QList<Verse> searchVerses(QString searchText);
+    QList<int> searchSurahs(QString searchText);
 
     bool insertPosData(int page, int surah, int ayah, int start_pos, int end_pos);
 

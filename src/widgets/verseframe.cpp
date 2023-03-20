@@ -1,4 +1,4 @@
-#include "../../headers/interfaces/verseframe.h"
+#include "verseframe.h"
 
 VerseFrame::VerseFrame(QWidget *parent)
     : QFrame{parent}

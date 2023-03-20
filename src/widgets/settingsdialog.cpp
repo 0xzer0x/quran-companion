@@ -1,5 +1,5 @@
-#include "../../headers/interfaces/settingsdialog.h"
-#include "../ui_settingsdialog.h"
+#include "settingsdialog.h"
+#include "ui_settingsdialog.h"
 
 SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePlayer *vPlayerPtr)
     : QDialog(parent)

@@ -1,4 +1,4 @@
-#include "../headers/downloadmanager.h"
+#include "downloadmanager.h"
 
 DownloadManager::DownloadManager(QObject *parent, DBManager *dbptr, QStringList reciterDirs)
     : QObject{parent}

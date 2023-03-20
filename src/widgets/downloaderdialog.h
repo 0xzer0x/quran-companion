@@ -8,8 +8,8 @@
 #include <QSettings>
 #include <QStandardItem>
 #include <QStandardItemModel>
-#include "../dbmanager.h"
-#include "../downloadmanager.h"
+#include "../utils/dbmanager.h"
+#include "../utils/downloadmanager.h"
 #include "downloadprogressbar.h"
 
 namespace Ui {

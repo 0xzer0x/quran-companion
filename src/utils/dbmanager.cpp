@@ -1,4 +1,4 @@
-#include "../headers/dbmanager.h"
+#include "dbmanager.h"
 
 DBManager::DBManager(QObject *parent)
     : QObject{parent}
@@ -402,36 +402,44 @@ QString DBManager::getVerseText(const int sIdx, const int vIdx)
     return m_queryOpenDB.value(0).toString();
 }
 
-QList<QMap<int, QString>> DBManager::searchVerses(QString searchText)
+QList<DBManager::Verse> DBManager::searchVerses(QString searchText)
 {
     // 0 -> surah idx with name matching search text / 1 -> verse with matching text
-    QList<QMap<int, QString>> results;
+    QList<DBManager::Verse> results;
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT sura_no FROM verses WHERE sura_name_ar like '%:searchText%'");
-    m_queryOpenDB.bindValue(0, searchText);
-    if (!m_queryOpenDB.exec()) {
-        qCritical() << "[CRITICAL] Error occurred during searchVerses 1st SQL statment exec";
-    }
 
-    while (m_queryOpenDB.next()) {
-        QMap<int, QString> entry;
-        entry.insert(0, m_queryOpenDB.value(0).toString());
-        qInfo() << entry;
-        results.append(entry);
-    }
-
-    m_queryOpenDB.clear();
-    m_queryOpenDB.prepare("SELECT aya_text FROM verses WHERE aya_text_emlaey like '%:searchText%'");
+    m_queryOpenDB.prepare("SELECT page,sura_no,aya_no FROM verses WHERE aya_text_emlaey like "
+                          "'%:searchText%' ORDER BY id");
     m_queryOpenDB.bindValue(0, searchText);
     if (!m_queryOpenDB.exec()) {
         qCritical() << "[CRITICAL] Error occurred during searchVerses 2nd SQL statment exec";
     }
 
     while (m_queryOpenDB.next()) {
-        QMap<int, QString> entry;
-        entry.insert(1, m_queryOpenDB.value(0).toString());
-        qInfo() << entry;
+        Verse entry;
+        entry.page = m_queryOpenDB.value(0).toInt();
+        entry.surah = m_queryOpenDB.value(1).toInt();
+        entry.number = m_queryOpenDB.value(2).toInt();
+
         results.append(entry);
+    }
+
+    return results;
+}
+
+QList<int> DBManager::searchSurahs(QString searchText)
+{
+    QList<int> results;
+    m_queryOpenDB = QSqlQuery(m_openDBCon);
+    m_queryOpenDB.prepare(
+        "SELECT sura_no FROM verses WHERE sura_name_ar like '%:searchText%' ORDER BY id");
+    m_queryOpenDB.bindValue(0, searchText);
+    if (!m_queryOpenDB.exec()) {
+        qCritical() << "[CRITICAL] Error occurred during searchVerses 1st SQL statment exec";
+    }
+
+    while (m_queryOpenDB.next()) {
+        results.append(m_queryOpenDB.value(0).toInt());
     }
 
     return results;

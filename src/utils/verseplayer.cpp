@@ -1,4 +1,4 @@
-#include "../headers/verseplayer.h"
+#include "verseplayer.h"
 
 /*!
  * \brief VersePlayer::VersePlayer class constructor
@@ -43,11 +43,11 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse)
     m_reciterDirNames.append("Yasser_Ad-dussary");
     m_reciterDirNames.append("Mahmoud_Al-banna");
 
-    m_bsmlPaths.append("qrc:/assets/bismillah/husary.mp3");
-    m_bsmlPaths.append("qrc:/assets/bismillah/husary.mp3");
-    m_bsmlPaths.append("qrc:/assets/bismillah/abdul-basit.mp3");
-    m_bsmlPaths.append("qrc:/assets/bismillah/menshawi.mp3");
-    m_bsmlPaths.append("qrc:/assets/bismillah/alafasy.mp3");
+    m_bsmlPaths.append("qrc:/assets/audio/bismillah/husary.mp3");
+    m_bsmlPaths.append("qrc:/assets/audio/bismillah/husary.mp3");
+    m_bsmlPaths.append("qrc:/assets/audio/bismillah/abdul-basit.mp3");
+    m_bsmlPaths.append("qrc:/assets/audio/bismillah/menshawi.mp3");
+    m_bsmlPaths.append("qrc:/assets/audio/bismillah/alafasy.mp3");
 }
 
 void VersePlayer::setVerse(Verse &newVerse)

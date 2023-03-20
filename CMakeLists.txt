@@ -14,35 +14,35 @@ include_directories("./include/")
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 
-set(TS_FILES)
+set(TS_FILES qt_ar.ts quran_companion_ar.ts)
 
 set(PROJECT_SOURCES
-        main.cpp
-        sources/interfaces/mainwindow.cpp
-        headers/interfaces/mainwindow.h
-        sources/interfaces/clickablelabel.cpp
-        headers/interfaces/clickablelabel.h
-        sources/interfaces/settingsdialog.cpp
-        headers/interfaces/settingsdialog.h
-        sources/interfaces/downloaderdialog.cpp
-        headers/interfaces/downloaderdialog.h
-        sources/interfaces/downloadprogressbar.cpp
-        headers/interfaces/downloadprogressbar.h
-        sources/interfaces/verseframe.cpp
-        headers/interfaces/verseframe.h
-        headers/dbmanager.h
-        sources/dbmanager.cpp
-        headers/verseplayer.h
-        sources/verseplayer.cpp
-        headers/pageconstructor.h
-        sources/pageconstructor.cpp
-        headers/downloadmanager.h
-        sources/downloadmanager.cpp
-        sources/mainwindow.ui
-        sources/settingsdialog.ui
-        sources/downloaderdialog.ui
+        src/main.cpp
+        src/core/mainwindow.cpp
+        src/core/mainwindow.h
+        src/core/mainwindow.ui
+        src/widgets/clickablelabel.cpp
+        src/widgets/clickablelabel.h
+        src/widgets/settingsdialog.cpp
+        src/widgets/settingsdialog.h
+        src/widgets/settingsdialog.ui
+        src/widgets/downloaderdialog.cpp
+        src/widgets/downloaderdialog.h
+        src/widgets/downloaderdialog.ui
+        src/widgets/downloadprogressbar.cpp
+        src/widgets/downloadprogressbar.h
+        src/widgets/verseframe.cpp
+        src/widgets/verseframe.h
+        src/utils/dbmanager.h
+        src/utils/dbmanager.cpp
+        src/utils/verseplayer.h
+        src/utils/verseplayer.cpp
+        src/utils/pageconstructor.h
+        src/utils/pageconstructor.cpp
+        src/utils/downloadmanager.h
+        src/utils/downloadmanager.cpp
         resources.qrc
-        images/qurancompanion.rc
+        qurancompanion.rc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -56,6 +56,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+    message(STATUS ${QM_FILES})
 else()
     if(ANDROID)
         add_library(quran-companion SHARED

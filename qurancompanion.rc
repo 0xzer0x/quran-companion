@@ -1,6 +1,6 @@
 #include "winver.h"
 
-IDI_ICON1 ICON "app-icon.ico"
+IDI_ICON1 ICON "images/app-icon.ico"
 
     VS_VERSION_INFO VERSIONINFO FILEVERSION 1,
     0, 0, 1 PRODUCTVERSION 1, 0, 0,

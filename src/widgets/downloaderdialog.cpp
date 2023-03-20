@@ -1,5 +1,5 @@
-#include "../../headers/interfaces/downloaderdialog.h"
-#include "../ui_downloaderdialog.h"
+#include "downloaderdialog.h"
+#include "ui_downloaderdialog.h"
 
 DownloaderDialog::DownloaderDialog(QWidget *parent,
                                    QSettings *settingsptr,

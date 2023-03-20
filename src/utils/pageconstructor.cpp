@@ -1,4 +1,4 @@
-#include "../headers/pageconstructor.h"
+#include "pageconstructor.h"
 
 #include <QApplication>
 #include <QPainter>

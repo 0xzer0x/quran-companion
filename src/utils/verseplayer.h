@@ -8,7 +8,7 @@
 #include <QMediaPlayer>
 #include <QObject>
 #include "dbmanager.h"
-
+typedef DBManager::Verse Verse;
 /*!
  * \class VersePlayer
  * 
@@ -19,19 +19,6 @@ class VersePlayer : public QMediaPlayer
     Q_OBJECT
 
 public:
-    struct Verse
-    {
-        int surah;
-        int number;
-        int page;
-        Verse(int page, int surah, int num)
-        {
-            this->page = page;
-            this->surah = surah;
-            this->number = num;
-        }
-    };
-
     explicit VersePlayer(QObject *parent = nullptr,
                          DBManager *dbPtr = nullptr,
                          Verse initVerse = Verse(1, 1, 1));

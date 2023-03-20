@@ -1,4 +1,4 @@
-#include "../../headers/interfaces/downloadprogressbar.h"
+#include "downloadprogressbar.h"
 
 DownloadProgressBar::DownloadProgressBar(QWidget *parent, int max)
     : QProgressBar(parent)
