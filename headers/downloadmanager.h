@@ -16,7 +16,9 @@ class DownloadManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit DownloadManager(QObject *parent = nullptr, DBManager *dbptr = nullptr);
+    explicit DownloadManager(QObject *parent = nullptr,
+                             DBManager *dbptr = nullptr,
+                             QStringList reciterDirs = QStringList());
     struct DownloadTask
     {
         int surah;

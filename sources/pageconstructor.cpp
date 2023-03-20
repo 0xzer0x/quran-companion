@@ -104,6 +104,8 @@ void PageConstructor::constructDoc(int pageNum, bool darkMode)
     QFontMetrics fm(QFont(m_pageFont, fontSize));
     if (m_currentPage < 3) {
         m_pageTextD->setTextWidth(fm.size(Qt::TextSingleLine, lines.at(3)).width() + 5);
+    } else if (m_currentPage == 602 || m_currentPage == 604) {
+        m_pageTextD->setTextWidth(fm.size(Qt::TextSingleLine, lines.at(2)).width() + 5);
     } else {
         m_pageTextD->setTextWidth(fm.size(Qt::TextSingleLine, lines.last()).width() + 5);
     }

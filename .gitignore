@@ -1,3 +1,3 @@
 CMakeLists.txt.user
 *.ts
-*.qm
+audio/husary_qasr_64kbps/*.mp3

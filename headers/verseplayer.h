@@ -18,25 +18,25 @@ class VersePlayer : public QMediaPlayer
 {
     Q_OBJECT
 
-private:
-    int m_surahIdx;
-    int m_verseNum;
-    int m_surahCount = 0;
-    int m_reciter;
-    QString m_verseFile;
-    QDir m_reciterDir;
-    QAudioOutput *m_output;
-    DBManager *m_dbPtr;
-    QList<QString> m_reciterDirNames;
-    QList<QString> m_bsmlPaths;
-
 public:
+    struct Verse
+    {
+        int surah;
+        int number;
+        int page;
+        Verse(int page, int surah, int num)
+        {
+            this->page = page;
+            this->surah = surah;
+            this->number = num;
+        }
+    };
+
     explicit VersePlayer(QObject *parent = nullptr,
                          DBManager *dbPtr = nullptr,
-                         int initSurah = 1,
-                         int initVerse = 1);
-    void setSurahIdx(int newSurahIdx);
-    void setVerseNum(int newVerseNum);
+                         Verse initVerse = Verse(1, 1, 1));
+
+    void setVerse(Verse &newVerse);
     QString verseFilename() const;
     bool setVerseFile(const QString &newVerseFilename);
     QString constructVerseFilename();
@@ -60,6 +60,17 @@ signals:
     void newSurah();
     void newVerse();
     void missingVerseFile();
+
+private:
+    Verse m_activeVerse;
+    int m_surahCount = 0;
+    int m_reciter;
+    QString m_verseFile;
+    QDir m_reciterDir;
+    QAudioOutput *m_output;
+    DBManager *m_dbPtr;
+    QList<QString> m_reciterDirNames;
+    QList<QString> m_bsmlPaths;
 };
 
 #endif // VERSEPLAYER_H

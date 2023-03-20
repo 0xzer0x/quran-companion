@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
         appSettings.setValue("Theme", "Light");
 
         appSettings.beginGroup("Reader");
-
         appSettings.setValue("Page", 1);
         appSettings.setValue("Surah", 1);
         appSettings.setValue("Verse", 1);
@@ -29,7 +28,6 @@ int main(int argc, char *argv[])
         appSettings.setValue("QuranFontSize", 22);
         appSettings.setValue("SideContentFont", QFont("Calibri", 14));
         appSettings.setValue("CopyVerseOnClick", true);
-
         appSettings.endGroup();
     }
     if (appSettings.value("Theme").toString() == "Dark") {

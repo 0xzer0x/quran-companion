@@ -35,10 +35,12 @@ public slots:
     void setCurrentBar();
     void surahDownloaded();
     void downloadAborted();
+    void topTaskDownloadError();
 
 private:
     Ui::DownloaderDialog *ui;
     DownloadProgressBar *m_currentBar;
+    QLabel *m_currentLb;
     QList<QFrame *> m_frameLst;
     QStandardItemModel m_treeModel;
     DownloadManager *m_downloaderPtr;

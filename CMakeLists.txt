@@ -17,7 +17,6 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia Ne
 set(TS_FILES)
 
 set(PROJECT_SOURCES
-        images/qurancompanion.rc
         main.cpp
         sources/interfaces/mainwindow.cpp
         headers/interfaces/mainwindow.h
@@ -43,6 +42,7 @@ set(PROJECT_SOURCES
         sources/settingsdialog.ui
         sources/downloaderdialog.ui
         resources.qrc
+        images/qurancompanion.rc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -86,6 +86,10 @@ install(TARGETS quran-companion
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
+file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR})
+
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(quran-companion)
 endif()
+
+

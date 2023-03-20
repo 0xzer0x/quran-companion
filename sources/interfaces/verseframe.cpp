@@ -24,7 +24,7 @@ void VerseFrame::enterEvent(QEnterEvent *event)
 
 void VerseFrame::leaveEvent(QEvent *event)
 {
-    if (!styleSheet().contains("50")) {
+    if (!styleSheet().contains(", 50)")) {
         setStyleSheet("");
     }
 }

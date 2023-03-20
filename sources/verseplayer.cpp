@@ -7,17 +7,16 @@
  * \param initSurah surah to start recitation with
  * \param initVerse verse in the inital surah to start with
  */
-VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, int initSurah, int initVerse)
+VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse)
     : QMediaPlayer{parent}
     , m_output{new QAudioOutput()}
+    , m_activeVerse{initVerse}
 {
     m_reciterDir.setPath(QApplication::applicationDirPath());
     m_reciterDir.cd("audio");
     m_reciterDir.cd("Al-Husary");
 
     m_dbPtr = dbPtr;
-    m_surahIdx = initSurah;
-    m_verseNum = initVerse;
     updateSurahVerseCount();
 
     setAudioOutput(m_output);
@@ -32,17 +31,28 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, int initSurah, int i
 
     connect(this, &VersePlayer::newVerse, this, &VersePlayer::playCurrentVerse, Qt::UniqueConnection);
 
-    m_reciterDirNames.insert(0, "Al-Husary");
-    m_reciterDirNames.insert(1, "Al-Husary_(Qasr)");
-    m_reciterDirNames.insert(2, "Abdul-Basit");
-    m_reciterDirNames.insert(3, "Menshawi");
-    m_reciterDirNames.insert(4, "Mishary_Alafasy");
+    m_reciterDirNames.append("Al-Husary");
+    m_reciterDirNames.append("Al-Husary_(Qasr)");
+    m_reciterDirNames.append("Al-Husary_(Mujawwad)");
+    m_reciterDirNames.append("Abdul-Basit");
+    m_reciterDirNames.append("Abdul-Basit_(Mujawwad)");
+    m_reciterDirNames.append("Menshawi");
+    m_reciterDirNames.append("Menshawi_(Mujawwad)");
+    m_reciterDirNames.append("Mishary_Alafasy");
+    m_reciterDirNames.append("Khalefa_Al-tunaiji");
+    m_reciterDirNames.append("Yasser_Ad-dussary");
+    m_reciterDirNames.append("Mahmoud_Al-banna");
 
     m_bsmlPaths.append("qrc:/assets/bismillah/husary.mp3");
     m_bsmlPaths.append("qrc:/assets/bismillah/husary.mp3");
     m_bsmlPaths.append("qrc:/assets/bismillah/abdul-basit.mp3");
     m_bsmlPaths.append("qrc:/assets/bismillah/menshawi.mp3");
     m_bsmlPaths.append("qrc:/assets/bismillah/alafasy.mp3");
+}
+
+void VersePlayer::setVerse(Verse &newVerse)
+{
+    m_activeVerse = newVerse;
 }
 
 /*!
@@ -52,17 +62,17 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, int initSurah, int i
 void VersePlayer::nextVerse()
 {
     // if last verse in surah, play basmalah before playing first verse
-    if (m_verseNum == m_surahCount) {
+    if (m_activeVerse.number == m_surahCount) {
         // if last verse in surah an-nas (114), do nothing (i.e stop playback)
-        if ((m_surahIdx < 114)) {
-            m_surahIdx++;
-            m_verseNum = 0;
+        if ((m_activeVerse.surah < 114)) {
+            m_activeVerse.surah++;
+            m_activeVerse.number = 0;
             updateSurahVerseCount(); // set new surah verse count
             emit newSurah();         // signals surah change
         }
 
     } else {
-        m_verseNum++;
+        m_activeVerse.number++;
         emit newVerse(); // signals active verse change
     }
 }
@@ -87,8 +97,8 @@ QString VersePlayer::constructVerseFilename()
 {
     // construct verse mp3 filename e.g. 002005.mp3
     QString filename;
-    filename.append(QString::number(m_surahIdx).rightJustified(3, '0'));
-    filename.append(QString::number(m_verseNum).rightJustified(3, '0'));
+    filename.append(QString::number(m_activeVerse.surah).rightJustified(3, '0'));
+    filename.append(QString::number(m_activeVerse.number).rightJustified(3, '0'));
 
     filename.append(".mp3");
     return filename;
@@ -107,7 +117,7 @@ void VersePlayer::playCurrentVerse()
 void VersePlayer::playBasmalah()
 {
     // no basmalah with surah al-tawbah (9)
-    if (m_surahIdx == 9 || m_surahIdx == 1) {
+    if (m_activeVerse.surah == 9 || m_activeVerse.surah == 1) {
         nextVerse();
     } else {
         qInfo() << m_bsmlPaths.at(m_reciter);
@@ -116,7 +126,7 @@ void VersePlayer::playBasmalah()
     }
 
     // Debugging
-    qInfo() << "SurahIdx:" << m_surahIdx << "Count:" << m_surahCount;
+    qInfo() << "SurahIdx:" << m_activeVerse.surah << "Count:" << m_surahCount;
 }
 
 /* -------------------- Setters ----------------------- */
@@ -152,19 +162,9 @@ bool VersePlayer::setVerseFile(const QString &newVerseFilename)
     return true;
 }
 
-void VersePlayer::setSurahIdx(int newSurahIdx)
-{
-  m_surahIdx = newSurahIdx;
-}
-
-void VersePlayer::setVerseNum(int newVerseNum)
-{
-  m_verseNum = newVerseNum;
-}
-
 void VersePlayer::updateSurahVerseCount()
 {
-  m_surahCount = m_dbPtr->getSurahVerseCount(m_surahIdx);
+    m_surahCount = m_dbPtr->getSurahVerseCount(m_activeVerse.surah);
 }
 
 /* -------------------- Getters ----------------------- */
@@ -186,7 +186,7 @@ QString VersePlayer::verseFilename() const
 
 int VersePlayer::surahIdx() const
 {
-  return m_surahIdx;
+  return m_activeVerse.surah;
 }
 
 int VersePlayer::surahCount() const
@@ -196,5 +196,5 @@ int VersePlayer::surahCount() const
 
 int VersePlayer::verseNum() const
 {
-  return m_verseNum;
+  return m_activeVerse.number;
 }

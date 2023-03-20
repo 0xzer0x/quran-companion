@@ -1,33 +1,30 @@
 #include "../headers/downloadmanager.h"
 
-DownloadManager::DownloadManager(QObject *parent, DBManager *dbptr)
+DownloadManager::DownloadManager(QObject *parent, DBManager *dbptr, QStringList reciterDirs)
     : QObject{parent}
+    , m_reciterDirNames{reciterDirs}
 {
     m_netMan = new QNetworkAccessManager(this);
     m_dbPtr = dbptr;
 
     m_downloadPath.setPath(QApplication::applicationDirPath());
+    if (!m_downloadPath.exists("audio"))
+        m_downloadPath.mkdir("audio");
+
     m_downloadPath.cd("audio");
 
     m_reciterBaseUrls.append("https://everyayah.com/data/Husary_64kbps/");
-    m_reciterBaseUrls.append("https://everyayah.com/data/Husary_64kbps/");
+    m_reciterBaseUrls.append(
+        "https://github.com/0xzer0x/quran-companion/raw/main/audio/husary_qasr_64kbps/");
     m_reciterBaseUrls.append("https://everyayah.com/data/Husary_Mujawwad_64kbps/");
     m_reciterBaseUrls.append("https://everyayah.com/data/Abdul_Basit_Murattal_64kbps/");
+    m_reciterBaseUrls.append("https://everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/");
     m_reciterBaseUrls.append("https://everyayah.com/data/Minshawy_Murattal_128kbps/");
+    m_reciterBaseUrls.append("https://everyayah.com/data/Minshawy_Mujawwad_64kbps/");
     m_reciterBaseUrls.append("https://everyayah.com/data/Alafasy_64kbps/");
     m_reciterBaseUrls.append("https://everyayah.com/data/khalefa_al_tunaiji_64kbps/");
     m_reciterBaseUrls.append("https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/");
     m_reciterBaseUrls.append("https://everyayah.com/data/mahmoud_ali_al_banna_32kbps/");
-
-    m_reciterDirNames.append("Al-Husary");
-    m_reciterDirNames.append("Al-Husary_(Qasr)");
-    m_reciterDirNames.append("Al-Husary_(Mujawwad)");
-    m_reciterDirNames.append("Abdul-Basit");
-    m_reciterDirNames.append("Menshawi");
-    m_reciterDirNames.append("Mishary_Alafasy");
-    m_reciterDirNames.append("Khalefa_Al-tunaiji");
-    m_reciterDirNames.append("Yasser_Ad-dussary");
-    m_reciterDirNames.append("Mahmoud_Al-banna");
 
     foreach (QString n, m_reciterDirNames) {
         if (!m_downloadPath.exists(n)) {
@@ -114,6 +111,7 @@ void DownloadManager::processQueueHead()
 
     m_isDownloading = true;
     QNetworkRequest req(m_currentTask.link);
+    req.setMaximumRedirectsAllowed(20);
 
     qInfo() << "Making request...";
     m_currentTask.networkReply = m_netMan->get(req);
@@ -168,34 +166,6 @@ void DownloadManager::handleConError(QNetworkReply::NetworkError err)
 {
     switch (err) {
     case QNetworkReply::OperationCanceledError:
-        qInfo() << m_currentTask.networkReply->errorString();
-        break;
-
-    case QNetworkReply::TimeoutError:
-        qInfo() << m_currentTask.networkReply->errorString();
-        break;
-
-    case QNetworkReply::ConnectionRefusedError:
-        qInfo() << m_currentTask.networkReply->errorString();
-        break;
-
-    case QNetworkReply::RemoteHostClosedError:
-        qInfo() << m_currentTask.networkReply->errorString();
-        break;
-
-    case QNetworkReply::TemporaryNetworkFailureError:
-        qInfo() << m_currentTask.networkReply->errorString();
-        break;
-
-    case QNetworkReply::NetworkSessionFailedError:
-        qInfo() << m_currentTask.networkReply->errorString();
-        break;
-
-    case QNetworkReply::UnknownNetworkError:
-        qInfo() << m_currentTask.networkReply->errorString();
-        break;
-
-    case QNetworkReply::UnknownServerError:
         qInfo() << m_currentTask.networkReply->errorString();
         break;
 

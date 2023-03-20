@@ -253,7 +253,7 @@ int DBManager::getSurahVerseCount(const int surahIdx)
 
 QList<int> DBManager::getPageMetadata(const int page)
 {
-    QList<int> data;
+    QList<int> data; // { surahIdx, jozz }
     m_queryOpenDB = QSqlQuery(m_openDBCon);
     m_queryOpenDB.prepare("SELECT sura_no,jozz FROM verses WHERE page=:p ORDER BY id");
     m_queryOpenDB.bindValue(0, page);
@@ -272,8 +272,7 @@ QList<QString> DBManager::getVersesInPage(const int page)
 {
     QList<QString> verseList;
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare(
-        "SELECT aya_text,aya_no,sura_name_ar FROM verses WHERE page=:p ORDER BY id");
+    m_queryOpenDB.prepare("SELECT aya_text FROM verses WHERE page=:p ORDER BY id");
     m_queryOpenDB.bindValue(0, page);
 
     if (!m_queryOpenDB.exec()) {
@@ -403,7 +402,40 @@ QString DBManager::getVerseText(const int sIdx, const int vIdx)
     return m_queryOpenDB.value(0).toString();
 }
 
-QList<QString> DBManager::searchVerses(QString searchText) {}
+QList<QMap<int, QString>> DBManager::searchVerses(QString searchText)
+{
+    // 0 -> surah idx with name matching search text / 1 -> verse with matching text
+    QList<QMap<int, QString>> results;
+    m_queryOpenDB = QSqlQuery(m_openDBCon);
+    m_queryOpenDB.prepare("SELECT sura_no FROM verses WHERE sura_name_ar like '%:searchText%'");
+    m_queryOpenDB.bindValue(0, searchText);
+    if (!m_queryOpenDB.exec()) {
+        qCritical() << "[CRITICAL] Error occurred during searchVerses 1st SQL statment exec";
+    }
+
+    while (m_queryOpenDB.next()) {
+        QMap<int, QString> entry;
+        entry.insert(0, m_queryOpenDB.value(0).toString());
+        qInfo() << entry;
+        results.append(entry);
+    }
+
+    m_queryOpenDB.clear();
+    m_queryOpenDB.prepare("SELECT aya_text FROM verses WHERE aya_text_emlaey like '%:searchText%'");
+    m_queryOpenDB.bindValue(0, searchText);
+    if (!m_queryOpenDB.exec()) {
+        qCritical() << "[CRITICAL] Error occurred during searchVerses 2nd SQL statment exec";
+    }
+
+    while (m_queryOpenDB.next()) {
+        QMap<int, QString> entry;
+        entry.insert(1, m_queryOpenDB.value(0).toString());
+        qInfo() << entry;
+        results.append(entry);
+    }
+
+    return results;
+}
 
 /* ---------------- Side content data ---------------- */
 
@@ -460,22 +492,4 @@ QString DBManager::getTranslation(const int sIdx, const int vIdx)
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
     return m_queryOpenDB.value(0).toString();
-}
-
-bool DBManager::insertPosData(int page, int surah, int ayah, int start_pos, int end_pos)
-{
-    m_queryOpenDB.clear();
-    m_queryOpenDB.prepare("INSERT INTO coordinates VALUES (:p, :s, :a, :start, :end)");
-    m_queryOpenDB.bindValue(0, page);
-    m_queryOpenDB.bindValue(1, surah);
-    m_queryOpenDB.bindValue(2, ayah);
-    m_queryOpenDB.bindValue(3, start_pos);
-    m_queryOpenDB.bindValue(4, end_pos);
-
-    if (!m_queryOpenDB.exec())
-        return false;
-
-    m_openDBCon.commit();
-
-    return true;
 }

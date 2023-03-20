@@ -14,6 +14,7 @@
 #include "downloaderdialog.h"
 #include "settingsdialog.h"
 #include "verseframe.h"
+typedef VersePlayer::Verse Verse;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -70,9 +71,7 @@ public slots:
 
 private:
     int counter = 0;
-    int m_currPage;
-    int m_currSurah;
-    int m_currVerse;
+    Verse m_currVerse = Verse(1, 1, 1);
     bool m_endOfPage = false;
     bool m_internalPageChange = false;
     bool m_internalSurahChange = false;

@@ -86,7 +86,7 @@ public:
     QString getVerseGlyphs(const int sIdx, const int vIdx);
     QString getTafsir(const int sIdx, const int vIdx);
     QString getTranslation(const int sIdx, const int vIdx);
-    QList<QString> searchVerses(QString searchText);
+    QList<QMap<int, QString>> searchVerses(QString searchText);
 
     bool insertPosData(int page, int surah, int ayah, int start_pos, int end_pos);
 

@@ -21,12 +21,15 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
     m_recitersList.append(tr("Al-Husary (Qasr)"));
     m_recitersList.append(tr("Al-Husary (Mujawwad)"));
     m_recitersList.append(tr("Abdul-Basit"));
+    m_recitersList.append(tr("Abdul-Basit (Mujawwad)"));
     m_recitersList.append(tr("Menshawi"));
+    m_recitersList.append(tr("Menshawi (Mujawwad)"));
     m_recitersList.append(tr("Mishary Alafasy"));
     m_recitersList.append(tr("Khalefa Al-tunaiji"));
     m_recitersList.append(tr("Yasser Ad-dussary"));
     m_recitersList.append(tr("Mahmoud Al-banna"));
 
+    // treeview setup
     QStringList headers;
     headers.append(tr("Number"));
     headers.append(tr("Name"));
@@ -35,6 +38,7 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
     ui->treeView->setSelectionMode(QAbstractItemView::SelectionMode::ExtendedSelection);
     fillTreeView();
 
+    // connectors
     connect(ui->btnAddToQueue,
             &QPushButton::clicked,
             this,
@@ -57,6 +61,12 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
             &DownloadManager::downloadCanceled,
             this,
             &DownloaderDialog::downloadAborted,
+            Qt::UniqueConnection);
+
+    connect(m_downloaderPtr,
+            &DownloadManager::downloadError,
+            this,
+            &DownloaderDialog::topTaskDownloadError,
             Qt::UniqueConnection);
 }
 
@@ -117,7 +127,7 @@ void DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
     QString reciter = m_recitersList.at(reciterIdx);
     QString surahName = m_treeModel.index(surah - 1, 1, m_treeModel.index(1, 0)).data().toString();
 
-    QString objName = reciter + " - " + surahName;
+    QString objName = reciter + " // Surah: " + surahName;
 
     QFrame *prgFrm = new QFrame(ui->scrollAreaWidgetContents);
     prgFrm->setLayout(new QVBoxLayout);
@@ -145,6 +155,9 @@ void DownloaderDialog::setCurrentBar()
     if (m_frameLst.empty())
         return;
 
+    m_currentLb = m_frameLst.at(0)->findChild<QLabel *>();
+    m_currentLb->setText(tr("Downloading: ") + m_currentLb->parent()->objectName());
+
     m_currentBar = m_frameLst.at(0)->findChild<DownloadProgressBar *>();
     connect(m_downloaderPtr,
             &DownloadManager::downloadProgressed,
@@ -164,6 +177,14 @@ void DownloaderDialog::downloadAborted()
 {
     qDeleteAll(m_frameLst);
     m_frameLst.clear();
+}
+
+void DownloaderDialog::topTaskDownloadError()
+{
+    m_currentBar->setStyleSheet("QProgressBar {text-align: center;} QProgressBar::chunk "
+                                "{border-radius:2px;background-color: red;}");
+
+    m_currentLb->setText(tr("Couldn't download: ") + m_currentLb->parent()->objectName());
 }
 
 void DownloaderDialog::closeEvent(QCloseEvent *event)
