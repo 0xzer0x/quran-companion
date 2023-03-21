@@ -407,10 +407,11 @@ QList<DBManager::Verse> DBManager::searchVerses(QString searchText)
     // 0 -> surah idx with name matching search text / 1 -> verse with matching text
     QList<DBManager::Verse> results;
     m_queryOpenDB = QSqlQuery(m_openDBCon);
+    QString q = "SELECT page,sura_no,aya_no FROM verses WHERE aya_text_emlaey like'%" + searchText
+                + "%' ORDER BY id";
 
-    m_queryOpenDB.prepare("SELECT page,sura_no,aya_no FROM verses WHERE aya_text_emlaey like "
-                          "'%:searchText%' ORDER BY id");
-    m_queryOpenDB.bindValue(0, searchText);
+    qInfo() << q;
+    m_queryOpenDB.prepare(q);
     if (!m_queryOpenDB.exec()) {
         qCritical() << "[CRITICAL] Error occurred during searchVerses 2nd SQL statment exec";
     }

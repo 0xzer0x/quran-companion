@@ -70,6 +70,7 @@ public slots:
     void addSideContent();
     void showExpandedVerseTafsir();
     void openSearchDialog();
+    void navigateToVerse(Verse v);
 
 private:
     int counter = 0;

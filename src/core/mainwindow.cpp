@@ -195,11 +195,14 @@ void MainWindow::gotoSurah(int surahIdx)
     m_player->setVerse(m_currVerse);
     m_player->playBasmalah();
 
-    m_endOfPage = false;
+    m_internalPageChange = true;
     ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
+    m_internalPageChange = false;
+
     m_player->updateSurahVerseCount();
     updateVerseDropDown();
 
+    m_endOfPage = false;
     qInfo() << m_currVerse.page;
 }
 
@@ -623,10 +626,38 @@ void MainWindow::showExpandedVerseTafsir()
 void MainWindow::openSearchDialog()
 {
   if (m_srchDlg == nullptr) {
-        m_srchDlg = new SearchDialog(this);
+        m_srchDlg = new SearchDialog(this, m_dbManPtr);
+        connect(m_srchDlg, &SearchDialog::navigateToVerse, this, &MainWindow::navigateToVerse);
   }
 
   m_srchDlg->show();
+}
+
+void MainWindow::navigateToVerse(Verse v)
+{
+  m_currVerse = v;
+
+  redrawQuranPage();
+  addSideContent();
+
+  m_player->setVerse(m_currVerse);
+  m_player->updateSurahVerseCount();
+  m_player->setVerseFile(m_player->constructVerseFilename());
+  updateVerseDropDown();
+
+  m_internalPageChange = true;
+  ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
+  m_internalPageChange = false;
+
+  m_internalSurahChange = true;
+  ui->cmbSurah->setCurrentIndex(m_currVerse.surah - 1);
+  m_internalSurahChange = false;
+
+  m_internalVerseChange = true;
+  ui->cmbVerse->setCurrentIndex(m_currVerse.number - 1);
+  m_internalVerseChange = false;
+
+  m_endOfPage = false;
 }
 
 MainWindow::~MainWindow()
