@@ -1,5 +1,7 @@
 <RCC>
-    <qresource prefix="/i18n"/>
+    <qresource prefix="/i18n">
+        <file>src/translations/arabic.qm</file>
+    </qresource>
     <qresource prefix="/assets">
         <file>images/app-icon.ico</file>
         <file>images/download.png</file>
@@ -11,9 +13,5 @@
         <file>images/sura_box.png</file>
         <file>images/zoom-in.png</file>
         <file>images/zoom-out.png</file>
-        <file>audio/bismillah/abdul-basit.mp3</file>
-        <file>audio/bismillah/alafasy.mp3</file>
-        <file>audio/bismillah/husary.mp3</file>
-        <file>audio/bismillah/menshawi.mp3</file>
     </qresource>
 </RCC>

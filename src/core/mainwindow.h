@@ -12,6 +12,7 @@
 #include "../utils/verseplayer.h"
 #include "../widgets/clickablelabel.h"
 #include "../widgets/downloaderdialog.h"
+#include "../widgets/searchdialog.h"
 #include "../widgets/settingsdialog.h"
 #include "../widgets/verseframe.h"
 typedef DBManager::Verse Verse;
@@ -68,6 +69,7 @@ public slots:
     void updateHighlightColor();
     void addSideContent();
     void showExpandedVerseTafsir();
+    void openSearchDialog();
 
 private:
     int counter = 0;
@@ -78,6 +80,7 @@ private:
     bool m_internalVerseChange = false;
     bool m_darkMode = false;
     Ui::MainWindow *ui;
+    SearchDialog *m_srchDlg = nullptr;
     SettingsDialog *m_settingsDlg = nullptr;
     DownloaderDialog *m_downloaderDlg = nullptr;
     DownloadManager *m_downManPtr = nullptr;

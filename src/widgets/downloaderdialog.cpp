@@ -110,9 +110,6 @@ void DownloaderDialog::addToQueue()
         addTaskProgress(i.parent().row(), i.row() + 1);
 
         for (int j = 1; j <= m_dbPtr->getSurahVerseCount(i.row() + 1); j++) {
-            qInfo() << "Enqueuing reciter:" << i.parent().row() << "surah:" << i.row() + 1
-                    << "ayah:" << j;
-
             m_downloaderPtr->enqeueVerseTask(i.parent().row(), i.row() + 1, j);
         }
     }
@@ -127,7 +124,7 @@ void DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
     QString reciter = m_recitersList.at(reciterIdx);
     QString surahName = m_treeModel.index(surah - 1, 1, m_treeModel.index(1, 0)).data().toString();
 
-    QString objName = reciter + " // Surah: " + surahName;
+    QString objName = reciter + tr(" // Surah: ") + surahName;
 
     QFrame *prgFrm = new QFrame(ui->scrollAreaWidgetContents);
     prgFrm->setLayout(new QVBoxLayout);

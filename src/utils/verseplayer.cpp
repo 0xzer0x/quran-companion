@@ -14,13 +14,11 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse)
 {
     m_reciterDir.setPath(QApplication::applicationDirPath());
     m_reciterDir.cd("audio");
-    m_reciterDir.cd("Al-Husary");
 
     m_dbPtr = dbPtr;
     updateSurahVerseCount();
 
     setAudioOutput(m_output);
-    setVerseFile(constructVerseFilename());
 
     // Connectors
     connect(this,
@@ -43,11 +41,22 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse)
     m_reciterDirNames.append("Yasser_Ad-dussary");
     m_reciterDirNames.append("Mahmoud_Al-banna");
 
-    m_bsmlPaths.append("qrc:/assets/audio/bismillah/husary.mp3");
-    m_bsmlPaths.append("qrc:/assets/audio/bismillah/husary.mp3");
-    m_bsmlPaths.append("qrc:/assets/audio/bismillah/abdul-basit.mp3");
-    m_bsmlPaths.append("qrc:/assets/audio/bismillah/menshawi.mp3");
-    m_bsmlPaths.append("qrc:/assets/audio/bismillah/alafasy.mp3");
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/husary.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/husary.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/husary.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/abdul-basit.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/abdul-basit.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/menshawi.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/menshawi.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
+
+    m_reciterDir.cd("Al-Husary");
+    setVerseFile(constructVerseFilename());
 }
 
 void VersePlayer::setVerse(Verse &newVerse)
@@ -116,6 +125,8 @@ void VersePlayer::playCurrentVerse()
 
 void VersePlayer::playBasmalah()
 {
+    m_activeVerse.number = 0;
+
     // no basmalah with surah al-tawbah (9)
     if (m_activeVerse.surah == 9 || m_activeVerse.surah == 1) {
         nextVerse();

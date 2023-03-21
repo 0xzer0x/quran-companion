@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
 
     connect(ui->actionPereferences, &QAction::triggered, this, &MainWindow::actionPrefTriggered);
     connect(ui->actionDownload_manager, &QAction::triggered, this, &MainWindow::actionDMTriggered);
+    connect(ui->btnSearch, &QPushButton::clicked, this, &MainWindow::openSearchDialog);
 }
 
 void MainWindow::init()
@@ -184,7 +185,7 @@ void MainWindow::gotoSurah(int surahIdx)
     // getting surah index
     m_currVerse.page = m_dbManPtr->getSurahStartPage(surahIdx);
     m_currVerse.surah = ui->cmbSurah->currentIndex() + 1;
-    m_currVerse.number = 0;
+    m_currVerse.number = 1;
 
     // setting up the page of verse 1
     redrawQuranPage();
@@ -617,6 +618,15 @@ void MainWindow::showExpandedVerseTafsir()
         showLb->setText(text);
   } else
         showLb->setText(tr("Expand..."));
+}
+
+void MainWindow::openSearchDialog()
+{
+  if (m_srchDlg == nullptr) {
+        m_srchDlg = new SearchDialog(this);
+  }
+
+  m_srchDlg->show();
 }
 
 MainWindow::~MainWindow()

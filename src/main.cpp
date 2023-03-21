@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     QTranslator trs;
 
     if (appSettings.value("Language").toString() != "English") {
-        if (trs.load(":/i18n/quran_companion_ar")) {
+        if (trs.load(":/i18n/src/translations/arabic.qm")) {
             qInfo() << "Tr" << trs.language() << "loaded";
             a.installTranslator(&trs);
         } else {

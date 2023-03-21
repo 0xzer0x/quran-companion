@@ -7,7 +7,6 @@ SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePla
 {
     ui->setupUi(this);
 
-    setWindowTitle(tr("Preferences"));
     setWindowIcon(QIcon(":/assets/images/prefs.png"));
     m_settingsPtr = settingsPtr;
     m_vPlayerPtr = vPlayerPtr;
@@ -15,6 +14,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePla
     if (m_settingsPtr->value("Language").toString() == "العربية") {
         ui->retranslateUi(this);
     }
+    setWindowTitle(tr("Preferences"));
     setCurrentSettingsAsRef();
 
     ui->cmbTheme->setCurrentText(m_theme);

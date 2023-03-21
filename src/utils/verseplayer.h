@@ -51,7 +51,7 @@ signals:
 private:
     Verse m_activeVerse;
     int m_surahCount = 0;
-    int m_reciter;
+    int m_reciter = 0;
     QString m_verseFile;
     QDir m_reciterDir;
     QAudioOutput *m_output;
