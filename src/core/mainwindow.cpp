@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
 {
     ui->setupUi(this);
 
-    setWindowTitle(QApplication::applicationName());
     m_settingsPtr = settingsPtr;
     init();
 
@@ -48,16 +47,19 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
     connect(ui->actionPereferences, &QAction::triggered, this, &MainWindow::actionPrefTriggered);
     connect(ui->actionDownload_manager, &QAction::triggered, this, &MainWindow::actionDMTriggered);
     connect(ui->btnSearch, &QPushButton::clicked, this, &MainWindow::openSearchDialog);
+    connect(ui->actionFind, &QAction::triggered, this, &MainWindow::openSearchDialog);
 }
 
 void MainWindow::init()
 {
-    m_darkMode = m_settingsPtr->value("Theme").toString() == "Dark";
+    m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
 
     if (m_settingsPtr->value("Language").toString() == "العربية") {
         ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
         ui->retranslateUi(this);
     }
+    setWindowTitle(QApplication::applicationName());
+
     m_settingsPtr->beginGroup("Reader");
 
     m_currVerse.page = m_settingsPtr->value("Page").toInt();
@@ -657,6 +659,7 @@ void MainWindow::navigateToVerse(Verse v)
   ui->cmbVerse->setCurrentIndex(m_currVerse.number - 1);
   m_internalVerseChange = false;
 
+  highlightCurrentVerse();
   m_endOfPage = false;
 }
 

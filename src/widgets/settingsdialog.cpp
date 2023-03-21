@@ -17,7 +17,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePla
     setWindowTitle(tr("Preferences"));
     setCurrentSettingsAsRef();
 
-    ui->cmbTheme->setCurrentText(m_theme);
+    ui->cmbTheme->setCurrentIndex(m_themeIdx);
     ui->cmbLang->setCurrentText(m_lang);
 
     ui->cmbQuranFontSz->setCurrentText(m_quranFontSize);
@@ -31,9 +31,9 @@ SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePla
     connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingsDialog::btnBoxAction);
 }
 
-void SettingsDialog::updateTheme(QString themeName)
+void SettingsDialog::updateTheme(int themeIdx)
 {
-    m_settingsPtr->setValue("Theme", themeName);
+    m_settingsPtr->setValue("Theme", themeIdx);
     QMessageBox::StandardButton btn
         = QMessageBox::question(this,
                                 tr("Restart required"),
@@ -118,8 +118,8 @@ void SettingsDialog::updateCpyVerseChk(bool state)
 
 void SettingsDialog::applyAllChanges()
 {
-    if (ui->cmbTheme->currentText() != m_theme) {
-        updateTheme(ui->cmbTheme->currentText());
+    if (ui->cmbTheme->currentIndex() != m_themeIdx) {
+        updateTheme(ui->cmbTheme->currentIndex());
     }
 
     if (ui->cmbLang->currentText() != m_lang) {
@@ -174,7 +174,7 @@ void SettingsDialog::applyAllChanges()
 
 void SettingsDialog::setCurrentSettingsAsRef()
 {
-    m_theme = m_settingsPtr->value("Theme").toString();
+    m_themeIdx = m_settingsPtr->value("Theme").toInt();
     m_lang = m_settingsPtr->value("Language").toString();
 
     m_settingsPtr->beginGroup("Reader");

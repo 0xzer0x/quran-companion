@@ -7,18 +7,20 @@
 #include <QStyleFactory>
 #include <QTranslator>
 
+void setTheme(int themeIdx);
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QApplication::setApplicationName("Quran Companion");
-    QApplication::setOrganizationName("Fursan Team");
+    QApplication::setOrganizationName("0xzer0x");
 
     qApp->setStyle(QStyleFactory::create("Fusion"));
     QSettings appSettings("qc-config.ini", QSettings::Format::IniFormat, &a);
 
     if (!appSettings.contains("Language")) {
         appSettings.setValue("Language", "English");
-        appSettings.setValue("Theme", "Light");
+        appSettings.setValue("Theme", 0);
 
         appSettings.beginGroup("Reader");
         appSettings.setValue("Page", 1);
@@ -30,31 +32,8 @@ int main(int argc, char *argv[])
         appSettings.setValue("CopyVerseOnClick", true);
         appSettings.endGroup();
     }
-    if (appSettings.value("Theme").toString() == "Dark") {
-        QPalette darkPalette;
-        darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
-        darkPalette.setColor(QPalette::WindowText, Qt::white);
-        darkPalette.setColor(QPalette::Disabled, QPalette::WindowText, QColor(127, 127, 127));
-        darkPalette.setColor(QPalette::Base, QColor(42, 42, 42));
-        darkPalette.setColor(QPalette::AlternateBase, QColor(66, 66, 66));
-        darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
-        darkPalette.setColor(QPalette::ToolTipText, Qt::white);
-        darkPalette.setColor(QPalette::Text, Qt::white);
-        darkPalette.setColor(QPalette::Disabled, QPalette::Text, QColor(127, 127, 127));
-        darkPalette.setColor(QPalette::Dark, QColor(35, 35, 35));
-        darkPalette.setColor(QPalette::Shadow, QColor(20, 20, 20));
-        darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
-        darkPalette.setColor(QPalette::ButtonText, Qt::white);
-        darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(127, 127, 127));
-        darkPalette.setColor(QPalette::BrightText, Qt::red);
-        darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
-        darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
-        darkPalette.setColor(QPalette::Disabled, QPalette::Highlight, QColor(80, 80, 80));
-        darkPalette.setColor(QPalette::HighlightedText, Qt::white);
-        darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
 
-        qApp->setPalette(darkPalette);
-    }
+    setTheme(appSettings.value("Theme").toInt());
 
     // add required fonts
     QDir fontsDir = QApplication::applicationDirPath() + QDir::separator() + "assets"
@@ -91,4 +70,40 @@ int main(int argc, char *argv[])
     MainWindow w(nullptr, &appSettings);
     w.show();
     return a.exec();
+}
+
+void setTheme(int themeIdx)
+{
+    QPalette themeColors;
+    switch (themeIdx) {
+    case 0:
+        break;
+
+    case 1:
+        themeColors.setColor(QPalette::Window, QColor(53, 53, 53));
+        themeColors.setColor(QPalette::WindowText, Qt::white);
+        themeColors.setColor(QPalette::Disabled, QPalette::WindowText, QColor(127, 127, 127));
+        themeColors.setColor(QPalette::Base, QColor(42, 42, 42));
+        themeColors.setColor(QPalette::AlternateBase, QColor(66, 66, 66));
+        themeColors.setColor(QPalette::ToolTipBase, Qt::white);
+        themeColors.setColor(QPalette::ToolTipText, Qt::white);
+        themeColors.setColor(QPalette::Text, Qt::white);
+        themeColors.setColor(QPalette::Disabled, QPalette::Text, QColor(127, 127, 127));
+        themeColors.setColor(QPalette::Dark, QColor(35, 35, 35));
+        themeColors.setColor(QPalette::Shadow, QColor(20, 20, 20));
+        themeColors.setColor(QPalette::Button, QColor(53, 53, 53));
+        themeColors.setColor(QPalette::ButtonText, Qt::white);
+        themeColors.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(127, 127, 127));
+        themeColors.setColor(QPalette::BrightText, Qt::red);
+        themeColors.setColor(QPalette::Link, QColor(42, 130, 218));
+        themeColors.setColor(QPalette::Highlight, QColor(42, 130, 218));
+        themeColors.setColor(QPalette::Disabled, QPalette::Highlight, QColor(80, 80, 80));
+        themeColors.setColor(QPalette::HighlightedText, Qt::white);
+        themeColors.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
+        qApp->setPalette(themeColors);
+        break;
+
+    default:
+        break;
+    }
 }

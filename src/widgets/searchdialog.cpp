@@ -48,6 +48,8 @@ void SearchDialog::getResults()
         clkLb->setFont(QFont(fontName, 15));
         clkLb->setText(m_dbPtr->getVerseGlyphs(v.surah, v.number));
         clkLb->setWordWrap(true);
+        clkLb->setStyleSheet("ClickableLabel{border-width: 0px 1px 0px 0px; border-style: solid; "
+                             "border-color: black}");
 
         connect(clkLb, &ClickableLabel::clicked, this, &SearchDialog::verseClicked);
 
@@ -55,7 +57,7 @@ void SearchDialog::getResults()
         m_lbLst.append(clkLb);
     }
 
-    ui->scrollArea->setAlignment(Qt::AlignRight);
+    ui->scrollArea->setAlignment(Qt::AlignCenter);
 }
 
 void SearchDialog::verseClicked()

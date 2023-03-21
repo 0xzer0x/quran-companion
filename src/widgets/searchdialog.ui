@@ -17,14 +17,14 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
+      <widget class="QLineEdit" name="ledSearchBar"/>
+     </item>
+     <item>
       <widget class="QPushButton" name="btnSrch">
        <property name="text">
         <string>Go</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="ledSearchBar"/>
      </item>
     </layout>
    </item>

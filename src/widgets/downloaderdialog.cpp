@@ -156,6 +156,9 @@ void DownloaderDialog::setCurrentBar()
     m_currentLb->setText(tr("Downloading: ") + m_currentLb->parent()->objectName());
 
     m_currentBar = m_frameLst.at(0)->findChild<DownloadProgressBar *>();
+
+    m_currentBar->setStyleSheet("QProgressBar {text-align: center;color:black;}");
+
     connect(m_downloaderPtr,
             &DownloadManager::downloadProgressed,
             m_currentBar,

@@ -38,7 +38,7 @@ signals:
 
 public slots:
     void btnBoxAction(QAbstractButton *btn);
-    void updateTheme(QString themeName);
+    void updateTheme(int themeIdx);
     void updateLang(QString langName);
     void updateSideContent(int idx);
     void updateTafsir(int idx);
@@ -52,7 +52,7 @@ public slots:
 private:
     Ui::SettingsDialog *ui;
     QSettings *m_settingsPtr;
-    QString m_theme;
+    int m_themeIdx;
     QString m_lang;
     QString m_highlightClr;
     QString m_quranFontSize;
