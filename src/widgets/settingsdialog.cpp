@@ -97,7 +97,7 @@ void SettingsDialog::updateSideFont(QFont fnt)
 {
     fnt.setPointSize(m_sideFont.pointSize());
     m_sideFont = fnt;
-    qInfo() << m_sideFont;
+
     m_settingsPtr->setValue("Reader/SideContentFont", m_sideFont);
     emit sideFontChanged();
     m_renderSideContent = true;
@@ -127,7 +127,6 @@ void SettingsDialog::applyAllChanges()
     }
 
     if (ui->cmbSideContent->currentIndex() != m_sideContent) {
-        qInfo() << "side content type is different!";
         updateSideContent(ui->cmbSideContent->currentIndex());
     }
 

@@ -21,11 +21,6 @@ SearchDialog::~SearchDialog()
 
 void SearchDialog::getResults()
 {
-    if (!m_lbLst.empty()) {
-        qDeleteAll(m_lbLst);
-        m_lbLst.clear();
-    }
-
     if (m_searchText == ui->ledSearchBar->text().trimmed())
         return;
 
@@ -34,7 +29,12 @@ void SearchDialog::getResults()
     if (m_searchText.isEmpty() || m_searchText.size() < 3)
         return;
 
-    qInfo() << "searching db...";
+    if (!m_lbLst.empty()) {
+        qDeleteAll(m_lbLst);
+        m_lbLst.clear();
+    }
+
+    qInfo() << " running verse search query";
     QList<Verse> results = m_dbPtr->searchVerses(m_searchText);
 
     foreach (const Verse v, results) {

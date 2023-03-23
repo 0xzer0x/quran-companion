@@ -14,8 +14,6 @@ include_directories("./include/")
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 
-set(TS_FILES src/translations/ara.ts)
-
 set(PROJECT_SOURCES
         src/main.cpp
         src/core/mainwindow.cpp
@@ -44,6 +42,8 @@ set(PROJECT_SOURCES
         src/utils/pageconstructor.cpp
         src/utils/downloadmanager.h
         src/utils/downloadmanager.cpp
+        src/utils/logger.h
+        src/utils/logger.cpp
         resources.qrc
         qurancompanion.rc
 )
@@ -53,7 +53,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
-    qt_add_translation(qmFiles ${TS_FILES})
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET quran-companion APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)

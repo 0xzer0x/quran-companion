@@ -38,6 +38,12 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
     ui->treeView->setSelectionMode(QAbstractItemView::SelectionMode::ExtendedSelection);
     fillTreeView();
 
+    if (m_appSettings->value("Theme").toInt() == 0) {
+        m_ssProgBar = "QProgressBar {text-align: center;color:black;}";
+    } else {
+        m_ssProgBar = "QProgressBar {text-align: center;color:white;}";
+    }
+
     // connectors
     connect(ui->btnAddToQueue,
             &QPushButton::clicked,
@@ -102,8 +108,6 @@ void DownloaderDialog::addToQueue()
     QModelIndexList selected = ui->treeView->selectionModel()->selectedRows();
 
     foreach (QModelIndex i, selected) {
-        qInfo() << "Parent row:" << i.parent().row() << "Surah row:" << i.row();
-
         if (i.parent().row() < 0)
             continue;
 
@@ -131,7 +135,6 @@ void DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
 
     prgFrm->setObjectName(objName);
 
-    qInfo() << prgFrm->objectName();
     QLabel *lbTitle = new QLabel;
 
     lbTitle->setText(prgFrm->objectName());
@@ -157,7 +160,7 @@ void DownloaderDialog::setCurrentBar()
 
     m_currentBar = m_frameLst.at(0)->findChild<DownloadProgressBar *>();
 
-    m_currentBar->setStyleSheet("QProgressBar {text-align: center;color:black;}");
+    m_currentBar->setStyleSheet(m_ssProgBar);
 
     connect(m_downloaderPtr,
             &DownloadManager::downloadProgressed,

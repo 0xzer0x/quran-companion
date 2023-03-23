@@ -47,6 +47,7 @@ private:
     DBManager *m_dbPtr;
     QSettings *m_appSettings;
     QStringList m_recitersList;
+    QString m_ssProgBar;
 
     // QWidget interface
 protected:

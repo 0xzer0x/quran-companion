@@ -98,7 +98,6 @@ void DBManager::setCurrentTafsir(Tafsir tafsirName)
     }
 
     m_tafsirDbPath.setFile(m_dbDir.filePath(m_tafsirDbFilename));
-    qInfo() << m_tafsirDbPath.filePath();
     m_dbDir.cdUp();
 }
 
@@ -195,7 +194,6 @@ void DBManager::setCurrentTranslation(Translation translationName)
     }
 
     m_transDbPath.setFile(m_dbDir.filePath(m_transDbFilename));
-    qInfo() << m_transDbPath.filePath();
     m_dbDir.cdUp();
 }
 
@@ -410,7 +408,6 @@ QList<DBManager::Verse> DBManager::searchVerses(QString searchText)
     QString q = "SELECT page,sura_no,aya_no FROM verses WHERE aya_text_emlaey like'%" + searchText
                 + "%' ORDER BY id";
 
-    qInfo() << q;
     m_queryOpenDB.prepare(q);
     if (!m_queryOpenDB.exec()) {
         qCritical() << "[CRITICAL] Error occurred during searchVerses 2nd SQL statment exec";
@@ -436,7 +433,7 @@ QList<int> DBManager::searchSurahs(QString searchText)
         "SELECT sura_no FROM verses WHERE sura_name_ar like '%:searchText%' ORDER BY id");
     m_queryOpenDB.bindValue(0, searchText);
     if (!m_queryOpenDB.exec()) {
-        qCritical() << "[CRITICAL] Error occurred during searchVerses 1st SQL statment exec";
+        qCritical() << "Error occurred during searchVerses 1st SQL statment exec";
     }
 
     while (m_queryOpenDB.next()) {
@@ -457,7 +454,7 @@ QString DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
     m_queryOpenDB.bindValue(1, vIdx);
 
     if (!m_queryOpenDB.exec())
-        qFatal("[WARNING] Couldn't execute getVerseGlyphs query!");
+        qFatal("Couldn't execute getVerseGlyphs query!");
 
     m_queryOpenDB.next();
 
@@ -474,9 +471,9 @@ QString DBManager::getTafsir(const int sIdx, const int vIdx)
     m_queryOpenDB.prepare(q);
 
     if (!m_queryOpenDB.exec()) {
-        qFatal("[WARNING] Couldn't execute getTafsir query!");
+        qFatal("Couldn't execute getTafsir query!");
     }
-    qInfo() << m_tafsirDbPath.baseName();
+
     m_queryOpenDB.next();
 
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
@@ -494,7 +491,7 @@ QString DBManager::getTranslation(const int sIdx, const int vIdx)
     m_queryOpenDB.prepare(q);
 
     if (!m_queryOpenDB.exec())
-        qFatal("[WARNING] Couldn't execute getTrans query!");
+        qFatal("Couldn't execute getTrans query!");
 
     m_queryOpenDB.next();
 

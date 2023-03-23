@@ -573,7 +573,7 @@
             <item>
              <widget class="QLabel" name="lbSideContent">
               <property name="text">
-               <string>Side content</string>
+               <string>Side content type</string>
               </property>
              </widget>
             </item>

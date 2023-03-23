@@ -1,11 +1,11 @@
-#include "core/mainwindow.h"
-
 #include <QApplication>
 #include <QFontDatabase>
 #include <QLocale>
 #include <QSettings>
 #include <QStyleFactory>
 #include <QTranslator>
+#include "core/mainwindow.h"
+#include "utils/logger.h"
 
 void setTheme(int themeIdx);
 
@@ -14,6 +14,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QApplication::setApplicationName("Quran Companion");
     QApplication::setOrganizationName("0xzer0x");
+
+    Logger::startLogger();
+    Logger::attach();
 
     qApp->setStyle(QStyleFactory::create("Fusion"));
     QSettings appSettings("qc-config.ini", QSettings::Format::IniFormat, &a);
@@ -28,7 +31,7 @@ int main(int argc, char *argv[])
         appSettings.setValue("Verse", 1);
 
         appSettings.setValue("QuranFontSize", 22);
-        appSettings.setValue("SideContentFont", QFont("Calibri", 14));
+        appSettings.setValue("SideContentFont", QFont("Almarai", 14));
         appSettings.setValue("CopyVerseOnClick", true);
         appSettings.endGroup();
     }
@@ -40,6 +43,7 @@ int main(int argc, char *argv[])
                     + QDir::separator() + "fonts";
     QFontDatabase::addApplicationFont(fontsDir.filePath("QCF_BSML.ttf"));
     QFontDatabase::addApplicationFont(fontsDir.filePath("Amiri.ttf"));
+    QFontDatabase::addApplicationFont(fontsDir.filePath("Almarai-Regular.ttf"));
 
     for (int i = 1; i < 605; i++) {
         QString font = "QCF_P";
@@ -62,6 +66,7 @@ int main(int argc, char *argv[])
         if (trs.load(":/i18n/src/translations/arabic.qm")) {
             qInfo() << "Tr" << trs.language() << "loaded";
             a.installTranslator(&trs);
+            qApp->setFont(QFont("Almarai", qApp->font().pointSize() + 1));
         } else {
             qWarning() << "AR Translation not loaded!";
         }
@@ -69,7 +74,10 @@ int main(int argc, char *argv[])
 
     MainWindow w(nullptr, &appSettings);
     w.show();
-    return a.exec();
+
+    int ret = a.exec();
+    Logger::stopLogger();
+    return ret;
 }
 
 void setTheme(int themeIdx)

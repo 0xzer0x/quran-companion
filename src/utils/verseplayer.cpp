@@ -49,11 +49,9 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse)
     m_bsmlPaths.append(m_reciterDir.filePath("bismillah/menshawi.mp3"));
     m_bsmlPaths.append(m_reciterDir.filePath("bismillah/menshawi.mp3"));
     m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
-    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
-    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
-    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
-    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
-    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/alafasy.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/tunaiji.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/ad-dussary.mp3"));
+    m_bsmlPaths.append(m_reciterDir.filePath("bismillah/al-banna.mp3"));
 
     m_reciterDir.cd("Al-Husary");
     setVerseFile(constructVerseFilename());
@@ -128,16 +126,15 @@ void VersePlayer::playBasmalah()
     m_activeVerse.number = 0;
 
     // no basmalah with surah al-tawbah (9)
-    if (m_activeVerse.surah == 9 || m_activeVerse.surah == 1) {
+    if (m_activeVerse.surah == 9) {
         nextVerse();
     } else {
-        qInfo() << m_bsmlPaths.at(m_reciter);
+        if (m_activeVerse.surah == 1)
+            m_activeVerse.number = 1;
+
         setSource(QUrl::fromLocalFile(m_bsmlPaths.at(m_reciter)));
         play();
     }
-
-    // Debugging
-    qInfo() << "SurahIdx:" << m_activeVerse.surah << "Count:" << m_surahCount;
 }
 
 /* -------------------- Setters ----------------------- */
@@ -161,13 +158,12 @@ bool VersePlayer::changeReciter(int reciterIdx)
 bool VersePlayer::setVerseFile(const QString &newVerseFilename)
 {
     if (!m_reciterDir.exists(newVerseFilename)) {
-        qInfo() << "[DEBUG] Emitting missing signal...";
+        qDebug() << "Emitting missing signal...";
         emit missingVerseFile();
         return false;
     }
 
     m_verseFile = newVerseFilename;
-    qInfo() << m_reciterDir.filePath(m_verseFile);
     setSource(QUrl::fromLocalFile(m_reciterDir.filePath(m_verseFile)));
 
     return true;

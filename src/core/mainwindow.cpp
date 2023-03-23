@@ -21,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
 
     // Menubar
     connect(ui->actionExit, &QAction::triggered, this, &QApplication::exit);
+    connect(ui->actionPereferences, &QAction::triggered, this, &MainWindow::actionPrefTriggered);
+    connect(ui->actionDownload_manager, &QAction::triggered, this, &MainWindow::actionDMTriggered);
+    connect(ui->actionFind, &QAction::triggered, this, &MainWindow::openSearchDialog);
 
     // page controls
     connect(ui->btnNext, &QPushButton::clicked, this, &MainWindow::nextPage);
@@ -44,10 +47,7 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
     connect(ui->cmbReciter, &QComboBox::currentIndexChanged, m_player, &VersePlayer::changeReciter);
     connect(spaceKey, &QShortcut::activated, this, &MainWindow::spaceKeyPressed);
 
-    connect(ui->actionPereferences, &QAction::triggered, this, &MainWindow::actionPrefTriggered);
-    connect(ui->actionDownload_manager, &QAction::triggered, this, &MainWindow::actionDMTriggered);
     connect(ui->btnSearch, &QPushButton::clicked, this, &MainWindow::openSearchDialog);
-    connect(ui->actionFind, &QAction::triggered, this, &MainWindow::openSearchDialog);
 }
 
 void MainWindow::init()
@@ -205,13 +205,12 @@ void MainWindow::gotoSurah(int surahIdx)
     updateVerseDropDown();
 
     m_endOfPage = false;
-    qInfo() << m_currVerse.page;
 }
 
 void MainWindow::cmbPageChanged(int newIdx)
 {
     if (m_internalPageChange) {
-        qInfo() << "Internal page change, not going to take action...";
+        qDebug() << "Internal page change";
         return;
     }
 
@@ -222,7 +221,7 @@ void MainWindow::cmbPageChanged(int newIdx)
 void MainWindow::cmbSurahChanged(int newSurahIdx)
 {
     if (m_internalSurahChange) {
-        qInfo() << "Internal surah change, not going to take action...";
+        qDebug() << "Internal surah change";
         return;
     }
 
@@ -239,7 +238,7 @@ void MainWindow::cmbVerseChanged(int newVerseIdx)
         return;
 
     if (m_internalVerseChange) {
-        qInfo() << "internal verse change, not going to take action...";
+        qDebug() << "internal verse change";
         return;
     }
 
@@ -349,8 +348,6 @@ void MainWindow::activeVerseChanged()
 
   m_currVerse.surah = m_player->surahIdx();
   m_currVerse.number = m_player->verseNum();
-  qInfo() << "Current surah:" << m_currVerse.surah;
-  qInfo() << "Current verse:" << m_currVerse.number;
 
   if (m_currVerse.number == 0)
         m_currVerse.number = 1;
@@ -417,11 +414,12 @@ void MainWindow::highlightCurrentVerse()
 
   QList<int> bounds = m_dbManPtr->getVerseBounds(m_currVerse.surah, m_currVerse.number);
 
-  qInfo() << "Selection start:" << m_highlighter->selectionStart();
   m_highlighter->setPosition(bounds.at(0));
   m_highlighter->setPosition(bounds.at(1), QTextCursor::KeepAnchor);
-  qInfo() << "Selection end:" << m_highlighter->selectionEnd();
   m_highlighter->mergeCharFormat(tcf);
+
+  qInfo() << "Selection start:" << m_highlighter->selectionStart()
+          << " Selection end:" << m_highlighter->selectionEnd();
 
   if (m_highlightedFrm != nullptr)
         m_highlightedFrm->setStyleSheet("");

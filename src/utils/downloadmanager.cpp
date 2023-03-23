@@ -88,16 +88,16 @@ void DownloadManager::processQueueHead()
         return;
     }
 
-    qInfo() << "Processing head...";
     m_currentTask = m_downloadQueue.dequeue();
-    qInfo() << "current task:" << m_currentTask.link;
+    qInfo() << "current task - " << m_currentTask.link;
     m_downloadPath.cd(m_reciterDirNames.at(m_currentTask.reciterIdx));
 
-    while (m_downloadPath.exists(m_currentTask.link.fileName())) {
-        emit downloadProgressed(m_currentTask.verse,
-                                m_dbPtr->getSurahVerseCount(m_currentTask.surah));
+    int sCount = m_dbPtr->getSurahVerseCount(m_currentTask.surah);
 
-        if (m_currentTask.verse == m_dbPtr->getSurahVerseCount(m_currentTask.surah)) {
+    while (m_downloadPath.exists(m_currentTask.link.fileName())) {
+        emit downloadProgressed(m_currentTask.verse, sCount);
+
+        if (m_currentTask.verse == sCount) {
             emit downloadComplete();
         }
 
@@ -111,9 +111,6 @@ void DownloadManager::processQueueHead()
 
     m_isDownloading = true;
     QNetworkRequest req(m_currentTask.link);
-    req.setMaximumRedirectsAllowed(20);
-
-    qInfo() << "Making request...";
     m_currentTask.networkReply = m_netMan->get(req);
 }
 
@@ -123,7 +120,6 @@ void DownloadManager::finishupTask(QNetworkReply *replyData)
         handleConError(m_currentTask.networkReply->error());
         return;
     }
-    qInfo() << m_downloadPath;
 
     saveFile(replyData, m_currentTask.link.fileName());
 
@@ -144,7 +140,7 @@ bool DownloadManager::saveFile(QNetworkReply *data, QString filename)
     QFile localFile(m_downloadPath.filePath(filename));
 
     if (!localFile.open(QIODevice::WriteOnly)) {
-        qWarning() << "[WARNING] Couldn't open file:" << filename;
+        qWarning() << "Couldn't open file:" << filename;
         return false;
     }
 

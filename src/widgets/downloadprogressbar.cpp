@@ -14,9 +14,5 @@ void DownloadProgressBar::updateProgress(qint64 downloaded, qint64 total)
         setMaximum(total);
 
     setValue(downloaded);
-
-    //    if (downloaded == total) {
-    //        delete parent();
-    //    }
 }
 
