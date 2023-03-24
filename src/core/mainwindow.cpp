@@ -46,8 +46,8 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
     connect(ui->btnStop, &QPushButton::clicked, this, &MainWindow::btnStopClicked);
     connect(ui->cmbReciter, &QComboBox::currentIndexChanged, m_player, &VersePlayer::changeReciter);
     connect(spaceKey, &QShortcut::activated, this, &MainWindow::spaceKeyPressed);
-
     connect(ui->btnSearch, &QPushButton::clicked, this, &MainWindow::openSearchDialog);
+    connect(ui->btnPreferences, &QPushButton::clicked, this, &MainWindow::actionPrefTriggered);
 }
 
 void MainWindow::init()

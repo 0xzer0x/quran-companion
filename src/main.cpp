@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
         appSettings.setValue("Verse", 1);
 
         appSettings.setValue("QuranFontSize", 22);
-        appSettings.setValue("SideContentFont", QFont("Almarai", 14));
+        appSettings.setValue("SideContentFont", QFont("Droid Sans Arabic", 14));
         appSettings.setValue("CopyVerseOnClick", true);
         appSettings.endGroup();
     }
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
                     + QDir::separator() + "fonts";
     QFontDatabase::addApplicationFont(fontsDir.filePath("QCF_BSML.ttf"));
     QFontDatabase::addApplicationFont(fontsDir.filePath("Amiri.ttf"));
-    QFontDatabase::addApplicationFont(fontsDir.filePath("Almarai-Regular.ttf"));
+    QFontDatabase::addApplicationFont(fontsDir.filePath("droid-sans-org.ttf"));
 
     for (int i = 1; i < 605; i++) {
         QString font = "QCF_P";
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
         if (trs.load(":/i18n/src/translations/arabic.qm")) {
             qInfo() << "Tr" << trs.language() << "loaded";
             a.installTranslator(&trs);
-            qApp->setFont(QFont("Almarai", qApp->font().pointSize() + 1));
+            qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize() + 1));
         } else {
             qWarning() << "AR Translation not loaded!";
         }

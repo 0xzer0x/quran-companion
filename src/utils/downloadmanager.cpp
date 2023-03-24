@@ -15,7 +15,7 @@ DownloadManager::DownloadManager(QObject *parent, DBManager *dbptr, QStringList 
 
     m_reciterBaseUrls.append("https://everyayah.com/data/Husary_64kbps/");
     m_reciterBaseUrls.append(
-        "https://github.com/0xzer0x/quran-companion/raw/main/audio/husary_qasr_64kbps/");
+        "https://github.com/0xzer0x/quran-companion/raw/audio-files/audio/husary_qasr_64kbps/");
     m_reciterBaseUrls.append("https://everyayah.com/data/Husary_Mujawwad_64kbps/");
     m_reciterBaseUrls.append("https://everyayah.com/data/Abdul_Basit_Murattal_64kbps/");
     m_reciterBaseUrls.append("https://everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/");

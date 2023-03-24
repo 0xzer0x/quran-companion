@@ -22,7 +22,7 @@
      <item>
       <widget class="QPushButton" name="btnSrch">
        <property name="text">
-        <string>Go</string>
+        <string>Find</string>
        </property>
       </widget>
      </item>

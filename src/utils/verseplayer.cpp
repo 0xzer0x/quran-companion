@@ -141,6 +141,9 @@ void VersePlayer::playBasmalah()
 
 bool VersePlayer::changeReciter(int reciterIdx)
 {
+    if (m_activeVerse.number == 0)
+        m_activeVerse.number = 1;
+
     stop();
     if (reciterIdx != m_reciter) {
         m_reciterDir.cdUp();

@@ -389,7 +389,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
+      <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -400,6 +400,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblVerse">
+       <property name="text">
+        <string>Verse</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cmbVerse"/>
      </item>
      <item>
       <widget class="QLabel" name="lblSurah">
@@ -989,16 +999,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="lblVerse">
-       <property name="text">
-        <string>Verse</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cmbVerse"/>
-     </item>
-     <item>
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Page</string>
@@ -1009,7 +1009,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <widget class="QComboBox" name="cmbPage"/>
      </item>
      <item>
-      <spacer name="spcrDock">
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -1024,7 +1024,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <item>
       <widget class="QPushButton" name="btnSearch">
        <property name="text">
-        <string>Find</string>
+        <string>Search</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnPreferences">
+       <property name="text">
+        <string>Preferences</string>
        </property>
       </widget>
      </item>
