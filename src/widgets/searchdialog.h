@@ -2,8 +2,11 @@
 #define SEARCHDIALOG_H
 
 #include <QDialog>
+#include <QStyle>
 #include "../utils/dbmanager.h"
 #include "clickablelabel.h"
+#include "verseframe.h"
+
 typedef DBManager::Verse Verse;
 
 namespace Ui {
@@ -24,12 +27,17 @@ signals:
 public slots:
     void getResults();
     void verseClicked();
+    void showResults();
+    void moveFwd();
+    void moveBwd();
 
 private:
     Ui::SearchDialog *ui;
+    int m_startResult = 0;
     DBManager *m_dbPtr;
-    QList<ClickableLabel *> m_lbLst;
+    QList<VerseFrame *> m_lbLst;
     QString m_searchText;
+    QList<Verse> m_currResults;
 
     // QWidget interface
 protected:

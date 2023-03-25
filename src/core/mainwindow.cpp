@@ -552,7 +552,6 @@ void MainWindow::addSideContent()
         QMap<QString, int> vInfo = m_vInfoList.at(i);
 
         verseContFrame = new VerseFrame(ui->scrlVerseCont);
-        verseContFrame->setLayout(new QVBoxLayout);
         verselb = new ClickableLabel(verseContFrame);
         contentLb = new ClickableLabel(verseContFrame);
 

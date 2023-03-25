@@ -2,7 +2,9 @@
 
 VerseFrame::VerseFrame(QWidget *parent)
     : QFrame{parent}
-{}
+{
+    this->setLayout(new QVBoxLayout);
+}
 
 void VerseFrame::highlightFrame()
 {

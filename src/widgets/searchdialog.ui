@@ -29,6 +29,13 @@
     </layout>
    </item>
    <item>
+    <widget class="QLabel" name="lbResultCount">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -45,12 +52,30 @@
         <x>0</x>
         <y>0</y>
         <width>562</width>
-        <height>500</height>
+        <height>446</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2"/>
      </widget>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="btnFwdRes">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnBwdRes">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

@@ -2,6 +2,7 @@
 #define VERSEFRAME_H
 
 #include <QFrame>
+#include <QVBoxLayout>
 
 class VerseFrame : public QFrame
 {

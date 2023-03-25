@@ -15,6 +15,7 @@
 #include "../widgets/searchdialog.h"
 #include "../widgets/settingsdialog.h"
 #include "../widgets/verseframe.h"
+
 typedef DBManager::Verse Verse;
 
 QT_BEGIN_NAMESPACE
