@@ -288,17 +288,17 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </item>
        <item>
         <property name="text">
-         <string>Khalefa Al-tunaiji</string>
+         <string>Khalefa Al-Tunaiji</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Yasser Ad-dussary</string>
+         <string>Yasser Ad-Dussary</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Mahmoud Al-banna</string>
+         <string>Mahmoud Al-Banna</string>
         </property>
        </item>
       </widget>

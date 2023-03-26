@@ -17,18 +17,6 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
     m_downloaderPtr = downloader;
     m_dbPtr = dbMan;
 
-    m_recitersList.append(tr("Al-Husary"));
-    m_recitersList.append(tr("Al-Husary (Qasr)"));
-    m_recitersList.append(tr("Al-Husary (Mujawwad)"));
-    m_recitersList.append(tr("Abdul-Basit"));
-    m_recitersList.append(tr("Abdul-Basit (Mujawwad)"));
-    m_recitersList.append(tr("Menshawi"));
-    m_recitersList.append(tr("Menshawi (Mujawwad)"));
-    m_recitersList.append(tr("Mishary Alafasy"));
-    m_recitersList.append(tr("Khalefa Al-tunaiji"));
-    m_recitersList.append(tr("Yasser Ad-dussary"));
-    m_recitersList.append(tr("Mahmoud Al-banna"));
-
     // treeview setup
     QStringList headers;
     headers.append(tr("Number"));
@@ -80,8 +68,8 @@ void DownloaderDialog::fillTreeView()
 {
     bool en = m_appSettings->value("Language").toString() == "العربية" ? false : true;
 
-    for (QString &name : m_recitersList) {
-        QStandardItem *item = new QStandardItem(name);
+    for (Reciter &reciter : m_downloaderPtr->recitersList()) {
+        QStandardItem *item = new QStandardItem(reciter.displayName);
 
         m_treeModel.invisibleRootItem()->appendRow(item);
 
@@ -125,7 +113,7 @@ void DownloaderDialog::addToQueue()
 
 void DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
 {
-    QString reciter = m_recitersList.at(reciterIdx);
+    QString reciter = m_downloaderPtr->recitersList().at(reciterIdx).displayName;
     QString surahName = m_treeModel.index(surah - 1, 1, m_treeModel.index(1, 0)).data().toString();
 
     QString objName = reciter + tr(" // Surah: ") + surahName;

@@ -475,7 +475,7 @@ void MainWindow::actionDMTriggered()
 {
   if (m_downloaderDlg == nullptr) {
         if (m_downManPtr == nullptr)
-            m_downManPtr = new DownloadManager(this, m_dbManPtr, m_player->reciterDirNames());
+            m_downManPtr = new DownloadManager(this, m_dbManPtr, m_player->recitersList());
 
         m_downloaderDlg = new DownloaderDialog(this, m_settingsPtr, m_downManPtr, m_dbManPtr);
   }

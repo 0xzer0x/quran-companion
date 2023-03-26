@@ -1,7 +1,7 @@
 #include "verseframe.h"
 
 VerseFrame::VerseFrame(QWidget *parent)
-    : QFrame{parent}
+    : QFrame(parent)
 {
     this->setLayout(new QVBoxLayout);
 }

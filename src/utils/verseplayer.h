@@ -8,7 +8,9 @@
 #include <QMediaPlayer>
 #include <QObject>
 #include "dbmanager.h"
+
 typedef DBManager::Verse Verse;
+typedef DBManager::Reciter Reciter;
 /*!
  * \class VersePlayer
  * 
@@ -21,8 +23,9 @@ class VersePlayer : public QMediaPlayer
 public:
     explicit VersePlayer(QObject *parent = nullptr,
                          DBManager *dbPtr = nullptr,
-                         Verse initVerse = Verse(1, 1, 1));
-
+                         Verse initVerse = Verse{},
+                         int reciterIdx = 0);
+    void fillRecitersList();
     void setVerse(Verse &newVerse);
     QString verseFilename() const;
     bool setVerseFile(const QString &newVerseFilename);
@@ -32,8 +35,7 @@ public:
     int surahCount() const;
     int verseNum() const;
     QAudioOutput *getOutput() const;
-
-    QList<QString> reciterDirNames() const;
+    QList<Reciter> recitersList() const;
 
 public slots:
     void playBasmalah();
@@ -49,15 +51,15 @@ signals:
     void missingVerseFile();
 
 private:
-    Verse m_activeVerse;
-    int m_surahCount = 0;
     int m_reciter = 0;
+    int m_surahCount = 0;
+    Verse m_activeVerse;
+    Reciter m_currentReciter;
+    QList<Reciter> m_recitersList;
     QString m_verseFile;
     QDir m_reciterDir;
     QAudioOutput *m_output;
     DBManager *m_dbPtr;
-    QList<QString> m_reciterDirNames;
-    QList<QString> m_bsmlPaths;
 };
 
 #endif // VERSEPLAYER_H

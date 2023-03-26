@@ -1,7 +1,7 @@
 #include "dbmanager.h"
 
 DBManager::DBManager(QObject *parent)
-    : QObject{parent}
+    : QObject(parent)
 {
     m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
 
@@ -414,10 +414,9 @@ QList<DBManager::Verse> DBManager::searchVerses(QString searchText)
     }
 
     while (m_queryOpenDB.next()) {
-        Verse entry;
-        entry.page = m_queryOpenDB.value(0).toInt();
-        entry.surah = m_queryOpenDB.value(1).toInt();
-        entry.number = m_queryOpenDB.value(2).toInt();
+        Verse entry{m_queryOpenDB.value(0).toInt(),
+                    m_queryOpenDB.value(1).toInt(),
+                    m_queryOpenDB.value(2).toInt()};
 
         results.append(entry);
     }

@@ -12,13 +12,15 @@
 #include <QUrl>
 #include "dbmanager.h"
 
+typedef DBManager::Reciter Reciter;
+
 class DownloadManager : public QObject
 {
     Q_OBJECT
 public:
     explicit DownloadManager(QObject *parent = nullptr,
                              DBManager *dbptr = nullptr,
-                             QStringList reciterDirs = QStringList());
+                             QList<Reciter> reciters = QList<Reciter>());
     struct DownloadTask
     {
         int surah;
@@ -36,6 +38,8 @@ public:
     QList<QString> reciterDirNames() const;
 
     QNetworkAccessManager *netMan() const;
+
+    QList<Reciter> recitersList() const;
 
 public slots:
     void startQueue();
@@ -61,8 +65,7 @@ private:
     DBManager *m_dbPtr;
     DownloadTask m_currentTask;
     QQueue<DownloadTask> m_downloadQueue;
-    QList<QString> m_reciterBaseUrls;
-    QList<QString> m_reciterDirNames;
+    const QList<Reciter> m_recitersList;
     QDir m_downloadPath;
 };
 

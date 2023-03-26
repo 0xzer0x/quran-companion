@@ -75,7 +75,7 @@ public slots:
 
 private:
     int counter = 0;
-    Verse m_currVerse = Verse(1, 1, 1);
+    Verse m_currVerse{1, 1, 1};
     bool m_endOfPage = false;
     bool m_internalPageChange = false;
     bool m_internalSurahChange = false;

@@ -12,6 +12,8 @@
 #include "../utils/downloadmanager.h"
 #include "downloadprogressbar.h"
 
+typedef DBManager::Reciter Reciter;
+
 namespace Ui {
 class DownloaderDialog;
 }
@@ -46,7 +48,6 @@ private:
     DownloadManager *m_downloaderPtr;
     DBManager *m_dbPtr;
     QSettings *m_appSettings;
-    QStringList m_recitersList;
     QString m_ssProgBar;
 
     // QWidget interface

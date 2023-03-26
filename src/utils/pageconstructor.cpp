@@ -9,7 +9,7 @@
  * \param dbPtr a pointer to the database management interface to query the quran sqlite db
  */
 PageConstructor::PageConstructor(QObject *parent, DBManager *dbPtr, QSettings *appSettings)
-    : QObject{parent}
+    : QObject(parent)
 {
     // set the m_dataDB pointer to the DBManager object
     m_dataDB = dbPtr;

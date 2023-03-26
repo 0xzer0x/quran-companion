@@ -1,8 +1,8 @@
 #include "downloadmanager.h"
 
-DownloadManager::DownloadManager(QObject *parent, DBManager *dbptr, QStringList reciterDirs)
-    : QObject{parent}
-    , m_reciterDirNames{reciterDirs}
+DownloadManager::DownloadManager(QObject *parent, DBManager *dbptr, QList<Reciter> reciters)
+    : QObject(parent)
+    , m_recitersList{reciters}
 {
     m_netMan = new QNetworkAccessManager(this);
     m_dbPtr = dbptr;
@@ -12,23 +12,9 @@ DownloadManager::DownloadManager(QObject *parent, DBManager *dbptr, QStringList 
         m_downloadPath.mkdir("audio");
 
     m_downloadPath.cd("audio");
-
-    m_reciterBaseUrls.append("https://everyayah.com/data/Husary_64kbps/");
-    m_reciterBaseUrls.append(
-        "https://github.com/0xzer0x/quran-companion/raw/audio-files/audio/husary_qasr_64kbps/");
-    m_reciterBaseUrls.append("https://everyayah.com/data/Husary_Mujawwad_64kbps/");
-    m_reciterBaseUrls.append("https://everyayah.com/data/Abdul_Basit_Murattal_64kbps/");
-    m_reciterBaseUrls.append("https://everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/");
-    m_reciterBaseUrls.append("https://everyayah.com/data/Minshawy_Murattal_128kbps/");
-    m_reciterBaseUrls.append("https://everyayah.com/data/Minshawy_Mujawwad_64kbps/");
-    m_reciterBaseUrls.append("https://everyayah.com/data/Alafasy_64kbps/");
-    m_reciterBaseUrls.append("https://everyayah.com/data/khalefa_al_tunaiji_64kbps/");
-    m_reciterBaseUrls.append("https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/");
-    m_reciterBaseUrls.append("https://everyayah.com/data/mahmoud_ali_al_banna_32kbps/");
-
-    foreach (QString n, m_reciterDirNames) {
-        if (!m_downloadPath.exists(n)) {
-            m_downloadPath.mkdir(n);
+    foreach (Reciter r, m_recitersList) {
+        if (!m_downloadPath.exists(r.baseDirName)) {
+            m_downloadPath.mkdir(r.baseDirName);
         }
     }
 
@@ -65,7 +51,7 @@ void DownloadManager::cancelCurrentTask()
 
 void DownloadManager::enqeueVerseTask(int reciterIdx, int surah, int verse)
 {
-    QString url = m_reciterBaseUrls.at(reciterIdx);
+    QString url = m_recitersList.at(reciterIdx).baseUrl;
     url.append(QString::number(surah).rightJustified(3, '0'));
     url.append(QString::number(verse).rightJustified(3, '0'));
     url.append(".mp3");
@@ -90,7 +76,7 @@ void DownloadManager::processQueueHead()
 
     m_currentTask = m_downloadQueue.dequeue();
     qInfo() << "current task - " << m_currentTask.link;
-    m_downloadPath.cd(m_reciterDirNames.at(m_currentTask.reciterIdx));
+    m_downloadPath.cd(m_recitersList.at(m_currentTask.reciterIdx).baseDirName);
 
     int sCount = m_dbPtr->getSurahVerseCount(m_currentTask.surah);
 
@@ -98,6 +84,7 @@ void DownloadManager::processQueueHead()
         emit downloadProgressed(m_currentTask.verse, sCount);
 
         if (m_currentTask.verse == sCount) {
+            m_downloadPath.cdUp();
             emit downloadComplete();
         }
 
@@ -107,6 +94,7 @@ void DownloadManager::processQueueHead()
         }
 
         m_currentTask = m_downloadQueue.dequeue();
+        qInfo() << "current task - " << m_currentTask.link;
     }
 
     m_isDownloading = true;
@@ -171,14 +159,14 @@ void DownloadManager::handleConError(QNetworkReply::NetworkError err)
     }
 }
 
+QList<Reciter> DownloadManager::recitersList() const
+{
+    return m_recitersList;
+}
+
 QNetworkAccessManager *DownloadManager::netMan() const
 {
     return m_netMan;
-}
-
-QList<QString> DownloadManager::reciterDirNames() const
-{
-    return m_reciterDirNames;
 }
 
 DownloadManager::DownloadTask DownloadManager::currentTask() const

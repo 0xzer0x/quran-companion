@@ -22,16 +22,17 @@ public:
 
     struct Verse
     {
-        int surah;
-        int number;
-        int page;
-        Verse() {}
-        Verse(int page, int surah, int num)
-        {
-            this->page = page;
-            this->surah = surah;
-            this->number = num;
-        }
+        int page{1};
+        int surah{1};
+        int number{1};
+    };
+
+    struct Reciter
+    {
+        QString baseDirName{};
+        QString displayName{};
+        QString basmallahPath{};
+        QString baseUrl{};
     };
 
     enum Database { quran, tafsir, translation };
@@ -102,8 +103,6 @@ public:
     QString getTranslation(const int sIdx, const int vIdx);
     QList<Verse> searchVerses(QString searchText);
     QList<int> searchSurahs(QString searchText);
-
-    bool insertPosData(int page, int surah, int ayah, int start_pos, int end_pos);
 
 private:
     QSqlDatabase m_openDBCon;
