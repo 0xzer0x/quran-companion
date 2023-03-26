@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
         if (trs.load(":/i18n/src/translations/arabic.qm")) {
             qInfo() << "Tr" << trs.language() << "loaded";
             a.installTranslator(&trs);
-            qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize() + 1));
+            qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
         } else {
             qWarning() << "AR Translation not loaded!";
         }
