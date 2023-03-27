@@ -121,7 +121,7 @@ void VersePlayer::nextVerse()
         // if last verse in surah an-nas (114), do nothing (i.e stop playback)
         if ((m_activeVerse.surah < 114)) {
             m_activeVerse.surah++;
-            m_activeVerse.number = 0;
+            m_activeVerse.number = 1;
             updateSurahVerseCount(); // set new surah verse count
             emit newSurah();         // signals surah change
         }
@@ -146,11 +146,6 @@ void VersePlayer::changeUsedAudioDevice(QAudioDevice dev)
 {
     m_output->setDevice(dev);
     setAudioOutput(m_output);
-}
-
-QList<Reciter> VersePlayer::recitersList() const
-{
-    return m_recitersList;
 }
 
 QString VersePlayer::constructVerseFilename()
@@ -242,17 +237,17 @@ QString VersePlayer::verseFilename() const
   return m_verseFile;
 }
 
-int VersePlayer::surahIdx() const
-{
-  return m_activeVerse.surah;
-}
-
 int VersePlayer::surahCount() const
 {
   return m_surahCount;
 }
 
-int VersePlayer::verseNum() const
+Verse VersePlayer::activeVerse() const
 {
-  return m_activeVerse.number;
+  return m_activeVerse;
+}
+
+QList<Reciter> VersePlayer::recitersList() const
+{
+  return m_recitersList;
 }

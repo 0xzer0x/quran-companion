@@ -1,7 +1,6 @@
 #ifndef DOWNLOADPROGRESSBAR_H
 #define DOWNLOADPROGRESSBAR_H
 
-#include <QNetworkReply>
 #include <QProgressBar>
 
 class DownloadProgressBar : public QProgressBar

@@ -11,6 +11,7 @@
 
 typedef DBManager::Verse Verse;
 typedef DBManager::Reciter Reciter;
+
 /*!
  * \class VersePlayer
  * 
@@ -31,9 +32,8 @@ public:
     bool setVerseFile(const QString &newVerseFilename);
     QString constructVerseFilename();
     void updateSurahVerseCount();
-    int surahIdx() const;
     int surahCount() const;
-    int verseNum() const;
+    Verse activeVerse() const;
     QAudioOutput *getOutput() const;
     QList<Reciter> recitersList() const;
 

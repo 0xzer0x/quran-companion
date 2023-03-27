@@ -18,6 +18,11 @@ namespace Ui {
 class DownloaderDialog;
 }
 
+/*!
+ * \class DownloaderDialog
+ * 
+ * \brief The DownloaderDialog class is responsible for downloading surah recitation files for any reciter available 
+ */
 class DownloaderDialog : public QDialog
 {
     Q_OBJECT
@@ -28,7 +33,6 @@ public:
                               DownloadManager *downloader = nullptr,
                               DBManager *dbMan = nullptr);
     void fillTreeView();
-
     ~DownloaderDialog();
 
 public slots:
@@ -38,6 +42,10 @@ public slots:
     void surahDownloaded();
     void downloadAborted();
     void topTaskDownloadError();
+
+    // QWidget interface
+protected:
+    void closeEvent(QCloseEvent *event);
 
 private:
     Ui::DownloaderDialog *ui;
@@ -49,10 +57,6 @@ private:
     DBManager *m_dbPtr;
     QSettings *m_appSettings;
     QString m_ssProgBar;
-
-    // QWidget interface
-protected:
-    void closeEvent(QCloseEvent *event);
 };
 
 #endif // DOWNLOADERDIALOG_H

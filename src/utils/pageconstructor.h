@@ -17,20 +17,6 @@ class PageConstructor : public QObject
 {
     Q_OBJECT
 
-private:
-    int m_currentPage;
-    QString m_pageFont;
-    int m_fontSize;
-    QList<QString> m_surahsInPage;
-    QMap<QString, QString> m_easternNumsMap;
-    QDir m_pageInfoDir = QDir::currentPath() + QDir::separator() + "assets" + QDir::separator()
-                         + "qcf_pages";
-    QTextCharFormat m_pFmt;
-    QTextBlockFormat m_pTbf;
-    QTextDocument *m_pageTextD;
-    DBManager *m_dataDB;
-    QSettings *m_settingsPtr;
-
 public:
     explicit PageConstructor(QObject *parent = nullptr,
                              DBManager *dbPtr = nullptr,
@@ -44,6 +30,20 @@ public:
     QString pageFont() const;
     int fontSize() const;
     void setFontSize(int newFontSize);
+
+private:
+    int m_currentPage;
+    QString m_pageFont;
+    int m_fontSize;
+    QList<QString> m_surahsInPage;
+    QMap<QString, QString> m_easternNumsMap;
+    QDir m_pageInfoDir = QDir::currentPath() + QDir::separator() + "assets" + QDir::separator()
+                         + "qcf_pages";
+    QTextCharFormat m_pFmt;
+    QTextBlockFormat m_pTbf;
+    QTextDocument *m_pageTextD;
+    DBManager *m_dataDB;
+    QSettings *m_settingsPtr;
 };
 
 #endif // PAGECONSTRUCTOR_H

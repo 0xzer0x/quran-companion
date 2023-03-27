@@ -13,6 +13,11 @@ namespace Ui {
 class SearchDialog;
 }
 
+/*!
+ * \class SearchDialog
+ * 
+ * \brief The SearchDialog class is responsible for searching quran verses
+ */
 class SearchDialog : public QDialog
 {
     Q_OBJECT
@@ -21,15 +26,19 @@ public:
     explicit SearchDialog(QWidget *parent = nullptr, DBManager *dbPtr = nullptr);
     ~SearchDialog();
 
-signals:
-    void navigateToVerse(Verse v);
-
 public slots:
     void getResults();
     void verseClicked();
     void showResults();
     void moveFwd();
     void moveBwd();
+
+signals:
+    void navigateToVerse(Verse v);
+
+    // QWidget interface
+protected:
+    void closeEvent(QCloseEvent *event);
 
 private:
     Ui::SearchDialog *ui;
@@ -38,10 +47,6 @@ private:
     QList<VerseFrame *> m_lbLst;
     QString m_searchText;
     QList<Verse> m_currResults;
-
-    // QWidget interface
-protected:
-    void closeEvent(QCloseEvent *event);
 };
 
 #endif // SEARCHDIALOG_H

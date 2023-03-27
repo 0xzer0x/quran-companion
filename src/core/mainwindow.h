@@ -24,20 +24,25 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+/*!
+ * \class MainWindow
+ * 
+ * \brief The MainWindow class is responsible for the reader interface, audio controls, navigation, and opening other dialogs
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
     MainWindow(QWidget *parent = nullptr, QSettings *settingsPtr = nullptr);
-    ~MainWindow();
-    void setVerseCoords();
+    void setupConnections();
     void highlightCurrentVerse();
     enum SideContent { tafsir, translation };
+    ~MainWindow();
 
-    int currPage() const;
-    int currVerse() const;
-    int currSurah() const;
+public slots:
+    void saveReaderState();
+    void restartApp();
 
 private slots:
     void nextPage();
@@ -51,37 +56,37 @@ private slots:
     void updateVerseDropDown();
     void gotoPage(int page);
     void gotoSurah(int surahIdx);
-
-public slots:
-    void spaceKeyPressed();
-    void mediaStateChanged(QMediaPlayer::PlaybackState state);
-    void mediaPosChanged(qint64 position);
-    void missingRecitationFileWarn();
     void activeVerseChanged();
-    void verseClicked();
+    void spaceKeyPressed();
     void actionPrefTriggered();
     void actionDMTriggered();
+    void navigateToVerse(Verse v);
+    void updateHighlightColor();
+    void showExpandedVerseTafsir();
+    void openSearchDialog();
+    void missingRecitationFileWarn();
+    void mediaStateChanged(QMediaPlayer::PlaybackState state);
+    void mediaPosChanged(qint64 position);
+    void verseClicked();
     void redrawQuranPage();
     void updateSideContentType();
     void updateLoadedTafsir();
     void updateLoadedTranslation();
     void updateSideFont();
     void updateQuranFontSize();
-    void updateHighlightColor();
     void addSideContent();
-    void showExpandedVerseTafsir();
-    void openSearchDialog();
-    void navigateToVerse(Verse v);
 
 private:
-    int counter = 0;
-    Verse m_currVerse{1, 1, 1};
+    void init();
+    void updateSurah();
+    void updatePageVerseInfoList();
     bool m_endOfPage = false;
     bool m_internalPageChange = false;
     bool m_internalSurahChange = false;
     bool m_internalVerseChange = false;
     bool m_darkMode = false;
     Ui::MainWindow *ui;
+    Verse m_currVerse{1, 1, 1};
     SearchDialog *m_srchDlg = nullptr;
     SettingsDialog *m_settingsDlg = nullptr;
     DownloaderDialog *m_downloaderDlg = nullptr;
@@ -99,8 +104,5 @@ private:
     QDir m_assetsDir = QDir::currentPath() + QDir::separator() + "assets";
     QFont m_sideFont;
     QString m_verseHighlightTemplate;
-    void init();
-    void updateSurah();
-    void updatePageVerseInfoList();
 };
 #endif // MAINWINDOW_H

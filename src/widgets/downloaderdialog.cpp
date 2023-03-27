@@ -1,6 +1,13 @@
 #include "downloaderdialog.h"
 #include "ui_downloaderdialog.h"
 
+/*!
+ * \brief DownloaderDialog::DownloaderDialog class constructor
+ * \param parent pointer to parent widget
+ * \param settingsptr pointer to settings instance to access app settings
+ * \param downloader pointer to backend downloader object
+ * \param dbMan pointer to database management/interaction object
+ */
 DownloaderDialog::DownloaderDialog(QWidget *parent,
                                    QSettings *settingsptr,
                                    DownloadManager *downloader,
@@ -64,6 +71,9 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
             Qt::UniqueConnection);
 }
 
+/*!
+ * \brief DownloaderDialog::fillTreeView fill the treeView model with the reciters info
+ */
 void DownloaderDialog::fillTreeView()
 {
     bool en = m_appSettings->value("Language").toString() == "العربية" ? false : true;
@@ -86,11 +96,9 @@ void DownloaderDialog::fillTreeView()
     }
 }
 
-DownloaderDialog::~DownloaderDialog()
-{
-    delete ui;
-}
-
+/*!
+ * \brief DownloaderDialog::addToQueue adds selected surahs to the download queue
+ */
 void DownloaderDialog::addToQueue()
 {
     QModelIndexList selected = ui->treeView->selectionModel()->selectedRows();
@@ -111,6 +119,11 @@ void DownloaderDialog::addToQueue()
     m_downloaderPtr->processQueueHead();
 }
 
+/*!
+ * \brief DownloaderDialog::addTaskProgress adds a download progress bar to the downloader dialog to indicate download state
+ * \param reciterIdx index for the chosen reciter as in the treeView & in the Reciters list
+ * \param surah integer value represents the surah number to download (1-114)
+ */
 void DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
 {
     QString reciter = m_downloaderPtr->recitersList().at(reciterIdx).displayName;
@@ -138,6 +151,9 @@ void DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
     ui->lytFrameView->addWidget(prgFrm);
 }
 
+/*!
+ * \brief DownloaderDialog::setCurrentBar sets the currently active download task progress bar in order to update displayed info
+ */
 void DownloaderDialog::setCurrentBar()
 {
     if (m_frameLst.empty())
@@ -157,6 +173,9 @@ void DownloaderDialog::setCurrentBar()
             Qt::UniqueConnection);
 }
 
+/*!
+ * \brief DownloaderDialog::surahDownloaded slot to delete the finished progress bar on download completion
+ */
 void DownloaderDialog::surahDownloaded()
 {
     delete m_frameLst.at(0);
@@ -164,12 +183,18 @@ void DownloaderDialog::surahDownloaded()
     setCurrentBar();
 }
 
+/*!
+ * \brief DownloaderDialog::downloadAborted slot to delete all download tasks / progress bars from dialog
+ */
 void DownloaderDialog::downloadAborted()
 {
     qDeleteAll(m_frameLst);
     m_frameLst.clear();
 }
 
+/*!
+ * \brief DownloaderDialog::topTaskDownloadError slot to update the current task in case of download error
+ */
 void DownloaderDialog::topTaskDownloadError()
 {
     m_currentBar->setStyleSheet("QProgressBar {text-align: center;} QProgressBar::chunk "
@@ -181,4 +206,9 @@ void DownloaderDialog::topTaskDownloadError()
 void DownloaderDialog::closeEvent(QCloseEvent *event)
 {
     this->hide();
+}
+
+DownloaderDialog::~DownloaderDialog()
+{
+    delete ui;
 }

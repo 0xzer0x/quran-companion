@@ -21,6 +21,7 @@ public:
     explicit DownloadManager(QObject *parent = nullptr,
                              DBManager *dbptr = nullptr,
                              QList<Reciter> reciters = QList<Reciter>());
+
     struct DownloadTask
     {
         int surah;
@@ -32,13 +33,8 @@ public:
     };
 
     bool isDownloading() const;
-
     DownloadTask currentTask() const;
-
-    QList<QString> reciterDirNames() const;
-
     QNetworkAccessManager *netMan() const;
-
     QList<Reciter> recitersList() const;
 
 public slots:

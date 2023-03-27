@@ -1,6 +1,11 @@
 #include "searchdialog.h"
 #include "ui_searchdialog.h"
 
+/*!
+ * \brief SearchDialog::SearchDialog class constructor
+ * \param parent pointer to parent widget
+ * \param dbPtr pointer to database management interface
+ */
 SearchDialog::SearchDialog(QWidget *parent, DBManager *dbPtr)
     : QDialog(parent)
     , ui(new Ui::SearchDialog)
@@ -19,11 +24,9 @@ SearchDialog::SearchDialog(QWidget *parent, DBManager *dbPtr)
     connect(ui->btnBwdRes, &QPushButton::clicked, this, &SearchDialog::moveBwd);
 }
 
-SearchDialog::~SearchDialog()
-{
-    delete ui;
-}
-
+/*!
+ * \brief SearchDialog::getResults slot to get search results and update UI accordingly
+ */
 void SearchDialog::getResults()
 {
     if (m_searchText == ui->ledSearchBar->text().trimmed())
@@ -49,6 +52,9 @@ void SearchDialog::getResults()
     showResults();
 }
 
+/*!
+ * \brief SearchDialog::verseClicked slot to emit signal for mainwindow to navigate to the clicked verse
+ */
 void SearchDialog::verseClicked()
 {
     QStringList data = sender()->objectName().split('-');
@@ -57,6 +63,9 @@ void SearchDialog::verseClicked()
     emit navigateToVerse(selected);
 }
 
+/*!
+ * \brief SearchDialog::showResults slot to display 50 search results according to the startIdx
+ */
 void SearchDialog::showResults()
 {
     int endIdx = m_currResults.size() > m_startResult + 50 ? m_startResult + 50
@@ -72,10 +81,10 @@ void SearchDialog::showResults()
                        + QString::number(v.number);
         lbInfo->setText(info);
         lbInfo->setAlignment(Qt::AlignLeft);
+
         clkLb->setMargin(5);
         clkLb->setObjectName(QString::number(v.page) + '-' + QString::number(v.surah) + '-'
                              + QString::number(v.number));
-
         clkLb->setFont(QFont(fontName, 15));
         clkLb->setText(m_dbPtr->getVerseGlyphs(v.surah, v.number));
         clkLb->setAlignment(Qt::AlignLeft);
@@ -91,9 +100,12 @@ void SearchDialog::showResults()
     }
 }
 
+/*!
+ * \brief SearchDialog::moveFwd slot for displaying the next 50 results from the search results
+ */
 void SearchDialog::moveFwd()
 {
-    if (!m_currResults.empty() && m_startResult < m_currResults.size()) {
+    if (!m_currResults.empty() && m_startResult + 50 < m_currResults.size()) {
         if (!m_lbLst.empty()) {
             qDeleteAll(m_lbLst);
             m_lbLst.clear();
@@ -104,6 +116,9 @@ void SearchDialog::moveFwd()
     }
 }
 
+/*!
+ * \brief SearchDialog::moveBwd slot for displaying the previous 50 results from the search results
+ */
 void SearchDialog::moveBwd()
 {
     if (!m_currResults.empty() && m_startResult > 0) {
@@ -127,4 +142,9 @@ void SearchDialog::closeEvent(QCloseEvent *event)
     }
 
     this->hide();
+}
+
+SearchDialog::~SearchDialog()
+{
+    delete ui;
 }

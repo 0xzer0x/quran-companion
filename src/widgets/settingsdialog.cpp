@@ -1,6 +1,12 @@
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
+/*!
+ * \brief SettingsDialog::SettingsDialog class constructor
+ * \param parent pointer to parent widget
+ * \param settingsPtr pointer to application settings
+ * \param vPlayerPtr pointer to The VersePlayer object
+ */
 SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePlayer *vPlayerPtr)
     : QDialog(parent)
     , ui(new Ui::SettingsDialog)
@@ -31,6 +37,10 @@ SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePla
     connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingsDialog::btnBoxAction);
 }
 
+/*!
+ * \brief SettingsDialog::updateTheme slot to update the theme in the settings file & ask user to restart
+ * \param themeIdx
+ */
 void SettingsDialog::updateTheme(int themeIdx)
 {
     m_settingsPtr->setValue("Theme", themeIdx);
@@ -40,11 +50,14 @@ void SettingsDialog::updateTheme(int themeIdx)
                                 tr("Application theme was changed, restart now?"));
 
     if (btn == QMessageBox::Yes) {
-        emit QApplication::exit();
-        QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+        emit restartApp();
     }
 }
 
+/*!
+ * \brief SettingsDialog::updateLang slot to update the app language in the settings file & ask user to restart
+ * \param langName
+ */
 void SettingsDialog::updateLang(QString langName)
 {
     m_settingsPtr->setValue("Language", langName);
@@ -55,11 +68,14 @@ void SettingsDialog::updateLang(QString langName)
                                 tr("Application language was changed, restart now?"));
 
     if (btn == QMessageBox::Yes) {
-        emit QApplication::exit();
-        QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+        emit restartApp();
     }
 }
 
+/*!
+ * \brief SettingsDialog::updateSideContent slot to update the side content type in the settings file
+ * \param idx
+ */
 void SettingsDialog::updateSideContent(int idx)
 {
     m_settingsPtr->setValue("Reader/SideContent", idx);
@@ -68,6 +84,10 @@ void SettingsDialog::updateSideContent(int idx)
     m_renderSideContent = true;
 }
 
+/*!
+ * \brief SettingsDialog::updateTafsir slot to update the tafsir chosen in the settings file
+ * \param idx
+ */
 void SettingsDialog::updateTafsir(int idx)
 {
     m_settingsPtr->setValue("Reader/Tafsir", idx);
@@ -77,6 +97,10 @@ void SettingsDialog::updateTafsir(int idx)
         m_renderSideContent = true;
 }
 
+/*!
+ * \brief SettingsDialog::updateTranslation slot to update the translation chosen in the settings file
+ * \param idx
+ */
 void SettingsDialog::updateTranslation(int idx)
 {
     m_settingsPtr->setValue("Reader/Translation", idx);
@@ -86,6 +110,10 @@ void SettingsDialog::updateTranslation(int idx)
         m_renderSideContent = true;
 }
 
+/*!
+ * \brief SettingsDialog::updateQuranFontSize slot to update Quran page font size in the settings file
+ * \param size
+ */
 void SettingsDialog::updateQuranFontSize(QString size)
 {
     m_settingsPtr->setValue("Reader/QuranFontSize", size);
@@ -93,6 +121,10 @@ void SettingsDialog::updateQuranFontSize(QString size)
     m_renderQuranPage = true;
 }
 
+/*!
+ * \brief SettingsDialog::updateSideFont slot to update the side font in the settings file
+ * \param fnt
+ */
 void SettingsDialog::updateSideFont(QFont fnt)
 {
     fnt.setPointSize(m_sideFont.pointSize());
@@ -103,6 +135,10 @@ void SettingsDialog::updateSideFont(QFont fnt)
     m_renderSideContent = true;
 }
 
+/*!
+ * \brief SettingsDialog::updateSideFontSize slot to update the side font size in the settings file
+ * \param size
+ */
 void SettingsDialog::updateSideFontSize(QString size)
 {
     m_sideFont.setPointSize(size.toInt());
@@ -111,11 +147,18 @@ void SettingsDialog::updateSideFontSize(QString size)
     m_renderSideContent = true;
 }
 
+/*!
+ * \brief SettingsDialog::updateCpyVerseChk slot to update the copy verse flag in the settings file
+ * \param state
+ */
 void SettingsDialog::updateCpyVerseChk(bool state)
 {
     m_settingsPtr->setValue("Reader/CopyVerseOnClick", state);
 }
 
+/*!
+ * \brief SettingsDialog::applyAllChanges slot to check whether any value of the settings in the dialog changed and apply it
+ */
 void SettingsDialog::applyAllChanges()
 {
     if (ui->cmbTheme->currentIndex() != m_themeIdx) {
@@ -171,6 +214,9 @@ void SettingsDialog::applyAllChanges()
     setCurrentSettingsAsRef();
 }
 
+/*!
+ * \brief SettingsDialog::setCurrentSettingsAsRef slot to update the settings displayed to match the values in the settings file
+ */
 void SettingsDialog::setCurrentSettingsAsRef()
 {
     m_themeIdx = m_settingsPtr->value("Theme").toInt();
@@ -200,6 +246,10 @@ void SettingsDialog::setCurrentSettingsAsRef()
     ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
 }
 
+/*!
+ * \brief SettingsDialog::btnBoxAction slot takes action according to the button clicked in the dialog
+ * \param btn
+ */
 void SettingsDialog::btnBoxAction(QAbstractButton *btn)
 {
     if (btn->text().contains(tr("Apply"))) {

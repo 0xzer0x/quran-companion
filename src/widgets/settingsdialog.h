@@ -15,6 +15,11 @@ namespace Ui {
 class SettingsDialog;
 }
 
+/*!
+ * \class SettingsDialog
+ * 
+ * \brief The SettingsDialog class represents a UI for manipulating application settings
+ */
 class SettingsDialog : public QDialog
 {
     Q_OBJECT
@@ -24,17 +29,6 @@ public:
                             QSettings *settingsPtr = nullptr,
                             VersePlayer *vPlayerPtr = nullptr);
     ~SettingsDialog();
-
-signals:
-    void quranFontChanged();
-    void highlightColorChanged();
-    void redrawSideContent();
-    void redrawQuranPage();
-    void sideContentTypeChanged();
-    void tafsirChanged();
-    void translationChanged();
-    void sideFontChanged();
-    void usedAudioDeviceChanged(QAudioDevice dev);
 
 public slots:
     void btnBoxAction(QAbstractButton *btn);
@@ -48,6 +42,18 @@ public slots:
     void updateSideFontSize(QString size);
     void updateCpyVerseChk(bool state);
     void applyAllChanges();
+
+signals:
+    void quranFontChanged();
+    void highlightColorChanged();
+    void redrawSideContent();
+    void redrawQuranPage();
+    void sideContentTypeChanged();
+    void tafsirChanged();
+    void translationChanged();
+    void sideFontChanged();
+    void usedAudioDeviceChanged(QAudioDevice dev);
+    void restartApp();
 
 private:
     Ui::SettingsDialog *ui;
