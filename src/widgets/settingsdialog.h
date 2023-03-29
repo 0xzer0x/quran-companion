@@ -5,10 +5,12 @@
 #include <QAudioDevice>
 #include <QColorDialog>
 #include <QDialog>
+#include <QIntValidator>
 #include <QMediaDevices>
 #include <QMessageBox>
 #include <QProcess>
 #include <QSettings>
+#include <QValidator>
 #include "../utils/verseplayer.h"
 
 namespace Ui {

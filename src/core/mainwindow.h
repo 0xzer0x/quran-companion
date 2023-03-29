@@ -3,6 +3,7 @@
 
 #include <QBoxLayout>
 #include <QClipboard>
+#include <QIntValidator>
 #include <QMainWindow>
 #include <QScrollBar>
 #include <QSettings>
@@ -86,6 +87,7 @@ private:
     bool m_internalVerseChange = false;
     bool m_darkMode = false;
     Ui::MainWindow *ui;
+    QIntValidator *verseValidator = nullptr;
     Verse m_currVerse{1, 1, 1};
     SearchDialog *m_srchDlg = nullptr;
     SettingsDialog *m_settingsDlg = nullptr;

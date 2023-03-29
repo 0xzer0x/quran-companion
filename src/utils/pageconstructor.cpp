@@ -150,7 +150,7 @@ void PageConstructor::constructDoc(int pageNum, bool darkMode)
             tc.insertText(QString(l));
         }
     }
-    m_pFmt.setFont(QFont("Amiri", 18));
+    m_pFmt.setFont(QFont("Amiri", m_fontSize - 4));
     tc.insertBlock(m_pTbf, m_pFmt);
     tc.insertText(getEasternNum(QString::number(pageNum)));
 }

@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
 
     m_settingsPtr = settingsPtr;
     init();
@@ -171,11 +172,17 @@ void MainWindow::updateVerseDropDown()
     m_internalVerseChange = true;
 
     m_player->updateSurahVerseCount();
+
+    if (verseValidator != nullptr)
+        delete verseValidator;
+
+    verseValidator = new QIntValidator(1, m_player->surahCount(), ui->cmbVerse);
     // updates values in the combobox with the current surah verses
     ui->cmbVerse->clear();
     for (int i = 1; i <= m_player->surahCount(); i++)
         ui->cmbVerse->addItem(QString::number(i), i);
 
+    ui->cmbVerse->setValidator(verseValidator);
     ui->cmbVerse->setCurrentIndex(m_currVerse.number - 1);
 
     m_internalVerseChange = false;
@@ -473,7 +480,7 @@ void MainWindow::verseClicked()
   }
 
   m_internalVerseChange = true;
-  cmbVerseChanged(vNum - 1);
+  ui->cmbVerse->setCurrentIndex(vNum - 1);
   m_internalVerseChange = false;
 
   if (m_settingsPtr->value("Reader/CopyVerseOnClick").toBool()) {

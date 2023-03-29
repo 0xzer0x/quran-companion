@@ -12,8 +12,10 @@ SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePla
     , ui(new Ui::SettingsDialog)
 {
     ui->setupUi(this);
-
+    ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 100));
+    ui->cmbSideFontSz->setValidator(new QIntValidator(10, 100));
     setWindowIcon(QIcon(":/assets/images/prefs.png"));
+
     m_settingsPtr = settingsPtr;
     m_vPlayerPtr = vPlayerPtr;
 
