@@ -1,3 +1,5 @@
 CMakeLists.txt.user
 *.ts
 audio/husary_qasr_64kbps/*.mp3
+dist/windows/build
+dist/windows/bundle

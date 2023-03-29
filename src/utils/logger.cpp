@@ -12,10 +12,7 @@ Logger::Logger(QObject *parent)
 
 bool Logger::startLogger()
 {
-    if (logFile.exists())
-        logFile.remove();
-
-    return logFile.open(QIODevice::Append);
+    return logFile.open(QIODevice::WriteOnly);
 }
 
 void Logger::stopLogger()

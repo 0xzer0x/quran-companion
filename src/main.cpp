@@ -60,12 +60,16 @@ int main(int argc, char *argv[])
 
     // uncomment to switch to Arabic
 
-    QTranslator trs;
+    QTranslator trs, qtTranslation;
 
     if (appSettings.value("Language").toString() != "English") {
-        if (trs.load(":/i18n/src/translations/arabic.qm")) {
+        if (trs.load(":/i18n/quran_companion_ar.qm")) {
             qInfo() << "Tr" << trs.language() << "loaded";
+            qInfo() << qtTranslation.load(":/i18n/qt_ar");
+
             a.installTranslator(&trs);
+            a.installTranslator(&qtTranslation);
+
             qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
         } else {
             qWarning() << "AR Translation not loaded!";

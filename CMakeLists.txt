@@ -53,17 +53,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET quran-companion APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+
 else()
     if(ANDROID)
         add_library(quran-companion SHARED
             ${PROJECT_SOURCES}
         )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
+
     else()
         add_executable(quran-companion
             ${PROJECT_SOURCES}
@@ -81,6 +77,8 @@ set_target_properties(quran-companion PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
+qt_add_translations(quran-companion TS_FILES ./src/translations/qt_ar.ts ./src/translations/quran_companion_ar.ts)
 
 
 install(TARGETS quran-companion
