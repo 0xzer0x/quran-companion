@@ -9,7 +9,7 @@ XCOPY ".\build\assets" ".\bundle\assets\" /E
 XCOPY ".\build\audio" ".\bundle\audio\" /E
 CD ./bundle
 
-windeployqt.exe .\quran-companion.exe
+windeployqt.exe --translations ar .\quran-companion.exe
 
 CD ..
 "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" quran-companion-setup.iss

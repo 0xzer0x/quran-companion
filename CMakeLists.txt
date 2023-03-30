@@ -14,6 +14,8 @@ include_directories("./include/")
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 
+set(QT_TR_DIR "C:/Qt/6.4.3/mingw_64/translations")
+
 set(PROJECT_SOURCES
         src/main.cpp
         src/core/mainwindow.cpp
@@ -78,7 +80,7 @@ set_target_properties(quran-companion PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-qt_add_translations(quran-companion TS_FILES ./src/translations/qt_ar.ts ./src/translations/quran_companion_ar.ts)
+qt_add_translations(quran-companion TS_FILES ./src/translations/quran_companion_ar.ts)
 
 
 install(TARGETS quran-companion
@@ -87,6 +89,9 @@ install(TARGETS quran-companion
 
 file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ./audio/bismillah DESTINATION ${PROJECT_BINARY_DIR}/audio)
+
+file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/translations)
+file(COPY_FILE ${QT_TR_DIR}/qtbase_ar.qm ${PROJECT_BINARY_DIR}/translations/qt_ar.qm)
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(quran-companion)

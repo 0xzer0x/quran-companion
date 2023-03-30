@@ -139,6 +139,7 @@ void SearchDialog::closeEvent(QCloseEvent *event)
         qDeleteAll(m_lbLst);
         m_lbLst.clear();
         ui->lbResultCount->setText("");
+        ui->ledSearchBar->clear();
         m_currResults.clear();
     }
 

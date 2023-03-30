@@ -15,16 +15,16 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLineEdit" name="ledSearchBar"/>
-     </item>
+    <layout class="QHBoxLayout" name="hboxSearchBar">
      <item>
       <widget class="QPushButton" name="btnSrch">
        <property name="text">
         <string>Find</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="ledSearchBar"/>
      </item>
     </layout>
    </item>
@@ -60,7 +60,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="buttonHBox">
      <item>
       <widget class="QPushButton" name="btnFwdRes">
        <property name="text">

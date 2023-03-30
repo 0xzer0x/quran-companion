@@ -44,7 +44,6 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(fontsDir.filePath("QCF_BSML.ttf"));
     QFontDatabase::addApplicationFont(fontsDir.filePath("Amiri.ttf"));
     QFontDatabase::addApplicationFont(fontsDir.filePath("droid-sans-org.ttf"));
-
     for (int i = 1; i < 605; i++) {
         QString font = "QCF_P";
         if (i < 10)
@@ -58,14 +57,15 @@ int main(int argc, char *argv[])
         QFontDatabase::addApplicationFont(fontsDir.filePath(font));
     }
 
-    // uncomment to switch to Arabic
-
+    // add translation
     QTranslator trs, qtTranslation;
+    QString baseQtTr = QApplication::applicationDirPath() + QDir::separator() + "translations"
+                       + QDir::separator();
 
     if (appSettings.value("Language").toString() != "English") {
         if (trs.load(":/i18n/quran_companion_ar.qm")) {
             qInfo() << "Tr" << trs.language() << "loaded";
-            qInfo() << qtTranslation.load(":/i18n/qt_ar");
+            qInfo() << qtTranslation.load(baseQtTr + "qt_ar");
 
             a.installTranslator(&trs);
             a.installTranslator(&qtTranslation);
