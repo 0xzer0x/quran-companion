@@ -9,11 +9,11 @@
 MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_settingsPtr{settingsPtr}
 {
     ui->setupUi(this);
     ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
 
-    m_settingsPtr = settingsPtr;
     init();
 
     if (m_settingsPtr->value("WindowState").isNull())
@@ -52,9 +52,14 @@ void MainWindow::init()
     m_settingsPtr->endGroup();
 
     // initalization
-    m_dbManPtr = new DBManager(this);
+    m_dbManPtr = new DBManager(this, m_settingsPtr->value("Reader/QCF").toInt());
     m_player = new VersePlayer(this, m_dbManPtr, m_currVerse);
-    m_pageCon = new PageConstructor(this, m_dbManPtr, m_settingsPtr);
+    m_quranBrowser = new QuranPageBrowser(ui->frmPageContent,
+                                          m_settingsPtr->value("Reader/QCF").toInt(),
+                                          m_currVerse.page,
+                                          m_dbManPtr,
+                                          m_settingsPtr);
+    ui->frmPageContent->layout()->addWidget(m_quranBrowser);
 
     updateQuranFontSize();
     updateHighlightColor();
@@ -71,7 +76,7 @@ void MainWindow::init()
     ui->scrlVerseCont->setLayout(vbl);
     addSideContent();
 
-    m_highlighter = new QTextCursor(ui->tdQuranPage->document());
+    m_highlighter = new QTextCursor(m_quranBrowser->document());
 
     ui->menuView->addAction(ui->dockControls->toggleViewAction());
     ui->btnPlay->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
@@ -82,7 +87,7 @@ void MainWindow::init()
     QString st
         = "%1 { "
           "background-color:transparent;border-radius:6px;border-width:2px;border-style:solid; }";
-    ui->tdQuranPage->setStyleSheet(st.arg("QFrame#tdQuranPage"));
+    ui->frmPageContent->setStyleSheet(st.arg("QFrame#frmPageContent"));
     ui->scrlVerseByVerse->setStyleSheet(st.arg("QScrollArea#scrlVerseByVerse"));
 
     for (int i = 1; i < 605; i++) {
@@ -123,6 +128,7 @@ void MainWindow::setupConnections()
     connect(m_player, &VersePlayer::newSurah, this, &MainWindow::updateSurah);
     connect(m_player, &VersePlayer::newVerse, this, &MainWindow::activeVerseChanged);
     connect(m_player, &VersePlayer::missingVerseFile, this, &MainWindow::missingRecitationFileWarn);
+    connect(m_quranBrowser, &QTextBrowser::anchorClicked, this, &MainWindow::verseAnchorClicked);
 
     // audio slider
     connect(m_player, &QMediaPlayer::positionChanged, this, &MainWindow::mediaPosChanged);
@@ -344,7 +350,7 @@ void MainWindow::spaceKeyPressed()
 void MainWindow::btnPlayClicked()
 {
     // If now playing the last verse in the page, set the flag to flip the page
-    if (m_currVerse.number == m_vInfoList.last().value("ayah")
+    if (m_currVerse.number == m_vInfoList.last().number
         && m_currVerse.number != m_player->surahCount()) {
         m_endOfPage = true;
     }
@@ -366,8 +372,7 @@ void MainWindow::btnStopClicked()
   m_player->stop();
 
   // set the current verse to the verse at the top of the page
-  m_currVerse.surah = m_vInfoList.at(0).value("surah");
-  m_currVerse.number = m_vInfoList.at(0).value("ayah");
+  m_currVerse = m_vInfoList.at(0);
   // update the player surah & verse
   m_player->setVerse(m_currVerse);
   // open newly set verse recitation file
@@ -451,7 +456,7 @@ void MainWindow::activeVerseChanged()
   }
 
   // If now playing the last verse in the page, set the flag to flip the page
-  if (m_currVerse.number == m_vInfoList.last().value("ayah")
+  if (m_currVerse.number == m_vInfoList.last().number
       && m_currVerse.number != m_player->surahCount()) {
         m_endOfPage = true;
   }
@@ -466,30 +471,62 @@ void MainWindow::verseClicked()
 {
   // object = clickable label, parent = verse frame, verse frame name scheme = 'surah_verse'
   QStringList data = sender()->parent()->objectName().split('_');
-  int sNum = data.at(0).toInt();
-  int vNum = data.at(1).toInt();
+  int surah = data.at(0).toInt();
+  int verse = data.at(1).toInt();
 
-  if (m_currVerse.surah != sNum) {
-        m_currVerse.surah = sNum;
+  if (m_currVerse.surah != surah) {
+        m_currVerse.surah = surah;
         m_player->updateSurahVerseCount();
         updateVerseDropDown();
 
         m_internalSurahChange = true;
-        ui->cmbSurah->setCurrentIndex(sNum - 1);
+        ui->cmbSurah->setCurrentIndex(surah - 1);
         m_internalSurahChange = false;
   }
 
   m_internalVerseChange = true;
-  ui->cmbVerse->setCurrentIndex(vNum - 1);
+  ui->cmbVerse->setCurrentIndex(verse - 1);
   m_internalVerseChange = false;
 
   if (m_settingsPtr->value("Reader/CopyVerseOnClick").toBool()) {
         QClipboard *clip = QApplication::clipboard();
-        clip->setText(m_dbManPtr->getVerseText(sNum, vNum));
+        clip->setText(m_dbManPtr->getVerseText(surah, verse));
   }
 
   m_endOfPage = false;
-  m_currVerse.number = vNum;
+  m_currVerse.number = verse;
+  m_player->setVerse(m_currVerse);
+  m_player->setVerseFile(m_player->constructVerseFilename());
+  btnPlayClicked();
+}
+
+void MainWindow::verseAnchorClicked(const QUrl &hrefUrl)
+{
+  QString idx = hrefUrl.toString();
+  idx.remove('#');
+  Verse v = m_vInfoList.at(idx.toInt());
+
+  if (m_currVerse.surah != v.surah) {
+        m_currVerse.surah = v.surah;
+        m_player->updateSurahVerseCount();
+        updateVerseDropDown();
+
+        m_internalSurahChange = true;
+        ui->cmbSurah->setCurrentIndex(v.surah - 1);
+        m_internalSurahChange = false;
+  }
+
+  m_internalVerseChange = true;
+  ui->cmbVerse->setCurrentIndex(v.number - 1);
+  m_internalVerseChange = false;
+
+  if (m_settingsPtr->value("Reader/CopyVerseOnClick").toBool()) {
+        QClipboard *clip = QApplication::clipboard();
+        clip->setText(m_dbManPtr->getVerseText(v.surah, v.number));
+  }
+
+  m_endOfPage = false;
+  m_currVerse.number = v.number;
   m_player->setVerse(m_currVerse);
   m_player->setVerseFile(m_player->constructVerseFilename());
   btnPlayClicked();
@@ -500,28 +537,19 @@ void MainWindow::verseClicked()
  */
 void MainWindow::highlightCurrentVerse()
 {
-  QTextCharFormat tcf;
-  tcf.setForeground(m_pageCon->pFmt().foreground());
-
-  if (m_highlighter->hasSelection())
-        m_highlighter->mergeCharFormat(tcf); // de-highlight any previous highlights
-
-  tcf.setForeground(m_highlightColor);
-
-  QList<int> bounds = m_dbManPtr->getVerseBounds(m_currVerse.surah, m_currVerse.number);
-
-  m_highlighter->setPosition(bounds.at(0));
-  m_highlighter->setPosition(bounds.at(1), QTextCursor::KeepAnchor);
-  m_highlighter->mergeCharFormat(tcf);
-
-  qInfo() << "Selection start:" << m_highlighter->selectionStart()
-          << " Selection end:" << m_highlighter->selectionEnd();
+  int idx;
+  for (idx = 0; idx < m_vInfoList.size(); idx++) {
+        Verse v = m_vInfoList.at(idx);
+        if (v.number == m_currVerse.number && v.surah == m_currVerse.surah)
+            break;
+  }
+  m_quranBrowser->highlightVerse(idx);
 
   if (m_highlightedFrm != nullptr)
         m_highlightedFrm->setStyleSheet("");
 
   VerseFrame *verseFrame = ui->scrlVerseCont->findChild<VerseFrame *>(
-      QString("%0_%1").arg(m_currVerse.surah).arg(m_currVerse.number));
+      QString("%0_%1").arg(QString::number(m_currVerse.surah), QString::number(m_currVerse.number)));
 
   verseFrame->highlightFrame();
 
@@ -593,9 +621,7 @@ void MainWindow::actionDMTriggered()
  */
 void MainWindow::redrawQuranPage()
 {
-  ui->tdQuranPage->clear();
-  m_pageCon->constructDoc(m_currVerse.page, m_darkMode);
-  ui->tdQuranPage->setDocument(m_pageCon->pageTextD());
+  m_quranBrowser->constructPage(m_currVerse.page);
   updatePageVerseInfoList();
 }
 
@@ -644,7 +670,7 @@ void MainWindow::updateQuranFontSize()
 {
   QString quranFontSize = m_settingsPtr->value("Reader/QuranFontSize").toString();
 
-  m_pageCon->setFontSize(quranFontSize.toInt());
+  m_quranBrowser->setFontSize(quranFontSize.toInt());
 }
 
 /* ------------------------ Side content generation ------------------------ */
@@ -669,22 +695,21 @@ void MainWindow::addSideContent()
   VerseFrame *verseContFrame;
   QString prevLbContent, currLbContent;
   for (int i = m_vInfoList.size() - 1; i >= 0; i--) {
-        QMap<QString, int> vInfo = m_vInfoList.at(i);
+        Verse vInfo = m_vInfoList.at(i);
 
         verseContFrame = new VerseFrame(ui->scrlVerseCont);
         verselb = new ClickableLabel(verseContFrame);
         contentLb = new ClickableLabel(verseContFrame);
 
-        verseContFrame->setObjectName(
-            QString("%0_%1").arg(vInfo.value("surah")).arg(vInfo.value("ayah")));
+        verseContFrame->setObjectName(QString("%0_%1").arg(vInfo.surah).arg(vInfo.number));
 
-        verselb->setFont(QFont(m_pageCon->pageFont(), m_pageCon->fontSize() - 2));
-        verselb->setText(m_dbManPtr->getVerseGlyphs(vInfo.value("surah"), vInfo.value("ayah")));
+        verselb->setFont(QFont(m_quranBrowser->pageFont(), m_quranBrowser->fontSize() - 2));
+        verselb->setText(m_dbManPtr->getVerseGlyphs(vInfo.surah, vInfo.number));
         verselb->setAlignment(Qt::AlignCenter);
         verselb->setWordWrap(true);
 
         if (showTafsir) {
-            QString txt = m_dbManPtr->getTafsir(vInfo.value("surah"), vInfo.value("ayah"));
+            QString txt = m_dbManPtr->getTafsir(vInfo.surah, vInfo.number);
             if (showFullTafsir)
                 currLbContent = txt;
             else {
@@ -696,7 +721,7 @@ void MainWindow::addSideContent()
             }
 
         } else {
-            currLbContent = m_dbManPtr->getTranslation(vInfo.value("surah"), vInfo.value("ayah"));
+            currLbContent = m_dbManPtr->getTranslation(vInfo.surah, vInfo.number);
         }
 
         if (currLbContent == prevLbContent && (!showTafsir || showFullTafsir)) {
@@ -769,7 +794,7 @@ void MainWindow::showExpandedVerseTafsir()
 void MainWindow::openSearchDialog()
 {
   if (m_srchDlg == nullptr) {
-        m_srchDlg = new SearchDialog(this, m_dbManPtr);
+        m_srchDlg = new SearchDialog(this, m_settingsPtr->value("Reader/QCF").toInt(), m_dbManPtr);
         connect(m_srchDlg, &SearchDialog::navigateToVerse, this, &MainWindow::navigateToVerse);
   }
 

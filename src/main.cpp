@@ -9,6 +9,10 @@
 
 void setTheme(int themeIdx);
 
+void addFonts(int qcfVersion);
+
+void loadTranslation(QString lang);
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -31,57 +35,57 @@ int main(int argc, char *argv[])
         appSettings.setValue("Verse", 1);
 
         appSettings.setValue("QuranFontSize", 22);
+        appSettings.setValue("QCF", 1);
         appSettings.setValue("SideContentFont", QFont("Droid Sans Arabic", 14));
         appSettings.setValue("CopyVerseOnClick", true);
         appSettings.endGroup();
     }
 
     setTheme(appSettings.value("Theme").toInt());
-
-    // add required fonts
-    QDir fontsDir = QApplication::applicationDirPath() + QDir::separator() + "assets"
-                    + QDir::separator() + "fonts";
-    QFontDatabase::addApplicationFont(fontsDir.filePath("QCF_BSML.ttf"));
-    QFontDatabase::addApplicationFont(fontsDir.filePath("Amiri.ttf"));
-    QFontDatabase::addApplicationFont(fontsDir.filePath("droid-sans-org.ttf"));
-    for (int i = 1; i < 605; i++) {
-        QString font = "QCF_P";
-        if (i < 10)
-            font.append("00");
-        else if (i < 100)
-            font.append("0");
-
-        font.append(QString::number(i));
-        font.append(".ttf");
-
-        QFontDatabase::addApplicationFont(fontsDir.filePath(font));
-    }
-
-    // add translation
-    QTranslator trs, qtTranslation;
-    QString baseQtTr = QApplication::applicationDirPath() + QDir::separator() + "translations"
-                       + QDir::separator();
-
-    if (appSettings.value("Language").toString() != "English") {
-        if (trs.load(":/i18n/quran_companion_ar.qm")) {
-            qInfo() << "Tr" << trs.language() << "loaded";
-            qInfo() << qtTranslation.load(baseQtTr + "qt_ar");
-
-            a.installTranslator(&trs);
-            a.installTranslator(&qtTranslation);
-
-            qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
-        } else {
-            qWarning() << "AR Translation not loaded!";
-        }
-    }
+    addFonts(appSettings.value("Reader/QCF").toInt());
+    loadTranslation(appSettings.value("Language").toString());
 
     MainWindow w(nullptr, &appSettings);
     w.show();
 
     int ret = a.exec();
     Logger::stopLogger();
+
     return ret;
+}
+
+void addFonts(int qcfVersion)
+{
+    QDir fontsDir;
+    QString fontBase;
+    fontsDir = QApplication::applicationDirPath() + QDir::separator() + "assets" + QDir::separator()
+               + "fonts";
+
+    QFontDatabase::addApplicationFont(fontsDir.filePath("Amiri.ttf"));
+    QFontDatabase::addApplicationFont(fontsDir.filePath("droid-sans-org.ttf"));
+
+    switch (qcfVersion) {
+    case 1:
+        fontsDir.cd("QCFV1");
+        fontBase = "QCF_P";
+        QFontDatabase::addApplicationFont(fontsDir.filePath("QCF_BSML.ttf"));
+        break;
+
+    case 2:
+        fontsDir.cd("QCFV2");
+        fontBase = "QCF2";
+        QFontDatabase::addApplicationFont(fontsDir.filePath("QCF2BSML.ttf"));
+        break;
+    }
+
+    // add required fonts
+    for (int i = 1; i < 605; i++) {
+        QString fontName = fontBase;
+        fontName.append(QString::number(i).rightJustified(3, '0'));
+        fontName.append(".ttf");
+
+        QFontDatabase::addApplicationFont(fontsDir.filePath(fontName));
+    }
 }
 
 void setTheme(int themeIdx)
@@ -117,5 +121,27 @@ void setTheme(int themeIdx)
 
     default:
         break;
+    }
+}
+
+void loadTranslation(QString lang)
+{
+    // add translation
+    QTranslator trs, qtTranslation;
+    QDir baseQtTr = QApplication::applicationDirPath() + QDir::separator() + "translations"
+                    + QDir::separator();
+
+    if (lang == "العربية") {
+        if (trs.load(":/i18n/quran_companion_ar.qm")) {
+            qInfo() << "Tr" << trs.language() << "loaded";
+            qInfo() << "Qt tr status: " << qtTranslation.load(baseQtTr.filePath("qt_ar.qm"));
+
+            qApp->installTranslator(&trs);
+            qApp->installTranslator(&qtTranslation);
+
+            qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
+        } else {
+            qWarning() << "AR Translation not loaded!";
+        }
     }
 }

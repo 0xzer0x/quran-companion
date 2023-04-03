@@ -3,20 +3,11 @@
 DownloadManager::DownloadManager(QObject *parent, DBManager *dbptr, QList<Reciter> reciters)
     : QObject(parent)
     , m_recitersList{reciters}
+    , m_netMan{new QNetworkAccessManager(this)}
+    , m_dbPtr{dbptr}
 {
-    m_netMan = new QNetworkAccessManager(this);
-    m_dbPtr = dbptr;
-
     m_downloadPath.setPath(QApplication::applicationDirPath());
-    if (!m_downloadPath.exists("audio"))
-        m_downloadPath.mkdir("audio");
-
     m_downloadPath.cd("audio");
-    foreach (Reciter r, m_recitersList) {
-        if (!m_downloadPath.exists(r.baseDirName)) {
-            m_downloadPath.mkdir(r.baseDirName);
-        }
-    }
 
     connect(m_netMan,
             &QNetworkAccessManager::finished,

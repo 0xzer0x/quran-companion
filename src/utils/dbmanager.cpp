@@ -1,12 +1,15 @@
 #include "dbmanager.h"
 
-DBManager::DBManager(QObject *parent)
+DBManager::DBManager(QObject *parent, int qcfVersion)
     : QObject(parent)
+    , m_qcfVer{qcfVersion}
 {
     m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
+    m_glyphsDbPath.setFile(m_dbDir.filePath("glyphs.db"));
 
     // set database driver, set the path & open a connection with the db
     QSqlDatabase::addDatabase("QSQLITE", "QuranData");
+    QSqlDatabase::addDatabase("QSQLITE", "GlyphsData");
     QSqlDatabase::addDatabase("QSQLITE", "TafsirData");
     QSqlDatabase::addDatabase("QSQLITE", "TranslationData");
 
@@ -22,6 +25,10 @@ void DBManager::setOpenDatabase(Database db, QString filePath)
     switch (db) {
     case quran:
         m_openDBCon = QSqlDatabase::database("QuranData");
+        break;
+
+    case glyphs:
+        m_openDBCon = QSqlDatabase::database("GlyphsData");
         break;
 
     case tafsir:
@@ -203,9 +210,12 @@ QList<int> DBManager::getVerseBounds(const int surah, const int ayah)
 {
     QList<int> bounds;
 
+    setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    QString q = "SELECT start_pos,end_pos FROM coordinates WHERE surah=%0 AND ayah=%1";
-    m_queryOpenDB.prepare(q.arg(surah).arg(ayah));
+    QString q = "SELECT start_pos,end_pos FROM %0 WHERE surah=%1 AND ayah=%2";
+    m_queryOpenDB.prepare(q.arg("coordinates_v" + QString::number(m_qcfVer),
+                                QString::number(surah),
+                                QString::number(ayah)));
 
     if (!m_queryOpenDB.exec())
         qWarning() << "Couldn't execute DBManager::getVerseBounds query!";
@@ -214,6 +224,7 @@ QList<int> DBManager::getVerseBounds(const int surah, const int ayah)
     bounds.append(m_queryOpenDB.value(0).toInt());
     bounds.append(m_queryOpenDB.value(1).toInt());
 
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     return bounds;
 }
 
@@ -266,6 +277,25 @@ QList<int> DBManager::getPageMetadata(const int page)
     return data;
 }
 
+QStringList DBManager::getPageLines(const int page)
+{
+    setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
+    m_queryOpenDB = QSqlQuery(m_openDBCon);
+    QString query = "SELECT %0 FROM pages WHERE page_no=%1";
+    query = query.arg("qcf_v" + QString::number(m_qcfVer), QString::number(page));
+
+    m_queryOpenDB.prepare(query);
+    if (!m_queryOpenDB.exec())
+        qFatal("Couldn't execute getPageLines query!");
+
+    m_queryOpenDB.next();
+    QStringList lines = m_queryOpenDB.value(0).toString().trimmed().split('\n');
+
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+
+    return lines;
+}
+
 QList<QString> DBManager::getVersesInPage(const int page)
 {
     QList<QString> verseList;
@@ -285,9 +315,9 @@ QList<QString> DBManager::getVersesInPage(const int page)
     return verseList;
 }
 
-QList<QMap<QString, int>> DBManager::getVerseInfoList(int page)
+QList<DBManager::Verse> DBManager::getVerseInfoList(int page)
 {
-    QList<QMap<QString, int>> viList;
+    QList<Verse> viList;
     m_queryOpenDB = QSqlQuery(m_openDBCon);
     m_queryOpenDB.prepare("SELECT sura_no,aya_no,sura_name_ar FROM verses WHERE page=:p");
     m_queryOpenDB.bindValue(0, page);
@@ -297,11 +327,8 @@ QList<QMap<QString, int>> DBManager::getVerseInfoList(int page)
     }
 
     while (m_queryOpenDB.next()) {
-        QMap<QString, int> verseInfo;
-        verseInfo.insert("surah", m_queryOpenDB.value(0).toInt());
-        verseInfo.insert("ayah", m_queryOpenDB.value(1).toInt());
-        viList.append(verseInfo);
-        verseInfo.clear();
+        Verse v{page, m_queryOpenDB.value(0).toInt(), m_queryOpenDB.value(1).toInt()};
+        viList.append(v);
     }
 
     return viList;
@@ -328,29 +355,36 @@ QString DBManager::getSurahName(const int sIdx, bool en)
 
 QString DBManager::getSurahNameGlyph(const int sura)
 {
+    setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
     m_queryOpenDB = QSqlQuery(m_openDBCon);
 
-    m_queryOpenDB.prepare("SELECT glyph FROM surah_symbols WHERE surah=:i");
+    m_queryOpenDB.prepare("SELECT qcf_v1 FROM surah_glyphs WHERE surah=:i");
     m_queryOpenDB.bindValue(0, sura);
     if (!m_queryOpenDB.exec()) {
         qCritical() << "Error occurred during getVerseInfo SQL statment exec";
     }
 
     m_queryOpenDB.next();
+
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+
     return m_queryOpenDB.value(0).toString();
 }
 
 QString DBManager::getJuzGlyph(const int juz)
 {
+    setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
     m_queryOpenDB = QSqlQuery(m_openDBCon);
 
-    m_queryOpenDB.prepare("SELECT juzz_glyph FROM juzz_symbols WHERE juzz=:j");
+    m_queryOpenDB.prepare("SELECT qcf_v1 FROM juzz_glyphs WHERE juzz=:j");
     m_queryOpenDB.bindValue(0, juz);
     if (!m_queryOpenDB.exec()) {
-        qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+        qCritical() << "Error occurred during getJuzGlyph SQL statment exec";
     }
 
     m_queryOpenDB.next();
+
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
     return m_queryOpenDB.value(0).toString();
 }
@@ -402,7 +436,6 @@ QString DBManager::getVerseText(const int sIdx, const int vIdx)
 
 QList<DBManager::Verse> DBManager::searchVerses(QString searchText)
 {
-    // 0 -> surah idx with name matching search text / 1 -> verse with matching text
     QList<DBManager::Verse> results;
     m_queryOpenDB = QSqlQuery(m_openDBCon);
     QString q = "SELECT page,sura_no,aya_no FROM verses WHERE aya_text_emlaey like'%" + searchText
@@ -446,16 +479,21 @@ QList<int> DBManager::searchSurahs(QString searchText)
 
 QString DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
 {
+    setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
+
     m_queryOpenDB = QSqlQuery(m_openDBCon);
+    QString query = "SELECT %0 FROM ayah_glyphs WHERE surah=%1 AND ayah=%2";
+    query = query.arg("qcf_v" + QString::number(m_qcfVer),
+                      QString::number(sIdx),
+                      QString::number(vIdx));
 
-    m_queryOpenDB.prepare("SELECT code FROM ayah_glyphs WHERE surah=:su AND ayah=:v");
-    m_queryOpenDB.bindValue(0, sIdx);
-    m_queryOpenDB.bindValue(1, vIdx);
-
+    m_queryOpenDB.prepare(query);
     if (!m_queryOpenDB.exec())
         qFatal("Couldn't execute getVerseGlyphs query!");
 
     m_queryOpenDB.next();
+
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
     return m_queryOpenDB.value(0).toString();
 }

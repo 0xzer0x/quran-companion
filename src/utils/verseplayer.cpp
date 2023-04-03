@@ -12,14 +12,22 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse, int
     , m_output{new QAudioOutput()}
     , m_activeVerse{initVerse}
     , m_reciter{reciterIdx}
+    , m_dbPtr{dbPtr}
 {
-    m_reciterDir.setPath(QApplication::applicationDirPath());
-    m_reciterDir.cd("audio");
-
-    m_dbPtr = dbPtr;
     updateSurahVerseCount();
     setAudioOutput(m_output);
     fillRecitersList();
+
+    m_reciterDir.setPath(QApplication::applicationDirPath());
+    if (!m_reciterDir.exists("audio"))
+        m_reciterDir.mkdir("audio");
+
+    m_reciterDir.cd("audio");
+    foreach (Reciter r, m_recitersList) {
+        if (!m_reciterDir.exists(r.baseDirName)) {
+            m_reciterDir.mkdir(r.baseDirName);
+        }
+    }
 
     // Connectors
     connect(this,
@@ -36,6 +44,8 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse, int
 
 void VersePlayer::fillRecitersList()
 {
+    m_reciterDir.cd("audio");
+
     Reciter husary{"Al-Husary",
                    tr("Al-Husary"),
                    m_reciterDir.filePath("bismillah/husary.mp3"),
@@ -103,6 +113,8 @@ void VersePlayer::fillRecitersList()
     m_recitersList.append(tunaiji);
     m_recitersList.append(dussary);
     m_recitersList.append(banna);
+
+    m_reciterDir.cdUp();
 }
 
 void VersePlayer::setVerse(Verse &newVerse)

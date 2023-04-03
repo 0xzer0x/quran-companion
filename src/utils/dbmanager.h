@@ -18,7 +18,7 @@ class DBManager : public QObject
     Q_OBJECT
 
 public:
-    explicit DBManager(QObject *parent = nullptr);
+    explicit DBManager(QObject *parent = nullptr, int qcfVersion = 1);
 
     struct Verse
     {
@@ -35,7 +35,7 @@ public:
         QString baseUrl{};
     };
 
-    enum Database { quran, tafsir, translation };
+    enum Database { quran, glyphs, tafsir, translation };
     enum Tafsir {
         muyassar,
         baghawy,
@@ -88,11 +88,12 @@ public:
     int getSurahStartPage(int surahIdx);
     int getSurahVerseCount(const int surahIdx);
     QList<int> getPageMetadata(const int page);
+    QStringList getPageLines(const int page);
 
     int getVersePage(const int &surahIdx, const int &verse);
     QList<int> getVerseBounds(const int surah, const int ayah);
     QList<QString> getVersesInPage(const int page);
-    QList<QMap<QString, int>> getVerseInfoList(const int page);
+    QList<Verse> getVerseInfoList(const int page);
 
     QString getSurahName(const int sIdx, bool en = true);
     QString getSurahNameGlyph(const int sura);
@@ -105,6 +106,7 @@ public:
     QList<int> searchSurahs(QString searchText);
 
 private:
+    int m_qcfVer;
     QSqlDatabase m_openDBCon;
     QSqlQuery m_queryOpenDB;
     QDir m_dbDir = QDir::currentPath() + QDir::separator() + "assets";
@@ -115,6 +117,7 @@ private:
     QFileInfo m_tafsirDbPath;
     QFileInfo m_transDbPath;
     QFileInfo m_quranDbPath;
+    QFileInfo m_glyphsDbPath;
 };
 
 #endif // DBMANAGER_H

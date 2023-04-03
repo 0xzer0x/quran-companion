@@ -9,7 +9,6 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories("./include/")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
@@ -21,6 +20,8 @@ set(PROJECT_SOURCES
         src/core/mainwindow.cpp
         src/core/mainwindow.h
         src/core/mainwindow.ui
+        src/core/quranpagebrowser.h
+        src/core/quranpagebrowser.cpp
         src/widgets/searchdialog.h
         src/widgets/searchdialog.cpp
         src/widgets/searchdialog.ui

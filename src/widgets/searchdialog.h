@@ -23,7 +23,7 @@ class SearchDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SearchDialog(QWidget *parent = nullptr, DBManager *dbPtr = nullptr);
+    explicit SearchDialog(QWidget *parent = nullptr, int qcfVersion = 1, DBManager *dbPtr = nullptr);
     ~SearchDialog();
 
 public slots:
@@ -43,6 +43,8 @@ protected:
 private:
     Ui::SearchDialog *ui;
     int m_startResult = 0;
+    int m_qcfVer;
+    QString m_fontBase;
     DBManager *m_dbPtr;
     QList<VerseFrame *> m_lbLst;
     QString m_searchText;

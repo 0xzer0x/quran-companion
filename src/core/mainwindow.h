@@ -16,6 +16,7 @@
 #include "../widgets/searchdialog.h"
 #include "../widgets/settingsdialog.h"
 #include "../widgets/verseframe.h"
+#include "quranpagebrowser.h"
 
 typedef DBManager::Verse Verse;
 
@@ -69,6 +70,7 @@ private slots:
     void mediaStateChanged(QMediaPlayer::PlaybackState state);
     void mediaPosChanged(qint64 position);
     void verseClicked();
+    void verseAnchorClicked(const QUrl &hrefUrl);
     void redrawQuranPage();
     void updateSideContentType();
     void updateLoadedTafsir();
@@ -87,6 +89,7 @@ private:
     bool m_internalVerseChange = false;
     bool m_darkMode = false;
     Ui::MainWindow *ui;
+    QuranPageBrowser *m_quranBrowser;
     QIntValidator *verseValidator = nullptr;
     Verse m_currVerse{1, 1, 1};
     SearchDialog *m_srchDlg = nullptr;
@@ -98,7 +101,7 @@ private:
     DBManager *m_dbManPtr;
     VersePlayer *m_player;
     PageConstructor *m_pageCon;
-    QList<QMap<QString, int>> m_vInfoList;
+    QList<Verse> m_vInfoList;
     QList<QFrame *> m_verseFrameList;
     QTextCursor *m_highlighter;
     QBrush m_highlightColor;

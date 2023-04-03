@@ -8,13 +8,16 @@
  * \param parent the parent QObject
  * \param dbPtr a pointer to the database management interface to query the quran sqlite db
  */
-PageConstructor::PageConstructor(QObject *parent, DBManager *dbPtr, QSettings *appSettings)
+PageConstructor::PageConstructor(QObject *parent,
+                                 int qcfVersion,
+                                 DBManager *dbPtr,
+                                 QSettings *appSettings)
     : QObject(parent)
+    , m_qcfVer{qcfVersion}
+    , m_dataDB{dbPtr}
+    , m_pageTextD{new QTextDocument}
+    , m_settingsPtr{appSettings}
 {
-    // set the m_dataDB pointer to the DBManager object
-    m_dataDB = dbPtr;
-    m_pageTextD = new QTextDocument;
-    m_settingsPtr = appSettings;
     m_fontSize = m_settingsPtr->value("QuranFontSize", 22).toInt();
 
     m_easternNumsMap.insert("0", "٠");
@@ -41,12 +44,10 @@ void PageConstructor::constructDoc(int pageNum, bool darkMode)
     m_currentPage = pageNum;
 
     // set the correct font for the page e.g QCF_P009
-    m_pageFont = "QCF_P";
-    if (pageNum < 10)
-        m_pageFont.append("00");
-    else if (pageNum < 100)
-        m_pageFont.append("0");
-    m_pageFont.append(QString::number(pageNum));
+    QString bsmlFont = m_qcfVer == 1 ? "QCF_BSML" : "QCF2BSML";
+    m_pageFont = m_qcfVer == 1 ? "QCF_P" : "QCF2";
+    m_pageFont.append(QString::number(pageNum).rightJustified(3, '0'));
+    qInfo() << m_pageFont;
 
     int fontSize = pageNum < 3 ? m_fontSize + 5 : m_fontSize;
 
@@ -78,13 +79,8 @@ void PageConstructor::constructDoc(int pageNum, bool darkMode)
     jozzHeader.append("ﰸ");
     jozzHeader.append(m_dataDB->getJuzGlyph(headerData.at(1)));
 
-    // read qcf glyphs page
-    QFile pageText(m_pageInfoDir.filePath("page_" + QString::number(pageNum) + ".txt"));
-    if (!pageText.open(QIODevice::ReadOnly))
-        return;
-
     // create a qlist of page lines
-    QList<QByteArray> lines = pageText.readAll().trimmed().split('\n');
+    QStringList lines = m_dataDB->getPageLines(pageNum);
 
     m_pTbf.setAlignment(Qt::AlignCenter);
     m_pTbf.setNonBreakableLines(true);
@@ -94,13 +90,13 @@ void PageConstructor::constructDoc(int pageNum, bool darkMode)
     QTextCursor tc(m_pageTextD);
 
     if (pageNum > 2) {
-        m_pFmt.setFont(QFont("QCF_BSML", fontSize - 5));
+        m_pFmt.setFont(QFont(bsmlFont, fontSize - 5));
 
         tc.insertBlock(m_pTbf, m_pFmt);
         tc.insertText(suraHeader + jozzHeader);
     }
-
     m_pFmt.setFont(QFont(m_pageFont, fontSize));
+
     QFontMetrics fm(QFont(m_pageFont, fontSize));
     if (m_currentPage < 3) {
         m_pageTextD->setTextWidth(fm.size(Qt::TextSingleLine, lines.at(3)).width() + 5);
@@ -109,7 +105,9 @@ void PageConstructor::constructDoc(int pageNum, bool darkMode)
     } else {
         m_pageTextD->setTextWidth(fm.size(Qt::TextSingleLine, lines.last()).width() + 5);
     }
-    foreach (QByteArray l, lines) {
+
+    int counter = 0, prevAnchor = 24;
+    foreach (QString l, lines) {
         l = l.trimmed();
         // if 'frame' exists in the line, means a surah frame should be added on this line
         if (l.contains("frame")) {
@@ -124,7 +122,7 @@ void PageConstructor::constructDoc(int pageNum, bool darkMode)
             // draw on top of the image the surah name text
             QPainter p(&frm);
             p.setPen(QPen(Qt::black));
-            p.setFont(QFont("QCF_BSML", 77));
+            p.setFont(QFont(bsmlFont, 77));
             p.drawText(frm.rect(), Qt::AlignCenter, frmText);
 
             if (darkMode)
@@ -138,16 +136,31 @@ void PageConstructor::constructDoc(int pageNum, bool darkMode)
             if (newSurah && pageNum != 1 && pageNum != 187) {
                 // change font, insert basmalah text, revert font back to page font
                 newSurah = false;
-                m_pFmt.setFont(QFont("QCF_BSML", fontSize - 6));
+                m_pFmt.setFont(QFont(bsmlFont, fontSize - 6));
                 tc.insertBlock(m_pTbf, m_pFmt);
                 tc.insertText("321");
-
                 m_pFmt.setFont(QFont(m_pageFont, fontSize));
             }
 
-            // insert the page line
             tc.insertBlock(m_pTbf, m_pFmt);
-            tc.insertText(QString(l));
+            if (l.contains(':')) {
+                QTextCharFormat anchorFormat;
+                anchorFormat.setAnchor(true);
+                anchorFormat.setAnchorHref("#" + QString::number(counter));
+
+                QStringList lineParts = l.split(':');
+                tc.insertText(lineParts.at(0));
+                int pos = tc.position();
+                tc.setPosition(prevAnchor, QTextCursor::KeepAnchor);
+                tc.mergeCharFormat(anchorFormat);
+
+                counter++;
+                prevAnchor = pos;
+                tc.setPosition(pos);
+                tc.insertText(lineParts.at(1));
+            } else
+                // insert the page line
+                tc.insertText(l);
         }
     }
     m_pFmt.setFont(QFont("Amiri", m_fontSize - 4));

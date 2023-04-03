@@ -19,6 +19,7 @@ class PageConstructor : public QObject
 
 public:
     explicit PageConstructor(QObject *parent = nullptr,
+                             int qcfVersion = 1,
                              DBManager *dbPtr = nullptr,
                              QSettings *appSettings = nullptr);
 
@@ -33,12 +34,10 @@ public:
 
 private:
     int m_currentPage;
+    int m_qcfVer;
     QString m_pageFont;
     int m_fontSize;
-    QList<QString> m_surahsInPage;
     QMap<QString, QString> m_easternNumsMap;
-    QDir m_pageInfoDir = QDir::currentPath() + QDir::separator() + "assets" + QDir::separator()
-                         + "qcf_pages";
     QTextCharFormat m_pFmt;
     QTextBlockFormat m_pTbf;
     QTextDocument *m_pageTextD;
