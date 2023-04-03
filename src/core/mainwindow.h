@@ -9,7 +9,6 @@
 #include <QSettings>
 #include <QShortcut>
 #include "../utils/dbmanager.h"
-#include "../utils/pageconstructor.h"
 #include "../utils/verseplayer.h"
 #include "../widgets/clickablelabel.h"
 #include "../widgets/downloaderdialog.h"
@@ -100,7 +99,6 @@ private:
     SideContent m_sideContent;
     DBManager *m_dbManPtr;
     VersePlayer *m_player;
-    PageConstructor *m_pageCon;
     QList<Verse> m_vInfoList;
     QList<QFrame *> m_verseFrameList;
     QTextCursor *m_highlighter;

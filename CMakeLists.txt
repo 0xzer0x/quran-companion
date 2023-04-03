@@ -41,8 +41,6 @@ set(PROJECT_SOURCES
         src/utils/dbmanager.cpp
         src/utils/verseplayer.h
         src/utils/verseplayer.cpp
-        src/utils/pageconstructor.h
-        src/utils/pageconstructor.cpp
         src/utils/downloadmanager.h
         src/utils/downloadmanager.cpp
         src/utils/logger.h
