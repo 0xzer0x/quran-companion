@@ -27,23 +27,19 @@ QuranPageBrowser::QuranPageBrowser(
     constructPage(initPage);
 }
 
-void QuranPageBrowser::constructPage(int pageNo)
+QString QuranPageBrowser::getEasternNum(QString num)
 {
-    if (!m_pageVerseCoords.empty()) {
-        qDeleteAll(m_pageVerseCoords);
-        m_pageVerseCoords.clear();
+    QString easternNum;
+
+    for (int i = 0; i < num.size(); i++) {
+        easternNum.append(m_easternNumsMap.value(num[i]));
     }
+    return easternNum;
+}
 
-    this->document()->clear();
-    QTextCursor cur(this->document());
-
-    QString bsmlFont = m_qcfVer == 1 ? "QCF_BSML" : "QCF2BSML";
-    m_pageFont = m_qcfVer == 1 ? "QCF_P" : "QCF2";
-    m_pageFont.append(QString::number(pageNo).rightJustified(3, '0'));
-
-    int fontSize = pageNo < 3 ? m_fontSize + 5 : m_fontSize;
-
-    QList<int> headerData = m_dbPtr->getPageMetadata(pageNo);
+QString QuranPageBrowser::constructPageHeader(int page)
+{
+    QList<int> headerData = m_dbPtr->getPageMetadata(page);
 
     QString suraHeader, jozzHeader;
     suraHeader.append("ﮌ");
@@ -71,8 +67,27 @@ void QuranPageBrowser::constructPage(int pageNo)
     jozzHeader.append("ﰸ");
     jozzHeader.append(m_dbPtr->getJuzGlyph(headerData.at(1)));
 
-    // create a qlist of page lines
-    QStringList lines = m_dbPtr->getPageLines(pageNo);
+    return suraHeader + jozzHeader;
+}
+
+void QuranPageBrowser::constructPage(int pageNo)
+{
+    if (!m_pageVerseCoords.empty()) {
+        qDeleteAll(m_pageVerseCoords);
+        m_pageVerseCoords.clear();
+    }
+
+    this->document()->clear();
+    QTextCursor cur(this->document());
+
+    QString bsmlFont = m_qcfVer == 1 ? "QCF_BSML" : "QCF2BSML";
+    m_pageFont = m_qcfVer == 1 ? "QCF_P" : "QCF2";
+    m_pageFont.append(QString::number(pageNo).rightJustified(3, '0'));
+
+    int fontSize = pageNo < 3 ? m_fontSize + 5 : m_fontSize;
+
+    QString header = constructPageHeader(pageNo);
+    QStringList lines = m_dbPtr->getPageLines(pageNo); // create a qlist of page lines
 
     int counter = 0, prevAnchor = pageNo < 3 ? 3 : 24;
 
@@ -86,15 +101,15 @@ void QuranPageBrowser::constructPage(int pageNo)
     pageTextFormat.setFont(QFont(m_pageFont, fontSize));
     if (pageNo > 2) {
         cur.insertBlock(pageFormat, bsmlFormat);
-        cur.insertText(suraHeader + jozzHeader);
+        cur.insertText(header);
     }
 
     QFontMetrics fm(QFont(m_pageFont, fontSize));
     QString measureLine;
     if (pageNo < 3) {
         measureLine = lines.at(3);
-    } else if (pageNo == 602 || pageNo == 604) {
-        measureLine = lines.at(2);
+    } else if (pageNo >= 602) {
+        measureLine = lines.at(1);
     } else {
         measureLine = lines.last();
     }
@@ -139,6 +154,7 @@ void QuranPageBrowser::constructPage(int pageNo)
                 foreach (QChar glyph, l) {
                     if (glyph != ':') {
                         cur.insertText(glyph);
+
                     } else {
                         QTextCharFormat anchorFormat;
                         anchorFormat.setAnchor(true);
@@ -159,9 +175,8 @@ void QuranPageBrowser::constructPage(int pageNo)
                     }
                 }
 
-            } else {
+            } else
                 cur.insertText(l);
-            }
         }
     }
 
@@ -188,7 +203,6 @@ void QuranPageBrowser::highlightVerse(int verseIdxInPage)
     tcf.setForeground(m_highlightColor);
 
     const int *const bounds = m_pageVerseCoords.at(verseIdxInPage);
-    qInfo("%d %d", bounds[0], bounds[1]);
 
     m_highlighter->setPosition(bounds[0]);
     m_highlighter->setPosition(bounds[1], QTextCursor::KeepAnchor);
@@ -196,16 +210,6 @@ void QuranPageBrowser::highlightVerse(int verseIdxInPage)
 
     qInfo() << "Selection start:" << m_highlighter->selectionStart()
             << " Selection end:" << m_highlighter->selectionEnd();
-}
-
-QString QuranPageBrowser::getEasternNum(QString num)
-{
-    QString easternNum;
-
-    for (int i = 0; i < num.size(); i++) {
-        easternNum.append(m_easternNumsMap.value(num[i]));
-    }
-    return easternNum;
 }
 
 void QuranPageBrowser::setFontSize(int newFontSize)

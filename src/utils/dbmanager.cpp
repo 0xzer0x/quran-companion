@@ -228,27 +228,10 @@ QList<int> DBManager::getVerseBounds(const int surah, const int ayah)
     return bounds;
 }
 
-int DBManager::getSurahIdx(QString sName)
-{
-    // create the sql query string
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT sura_no FROM verses WHERE sura_name_ar=:name AND aya_no=1");
-    m_queryOpenDB.bindValue(":name", sName);
-
-    if (!m_queryOpenDB.exec()) {
-        qCritical() << "Error occurred during SQL statment exec";
-        return -1;
-    }
-
-    // return the integer idx of the first record in the result
-    m_queryOpenDB.next();
-    return m_queryOpenDB.value(0).toInt();
-}
-
 int DBManager::getSurahVerseCount(const int surahIdx)
 {
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT aya_no FROM verses WHERE sura_no=:idx ORDER BY aya_no DESC");
+    m_queryOpenDB.prepare("SELECT aya_no FROM verses_v1 WHERE sura_no=:idx ORDER BY aya_no DESC");
     m_queryOpenDB.bindValue(0, surahIdx);
 
     if (!m_queryOpenDB.exec()) {
@@ -264,7 +247,7 @@ QList<int> DBManager::getPageMetadata(const int page)
 {
     QList<int> data; // { surahIdx, jozz }
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT sura_no,jozz FROM verses WHERE page=:p ORDER BY id");
+    m_queryOpenDB.prepare("SELECT sura_no,jozz FROM verses_v1 WHERE page=:p ORDER BY id");
     m_queryOpenDB.bindValue(0, page);
 
     if (!m_queryOpenDB.exec())
@@ -300,8 +283,8 @@ QList<QString> DBManager::getVersesInPage(const int page)
 {
     QList<QString> verseList;
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT aya_text FROM verses WHERE page=:p ORDER BY id");
-    m_queryOpenDB.bindValue(0, page);
+    QString query = "SELECT aya_text FROM verses_v%0 WHERE page=%1 ORDER BY id";
+    m_queryOpenDB.prepare(query.arg(QString::number(m_qcfVer), QString::number(page)));
 
     if (!m_queryOpenDB.exec()) {
         qCritical() << "Error occurred during getVersesInPage SQL statment exec";
@@ -319,8 +302,8 @@ QList<DBManager::Verse> DBManager::getVerseInfoList(int page)
 {
     QList<Verse> viList;
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT sura_no,aya_no,sura_name_ar FROM verses WHERE page=:p");
-    m_queryOpenDB.bindValue(0, page);
+    QString query = "SELECT sura_no,aya_no FROM verses_v%0 WHERE page=%1 ORDER BY id";
+    m_queryOpenDB.prepare(query.arg(QString::number(m_qcfVer), QString::number(page)));
 
     if (!m_queryOpenDB.exec()) {
         qCritical() << "Error occurred during getVerseInfo SQL statment exec";
@@ -339,9 +322,9 @@ QString DBManager::getSurahName(const int sIdx, bool en)
     m_queryOpenDB = QSqlQuery(m_openDBCon);
 
     if (en) {
-        m_queryOpenDB.prepare("SELECT sura_name_en FROM verses WHERE sura_no=:i");
+        m_queryOpenDB.prepare("SELECT sura_name_en FROM verses_v1 WHERE sura_no=:i");
     } else {
-        m_queryOpenDB.prepare("SELECT sura_name_ar FROM verses WHERE sura_no=:i");
+        m_queryOpenDB.prepare("SELECT sura_name_ar FROM verses_v1 WHERE sura_no=:i");
     }
 
     m_queryOpenDB.bindValue(0, sIdx);
@@ -392,8 +375,7 @@ QString DBManager::getJuzGlyph(const int juz)
 int DBManager::getSurahStartPage(int surahIdx)
 {
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT page FROM verses WHERE sura_no=:sn AND aya_no=1");
-
+    m_queryOpenDB.prepare("SELECT page FROM verses_v1 WHERE sura_no=:sn AND aya_no=1");
     m_queryOpenDB.bindValue(0, surahIdx);
 
     if (!m_queryOpenDB.exec()) {
@@ -407,9 +389,9 @@ int DBManager::getSurahStartPage(int surahIdx)
 int DBManager::getVersePage(const int &surahIdx, const int &verse)
 {
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT page FROM verses WHERE sura_no=:s AND aya_no=:v");
-    m_queryOpenDB.bindValue(0, surahIdx);
-    m_queryOpenDB.bindValue(1, verse);
+    QString query = "SELECT page FROM verses_v%0 WHERE sura_no=%1 AND aya_no=%2";
+    m_queryOpenDB.prepare(
+        query.arg(QString::number(m_qcfVer), QString::number(surahIdx), QString::number(verse)));
 
     if (!m_queryOpenDB.exec()) {
         qCritical() << "Error occurred during getVerseInfo SQL statment exec";
@@ -422,7 +404,7 @@ int DBManager::getVersePage(const int &surahIdx, const int &verse)
 QString DBManager::getVerseText(const int sIdx, const int vIdx)
 {
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT aya_text FROM verses WHERE sura_no=:s AND aya_no=:v");
+    m_queryOpenDB.prepare("SELECT aya_text FROM verses_v1 WHERE sura_no=:s AND aya_no=:v");
     m_queryOpenDB.bindValue(0, sIdx);
     m_queryOpenDB.bindValue(1, vIdx);
 
@@ -438,8 +420,8 @@ QList<DBManager::Verse> DBManager::searchVerses(QString searchText)
 {
     QList<DBManager::Verse> results;
     m_queryOpenDB = QSqlQuery(m_openDBCon);
-    QString q = "SELECT page,sura_no,aya_no FROM verses WHERE aya_text_emlaey like'%" + searchText
-                + "%' ORDER BY id";
+    QString q = "SELECT page,sura_no,aya_no FROM verses_v" + QString::number(m_qcfVer)
+                + " WHERE aya_text_emlaey like'%" + searchText + "%' ORDER BY id";
 
     m_queryOpenDB.prepare(q);
     if (!m_queryOpenDB.exec()) {
@@ -462,7 +444,7 @@ QList<int> DBManager::searchSurahs(QString searchText)
     QList<int> results;
     m_queryOpenDB = QSqlQuery(m_openDBCon);
     m_queryOpenDB.prepare(
-        "SELECT sura_no FROM verses WHERE sura_name_ar like '%:searchText%' ORDER BY id");
+        "SELECT sura_no FROM verses_v1 WHERE sura_name_ar like '%:searchText%' ORDER BY id");
     m_queryOpenDB.bindValue(0, searchText);
     if (!m_queryOpenDB.exec()) {
         qCritical() << "Error occurred during searchVerses 1st SQL statment exec";

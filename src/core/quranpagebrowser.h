@@ -22,6 +22,7 @@ public:
     QString getEasternNum(QString num);
     void setFontSize(int newFontSize);
     void highlightVerse(int verseIdxInPage);
+    QString constructPageHeader(int page);
 
 private:
     bool m_darkMode;

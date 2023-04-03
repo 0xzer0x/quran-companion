@@ -84,7 +84,6 @@ public:
     void setCurrentTranslation(Translation translationName);
     void setOpenDatabase(Database db, QString filePath);
 
-    int getSurahIdx(QString sName);
     int getSurahStartPage(int surahIdx);
     int getSurahVerseCount(const int surahIdx);
     QList<int> getPageMetadata(const int page);

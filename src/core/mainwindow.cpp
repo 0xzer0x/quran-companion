@@ -474,8 +474,13 @@ void MainWindow::verseClicked()
   int surah = data.at(0).toInt();
   int verse = data.at(1).toInt();
 
+  m_currVerse.number = verse;
+  m_player->setVerse(m_currVerse);
+
   if (m_currVerse.surah != surah) {
         m_currVerse.surah = surah;
+
+        m_player->setVerse(m_currVerse);
         m_player->updateSurahVerseCount();
         updateVerseDropDown();
 
@@ -494,8 +499,6 @@ void MainWindow::verseClicked()
   }
 
   m_endOfPage = false;
-  m_currVerse.number = verse;
-  m_player->setVerse(m_currVerse);
   m_player->setVerseFile(m_player->constructVerseFilename());
   btnPlayClicked();
 }
@@ -506,8 +509,13 @@ void MainWindow::verseAnchorClicked(const QUrl &hrefUrl)
   idx.remove('#');
   Verse v = m_vInfoList.at(idx.toInt());
 
+  m_currVerse.number = v.number;
+  m_player->setVerse(m_currVerse);
+
   if (m_currVerse.surah != v.surah) {
         m_currVerse.surah = v.surah;
+
+        m_player->setVerse(m_currVerse);
         m_player->updateSurahVerseCount();
         updateVerseDropDown();
 
@@ -526,8 +534,6 @@ void MainWindow::verseAnchorClicked(const QUrl &hrefUrl)
   }
 
   m_endOfPage = false;
-  m_currVerse.number = v.number;
-  m_player->setVerse(m_currVerse);
   m_player->setVerseFile(m_player->constructVerseFilename());
   btnPlayClicked();
 }
