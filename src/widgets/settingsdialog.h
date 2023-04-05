@@ -39,6 +39,7 @@ public slots:
     void updateSideContent(int idx);
     void updateTafsir(int idx);
     void updateTranslation(int idx);
+    void updateQuranFont(int qcfV);
     void updateQuranFontSize(QString size);
     void updateSideFont(QFont fnt);
     void updateSideFontSize(QString size);
@@ -62,7 +63,7 @@ private:
     QSettings *m_settingsPtr;
     int m_themeIdx;
     QString m_lang;
-    QString m_highlightClr;
+    int m_qcfVer;
     QString m_quranFontSize;
     QList<QAudioDevice> m_audioDevices;
     VersePlayer *m_vPlayerPtr;

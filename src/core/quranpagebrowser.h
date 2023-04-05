@@ -28,7 +28,9 @@ private:
     bool m_darkMode;
     int m_qcfVer;
     int m_fontSize;
+    int m_pageWidth;
     QString m_pageFont;
+    QString m_bsmlFont;
     QTextCursor *m_highlighter;
     QBrush m_highlightColor;
     QList<int *> m_pageVerseCoords;

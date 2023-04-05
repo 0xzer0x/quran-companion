@@ -28,6 +28,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePla
     ui->cmbTheme->setCurrentIndex(m_themeIdx);
     ui->cmbLang->setCurrentText(m_lang);
 
+    ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
     ui->cmbQuranFontSz->setCurrentText(m_quranFontSize);
     ui->chkCopyVerseOnClick->setChecked(m_cpyVerseChk);
     ui->fntCmbSide->setCurrentFont(m_sideFont);
@@ -112,6 +113,20 @@ void SettingsDialog::updateTranslation(int idx)
         m_renderSideContent = true;
 }
 
+void SettingsDialog::updateQuranFont(int qcfV)
+{
+    m_settingsPtr->setValue("Reader/QCF", qcfV);
+
+    QMessageBox::StandardButton btn
+        = QMessageBox::question(this,
+                                tr("Restart required"),
+                                tr("Restart is required to load new quran font, restart now?"));
+
+    if (btn == QMessageBox::Yes) {
+        emit restartApp();
+    }
+}
+
 /*!
  * \brief SettingsDialog::updateQuranFontSize slot to update Quran page font size in the settings file
  * \param size
@@ -183,6 +198,10 @@ void SettingsDialog::applyAllChanges()
         updateTranslation(ui->cmbTranslation->currentIndex());
     }
 
+    if (ui->cmbQCF->currentIndex() + 1 != m_qcfVer) {
+        updateQuranFont(ui->cmbQCF->currentIndex() + 1);
+    }
+
     if (ui->cmbQuranFontSz->currentText() != m_quranFontSize) {
         updateQuranFontSize(ui->cmbQuranFontSz->currentText());
     }
@@ -226,13 +245,13 @@ void SettingsDialog::setCurrentSettingsAsRef()
 
     m_settingsPtr->beginGroup("Reader");
 
+    m_qcfVer = m_settingsPtr->value("QCF").toInt();
     m_quranFontSize = m_settingsPtr->value("QuranFontSize").toString();
     m_sideFont = qvariant_cast<QFont>(m_settingsPtr->value("SideContentFont"));
     m_sideContent = m_settingsPtr->value("SideContent").toInt();
     m_tafsir = m_settingsPtr->value("Tafsir").toInt();
     m_trans = m_settingsPtr->value("Translation").toInt();
     m_cpyVerseChk = m_settingsPtr->value("CopyVerseOnClick").toBool();
-    m_highlightClr = m_settingsPtr->value("HighlightColor").toString();
 
     m_settingsPtr->endGroup();
 

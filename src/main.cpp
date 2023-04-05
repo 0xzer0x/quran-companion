@@ -11,8 +11,6 @@ void setTheme(int themeIdx);
 
 void addFonts(int qcfVersion);
 
-void loadTranslation(QString lang);
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -43,7 +41,24 @@ int main(int argc, char *argv[])
 
     setTheme(appSettings.value("Theme").toInt());
     addFonts(appSettings.value("Reader/QCF").toInt());
-    loadTranslation(appSettings.value("Language").toString());
+    // add translation
+    QTranslator trs, qtTranslation;
+    QDir baseQtTr = QApplication::applicationDirPath() + QDir::separator() + "translations"
+                    + QDir::separator();
+
+    if (appSettings.value("Language").toString() == "العربية") {
+        if (trs.load(":/i18n/quran_companion_ar.qm")) {
+            qInfo() << "Tr" << trs.language() << "loaded";
+            qInfo() << "Qt tr status: " << qtTranslation.load(baseQtTr.filePath("qt_ar.qm"));
+
+            a.installTranslator(&trs);
+            a.installTranslator(&qtTranslation);
+
+            qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
+        } else {
+            qWarning() << "AR Translation not loaded!";
+        }
+    }
 
     MainWindow w(nullptr, &appSettings);
     w.show();
@@ -121,27 +136,5 @@ void setTheme(int themeIdx)
 
     default:
         break;
-    }
-}
-
-void loadTranslation(QString lang)
-{
-    // add translation
-    QTranslator trs, qtTranslation;
-    QDir baseQtTr = QApplication::applicationDirPath() + QDir::separator() + "translations"
-                    + QDir::separator();
-
-    if (lang == "العربية") {
-        if (trs.load(":/i18n/quran_companion_ar.qm")) {
-            qInfo() << "Tr" << trs.language() << "loaded";
-            qInfo() << "Qt tr status: " << qtTranslation.load(baseQtTr.filePath("qt_ar.qm"));
-
-            qApp->installTranslator(&trs);
-            qApp->installTranslator(&qtTranslation);
-
-            qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
-        } else {
-            qWarning() << "AR Translation not loaded!";
-        }
     }
 }

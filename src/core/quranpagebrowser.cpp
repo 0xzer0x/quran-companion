@@ -11,6 +11,7 @@ QuranPageBrowser::QuranPageBrowser(
     m_highlightColor = QBrush(QColor(0, 161, 185));
     m_fontSize = m_settingsPtr->value("Reader/QuranFontSize", 22).toInt();
     m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
+    m_bsmlFont = m_qcfVer == 1 ? "QCF_BSML" : "QCF2BSML";
     setStyleSheet("QTextBrowser{background-color: transparent;}");
 
     m_easternNumsMap.insert("0", "٠");
@@ -23,8 +24,6 @@ QuranPageBrowser::QuranPageBrowser(
     m_easternNumsMap.insert("7", "٧");
     m_easternNumsMap.insert("8", "٨");
     m_easternNumsMap.insert("9", "٩");
-
-    constructPage(initPage);
 }
 
 QString QuranPageBrowser::getEasternNum(QString num)
@@ -80,7 +79,6 @@ void QuranPageBrowser::constructPage(int pageNo)
     this->document()->clear();
     QTextCursor cur(this->document());
 
-    QString bsmlFont = m_qcfVer == 1 ? "QCF_BSML" : "QCF2BSML";
     m_pageFont = m_qcfVer == 1 ? "QCF_P" : "QCF2";
     m_pageFont.append(QString::number(pageNo).rightJustified(3, '0'));
 
@@ -97,7 +95,7 @@ void QuranPageBrowser::constructPage(int pageNo)
     pageFormat.setLayoutDirection(Qt::RightToLeft);
 
     QTextCharFormat bsmlFormat, pageTextFormat;
-    bsmlFormat.setFont(QFont(bsmlFont, fontSize - 6));
+    bsmlFormat.setFont(QFont(m_bsmlFont, fontSize - 6));
     pageTextFormat.setFont(QFont(m_pageFont, fontSize));
     if (pageNo > 2) {
         cur.insertBlock(pageFormat, bsmlFormat);
@@ -114,7 +112,7 @@ void QuranPageBrowser::constructPage(int pageNo)
         measureLine = lines.last();
     }
 
-    this->document()->setTextWidth(fm.size(Qt::TextSingleLine, measureLine.remove(':')).width() + 5);
+    m_pageWidth = fm.size(Qt::TextSingleLine, measureLine.remove(':')).width() + 5;
     bool newSurah = false;
     foreach (QString l, lines) {
         l = l.trimmed();
@@ -130,7 +128,7 @@ void QuranPageBrowser::constructPage(int pageNo)
             // draw on top of the image the surah name text
             QPainter p(&frm);
             p.setPen(QPen(Qt::black));
-            p.setFont(QFont(bsmlFont, 77));
+            p.setFont(QFont(m_bsmlFont, 77));
             p.drawText(frm.rect(), Qt::AlignCenter, frmText);
 
             if (m_darkMode)
@@ -138,8 +136,7 @@ void QuranPageBrowser::constructPage(int pageNo)
 
             // insert the surah image in the document
             cur.insertBlock(pageFormat, pageTextFormat);
-            cur.insertImage(
-                frm.scaledToWidth(this->document()->textWidth(), Qt::SmoothTransformation));
+            cur.insertImage(frm.scaledToWidth(m_pageWidth, Qt::SmoothTransformation));
 
             newSurah = true;
         } else {

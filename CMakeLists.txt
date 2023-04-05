@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 
-set(QT_TR_DIR "C:/Qt/6.4.3/mingw_64/translations")
+set(QT_TR_DIR "C:/Qt/6.5.0/mingw_64/translations")
 
 set(PROJECT_SOURCES
         src/main.cpp

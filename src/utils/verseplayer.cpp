@@ -9,12 +9,12 @@
  */
 VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse, int reciterIdx)
     : QMediaPlayer(parent)
-    , m_output{new QAudioOutput()}
     , m_activeVerse{initVerse}
     , m_reciter{reciterIdx}
     , m_dbPtr{dbPtr}
 {
     updateSurahVerseCount();
+    m_output = new QAudioOutput(this);
     setAudioOutput(m_output);
     fillRecitersList();
 

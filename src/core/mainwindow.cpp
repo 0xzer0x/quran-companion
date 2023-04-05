@@ -133,7 +133,7 @@ void MainWindow::setupConnections()
     // audio slider
     connect(m_player, &QMediaPlayer::positionChanged, this, &MainWindow::mediaPosChanged);
     connect(m_player, &QMediaPlayer::playbackStateChanged, this, &MainWindow::mediaStateChanged);
-    connect(ui->sldrAudioPlayer, &QSlider::valueChanged, m_player, &QMediaPlayer::setPosition);
+    connect(ui->sldrAudioPlayer, &QSlider::sliderMoved, m_player, &QMediaPlayer::setPosition);
 
     // player control
     connect(ui->btnPlay, &QPushButton::clicked, this, &MainWindow::btnPlayClicked);
@@ -418,7 +418,8 @@ void MainWindow::mediaPosChanged(qint64 position)
   if (ui->sldrAudioPlayer->maximum() != m_player->duration())
         ui->sldrAudioPlayer->setMaximum(m_player->duration());
 
-  ui->sldrAudioPlayer->setValue(position);
+  if (!ui->sldrAudioPlayer->isSliderDown())
+        ui->sldrAudioPlayer->setValue(position);
 }
 
 /*!
@@ -769,12 +770,12 @@ void MainWindow::saveReaderState()
   m_settingsPtr->setValue("Surah", m_currVerse.surah);
   m_settingsPtr->setValue("Verse", m_currVerse.number);
   m_settingsPtr->endGroup();
+
+  m_settingsPtr->sync();
 }
 
 void MainWindow::restartApp()
 {
-  saveReaderState();
-
   emit QApplication::exit();
   QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }
