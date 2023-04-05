@@ -13,7 +13,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia Network LinguistTools)
 
-set(QT_TR_DIR "C:/Qt/6.5.0/mingw_64/translations")
+if (WIN32)
+    set(QT_TR_DIR "C:/Qt/6.5.0/mingw_64/translations")
+else()
+    set(QT_TR_DIR "$ENV{HOME}/Qt/6.5.0/gcc_64/translations")
+endif()
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -95,5 +99,3 @@ file(COPY_FILE ${QT_TR_DIR}/qtbase_ar.qm ${PROJECT_BINARY_DIR}/translations/qt_a
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(quran-companion)
 endif()
-
-

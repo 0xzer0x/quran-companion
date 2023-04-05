@@ -776,6 +776,7 @@ void MainWindow::saveReaderState()
 
 void MainWindow::restartApp()
 {
+  saveReaderState();
   emit QApplication::exit();
   QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }
