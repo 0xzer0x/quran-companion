@@ -16,7 +16,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia Ne
 if (WIN32)
     set(QT_TR_DIR "C:/Qt/6.5.0/mingw_64/translations")
 else()
-    set(QT_TR_DIR "$ENV{HOME}/Qt/6.5.0/gcc_64/translations")
+    set(QT_TR_DIR "/usr/share/qt6/translations")
 endif()
 
 set(PROJECT_SOURCES

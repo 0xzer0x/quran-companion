@@ -53,7 +53,7 @@ void SettingsDialog::updateTheme(int themeIdx)
                                 tr("Application theme was changed, restart now?"));
 
     if (btn == QMessageBox::Yes) {
-        emit restartApp();
+        m_restartReq = true;
     }
 }
 
@@ -71,7 +71,7 @@ void SettingsDialog::updateLang(QString langName)
                                 tr("Application language was changed, restart now?"));
 
     if (btn == QMessageBox::Yes) {
-        emit restartApp();
+        m_restartReq = true;
     }
 }
 
@@ -123,7 +123,7 @@ void SettingsDialog::updateQuranFont(int qcfV)
                                 tr("Restart is required to load new quran font, restart now?"));
 
     if (btn == QMessageBox::Yes) {
-        emit restartApp();
+        m_restartReq = true;
     }
 }
 
@@ -221,6 +221,12 @@ void SettingsDialog::applyAllChanges()
     if (ui->cmbAudioDevices->currentIndex() != m_audioOutIdx) {
         m_audioOutIdx = ui->cmbAudioDevices->currentIndex();
         emit usedAudioDeviceChanged(m_audioDevices.at(m_audioOutIdx));
+    }
+
+    // restart after applying all changes if required
+    if (m_restartReq) {
+        emit restartApp();
+        return;
     }
 
     // redraw once if flag is set

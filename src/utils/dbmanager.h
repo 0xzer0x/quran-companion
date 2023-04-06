@@ -25,6 +25,10 @@ public:
         int page{1};
         int surah{1};
         int number{1};
+        bool operator==(const Verse &v2)
+        {
+            return (this->number == v2.number && this->surah == v2.surah);
+        }
     };
 
     struct Reciter

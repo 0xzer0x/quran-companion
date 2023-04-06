@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/assets">
         <file>images/app-icon.ico</file>
-        <file>images/download.png</file>
         <file>images/download-manager.png</file>
         <file>images/pause.png</file>
         <file>images/play.png</file>
@@ -9,5 +8,8 @@
         <file>images/stop.png</file>
         <file>images/sura_box.png</file>
         <file>images/search.png</file>
+        <file>images/exit.png</file>
+        <file>images/arrow-left.png</file>
+        <file>images/arrow-right.png</file>
     </qresource>
 </RCC>

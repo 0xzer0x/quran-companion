@@ -16,8 +16,6 @@ SearchDialog::SearchDialog(QWidget *parent, int qcfVersion, DBManager *dbPtr)
 
     ui->setupUi(this);
     setWindowIcon(QIcon(":/assets/images/search.png"));
-    ui->btnFwdRes->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowLeft));
-    ui->btnBwdRes->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));
     setWindowTitle(tr("Verse search"));
 
     connect(ui->btnSrch, &QPushButton::clicked, this, &SearchDialog::getResults);

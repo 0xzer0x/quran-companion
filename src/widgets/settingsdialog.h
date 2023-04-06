@@ -75,6 +75,7 @@ private:
     bool m_cpyVerseChk;
     bool m_renderSideContent = false;
     bool m_renderQuranPage = false;
+    bool m_restartReq = false;
     void setCurrentSettingsAsRef();
 };
 

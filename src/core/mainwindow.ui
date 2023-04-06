@@ -355,6 +355,11 @@
        <property name="text">
         <string/>
        </property>
+       <property name="icon">
+        <iconset>
+         <normalon>:/assets/images/play.png</normalon>
+        </iconset>
+       </property>
        <property name="default">
         <bool>false</bool>
        </property>
@@ -377,6 +382,11 @@
        <property name="text">
         <string/>
        </property>
+       <property name="icon">
+        <iconset>
+         <normalon>:/assets/images/pause.png</normalon>
+        </iconset>
+       </property>
       </widget>
      </item>
      <item>
@@ -395,6 +405,11 @@
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normalon>:/assets/images/stop.png</normalon>
+        </iconset>
        </property>
       </widget>
      </item>
@@ -1089,7 +1104,8 @@
   <action name="actionExit">
    <property name="icon">
     <iconset theme="window-close">
-     <normaloff>.</normaloff>.</iconset>
+     <normaloff>.</normaloff>
+     <normalon>:/assets/images/exit.png</normalon>.</iconset>
    </property>
    <property name="text">
     <string>Exit</string>

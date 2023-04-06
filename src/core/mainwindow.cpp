@@ -79,10 +79,6 @@ void MainWindow::init()
     m_highlighter = new QTextCursor(m_quranBrowser->document());
 
     ui->menuView->addAction(ui->dockControls->toggleViewAction());
-    ui->btnPlay->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPlay));
-    ui->btnPause->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaPause));
-    ui->btnStop->setIcon(QApplication::style()->standardIcon(QStyle::SP_MediaStop));
-    ui->actionExit->setIcon(QApplication::style()->standardIcon(QStyle::SP_TitleBarCloseButton));
 
     QString st
         = "%1 { "
@@ -547,7 +543,7 @@ void MainWindow::highlightCurrentVerse()
   int idx;
   for (idx = 0; idx < m_vInfoList.size(); idx++) {
         Verse v = m_vInfoList.at(idx);
-        if (v.number == m_currVerse.number && v.surah == m_currVerse.surah)
+        if (m_currVerse == v)
             break;
   }
   m_quranBrowser->highlightVerse(idx);

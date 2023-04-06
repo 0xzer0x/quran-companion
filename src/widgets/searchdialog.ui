@@ -66,12 +66,22 @@
        <property name="text">
         <string/>
        </property>
+       <property name="icon">
+        <iconset>
+         <normalon>:/assets/images/arrow-left.png</normalon>
+        </iconset>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="btnBwdRes">
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normalon>:/assets/images/arrow-right.png</normalon>
+        </iconset>
        </property>
       </widget>
      </item>

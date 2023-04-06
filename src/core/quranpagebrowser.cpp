@@ -186,7 +186,7 @@ void QuranPageBrowser::constructPage(int pageNo)
 
 void QuranPageBrowser::highlightVerse(int verseIdxInPage)
 {
-    if (verseIdxInPage > m_pageVerseCoords.size() || verseIdxInPage == -1) {
+    if (verseIdxInPage > m_pageVerseCoords.size() || verseIdxInPage < 0) {
         qCritical() << "verseIdxInPage is out of page coords range!!!";
         return;
     }
