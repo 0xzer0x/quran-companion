@@ -107,10 +107,31 @@ void setTheme(int themeIdx)
 {
     QPalette themeColors;
     switch (themeIdx) {
-    case 0:
+    case 0: // light
+        themeColors.setColor(QPalette::Window, QColor(240, 240, 240));
+        themeColors.setColor(QPalette::WindowText, Qt::black);
+        themeColors.setColor(QPalette::Disabled, QPalette::WindowText, QColor(120, 120, 120));
+        themeColors.setColor(QPalette::Base, QColor(255, 255, 255));
+        themeColors.setColor(QPalette::AlternateBase, QColor(233, 231, 227));
+        themeColors.setColor(QPalette::ToolTipBase, Qt::black);
+        themeColors.setColor(QPalette::ToolTipText, Qt::black);
+        themeColors.setColor(QPalette::Text, Qt::black);
+        themeColors.setColor(QPalette::Disabled, QPalette::Text, QColor(120, 120, 120));
+        themeColors.setColor(QPalette::Dark, QColor(160, 160, 160));
+        themeColors.setColor(QPalette::Shadow, QColor(105, 105, 105));
+        themeColors.setColor(QPalette::Button, QColor(240, 240, 240));
+        themeColors.setColor(QPalette::ButtonText, Qt::black);
+        themeColors.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(120, 120, 120));
+        themeColors.setColor(QPalette::BrightText, Qt::red);
+        themeColors.setColor(QPalette::Link, QColor(0, 0, 255));
+        themeColors.setColor(QPalette::Highlight, QColor(0, 120, 215));
+        themeColors.setColor(QPalette::Disabled, QPalette::Highlight, QColor(0, 120, 215));
+        themeColors.setColor(QPalette::HighlightedText, Qt::black);
+        themeColors.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(255, 255, 255));
+        qApp->setPalette(themeColors);
         break;
 
-    case 1:
+    case 1: // dark
         themeColors.setColor(QPalette::Window, QColor(53, 53, 53));
         themeColors.setColor(QPalette::WindowText, Qt::white);
         themeColors.setColor(QPalette::Disabled, QPalette::WindowText, QColor(127, 127, 127));
