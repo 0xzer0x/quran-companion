@@ -118,7 +118,7 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 
 ### Build
 
-1. Clone the repo, make sure to pass `--depth=1` to reduce the download time
+1. Clone the repo, make sure to pass `--depth=1` to reduce the download size
 
 ```sh
   git clone --depth=1 -b main https://github.com/0xzer0x/quran-companion.git
