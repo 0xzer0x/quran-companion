@@ -107,7 +107,7 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 - GCC
 
 - Qt >= 6.4
-
+  - Qt Tools
   - Qt Multimedia
 
 - CMake >= 3.22
