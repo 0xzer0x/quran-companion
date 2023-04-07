@@ -53,7 +53,10 @@ void MainWindow::init()
 
     // initalization
     m_dbManPtr = new DBManager(this, m_settingsPtr->value("Reader/QCF").toInt());
-    m_player = new VersePlayer(this, m_dbManPtr, m_currVerse);
+    m_player = new VersePlayer(this,
+                               m_dbManPtr,
+                               m_currVerse,
+                               m_settingsPtr->value("Reciter", 0).toInt());
     m_quranBrowser = new QuranPageBrowser(ui->frmPageContent,
                                           m_settingsPtr->value("Reader/QCF").toInt(),
                                           m_currVerse.page,
@@ -80,12 +83,6 @@ void MainWindow::init()
 
     ui->menuView->addAction(ui->dockControls->toggleViewAction());
 
-    QString st
-        = "%1 { "
-          "background-color:transparent;border-radius:6px;border-width:2px;border-style:solid; }";
-    ui->frmPageContent->setStyleSheet(st.arg("QFrame#frmPageContent"));
-    ui->scrlVerseByVerse->setStyleSheet(st.arg("QScrollArea#scrlVerseByVerse"));
-
     for (int i = 1; i < 605; i++) {
         ui->cmbPage->addItem(QString::number(i));
     }
@@ -98,6 +95,7 @@ void MainWindow::init()
     m_internalVerseChange = false;
 
     ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
+    ui->cmbReciter->setCurrentIndex(m_settingsPtr->value("Reciter", 0).toInt());
 }
 
 /*!
@@ -671,9 +669,10 @@ void MainWindow::updateSideFont()
  */
 void MainWindow::updateQuranFontSize()
 {
-  QString quranFontSize = m_settingsPtr->value("Reader/QuranFontSize").toString();
+  int qcf = m_settingsPtr->value("Reader/QCF").toInt();
+  int quranFontSize = m_settingsPtr->value("Reader/QCF" + QString::number(qcf) + "Size").toInt();
 
-  m_quranBrowser->setFontSize(quranFontSize.toInt());
+  m_quranBrowser->setFontSize(quranFontSize);
 }
 
 /* ------------------------ Side content generation ------------------------ */
@@ -761,6 +760,8 @@ void MainWindow::addSideContent()
 void MainWindow::saveReaderState()
 {
   m_settingsPtr->setValue("WindowState", saveState());
+  m_settingsPtr->setValue("Reciter", ui->cmbReciter->currentIndex());
+
   m_settingsPtr->beginGroup("Reader");
   m_settingsPtr->setValue("Page", m_currVerse.page);
   m_settingsPtr->setValue("Surah", m_currVerse.surah);

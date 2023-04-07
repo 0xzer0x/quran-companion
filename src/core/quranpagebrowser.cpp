@@ -9,9 +9,10 @@ QuranPageBrowser::QuranPageBrowser(
     , m_highlighter{new QTextCursor(document())}
 {
     m_highlightColor = QBrush(QColor(0, 161, 185));
-    m_fontSize = m_settingsPtr->value("Reader/QuranFontSize", 22).toInt();
+    m_fontSize = m_settingsPtr->value("Reader/QCF" + QString::number(m_qcfVer) + "Size", 22).toInt();
     m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
     m_bsmlFont = m_qcfVer == 1 ? "QCF_BSML" : "QCF2BSML";
+    m_fontPrefix = m_qcfVer == 1 ? "QCF_P" : "QCF2";
     setStyleSheet("QTextBrowser{background-color: transparent;}");
 
     m_easternNumsMap.insert("0", "٠");
@@ -79,7 +80,7 @@ void QuranPageBrowser::constructPage(int pageNo)
     this->document()->clear();
     QTextCursor cur(this->document());
 
-    m_pageFont = m_qcfVer == 1 ? "QCF_P" : "QCF2";
+    m_pageFont = m_fontPrefix;
     m_pageFont.append(QString::number(pageNo).rightJustified(3, '0'));
 
     int fontSize = pageNo < 3 ? m_fontSize + 5 : m_fontSize;

@@ -29,7 +29,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePla
     ui->cmbLang->setCurrentText(m_lang);
 
     ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
-    ui->cmbQuranFontSz->setCurrentText(m_quranFontSize);
+    ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
     ui->chkCopyVerseOnClick->setChecked(m_cpyVerseChk);
     ui->fntCmbSide->setCurrentFont(m_sideFont);
     ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
@@ -133,7 +133,7 @@ void SettingsDialog::updateQuranFont(int qcfV)
  */
 void SettingsDialog::updateQuranFontSize(QString size)
 {
-    m_settingsPtr->setValue("Reader/QuranFontSize", size);
+    m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size", size);
     emit quranFontChanged();
     m_renderQuranPage = true;
 }
@@ -202,7 +202,7 @@ void SettingsDialog::applyAllChanges()
         updateQuranFont(ui->cmbQCF->currentIndex() + 1);
     }
 
-    if (ui->cmbQuranFontSz->currentText() != m_quranFontSize) {
+    if (ui->cmbQuranFontSz->currentText() != QString::number(m_quranFontSize)) {
         updateQuranFontSize(ui->cmbQuranFontSz->currentText());
     }
 
@@ -252,7 +252,7 @@ void SettingsDialog::setCurrentSettingsAsRef()
     m_settingsPtr->beginGroup("Reader");
 
     m_qcfVer = m_settingsPtr->value("QCF").toInt();
-    m_quranFontSize = m_settingsPtr->value("QuranFontSize").toString();
+    m_quranFontSize = m_settingsPtr->value("QCF" + QString::number(m_qcfVer) + "Size").toInt();
     m_sideFont = qvariant_cast<QFont>(m_settingsPtr->value("SideContentFont"));
     m_sideContent = m_settingsPtr->value("SideContent").toInt();
     m_tafsir = m_settingsPtr->value("Tafsir").toInt();

@@ -30,6 +30,7 @@ private:
     int m_fontSize;
     int m_pageWidth;
     QString m_pageFont;
+    QString m_fontPrefix;
     QString m_bsmlFont;
     QTextCursor *m_highlighter;
     QBrush m_highlightColor;

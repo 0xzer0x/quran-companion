@@ -64,7 +64,7 @@ private:
     int m_themeIdx;
     QString m_lang;
     int m_qcfVer;
-    QString m_quranFontSize;
+    int m_quranFontSize;
     QList<QAudioDevice> m_audioDevices;
     VersePlayer *m_vPlayerPtr;
     int m_audioOutIdx;

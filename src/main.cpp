@@ -32,7 +32,8 @@ int main(int argc, char *argv[])
         appSettings.setValue("Surah", 1);
         appSettings.setValue("Verse", 1);
 
-        appSettings.setValue("QuranFontSize", 22);
+        appSettings.setValue("QCF1Size", 22);
+        appSettings.setValue("QCF2Size", 20);
         appSettings.setValue("QCF", 1);
         appSettings.setValue("SideContentFont", QFont("Droid Sans Arabic", 14));
         appSettings.setValue("CopyVerseOnClick", true);

@@ -35,7 +35,7 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,20,1">
        <property name="spacing">
         <number>6</number>
        </property>
@@ -61,7 +61,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>60</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
@@ -71,15 +71,43 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="text">
-          <string>next</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normalon>:/assets/images/arrow-left.png</normalon>
+          </iconset>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QSplitter" name="splitter">
+         <property name="styleSheet">
+          <string notr="true">QSplitter{
+background-color: transparent;
+border-width:2px;
+border-radius:4px;
+border-style:solid;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+         <property name="midLineWidth">
+          <number>0</number>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="handleWidth">
+          <number>6</number>
          </property>
          <widget class="QScrollArea" name="scrlVerseByVerse">
           <property name="sizePolicy">
@@ -94,6 +122,12 @@
             <height>0</height>
            </size>
           </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="midLineWidth">
+           <number>0</number>
+          </property>
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
@@ -102,8 +136,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>651</width>
-             <height>836</height>
+             <width>647</width>
+             <height>834</height>
             </rect>
            </property>
           </widget>
@@ -126,6 +160,9 @@
           </property>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
+          </property>
+          <property name="midLineWidth">
+           <number>0</number>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <property name="spacing">
@@ -171,7 +208,12 @@
           <string notr="true">b</string>
          </property>
          <property name="text">
-          <string>previous</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normalon>:/assets/images/arrow-right.png</normalon>
+          </iconset>
          </property>
         </widget>
        </item>
