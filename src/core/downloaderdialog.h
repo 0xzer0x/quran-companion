@@ -10,7 +10,7 @@
 #include <QStandardItemModel>
 #include "../utils/dbmanager.h"
 #include "../utils/downloadmanager.h"
-#include "downloadprogressbar.h"
+#include "../widgets/downloadprogressbar.h"
 
 typedef DBManager::Reciter Reciter;
 

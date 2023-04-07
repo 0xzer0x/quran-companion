@@ -11,11 +11,11 @@
 #include "../utils/dbmanager.h"
 #include "../utils/verseplayer.h"
 #include "../widgets/clickablelabel.h"
-#include "../widgets/downloaderdialog.h"
-#include "../widgets/searchdialog.h"
-#include "../widgets/settingsdialog.h"
+#include "../widgets/quranpagebrowser.h"
 #include "../widgets/verseframe.h"
-#include "quranpagebrowser.h"
+#include "downloaderdialog.h"
+#include "searchdialog.h"
+#include "settingsdialog.h"
 
 typedef DBManager::Verse Verse;
 

@@ -105,14 +105,12 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 ### Dependencies
 
 - GCC
-
 - Qt >= 6.4
   - Qt Tools
   - Qt Multimedia
-
 - CMake >= 3.22
-
-- Openssl1.1.1
+- ffmpeg
+- openssl1.1.1
 
 - Inno setup for windows (Optional)
 
@@ -159,6 +157,7 @@ For Ubuntu, a script is provided in _dist/linux_ to preform the following steps.
   mkdir bundle
   cp -r build/quran-companion bundle/
   cp -r build/assets bundle/
+  cp -r build/audio bundle/
   cp -r build/translations bundle/
 ```
 

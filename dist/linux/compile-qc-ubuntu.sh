@@ -13,8 +13,9 @@ echo;echo;
 echo '#---------------------[Building]---------------------#'
 echo;echo;
 
-cmake ../../../
-make
+export QT_MEDIA_BACKEND=ffmpeg;
+cmake ../../../;
+make;
 
 echo;echo;
 echo '#---------------------[Copying Files]---------------------#'
@@ -24,6 +25,7 @@ cd ..
 mkdir bundle
 cp -r build/quran-companion bundle/
 cp -r build/assets bundle/
+cp -r build/audio bundle/
 cp -r build/translations bundle/
 
 echo;echo;

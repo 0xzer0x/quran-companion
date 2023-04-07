@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.22)
 
-project(quran-companion VERSION 0.1 LANGUAGES CXX)
+project(quran-companion VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -24,19 +24,19 @@ set(PROJECT_SOURCES
         src/core/mainwindow.cpp
         src/core/mainwindow.h
         src/core/mainwindow.ui
-        src/core/quranpagebrowser.h
-        src/core/quranpagebrowser.cpp
-        src/widgets/searchdialog.h
-        src/widgets/searchdialog.cpp
-        src/widgets/searchdialog.ui
+        src/core/searchdialog.h
+        src/core/searchdialog.cpp
+        src/core/searchdialog.ui
+        src/core/settingsdialog.cpp
+        src/core/settingsdialog.h
+        src/core/settingsdialog.ui
+        src/core/downloaderdialog.cpp
+        src/core/downloaderdialog.h
+        src/core/downloaderdialog.ui
+        src/widgets/quranpagebrowser.h
+        src/widgets/quranpagebrowser.cpp
         src/widgets/clickablelabel.cpp
         src/widgets/clickablelabel.h
-        src/widgets/settingsdialog.cpp
-        src/widgets/settingsdialog.h
-        src/widgets/settingsdialog.ui
-        src/widgets/downloaderdialog.cpp
-        src/widgets/downloaderdialog.h
-        src/widgets/downloaderdialog.ui
         src/widgets/downloadprogressbar.cpp
         src/widgets/downloadprogressbar.h
         src/widgets/verseframe.cpp
@@ -75,16 +75,18 @@ endif()
 
 target_link_libraries(quran-companion PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::Network)
 
-set_target_properties(quran-companion PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
+if (WIN32)
+    set_target_properties(quran-companion PROPERTIES WIN32_EXECUTABLE TRUE)
+elseif(APPLE)
+    set_target_properties(quran-companion PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER com.zer0x.qurancompanion
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+    )
+endif()
 
 qt_add_translations(quran-companion TS_FILES ./src/translations/quran_companion_ar.ts)
-
 
 install(TARGETS quran-companion
     BUNDLE DESTINATION .

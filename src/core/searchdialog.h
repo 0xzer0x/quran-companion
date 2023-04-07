@@ -4,8 +4,8 @@
 #include <QDialog>
 #include <QStyle>
 #include "../utils/dbmanager.h"
-#include "clickablelabel.h"
-#include "verseframe.h"
+#include "../widgets/clickablelabel.h"
+#include "../widgets/verseframe.h"
 
 typedef DBManager::Verse Verse;
 
