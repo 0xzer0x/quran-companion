@@ -7,14 +7,18 @@
  * \param settingsPtr pointer to application settings
  * \param vPlayerPtr pointer to The VersePlayer object
  */
-SettingsDialog::SettingsDialog(QWidget *parent, QSettings *settingsPtr, VersePlayer *vPlayerPtr)
+SettingsDialog::SettingsDialog(QWidget *parent,
+                               QSettings *settingsPtr,
+                               VersePlayer *vPlayerPtr,
+                               const QString &iconsPath)
     : QDialog(parent)
     , ui(new Ui::SettingsDialog)
+    , m_iconsPath{iconsPath}
 {
     ui->setupUi(this);
     ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 100));
     ui->cmbSideFontSz->setValidator(new QIntValidator(10, 100));
-    setWindowIcon(QIcon(":/assets/images/prefs.png"));
+    setWindowIcon(QIcon(m_iconsPath + "prefs.png"));
 
     m_settingsPtr = settingsPtr;
     m_vPlayerPtr = vPlayerPtr;

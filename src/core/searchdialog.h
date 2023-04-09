@@ -23,7 +23,10 @@ class SearchDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SearchDialog(QWidget *parent = nullptr, int qcfVersion = 1, DBManager *dbPtr = nullptr);
+    explicit SearchDialog(QWidget *parent = nullptr,
+                          int qcfVersion = 1,
+                          DBManager *dbPtr = nullptr,
+                          const QString &iconPath = ":/assets/images/light/");
     ~SearchDialog();
 
 public slots:
@@ -44,7 +47,8 @@ private:
     Ui::SearchDialog *ui;
     int m_startResult = 0;
     int m_qcfVer;
-    QString m_fontBase;
+    QString m_iconsPath;
+    QString m_fontPrefix;
     DBManager *m_dbPtr;
     QList<VerseFrame *> m_lbLst;
     QString m_searchText;

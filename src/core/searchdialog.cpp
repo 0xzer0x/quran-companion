@@ -6,23 +6,29 @@
  * \param parent pointer to parent widget
  * \param dbPtr pointer to database management interface
  */
-SearchDialog::SearchDialog(QWidget *parent, int qcfVersion, DBManager *dbPtr)
+SearchDialog::SearchDialog(QWidget *parent,
+                           int qcfVersion,
+                           DBManager *dbPtr,
+                           const QString &iconPath)
     : QDialog(parent)
     , ui(new Ui::SearchDialog)
     , m_qcfVer{qcfVersion}
     , m_dbPtr{dbPtr}
+    , m_iconsPath{iconPath}
 {
     setLayoutDirection(Qt::LeftToRight);
 
     ui->setupUi(this);
-    setWindowIcon(QIcon(":/assets/images/search.png"));
+    setWindowIcon(QIcon(m_iconsPath + "search.png"));
     setWindowTitle(tr("Verse search"));
+    ui->btnFwdRes->setIcon(QIcon(m_iconsPath + "arrow-left.png"));
+    ui->btnBwdRes->setIcon(QIcon(m_iconsPath + "arrow-right.png"));
 
     connect(ui->btnSrch, &QPushButton::clicked, this, &SearchDialog::getResults);
     connect(ui->btnFwdRes, &QPushButton::clicked, this, &SearchDialog::moveFwd);
     connect(ui->btnBwdRes, &QPushButton::clicked, this, &SearchDialog::moveBwd);
 
-    m_fontBase = m_qcfVer == 1 ? "QCF_P" : "QCF2";
+    m_fontPrefix = m_qcfVer == 1 ? "QCF_P" : "QCF2";
 }
 
 /*!
@@ -73,7 +79,7 @@ void SearchDialog::showResults()
                                                            : m_currResults.size();
     for (int i = m_startResult; i < endIdx; i++) {
         Verse v = m_currResults.at(i);
-        QString fontName = m_fontBase + QString::number(v.page).rightJustified(3, '0');
+        QString fontName = m_fontPrefix + QString::number(v.page).rightJustified(3, '0');
         VerseFrame *vFrame = new VerseFrame(ui->srclResults);
         QLabel *lbInfo = new QLabel(vFrame);
         ClickableLabel *clkLb = new ClickableLabel(vFrame);

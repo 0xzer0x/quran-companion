@@ -1,11 +1,16 @@
 #include "quranpagebrowser.h"
 
-QuranPageBrowser::QuranPageBrowser(
-    QWidget *parent, int qcfVersion, int initPage, DBManager *dbPtr, QSettings *appSettings)
+QuranPageBrowser::QuranPageBrowser(QWidget *parent,
+                                   int qcfVersion,
+                                   int initPage,
+                                   DBManager *dbPtr,
+                                   QSettings *appSettings,
+                                   const QString &iconsPath)
     : QTextBrowser(parent)
     , m_qcfVer{qcfVersion}
     , m_dbPtr{dbPtr}
     , m_settingsPtr{appSettings}
+    , m_iconsPath{iconsPath}
     , m_highlighter{new QTextCursor(document())}
 {
     createActions();
@@ -217,9 +222,9 @@ void QuranPageBrowser::createActions()
     m_zoomIn = new QAction(tr("Zoom In"), this);
     m_zoomOut = new QAction(tr("Zoom Out"), this);
     m_copyAct = new QAction(tr("Copy Verse"), this);
-    m_zoomIn->setIcon(QIcon(":/assets/images/zoom-in.png"));
-    m_zoomOut->setIcon(QIcon(":/assets/images/zoom-out.png"));
-    m_copyAct->setIcon(QIcon(":/assets/images/copy.png"));
+    m_zoomIn->setIcon(QIcon(m_iconsPath + "zoom-in.png"));
+    m_zoomOut->setIcon(QIcon(m_iconsPath + "zoom-out.png"));
+    m_copyAct->setIcon(QIcon(m_iconsPath + "copy.png"));
     connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
     connect(m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);
     connect(m_copyAct, &QAction::triggered, this, &QuranPageBrowser::actionCopy);

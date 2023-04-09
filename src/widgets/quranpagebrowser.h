@@ -18,7 +18,8 @@ public:
                      int qcfVersion = 1,
                      int initPage = 1,
                      DBManager *dbPtr = nullptr,
-                     QSettings *appSettings = nullptr);
+                     QSettings *appSettings = nullptr,
+                     const QString &iconsPath = ":/assets/images/light/");
 
     void createActions();
     void updateFontSize();
@@ -51,6 +52,7 @@ private:
     int m_pageWidth;
     QPoint m_mousePos;
     QPoint m_mouseGlobalPos;
+    QString m_iconsPath;
     QString m_pageFont;
     QString m_fontPrefix;
     QString m_bsmlFont;

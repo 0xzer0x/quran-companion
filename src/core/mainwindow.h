@@ -87,11 +87,12 @@ private:
     bool m_internalVerseChange = false;
     bool m_darkMode = false;
     Ui::MainWindow *ui;
+    QString m_iconsPath;
     QIntValidator *verseValidator = nullptr;
     QuranPageBrowser *m_quranBrowser;
     DBManager *m_dbManPtr;
     VersePlayer *m_player;
-    SearchDialog *m_srchDlg = nullptr;
+    SearchDialog *m_searchDlg = nullptr;
     SettingsDialog *m_settingsDlg = nullptr;
     DownloaderDialog *m_downloaderDlg = nullptr;
     DownloadManager *m_downManPtr = nullptr;
@@ -101,7 +102,6 @@ private:
     SideContent m_sideContent;
     QDir m_assetsDir = QApplication::applicationDirPath() + QDir::separator() + "assets";
     QFont m_sideFont;
-    QString m_verseHighlightTemplate;
     QList<Verse> m_vInfoList;
     QList<QFrame *> m_verseFrameList;
 };

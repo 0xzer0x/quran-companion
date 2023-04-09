@@ -31,7 +31,8 @@ public:
     explicit DownloaderDialog(QWidget *parent = nullptr,
                               QSettings *settingsptr = nullptr,
                               DownloadManager *downloader = nullptr,
-                              DBManager *dbMan = nullptr);
+                              DBManager *dbMan = nullptr,
+                              const QString &iconsPath = ":/assets/images/light/");
     void fillTreeView();
     ~DownloaderDialog();
 
@@ -50,6 +51,7 @@ protected:
 
 private:
     Ui::DownloaderDialog *ui;
+    QString m_iconsPath;
     DownloadProgressBar *m_currentBar;
     QLabel *m_currentLb;
     QList<QFrame *> m_frameLst;

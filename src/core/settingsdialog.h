@@ -29,7 +29,8 @@ class SettingsDialog : public QDialog
 public:
     explicit SettingsDialog(QWidget *parent = nullptr,
                             QSettings *settingsPtr = nullptr,
-                            VersePlayer *vPlayerPtr = nullptr);
+                            VersePlayer *vPlayerPtr = nullptr,
+                            const QString &iconsPath = ":/assets/images/light/");
     ~SettingsDialog();
 
 public slots:
@@ -60,6 +61,7 @@ signals:
 
 private:
     Ui::SettingsDialog *ui;
+    QString m_iconsPath;
     QSettings *m_settingsPtr;
     int m_themeIdx;
     QString m_lang;

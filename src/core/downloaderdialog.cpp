@@ -11,14 +11,16 @@
 DownloaderDialog::DownloaderDialog(QWidget *parent,
                                    QSettings *settingsptr,
                                    DownloadManager *downloader,
-                                   DBManager *dbMan)
+                                   DBManager *dbMan,
+                                   const QString &iconsPath)
     : QDialog(parent)
     , ui(new Ui::DownloaderDialog)
+    , m_iconsPath{iconsPath}
 {
     ui->setupUi(this);
 
     setWindowTitle(tr("Download Manager"));
-    setWindowIcon(QIcon(":/assets/images/download-manager.png"));
+    setWindowIcon(QIcon(m_iconsPath + "download-manager.png"));
 
     m_appSettings = settingsptr;
     m_downloaderPtr = downloader;

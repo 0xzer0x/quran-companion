@@ -11,8 +11,21 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
     , ui(new Ui::MainWindow)
     , m_settingsPtr{settingsPtr}
 {
+    m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
+
     ui->setupUi(this);
     ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
+    m_iconsPath = ":assets/images/";
+    m_iconsPath.append(m_darkMode ? "dark/" : "light/");
+    ui->actionDownload_manager->setIcon(QIcon(m_iconsPath + "download-manager.png"));
+    ui->actionExit->setIcon(QIcon(m_iconsPath + "exit.png"));
+    ui->actionFind->setIcon(QIcon(m_iconsPath + "search.png"));
+    ui->actionPereferences->setIcon(QIcon(m_iconsPath + "prefs.png"));
+    ui->btnPlay->setIcon(QIcon(m_iconsPath + "play.png"));
+    ui->btnPause->setIcon(QIcon(m_iconsPath + "pause.png"));
+    ui->btnStop->setIcon(QIcon(m_iconsPath + "stop.png"));
+    ui->btnNext->setIcon(QIcon(m_iconsPath + "arrow-left.png"));
+    ui->btnPrev->setIcon(QIcon(m_iconsPath + "arrow-right.png"));
 
     init();
 
@@ -29,8 +42,6 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
  */
 void MainWindow::init()
 {
-    m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
-
     if (m_settingsPtr->value("Language").toString() == "العربية") {
         ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
         ui->retranslateUi(this);
@@ -61,7 +72,8 @@ void MainWindow::init()
                                           m_settingsPtr->value("Reader/QCF").toInt(),
                                           m_currVerse.page,
                                           m_dbManPtr,
-                                          m_settingsPtr);
+                                          m_settingsPtr,
+                                          m_iconsPath);
     ui->frmPageContent->layout()->addWidget(m_quranBrowser);
 
     updateSideContentType();
@@ -568,7 +580,7 @@ void MainWindow::actionPrefTriggered()
   if (m_settingsDlg != nullptr)
         delete m_settingsDlg;
 
-  m_settingsDlg = new SettingsDialog(this, m_settingsPtr, m_player);
+  m_settingsDlg = new SettingsDialog(this, m_settingsPtr, m_player, m_iconsPath);
 
   // Restart signal
   connect(m_settingsDlg, &SettingsDialog::restartApp, this, &MainWindow::restartApp);
@@ -611,7 +623,11 @@ void MainWindow::actionDMTriggered()
         if (m_downManPtr == nullptr)
             m_downManPtr = new DownloadManager(this, m_dbManPtr, m_player->recitersList());
 
-        m_downloaderDlg = new DownloaderDialog(this, m_settingsPtr, m_downManPtr, m_dbManPtr);
+        m_downloaderDlg = new DownloaderDialog(this,
+                                               m_settingsPtr,
+                                               m_downManPtr,
+                                               m_dbManPtr,
+                                               m_iconsPath);
   }
 
   m_downloaderDlg->show();
@@ -794,12 +810,15 @@ void MainWindow::showExpandedVerseTafsir()
  */
 void MainWindow::openSearchDialog()
 {
-  if (m_srchDlg == nullptr) {
-        m_srchDlg = new SearchDialog(this, m_settingsPtr->value("Reader/QCF").toInt(), m_dbManPtr);
-        connect(m_srchDlg, &SearchDialog::navigateToVerse, this, &MainWindow::navigateToVerse);
+  if (m_searchDlg == nullptr) {
+        m_searchDlg = new SearchDialog(this,
+                                       m_settingsPtr->value("Reader/QCF").toInt(),
+                                       m_dbManPtr,
+                                       m_iconsPath);
+        connect(m_searchDlg, &SearchDialog::navigateToVerse, this, &MainWindow::navigateToVerse);
   }
 
-  m_srchDlg->show();
+  m_searchDlg->show();
 }
 
 /*!
