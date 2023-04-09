@@ -13,6 +13,7 @@ QuranPageBrowser::QuranPageBrowser(QWidget *parent,
     , m_iconsPath{iconsPath}
     , m_highlighter{new QTextCursor(document())}
 {
+    setTextInteractionFlags(Qt::TextInteractionFlag::LinksAccessibleByMouse);
     createActions();
     updateFontSize();
 
@@ -61,7 +62,11 @@ QString QuranPageBrowser::constructPageHeader(int page)
     suraHeader.append("ﰦ");
     suraHeader.append("ﰦ");
     suraHeader.append("ﰦ");
+    suraHeader.append("ﰦ");
+    suraHeader.append("ﰦ");
     // construct jozz part
+    jozzHeader.append("ﰦ");
+    jozzHeader.append("ﰦ");
     jozzHeader.append("ﰦ");
     jozzHeader.append("ﰦ");
     jozzHeader.append("ﰦ");
@@ -95,7 +100,7 @@ void QuranPageBrowser::constructPage(int pageNo)
     QString header = constructPageHeader(pageNo);
     QStringList lines = m_dbPtr->getPageLines(pageNo); // create a qlist of page lines
 
-    int counter = 0, prevAnchor = pageNo < 3 ? 3 : 24;
+    int counter = 0, prevAnchor = pageNo < 3 ? 3 : 28;
 
     QTextBlockFormat pageFormat;
     pageFormat.setAlignment(Qt::AlignCenter);
@@ -108,6 +113,7 @@ void QuranPageBrowser::constructPage(int pageNo)
     if (pageNo > 2) {
         cur.insertBlock(pageFormat, bsmlFormat);
         cur.insertText(header);
+        bsmlFormat.setFontPointSize(fontSize - 2);
     }
 
     QFontMetrics fm(QFont(m_pageFont, fontSize));
