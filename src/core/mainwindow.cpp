@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
 }
 
 /*!
- * \brief MainWindow::init initalizes different parts used by the app, such as the page consturctor, db manager, and the verse player objects
+ * \brief MainWindow::init initalizes different parts used by the app, such as the quran page widget, db manager, and the verse player objects
  */
 void MainWindow::init()
 {
@@ -64,8 +64,6 @@ void MainWindow::init()
                                           m_settingsPtr);
     ui->frmPageContent->layout()->addWidget(m_quranBrowser);
 
-    updateQuranFontSize();
-    updateHighlightColor();
     updateSideContentType();
     updateLoadedTafsir();
     updateLoadedTranslation();
@@ -79,12 +77,14 @@ void MainWindow::init()
     ui->scrlVerseCont->setLayout(vbl);
     addSideContent();
 
-    m_highlighter = new QTextCursor(m_quranBrowser->document());
-
     ui->menuView->addAction(ui->dockControls->toggleViewAction());
 
     for (int i = 1; i < 605; i++) {
         ui->cmbPage->addItem(QString::number(i));
+    }
+
+    foreach (Reciter r, m_player->recitersList()) {
+        ui->cmbReciter->addItem(r.displayName);
     }
 
     m_internalSurahChange = true;
@@ -113,16 +113,19 @@ void MainWindow::setupConnections()
     connect(ui->actionDownload_manager, &QAction::triggered, this, &MainWindow::actionDMTriggered);
     connect(ui->actionFind, &QAction::triggered, this, &MainWindow::openSearchDialog);
 
+    // Quran page
+    connect(m_quranBrowser, &QTextBrowser::anchorClicked, this, &MainWindow::verseAnchorClicked);
+    connect(m_quranBrowser, &QuranPageBrowser::copyVerse, this, &MainWindow::copyVerseText);
+
     // page controls
     connect(ui->btnNext, &QPushButton::clicked, this, &MainWindow::nextPage);
     connect(ui->btnPrev, &QPushButton::clicked, this, &MainWindow::prevPage);
     connect(ui->cmbSurah, &QComboBox::currentIndexChanged, this, &MainWindow::cmbSurahChanged);
     connect(ui->cmbPage, &QComboBox::currentIndexChanged, this, &MainWindow::cmbPageChanged);
     connect(ui->cmbVerse, &QComboBox::currentIndexChanged, this, &MainWindow::cmbVerseChanged);
-    connect(m_player, &VersePlayer::newSurah, this, &MainWindow::updateSurah);
-    connect(m_player, &VersePlayer::newVerse, this, &MainWindow::activeVerseChanged);
+    connect(m_player, &VersePlayer::surahChanged, this, &MainWindow::updateSurah);
+    connect(m_player, &VersePlayer::verseNoChanged, this, &MainWindow::activeVerseChanged);
     connect(m_player, &VersePlayer::missingVerseFile, this, &MainWindow::missingRecitationFileWarn);
-    connect(m_quranBrowser, &QTextBrowser::anchorClicked, this, &MainWindow::verseAnchorClicked);
 
     // audio slider
     connect(m_player, &QMediaPlayer::positionChanged, this, &MainWindow::mediaPosChanged);
@@ -137,12 +140,6 @@ void MainWindow::setupConnections()
     connect(spaceKey, &QShortcut::activated, this, &MainWindow::spaceKeyPressed);
     connect(ui->btnSearch, &QPushButton::clicked, this, &MainWindow::openSearchDialog);
     connect(ui->btnPreferences, &QPushButton::clicked, this, &MainWindow::actionPrefTriggered);
-}
-
-void MainWindow::updateHighlightColor()
-{
-    QColor clr(0, 161, 185);
-    m_highlightColor = QBrush(clr);
 }
 
 /* ------------------------ UI updating ------------------------ */
@@ -578,7 +575,10 @@ void MainWindow::actionPrefTriggered()
 
   // Quran page signals
   connect(m_settingsDlg, &SettingsDialog::redrawQuranPage, this, &MainWindow::redrawQuranPage);
-  connect(m_settingsDlg, &SettingsDialog::quranFontChanged, this, &MainWindow::updateQuranFontSize);
+  connect(m_settingsDlg,
+          &SettingsDialog::quranFontChanged,
+          m_quranBrowser,
+          &QuranPageBrowser::updateFontSize);
 
   // Side panel signals
   connect(m_settingsDlg, &SettingsDialog::redrawSideContent, this, &MainWindow::addSideContent);
@@ -664,17 +664,6 @@ void MainWindow::updateSideFont()
   m_sideFont = qvariant_cast<QFont>(m_settingsPtr->value("Reader/SideContentFont"));
 }
 
-/*!
- * \brief MainWindow::updateQuranFontSize set quran page font to the one in the settings 
- */
-void MainWindow::updateQuranFontSize()
-{
-  int qcf = m_settingsPtr->value("Reader/QCF").toInt();
-  int quranFontSize = m_settingsPtr->value("Reader/QCF" + QString::number(qcf) + "Size").toInt();
-
-  m_quranBrowser->setFontSize(quranFontSize);
-}
-
 /* ------------------------ Side content generation ------------------------ */
 
 /*!
@@ -755,6 +744,13 @@ void MainWindow::addSideContent()
   if (m_player->playbackState() == QMediaPlayer::PlayingState) {
         highlightCurrentVerse();
   }
+}
+
+void MainWindow::copyVerseText(int IdxInPage)
+{
+  const Verse &v = m_vInfoList.at(IdxInPage);
+  QClipboard *clip = QApplication::clipboard();
+  clip->setText(m_dbManPtr->getVerseText(v.surah, v.number));
 }
 
 void MainWindow::saveReaderState()

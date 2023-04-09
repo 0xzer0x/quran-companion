@@ -42,6 +42,7 @@ public slots:
     void surahDownloaded();
     void downloadAborted();
     void topTaskDownloadError();
+    void selectDownloadable(int reciter, int surah);
 
     // QWidget interface
 protected:

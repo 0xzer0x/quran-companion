@@ -11,5 +11,8 @@
         <file>images/exit.png</file>
         <file>images/arrow-left.png</file>
         <file>images/arrow-right.png</file>
+        <file>images/zoom-in.png</file>
+        <file>images/zoom-out.png</file>
+        <file>images/copy.png</file>
     </qresource>
 </RCC>

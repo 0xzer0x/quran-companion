@@ -8,8 +8,10 @@ QuranPageBrowser::QuranPageBrowser(
     , m_settingsPtr{appSettings}
     , m_highlighter{new QTextCursor(document())}
 {
+    createActions();
+    updateFontSize();
+
     m_highlightColor = QBrush(QColor(0, 161, 185));
-    m_fontSize = m_settingsPtr->value("Reader/QCF" + QString::number(m_qcfVer) + "Size", 22).toInt();
     m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
     m_bsmlFont = m_qcfVer == 1 ? "QCF_BSML" : "QCF2BSML";
     m_fontPrefix = m_qcfVer == 1 ? "QCF_P" : "QCF2";
@@ -181,8 +183,9 @@ void QuranPageBrowser::constructPage(int pageNo)
     pageTextFormat.setFont(QFont("Amiri", m_fontSize - 4));
     cur.insertBlock(pageFormat, pageTextFormat);
     cur.insertText(getEasternNum(QString::number(pageNo)));
-
     setAlignment(Qt::AlignCenter);
+
+    m_page = pageNo;
 }
 
 void QuranPageBrowser::highlightVerse(int verseIdxInPage)
@@ -206,13 +209,68 @@ void QuranPageBrowser::highlightVerse(int verseIdxInPage)
     m_highlighter->setPosition(bounds[1], QTextCursor::KeepAnchor);
     m_highlighter->mergeCharFormat(tcf);
 
-    qInfo() << "Selection start:" << m_highlighter->selectionStart()
-            << " Selection end:" << m_highlighter->selectionEnd();
+    qInfo() << "Selected verse #" + QString::number(verseIdxInPage) + " in page";
 }
 
-void QuranPageBrowser::setFontSize(int newFontSize)
+void QuranPageBrowser::createActions()
 {
-    m_fontSize = newFontSize;
+    m_zoomIn = new QAction(tr("Zoom In"), this);
+    m_zoomOut = new QAction(tr("Zoom Out"), this);
+    m_copyAct = new QAction(tr("Copy Verse"), this);
+    m_zoomIn->setIcon(QIcon(":/assets/images/zoom-in.png"));
+    m_zoomOut->setIcon(QIcon(":/assets/images/zoom-out.png"));
+    m_copyAct->setIcon(QIcon(":/assets/images/copy.png"));
+    connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
+    connect(m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);
+    connect(m_copyAct, &QAction::triggered, this, &QuranPageBrowser::actionCopy);
+}
+
+#ifndef QT_NO_CONTEXTMENU
+void QuranPageBrowser::contextMenuEvent(QContextMenuEvent *event)
+{
+    QMenu menu(this);
+    menu.addAction(m_zoomIn);
+    menu.addAction(m_zoomOut);
+    menu.addSeparator();
+    menu.addAction(m_copyAct);
+
+    m_mousePos = event->pos();
+    m_mouseGlobalPos = event->globalPos();
+    menu.exec(m_mouseGlobalPos);
+}
+#endif // QT_NO_CONTEXTMENU
+
+void QuranPageBrowser::actionZoomIn()
+{
+    m_fontSize += 2;
+    m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size", m_fontSize);
+    constructPage(m_page);
+}
+
+void QuranPageBrowser::actionZoomOut()
+{
+    m_fontSize -= 2;
+    m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size", m_fontSize);
+    constructPage(m_page);
+}
+
+void QuranPageBrowser::actionCopy()
+{
+    int posInDoc = cursorForPosition(m_mousePos).position();
+
+    int idxInPage;
+    for (idxInPage = 0; idxInPage < m_pageVerseCoords.size(); ++idxInPage) {
+        const int *const vCoord = m_pageVerseCoords.at(idxInPage);
+        if (vCoord[0] <= posInDoc && vCoord[1] >= posInDoc)
+            break;
+    }
+
+    emit copyVerse(idxInPage);
+}
+
+void QuranPageBrowser::updateFontSize()
+{
+    m_fontSize = m_settingsPtr->value("Reader/QCF" + QString::number(m_qcfVer) + "Size", 22).toInt();
 }
 
 int QuranPageBrowser::fontSize() const

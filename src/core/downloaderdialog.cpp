@@ -203,6 +203,8 @@ void DownloaderDialog::topTaskDownloadError()
     m_currentLb->setText(tr("Couldn't download: ") + m_currentLb->parent()->objectName());
 }
 
+void DownloaderDialog::selectDownloadable(int reciter, int surah) {}
+
 void DownloaderDialog::closeEvent(QCloseEvent *event)
 {
     this->hide();

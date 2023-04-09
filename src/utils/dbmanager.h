@@ -19,26 +19,6 @@ class DBManager : public QObject
 
 public:
     explicit DBManager(QObject *parent = nullptr, int qcfVersion = 1);
-
-    struct Verse
-    {
-        int page{1};
-        int surah{1};
-        int number{1};
-        bool operator==(const Verse &v2)
-        {
-            return (this->number == v2.number && this->surah == v2.surah);
-        }
-    };
-
-    struct Reciter
-    {
-        QString baseDirName{};
-        QString displayName{};
-        QString basmallahPath{};
-        QString baseUrl{};
-    };
-
     enum Database { quran, glyphs, tafsir, translation };
     enum Tafsir {
         muyassar,
@@ -82,6 +62,24 @@ public:
         ur_jalandhry,
         uz_sodik,
         zh_jian
+    };
+
+    struct Verse
+    {
+        int page{1};
+        int surah{1};
+        int number{1};
+        bool operator==(const Verse &v2)
+        {
+            return (this->number == v2.number && this->surah == v2.surah);
+        }
+    };
+    struct Reciter
+    {
+        QString baseDirName{};
+        QString displayName{};
+        QString basmallahPath{};
+        QString baseUrl{};
     };
 
     void setCurrentTafsir(Tafsir tafsirName);

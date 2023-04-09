@@ -36,7 +36,11 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse, int
             &VersePlayer::verseStateChanged,
             Qt::UniqueConnection);
 
-    connect(this, &VersePlayer::newVerse, this, &VersePlayer::playCurrentVerse, Qt::UniqueConnection);
+    connect(this,
+            &VersePlayer::verseNoChanged,
+            this,
+            &VersePlayer::playCurrentVerse,
+            Qt::UniqueConnection);
 
     m_reciterDir.cd(m_recitersList.at(m_reciter).baseDirName);
     setVerseFile(constructVerseFilename());
@@ -51,11 +55,10 @@ void VersePlayer::fillRecitersList()
                    m_reciterDir.filePath("bismillah/husary.mp3"),
                    "https://everyayah.com/data/Husary_64kbps/"};
 
-    Reciter husaryQasr{
-        "Al-Husary_(Qasr)",
-        tr("Al-Husary (Qasr)"),
-        husary.basmallahPath,
-        "https://github.com/0xzer0x/quran-companion/raw/audio-files/audio/husary_qasr_64kbps/"};
+    Reciter husaryQasr{"Al-Husary_(Qasr)",
+                       tr("Al-Husary (Qasr)"),
+                       husary.basmallahPath,
+                       "https://quran.ksu.edu.sa/ayat/mp3/husary_qasr_64kbps/"};
 
     Reciter husaryMujawwad{"Al-Husary_(Mujawwad)",
                            tr("Al-Husary (Mujawwad)"),
@@ -90,7 +93,7 @@ void VersePlayer::fillRecitersList()
     Reciter tunaiji{"Khalefa_Al-Tunaiji",
                     tr("Khalefa Al-Tunaiji"),
                     m_reciterDir.filePath("bismillah/tunaiji.mp3"),
-                    "https://everyayah.com/data/khalefa_al_tunaiji_64kbps/"};
+                    "	https://quran.ksu.edu.sa/ayat/mp3/tunaiji_64kbps/"};
 
     Reciter dussary{"Yasser_Ad-Dussary",
                     tr("Yasser Ad-Dussary"),
@@ -101,6 +104,71 @@ void VersePlayer::fillRecitersList()
                   tr("Mahmoud Al-Banna"),
                   m_reciterDir.filePath("bismillah/al-banna.mp3"),
                   "https://everyayah.com/data/mahmoud_ali_al_banna_32kbps/"};
+
+    Reciter basfar{"Abdullah_Basfar",
+                   tr("Abdullah Basfar"),
+                   m_reciterDir.filePath("bismillah/basfar.mp3"),
+                   "https://everyayah.com/data/Abdullah_Basfar_64kbps/"};
+
+    Reciter shatree{"Ash-Shaatree",
+                    tr("Abu Bakr Ash-Shaatree"),
+                    m_reciterDir.filePath("bismillah/shatree.mp3"),
+                    "https://everyayah.com/data/Abu_Bakr_Ash-Shaatree_64kbps/"};
+
+    Reciter ajamy{"Al-Ajamy",
+                  tr("Ahmed Al-Ajamy"),
+                  m_reciterDir.filePath("bismillah/ajamy.mp3"),
+                  "https://everyayah.com/data/ahmed_ibn_ali_al_ajamy_128kbps/"};
+
+    Reciter aliJaber{"Ali_Jaber",
+                     tr("Ali Jaber"),
+                     m_reciterDir.filePath("bismillah/ajaber.mp3"),
+                     "https://everyayah.com/data/Ali_Jaber_64kbps/"};
+
+    Reciter fAbbad{"Fares_Abbad",
+                   tr("Fares Abbad"),
+                   m_reciterDir.filePath("bismillah/fabbad.mp3"),
+                   "https://everyayah.com/data/Fares_Abbad_64kbps/"};
+
+    Reciter ghamadi{"Ghamadi",
+                    tr("Saad Al-Ghamadi"),
+                    m_reciterDir.filePath("bismillah/ghamadi.mp3"),
+                    "https://everyayah.com/data/Ghamadi_40kbps/"};
+
+    Reciter hRifai{"Hani_Rifai",
+                   tr("Hani Rifai"),
+                   m_reciterDir.filePath("bismillah/rifai.mp3"),
+                   "https://everyayah.com/data/Hani_Rifai_64kbps/"};
+
+    Reciter hudhaify{"Hudhaify",
+                     tr("Hudhaify"),
+                     m_reciterDir.filePath("bismillah/hudhaify.mp3"),
+                     "https://everyayah.com/data/Hudhaify_64kbps/"};
+
+    Reciter shuraym{"Saood_Ash-Shuraym",
+                    tr("Saood Ash-Shuraym"),
+                    m_reciterDir.filePath("bismillah/shuraym.mp3"),
+                    "https://everyayah.com/data/Saood_ash-Shuraym_64kbps/"};
+
+    Reciter alqatami{"Nasser_Alqatami",
+                     tr("Nasser Alqatami"),
+                     m_reciterDir.filePath("bismillah/qatami.mp3"),
+                     "https://everyayah.com/data/Nasser_Alqatami_128kbps/"};
+
+    Reciter muaiqly{"Maher_AlMuaiqly",
+                    tr("Maher Al-Muaiqly"),
+                    m_reciterDir.filePath("bismillah/muaiqly.mp3"),
+                    "https://everyayah.com/data/Maher_AlMuaiqly_64kbps/"};
+
+    Reciter mIsmail{"Mostafa_Ismail",
+                    tr("Mostafa Ismail"),
+                    m_reciterDir.filePath("bismillah/mismail.mp3"),
+                    "https://quran.ksu.edu.sa/ayat/mp3/Mostafa_Ismail_128kbps/"};
+
+    Reciter mJibreel{"Muhammad_Jibreel",
+                     tr("Muhammad Jibreel"),
+                     m_reciterDir.filePath("bismillah/mjibreel.mp3"),
+                     "https://quran.ksu.edu.sa/ayat/mp3/Muhammad_Jibreel_64kbps/"};
 
     m_recitersList.append(husary);
     m_recitersList.append(husaryQasr);
@@ -113,6 +181,19 @@ void VersePlayer::fillRecitersList()
     m_recitersList.append(tunaiji);
     m_recitersList.append(dussary);
     m_recitersList.append(banna);
+    m_recitersList.append(basfar);
+    m_recitersList.append(shatree);
+    m_recitersList.append(ajamy);
+    m_recitersList.append(aliJaber);
+    m_recitersList.append(fAbbad);
+    m_recitersList.append(ghamadi);
+    m_recitersList.append(hRifai);
+    m_recitersList.append(hudhaify);
+    m_recitersList.append(shuraym);
+    m_recitersList.append(alqatami);
+    m_recitersList.append(muaiqly);
+    m_recitersList.append(mIsmail);
+    m_recitersList.append(mJibreel);
 
     m_reciterDir.cdUp();
 }
@@ -135,12 +216,12 @@ void VersePlayer::nextVerse()
             m_activeVerse.surah++;
             m_activeVerse.number = 1;
             updateSurahVerseCount(); // set new surah verse count
-            emit newSurah();         // signals surah change
+            emit surahChanged();     // signals surah change
         }
 
     } else {
         m_activeVerse.number++;
-        emit newVerse(); // signals active verse change
+        emit verseNoChanged(); // signals active verse change
     }
 }
 

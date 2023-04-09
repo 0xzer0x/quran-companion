@@ -62,7 +62,6 @@ private slots:
     void actionPrefTriggered();
     void actionDMTriggered();
     void navigateToVerse(Verse v);
-    void updateHighlightColor();
     void showExpandedVerseTafsir();
     void openSearchDialog();
     void missingRecitationFileWarn();
@@ -75,8 +74,8 @@ private slots:
     void updateLoadedTafsir();
     void updateLoadedTranslation();
     void updateSideFont();
-    void updateQuranFontSize();
     void addSideContent();
+    void copyVerseText(int IdxInPage);
 
 private:
     void init();
@@ -88,24 +87,22 @@ private:
     bool m_internalVerseChange = false;
     bool m_darkMode = false;
     Ui::MainWindow *ui;
-    QuranPageBrowser *m_quranBrowser;
     QIntValidator *verseValidator = nullptr;
-    Verse m_currVerse{1, 1, 1};
+    QuranPageBrowser *m_quranBrowser;
+    DBManager *m_dbManPtr;
+    VersePlayer *m_player;
     SearchDialog *m_srchDlg = nullptr;
     SettingsDialog *m_settingsDlg = nullptr;
     DownloaderDialog *m_downloaderDlg = nullptr;
     DownloadManager *m_downManPtr = nullptr;
-    QSettings *m_settingsPtr;
-    SideContent m_sideContent;
-    DBManager *m_dbManPtr;
-    VersePlayer *m_player;
-    QList<Verse> m_vInfoList;
-    QList<QFrame *> m_verseFrameList;
-    QTextCursor *m_highlighter;
-    QBrush m_highlightColor;
     VerseFrame *m_highlightedFrm = nullptr;
-    QDir m_assetsDir = QDir::currentPath() + QDir::separator() + "assets";
+    QSettings *m_settingsPtr;
+    Verse m_currVerse{1, 1, 1};
+    SideContent m_sideContent;
+    QDir m_assetsDir = QApplication::applicationDirPath() + QDir::separator() + "assets";
     QFont m_sideFont;
     QString m_verseHighlightTemplate;
+    QList<Verse> m_vInfoList;
+    QList<QFrame *> m_verseFrameList;
 };
 #endif // MAINWINDOW_H

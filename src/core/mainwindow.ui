@@ -298,61 +298,6 @@ border-style:solid;
          <height>0</height>
         </size>
        </property>
-       <item>
-        <property name="text">
-         <string>Al-Husary</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Al-Husary (Qasr)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Al-Husary (Mujawwad)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Abdul-Basit</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Abdul-Basit (Mujawwad)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Menshawi</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Menshawi (Mujawwad)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Mishary Alafasy</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Khalefa Al-Tunaiji</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Yasser Ad-Dussary</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Mahmoud Al-Banna</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item>

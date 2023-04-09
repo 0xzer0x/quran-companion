@@ -46,8 +46,8 @@ public slots:
     void changeUsedAudioDevice(QAudioDevice dev);
 
 signals:
-    void newSurah();
-    void newVerse();
+    void surahChanged();
+    void verseNoChanged();
     void missingVerseFile();
 
 private:
