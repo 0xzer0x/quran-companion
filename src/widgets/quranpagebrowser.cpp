@@ -115,13 +115,12 @@ void QuranPageBrowser::constructPage(int pageNo)
     if (pageNo < 3) {
         measureLine = lines.at(3);
     } else if (pageNo >= 602) {
-        measureLine = lines.at(1);
+        measureLine = lines.at(2);
     } else {
-        measureLine = lines.last();
+        measureLine = lines.at(lines.size() - 2);
     }
 
     m_pageWidth = fm.size(Qt::TextSingleLine, measureLine.remove(':')).width() + 5;
-    bool newSurah = false;
     foreach (QString l, lines) {
         l = l.trimmed();
         if (l.contains("frame")) {
@@ -146,14 +145,10 @@ void QuranPageBrowser::constructPage(int pageNo)
             cur.insertBlock(pageFormat, pageTextFormat);
             cur.insertImage(frm.scaledToWidth(m_pageWidth, Qt::SmoothTransformation));
 
-            newSurah = true;
+        } else if (l.contains("bsml")) {
+            cur.insertBlock(pageFormat, bsmlFormat);
+            cur.insertText("321");
         } else {
-            if (newSurah && pageNo != 1 && pageNo != 187) {
-                newSurah = false;
-                cur.insertBlock(pageFormat, bsmlFormat);
-                cur.insertText("321");
-            }
-
             cur.insertBlock(pageFormat, pageTextFormat);
             if (l.contains(':')) {
                 foreach (QChar glyph, l) {
@@ -215,6 +210,8 @@ void QuranPageBrowser::highlightVerse(int verseIdxInPage)
     m_highlighter->mergeCharFormat(tcf);
 
     qInfo() << "Selected verse #" + QString::number(verseIdxInPage) + " in page";
+
+    m_highlightedIdx = verseIdxInPage;
 }
 
 void QuranPageBrowser::createActions()
@@ -250,6 +247,7 @@ void QuranPageBrowser::actionZoomIn()
     m_fontSize += 2;
     m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size", m_fontSize);
     constructPage(m_page);
+    highlightVerse(m_highlightedIdx);
 }
 
 void QuranPageBrowser::actionZoomOut()
@@ -257,6 +255,7 @@ void QuranPageBrowser::actionZoomOut()
     m_fontSize -= 2;
     m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size", m_fontSize);
     constructPage(m_page);
+    highlightVerse(m_highlightedIdx);
 }
 
 void QuranPageBrowser::actionCopy()

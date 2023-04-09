@@ -50,6 +50,7 @@ private:
     int m_qcfVer;
     int m_fontSize;
     int m_pageWidth;
+    int m_highlightedIdx = -1;
     QPoint m_mousePos;
     QPoint m_mouseGlobalPos;
     QString m_iconsPath;
