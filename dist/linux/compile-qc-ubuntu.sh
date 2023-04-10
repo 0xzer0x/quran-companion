@@ -13,7 +13,6 @@ echo;echo;
 echo '#---------------------[Building]---------------------#'
 echo;echo;
 
-export QT_MEDIA_BACKEND=ffmpeg;
 cmake ../../../;
 make;
 

@@ -111,7 +111,6 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 - CMake >= 3.22
 - ffmpeg
 - openssl1.1.1
-
 - Inno setup for windows (Optional)
 
 ### Build
@@ -136,29 +135,32 @@ For Ubuntu, a script is provided in _dist/linux_ to preform the following steps.
 
 2. Install dependencies
 
+- **Ubuntu**
+
 ```sh
-  sudo apt install build-essential cmake qt6-tools-dev qt6-base-dev qt6-image-formats-plugins qt6-multimedia-dev qt6-l10n-tools qt6-translations-l10n
+sudo apt install build-essential cmake qt6-tools-dev qt6-base-dev qt6-image-formats-plugins qt6-multimedia-dev qt6-l10n-tools qt6-translations-l10n ffmpeg
+```
+
+- **Arch linux**
+
+```sh
+sudo pacman -Sy base-devel cmake qt6-base qt6-multimedia qt6-tools qt6-imageformats qt6-translations ffmpeg
 ```
 
 3. Build
 
 ```sh
-  cd dist/linux
   mkdir build
   cd build
-  cmake ../../../
+  cmake ..
   make
 ```
 
-4. Copy final application files to bundle directory
+4. If you're using Qt 6.4, you need to set the **QT_MEDIA_BACKEND** environmental variable to `ffmpeg` every time you run the executable, you could put the following snippet in a bash file to run the application
 
 ```sh
-  cd ..
-  mkdir bundle
-  cp -r build/quran-companion bundle/
-  cp -r build/assets bundle/
-  cp -r build/audio bundle/
-  cp -r build/translations bundle/
+export QT_MEDIA_BACKEND=ffmpeg
+./quran-companion
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
