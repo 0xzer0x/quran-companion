@@ -84,6 +84,9 @@ QString QuranPageBrowser::constructPageHeader(int page)
 
 void QuranPageBrowser::constructPage(int pageNo)
 {
+    if (pageNo != m_page)
+        m_highlightedIdx = -1;
+
     if (!m_pageVerseCoords.empty()) {
         qDeleteAll(m_pageVerseCoords);
         m_pageVerseCoords.clear();

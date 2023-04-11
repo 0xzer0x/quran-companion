@@ -1072,20 +1072,26 @@ border-style:solid;
   </widget>
   <action name="actionPereferences">
    <property name="icon">
-    <iconset resource="../../resources.qrc">
+    <iconset>
      <normaloff>:/assets/images/prefs.png</normaloff>:/assets/images/prefs.png</iconset>
    </property>
    <property name="text">
     <string>Preferences</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
   </action>
   <action name="actionDownload_manager">
    <property name="icon">
-    <iconset resource="../../resources.qrc">
+    <iconset>
      <normaloff>:/assets/images/download-manager.png</normaloff>:/assets/images/download-manager.png</iconset>
    </property>
    <property name="text">
     <string>Download manager</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="actionExit">
@@ -1097,19 +1103,23 @@ border-style:solid;
    <property name="text">
     <string>Exit</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
   </action>
   <action name="actionFind">
    <property name="icon">
-    <iconset resource="../../resources.qrc">
+    <iconset>
      <normaloff>:/assets/images/search.png</normaloff>:/assets/images/search.png</iconset>
    </property>
    <property name="text">
     <string>Find</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
   </action>
  </widget>
- <resources>
-  <include location="../../resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

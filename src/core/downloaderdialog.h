@@ -60,6 +60,7 @@ private:
     DBManager *m_dbPtr;
     QSettings *m_appSettings;
     QString m_ssProgBar;
+    QStringList m_surahDisplayNames;
 };
 
 #endif // DOWNLOADERDIALOG_H

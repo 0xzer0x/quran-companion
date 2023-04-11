@@ -7,6 +7,7 @@
  * \param settingsptr pointer to settings instance to access app settings
  * \param downloader pointer to backend downloader object
  * \param dbMan pointer to database management/interaction object
+ * \param iconsPath path to current theme icons
  */
 DownloaderDialog::DownloaderDialog(QWidget *parent,
                                    QSettings *settingsptr,
@@ -16,15 +17,19 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
     : QDialog(parent)
     , ui(new Ui::DownloaderDialog)
     , m_iconsPath{iconsPath}
+    , m_appSettings{settingsptr}
+    , m_downloaderPtr{downloader}
+    , m_dbPtr{dbMan}
+
 {
     ui->setupUi(this);
-
     setWindowTitle(tr("Download Manager"));
     setWindowIcon(QIcon(m_iconsPath + "download-manager.png"));
 
-    m_appSettings = settingsptr;
-    m_downloaderPtr = downloader;
-    m_dbPtr = dbMan;
+    bool en = m_appSettings->value("Language").toString() == "العربية" ? false : true;
+    for (int i = 1; i <= 114; i++) {
+        m_surahDisplayNames.append(m_dbPtr->getSurahName(i, en));
+    }
 
     // treeview setup
     QStringList headers;
@@ -78,16 +83,13 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
  */
 void DownloaderDialog::fillTreeView()
 {
-    bool en = m_appSettings->value("Language").toString() == "العربية" ? false : true;
-
     for (Reciter &reciter : m_downloaderPtr->recitersList()) {
         QStandardItem *item = new QStandardItem(reciter.displayName);
 
         m_treeModel.invisibleRootItem()->appendRow(item);
 
         for (int j = 1; j <= 114; j++) {
-            QString sName = m_dbPtr->getSurahName(j, en);
-            QStandardItem *suraItem = new QStandardItem(sName);
+            QStandardItem *suraItem = new QStandardItem(m_surahDisplayNames.at(j - 1));
 
             QList<QStandardItem *> rw;
             rw.append(new QStandardItem(QString::number(j)));
@@ -129,7 +131,7 @@ void DownloaderDialog::addToQueue()
 void DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
 {
     QString reciter = m_downloaderPtr->recitersList().at(reciterIdx).displayName;
-    QString surahName = m_treeModel.index(surah - 1, 1, m_treeModel.index(1, 0)).data().toString();
+    QString surahName = m_surahDisplayNames.at(surah-1);
 
     QString objName = reciter + tr(" // Surah: ") + surahName;
 

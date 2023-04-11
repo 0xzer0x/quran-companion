@@ -58,7 +58,8 @@ void VersePlayer::fillRecitersList()
     Reciter husaryQasr{"Al-Husary_(Qasr)",
                        tr("Al-Husary (Qasr)"),
                        husary.basmallahPath,
-                       "https://quran.ksu.edu.sa/ayat/mp3/husary_qasr_64kbps/"};
+                       "https://github.com/0xzer0x/quran-companion/raw/audio-files/audio/"
+                       "husary_qasr_64kbps/"};
 
     Reciter husaryMujawwad{"Al-Husary_(Mujawwad)",
                            tr("Al-Husary (Mujawwad)"),
