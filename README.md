@@ -1,5 +1,8 @@
 <a name="readme-top"></a>
 
+<p align="center">
+<span  dir="rtl">بسم الله الرحمن الرحيم</span>
+</p>
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -86,9 +89,15 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Installation
+## Installation
 
-Currently, only windows setup packages are provided in the [release page][latest-release].
+**Windows**
+
+setup packages are provided in the [release page][latest-release].
+
+**Linux**
+
+prebuilt archives are provided in the [release page][latest-release]. Extract the archive in a location where your user has write access & run the application through the `quran-companion.sh` bash script.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -110,7 +119,7 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
   - Qt Multimedia
 - CMake >= 3.22
 - ffmpeg
-- openssl1.1.1
+- openssl
 - Inno setup for windows (Optional)
 
 ### Build

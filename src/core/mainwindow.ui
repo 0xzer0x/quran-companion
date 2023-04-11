@@ -82,6 +82,9 @@
            <normalon>:/assets/images/arrow-left.png</normalon>
           </iconset>
          </property>
+         <property name="shortcut">
+          <string>Left</string>
+         </property>
          <property name="flat">
           <bool>false</bool>
          </property>
@@ -214,6 +217,9 @@ border-style:solid;
           <iconset>
            <normalon>:/assets/images/arrow-right.png</normalon>
           </iconset>
+         </property>
+         <property name="shortcut">
+          <string>Right</string>
          </property>
         </widget>
        </item>

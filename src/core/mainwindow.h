@@ -48,34 +48,41 @@ public slots:
 private slots:
     void nextPage();
     void prevPage();
+
     void btnPlayClicked();
     void btnPauseClicked();
     void btnStopClicked();
+
     void cmbPageChanged(int newPageIdx);
     void cmbSurahChanged(int newSurahIdx);
     void cmbVerseChanged(int newVerseIdx);
     void updateVerseDropDown();
     void gotoPage(int page);
     void gotoSurah(int surahIdx);
+
     void activeVerseChanged();
+    void missingRecitationFileWarn();
+    void mediaPosChanged(qint64 position);
+    void mediaStateChanged(QMediaPlayer::PlaybackState state);
+
     void spaceKeyPressed();
     void actionPrefTriggered();
     void actionDMTriggered();
-    void navigateToVerse(Verse v);
-    void showExpandedVerseTafsir();
     void openSearchDialog();
-    void missingRecitationFileWarn();
-    void mediaStateChanged(QMediaPlayer::PlaybackState state);
-    void mediaPosChanged(qint64 position);
+
     void verseClicked();
+    void showExpandedVerseTafsir();
+    void navigateToVerse(Verse v);
     void verseAnchorClicked(const QUrl &hrefUrl);
+    void copyVerseText(int IdxInPage);
+
     void redrawQuranPage();
+    void addSideContent();
+
     void updateSideContentType();
     void updateLoadedTafsir();
     void updateLoadedTranslation();
     void updateSideFont();
-    void addSideContent();
-    void copyVerseText(int IdxInPage);
 
 private:
     void init();

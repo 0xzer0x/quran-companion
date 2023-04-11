@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Quran Companion"
-#define MyAppVersion "0.1"
+#define MyAppVersion "1.0.0-alpha"
 #define MyAppPublisher "0xzer0x"
 #define MyAppURL "https://github.com/0xzer0x/quran-companion"
 #define MyAppExeName "quran-companion.exe"
@@ -24,7 +24,7 @@ LicenseFile=..\..\license.txt
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 OutputDir=.
-OutputBaseFilename=qc-beta-x64-setup
+OutputBaseFilename=quran-companion_v1.0.0-alpha_x64_setup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
