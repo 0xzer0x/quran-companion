@@ -94,7 +94,7 @@ void VersePlayer::fillRecitersList()
     Reciter tunaiji{"Khalefa_Al-Tunaiji",
                     tr("Khalefa Al-Tunaiji"),
                     m_reciterDir.filePath("bismillah/tunaiji.mp3"),
-                    "	https://quran.ksu.edu.sa/ayat/mp3/tunaiji_64kbps/"};
+                    "https://quran.ksu.edu.sa/ayat/mp3/tunaiji_64kbps/"};
 
     Reciter dussary{"Yasser_Ad-Dussary",
                     tr("Yasser Ad-Dussary"),
