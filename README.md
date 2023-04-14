@@ -114,7 +114,6 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 - CMake >= 3.22
 - ffmpeg
 - openssl
-- Inno setup for windows (Optional)
 
 ### Build
 
@@ -130,7 +129,14 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 
 3. Add the Qt bin directory to the system **PATH** variable, usually `C:\Qt\6.X.X\mingw_64\bin`
 
-4. Navigate to the _dist/windows_ dir & run the `build-setup.bat` script. This should create a _Bundle_ folder that contains the full application. If you installed Inno setup, a setup file will also be created.
+4. Build
+
+```cmd
+  mkdir build
+  cd build
+  cmake.exe -DCMAKE_BUILD_TYPE=Release -G "Ninja" ..
+  ninja
+```
 
 #### Linux
 
