@@ -155,8 +155,13 @@ void QuranPageBrowser::constructPage(int pageNo)
             cur.insertImage(frm.scaledToWidth(m_pageWidth, Qt::SmoothTransformation));
 
         } else if (l.contains("bsml")) {
-            cur.insertBlock(pageFormat, bsmlFormat);
-            cur.insertText("321");
+            QImage bsml(":/assets/images/basmalah.png");
+            if (m_darkMode)
+                bsml.invertPixels();
+
+            cur.insertBlock(pageFormat, pageTextFormat);
+            cur.insertImage(bsml.scaledToWidth(m_pageWidth, Qt::SmoothTransformation));
+
         } else {
             cur.insertBlock(pageFormat, pageTextFormat);
             if (l.contains(':')) {

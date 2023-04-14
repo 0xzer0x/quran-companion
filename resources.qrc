@@ -26,5 +26,6 @@
         <file>images/dark/zoom-in.png</file>
         <file>images/dark/zoom-out.png</file>
         <file>images/dark/prefs.png</file>
+        <file>images/basmalah.png</file>
     </qresource>
 </RCC>
