@@ -91,13 +91,7 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 
 ## Installation
 
-**Windows**
-
-setup packages are provided in the [release page][latest-release].
-
-**Linux**
-
-prebuilt archives are provided in the [release page][latest-release]. Extract the archive in a location where your user has write access & run the application through the `quran-companion.sh` bash script.
+- Online installers are provided for Windows & Linux in the [release page][latest-release], this is the recommended method as it provides updating functionality through the `QCMaintenanceTool`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

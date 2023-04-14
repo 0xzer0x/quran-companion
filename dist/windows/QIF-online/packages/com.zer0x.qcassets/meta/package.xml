@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>assets</DisplayName>
+    <Description>Install the required application assets.</Description>
+    <Version>0.0.0</Version>
+    <ReleaseDate>2023-04-13</ReleaseDate>
+    <Default>true</Default>
+</Package>
