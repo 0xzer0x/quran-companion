@@ -1,8 +1,7 @@
 *.exe
 *.run
 CMakeLists.txt.user
-audio/husary_qasr_64kbps/*.mp3
 dist/windows/*
-!dist/windows/QIF-online/
 dist/linux/*
-!dist/linux/QIF-online/
+!dist/windows/online-installer/
+!dist/linux/online-installer/

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>Qt runtime libraries</DisplayName>
+    <Description>Required Qt libraries to run the application.</Description>
+    <Version>0.0.0</Version>
+    <ReleaseDate>2023-04-03</ReleaseDate>
+    <Default>true</Default>
+</Package>
