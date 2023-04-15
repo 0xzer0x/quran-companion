@@ -18,7 +18,7 @@
     <br />
     <a href="https://github.com/0xzer0x/quran-companion/releases/latest"><img src="https://img.shields.io/github/v/release/0xzer0x/quran-companion"></a> <img src="https://img.shields.io/github/v/tag/0xzer0x/quran-companion">
     <br />
-    <a href="https://github.com/0xzer0x/quran-companion#usage">View Demo</a>
+    <a href="https://github.com/0xzer0x/quran-companion#screenshots">View Demo</a>
     ·
     <a href="https://github.com/0xzer0x/quran-companion/issues">Report Bug</a>
     ·
