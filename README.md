@@ -54,7 +54,7 @@
         </ul>
     </li>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#screenshots">Screenshots</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -175,9 +175,15 @@ export QT_MEDIA_BACKEND=ffmpeg
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <!-- USAGE EXAMPLES -->
 
-## Usage
+## Screenshots
 
-TO-BE-FILLED
+![light.png](screenshots/light.png)
+
+![dark.png](screenshots/dark.png)
+
+### Arabic UI
+
+![ar_dark.png](screenshots/ar_dark.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -185,9 +191,13 @@ TO-BE-FILLED
 
 ## Roadmap
 
+- [ ] Add more tafsir books
 - [ ] Add bookmarked verses tab
 - [ ] Add daily verse functionality
-- [ ] Add more tafsir books
+- [ ] Enhance search functionality
+  - [ ] Search in a range of pages only
+  - [ ] Search in a specific surah only
+  - [ ] Search the English translation
 
 See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a full list of proposed features (and known issues).
 
