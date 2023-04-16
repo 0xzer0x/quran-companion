@@ -134,7 +134,7 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 ```cmd
   mkdir build
   cd build
-  cmake.exe -DCMAKE_BUILD_TYPE=Release -G "Ninja" ..
+  cmake.exe -DCMAKE_PREFIX_PATH="C:\Qt\6.5.0\mingw_64" -DCMAKE_BUILD_TYPE=Release -G "Ninja" ..
   ninja
 ```
 

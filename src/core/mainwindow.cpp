@@ -513,33 +513,49 @@ void MainWindow::verseAnchorClicked(const QUrl &hrefUrl)
   idx.remove('#');
   Verse v = m_vInfoList.at(idx.toInt());
 
-  m_currVerse.number = v.number;
-  m_player->setVerse(m_currVerse);
+  int chosenAction = m_quranBrowser->lmbVerseMenu();
 
-  if (m_currVerse.surah != v.surah) {
-        m_currVerse.surah = v.surah;
-
-        m_player->setVerse(m_currVerse);
-        m_player->updateSurahVerseCount();
-        updateVerseDropDown();
-
-        m_internalSurahChange = true;
-        ui->cmbSurah->setCurrentIndex(v.surah - 1);
-        m_internalSurahChange = false;
-  }
-
-  m_internalVerseChange = true;
-  ui->cmbVerse->setCurrentIndex(v.number - 1);
-  m_internalVerseChange = false;
-
-  if (m_settingsPtr->value("Reader/CopyVerseOnClick").toBool()) {
+  // copy
+  if (chosenAction == 2) {
         QClipboard *clip = QApplication::clipboard();
         clip->setText(m_dbManPtr->getVerseText(v.surah, v.number));
   }
+  // select or play
+  else if (chosenAction == 0 || chosenAction == 1) {
+        m_currVerse.number = v.number;
+        m_player->setVerse(m_currVerse);
 
-  m_endOfPage = false;
-  m_player->setVerseFile(m_player->constructVerseFilename());
-  btnPlayClicked();
+        if (m_currVerse.surah != v.surah) {
+            m_currVerse.surah = v.surah;
+
+            m_player->setVerse(m_currVerse);
+            m_player->updateSurahVerseCount();
+            updateVerseDropDown();
+
+            m_internalSurahChange = true;
+            ui->cmbSurah->setCurrentIndex(v.surah - 1);
+            m_internalSurahChange = false;
+        }
+
+        m_internalVerseChange = true;
+        ui->cmbVerse->setCurrentIndex(v.number - 1);
+
+        m_internalVerseChange = false;
+
+        m_endOfPage = false;
+        switch (chosenAction) {
+        case 0:
+            m_player->setVerseFile(m_player->constructVerseFilename());
+            btnPlayClicked();
+            break;
+        case 1:
+            m_player->setSource(QUrl());
+            highlightCurrentVerse();
+            break;
+        default:
+            break;
+        }
+  }
 }
 
 /*!
@@ -564,7 +580,7 @@ void MainWindow::highlightCurrentVerse()
   verseFrame->highlightFrame();
 
   if (m_highlightedFrm != nullptr) {
-        ui->scrlVerseByVerse->verticalScrollBar()->setValue(m_highlightedFrm->pos().y());
+        ui->scrlVerseByVerse->ensureWidgetVisible(verseFrame);
   }
 
   m_highlightedFrm = verseFrame;

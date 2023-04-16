@@ -44,7 +44,6 @@ public slots:
     void updateQuranFontSize(QString size);
     void updateSideFont(QFont fnt);
     void updateSideFontSize(QString size);
-    void updateCpyVerseChk(bool state);
     void applyAllChanges();
 
 signals:
@@ -74,7 +73,6 @@ private:
     int m_tafsir;
     int m_trans;
     QFont m_sideFont;
-    bool m_cpyVerseChk;
     bool m_renderSideContent = false;
     bool m_renderQuranPage = false;
     bool m_restartReq = false;

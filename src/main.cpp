@@ -36,7 +36,6 @@ int main(int argc, char *argv[])
         appSettings.setValue("QCF2Size", 20);
         appSettings.setValue("QCF", 1);
         appSettings.setValue("SideContentFont", QFont("Droid Sans Arabic", 14));
-        appSettings.setValue("CopyVerseOnClick", true);
         appSettings.endGroup();
     }
 

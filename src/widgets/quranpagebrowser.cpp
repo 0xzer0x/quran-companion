@@ -228,17 +228,41 @@ void QuranPageBrowser::highlightVerse(int verseIdxInPage)
     m_highlightedIdx = verseIdxInPage;
 }
 
+int QuranPageBrowser::lmbVerseMenu()
+{
+    QMenu lmbMenu(this);
+    lmbMenu.addAction(m_playAct);
+    lmbMenu.addAction(m_selectAct);
+    lmbMenu.addSeparator();
+    lmbMenu.addAction(m_copyAct);
+
+    QAction *chosen = lmbMenu.exec(QCursor::pos());
+
+    int actionIdx = -1;
+    if (chosen == m_playAct)
+        actionIdx = 0;
+    else if (chosen == m_selectAct)
+        actionIdx = 1;
+    else if (chosen == m_copyAct)
+        actionIdx = 2;
+
+    return actionIdx;
+}
+
 void QuranPageBrowser::createActions()
 {
     m_zoomIn = new QAction(tr("Zoom In"), this);
     m_zoomOut = new QAction(tr("Zoom Out"), this);
     m_copyAct = new QAction(tr("Copy Verse"), this);
+    m_selectAct = new QAction(tr("Select"), this);
+    m_playAct = new QAction(tr("Play"), this);
     m_zoomIn->setIcon(QIcon(m_iconsPath + "zoom-in.png"));
     m_zoomOut->setIcon(QIcon(m_iconsPath + "zoom-out.png"));
+    m_playAct->setIcon(QIcon(m_iconsPath + "play.png"));
+    m_selectAct->setIcon(QIcon(m_iconsPath + "select.png"));
     m_copyAct->setIcon(QIcon(m_iconsPath + "copy.png"));
     connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
     connect(m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);
-    connect(m_copyAct, &QAction::triggered, this, &QuranPageBrowser::actionCopy);
 }
 
 #ifndef QT_NO_CONTEXTMENU
@@ -247,8 +271,6 @@ void QuranPageBrowser::contextMenuEvent(QContextMenuEvent *event)
     QMenu menu(this);
     menu.addAction(m_zoomIn);
     menu.addAction(m_zoomOut);
-    menu.addSeparator();
-    menu.addAction(m_copyAct);
 
     m_mousePos = event->pos();
     m_mouseGlobalPos = event->globalPos();

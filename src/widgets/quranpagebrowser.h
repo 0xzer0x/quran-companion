@@ -27,6 +27,7 @@ public:
     QString constructPageHeader(int page);
     void constructPage(int pageNo);
     void highlightVerse(int verseIdxInPage);
+    int lmbVerseMenu();
 
     int fontSize() const;
     QString pageFont() const;
@@ -60,6 +61,8 @@ private:
     QAction *m_zoomIn;
     QAction *m_zoomOut;
     QAction *m_copyAct;
+    QAction *m_selectAct;
+    QAction *m_playAct;
     QTextCursor *m_highlighter;
     QBrush m_highlightColor;
     QList<int *> m_pageVerseCoords;

@@ -34,7 +34,6 @@ SettingsDialog::SettingsDialog(QWidget *parent,
 
     ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
     ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
-    ui->chkCopyVerseOnClick->setChecked(m_cpyVerseChk);
     ui->fntCmbSide->setCurrentFont(m_sideFont);
     ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
     ui->cmbSideContent->setCurrentIndex(m_sideContent);
@@ -168,14 +167,6 @@ void SettingsDialog::updateSideFontSize(QString size)
     m_renderSideContent = true;
 }
 
-/*!
- * \brief SettingsDialog::updateCpyVerseChk slot to update the copy verse flag in the settings file
- * \param state
- */
-void SettingsDialog::updateCpyVerseChk(bool state)
-{
-    m_settingsPtr->setValue("Reader/CopyVerseOnClick", state);
-}
 
 /*!
  * \brief SettingsDialog::applyAllChanges slot to check whether any value of the settings in the dialog changed and apply it
@@ -218,10 +209,6 @@ void SettingsDialog::applyAllChanges()
         updateSideFontSize(ui->cmbSideFontSz->currentText());
     }
 
-    if (ui->chkCopyVerseOnClick->isChecked() != m_cpyVerseChk) {
-        updateCpyVerseChk(ui->chkCopyVerseOnClick->isChecked());
-    }
-
     if (ui->cmbAudioDevices->currentIndex() != m_audioOutIdx) {
         m_audioOutIdx = ui->cmbAudioDevices->currentIndex();
         emit usedAudioDeviceChanged(m_audioDevices.at(m_audioOutIdx));
@@ -261,7 +248,6 @@ void SettingsDialog::setCurrentSettingsAsRef()
     m_sideContent = m_settingsPtr->value("SideContent").toInt();
     m_tafsir = m_settingsPtr->value("Tafsir").toInt();
     m_trans = m_settingsPtr->value("Translation").toInt();
-    m_cpyVerseChk = m_settingsPtr->value("CopyVerseOnClick").toBool();
 
     m_settingsPtr->endGroup();
 
