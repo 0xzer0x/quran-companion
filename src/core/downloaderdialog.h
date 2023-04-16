@@ -43,7 +43,7 @@ public slots:
     void surahDownloaded();
     void downloadAborted();
     void topTaskDownloadError();
-    void selectDownloadable(int reciter, int surah);
+    void updateDownloadSpeed(int value, QString unit);
 
     // QWidget interface
 protected:
@@ -54,6 +54,7 @@ private:
     QString m_iconsPath;
     DownloadProgressBar *m_currentBar;
     QLabel *m_currentLb;
+    QLabel *m_currDownSpeedLb;
     QList<QFrame *> m_frameLst;
     QStandardItemModel m_treeModel;
     DownloadManager *m_downloaderPtr;

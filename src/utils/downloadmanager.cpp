@@ -6,8 +6,8 @@ DownloadManager::DownloadManager(QObject *parent, DBManager *dbptr, QList<Recite
     , m_netMan{new QNetworkAccessManager(this)}
     , m_dbPtr{dbptr}
 {
-    m_downloadPath.setPath(QApplication::applicationDirPath());
-    m_downloadPath.cd("audio");
+    m_topLevelPath.setPath(QApplication::applicationDirPath());
+    m_topLevelPath.cd("audio");
 
     connect(m_netMan,
             &QNetworkAccessManager::finished,
@@ -66,16 +66,16 @@ void DownloadManager::processQueueHead()
     }
 
     m_currentTask = m_downloadQueue.dequeue();
-    qInfo() << "current task - " << m_currentTask.link;
+    qInfo() << "current download task - " << m_currentTask.link;
+    m_currSurahCount = m_dbPtr->getSurahVerseCount(m_currentTask.surah);
+
+    m_downloadPath = m_topLevelPath;
     m_downloadPath.cd(m_recitersList.at(m_currentTask.reciterIdx).baseDirName);
 
-    int sCount = m_dbPtr->getSurahVerseCount(m_currentTask.surah);
-
     while (m_downloadPath.exists(m_currentTask.link.fileName())) {
-        emit downloadProgressed(m_currentTask.verse, sCount);
+        emit downloadProgressed(m_currentTask.verse, m_currSurahCount);
 
-        if (m_currentTask.verse == sCount) {
-            m_downloadPath.cdUp();
+        if (m_currentTask.verse == m_currSurahCount) {
             emit downloadComplete();
         }
 
@@ -91,6 +91,33 @@ void DownloadManager::processQueueHead()
     m_isDownloading = true;
     QNetworkRequest req(m_currentTask.link);
     m_currentTask.networkReply = m_netMan->get(req);
+    m_downloadStart = QTime::currentTime();
+
+    connect(m_currentTask.networkReply,
+            &QNetworkReply::downloadProgress,
+            this,
+            &DownloadManager::downloadProgress);
+}
+
+void DownloadManager::downloadProgress(qint64 bytes, qint64 total)
+{
+    int secs = m_downloadStart.secsTo(QTime::currentTime());
+    if (secs < 1)
+        secs = 1;
+
+    int speedPerSec = bytes / secs;
+    QString unit = tr("bytes");
+    if (speedPerSec >= 1024) {
+        unit = tr("KB");
+        speedPerSec /= 1024;
+    }
+
+    if (speedPerSec >= 1024) {
+        unit = tr("MB");
+        speedPerSec /= 1024;
+    }
+
+    emit downloadSpeedUpdated(speedPerSec, unit);
 }
 
 void DownloadManager::finishupTask(QNetworkReply *replyData)
@@ -102,13 +129,16 @@ void DownloadManager::finishupTask(QNetworkReply *replyData)
 
     saveFile(replyData, m_currentTask.link.fileName());
 
-    m_downloadPath.cdUp();
-
-    emit downloadProgressed(m_currentTask.verse, m_dbPtr->getSurahVerseCount(m_currentTask.surah));
-
-    if (m_currentTask.verse == m_dbPtr->getSurahVerseCount(m_currentTask.surah)) {
+    emit downloadProgressed(m_currentTask.verse, m_currSurahCount);
+    if (m_currentTask.verse == m_currSurahCount) {
         emit downloadComplete();
     }
+
+    disconnect(m_currentTask.networkReply,
+               &QNetworkReply::downloadProgress,
+               this,
+               &DownloadManager::downloadProgress);
+    m_currentTask.clear();
 
     if (!m_downloadQueue.isEmpty())
         processQueueHead();

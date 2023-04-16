@@ -76,6 +76,11 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
             this,
             &DownloaderDialog::topTaskDownloadError,
             Qt::UniqueConnection);
+
+    connect(m_downloaderPtr,
+            &DownloadManager::downloadSpeedUpdated,
+            this,
+            &DownloaderDialog::updateDownloadSpeed);
 }
 
 /*!
@@ -137,19 +142,27 @@ void DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
 
     QFrame *prgFrm = new QFrame(ui->scrollAreaWidgetContents);
     prgFrm->setLayout(new QVBoxLayout);
-
     prgFrm->setObjectName(objName);
 
-    QLabel *lbTitle = new QLabel;
+    QBoxLayout *downInfo;
+    if (m_appSettings->value("Language").toString() == "العربية")
+        downInfo = new QBoxLayout(QBoxLayout::RightToLeft, prgFrm);
+    else
+        downInfo = new QHBoxLayout(prgFrm);
 
+    QLabel *lbTitle = new QLabel(prgFrm);
+    lbTitle->setObjectName("DownloadInfo");
     lbTitle->setText(prgFrm->objectName());
+    QLabel *downSpeed = new QLabel(prgFrm);
+    downSpeed->setObjectName("DownloadSpeed");
+    downSpeed->setAlignment(Qt::AlignRight);
 
-    prgFrm->layout()->addWidget(lbTitle);
+    downInfo->addWidget(lbTitle);
+    downInfo->addWidget(downSpeed);
+    prgFrm->layout()->addItem(downInfo);
 
     DownloadProgressBar *dpb = new DownloadProgressBar(prgFrm, m_dbPtr->getSurahVerseCount(surah));
-
     prgFrm->layout()->addWidget(dpb);
-
     m_frameLst.append(prgFrm);
 
     ui->lytFrameView->addWidget(prgFrm);
@@ -163,7 +176,8 @@ void DownloaderDialog::setCurrentBar()
     if (m_frameLst.empty())
         return;
 
-    m_currentLb = m_frameLst.at(0)->findChild<QLabel *>();
+    m_currentLb = m_frameLst.at(0)->findChild<QLabel *>("DownloadInfo");
+    m_currDownSpeedLb = m_frameLst.at(0)->findChild<QLabel *>("DownloadSpeed");
     m_currentLb->setText(tr("Downloading: ") + m_currentLb->parent()->objectName());
 
     m_currentBar = m_frameLst.at(0)->findChild<DownloadProgressBar *>();
@@ -175,6 +189,11 @@ void DownloaderDialog::setCurrentBar()
             m_currentBar,
             &DownloadProgressBar::updateProgress,
             Qt::UniqueConnection);
+}
+
+void DownloaderDialog::updateDownloadSpeed(int value, QString unit)
+{
+    m_currDownSpeedLb->setText(QString::number(value) + " " + unit + tr("/sec"));
 }
 
 /*!
@@ -202,12 +221,11 @@ void DownloaderDialog::downloadAborted()
 void DownloaderDialog::topTaskDownloadError()
 {
     m_currentBar->setStyleSheet("QProgressBar {text-align: center;} QProgressBar::chunk "
-                                "{border-radius:2px;background-color: red;}");
+                                "{border-radius:4px;background-color: red;}");
 
     m_currentLb->setText(tr("Couldn't download: ") + m_currentLb->parent()->objectName());
+    m_currDownSpeedLb->setText("");
 }
-
-void DownloaderDialog::selectDownloadable(int reciter, int surah) {}
 
 void DownloaderDialog::closeEvent(QCloseEvent *event)
 {
