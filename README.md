@@ -41,6 +41,11 @@
     </li>
     <li>
     <a href="#installation">Installation</a>
+      <ul>
+        <li>
+          <a href="#keyboard-shortcuts">Keyboard Shortcuts</a>
+        </li>
+      </ul>
     </li>
     <li><a href="#compilation">Compilation</a>
         <ul>
@@ -93,6 +98,18 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 
 - Online installers are provided for Windows & Linux in the [release page][latest-release], this is the recommended method as it provides updating functionality through the `QCMaintenanceTool`
 
+### Keyboard Shortcuts
+
+| Key                            | Description                     |
+| ------------------------------ | ------------------------------- |
+| <kbd>&#8592;</kbd>             | Next page                       |
+| <kbd>&#8594;</kbd>             | Previous page                   |
+| <kbd>Space</kbd>               | start/pause recitation playback |
+| <kbd>Ctrl</kbd> + <kbd>F</kbd> | Open search dialog              |
+| <kbd>Ctrl</kbd> + <kbd>P</kbd> | Open Preferences dialog         |
+| <kbd>Ctrl</kbd> + <kbd>D</kbd> | Open the Download Manager       |
+| <kbd>Ctrl</kbd> + <kbd>Q</kbd> | Exit                            |
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Compilation
@@ -129,20 +146,18 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 
 3. Add the Qt bin directory to the system **PATH** variable, usually `C:\Qt\6.X.X\mingw_64\bin`
 
-4. Build
+4. Build (replace 6.x.x with the Qt version you installed)
 
 ```cmd
   mkdir build
   cd build
-  cmake.exe -DCMAKE_PREFIX_PATH="C:\Qt\6.5.0\mingw_64" -DCMAKE_BUILD_TYPE=Release -G "Ninja" ..
+  cmake.exe -DCMAKE_PREFIX_PATH="C:\Qt\6.x.x\mingw_64" -DCMAKE_BUILD_TYPE=Release -G "Ninja" ..
   ninja
 ```
 
 #### Linux
 
-For Ubuntu, a script is provided in _dist/linux_ to preform the following steps. navigate to that directory & run the script, the final application is at the created _bundle_ directory.
-
-2. Install dependencies
+2. Install dependencies (through the Qt [online installer](https://www.qt.io/download-qt-installer) or using your distro's package manager)
 
 - **Ubuntu**
 
@@ -157,6 +172,8 @@ sudo pacman -Sy base-devel cmake qt6-base qt6-multimedia qt6-tools qt6-imageform
 ```
 
 3. Build
+
+**Note:** if you installed Qt through the online installer, you need to pass `-DCMAKE_PREFIX_PATH=~/Qt/6.x.x/gcc_64` to CMake in order for the linker to find the Qt libs
 
 ```sh
   mkdir build
@@ -173,7 +190,8 @@ export QT_MEDIA_BACKEND=ffmpeg
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-<!-- USAGE EXAMPLES -->
+
+<!-- SCREENSHOTS -->
 
 ## Screenshots
 
