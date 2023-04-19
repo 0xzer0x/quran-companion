@@ -123,7 +123,7 @@ void QuranPageBrowser::constructPage(int pageNo)
     QString measureLine;
     if (pageNo < 3) {
         measureLine = lines.at(3);
-    } else if (pageNo >= 602) {
+    } else if (pageNo >= 602 || pageNo == 596) {
         measureLine = lines.at(2);
     } else {
         measureLine = lines.at(lines.size() - 2);
