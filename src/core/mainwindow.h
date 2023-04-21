@@ -3,6 +3,7 @@
 
 #include <QBoxLayout>
 #include <QClipboard>
+#include <QDesktopServices>
 #include <QIntValidator>
 #include <QMainWindow>
 #include <QScrollBar>
@@ -42,6 +43,9 @@ public:
     ~MainWindow();
 
 public slots:
+    void visitWebsite();
+    void checkForUpdates();
+    void updateProcessCallback();
     void saveReaderState();
     void restartApp();
 
@@ -85,6 +89,7 @@ private slots:
     void updateSideFont();
 
 private:
+    void loadIcons();
     void init();
     void updateSurah();
     void updatePageVerseInfoList();
@@ -95,6 +100,8 @@ private:
     bool m_darkMode = false;
     Ui::MainWindow *ui;
     QString m_iconsPath;
+    QProcess *m_process;
+    QString m_updateToolPath;
     QIntValidator *verseValidator = nullptr;
     QuranPageBrowser *m_quranBrowser;
     DBManager *m_dbManPtr;

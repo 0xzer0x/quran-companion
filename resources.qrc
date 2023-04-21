@@ -29,5 +29,10 @@
         <file>images/basmalah.png</file>
         <file>images/dark/select.png</file>
         <file>images/light/select.png</file>
+        <file>images/splash.png</file>
+        <file>images/light/website.png</file>
+        <file>images/dark/website.png</file>
+        <file>images/light/update.png</file>
+        <file>images/dark/update.png</file>
     </qresource>
 </RCC>

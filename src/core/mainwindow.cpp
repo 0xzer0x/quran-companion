@@ -9,12 +9,32 @@
 MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_process{new QProcess(this)}
     , m_settingsPtr{settingsPtr}
 {
     m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
 
+    m_updateToolPath = QApplication::applicationDirPath() + QDir::separator() + "QCMaintenanceTool";
+#ifdef Q_OS_WIN
+    m_updateToolPath.append(".exe");
+#endif
+
     ui->setupUi(this);
     ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
+
+    loadIcons();
+    init();
+
+    if (m_settingsPtr->value("WindowState").isNull())
+        m_settingsPtr->setValue("WindowState", saveState());
+    else
+        restoreState(m_settingsPtr->value("WindowState").toByteArray());
+
+    setupConnections();
+}
+
+void MainWindow::loadIcons()
+{
     m_iconsPath = ":assets/images/";
     m_iconsPath.append(m_darkMode ? "dark/" : "light/");
     ui->actionDownload_manager->setIcon(QIcon(m_iconsPath + "download-manager.png"));
@@ -26,15 +46,8 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
     ui->btnStop->setIcon(QIcon(m_iconsPath + "stop.png"));
     ui->btnNext->setIcon(QIcon(m_iconsPath + "arrow-left.png"));
     ui->btnPrev->setIcon(QIcon(m_iconsPath + "arrow-right.png"));
-
-    init();
-
-    if (m_settingsPtr->value("WindowState").isNull())
-        m_settingsPtr->setValue("WindowState", saveState());
-    else
-        restoreState(m_settingsPtr->value("WindowState").toByteArray());
-
-    setupConnections();
+    ui->actionCheck_for_updates->setIcon(QIcon(m_iconsPath + "update.png"));
+    ui->actionWebsite->setIcon(QIcon(m_iconsPath + "website.png"));
 }
 
 /*!
@@ -124,6 +137,9 @@ void MainWindow::setupConnections()
     connect(ui->actionPereferences, &QAction::triggered, this, &MainWindow::actionPrefTriggered);
     connect(ui->actionDownload_manager, &QAction::triggered, this, &MainWindow::actionDMTriggered);
     connect(ui->actionFind, &QAction::triggered, this, &MainWindow::openSearchDialog);
+    connect(ui->actionCheck_for_updates, &QAction::triggered, this, &MainWindow::checkForUpdates);
+    connect(m_process, &QProcess::finished, this, &MainWindow::updateProcessCallback);
+    connect(ui->actionWebsite, &QAction::triggered, this, &MainWindow::visitWebsite);
 
     // Quran page
     connect(m_quranBrowser, &QTextBrowser::anchorClicked, this, &MainWindow::verseAnchorClicked);
@@ -152,6 +168,40 @@ void MainWindow::setupConnections()
     connect(spaceKey, &QShortcut::activated, this, &MainWindow::spaceKeyPressed);
     connect(ui->btnSearch, &QPushButton::clicked, this, &MainWindow::openSearchDialog);
     connect(ui->btnPreferences, &QPushButton::clicked, this, &MainWindow::actionPrefTriggered);
+}
+
+void MainWindow::visitWebsite()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/0xzer0x/quran-companion"));
+}
+
+void MainWindow::checkForUpdates()
+{
+    m_process->setWorkingDirectory(QApplication::applicationDirPath());
+
+    m_process->start(m_updateToolPath, QStringList("ch"));
+}
+
+void MainWindow::updateProcessCallback()
+{
+    QString output = m_process->readAll();
+    QString displayText;
+
+    if (output.contains("There are currently no updates available.")) {
+        displayText = tr("There are currently no updates available.");
+        QMessageBox::information(this, tr("Update info"), displayText);
+
+    } else {
+        displayText = tr("Updates available, do you want to open the update tool?");
+
+        QMessageBox::StandardButton btn = QMessageBox::question(this,
+                                                                tr("Updates info"),
+                                                                displayText);
+
+        if (btn == QMessageBox::Yes) {
+            m_process->startDetached(m_updateToolPath);
+        }
+    }
 }
 
 /* ------------------------ UI updating ------------------------ */
@@ -220,6 +270,7 @@ void MainWindow::nextPage()
     bool keepPlaying = m_player->playbackState() == QMediaPlayer::PlayingState;
     if (m_currVerse.page < 604) {
         ui->cmbPage->setCurrentIndex(m_currVerse.page);
+        ui->scrlVerseByVerse->verticalScrollBar()->setValue(0);
 
         // if the page is flipped automatically, resume playback
         if (keepPlaying)
@@ -235,6 +286,7 @@ void MainWindow::prevPage()
     bool keepPlaying = m_player->playbackState() == QMediaPlayer::PlayingState;
     if (m_currVerse.page > 1) {
         ui->cmbPage->setCurrentIndex(m_currVerse.page - 2);
+        ui->scrlVerseByVerse->verticalScrollBar()->setValue(0);
 
         if (keepPlaying)
             btnPlayClicked();

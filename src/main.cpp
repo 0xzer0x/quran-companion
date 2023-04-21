@@ -2,6 +2,7 @@
 #include <QFontDatabase>
 #include <QLocale>
 #include <QSettings>
+#include <QSplashScreen>
 #include <QStyleFactory>
 #include <QTranslator>
 #include "core/mainwindow.h"
@@ -11,36 +12,29 @@ void setTheme(int themeIdx);
 
 void addFonts(int qcfVersion);
 
+void setDefaults(QSettings &settings);
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QApplication::setApplicationName("Quran Companion");
     QApplication::setOrganizationName("0xzer0x");
+    QApplication::setApplicationVersion("1.0");
+
+    QSplashScreen splash(QPixmap(":/assets/images/splash.png"));
+    splash.show();
 
     Logger::startLogger();
     Logger::attach();
 
-    qApp->setStyle(QStyleFactory::create("Fusion"));
     QSettings appSettings("qc-config.ini", QSettings::Format::IniFormat, &a);
-
     if (!appSettings.contains("Language")) {
-        appSettings.setValue("Language", "English");
-        appSettings.setValue("Theme", 0);
-
-        appSettings.beginGroup("Reader");
-        appSettings.setValue("Page", 1);
-        appSettings.setValue("Surah", 1);
-        appSettings.setValue("Verse", 1);
-
-        appSettings.setValue("QCF1Size", 22);
-        appSettings.setValue("QCF2Size", 20);
-        appSettings.setValue("QCF", 1);
-        appSettings.setValue("SideContentFont", QFont("Droid Sans Arabic", 14));
-        appSettings.endGroup();
+        setDefaults(appSettings);
     }
 
     setTheme(appSettings.value("Theme").toInt());
     addFonts(appSettings.value("Reader/QCF").toInt());
+
     // add translation
     QTranslator trs, qtTranslation;
     QDir baseQtTr = QApplication::applicationDirPath() + QDir::separator() + "translations"
@@ -62,11 +56,27 @@ int main(int argc, char *argv[])
 
     MainWindow w(nullptr, &appSettings);
     w.show();
+    splash.finish(&w);
 
     int ret = a.exec();
     Logger::stopLogger();
-
     return ret;
+}
+
+void setDefaults(QSettings &settings)
+{
+    settings.setValue("Language", "English");
+    settings.setValue("Theme", 0);
+
+    settings.beginGroup("Reader");
+    settings.setValue("Page", 1);
+    settings.setValue("Surah", 1);
+    settings.setValue("Verse", 1);
+    settings.setValue("QCF1Size", 22);
+    settings.setValue("QCF2Size", 20);
+    settings.setValue("QCF", 1);
+    settings.setValue("SideContentFont", QFont("Droid Sans Arabic", 14));
+    settings.endGroup();
 }
 
 void addFonts(int qcfVersion)
@@ -105,6 +115,8 @@ void addFonts(int qcfVersion)
 
 void setTheme(int themeIdx)
 {
+    qApp->setStyle(QStyleFactory::create("Fusion"));
+
     QPalette themeColors;
     switch (themeIdx) {
     case 0: // light

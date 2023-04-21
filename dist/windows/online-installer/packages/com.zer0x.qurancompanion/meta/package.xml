@@ -8,5 +8,9 @@
     <Licenses>
         <License name="LGPL3 Agreement" file="license.txt" />
     </Licenses>
+    <Script>installscript.qs</Script>
     <Default>true</Default>
+    <UserInterfaces>
+        <UserInterface>page.ui</UserInterface>
+    </UserInterfaces>
 </Package>

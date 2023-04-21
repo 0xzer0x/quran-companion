@@ -69,17 +69,17 @@
         <translation> // سورة: </translation>
     </message>
     <message>
-        <location filename="../core/downloaderdialog.cpp" line="176"/>
+        <location filename="../core/downloaderdialog.cpp" line="181"/>
         <source>Downloading: </source>
         <translation>جاري تحميل: </translation>
     </message>
     <message>
-        <location filename="../core/downloaderdialog.cpp" line="191"/>
+        <location filename="../core/downloaderdialog.cpp" line="196"/>
         <source>/sec</source>
         <translation>/ث</translation>
     </message>
     <message>
-        <location filename="../core/downloaderdialog.cpp" line="221"/>
+        <location filename="../core/downloaderdialog.cpp" line="226"/>
         <source>Couldn&apos;t download: </source>
         <translation>لم يكتمل تحميل: </translation>
     </message>
@@ -128,7 +128,7 @@
         <translation type="vanished">التالي</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="839"/>
+        <location filename="../core/mainwindow.ui" line="847"/>
         <source>081 - At-Takwīr</source>
         <translation>081 - التَّكوير</translation>
     </message>
@@ -152,12 +152,12 @@
         <translation>ملف</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="279"/>
+        <location filename="../core/mainwindow.ui" line="287"/>
         <source>Controls dock</source>
         <translation>وحدة التحكم</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="289"/>
+        <location filename="../core/mainwindow.ui" line="297"/>
         <source>Reciter</source>
         <translation>القارئ</translation>
     </message>
@@ -216,606 +216,621 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="425"/>
+        <location filename="../core/mainwindow.ui" line="263"/>
+        <source>Help</source>
+        <translation>مساعدة</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="433"/>
         <source>Surah</source>
         <translation>السورة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="439"/>
+        <location filename="../core/mainwindow.ui" line="447"/>
         <source>001 - Al-Fātiḥah</source>
         <translation>001 - الفاتحة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="444"/>
+        <location filename="../core/mainwindow.ui" line="452"/>
         <source>002 - Al-Baqarah</source>
         <translation>002 - البقرة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="449"/>
+        <location filename="../core/mainwindow.ui" line="457"/>
         <source>003 - Āl-‘Imrān</source>
         <translation>003 - آل عِمران</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="454"/>
+        <location filename="../core/mainwindow.ui" line="462"/>
         <source>004 - An-Nisā’</source>
         <translation>004 - النِّسَاء</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="459"/>
+        <location filename="../core/mainwindow.ui" line="467"/>
         <source>005 - Al-Mā’idah</source>
         <translation>005 - المَائدة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="464"/>
+        <location filename="../core/mainwindow.ui" line="472"/>
         <source>006 - Al-An‘ām</source>
         <translation>006 - الأنعَام</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="469"/>
+        <location filename="../core/mainwindow.ui" line="477"/>
         <source>007 - Al-A‘rāf</source>
         <translation>007 - الأعرَاف</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="474"/>
+        <location filename="../core/mainwindow.ui" line="482"/>
         <source>008 - Al-Anfāl</source>
         <translation>008 - الأنفَال</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="479"/>
+        <location filename="../core/mainwindow.ui" line="487"/>
         <source>009 - At-Taubah</source>
         <translation>009 - التوبَة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="484"/>
+        <location filename="../core/mainwindow.ui" line="492"/>
         <source>010 - Yūnus</source>
         <translation>010 - يُونس</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="489"/>
+        <location filename="../core/mainwindow.ui" line="497"/>
         <source>011 - Hūd</source>
         <translation>011 - هُود</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="494"/>
+        <location filename="../core/mainwindow.ui" line="502"/>
         <source>012 - Yūsuf</source>
         <translation>012 - يُوسُف</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="499"/>
+        <location filename="../core/mainwindow.ui" line="507"/>
         <source>013 - Ar-Ra‘d</source>
         <translation>013 - الرَّعد</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="504"/>
+        <location filename="../core/mainwindow.ui" line="512"/>
         <source>014 - Ibrāhīm</source>
         <translation>014 - إبراهِيم</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="509"/>
+        <location filename="../core/mainwindow.ui" line="517"/>
         <source>015 - Al-Ḥijr</source>
         <translation>015 - الحِجر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="514"/>
+        <location filename="../core/mainwindow.ui" line="522"/>
         <source>016 - An-Naḥl</source>
         <translation>016 - النَّحل</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="519"/>
+        <location filename="../core/mainwindow.ui" line="527"/>
         <source>017 - Al-Isrā’</source>
         <translation>017 - الإسرَاء</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="524"/>
+        <location filename="../core/mainwindow.ui" line="532"/>
         <source>018 - Al-Kahf</source>
         <translation>018 - الكَهف</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="529"/>
+        <location filename="../core/mainwindow.ui" line="537"/>
         <source>019 - Maryam</source>
         <translation>019 - مَريَم</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="534"/>
+        <location filename="../core/mainwindow.ui" line="542"/>
         <source>020 - Ṭā-Hā</source>
         <translation>020 - طه</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="539"/>
+        <location filename="../core/mainwindow.ui" line="547"/>
         <source>021 - Al-Anbiyā’</source>
         <translation>021 - الأنبيَاء</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="544"/>
+        <location filename="../core/mainwindow.ui" line="552"/>
         <source>022 - Al-Ḥajj</source>
         <translation>022 - الحج</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="549"/>
+        <location filename="../core/mainwindow.ui" line="557"/>
         <source>023 - Al-Mu’minūn</source>
         <translation>023 - المؤمنُون</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="554"/>
+        <location filename="../core/mainwindow.ui" line="562"/>
         <source>024 - An-Nūr</source>
         <translation>024 - النور</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="559"/>
+        <location filename="../core/mainwindow.ui" line="567"/>
         <source>025 - Al-Furqān</source>
         <translation>025 - الفُرقَان</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="564"/>
+        <location filename="../core/mainwindow.ui" line="572"/>
         <source>026 - Ash-Shu‘arā’</source>
         <translation>026 - الشعراء</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="569"/>
+        <location filename="../core/mainwindow.ui" line="577"/>
         <source>027 - An-Naml</source>
         <translation>027 - النَّمل</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="574"/>
+        <location filename="../core/mainwindow.ui" line="582"/>
         <source>028 - Al-Qaṣaṣ</source>
         <translation>028 - القَصَص</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="579"/>
+        <location filename="../core/mainwindow.ui" line="587"/>
         <source>029 - Al-‘Ankabūt</source>
         <translation>029 - العَنكبُوت</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="584"/>
+        <location filename="../core/mainwindow.ui" line="592"/>
         <source>030 - Ar-Rūm</source>
         <translation>030 - الرُّوم</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="589"/>
+        <location filename="../core/mainwindow.ui" line="597"/>
         <source>031 - Luqmān</source>
         <translation>031 - لُقمَان</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="594"/>
+        <location filename="../core/mainwindow.ui" line="602"/>
         <source>032 - As-Sajdah</source>
         <translation>032 - السَّجدة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="599"/>
+        <location filename="../core/mainwindow.ui" line="607"/>
         <source>033 - Al-Aḥzāb</source>
         <translation>033 - الأحزَاب</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="604"/>
+        <location filename="../core/mainwindow.ui" line="612"/>
         <source>034 - Saba’</source>
         <translation>034 - سَبإ</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="609"/>
+        <location filename="../core/mainwindow.ui" line="617"/>
         <source>035 - Fāṭir</source>
         <translation>035 - فَاطِر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="614"/>
+        <location filename="../core/mainwindow.ui" line="622"/>
         <source>036 - Yā-Sīn</source>
         <translation>036 - يسٓ</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="619"/>
+        <location filename="../core/mainwindow.ui" line="627"/>
         <source>037 - Aṣ-Ṣāffāt</source>
         <translation>037 - الصَّافَات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="624"/>
+        <location filename="../core/mainwindow.ui" line="632"/>
         <source>038 - Ṣād</source>
         <translation>038 - صٓ</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="629"/>
+        <location filename="../core/mainwindow.ui" line="637"/>
         <source>039 - Az-Zumar</source>
         <translation>039 - الزُّمَر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="634"/>
+        <location filename="../core/mainwindow.ui" line="642"/>
         <source>040 - Ghāfir</source>
         <translation>040 - غَافِر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="639"/>
+        <location filename="../core/mainwindow.ui" line="647"/>
         <source>041 - Fuṣṣilat</source>
         <translation>041 - فُصِّلَت</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="644"/>
+        <location filename="../core/mainwindow.ui" line="652"/>
         <source>042 - Ash-Shūra</source>
         <translation>042 - الشُّوري</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="649"/>
+        <location filename="../core/mainwindow.ui" line="657"/>
         <source>043 - Az-Zukhruf</source>
         <translation>043 - الزُّخرُف</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="654"/>
+        <location filename="../core/mainwindow.ui" line="662"/>
         <source>044 - Ad-Dukhān</source>
         <translation>044 - الدُّخان</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="659"/>
+        <location filename="../core/mainwindow.ui" line="667"/>
         <source>045 - Al-Jāthiyah</source>
         <translation>045 - الجاثِية</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="664"/>
+        <location filename="../core/mainwindow.ui" line="672"/>
         <source>046 - Al-Aḥqāf</source>
         <translation>046 - الأحقَاف</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="669"/>
+        <location filename="../core/mainwindow.ui" line="677"/>
         <source>047 - Muḥammad</source>
         <translation>047 - مُحمد</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="674"/>
+        <location filename="../core/mainwindow.ui" line="682"/>
         <source>048 - Al-Fatḥ</source>
         <translation>048 - الفَتح</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="679"/>
+        <location filename="../core/mainwindow.ui" line="687"/>
         <source>049 - Al-Ḥujurāt</source>
         <translation>049 - الحُجُرَات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="684"/>
+        <location filename="../core/mainwindow.ui" line="692"/>
         <source>050 - Qāf</source>
         <translation>050 - قٓ</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="689"/>
+        <location filename="../core/mainwindow.ui" line="697"/>
         <source>051 - Adh-Dhāriyāt</source>
         <translation>051 - الذَّاريَات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="694"/>
+        <location filename="../core/mainwindow.ui" line="702"/>
         <source>052 - Aṭ-Ṭūr</source>
         <translation>052 - الطُّور</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="699"/>
+        <location filename="../core/mainwindow.ui" line="707"/>
         <source>053 - An-Najm</source>
         <translation>053 - النَّجم</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="704"/>
+        <location filename="../core/mainwindow.ui" line="712"/>
         <source>054 - Al-Qamar</source>
         <translation>054 - القَمَر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="709"/>
+        <location filename="../core/mainwindow.ui" line="717"/>
         <source>055 - Ar-Raḥmān</source>
         <translation>055 - الرَّحمٰن</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="714"/>
+        <location filename="../core/mainwindow.ui" line="722"/>
         <source>056 - Al-Wāqi‘ah</source>
         <translation>056 - الوَاقِعة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="719"/>
+        <location filename="../core/mainwindow.ui" line="727"/>
         <source>057 - Al-Ḥadīd</source>
         <translation>057 - الحدِيد</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="724"/>
+        <location filename="../core/mainwindow.ui" line="732"/>
         <source>058 - Al-Mujādilah</source>
         <translation>058 - المُجَادلة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="729"/>
+        <location filename="../core/mainwindow.ui" line="737"/>
         <source>059 - Al-Ḥashr</source>
         <translation>059 - الحَشر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="734"/>
+        <location filename="../core/mainwindow.ui" line="742"/>
         <source>060 - Al-Mumtaḥanah</source>
         <translation>060 - المُمتَحنَة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="739"/>
+        <location filename="../core/mainwindow.ui" line="747"/>
         <source>061 - Aṣ-Ṣaff</source>
         <translation>061 - الصَّف</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="744"/>
+        <location filename="../core/mainwindow.ui" line="752"/>
         <source>062 - Al-Jumu‘ah</source>
         <translation>062 - الجُمعَة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="749"/>
+        <location filename="../core/mainwindow.ui" line="757"/>
         <source>063 - Al-Munāfiqūn</source>
         <translation>063 - المُنَافِقُونَ</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="754"/>
+        <location filename="../core/mainwindow.ui" line="762"/>
         <source>064 - At-Taghābun</source>
         <translation>064 - التغَابُن</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="759"/>
+        <location filename="../core/mainwindow.ui" line="767"/>
         <source>065 - Aṭ-Ṭalāq</source>
         <translation>065 - الطَّلَاق</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="764"/>
+        <location filename="../core/mainwindow.ui" line="772"/>
         <source>066 - At-Taḥrīm</source>
         <translation>066 - التَّحرِيم</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="769"/>
+        <location filename="../core/mainwindow.ui" line="777"/>
         <source>067 - Al-Mulk</source>
         <translation>067 - المُلك</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="774"/>
+        <location filename="../core/mainwindow.ui" line="782"/>
         <source>068 - Al-Qalam</source>
         <translation>068 - القَلَم</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="779"/>
+        <location filename="../core/mainwindow.ui" line="787"/>
         <source>069 - Al-Ḥāqqah</source>
         <translation>069 - الحَاقة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="784"/>
+        <location filename="../core/mainwindow.ui" line="792"/>
         <source>070 - Al-Ma‘ārij</source>
         <translation>070 - المَعَارج</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="789"/>
+        <location filename="../core/mainwindow.ui" line="797"/>
         <source>071 - Nūḥ</source>
         <translation>071 - نُوح</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="794"/>
+        <location filename="../core/mainwindow.ui" line="802"/>
         <source>072 - Al-Jinn</source>
         <translation>072 - الجِن</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="799"/>
+        <location filename="../core/mainwindow.ui" line="807"/>
         <source>073 - Al-Muzzammil</source>
         <translation>073 - المُزمل</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="804"/>
+        <location filename="../core/mainwindow.ui" line="812"/>
         <source>074 - Al-Muddaththir</source>
         <translation>074 - المُدثر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="809"/>
+        <location filename="../core/mainwindow.ui" line="817"/>
         <source>075 - Al-Qiyāmah</source>
         <translation>075 - القِيَامة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="814"/>
+        <location filename="../core/mainwindow.ui" line="822"/>
         <source>076 - Al-Insān</source>
         <translation>076 - الإنسَان</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="819"/>
+        <location filename="../core/mainwindow.ui" line="827"/>
         <source>077 - Al-Mursalāt</source>
         <translation>077 - المُرسَلات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="824"/>
+        <location filename="../core/mainwindow.ui" line="832"/>
         <source>078 - An-Naba’</source>
         <translation>078 - النَّبَإ</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="829"/>
+        <location filename="../core/mainwindow.ui" line="837"/>
         <source>079 - An-Nāzi‘āt</source>
         <translation>079 - النَّازعَات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="834"/>
+        <location filename="../core/mainwindow.ui" line="842"/>
         <source>080 - ‘Abasa</source>
         <translation>080 - عَبَسَ</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1088"/>
+        <location filename="../core/mainwindow.ui" line="1096"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1100"/>
+        <location filename="../core/mainwindow.ui" line="1108"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1113"/>
+        <location filename="../core/mainwindow.ui" line="1121"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1122"/>
+        <location filename="../core/mainwindow.ui" line="1130"/>
         <source>Find</source>
         <translation>البحث</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1125"/>
+        <location filename="../core/mainwindow.ui" line="1133"/>
         <source>Ctrl+F</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="1138"/>
+        <source>Check for updates</source>
+        <translation>التحقق من وجود تحديثات</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="1143"/>
+        <source>Website</source>
+        <translation>صفحة البرنامج</translation>
     </message>
     <message>
         <source>081- At-Takwīr</source>
         <translation type="vanished">081 - التَّكوير</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="844"/>
+        <location filename="../core/mainwindow.ui" line="852"/>
         <source>082 - Al-Infiṭār</source>
         <translation>082 - الانفِطَار</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="849"/>
+        <location filename="../core/mainwindow.ui" line="857"/>
         <source>083 - Al-Muṭaffifīn</source>
         <translation>083 - المُطَففين</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="854"/>
+        <location filename="../core/mainwindow.ui" line="862"/>
         <source>084 - Al-Inshiqāq</source>
         <translation>084 - الانشِقَاق</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="859"/>
+        <location filename="../core/mainwindow.ui" line="867"/>
         <source>085 - Al-Burūj</source>
         <translation>085 - البُرُوج</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="864"/>
+        <location filename="../core/mainwindow.ui" line="872"/>
         <source>086 - Aṭ-Ṭāriq</source>
         <translation>086 - الطَّارق</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="869"/>
+        <location filename="../core/mainwindow.ui" line="877"/>
         <source>087 - Al-A‘lā</source>
         <translation>087 - الأعلى</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="874"/>
+        <location filename="../core/mainwindow.ui" line="882"/>
         <source>088 - Al-Ghāshiyah</source>
         <translation>088 - الغَاشِية</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="879"/>
+        <location filename="../core/mainwindow.ui" line="887"/>
         <source>089 - Al-Fajr</source>
         <translation>089 - الفَجر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="884"/>
+        <location filename="../core/mainwindow.ui" line="892"/>
         <source>090 - Al-Balad</source>
         <translation>090 - البَلَد</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="889"/>
+        <location filename="../core/mainwindow.ui" line="897"/>
         <source>091 - Ash-Shams</source>
         <translation>091 - الشَّمس</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="894"/>
+        <location filename="../core/mainwindow.ui" line="902"/>
         <source>092 - Al-Lail</source>
         <translation>092 - اللَّيل</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="899"/>
+        <location filename="../core/mainwindow.ui" line="907"/>
         <source>093 - Aḍ-Ḍuḥā</source>
         <translation>093 - الضُّحى</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="904"/>
+        <location filename="../core/mainwindow.ui" line="912"/>
         <source>094 - Ash-Sharḥ</source>
         <translation>094 - الشَّرح</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="909"/>
+        <location filename="../core/mainwindow.ui" line="917"/>
         <source>095 - At-Tīn</source>
         <translation>095 - التِّين</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="914"/>
+        <location filename="../core/mainwindow.ui" line="922"/>
         <source>096 - Al-‘Alaq</source>
         <translation>096 - العَلَق</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="919"/>
+        <location filename="../core/mainwindow.ui" line="927"/>
         <source>097 - Al-Qadr</source>
         <translation>097 - القَدر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="924"/>
+        <location filename="../core/mainwindow.ui" line="932"/>
         <source>098 - Al-Bayyinah</source>
         <translation>098 - البَينَة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="929"/>
+        <location filename="../core/mainwindow.ui" line="937"/>
         <source>099 - Az-Zalzalah</source>
         <translation>099 - الزَّلزَلة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="934"/>
+        <location filename="../core/mainwindow.ui" line="942"/>
         <source>100 - Al-‘Ādiyāt</source>
         <translation>100 - العَاديَات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="939"/>
+        <location filename="../core/mainwindow.ui" line="947"/>
         <source>101 - Al-Qāri‘ah</source>
         <translation>101 - القَارعَة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="944"/>
+        <location filename="../core/mainwindow.ui" line="952"/>
         <source>102 - At-Takāthur</source>
         <translation>102 - التَّكاثُر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="949"/>
+        <location filename="../core/mainwindow.ui" line="957"/>
         <source>103 - Al-‘Aṣr</source>
         <translation>103 - العَصر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="954"/>
+        <location filename="../core/mainwindow.ui" line="962"/>
         <source>104 - Al-Humazah</source>
         <translation>104 - الهُمَزة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="959"/>
+        <location filename="../core/mainwindow.ui" line="967"/>
         <source>105 - Al-Fīl</source>
         <translation>105 - الفِيل</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="964"/>
+        <location filename="../core/mainwindow.ui" line="972"/>
         <source>106 - Quraish</source>
         <translation>106 - قُرَيش</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="969"/>
+        <location filename="../core/mainwindow.ui" line="977"/>
         <source>107 - Al-Mā‘ūn</source>
         <translation>107 - المَاعُون</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="974"/>
+        <location filename="../core/mainwindow.ui" line="982"/>
         <source>108 - Al-Kauthar</source>
         <translation>108 - الكَوثر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="979"/>
+        <location filename="../core/mainwindow.ui" line="987"/>
         <source>109 - Al-Kāfirūn</source>
         <translation>109 - الكافِرون</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="984"/>
+        <location filename="../core/mainwindow.ui" line="992"/>
         <source>110 - An-Naṣr</source>
         <translation>110 - النَّصر</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="989"/>
+        <location filename="../core/mainwindow.ui" line="997"/>
         <source>111 - Al-Masad</source>
         <translation>111 - المَسَد</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="994"/>
+        <location filename="../core/mainwindow.ui" line="1002"/>
         <source>112 - Al-Ikhlāṣ</source>
         <translation>112 - الإخلَاص</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="999"/>
+        <location filename="../core/mainwindow.ui" line="1007"/>
         <source>113 - Al-Falaq</source>
         <translation>113 - الفَلَق</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1004"/>
+        <location filename="../core/mainwindow.ui" line="1012"/>
         <source>114 - An-Nās</source>
         <translation>114 - النَّاس</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1012"/>
+        <location filename="../core/mainwindow.ui" line="1020"/>
         <source>Verse</source>
         <translation>الآية</translation>
     </message>
@@ -832,45 +847,65 @@
         <translation type="vanished">محمود البنا</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1026"/>
+        <location filename="../core/mainwindow.ui" line="1034"/>
         <source>Page</source>
         <translation>الصفحة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1053"/>
+        <location filename="../core/mainwindow.ui" line="1061"/>
         <source>Search</source>
         <translation>البحث</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1066"/>
-        <location filename="../core/mainwindow.ui" line="1085"/>
+        <location filename="../core/mainwindow.ui" line="1074"/>
+        <location filename="../core/mainwindow.ui" line="1093"/>
         <source>Preferences</source>
         <translation>الإعدادات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1097"/>
+        <location filename="../core/mainwindow.ui" line="1105"/>
         <source>Download manager</source>
         <translation>إدارة التحميلات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1110"/>
+        <location filename="../core/mainwindow.ui" line="1118"/>
         <source>Exit</source>
         <translation>خروج</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="435"/>
+        <location filename="../core/mainwindow.cpp" line="191"/>
+        <source>There are currently no updates available.</source>
+        <translation>لا تتوفر تحديثات حالياً.</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="192"/>
+        <source>Update info</source>
+        <translation>معلومات التحديث</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="195"/>
+        <source>Updates available, do you want to open the update tool?</source>
+        <translation>هناك تحديثات متاحة، هل تود تشغيل مدير التحديثات؟</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="198"/>
+        <source>Updates info</source>
+        <translation>معلومات التحديث</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="486"/>
         <source>Recitation not found</source>
         <translation>التلاوة غير موجودة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="436"/>
+        <location filename="../core/mainwindow.cpp" line="487"/>
         <source>The recitation files for the current surah is missing, would you like to download it?</source>
         <translation>ملفات التلاوة الخاصة بالسورة الحالية غير متوفرة، هل تود الذهاب إلى صفحة التحميل؟</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="739"/>
-        <location filename="../core/mainwindow.cpp" line="816"/>
-        <location filename="../core/mainwindow.cpp" line="821"/>
+        <location filename="../core/mainwindow.cpp" line="790"/>
+        <location filename="../core/mainwindow.cpp" line="867"/>
+        <location filename="../core/mainwindow.cpp" line="872"/>
         <source>Expand...</source>
         <translation>إظهار...</translation>
     </message>
