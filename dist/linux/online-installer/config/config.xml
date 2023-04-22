@@ -2,7 +2,7 @@
 <Installer>
 
     <Name>Quran Companion</Name>
-    <Version>1.0-alpha</Version>
+    <Version>1.0.0-alpha</Version>
     <Title>Quran Companion</Title>
     <Publisher>0xzer0x</Publisher>
     <ProductUrl>http://github.com/0xzer0x/quran-companion.git</ProductUrl>
@@ -11,7 +11,7 @@
     <MaintenanceToolName>QCMaintenanceTool</MaintenanceToolName>
     <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
     <TargetDir>@HomeDir@/QuranCompanion</TargetDir>
-    <RunProgram>@TargetDir@/quran-companion</RunProgram>
+    <RunProgram>@TargetDir@/quran-companion.sh</RunProgram>
     <RemoteRepositories>
      <Repository>
              <Url>https://gitlab.com/0xzer0x/qurancompanionqif/-/raw/main/linux</Url>

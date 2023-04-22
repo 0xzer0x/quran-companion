@@ -3,7 +3,7 @@
     <DisplayName>Quran Companion</DisplayName>
     <Description>Quran Companion application files.</Description>
     <Dependencies>com.zer0x.qcassets, com.qt.libs</Dependencies>
-    <Version>1.0.0-alpha</Version>
+    <Version>0.0.0</Version>
     <ReleaseDate>2023-04-13</ReleaseDate>
     <Licenses>
         <License name="LGPL3 Agreement" file="license.txt" />

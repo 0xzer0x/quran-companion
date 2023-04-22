@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Package>
-    <DisplayName>assets</DisplayName>
-    <Description>Required application assets.</Description>
-    <Dependencies>com.zer0x.qcassets.fonts, com.zer0x.qcassets.qcdb</Dependencies>
-    <Version>1.0.0-alpha</Version>
-    <ReleaseDate>2023-04-13</ReleaseDate>
-    <Default>true</Default>
-</Package>

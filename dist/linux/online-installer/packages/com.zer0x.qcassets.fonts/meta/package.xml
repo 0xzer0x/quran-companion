@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Package>
-    <DisplayName>QCF Fonts</DisplayName>
-    <Description>King Fahd Quran Complex Fonts.</Description>
-    <Version>1.0.1-installer</Version>
-    <ReleaseDate>2023-04-13</ReleaseDate>
-    <Default>true</Default>
-    <Script>installscript.js</Script>
-</Package>
