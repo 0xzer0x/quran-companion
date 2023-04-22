@@ -32,12 +32,18 @@
      <property name="text">
       <string>Create desktop shortcut</string>
      </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="chkStart">
      <property name="text">
       <string>Add startmenu entry</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

@@ -114,7 +114,7 @@ private:
     QSettings *m_settingsPtr;
     Verse m_currVerse{1, 1, 1};
     SideContent m_sideContent;
-    QDir m_assetsDir = QApplication::applicationDirPath() + QDir::separator() + "assets";
+    QDir m_assetsDir = QDir::currentPath() + QDir::separator() + "assets";
     QFont m_sideFont;
     QList<Verse> m_vInfoList;
     QList<QFrame *> m_verseFrameList;

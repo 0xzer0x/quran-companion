@@ -6,8 +6,7 @@ DownloadManager::DownloadManager(QObject *parent, DBManager *dbptr, QList<Recite
     , m_netMan{new QNetworkAccessManager(this)}
     , m_dbPtr{dbptr}
 {
-    m_topLevelPath.setPath(QApplication::applicationDirPath());
-    m_topLevelPath.cd("audio");
+    m_topLevelPath.setPath(QDir::currentPath() + QDir::separator() + "audio");
 
     connect(m_netMan,
             &QNetworkAccessManager::finished,

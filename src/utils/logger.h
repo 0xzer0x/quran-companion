@@ -15,7 +15,7 @@ public:
     static QString filename;
     static QFile logFile;
 
-    static bool startLogger();
+    static bool startLogger(QString parentDir);
     static void stopLogger();
     static void attach();
     static void handler(QtMsgType type, const QMessageLogContext &context, const QString &msg);

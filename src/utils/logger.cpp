@@ -1,17 +1,16 @@
 #include "logger.h"
 
-QString Logger::filename = QDir::currentPath() + QDir::separator() + "qc-logs.txt";
+QString Logger::filename = "qc-logs.txt";
 static const QtMessageHandler QT_DEFAULT_MESSAGE_HANDLER = qInstallMessageHandler(nullptr);
 QFile Logger::logFile = QFile(filename);
 
 Logger::Logger(QObject *parent)
     : QObject{parent}
-{
-    
-}
+{}
 
-bool Logger::startLogger()
+bool Logger::startLogger(QString parentDir)
 {
+    logFile.setFileName(parentDir + QDir::separator() + filename);
     return logFile.open(QIODevice::WriteOnly);
 }
 

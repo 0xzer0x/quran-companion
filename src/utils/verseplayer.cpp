@@ -18,12 +18,12 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse, int
     setAudioOutput(m_output);
     fillRecitersList();
 
-    m_reciterDir.setPath(QApplication::applicationDirPath());
+    m_reciterDir.setPath(QDir::currentPath());
     if (!m_reciterDir.exists("audio"))
         m_reciterDir.mkdir("audio");
 
     m_reciterDir.cd("audio");
-    foreach (Reciter r, m_recitersList) {
+    foreach (const Reciter &r, m_recitersList) {
         if (!m_reciterDir.exists(r.baseDirName)) {
             m_reciterDir.mkdir(r.baseDirName);
         }

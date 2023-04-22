@@ -9,10 +9,9 @@
 #include "utils/logger.h"
 
 void setTheme(int themeIdx);
-
 void addFonts(int qcfVersion);
-
-void setDefaults(QSettings &settings);
+void addTranslation(QString lang);
+void checkSettings(QSettings &settings);
 
 int main(int argc, char *argv[])
 {
@@ -24,59 +23,61 @@ int main(int argc, char *argv[])
     QSplashScreen splash(QPixmap(":/assets/images/splash.png"));
     splash.show();
 
-    Logger::startLogger();
+    QDir::setCurrent(QApplication::applicationDirPath());
+    Logger::startLogger(QDir::currentPath());
     Logger::attach();
 
     QSettings appSettings("qc-config.ini", QSettings::Format::IniFormat, &a);
-    if (!appSettings.contains("Language")) {
-        setDefaults(appSettings);
-    }
+    checkSettings(appSettings);
 
     setTheme(appSettings.value("Theme").toInt());
     addFonts(appSettings.value("Reader/QCF").toInt());
-
-    // add translation
-    QTranslator trs, qtTranslation;
-    QDir baseQtTr = QApplication::applicationDirPath() + QDir::separator() + "translations"
-                    + QDir::separator();
-
-    if (appSettings.value("Language").toString() == "العربية") {
-        if (trs.load(":/i18n/quran_companion_ar.qm")) {
-            qInfo() << "Tr" << trs.language() << "loaded";
-            qInfo() << "Qt tr status: " << qtTranslation.load(baseQtTr.filePath("qt_ar.qm"));
-
-            a.installTranslator(&trs);
-            a.installTranslator(&qtTranslation);
-
-            qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
-        } else {
-            qWarning() << "AR Translation not loaded!";
-        }
-    }
+    addTranslation(appSettings.value("Language").toString());
 
     MainWindow w(nullptr, &appSettings);
-    w.show();
     splash.finish(&w);
+    w.show();
 
     int ret = a.exec();
     Logger::stopLogger();
     return ret;
 }
 
-void setDefaults(QSettings &settings)
+void checkSettings(QSettings &settings)
 {
-    settings.setValue("Language", "English");
-    settings.setValue("Theme", 0);
+    QStringList defaultKeys;
+    defaultKeys << "Language"
+                << "Reader/Page"
+                << "Reader/QCF"
+                << "Reader/QCF1Size"
+                << "Reader/QCF2Size"
+                << "Reader/SideContent"
+                << "Reader/SideContentFont"
+                << "Reader/Surah"
+                << "Reader/Tafsir"
+                << "Reader/Translation"
+                << "Reader/Verse"
+                << "Reciter"
+                << "Theme"
+                << "WindowState";
 
-    settings.beginGroup("Reader");
-    settings.setValue("Page", 1);
-    settings.setValue("Surah", 1);
-    settings.setValue("Verse", 1);
-    settings.setValue("QCF1Size", 22);
-    settings.setValue("QCF2Size", 20);
-    settings.setValue("QCF", 1);
-    settings.setValue("SideContentFont", QFont("Droid Sans Arabic", 14));
-    settings.endGroup();
+    if (settings.allKeys() != defaultKeys) {
+        settings.setValue("Language", settings.value("Language", "English"));
+        settings.setValue("Theme", settings.value("Theme", 0));
+
+        settings.beginGroup("Reader");
+        // all keys now have "Reader" prefix
+        settings.setValue("Page", settings.value("Page", 1));
+        settings.setValue("Surah", settings.value("Surah", 1));
+        settings.setValue("Verse", settings.value("Verse", 1));
+        settings.setValue("QCF1Size", settings.value("QCF1Size", 22));
+        settings.setValue("QCF2Size", settings.value("QCF2Size", 20));
+        settings.setValue("QCF", settings.value("QCF", 1));
+        settings.setValue("SideContentFont",
+                          settings.value("SideContentFont", QFont("Droid Sans Arabic", 14)));
+
+        settings.endGroup();
+    }
 }
 
 void addFonts(int qcfVersion)
@@ -169,5 +170,24 @@ void setTheme(int themeIdx)
 
     default:
         break;
+    }
+}
+
+void addTranslation(QString lang)
+{
+    QTranslator *translation = new QTranslator(qApp), *qtBase = new QTranslator(qApp);
+    QDir baseQtTr = QDir::currentPath() + QDir::separator() + "translations" + QDir::separator();
+
+    if (lang == "العربية") {
+        if (translation->load(":/i18n/quran_companion_ar.qm")) {
+            qInfo() << "tr" << translation->language() << "loaded";
+            qInfo() << "Qt tr loaded:" << qtBase->load(baseQtTr.filePath("qt_ar.qm"));
+            qApp->installTranslator(translation);
+            qApp->installTranslator(qtBase);
+            qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
+
+        } else {
+            qWarning() << "AR Translation not loaded!";
+        }
     }
 }

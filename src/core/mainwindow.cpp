@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
 {
     m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
 
-    m_updateToolPath = QApplication::applicationDirPath() + QDir::separator() + "QCMaintenanceTool";
+    m_updateToolPath = QDir::currentPath() + QDir::separator() + "QCMaintenanceTool";
 #ifdef Q_OS_WIN
     m_updateToolPath.append(".exe");
 #endif
@@ -60,10 +60,7 @@ void MainWindow::init()
         ui->retranslateUi(this);
     }
 
-    setWindowTitle(QApplication::applicationName());
-
     m_settingsPtr->beginGroup("Reader");
-
     m_currVerse = {m_settingsPtr->value("Page").toInt(),
                    m_settingsPtr->value("Surah").toInt(),
                    m_settingsPtr->value("Verse").toInt()};
@@ -177,7 +174,7 @@ void MainWindow::visitWebsite()
 
 void MainWindow::checkForUpdates()
 {
-    m_process->setWorkingDirectory(QApplication::applicationDirPath());
+    m_process->setWorkingDirectory(QDir::currentPath());
 
     m_process->start(m_updateToolPath, QStringList("ch"));
 }
@@ -549,11 +546,6 @@ void MainWindow::verseClicked()
   ui->cmbVerse->setCurrentIndex(verse - 1);
   m_internalVerseChange = false;
 
-  if (m_settingsPtr->value("Reader/CopyVerseOnClick").toBool()) {
-        QClipboard *clip = QApplication::clipboard();
-        clip->setText(m_dbManPtr->getVerseText(surah, verse));
-  }
-
   m_endOfPage = false;
   m_player->setVerseFile(m_player->constructVerseFilename());
   btnPlayClicked();
@@ -569,8 +561,7 @@ void MainWindow::verseAnchorClicked(const QUrl &hrefUrl)
 
   // copy
   if (chosenAction == 2) {
-        QClipboard *clip = QApplication::clipboard();
-        clip->setText(m_dbManPtr->getVerseText(v.surah, v.number));
+        copyVerseText(idx.toInt());
   }
   // select or play
   else if (chosenAction == 0 || chosenAction == 1) {
