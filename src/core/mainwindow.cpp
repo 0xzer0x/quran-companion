@@ -126,6 +126,7 @@ void MainWindow::init()
 void MainWindow::setupConnections()
 {
     QShortcut *spaceKey = new QShortcut(Qt::Key_Space, this);
+    spaceKey->setContext(Qt::ApplicationShortcut);
 
     /* ------------------ UI connectors ------------------ */
 

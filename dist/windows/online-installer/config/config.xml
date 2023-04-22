@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Installer>
     <Name>Quran Companion</Name>
-    <Version>0.0.0</Version>
+    <Version>1.0-alpha</Version>
     <Title>Quran Companion</Title>
     <Publisher>0xzer0x</Publisher>
     <ProductUrl>http://github.com/0xzer0x/quran-companion.git</ProductUrl>
@@ -12,12 +12,13 @@
     <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
 
     <TargetDir>@HomeDir@/QuranCompanion</TargetDir>
-
+	<RunProgram>@TargetDir@/quran-companion.exe</RunProgram>
+    
     <RemoteRepositories>
      <Repository>
              <Url>https://gitlab.com/0xzer0x/qurancompanionqif/-/raw/main/windows</Url>
              <Enabled>1</Enabled>
-             <DisplayName>Windows repository</DisplayName>
+             <DisplayName>Windows Repository</DisplayName>
      </Repository>
 	</RemoteRepositories>
 

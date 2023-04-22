@@ -30,7 +30,7 @@
    <item>
     <widget class="QCheckBox" name="chkDesktop">
      <property name="text">
-      <string>Create desktop shortcut</string>
+      <string>Create Desktop Shortcut</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -40,7 +40,7 @@
    <item>
     <widget class="QCheckBox" name="chkStart">
      <property name="text">
-      <string>Add startmenu entry</string>
+      <string>Add Startmenu Entry</string>
      </property>
      <property name="checked">
       <bool>true</bool>

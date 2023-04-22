@@ -33,6 +33,11 @@ QuranPageBrowser::QuranPageBrowser(QWidget *parent,
     m_easternNumsMap.insert("7", "٧");
     m_easternNumsMap.insert("8", "٨");
     m_easternNumsMap.insert("9", "٩");
+
+    QShortcut *zoomIn = new QShortcut(QKeySequence::StandardKey::ZoomIn, this);
+    QShortcut *zoomOut = new QShortcut(QKeySequence::StandardKey::ZoomOut, this);
+    connect(zoomIn, &QShortcut::activated, this, &QuranPageBrowser::actionZoomIn);
+    connect(zoomOut, &QShortcut::activated, this, &QuranPageBrowser::actionZoomOut);
 }
 
 QString QuranPageBrowser::getEasternNum(QString num)

@@ -5,6 +5,7 @@
 #include <QMenu>
 #include <QPainter>
 #include <QSettings>
+#include <QShortcut>
 #include <QTextBrowser>
 #include <QTextCursor>
 #include "../utils/dbmanager.h"
