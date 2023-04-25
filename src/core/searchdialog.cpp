@@ -7,28 +7,34 @@
  * \param dbPtr pointer to database management interface
  */
 SearchDialog::SearchDialog(QWidget *parent,
-                           int qcfVersion,
+                           QSettings *settings,
                            DBManager *dbPtr,
                            const QString &iconPath)
     : QDialog(parent)
     , ui(new Ui::SearchDialog)
-    , m_qcfVer{qcfVersion}
+    , m_settings{settings}
     , m_dbPtr{dbPtr}
     , m_iconsPath{iconPath}
 {
     setLayoutDirection(Qt::LeftToRight);
+    m_fontPrefix = m_settings->value("Reader/QCF", 1).toInt() == 1 ? "QCF_P" : "QCF2";
 
     ui->setupUi(this);
     setWindowIcon(QIcon(m_iconsPath + "search.png"));
-    setWindowTitle(tr("Verse search"));
     ui->btnFwdRes->setIcon(QIcon(m_iconsPath + "arrow-left.png"));
     ui->btnBwdRes->setIcon(QIcon(m_iconsPath + "arrow-right.png"));
+    ui->btnTransfer->setIcon(QIcon(m_iconsPath + "transfer.png"));
+    ui->btnFwdRes->setDisabled(true);
+    ui->btnBwdRes->setDisabled(true);
+
+    ui->listViewAllSurahs->setModel(&m_modelAllSurahs);
+    ui->listViewSelected->setModel(&m_modelSelectedSurahs);
 
     connect(ui->btnSrch, &QPushButton::clicked, this, &SearchDialog::getResults);
     connect(ui->btnFwdRes, &QPushButton::clicked, this, &SearchDialog::moveFwd);
     connect(ui->btnBwdRes, &QPushButton::clicked, this, &SearchDialog::moveBwd);
 
-    m_fontPrefix = m_qcfVer == 1 ? "QCF_P" : "QCF2";
+    fillListView();
 }
 
 /*!
@@ -36,10 +42,9 @@ SearchDialog::SearchDialog(QWidget *parent,
  */
 void SearchDialog::getResults()
 {
-    if (m_searchText == ui->ledSearchBar->text().trimmed())
-        return;
-
     m_searchText = ui->ledSearchBar->text().trimmed();
+    if (ui->chkWholeWord->isChecked())
+        m_searchText = ' ' + m_searchText + ' ';
 
     if (!m_lbLst.empty()) {
         qDeleteAll(m_lbLst);
@@ -48,12 +53,19 @@ void SearchDialog::getResults()
         m_currResults.clear();
     }
 
-    if (m_searchText.isEmpty())
+    if (m_searchText.isEmpty()) {
+        ui->btnFwdRes->setDisabled(true);
+        ui->btnBwdRes->setDisabled(true);
         return;
+    }
 
-    qInfo() << " running verse search query";
-    m_currResults = m_dbPtr->searchVerses(m_searchText);
+    int range[2];
+    range[0] = ui->spnStartPage->value();
+    if (ui->spnEndPage->value() < range[0])
+        ui->spnEndPage->setValue(range[0]);
+    range[1] = ui->spnEndPage->value();
 
+    m_currResults = m_dbPtr->searchVerses(m_searchText, range);
     ui->lbResultCount->setText(QString::number(m_currResults.size()) + tr(" Search results"));
     m_startResult = 0;
     showResults();
@@ -66,7 +78,6 @@ void SearchDialog::verseClicked()
 {
     QStringList data = sender()->objectName().split('-');
     Verse selected{data.at(0).toInt(), data.at(1).toInt(), data.at(2).toInt()};
-
     emit navigateToVerse(selected);
 }
 
@@ -77,6 +88,16 @@ void SearchDialog::showResults()
 {
     int endIdx = m_currResults.size() > m_startResult + 50 ? m_startResult + 50
                                                            : m_currResults.size();
+
+    if (m_startResult == 0)
+        ui->btnBwdRes->setDisabled(true);
+    else
+        ui->btnBwdRes->setDisabled(false);
+    if (endIdx == m_currResults.size())
+        ui->btnFwdRes->setDisabled(true);
+    else
+        ui->btnFwdRes->setDisabled(false);
+
     for (int i = m_startResult; i < endIdx; i++) {
         Verse v = m_currResults.at(i);
         QString fontName = m_fontPrefix + QString::number(v.page).rightJustified(3, '0');
@@ -105,6 +126,8 @@ void SearchDialog::showResults()
         ui->srclResults->layout()->addWidget(vFrame);
         m_lbLst.append(vFrame);
     }
+
+    ui->scrollArea->verticalScrollBar()->setValue(0);
 }
 
 /*!
@@ -139,6 +162,17 @@ void SearchDialog::moveBwd()
     }
 }
 
+void SearchDialog::fillListView()
+{
+    bool en = m_settings->value("Language") == "العربية" ? false : true;
+    for (int i = 1; i <= 114; i++) {
+        QStandardItem *surah = new QStandardItem(m_dbPtr->getSurahName(i, en));
+        m_modelAllSurahs.invisibleRootItem()->appendRow(surah);
+    }
+}
+
+void SearchDialog::btnTransferClicked() {}
+
 void SearchDialog::closeEvent(QCloseEvent *event)
 {
     if (!m_lbLst.empty()) {
@@ -147,6 +181,8 @@ void SearchDialog::closeEvent(QCloseEvent *event)
         ui->lbResultCount->setText("");
         ui->ledSearchBar->clear();
         m_currResults.clear();
+        ui->btnFwdRes->setDisabled(true);
+        ui->btnBwdRes->setDisabled(true);
     }
 
     this->hide();

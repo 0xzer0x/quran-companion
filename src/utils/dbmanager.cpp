@@ -6,12 +6,14 @@ DBManager::DBManager(QObject *parent, int qcfVersion)
 {
     m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
     m_glyphsDbPath.setFile(m_dbDir.filePath("glyphs.db"));
+    m_bookmarksDbPath.setFile(QDir::currentPath() + QDir::separator() + "bookmarks.db");
 
     // set database driver, set the path & open a connection with the db
-    QSqlDatabase::addDatabase("QSQLITE", "QuranData");
-    QSqlDatabase::addDatabase("QSQLITE", "GlyphsData");
-    QSqlDatabase::addDatabase("QSQLITE", "TafsirData");
-    QSqlDatabase::addDatabase("QSQLITE", "TranslationData");
+    QSqlDatabase::addDatabase("QSQLITE", "QuranCon");
+    QSqlDatabase::addDatabase("QSQLITE", "GlyphsCon");
+    QSqlDatabase::addDatabase("QSQLITE", "BookmarksCon");
+    QSqlDatabase::addDatabase("QSQLITE", "TafsirCon");
+    QSqlDatabase::addDatabase("QSQLITE", "TranslationCon");
 
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 }
@@ -24,19 +26,23 @@ void DBManager::setOpenDatabase(Database db, QString filePath)
 
     switch (db) {
     case quran:
-        m_openDBCon = QSqlDatabase::database("QuranData");
+        m_openDBCon = QSqlDatabase::database("QuranCon");
         break;
 
     case glyphs:
-        m_openDBCon = QSqlDatabase::database("GlyphsData");
+        m_openDBCon = QSqlDatabase::database("GlyphsCon");
+        break;
+
+    case bookmarks:
+        m_openDBCon = QSqlDatabase::database("BookmarksCon");
         break;
 
     case tafsir:
-        m_openDBCon = QSqlDatabase::database("TafsirData");
+        m_openDBCon = QSqlDatabase::database("TafsirCon");
         break;
 
     case translation:
-        m_openDBCon = QSqlDatabase::database("TranslationData");
+        m_openDBCon = QSqlDatabase::database("TranslationCon");
         break;
     }
 
@@ -204,58 +210,44 @@ void DBManager::setCurrentTranslation(Translation translationName)
     m_dbDir.cdUp();
 }
 
-/* ---------------- Main Quran page data ---------------- */
+/* ---------------- Page-related methods ---------------- */
 
 QList<int> DBManager::getVerseBounds(const int surah, const int ayah)
 {
     QList<int> bounds;
 
     setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    QString q = "SELECT start_pos,end_pos FROM %0 WHERE surah=%1 AND ayah=%2";
-    m_queryOpenDB.prepare(q.arg("coordinates_v" + QString::number(m_qcfVer),
-                                QString::number(surah),
-                                QString::number(ayah)));
+    QSqlQuery dbQuery(m_openDBCon);
 
-    if (!m_queryOpenDB.exec())
+    QString q = "SELECT start_pos,end_pos FROM %0 WHERE surah=%1 AND ayah=%2";
+    dbQuery.prepare(q.arg("coordinates_v" + QString::number(m_qcfVer),
+                          QString::number(surah),
+                          QString::number(ayah)));
+
+    if (!dbQuery.exec())
         qWarning() << "Couldn't execute DBManager::getVerseBounds query!";
 
-    m_queryOpenDB.next();
-    bounds.append(m_queryOpenDB.value(0).toInt());
-    bounds.append(m_queryOpenDB.value(1).toInt());
+    dbQuery.next();
+    bounds.append(dbQuery.value(0).toInt());
+    bounds.append(dbQuery.value(1).toInt());
 
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     return bounds;
 }
 
-int DBManager::getSurahVerseCount(const int surahIdx)
-{
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT aya_no FROM verses_v1 WHERE sura_no=:idx ORDER BY aya_no DESC");
-    m_queryOpenDB.bindValue(0, surahIdx);
-
-    if (!m_queryOpenDB.exec()) {
-        qCritical() << "Error occurred during SQL statment exec";
-        return -1;
-    }
-
-    m_queryOpenDB.next();
-    return m_queryOpenDB.value(0).toInt();
-}
-
 QList<int> DBManager::getPageMetadata(const int page)
 {
     QList<int> data; // { surahIdx, jozz }
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT sura_no,jozz FROM verses_v1 WHERE page=:p ORDER BY id");
-    m_queryOpenDB.bindValue(0, page);
+    QSqlQuery dbQuery(m_openDBCon);
+    dbQuery.prepare("SELECT sura_no,jozz FROM verses_v1 WHERE page=:p ORDER BY id");
+    dbQuery.bindValue(0, page);
 
-    if (!m_queryOpenDB.exec())
+    if (!dbQuery.exec())
         qCritical() << "Error occurred during getFirstSurahInPage SQL statment exec";
 
-    m_queryOpenDB.next();
-    data.push_back(m_queryOpenDB.value(0).toInt());
-    data.push_back(m_queryOpenDB.value(1).toInt());
+    dbQuery.next();
+    data.push_back(dbQuery.value(0).toInt());
+    data.push_back(dbQuery.value(1).toInt());
 
     return data;
 }
@@ -263,258 +255,355 @@ QList<int> DBManager::getPageMetadata(const int page)
 QStringList DBManager::getPageLines(const int page)
 {
     setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
+    QSqlQuery dbQuery(m_openDBCon);
+
     QString query = "SELECT %0 FROM pages WHERE page_no=%1";
     query = query.arg("qcf_v" + QString::number(m_qcfVer), QString::number(page));
 
-    m_queryOpenDB.prepare(query);
-    if (!m_queryOpenDB.exec())
+    dbQuery.prepare(query);
+    if (!dbQuery.exec())
         qFatal("Couldn't execute getPageLines query!");
 
-    m_queryOpenDB.next();
-    QStringList lines = m_queryOpenDB.value(0).toString().trimmed().split('\n');
+    dbQuery.next();
+    QStringList lines = dbQuery.value(0).toString().trimmed().split('\n');
 
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
     return lines;
 }
 
-QList<QString> DBManager::getVersesInPage(const int page)
-{
-    QList<QString> verseList;
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    QString query = "SELECT aya_text FROM verses_v%0 WHERE page=%1 ORDER BY id";
-    m_queryOpenDB.prepare(query.arg(QString::number(m_qcfVer), QString::number(page)));
-
-    if (!m_queryOpenDB.exec()) {
-        qCritical() << "Error occurred during getVersesInPage SQL statment exec";
-
-    } else {
-        while (m_queryOpenDB.next()) {
-            verseList.append(m_queryOpenDB.value(0).toString());
-        }
-    }
-
-    return verseList;
-}
-
 QList<DBManager::Verse> DBManager::getVerseInfoList(int page)
 {
     QList<Verse> viList;
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    QString query = "SELECT sura_no,aya_no FROM verses_v%0 WHERE page=%1 ORDER BY id";
-    m_queryOpenDB.prepare(query.arg(QString::number(m_qcfVer), QString::number(page)));
+    QSqlQuery dbQuery(m_openDBCon);
 
-    if (!m_queryOpenDB.exec()) {
+    QString query = "SELECT sura_no,aya_no FROM verses_v%0 WHERE page=%1 ORDER BY id";
+    dbQuery.prepare(query.arg(QString::number(m_qcfVer), QString::number(page)));
+
+    if (!dbQuery.exec()) {
         qCritical() << "Error occurred during getVerseInfo SQL statment exec";
     }
 
-    while (m_queryOpenDB.next()) {
-        Verse v{page, m_queryOpenDB.value(0).toInt(), m_queryOpenDB.value(1).toInt()};
+    while (dbQuery.next()) {
+        Verse v{page, dbQuery.value(0).toInt(), dbQuery.value(1).toInt()};
         viList.append(v);
     }
 
     return viList;
 }
 
-QString DBManager::getSurahName(const int sIdx, bool en)
-{
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-
-    if (en) {
-        m_queryOpenDB.prepare("SELECT sura_name_en FROM verses_v1 WHERE sura_no=:i");
-    } else {
-        m_queryOpenDB.prepare("SELECT sura_name_ar FROM verses_v1 WHERE sura_no=:i");
-    }
-
-    m_queryOpenDB.bindValue(0, sIdx);
-    if (!m_queryOpenDB.exec()) {
-        qCritical() << "Error occurred during getVerseInfo SQL statment exec";
-    }
-
-    m_queryOpenDB.next();
-    return m_queryOpenDB.value(0).toString();
-}
+/* ---------------- Glyph-related methods ---------------- */
 
 QString DBManager::getSurahNameGlyph(const int sura)
 {
     setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
+    QSqlQuery dbQuery(m_openDBCon);
 
-    m_queryOpenDB.prepare("SELECT qcf_v1 FROM surah_glyphs WHERE surah=:i");
-    m_queryOpenDB.bindValue(0, sura);
-    if (!m_queryOpenDB.exec()) {
+    dbQuery.prepare("SELECT qcf_v1 FROM surah_glyphs WHERE surah=:i");
+    dbQuery.bindValue(0, sura);
+    if (!dbQuery.exec()) {
         qCritical() << "Error occurred during getVerseInfo SQL statment exec";
     }
 
-    m_queryOpenDB.next();
+    dbQuery.next();
 
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
-    return m_queryOpenDB.value(0).toString();
+    return dbQuery.value(0).toString();
 }
 
 QString DBManager::getJuzGlyph(const int juz)
 {
     setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
+    QSqlQuery dbQuery(m_openDBCon);
 
-    m_queryOpenDB.prepare("SELECT qcf_v1 FROM juzz_glyphs WHERE juzz=:j");
-    m_queryOpenDB.bindValue(0, juz);
-    if (!m_queryOpenDB.exec()) {
+    dbQuery.prepare("SELECT qcf_v1 FROM juzz_glyphs WHERE juzz=:j");
+    dbQuery.bindValue(0, juz);
+    if (!dbQuery.exec()) {
         qCritical() << "Error occurred during getJuzGlyph SQL statment exec";
     }
 
-    m_queryOpenDB.next();
+    dbQuery.next();
 
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
-    return m_queryOpenDB.value(0).toString();
-}
-
-int DBManager::getSurahStartPage(int surahIdx)
-{
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT page FROM verses_v1 WHERE sura_no=:sn AND aya_no=1");
-    m_queryOpenDB.bindValue(0, surahIdx);
-
-    if (!m_queryOpenDB.exec()) {
-        qCritical() << "Error occurred during getVerseInfo SQL statment exec";
-    }
-    m_queryOpenDB.next();
-
-    return m_queryOpenDB.value(0).toInt();
-}
-
-int DBManager::getVersePage(const int &surahIdx, const int &verse)
-{
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    QString query = "SELECT page FROM verses_v%0 WHERE sura_no=%1 AND aya_no=%2";
-    m_queryOpenDB.prepare(
-        query.arg(QString::number(m_qcfVer), QString::number(surahIdx), QString::number(verse)));
-
-    if (!m_queryOpenDB.exec()) {
-        qCritical() << "Error occurred during getVerseInfo SQL statment exec";
-    }
-    m_queryOpenDB.next();
-
-    return m_queryOpenDB.value(0).toInt();
-}
-
-QString DBManager::getVerseText(const int sIdx, const int vIdx)
-{
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare("SELECT aya_text FROM verses_v1 WHERE sura_no=:s AND aya_no=:v");
-    m_queryOpenDB.bindValue(0, sIdx);
-    m_queryOpenDB.bindValue(1, vIdx);
-
-    if (!m_queryOpenDB.exec()) {
-        qCritical() << "Error occurred during getVerseInfo SQL statment exec";
-    }
-    m_queryOpenDB.next();
-
-    return m_queryOpenDB.value(0).toString();
+    return dbQuery.value(0).toString();
 }
 
 QString DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
 {
     setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
 
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
+    QSqlQuery dbQuery(m_openDBCon);
+
     QString query = "SELECT %0 FROM ayah_glyphs WHERE surah=%1 AND ayah=%2";
     query = query.arg("qcf_v" + QString::number(m_qcfVer),
                       QString::number(sIdx),
                       QString::number(vIdx));
 
-    m_queryOpenDB.prepare(query);
-    if (!m_queryOpenDB.exec())
+    dbQuery.prepare(query);
+    if (!dbQuery.exec())
         qFatal("Couldn't execute getVerseGlyphs query!");
 
-    m_queryOpenDB.next();
+    dbQuery.next();
 
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
-    return m_queryOpenDB.value(0).toString();
+    return dbQuery.value(0).toString();
 }
 
-QList<DBManager::Verse> DBManager::searchVerses(QString searchText)
-{
-    QList<DBManager::Verse> results;
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    QString q = "SELECT page,sura_no,aya_no FROM verses_v" + QString::number(m_qcfVer)
-                + " WHERE aya_text_emlaey like'%" + searchText + "%' ORDER BY id";
+/* ---------------- Surah-related methods ---------------- */
 
-    m_queryOpenDB.prepare(q);
-    if (!m_queryOpenDB.exec()) {
-        qCritical() << "[CRITICAL] Error occurred during searchVerses 2nd SQL statment exec";
+QString DBManager::getSurahName(const int sIdx, bool en)
+{
+    QSqlQuery dbQuery(m_openDBCon);
+
+    if (en) {
+        dbQuery.prepare("SELECT sura_name_en FROM verses_v1 WHERE sura_no=:i");
+    } else {
+        dbQuery.prepare("SELECT sura_name_ar FROM verses_v1 WHERE sura_no=:i");
     }
 
-    while (m_queryOpenDB.next()) {
-        Verse entry{m_queryOpenDB.value(0).toInt(),
-                    m_queryOpenDB.value(1).toInt(),
-                    m_queryOpenDB.value(2).toInt()};
+    dbQuery.bindValue(0, sIdx);
+    if (!dbQuery.exec()) {
+        qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    }
 
+    dbQuery.next();
+    return dbQuery.value(0).toString();
+}
+
+int DBManager::getSurahVerseCount(const int surahIdx)
+{
+    QSqlQuery dbQuery(m_openDBCon);
+
+    dbQuery.prepare("SELECT aya_no FROM verses_v1 WHERE sura_no=:idx ORDER BY aya_no DESC");
+    dbQuery.bindValue(0, surahIdx);
+
+    if (!dbQuery.exec()) {
+        qCritical() << "Error occurred during SQL statment exec";
+        return -1;
+    }
+
+    dbQuery.next();
+    return dbQuery.value(0).toInt();
+}
+
+int DBManager::getSurahStartPage(int surahIdx)
+{
+    QSqlQuery dbQuery(m_openDBCon);
+
+    dbQuery.prepare("SELECT page FROM verses_v1 WHERE sura_no=:sn AND aya_no=1");
+    dbQuery.bindValue(0, surahIdx);
+
+    if (!dbQuery.exec()) {
+        qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    }
+    dbQuery.next();
+
+    return dbQuery.value(0).toInt();
+}
+
+QList<int> DBManager::searchSurahs(QString searchText)
+{
+    QList<int> results;
+    QSqlQuery dbQuery(m_openDBCon);
+
+    dbQuery.prepare(
+        "SELECT sura_no FROM verses_v1 WHERE sura_name_ar like '%:searchText%' ORDER BY id");
+    dbQuery.bindValue(0, searchText);
+    if (!dbQuery.exec()) {
+        qCritical() << "Error occurred during searchVerses 1st SQL statment exec";
+    }
+
+    while (dbQuery.next()) {
+        results.append(dbQuery.value(0).toInt());
+    }
+
+    return results;
+}
+
+/* ---------------- Verse-related methods ---------------- */
+
+QString DBManager::getVerseText(const int sIdx, const int vIdx)
+{
+    QSqlQuery dbQuery(m_openDBCon);
+
+    dbQuery.prepare("SELECT aya_text FROM verses_v1 WHERE sura_no=:s AND aya_no=:v");
+    dbQuery.bindValue(0, sIdx);
+    dbQuery.bindValue(1, vIdx);
+
+    if (!dbQuery.exec()) {
+        qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    }
+    dbQuery.next();
+
+    return dbQuery.value(0).toString();
+}
+
+int DBManager::getVersePage(const int &surahIdx, const int &verse)
+{
+    QSqlQuery dbQuery(m_openDBCon);
+
+    QString query = "SELECT page FROM verses_v%0 WHERE sura_no=%1 AND aya_no=%2";
+    dbQuery.prepare(
+        query.arg(QString::number(m_qcfVer), QString::number(surahIdx), QString::number(verse)));
+
+    if (!dbQuery.exec()) {
+        qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    }
+    dbQuery.next();
+
+    return dbQuery.value(0).toInt();
+}
+
+QList<DBManager::Verse> DBManager::searchVerses(QString searchText, int range[2])
+{
+    QList<DBManager::Verse> results;
+    QSqlQuery dbQuery(m_openDBCon);
+
+    QString q = "SELECT page,sura_no,aya_no FROM verses_v" + QString::number(m_qcfVer)
+                + " WHERE page >= " + QString::number(range[0])
+                + " AND page <= " + QString::number(range[1]) + " AND aya_text_emlaey like'%"
+                + searchText + "%' ORDER BY id";
+
+    dbQuery.prepare(q);
+    if (!dbQuery.exec()) {
+        qCritical() << "[CRITICAL] Error occurred during searchVerses SQL statment exec";
+    }
+
+    while (dbQuery.next()) {
+        Verse entry{dbQuery.value(0).toInt(), dbQuery.value(1).toInt(), dbQuery.value(2).toInt()};
         results.append(entry);
     }
 
     return results;
 }
 
-QList<int> DBManager::searchSurahs(QString searchText)
+QList<DBManager::Verse> DBManager::favoriteVerses()
 {
-    QList<int> results;
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
-    m_queryOpenDB.prepare(
-        "SELECT sura_no FROM verses_v1 WHERE sura_name_ar like '%:searchText%' ORDER BY id");
-    m_queryOpenDB.bindValue(0, searchText);
-    if (!m_queryOpenDB.exec()) {
-        qCritical() << "Error occurred during searchVerses 1st SQL statment exec";
+    QList<Verse> results;
+    setOpenDatabase(Database::bookmarks, m_bookmarksDbPath.filePath());
+    QSqlQuery dbQuery(m_openDBCon);
+
+    dbQuery.prepare("SELECT page,surah,number FROM favorites ORDER BY id");
+    if (!dbQuery.exec())
+        qCritical() << "Couldn't execute favoriteVerses SELECT query";
+
+    while (dbQuery.next()) {
+        results.append(
+            Verse{dbQuery.value(0).toInt(), dbQuery.value(1).toInt(), dbQuery.value(2).toInt()});
     }
 
-    while (m_queryOpenDB.next()) {
-        results.append(m_queryOpenDB.value(0).toInt());
-    }
-
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     return results;
 }
 
-/* ---------------- Side content data ---------------- */
+bool DBManager::isBookmarked(Verse v)
+{
+    setOpenDatabase(Database::bookmarks, m_bookmarksDbPath.filePath());
+    QSqlQuery dbQuery(m_openDBCon);
+
+    dbQuery.prepare("SELECT page FROM favorites WHERE page=:p AND surah=:s AND number=:n");
+    dbQuery.bindValue(0, v.page);
+    dbQuery.bindValue(1, v.surah);
+    dbQuery.bindValue(2, v.number);
+
+    if (!dbQuery.exec()) {
+        qWarning() << "Couldn't check if verse is favorites";
+        return false;
+    }
+
+    dbQuery.next();
+
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+    return dbQuery.isValid();
+}
+
+bool DBManager::addBookmark(Verse v)
+{
+    setOpenDatabase(Database::bookmarks, m_bookmarksDbPath.filePath());
+    QSqlQuery dbQuery(m_openDBCon);
+    dbQuery.exec("CREATE TABLE IF NOT EXISTS favorites(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                 "page INTEGER, surah INTEGER, number INTEGER)");
+    // code to check whether verse exists in db or no
+
+    dbQuery.clear();
+    dbQuery.prepare("INSERT INTO favorites(page, surah, number) VALUES (:p, :s, :n)");
+    dbQuery.bindValue(0, v.page);
+    dbQuery.bindValue(1, v.surah);
+    dbQuery.bindValue(2, v.number);
+
+    if (!dbQuery.exec()) {
+        qWarning() << "Couldn't add verse to favorites db";
+        return false;
+    }
+
+    if (!m_openDBCon.commit())
+        return false;
+
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+    return true;
+}
+
+bool DBManager::removeBookmark(Verse v)
+{
+    setOpenDatabase(Database::bookmarks, m_bookmarksDbPath.filePath());
+    QSqlQuery dbQuery(m_openDBCon);
+    // CODE TO REMOVE ENTRY FROM SQL TABLE
+    dbQuery.prepare("DELETE FROM favorites WHERE page=:p AND surah=:s AND number=:n");
+    dbQuery.bindValue(0, v.page);
+    dbQuery.bindValue(1, v.surah);
+    dbQuery.bindValue(2, v.number);
+
+    if (!dbQuery.exec()) {
+        qWarning() << "Couldn't remove verse from favorites";
+        return false;
+    }
+
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+    return true;
+}
+
+/* ---------------- Side content methods ---------------- */
 
 QString DBManager::getTafsir(const int sIdx, const int vIdx)
 {
     setOpenDatabase(Database::tafsir, m_tafsirDbPath.filePath());
 
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
+    QSqlQuery dbQuery(m_openDBCon);
+
     QString q = "SELECT text FROM %0 WHERE sura=%1 AND aya=%2";
     q = q.arg(m_tafsirDbPath.baseName()).arg(sIdx).arg(vIdx);
-    m_queryOpenDB.prepare(q);
+    dbQuery.prepare(q);
 
-    if (!m_queryOpenDB.exec()) {
+    if (!dbQuery.exec()) {
         qFatal("Couldn't execute getTafsir query!");
     }
 
-    m_queryOpenDB.next();
+    dbQuery.next();
 
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
-    return m_queryOpenDB.value(0).toString();
+    return dbQuery.value(0).toString();
 }
 
 QString DBManager::getTranslation(const int sIdx, const int vIdx)
 {
     setOpenDatabase(Database::translation, m_transDbPath.filePath());
 
-    m_queryOpenDB = QSqlQuery(m_openDBCon);
+    QSqlQuery dbQuery(m_openDBCon);
+
     QString q = "SELECT text FROM %0 WHERE sura=%1 AND aya=%2";
     q = q.arg(m_transDbPath.baseName()).arg(sIdx).arg(vIdx);
-    m_queryOpenDB.prepare(q);
+    dbQuery.prepare(q);
 
-    if (!m_queryOpenDB.exec())
+    if (!dbQuery.exec())
         qFatal("Couldn't execute getTrans query!");
 
-    m_queryOpenDB.next();
+    dbQuery.next();
 
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
-    return m_queryOpenDB.value(0).toString();
+    return dbQuery.value(0).toString();
 }

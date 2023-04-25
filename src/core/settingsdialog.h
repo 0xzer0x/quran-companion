@@ -45,6 +45,7 @@ public slots:
     void updateSideFont(QFont fnt);
     void updateSideFontSize(QString size);
     void applyAllChanges();
+    void showWindow();
 
 signals:
     void quranFontChanged();
@@ -77,6 +78,10 @@ private:
     bool m_renderQuranPage = false;
     bool m_restartReq = false;
     void setCurrentSettingsAsRef();
+
+    // QWidget interface
+protected:
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // SETTINGSDIALOG_H

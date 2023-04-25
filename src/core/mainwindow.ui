@@ -140,7 +140,7 @@ border-style:solid;
              <x>0</x>
              <y>0</y>
              <width>647</width>
-             <height>834</height>
+             <height>833</height>
             </rect>
            </property>
           </widget>
@@ -234,7 +234,7 @@ border-style:solid;
      <x>0</x>
      <y>0</y>
      <width>1357</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuView">
@@ -248,6 +248,8 @@ border-style:solid;
     <property name="title">
      <string>Edit</string>
     </property>
+    <addaction name="actionBookmarks"/>
+    <addaction name="separator"/>
     <addaction name="actionPereferences"/>
    </widget>
    <widget class="QMenu" name="menuFile">
@@ -1141,6 +1143,11 @@ border-style:solid;
   <action name="actionWebsite">
    <property name="text">
     <string>Website</string>
+   </property>
+  </action>
+  <action name="actionBookmarks">
+   <property name="text">
+    <string>Bookmarks</string>
    </property>
   </action>
  </widget>

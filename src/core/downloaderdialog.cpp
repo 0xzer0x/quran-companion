@@ -23,7 +23,6 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
 
 {
     ui->setupUi(this);
-    setWindowTitle(tr("Download Manager"));
     setWindowIcon(QIcon(m_iconsPath + "download-manager.png"));
 
     bool en = m_appSettings->value("Language").toString() == "العربية" ? false : true;

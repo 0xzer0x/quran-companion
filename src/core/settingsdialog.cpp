@@ -23,10 +23,6 @@ SettingsDialog::SettingsDialog(QWidget *parent,
     m_settingsPtr = settingsPtr;
     m_vPlayerPtr = vPlayerPtr;
 
-    if (m_settingsPtr->value("Language").toString() == "العربية") {
-        ui->retranslateUi(this);
-    }
-    setWindowTitle(tr("Preferences"));
     setCurrentSettingsAsRef();
 
     ui->cmbTheme->setCurrentIndex(m_themeIdx);
@@ -232,6 +228,23 @@ void SettingsDialog::applyAllChanges()
     setCurrentSettingsAsRef();
 }
 
+void SettingsDialog::showWindow()
+{
+    setCurrentSettingsAsRef();
+
+    ui->cmbTheme->setCurrentIndex(m_themeIdx);
+    ui->cmbLang->setCurrentText(m_lang);
+    ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
+    ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
+    ui->fntCmbSide->setCurrentFont(m_sideFont);
+    ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
+    ui->cmbSideContent->setCurrentIndex(m_sideContent);
+    ui->cmbTafsir->setCurrentIndex(m_tafsir);
+    ui->cmbTranslation->setCurrentIndex(m_trans);
+
+    this->show();
+}
+
 /*!
  * \brief SettingsDialog::setCurrentSettingsAsRef slot to update the settings displayed to match the values in the settings file
  */
@@ -277,6 +290,11 @@ void SettingsDialog::btnBoxAction(QAbstractButton *btn)
         applyAllChanges();
         this->accept();
     }
+}
+
+void SettingsDialog::closeEvent(QCloseEvent *event)
+{
+    this->hide();
 }
 
 SettingsDialog::~SettingsDialog()

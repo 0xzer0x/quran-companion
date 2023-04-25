@@ -28,7 +28,7 @@ public:
     QString constructPageHeader(int page);
     void constructPage(int pageNo);
     void highlightVerse(int verseIdxInPage);
-    int lmbVerseMenu();
+    int lmbVerseMenu(bool favoriteVerse);
 
     int fontSize() const;
     QString pageFont() const;
@@ -45,6 +45,8 @@ private slots:
     void actionZoomIn();
     void actionZoomOut();
     void actionCopy();
+    void actionAddToFav();
+    void actionRemoveFromFav();
 
 private:
     bool m_darkMode;
@@ -64,6 +66,8 @@ private:
     QAction *m_copyAct;
     QAction *m_selectAct;
     QAction *m_playAct;
+    QAction *m_actAddBookmark;
+    QAction *m_actRemBookmark;
     QTextCursor *m_highlighter;
     QBrush m_highlightColor;
     QList<int *> m_pageVerseCoords;
