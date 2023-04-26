@@ -304,7 +304,7 @@ bool VersePlayer::setVerseFile(const QString &newVerseFilename)
 {
     if (!m_reciterDir.exists(newVerseFilename)) {
         qDebug() << "Emitting missing signal...";
-        emit missingVerseFile();
+        emit missingVerseFile(m_reciter, m_activeVerse.surah);
         return false;
     }
 

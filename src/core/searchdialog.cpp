@@ -23,7 +23,7 @@ SearchDialog::SearchDialog(QWidget *parent,
     setWindowIcon(QIcon(m_iconsPath + "search.png"));
     ui->btnFwdRes->setIcon(QIcon(m_iconsPath + "arrow-left.png"));
     ui->btnBwdRes->setIcon(QIcon(m_iconsPath + "arrow-right.png"));
-    ui->btnTransfer->setIcon(QIcon(m_iconsPath + "transfer.png"));
+    ui->btnTransfer->setStyleSheet("QPushButton{image: url(" + m_iconsPath + "transfer.png" + ")}");
     ui->btnFwdRes->setDisabled(true);
     ui->btnBwdRes->setDisabled(true);
 

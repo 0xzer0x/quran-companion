@@ -195,6 +195,17 @@ void DownloaderDialog::updateDownloadSpeed(int value, QString unit)
     m_currDownSpeedLb->setText(QString::number(value) + " " + unit + tr("/sec"));
 }
 
+void DownloaderDialog::selectTask(int reciter, int surah)
+{
+    QItemSelectionModel *selector = ui->treeView->selectionModel();
+    QModelIndex reciterIdx = m_treeModel.index(reciter, 0);
+    ui->treeView->collapseAll();
+    ui->treeView->expand(reciterIdx);
+    selector->clearSelection();
+    selector->select(m_treeModel.index(surah - 1, 1, reciterIdx),
+                     QItemSelectionModel::Rows | QItemSelectionModel::Select);
+}
+
 /*!
  * \brief DownloaderDialog::surahDownloaded slot to delete the finished progress bar on download completion
  */

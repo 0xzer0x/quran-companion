@@ -8,6 +8,8 @@ BookmarksDialog::BookmarksDialog(QWidget *parent, QString iconPath, DBManager *d
     , m_qcfVer{qcfVer}
     , m_iconsPath{iconPath}
 {
+    setLayoutDirection(Qt::LeftToRight);
+
     ui->setupUi(this);
     setWindowIcon(QIcon(m_iconsPath + "bookmark-true.png"));
     ui->btnNext->setIcon(QIcon(m_iconsPath + "arrow-left.png"));

@@ -66,7 +66,7 @@ private slots:
     void gotoSurah(int surahIdx);
 
     void activeVerseChanged();
-    void missingRecitationFileWarn();
+    void missingRecitationFileWarn(int reciterIdx, int surah);
     void mediaPosChanged(qint64 position);
     void mediaStateChanged(QMediaPlayer::PlaybackState state);
 

@@ -484,7 +484,7 @@ void MainWindow::mediaPosChanged(qint64 position)
 /*!
  * \brief MainWindow::missingRecitationFileWarn display warning message box in case that recitation files are missing
  */
-void MainWindow::missingRecitationFileWarn()
+void MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 {
   QMessageBox::StandardButton btn = QMessageBox::question(
       this,
@@ -493,6 +493,8 @@ void MainWindow::missingRecitationFileWarn()
 
   if (btn == QMessageBox::Yes) {
         actionDMTriggered();
+        if (m_downloaderDlg != nullptr)
+            m_downloaderDlg->selectTask(reciterIdx, surah);
   }
 }
 

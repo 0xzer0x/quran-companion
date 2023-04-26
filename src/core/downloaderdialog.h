@@ -44,6 +44,7 @@ public slots:
     void downloadAborted();
     void topTaskDownloadError();
     void updateDownloadSpeed(int value, QString unit);
+    void selectTask(int reciter, int surah);
 
     // QWidget interface
 protected:

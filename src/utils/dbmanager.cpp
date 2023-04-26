@@ -14,8 +14,6 @@ DBManager::DBManager(QObject *parent, int qcfVersion)
     QSqlDatabase::addDatabase("QSQLITE", "BookmarksCon");
     QSqlDatabase::addDatabase("QSQLITE", "TafsirCon");
     QSqlDatabase::addDatabase("QSQLITE", "TranslationCon");
-
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 }
 
 /* ---------------- Database handling ---------------- */
@@ -215,7 +213,6 @@ void DBManager::setCurrentTranslation(Translation translationName)
 QList<int> DBManager::getVerseBounds(const int surah, const int ayah)
 {
     QList<int> bounds;
-
     setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
     QSqlQuery dbQuery(m_openDBCon);
 
@@ -231,13 +228,13 @@ QList<int> DBManager::getVerseBounds(const int surah, const int ayah)
     bounds.append(dbQuery.value(0).toInt());
     bounds.append(dbQuery.value(1).toInt());
 
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     return bounds;
 }
 
 QList<int> DBManager::getPageMetadata(const int page)
 {
     QList<int> data; // { surahIdx, jozz }
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     QSqlQuery dbQuery(m_openDBCon);
     dbQuery.prepare("SELECT sura_no,jozz FROM verses_v1 WHERE page=:p ORDER BY id");
     dbQuery.bindValue(0, page);
@@ -267,14 +264,13 @@ QStringList DBManager::getPageLines(const int page)
     dbQuery.next();
     QStringList lines = dbQuery.value(0).toString().trimmed().split('\n');
 
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
-
     return lines;
 }
 
 QList<DBManager::Verse> DBManager::getVerseInfoList(int page)
 {
     QList<Verse> viList;
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     QSqlQuery dbQuery(m_openDBCon);
 
     QString query = "SELECT sura_no,aya_no FROM verses_v%0 WHERE page=%1 ORDER BY id";
@@ -307,8 +303,6 @@ QString DBManager::getSurahNameGlyph(const int sura)
 
     dbQuery.next();
 
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
-
     return dbQuery.value(0).toString();
 }
 
@@ -324,8 +318,6 @@ QString DBManager::getJuzGlyph(const int juz)
     }
 
     dbQuery.next();
-
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
     return dbQuery.value(0).toString();
 }
@@ -347,8 +339,6 @@ QString DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
 
     dbQuery.next();
 
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
-
     return dbQuery.value(0).toString();
 }
 
@@ -356,6 +346,7 @@ QString DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
 
 QString DBManager::getSurahName(const int sIdx, bool en)
 {
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     QSqlQuery dbQuery(m_openDBCon);
 
     if (en) {
@@ -375,6 +366,7 @@ QString DBManager::getSurahName(const int sIdx, bool en)
 
 int DBManager::getSurahVerseCount(const int surahIdx)
 {
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     QSqlQuery dbQuery(m_openDBCon);
 
     dbQuery.prepare("SELECT aya_no FROM verses_v1 WHERE sura_no=:idx ORDER BY aya_no DESC");
@@ -391,6 +383,7 @@ int DBManager::getSurahVerseCount(const int surahIdx)
 
 int DBManager::getSurahStartPage(int surahIdx)
 {
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     QSqlQuery dbQuery(m_openDBCon);
 
     dbQuery.prepare("SELECT page FROM verses_v1 WHERE sura_no=:sn AND aya_no=1");
@@ -406,6 +399,7 @@ int DBManager::getSurahStartPage(int surahIdx)
 
 QList<int> DBManager::searchSurahs(QString searchText)
 {
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     QList<int> results;
     QSqlQuery dbQuery(m_openDBCon);
 
@@ -427,6 +421,7 @@ QList<int> DBManager::searchSurahs(QString searchText)
 
 QString DBManager::getVerseText(const int sIdx, const int vIdx)
 {
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     QSqlQuery dbQuery(m_openDBCon);
 
     dbQuery.prepare("SELECT aya_text FROM verses_v1 WHERE sura_no=:s AND aya_no=:v");
@@ -443,6 +438,7 @@ QString DBManager::getVerseText(const int sIdx, const int vIdx)
 
 int DBManager::getVersePage(const int &surahIdx, const int &verse)
 {
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     QSqlQuery dbQuery(m_openDBCon);
 
     QString query = "SELECT page FROM verses_v%0 WHERE sura_no=%1 AND aya_no=%2";
@@ -460,6 +456,7 @@ int DBManager::getVersePage(const int &surahIdx, const int &verse)
 QList<DBManager::Verse> DBManager::searchVerses(QString searchText, int range[2])
 {
     QList<DBManager::Verse> results;
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     QSqlQuery dbQuery(m_openDBCon);
 
     QString q = "SELECT page,sura_no,aya_no FROM verses_v" + QString::number(m_qcfVer)
@@ -495,7 +492,6 @@ QList<DBManager::Verse> DBManager::favoriteVerses()
             Verse{dbQuery.value(0).toInt(), dbQuery.value(1).toInt(), dbQuery.value(2).toInt()});
     }
 
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     return results;
 }
 
@@ -516,7 +512,6 @@ bool DBManager::isBookmarked(Verse v)
 
     dbQuery.next();
 
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     return dbQuery.isValid();
 }
 
@@ -542,7 +537,6 @@ bool DBManager::addBookmark(Verse v)
     if (!m_openDBCon.commit())
         return false;
 
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     return true;
 }
 
@@ -561,7 +555,6 @@ bool DBManager::removeBookmark(Verse v)
         return false;
     }
 
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     return true;
 }
 
@@ -583,8 +576,6 @@ QString DBManager::getTafsir(const int sIdx, const int vIdx)
 
     dbQuery.next();
 
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
-
     return dbQuery.value(0).toString();
 }
 
@@ -602,8 +593,6 @@ QString DBManager::getTranslation(const int sIdx, const int vIdx)
         qFatal("Couldn't execute getTrans query!");
 
     dbQuery.next();
-
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
 
     return dbQuery.value(0).toString();
 }
