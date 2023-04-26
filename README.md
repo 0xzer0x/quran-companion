@@ -210,13 +210,12 @@ export QT_MEDIA_BACKEND=ffmpeg
 ## Roadmap
 
 - [ ] Add more tafsir books
-- [ ] Add bookmarked verses tab
 - [ ] Add daily verse functionality
-- [ ] Enhance search functionality
-  - [ ] Search in a range of pages only
-  - [ ] Search in a specific surah only
-  - [ ] Search the English translation
-
+- [x] Add bookmarked verses tab
+- [x] Enhance search functionality
+  - [x] Search in a range of pages only
+  - [x] Search in a specific surah only
+  
 See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
