@@ -33,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
     setupConnections();
 }
 
+/* ------------------------ Initalization methods ------------------------ */
+
 void MainWindow::loadIcons()
 {
     m_iconsPath = ":assets/images/";
@@ -40,6 +42,7 @@ void MainWindow::loadIcons()
     ui->actionDownload_manager->setIcon(QIcon(m_iconsPath + "download-manager.png"));
     ui->actionExit->setIcon(QIcon(m_iconsPath + "exit.png"));
     ui->actionFind->setIcon(QIcon(m_iconsPath + "search.png"));
+    ui->actionBookmarks->setIcon(QIcon(m_iconsPath + "bookmark-true.png"));
     ui->actionPereferences->setIcon(QIcon(m_iconsPath + "prefs.png"));
     ui->btnPlay->setIcon(QIcon(m_iconsPath + "play.png"));
     ui->btnPause->setIcon(QIcon(m_iconsPath + "pause.png"));
@@ -138,6 +141,7 @@ void MainWindow::setupConnections()
     connect(ui->actionCheck_for_updates, &QAction::triggered, this, &MainWindow::checkForUpdates);
     connect(m_process, &QProcess::finished, this, &MainWindow::updateProcessCallback);
     connect(ui->actionWebsite, &QAction::triggered, this, &MainWindow::visitWebsite);
+    connect(ui->actionBookmarks, &QAction::triggered, this, &MainWindow::actionBookmarksTriggered);
 
     // Quran page
     connect(m_quranBrowser, &QTextBrowser::anchorClicked, this, &MainWindow::verseAnchorClicked);
@@ -167,6 +171,8 @@ void MainWindow::setupConnections()
     connect(ui->btnSearch, &QPushButton::clicked, this, &MainWindow::openSearchDialog);
     connect(ui->btnPreferences, &QPushButton::clicked, this, &MainWindow::actionPrefTriggered);
 }
+
+/* ------------------------ Help menu actions ------------------------ */
 
 void MainWindow::visitWebsite()
 {
@@ -397,6 +403,11 @@ void MainWindow::spaceKeyPressed()
     }
 }
 
+void MainWindow::btnPauseClicked()
+{
+    m_player->pause();
+}
+
 /*!
  * \brief MainWindow::btnPlayClicked continues playback of the current verse
  */
@@ -410,11 +421,6 @@ void MainWindow::btnPlayClicked()
 
     highlightCurrentVerse();
     m_player->play();
-}
-
-void MainWindow::btnPauseClicked()
-{
-  m_player->pause();
 }
 
 /*!
@@ -478,7 +484,7 @@ void MainWindow::mediaPosChanged(qint64 position)
 /*!
  * \brief MainWindow::missingRecitationFileWarn display warning message box in case that recitation files are missing
  */
-void MainWindow::missingRecitationFileWarn()
+void MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 {
   QMessageBox::StandardButton btn = QMessageBox::question(
       this,
@@ -487,6 +493,8 @@ void MainWindow::missingRecitationFileWarn()
 
   if (btn == QMessageBox::Yes) {
         actionDMTriggered();
+        if (m_downloaderDlg != nullptr)
+            m_downloaderDlg->selectTask(reciterIdx, surah);
   }
 }
 
@@ -552,16 +560,26 @@ void MainWindow::verseClicked()
   btnPlayClicked();
 }
 
+/*!
+ * \brief MainWindow::verseAnchorClicked is the callback function for clicking verses
+ * in the QuranPageBrowser that determines which action to take based on the chosen option in the menu
+ * \param hrefUrl "#idx" where idx is the verse index in the page/pageVerseInfo list
+ */
 void MainWindow::verseAnchorClicked(const QUrl &hrefUrl)
 {
   QString idx = hrefUrl.toString();
   idx.remove('#');
   Verse v = m_vInfoList.at(idx.toInt());
-
-  int chosenAction = m_quranBrowser->lmbVerseMenu();
-
+  
+  int chosenAction = m_quranBrowser->lmbVerseMenu(m_dbManPtr->isBookmarked(v));
+  // remove from / add to favorites
+  if (chosenAction == 4) {
+        m_dbManPtr->removeBookmark(v);
+  } else if (chosenAction == 3) {
+        m_dbManPtr->addBookmark(v);
+  }
   // copy
-  if (chosenAction == 2) {
+  else if (chosenAction == 2) {
         copyVerseText(idx.toInt());
   }
   // select or play
@@ -602,76 +620,71 @@ void MainWindow::verseAnchorClicked(const QUrl &hrefUrl)
   }
 }
 
-/*!
- * \brief MainWindow::highlightCurrentVerse highlights the currently selected/recited verse in the quran page & side panel
- */
-void MainWindow::highlightCurrentVerse()
-{
-  int idx;
-  for (idx = 0; idx < m_vInfoList.size(); idx++) {
-        Verse v = m_vInfoList.at(idx);
-        if (m_currVerse == v)
-            break;
-  }
-  m_quranBrowser->highlightVerse(idx);
-
-  if (m_highlightedFrm != nullptr)
-        m_highlightedFrm->setStyleSheet("");
-
-  VerseFrame *verseFrame = ui->scrlVerseCont->findChild<VerseFrame *>(
-      QString("%0_%1").arg(QString::number(m_currVerse.surah), QString::number(m_currVerse.number)));
-
-  verseFrame->highlightFrame();
-
-  if (m_highlightedFrm != nullptr) {
-        ui->scrlVerseByVerse->ensureWidgetVisible(verseFrame);
-  }
-
-  m_highlightedFrm = verseFrame;
-}
-
-/* ------------------------ Settings update methods ------------------------ */
+/* ------------------------ Preferences/Downloader dialog methods ------------------------ */
 
 /*!
  * \brief MainWindow::actionPrefTriggered open the settings dialog and connect settings change slots
  */
 void MainWindow::actionPrefTriggered()
 {
-  if (m_settingsDlg != nullptr)
-        delete m_settingsDlg;
+  if (m_settingsDlg == nullptr) {
+        m_settingsDlg = new SettingsDialog(this, m_settingsPtr, m_player, m_iconsPath);
 
-  m_settingsDlg = new SettingsDialog(this, m_settingsPtr, m_player, m_iconsPath);
+        // Restart signal
+        connect(m_settingsDlg,
+                &SettingsDialog::restartApp,
+                this,
+                &MainWindow::restartApp,
+                Qt::UniqueConnection);
 
-  // Restart signal
-  connect(m_settingsDlg, &SettingsDialog::restartApp, this, &MainWindow::restartApp);
+        // Quran page signals
+        connect(m_settingsDlg,
+                &SettingsDialog::redrawQuranPage,
+                this,
+                &MainWindow::redrawQuranPage,
+                Qt::UniqueConnection);
+        connect(m_settingsDlg,
+                &SettingsDialog::quranFontChanged,
+                m_quranBrowser,
+                &QuranPageBrowser::updateFontSize,
+                Qt::UniqueConnection);
 
-  // Quran page signals
-  connect(m_settingsDlg, &SettingsDialog::redrawQuranPage, this, &MainWindow::redrawQuranPage);
-  connect(m_settingsDlg,
-          &SettingsDialog::quranFontChanged,
-          m_quranBrowser,
-          &QuranPageBrowser::updateFontSize);
+        // Side panel signals
+        connect(m_settingsDlg,
+                &SettingsDialog::redrawSideContent,
+                this,
+                &MainWindow::addSideContent,
+                Qt::UniqueConnection);
+        connect(m_settingsDlg,
+                &SettingsDialog::sideContentTypeChanged,
+                this,
+                &MainWindow::updateSideContentType,
+                Qt::UniqueConnection);
+        connect(m_settingsDlg,
+                &SettingsDialog::tafsirChanged,
+                this,
+                &MainWindow::updateLoadedTafsir,
+                Qt::UniqueConnection);
+        connect(m_settingsDlg,
+                &SettingsDialog::translationChanged,
+                this,
+                &MainWindow::updateLoadedTranslation,
+                Qt::UniqueConnection);
+        connect(m_settingsDlg,
+                &SettingsDialog::sideFontChanged,
+                this,
+                &MainWindow::updateSideFont,
+                Qt::UniqueConnection);
 
-  // Side panel signals
-  connect(m_settingsDlg, &SettingsDialog::redrawSideContent, this, &MainWindow::addSideContent);
-  connect(m_settingsDlg,
-          &SettingsDialog::sideContentTypeChanged,
-          this,
-          &MainWindow::updateSideContentType);
-  connect(m_settingsDlg, &SettingsDialog::tafsirChanged, this, &MainWindow::updateLoadedTafsir);
-  connect(m_settingsDlg,
-          &SettingsDialog::translationChanged,
-          this,
-          &MainWindow::updateLoadedTranslation);
-  connect(m_settingsDlg, &SettingsDialog::sideFontChanged, this, &MainWindow::updateSideFont);
+        // audio device signals
+        connect(m_settingsDlg,
+                &SettingsDialog::usedAudioDeviceChanged,
+                m_player,
+                &VersePlayer::changeUsedAudioDevice,
+                Qt::UniqueConnection);
+  }
 
-  // audio device signals
-  connect(m_settingsDlg,
-          &SettingsDialog::usedAudioDeviceChanged,
-          m_player,
-          &VersePlayer::changeUsedAudioDevice);
-
-  m_settingsDlg->show();
+  m_settingsDlg->showWindow();
 }
 
 /*!
@@ -693,14 +706,72 @@ void MainWindow::actionDMTriggered()
   m_downloaderDlg->show();
 }
 
-/*!
- * \brief MainWindow::redrawQuranPage redraw the current quran page
- */
-void MainWindow::redrawQuranPage()
+void MainWindow::actionBookmarksTriggered()
 {
-  m_quranBrowser->constructPage(m_currVerse.page);
-  updatePageVerseInfoList();
+  if (m_bookmarksDlg == nullptr) {
+        m_bookmarksDlg = new BookmarksDialog(this,
+                                             m_iconsPath,
+                                             m_dbManPtr,
+                                             m_settingsPtr->value("Reader/QCF", 1).toInt());
+        connect(m_bookmarksDlg,
+                &BookmarksDialog::navigateToVerse,
+                this,
+                &MainWindow::navigateToVerse,
+                Qt::UniqueConnection);
+  }
+
+  m_bookmarksDlg->showWindow();
 }
+
+/* ------------------------ Search dialog ------------------------ */
+
+/*!
+ * \brief MainWindow::openSearchDialog open the verse search dialog
+ */
+void MainWindow::openSearchDialog()
+{
+  if (m_searchDlg == nullptr) {
+        m_searchDlg = new SearchDialog(this, m_settingsPtr, m_dbManPtr, m_iconsPath);
+        connect(m_searchDlg, &SearchDialog::navigateToVerse, this, &MainWindow::navigateToVerse);
+  }
+
+  m_searchDlg->show();
+}
+
+/*!
+ * \brief MainWindow::navigateToVerse navigate to a selected verse from the search results
+ * \param v Verse to navigate to
+ */
+void MainWindow::navigateToVerse(Verse v)
+{
+  m_currVerse = v;
+
+  redrawQuranPage();
+  addSideContent();
+
+  m_player->setVerse(m_currVerse);
+  m_player->updateSurahVerseCount();
+  updateVerseDropDown();
+
+  m_internalPageChange = true;
+  ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
+  m_internalPageChange = false;
+
+  m_internalSurahChange = true;
+  ui->cmbSurah->setCurrentIndex(m_currVerse.surah - 1);
+  m_internalSurahChange = false;
+
+  m_internalVerseChange = true;
+  ui->cmbVerse->setCurrentIndex(m_currVerse.number - 1);
+  m_internalVerseChange = false;
+
+  highlightCurrentVerse();
+
+  m_player->setVerseFile(m_player->constructVerseFilename());
+  m_endOfPage = false;
+}
+
+/* ------------------------ Settings update methods ------------------------ */
 
 /*!
  * \brief MainWindow::updateSideContentType set side content type to the one in the settings 
@@ -740,7 +811,44 @@ void MainWindow::updateSideFont()
   m_sideFont = qvariant_cast<QFont>(m_settingsPtr->value("Reader/SideContentFont"));
 }
 
-/* ------------------------ Side content generation ------------------------ */
+/* ------------------------ Content generation ------------------------ */
+
+/*!
+ * \brief MainWindow::redrawQuranPage redraw the current quran page
+ */
+void MainWindow::redrawQuranPage()
+{
+  m_quranBrowser->constructPage(m_currVerse.page);
+  updatePageVerseInfoList();
+}
+
+/*!
+ * \brief MainWindow::highlightCurrentVerse highlights the currently selected/recited verse in the quran page & side panel
+ */
+void MainWindow::highlightCurrentVerse()
+{
+  int idx;
+  for (idx = 0; idx < m_vInfoList.size(); idx++) {
+        Verse v = m_vInfoList.at(idx);
+        if (m_currVerse == v)
+            break;
+  }
+  m_quranBrowser->highlightVerse(idx);
+
+  if (m_highlightedFrm != nullptr)
+        m_highlightedFrm->setStyleSheet("");
+
+  VerseFrame *verseFrame = ui->scrlVerseCont->findChild<VerseFrame *>(
+      QString("%0_%1").arg(QString::number(m_currVerse.surah), QString::number(m_currVerse.number)));
+
+  verseFrame->highlightFrame();
+
+  if (m_highlightedFrm != nullptr) {
+        ui->scrlVerseByVerse->ensureWidgetVisible(verseFrame);
+  }
+
+  m_highlightedFrm = verseFrame;
+}
 
 /*!
  * \brief MainWindow::addSideContent updates the side panel with the chosen side content type
@@ -822,6 +930,23 @@ void MainWindow::addSideContent()
   }
 }
 
+/*!
+ * \brief MainWindow::showExpandedVerseTafsir toggle a collapsed verse tafsir
+ */
+void MainWindow::showExpandedVerseTafsir()
+{
+  ClickableLabel *showLb = qobject_cast<ClickableLabel *>(sender());
+
+  if (showLb->text() == tr("Expand...")) {
+        QStringList data = sender()->parent()->objectName().split('_');
+        QString text = m_dbManPtr->getTafsir(data.at(0).toInt(), data.at(1).toInt());
+        showLb->setText(text);
+  } else
+        showLb->setText(tr("Expand..."));
+}
+
+/* ------------------------ Helper functions ------------------------ */
+
 void MainWindow::copyVerseText(int IdxInPage)
 {
   const Verse &v = m_vInfoList.at(IdxInPage);
@@ -848,70 +973,6 @@ void MainWindow::restartApp()
   saveReaderState();
   emit QApplication::exit();
   QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-}
-
-/*!
- * \brief MainWindow::showExpandedVerseTafsir toggle a collapsed verse tafsir
- */
-void MainWindow::showExpandedVerseTafsir()
-{
-  ClickableLabel *showLb = qobject_cast<ClickableLabel *>(sender());
-
-  if (showLb->text() == tr("Expand...")) {
-        QStringList data = sender()->parent()->objectName().split('_');
-        QString text = m_dbManPtr->getTafsir(data.at(0).toInt(), data.at(1).toInt());
-        showLb->setText(text);
-  } else
-        showLb->setText(tr("Expand..."));
-}
-
-/*!
- * \brief MainWindow::openSearchDialog open the verse search dialog
- */
-void MainWindow::openSearchDialog()
-{
-  if (m_searchDlg == nullptr) {
-        m_searchDlg = new SearchDialog(this,
-                                       m_settingsPtr->value("Reader/QCF").toInt(),
-                                       m_dbManPtr,
-                                       m_iconsPath);
-        connect(m_searchDlg, &SearchDialog::navigateToVerse, this, &MainWindow::navigateToVerse);
-  }
-
-  m_searchDlg->show();
-}
-
-/*!
- * \brief MainWindow::navigateToVerse navigate to a selected verse from the search results
- * \param v Verse to navigate to
- */
-void MainWindow::navigateToVerse(Verse v)
-{
-  m_currVerse = v;
-
-  redrawQuranPage();
-  addSideContent();
-
-  updateVerseDropDown();
-
-  m_internalPageChange = true;
-  ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
-  m_internalPageChange = false;
-
-  m_internalSurahChange = true;
-  ui->cmbSurah->setCurrentIndex(m_currVerse.surah - 1);
-  m_internalSurahChange = false;
-
-  m_internalVerseChange = true;
-  ui->cmbVerse->setCurrentIndex(m_currVerse.number - 1);
-  m_internalVerseChange = false;
-
-  highlightCurrentVerse();
-
-  m_player->setVerse(m_currVerse);
-  m_player->updateSurahVerseCount();
-  m_player->setVerseFile(m_player->constructVerseFilename());
-  m_endOfPage = false;
 }
 
 MainWindow::~MainWindow()

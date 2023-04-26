@@ -14,6 +14,7 @@
 #include "../widgets/clickablelabel.h"
 #include "../widgets/quranpagebrowser.h"
 #include "../widgets/verseframe.h"
+#include "bookmarksdialog.h"
 #include "downloaderdialog.h"
 #include "searchdialog.h"
 #include "settingsdialog.h"
@@ -65,13 +66,14 @@ private slots:
     void gotoSurah(int surahIdx);
 
     void activeVerseChanged();
-    void missingRecitationFileWarn();
+    void missingRecitationFileWarn(int reciterIdx, int surah);
     void mediaPosChanged(qint64 position);
     void mediaStateChanged(QMediaPlayer::PlaybackState state);
 
     void spaceKeyPressed();
     void actionPrefTriggered();
     void actionDMTriggered();
+    void actionBookmarksTriggered();
     void openSearchDialog();
 
     void verseClicked();
@@ -108,6 +110,7 @@ private:
     VersePlayer *m_player;
     SearchDialog *m_searchDlg = nullptr;
     SettingsDialog *m_settingsDlg = nullptr;
+    BookmarksDialog *m_bookmarksDlg = nullptr;
     DownloaderDialog *m_downloaderDlg = nullptr;
     DownloadManager *m_downManPtr = nullptr;
     VerseFrame *m_highlightedFrm = nullptr;

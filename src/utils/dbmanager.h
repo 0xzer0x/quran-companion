@@ -19,7 +19,7 @@ class DBManager : public QObject
 
 public:
     explicit DBManager(QObject *parent = nullptr, int qcfVersion = 1);
-    enum Database { quran, glyphs, tafsir, translation };
+    enum Database { quran, glyphs, bookmarks, tafsir, translation };
     enum Tafsir {
         muyassar,
         baghawy,
@@ -86,30 +86,37 @@ public:
     void setCurrentTranslation(Translation translationName);
     void setOpenDatabase(Database db, QString filePath);
 
-    int getSurahStartPage(int surahIdx);
-    int getSurahVerseCount(const int surahIdx);
     QList<int> getPageMetadata(const int page);
     QStringList getPageLines(const int page);
-
-    int getVersePage(const int &surahIdx, const int &verse);
     QList<int> getVerseBounds(const int surah, const int ayah);
-    QList<QString> getVersesInPage(const int page);
     QList<Verse> getVerseInfoList(const int page);
 
-    QString getSurahName(const int sIdx, bool en = true);
     QString getSurahNameGlyph(const int sura);
     QString getJuzGlyph(const int juz);
-    QString getVerseText(const int sIdx, const int vIdx);
     QString getVerseGlyphs(const int sIdx, const int vIdx);
+
+    QString getVerseText(const int sIdx, const int vIdx);
+    int getSurahVerseCount(const int surahIdx);
+    int getSurahStartPage(int surahIdx);
+    QList<QString> displaySurahNames(bool en = true);
+    QString getSurahName(const int sIdx, bool en = true);
+    int getVersePage(const int &surahIdx, const int &verse);
+    QList<Verse> searchSurahs(QString searchText, const QList<int> surahs, const bool whole = false);
+    QList<Verse> searchVerses(QString searchText,
+                              const int range[2] = new int[2]{1, 604},
+                              const bool whole = false);
+
     QString getTafsir(const int sIdx, const int vIdx);
     QString getTranslation(const int sIdx, const int vIdx);
-    QList<Verse> searchVerses(QString searchText);
-    QList<int> searchSurahs(QString searchText);
+
+    QList<Verse> favoriteVerses();
+    bool isBookmarked(Verse v);
+    bool addBookmark(Verse v);
+    bool removeBookmark(Verse v);
 
 private:
     int m_qcfVer;
     QSqlDatabase m_openDBCon;
-    QSqlQuery m_queryOpenDB;
     QDir m_dbDir = QDir::currentPath() + QDir::separator() + "assets";
     Tafsir m_currTafsir = Tafsir::sa3dy;
     Translation m_currTrans = Translation::en_sahih;
@@ -119,6 +126,8 @@ private:
     QFileInfo m_transDbPath;
     QFileInfo m_quranDbPath;
     QFileInfo m_glyphsDbPath;
+    QFileInfo m_bookmarksDbPath;
+    QStringList m_surahNames;
 };
 
 #endif // DBMANAGER_H

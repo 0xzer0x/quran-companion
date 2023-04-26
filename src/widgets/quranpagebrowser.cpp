@@ -233,13 +233,18 @@ void QuranPageBrowser::highlightVerse(int verseIdxInPage)
     m_highlightedIdx = verseIdxInPage;
 }
 
-int QuranPageBrowser::lmbVerseMenu()
+int QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
 {
     QMenu lmbMenu(this);
     lmbMenu.addAction(m_playAct);
     lmbMenu.addAction(m_selectAct);
     lmbMenu.addSeparator();
     lmbMenu.addAction(m_copyAct);
+    if (favoriteVerse) {
+        lmbMenu.addAction(m_actRemBookmark);
+    } else {
+        lmbMenu.addAction(m_actAddBookmark);
+    }
 
     QAction *chosen = lmbMenu.exec(QCursor::pos());
 
@@ -250,6 +255,10 @@ int QuranPageBrowser::lmbVerseMenu()
         actionIdx = 1;
     else if (chosen == m_copyAct)
         actionIdx = 2;
+    else if (chosen == m_actAddBookmark)
+        actionIdx = 3;
+    else if (chosen == m_actRemBookmark)
+        actionIdx = 4;
 
     return actionIdx;
 }
@@ -261,11 +270,15 @@ void QuranPageBrowser::createActions()
     m_copyAct = new QAction(tr("Copy Verse"), this);
     m_selectAct = new QAction(tr("Select"), this);
     m_playAct = new QAction(tr("Play"), this);
+    m_actAddBookmark = new QAction(tr("Add Bookmark"), this);
+    m_actRemBookmark = new QAction(tr("Remove Bookmark"), this);
     m_zoomIn->setIcon(QIcon(m_iconsPath + "zoom-in.png"));
     m_zoomOut->setIcon(QIcon(m_iconsPath + "zoom-out.png"));
     m_playAct->setIcon(QIcon(m_iconsPath + "play.png"));
     m_selectAct->setIcon(QIcon(m_iconsPath + "select.png"));
     m_copyAct->setIcon(QIcon(m_iconsPath + "copy.png"));
+    m_actAddBookmark->setIcon(QIcon(m_iconsPath + "bookmark-false.png"));
+    m_actRemBookmark->setIcon(QIcon(m_iconsPath + "bookmark-true.png"));
     connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
     connect(m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);
 }
@@ -312,6 +325,10 @@ void QuranPageBrowser::actionCopy()
 
     emit copyVerse(idxInPage);
 }
+
+void QuranPageBrowser::actionAddToFav() {}
+
+void QuranPageBrowser::actionRemoveFromFav() {}
 
 void QuranPageBrowser::updateFontSize()
 {

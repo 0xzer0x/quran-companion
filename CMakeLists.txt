@@ -43,6 +43,9 @@ set(PROJECT_SOURCES
     src/core/downloaderdialog.cpp
     src/core/downloaderdialog.h
     src/core/downloaderdialog.ui
+    src/core/bookmarksdialog.h
+    src/core/bookmarksdialog.cpp
+    src/core/bookmarksdialog.ui
     src/widgets/quranpagebrowser.h
     src/widgets/quranpagebrowser.cpp
     src/widgets/clickablelabel.cpp

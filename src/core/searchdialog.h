@@ -2,7 +2,11 @@
 #define SEARCHDIALOG_H
 
 #include <QDialog>
-#include <QStyle>
+#include <QScrollBar>
+#include <QSettings>
+#include <QSpinBox>
+#include <QStandardItem>
+#include <QStandardItemModel>
 #include "../utils/dbmanager.h"
 #include "../widgets/clickablelabel.h"
 #include "../widgets/verseframe.h"
@@ -24,7 +28,7 @@ class SearchDialog : public QDialog
 
 public:
     explicit SearchDialog(QWidget *parent = nullptr,
-                          int qcfVersion = 1,
+                          QSettings *settings = nullptr,
                           DBManager *dbPtr = nullptr,
                           const QString &iconPath = ":/assets/images/light/");
     ~SearchDialog();
@@ -43,16 +47,25 @@ signals:
 protected:
     void closeEvent(QCloseEvent *event);
 
+private slots:
+    void btnTransferClicked();
+
 private:
-    Ui::SearchDialog *ui;
-    int m_startResult = 0;
+    void fillListView();
     int m_qcfVer;
+    int m_startResult = 0;
+    Ui::SearchDialog *ui;
+    DBManager *m_dbPtr;
+    QSettings *m_settings;
     QString m_iconsPath;
     QString m_fontPrefix;
-    DBManager *m_dbPtr;
+    QStringList m_surahNames;
+    QMap<QString, int> m_selectedSurahMap;
     QList<VerseFrame *> m_lbLst;
     QString m_searchText;
     QList<Verse> m_currResults;
+    QStandardItemModel m_modelAllSurahs;
+    QStandardItemModel m_modelSelectedSurahs;
 };
 
 #endif // SEARCHDIALOG_H

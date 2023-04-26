@@ -23,13 +23,10 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
 
 {
     ui->setupUi(this);
-    setWindowTitle(tr("Download Manager"));
     setWindowIcon(QIcon(m_iconsPath + "download-manager.png"));
 
     bool en = m_appSettings->value("Language").toString() == "العربية" ? false : true;
-    for (int i = 1; i <= 114; i++) {
-        m_surahDisplayNames.append(m_dbPtr->getSurahName(i, en));
-    }
+    m_surahDisplayNames = m_dbPtr->displaySurahNames(en);
 
     // treeview setup
     QStringList headers;
@@ -194,6 +191,17 @@ void DownloaderDialog::setCurrentBar()
 void DownloaderDialog::updateDownloadSpeed(int value, QString unit)
 {
     m_currDownSpeedLb->setText(QString::number(value) + " " + unit + tr("/sec"));
+}
+
+void DownloaderDialog::selectTask(int reciter, int surah)
+{
+    QItemSelectionModel *selector = ui->treeView->selectionModel();
+    QModelIndex reciterIdx = m_treeModel.index(reciter, 0);
+    ui->treeView->collapseAll();
+    ui->treeView->expand(reciterIdx);
+    selector->clearSelection();
+    selector->select(m_treeModel.index(surah - 1, 1, reciterIdx),
+                     QItemSelectionModel::Rows | QItemSelectionModel::Select);
 }
 
 /*!

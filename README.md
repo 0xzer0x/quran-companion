@@ -105,9 +105,10 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 | <kbd>&#8592;</kbd>             | Next page                       |
 | <kbd>&#8594;</kbd>             | Previous page                   |
 | <kbd>Space</kbd>               | start/pause recitation playback |
-| <kbd>Ctrl</kbd> + <kbd>F</kbd> | Open search dialog              |
+| <kbd>Ctrl</kbd> + <kbd>B</kbd> | Open Bookmarks dialog           |
+| <kbd>Ctrl</kbd> + <kbd>F</kbd> | Open Search dialog              |
 | <kbd>Ctrl</kbd> + <kbd>P</kbd> | Open Preferences dialog         |
-| <kbd>Ctrl</kbd> + <kbd>D</kbd> | Open the Download Manager       |
+| <kbd>Ctrl</kbd> + <kbd>D</kbd> | Open the download manager       |
 | <kbd>Ctrl</kbd> + <kbd>Q</kbd> | Exit                            |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -210,12 +211,11 @@ export QT_MEDIA_BACKEND=ffmpeg
 ## Roadmap
 
 - [ ] Add more tafsir books
-- [ ] Add bookmarked verses tab
 - [ ] Add daily verse functionality
-- [ ] Enhance search functionality
-  - [ ] Search in a range of pages only
-  - [ ] Search in a specific surah only
-  - [ ] Search the English translation
+- [x] Add bookmarked verses tab
+- [x] Enhance search functionality
+  - [x] Search in a range of pages only
+  - [x] Search in a specific surah only
 
 See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a full list of proposed features (and known issues).
 

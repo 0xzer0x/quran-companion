@@ -248,6 +248,8 @@ border-style:solid;
     <property name="title">
      <string>Edit</string>
     </property>
+    <addaction name="actionBookmarks"/>
+    <addaction name="separator"/>
     <addaction name="actionPereferences"/>
    </widget>
    <widget class="QMenu" name="menuFile">
@@ -1141,6 +1143,14 @@ border-style:solid;
   <action name="actionWebsite">
    <property name="text">
     <string>Website</string>
+   </property>
+  </action>
+  <action name="actionBookmarks">
+   <property name="text">
+    <string>Bookmarks</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
    </property>
   </action>
  </widget>

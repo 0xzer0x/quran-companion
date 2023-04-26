@@ -4,6 +4,8 @@
         <file>images/basmalah.png</file>
         <file>images/dark/arrow-left.png</file>
         <file>images/dark/arrow-right.png</file>
+        <file>images/dark/bookmark-false.png</file>
+        <file>images/dark/bookmark-true.png</file>
         <file>images/dark/copy.png</file>
         <file>images/dark/download-manager.png</file>
         <file>images/dark/exit.png</file>
@@ -13,12 +15,15 @@
         <file>images/dark/search.png</file>
         <file>images/dark/select.png</file>
         <file>images/dark/stop.png</file>
+        <file>images/dark/transfer.png</file>
         <file>images/dark/update.png</file>
         <file>images/dark/website.png</file>
         <file>images/dark/zoom-in.png</file>
         <file>images/dark/zoom-out.png</file>
         <file>images/light/arrow-left.png</file>
         <file>images/light/arrow-right.png</file>
+        <file>images/light/bookmark-false.png</file>
+        <file>images/light/bookmark-true.png</file>
         <file>images/light/copy.png</file>
         <file>images/light/download-manager.png</file>
         <file>images/light/exit.png</file>
@@ -28,6 +33,7 @@
         <file>images/light/search.png</file>
         <file>images/light/select.png</file>
         <file>images/light/stop.png</file>
+        <file>images/light/transfer.png</file>
         <file>images/light/update.png</file>
         <file>images/light/website.png</file>
         <file>images/light/zoom-in.png</file>

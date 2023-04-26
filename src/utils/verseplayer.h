@@ -48,7 +48,7 @@ public slots:
 signals:
     void surahChanged();
     void verseNoChanged();
-    void missingVerseFile();
+    void missingVerseFile(int reciterIdx, int surah);
 
 private:
     int m_reciter = 0;
