@@ -98,10 +98,13 @@ public:
     QString getVerseText(const int sIdx, const int vIdx);
     int getSurahVerseCount(const int surahIdx);
     int getSurahStartPage(int surahIdx);
+    QList<QString> displaySurahNames(bool en = true);
     QString getSurahName(const int sIdx, bool en = true);
     int getVersePage(const int &surahIdx, const int &verse);
-    QList<Verse> searchVerses(QString searchText, int range[2] = new int[2]{1, 604});
-    QList<int> searchSurahs(QString searchText);
+    QList<Verse> searchSurahs(QString searchText, const QList<int> surahs, const bool whole = false);
+    QList<Verse> searchVerses(QString searchText,
+                              const int range[2] = new int[2]{1, 604},
+                              const bool whole = false);
 
     QString getTafsir(const int sIdx, const int vIdx);
     QString getTranslation(const int sIdx, const int vIdx);
@@ -124,6 +127,7 @@ private:
     QFileInfo m_quranDbPath;
     QFileInfo m_glyphsDbPath;
     QFileInfo m_bookmarksDbPath;
+    QStringList m_surahNames;
 };
 
 #endif // DBMANAGER_H

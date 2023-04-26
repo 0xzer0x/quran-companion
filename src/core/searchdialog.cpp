@@ -18,6 +18,7 @@ SearchDialog::SearchDialog(QWidget *parent,
 {
     setLayoutDirection(Qt::LeftToRight);
     m_fontPrefix = m_settings->value("Reader/QCF", 1).toInt() == 1 ? "QCF_P" : "QCF2";
+    m_surahNames = m_dbPtr->displaySurahNames(m_settings->value("Language").toString() != "العربية");
 
     ui->setupUi(this);
     setWindowIcon(QIcon(m_iconsPath + "search.png"));
@@ -33,6 +34,7 @@ SearchDialog::SearchDialog(QWidget *parent,
     connect(ui->btnSrch, &QPushButton::clicked, this, &SearchDialog::getResults);
     connect(ui->btnFwdRes, &QPushButton::clicked, this, &SearchDialog::moveFwd);
     connect(ui->btnBwdRes, &QPushButton::clicked, this, &SearchDialog::moveBwd);
+    connect(ui->btnTransfer, &QPushButton::clicked, this, &SearchDialog::btnTransferClicked);
 
     fillListView();
 }
@@ -43,29 +45,33 @@ SearchDialog::SearchDialog(QWidget *parent,
 void SearchDialog::getResults()
 {
     m_searchText = ui->ledSearchBar->text().trimmed();
-    if (ui->chkWholeWord->isChecked())
-        m_searchText = ' ' + m_searchText + ' ';
 
     if (!m_lbLst.empty()) {
         qDeleteAll(m_lbLst);
         m_lbLst.clear();
-        ui->lbResultCount->setText("");
         m_currResults.clear();
     }
 
     if (m_searchText.isEmpty()) {
+        ui->lbResultCount->setText("");
         ui->btnFwdRes->setDisabled(true);
         ui->btnBwdRes->setDisabled(true);
         return;
     }
 
-    int range[2];
-    range[0] = ui->spnStartPage->value();
-    if (ui->spnEndPage->value() < range[0])
-        ui->spnEndPage->setValue(range[0]);
-    range[1] = ui->spnEndPage->value();
+    if (!ui->chkSurahsOnly->isChecked()) {
+        int range[2];
+        range[0] = ui->spnStartPage->value();
+        if (ui->spnEndPage->value() < range[0])
+            ui->spnEndPage->setValue(range[0]);
+        range[1] = ui->spnEndPage->value();
 
-    m_currResults = m_dbPtr->searchVerses(m_searchText, range);
+        m_currResults = m_dbPtr->searchVerses(m_searchText, range, ui->chkWholeWord->isChecked());
+    } else {
+        m_currResults = m_dbPtr->searchSurahs(m_searchText,
+                                              m_selectedSurahMap.values(),
+                                              ui->chkWholeWord->isChecked());
+    }
     ui->lbResultCount->setText(QString::number(m_currResults.size()) + tr(" Search results"));
     m_startResult = 0;
     showResults();
@@ -164,14 +170,39 @@ void SearchDialog::moveBwd()
 
 void SearchDialog::fillListView()
 {
-    bool en = m_settings->value("Language") == "العربية" ? false : true;
     for (int i = 1; i <= 114; i++) {
-        QStandardItem *surah = new QStandardItem(m_dbPtr->getSurahName(i, en));
+        QStandardItem *surah = new QStandardItem(m_surahNames.at(i - 1));
         m_modelAllSurahs.invisibleRootItem()->appendRow(surah);
     }
 }
 
-void SearchDialog::btnTransferClicked() {}
+void SearchDialog::btnTransferClicked()
+{
+    QModelIndexList selectedAdd = ui->listViewAllSurahs->selectionModel()->selectedRows();
+    QModelIndexList selectedRem = ui->listViewSelected->selectionModel()->selectedRows();
+    QList<QString> removed;
+
+    foreach (const QModelIndex &midx, selectedAdd) {
+        if (m_selectedSurahMap.contains(midx.data().toString()))
+            continue;
+        // KEY: visible surah name - VALUE: surah number
+        int sIdx = m_surahNames.indexOf(midx.data().toString());
+        m_selectedSurahMap.insert(midx.data().toString(), sIdx + 1);
+        m_modelSelectedSurahs.appendRow(
+            new QStandardItem(midx.data().toString())); // add surah to selected view
+    }
+
+    foreach (const QModelIndex &remIdx, selectedRem) {
+        // remove from selected map & view
+        m_selectedSurahMap.remove(remIdx.data().toString());
+        removed.append(remIdx.data().toString());
+    }
+
+    foreach (const QString &rem, removed) {
+        int r = m_modelSelectedSurahs.findItems(rem).at(0)->row();
+        m_modelSelectedSurahs.removeRow(r);
+    }
+}
 
 void SearchDialog::closeEvent(QCloseEvent *event)
 {

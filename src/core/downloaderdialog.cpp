@@ -26,9 +26,7 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
     setWindowIcon(QIcon(m_iconsPath + "download-manager.png"));
 
     bool en = m_appSettings->value("Language").toString() == "العربية" ? false : true;
-    for (int i = 1; i <= 114; i++) {
-        m_surahDisplayNames.append(m_dbPtr->getSurahName(i, en));
-    }
+    m_surahDisplayNames = m_dbPtr->displaySurahNames(en);
 
     // treeview setup
     QStringList headers;

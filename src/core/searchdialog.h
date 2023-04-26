@@ -59,6 +59,8 @@ private:
     QSettings *m_settings;
     QString m_iconsPath;
     QString m_fontPrefix;
+    QStringList m_surahNames;
+    QMap<QString, int> m_selectedSurahMap;
     QList<VerseFrame *> m_lbLst;
     QString m_searchText;
     QList<Verse> m_currResults;

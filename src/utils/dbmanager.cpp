@@ -397,21 +397,46 @@ int DBManager::getSurahStartPage(int surahIdx)
     return dbQuery.value(0).toInt();
 }
 
-QList<int> DBManager::searchSurahs(QString searchText)
+QList<QString> DBManager::displaySurahNames(bool en)
 {
+    if (m_surahNames.empty()) {
+        for (int i = 1; i <= 114; i++) {
+            m_surahNames.append(getSurahName(i, en));
+        }
+    }
+
+    return m_surahNames;
+}
+
+QList<DBManager::Verse> DBManager::searchSurahs(QString searchText,
+                                                const QList<int> surahs,
+                                                const bool whole)
+{
+    QList<DBManager::Verse> results;
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
-    QList<int> results;
     QSqlQuery dbQuery(m_openDBCon);
 
-    dbQuery.prepare(
-        "SELECT sura_no FROM verses_v1 WHERE sura_name_ar like '%:searchText%' ORDER BY id");
-    dbQuery.bindValue(0, searchText);
+    QString q = "SELECT page,sura_no,aya_no FROM verses_v" + QString::number(m_qcfVer) + " WHERE (";
+    for (int i = 0; i < surahs.size(); i++) {
+        q.append("sura_no=" + QString::number(surahs.at(i)) + ' ');
+        if (i != surahs.size() - 1)
+            q.append("OR ");
+    }
+
+    if (whole)
+        q.append(") AND (aya_text_emlaey like '" + searchText + " %' OR aya_text_emlaey like '% "
+                 + searchText + " %') ORDER BY id");
+    else
+        q.append(") AND (aya_text_emlaey like '%" + searchText + "%') ORDER BY id");
+
+    dbQuery.prepare(q);
     if (!dbQuery.exec()) {
-        qCritical() << "Error occurred during searchVerses 1st SQL statment exec";
+        qCritical() << "[CRITICAL] Error occurred during searchSurahs SQL statment exec";
     }
 
     while (dbQuery.next()) {
-        results.append(dbQuery.value(0).toInt());
+        results.append(
+            Verse{dbQuery.value(0).toInt(), dbQuery.value(1).toInt(), dbQuery.value(2).toInt()});
     }
 
     return results;
@@ -453,16 +478,23 @@ int DBManager::getVersePage(const int &surahIdx, const int &verse)
     return dbQuery.value(0).toInt();
 }
 
-QList<DBManager::Verse> DBManager::searchVerses(QString searchText, int range[2])
+QList<DBManager::Verse> DBManager::searchVerses(QString searchText,
+                                                const int range[2],
+                                                const bool whole)
 {
     QList<DBManager::Verse> results;
     setOpenDatabase(Database::quran, m_quranDbPath.filePath());
     QSqlQuery dbQuery(m_openDBCon);
 
     QString q = "SELECT page,sura_no,aya_no FROM verses_v" + QString::number(m_qcfVer)
-                + " WHERE page >= " + QString::number(range[0])
-                + " AND page <= " + QString::number(range[1]) + " AND aya_text_emlaey like'%"
-                + searchText + "%' ORDER BY id";
+                + " WHERE (page >= " + QString::number(range[0])
+                + " AND page <= " + QString::number(range[1]) + ")";
+
+    if (whole)
+        q.append(" AND (aya_text_emlaey like '" + searchText + " %' OR aya_text_emlaey like '% "
+                 + searchText + " %') ORDER BY id");
+    else
+        q.append(" AND (aya_text_emlaey like '%" + searchText + "%') ORDER BY id");
 
     dbQuery.prepare(q);
     if (!dbQuery.exec()) {
