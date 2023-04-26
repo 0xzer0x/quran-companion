@@ -68,7 +68,7 @@ void BookmarksDialog::loadFavorites()
                 &BookmarksDialog::btnRemove,
                 Qt::UniqueConnection);
 
-        QString info = tr("Surah: ") + QString::number(verse.surah) + " - " + tr("Ayah: ")
+        QString info = tr("Surah: ") + QString::number(verse.surah) + " - " + tr("Verse: ")
                        + QString::number(verse.number);
         lbMeta->setText(info);
         lbMeta->setAlignment(Qt::AlignLeft);

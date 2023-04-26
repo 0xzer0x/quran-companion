@@ -16,12 +16,12 @@ SearchDialog::SearchDialog(QWidget *parent,
     , m_dbPtr{dbPtr}
     , m_iconsPath{iconPath}
 {
-    setLayoutDirection(Qt::LeftToRight);
     m_fontPrefix = m_settings->value("Reader/QCF", 1).toInt() == 1 ? "QCF_P" : "QCF2";
     m_surahNames = m_dbPtr->displaySurahNames(m_settings->value("Language").toString() != "العربية");
 
-    ui->setupUi(this);
     setWindowIcon(QIcon(m_iconsPath + "search.png"));
+    ui->setupUi(this);
+    ui->frmNavBtns->setLayoutDirection(Qt::LeftToRight);
     ui->btnFwdRes->setIcon(QIcon(m_iconsPath + "arrow-left.png"));
     ui->btnBwdRes->setIcon(QIcon(m_iconsPath + "arrow-right.png"));
     ui->btnTransfer->setStyleSheet("QPushButton{image: url(" + m_iconsPath + "transfer.png" + ")}");
@@ -111,7 +111,7 @@ void SearchDialog::showResults()
         QLabel *lbInfo = new QLabel(vFrame);
         ClickableLabel *clkLb = new ClickableLabel(vFrame);
 
-        QString info = tr("Surah: ") + QString::number(v.surah) + " - " + tr("Ayah: ")
+        QString info = tr("Surah: ") + m_surahNames.at(v.surah - 1) + " - " + tr("Verse: ")
                        + QString::number(v.number);
         lbInfo->setText(info);
         lbInfo->setAlignment(Qt::AlignLeft);

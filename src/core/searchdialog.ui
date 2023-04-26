@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>582</width>
-    <height>552</height>
+    <width>676</width>
+    <height>658</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="searchTab">
       <attribute name="title">
@@ -27,6 +27,9 @@
        <item>
         <layout class="QHBoxLayout" name="hboxSearchBar">
          <item>
+          <widget class="QLineEdit" name="ledSearchBar"/>
+         </item>
+         <item>
           <widget class="QPushButton" name="btnSrch">
            <property name="text">
             <string>Find</string>
@@ -35,9 +38,6 @@
             <bool>true</bool>
            </property>
           </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="ledSearchBar"/>
          </item>
         </layout>
        </item>
@@ -95,8 +95,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>540</width>
-            <height>390</height>
+            <width>634</width>
+            <height>498</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -104,38 +104,52 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="buttonHBox">
-         <item>
-          <widget class="QPushButton" name="btnFwdRes">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normalon>:/assets/images/arrow-left.png</normalon>
-            </iconset>
-           </property>
-           <property name="shortcut">
-            <string>Left</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnBwdRes">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normalon>:/assets/images/arrow-right.png</normalon>
-            </iconset>
-           </property>
-           <property name="shortcut">
-            <string>Right</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QFrame" name="frmNavBtns">
+         <layout class="QHBoxLayout" name="buttonHBox">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="btnFwdRes">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normalon>:/assets/images/arrow-left.png</normalon>
+             </iconset>
+            </property>
+            <property name="shortcut">
+             <string>Left</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnBwdRes">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normalon>:/assets/images/arrow-right.png</normalon>
+             </iconset>
+            </property>
+            <property name="shortcut">
+             <string>Right</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
