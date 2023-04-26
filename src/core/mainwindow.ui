@@ -140,7 +140,7 @@ border-style:solid;
              <x>0</x>
              <y>0</y>
              <width>647</width>
-             <height>833</height>
+             <height>834</height>
             </rect>
            </property>
           </widget>
@@ -234,7 +234,7 @@ border-style:solid;
      <x>0</x>
      <y>0</y>
      <width>1357</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuView">
@@ -1148,6 +1148,9 @@ border-style:solid;
   <action name="actionBookmarks">
    <property name="text">
     <string>Bookmarks</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
    </property>
   </action>
  </widget>
