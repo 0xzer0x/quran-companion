@@ -202,7 +202,7 @@ export QT_MEDIA_BACKEND=ffmpeg
 
 ### Arabic UI
 
-![ar_dark.png](screenshots/ar_dark.png)
+![ar_dark.png](screenshots/ar_light.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
