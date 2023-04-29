@@ -88,6 +88,7 @@ void MainWindow::init()
                                           m_settingsPtr,
                                           m_iconsPath);
     ui->frmPageContent->layout()->addWidget(m_quranBrowser);
+    m_notifyMgr = new NotificationManager(this, m_dbManPtr);
 
     updateSideContentType();
     updateLoadedTafsir();
@@ -121,6 +122,7 @@ void MainWindow::init()
 
     ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
     ui->cmbReciter->setCurrentIndex(m_settingsPtr->value("Reciter", 0).toInt());
+    m_notifyMgr->checkDailyVerse();
 }
 
 /*!
@@ -170,6 +172,12 @@ void MainWindow::setupConnections()
     connect(spaceKey, &QShortcut::activated, this, &MainWindow::spaceKeyPressed);
     connect(ui->btnSearch, &QPushButton::clicked, this, &MainWindow::openSearchDialog);
     connect(ui->btnPreferences, &QPushButton::clicked, this, &MainWindow::actionPrefTriggered);
+
+    // system tray
+    connect(m_notifyMgr, &NotificationManager::showWindow, this, &MainWindow::show);
+    connect(m_notifyMgr, &NotificationManager::hideWindow, this, &MainWindow::hide);
+    connect(m_notifyMgr, &NotificationManager::checkForUpdates, this, &MainWindow::checkForUpdates);
+    connect(m_notifyMgr, &NotificationManager::exit, this, &QApplication::exit);
 }
 
 /* ------------------------ Help menu actions ------------------------ */

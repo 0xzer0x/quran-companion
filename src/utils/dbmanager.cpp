@@ -454,11 +454,32 @@ QString DBManager::getVerseText(const int sIdx, const int vIdx)
     dbQuery.bindValue(1, vIdx);
 
     if (!dbQuery.exec()) {
-        qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+        qCritical() << "Error occurred during getVerseText SQL statment exec";
     }
     dbQuery.next();
 
     return dbQuery.value(0).toString();
+}
+
+QPair<DBManager::Verse, QString> DBManager::randomVerse()
+{
+    QPair<DBManager::Verse, QString> res;
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+    QSqlQuery dbQuery(m_openDBCon);
+
+    int id = QRandomGenerator::global()->bounded(1, 6237);
+    dbQuery.prepare("SELECT page,sura_no,aya_no,aya_text FROM verses_v1 WHERE id="
+                    + QString::number(id));
+
+    if (!dbQuery.exec()) {
+        qCritical() << "Error occurred during randomVerse SQL statment exec";
+    }
+    dbQuery.next();
+    Verse v{dbQuery.value(0).toInt(), dbQuery.value(1).toInt(), dbQuery.value(2).toInt()};
+
+    res.first = v;
+    res.second = dbQuery.value(3).toString();
+    return res;
 }
 
 int DBManager::getVersePage(const int &surahIdx, const int &verse)

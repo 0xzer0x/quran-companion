@@ -298,7 +298,7 @@ void QuranPageBrowser::contextMenuEvent(QContextMenuEvent *event)
 
 void QuranPageBrowser::actionZoomIn()
 {
-    m_fontSize += 2;
+    m_fontSize++;
     m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size", m_fontSize);
     constructPage(m_page);
     highlightVerse(m_highlightedIdx);
@@ -306,7 +306,7 @@ void QuranPageBrowser::actionZoomIn()
 
 void QuranPageBrowser::actionZoomOut()
 {
-    m_fontSize -= 2;
+    m_fontSize--;
     m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size", m_fontSize);
     constructPage(m_page);
     highlightVerse(m_highlightedIdx);

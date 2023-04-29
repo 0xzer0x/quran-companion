@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QObject>
+#include <QRandomGenerator>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -96,6 +97,7 @@ public:
     QString getVerseGlyphs(const int sIdx, const int vIdx);
 
     QString getVerseText(const int sIdx, const int vIdx);
+    QPair<Verse, QString> randomVerse();
     int getSurahVerseCount(const int surahIdx);
     int getSurahStartPage(int surahIdx);
     QList<QString> displaySurahNames(bool en = true);

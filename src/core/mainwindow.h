@@ -10,6 +10,7 @@
 #include <QSettings>
 #include <QShortcut>
 #include "../utils/dbmanager.h"
+#include "../utils/notificationmanager.h"
 #include "../utils/verseplayer.h"
 #include "../widgets/clickablelabel.h"
 #include "../widgets/quranpagebrowser.h"
@@ -106,6 +107,7 @@ private:
     QString m_updateToolPath;
     QIntValidator *verseValidator = nullptr;
     QuranPageBrowser *m_quranBrowser;
+    NotificationManager *m_notifyMgr;
     DBManager *m_dbManPtr;
     VersePlayer *m_player;
     SearchDialog *m_searchDlg = nullptr;

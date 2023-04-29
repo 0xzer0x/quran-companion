@@ -40,5 +40,6 @@
         <file>images/light/zoom-out.png</file>
         <file>images/splash.png</file>
         <file>images/sura_box.png</file>
+        <file>images/tray.png</file>
     </qresource>
 </RCC>

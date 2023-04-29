@@ -60,6 +60,8 @@ set(PROJECT_SOURCES
     src/utils/verseplayer.cpp
     src/utils/downloadmanager.h
     src/utils/downloadmanager.cpp
+    src/utils/notificationmanager.h
+    src/utils/notificationmanager.cpp
     src/utils/logger.h
     src/utils/logger.cpp
     resources.qrc
