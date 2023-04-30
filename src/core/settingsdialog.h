@@ -64,7 +64,7 @@ private:
     QString m_iconsPath;
     QSettings *m_settingsPtr;
     int m_themeIdx;
-    QString m_lang;
+    QLocale::Language m_lang;
     int m_qcfVer;
     int m_quranFontSize;
     QList<QAudioDevice> m_audioDevices;
@@ -78,6 +78,7 @@ private:
     bool m_renderQuranPage = false;
     bool m_restartReq = false;
     void setCurrentSettingsAsRef();
+    void setLanguageBox();
 
     // QWidget interface
 protected:

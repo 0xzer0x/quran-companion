@@ -10,7 +10,7 @@
 
 void setTheme(int themeIdx);
 void addFonts(int qcfVersion);
-void addTranslation(QString lang);
+void addTranslation(QLocale::Language localeCode);
 void checkSettings(QSettings &settings);
 
 int main(int argc, char *argv[])
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     setTheme(appSettings.value("Theme").toInt());
     addFonts(appSettings.value("Reader/QCF").toInt());
-    addTranslation(appSettings.value("Language").toString());
+    addTranslation((QLocale::Language) appSettings.value("Language").toInt());
 
     MainWindow w(nullptr, &appSettings);
     splash.finish(&w);
@@ -62,7 +62,7 @@ void checkSettings(QSettings &settings)
                 << "WindowState";
 
     if (settings.allKeys() != defaultKeys) {
-        settings.setValue("Language", settings.value("Language", "English"));
+        settings.setValue("Language", settings.value("Language", (int) QLocale::English));
         settings.setValue("Theme", settings.value("Theme", 0));
 
         settings.beginGroup("Reader");
@@ -173,19 +173,21 @@ void setTheme(int themeIdx)
     }
 }
 
-void addTranslation(QString lang)
+void addTranslation(QLocale::Language localeCode)
 {
-    QTranslator *translation = new QTranslator(qApp), *qtBase = new QTranslator(qApp);
-    if (lang == "العربية") {
-        if (translation->load(":/i18n/qc_ar.qm")) {
-            qInfo() << "tr" << translation->language() << "loaded";
-            qInfo() << "Qt tr loaded:" << qtBase->load(":/base/ar.qm");
-            qApp->installTranslator(translation);
-            qApp->installTranslator(qtBase);
-            qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
+    if (localeCode == QLocale::English)
+        return;
 
-        } else {
-            qWarning() << "AR Translation not loaded!";
-        }
+    QString code = QLocale::languageToCode(localeCode);
+    QTranslator *translation = new QTranslator(qApp), *qtBase = new QTranslator(qApp);
+    if (translation->load(":/i18n/qc_" + code + ".qm")) {
+        qInfo() << "tr" << translation->language() << "loaded";
+        qInfo() << "Qt tr loaded:" << qtBase->load(":/base/" + code + ".qm");
+        qApp->installTranslator(translation);
+        qApp->installTranslator(qtBase);
+        qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
+
+    } else {
+        qWarning() << code + " translation not loaded!";
     }
 }

@@ -25,8 +25,8 @@ SettingsDialog::SettingsDialog(QWidget *parent,
 
     setCurrentSettingsAsRef();
 
+    setLanguageBox();
     ui->cmbTheme->setCurrentIndex(m_themeIdx);
-    ui->cmbLang->setCurrentText(m_lang);
 
     ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
     ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
@@ -35,6 +35,7 @@ SettingsDialog::SettingsDialog(QWidget *parent,
     ui->cmbSideContent->setCurrentIndex(m_sideContent);
     ui->cmbTafsir->setCurrentIndex(m_tafsir);
     ui->cmbTranslation->setCurrentIndex(m_trans);
+    ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
 
     connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingsDialog::btnBoxAction);
 }
@@ -62,8 +63,11 @@ void SettingsDialog::updateTheme(int themeIdx)
  */
 void SettingsDialog::updateLang(QString langName)
 {
-    m_settingsPtr->setValue("Language", langName);
+    int code = QLocale::English;
+    if (langName == "العربية")
+        code = QLocale::Arabic;
 
+    m_settingsPtr->setValue("Language", code);
     QMessageBox::StandardButton btn
         = QMessageBox::question(this,
                                 tr("Restart required"),
@@ -231,17 +235,7 @@ void SettingsDialog::applyAllChanges()
 void SettingsDialog::showWindow()
 {
     setCurrentSettingsAsRef();
-
-    ui->cmbTheme->setCurrentIndex(m_themeIdx);
-    ui->cmbLang->setCurrentText(m_lang);
-    ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
     ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
-    ui->fntCmbSide->setCurrentFont(m_sideFont);
-    ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
-    ui->cmbSideContent->setCurrentIndex(m_sideContent);
-    ui->cmbTafsir->setCurrentIndex(m_tafsir);
-    ui->cmbTranslation->setCurrentIndex(m_trans);
-
     this->show();
 }
 
@@ -251,7 +245,7 @@ void SettingsDialog::showWindow()
 void SettingsDialog::setCurrentSettingsAsRef()
 {
     m_themeIdx = m_settingsPtr->value("Theme").toInt();
-    m_lang = m_settingsPtr->value("Language").toString();
+    m_lang = (QLocale::Language) m_settingsPtr->value("Language").toInt();
 
     m_settingsPtr->beginGroup("Reader");
 
@@ -272,8 +266,21 @@ void SettingsDialog::setCurrentSettingsAsRef()
         if (m_audioDevices.at(i) == m_vPlayerPtr->getOutput()->device())
             m_audioOutIdx = i;
     }
+}
 
-    ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
+void SettingsDialog::setLanguageBox()
+{
+    switch (m_lang) {
+    case QLocale::English:
+        ui->cmbLang->setCurrentIndex(0);
+        break;
+    case QLocale::Arabic:
+        ui->cmbLang->setCurrentIndex(1);
+        break;
+
+    default:
+        break;
+    }
 }
 
 /*!

@@ -58,9 +58,8 @@ void MainWindow::loadIcons()
  */
 void MainWindow::init()
 {
-    if (m_settingsPtr->value("Language").toString() == "العربية") {
+    if (m_settingsPtr->value("Language").toInt() == 14) {
         ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
-        ui->retranslateUi(this);
     }
 
     m_settingsPtr->beginGroup("Reader");
