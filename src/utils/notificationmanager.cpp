@@ -11,11 +11,13 @@ NotificationManager::NotificationManager(QObject *parent, DBManager *dbPtr)
     QAction *show = new QAction(tr("Show window"), m_trayMenu);
     QAction *hide = new QAction(tr("Hide window"), m_trayMenu);
     QAction *update = new QAction(tr("Check for updates"), m_trayMenu);
+    QAction *website = new QAction(tr("Website"), m_trayMenu);
     QAction *exit = new QAction(tr("Exit"), m_trayMenu);
     m_trayMenu->addAction(show);
     m_trayMenu->addAction(hide);
     m_trayMenu->addSeparator();
     m_trayMenu->addAction(update);
+    m_trayMenu->addAction(website);
     m_trayMenu->addSeparator();
     m_trayMenu->addAction(exit);
 
@@ -27,10 +29,20 @@ NotificationManager::NotificationManager(QObject *parent, DBManager *dbPtr)
             this,
             &NotificationManager::checkForUpdates,
             Qt::UniqueConnection);
+    connect(website,
+            &QAction::triggered,
+            this,
+            &NotificationManager::openWebsite,
+            Qt::UniqueConnection);
 
     m_sysTray->setContextMenu(m_trayMenu);
     m_sysTray->setIcon(QIcon(":/assets/images/tray.png"));
     m_sysTray->show();
+}
+
+void NotificationManager::notify(QString title, QString msg)
+{
+    m_sysTray->showMessage(title, msg);
 }
 
 void NotificationManager::checkDailyVerse()

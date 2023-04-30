@@ -707,6 +707,11 @@
         <translation>العلامات</translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.ui" line="1153"/>
+        <source>Ctrl+B</source>
+        <translation></translation>
+    </message>
+    <message>
         <source>081- At-Takwīr</source>
         <translation type="vanished">081 - التَّكوير</translation>
     </message>
@@ -919,41 +924,91 @@
         <translation>خروج</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="195"/>
+        <location filename="../core/mainwindow.cpp" line="204"/>
         <source>There are currently no updates available.</source>
         <translation>لا تتوفر تحديثات حالياً.</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="196"/>
+        <location filename="../core/mainwindow.cpp" line="206"/>
+        <location filename="../core/mainwindow.cpp" line="208"/>
+        <location filename="../core/mainwindow.cpp" line="218"/>
         <source>Update info</source>
         <translation>معلومات التحديث</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="199"/>
+        <location filename="../core/mainwindow.cpp" line="210"/>
         <source>Updates available, do you want to open the update tool?</source>
         <translation>هناك تحديثات متاحة، هل تود تشغيل مدير التحديثات؟</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="202"/>
+        <location filename="../core/mainwindow.cpp" line="213"/>
         <source>Updates info</source>
         <translation>معلومات التحديث</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="491"/>
+        <location filename="../core/mainwindow.cpp" line="219"/>
+        <source>Updates are available, use the maintainance tool to install the latest updates.</source>
+        <translation>هناك تحديثات متاحة، يمكنك إستخدام اداة التحديث للحصول على اخر التحديثات.</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="505"/>
         <source>Recitation not found</source>
         <translation>التلاوة غير موجودة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="492"/>
+        <location filename="../core/mainwindow.cpp" line="506"/>
         <source>The recitation files for the current surah is missing, would you like to download it?</source>
         <translation>ملفات التلاوة الخاصة بالسورة الحالية غير متوفرة، هل تود الذهاب إلى صفحة التحميل؟</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="891"/>
-        <location filename="../core/mainwindow.cpp" line="940"/>
-        <location filename="../core/mainwindow.cpp" line="945"/>
+        <location filename="../core/mainwindow.cpp" line="905"/>
+        <location filename="../core/mainwindow.cpp" line="954"/>
+        <location filename="../core/mainwindow.cpp" line="959"/>
         <source>Expand...</source>
         <translation>إظهار...</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationManager</name>
+    <message>
+        <location filename="../utils/notificationmanager.cpp" line="11"/>
+        <source>Show window</source>
+        <translation>إظهار النافذة</translation>
+    </message>
+    <message>
+        <location filename="../utils/notificationmanager.cpp" line="12"/>
+        <source>Hide window</source>
+        <translation>إخفاء النافذة</translation>
+    </message>
+    <message>
+        <location filename="../utils/notificationmanager.cpp" line="13"/>
+        <source>Check for updates</source>
+        <translation>التحقق من وجود تحديثات</translation>
+    </message>
+    <message>
+        <location filename="../utils/notificationmanager.cpp" line="14"/>
+        <source>Website</source>
+        <translation>صفحة البرنامج</translation>
+    </message>
+    <message>
+        <location filename="../utils/notificationmanager.cpp" line="15"/>
+        <source>Exit</source>
+        <translation>خروج</translation>
+    </message>
+    <message>
+        <location filename="../utils/notificationmanager.cpp" line="84"/>
+        <source>Surah: </source>
+        <translation>سورة: </translation>
+    </message>
+    <message>
+        <location filename="../utils/notificationmanager.cpp" line="84"/>
+        <source>Verse: </source>
+        <translation>آية: </translation>
+    </message>
+    <message>
+        <location filename="../utils/notificationmanager.cpp" line="87"/>
+        <source>Verse Of The Day</source>
+        <translation>آية اليوم</translation>
     </message>
 </context>
 <context>

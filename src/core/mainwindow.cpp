@@ -177,6 +177,7 @@ void MainWindow::setupConnections()
     connect(m_notifyMgr, &NotificationManager::showWindow, this, &MainWindow::show);
     connect(m_notifyMgr, &NotificationManager::hideWindow, this, &MainWindow::hide);
     connect(m_notifyMgr, &NotificationManager::checkForUpdates, this, &MainWindow::checkForUpdates);
+    connect(m_notifyMgr, &NotificationManager::openWebsite, this, &MainWindow::visitWebsite);
     connect(m_notifyMgr, &NotificationManager::exit, this, &QApplication::exit);
 }
 
@@ -201,17 +202,22 @@ void MainWindow::updateProcessCallback()
 
     if (output.contains("There are currently no updates available.")) {
         displayText = tr("There are currently no updates available.");
-        QMessageBox::information(this, tr("Update info"), displayText);
-
+        if (this->isVisible())
+            QMessageBox::information(this, tr("Update info"), displayText);
+        else
+            m_notifyMgr->notify(tr("Update info"), displayText);
     } else {
         displayText = tr("Updates available, do you want to open the update tool?");
-
-        QMessageBox::StandardButton btn = QMessageBox::question(this,
-                                                                tr("Updates info"),
-                                                                displayText);
-
-        if (btn == QMessageBox::Yes) {
-            m_process->startDetached(m_updateToolPath);
+        if (this->isVisible()) {
+            QMessageBox::StandardButton btn = QMessageBox::question(this,
+                                                                    tr("Updates info"),
+                                                                    displayText);
+            if (btn == QMessageBox::Yes)
+                m_process->startDetached(m_updateToolPath);
+        } else {
+            m_notifyMgr->notify(tr("Update info"),
+                                tr("Updates are available, use the maintainance tool to install "
+                                   "the latest updates."));
         }
     }
 }

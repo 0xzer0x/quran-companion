@@ -18,6 +18,7 @@ class NotificationManager : public QObject
     Q_OBJECT
 public:
     explicit NotificationManager(QObject *parent = nullptr, DBManager *dbPtr = nullptr);
+    void notify(QString title, QString msg);
     void checkDailyVerse();
     void showVerseOfTheDay();
 
@@ -27,6 +28,7 @@ signals:
     void checkForUpdates();
     void showWindow();
     void hideWindow();
+    void openWebsite();
 
 private:
     QDateTime m_dtNow;
