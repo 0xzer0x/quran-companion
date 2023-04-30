@@ -16,7 +16,7 @@ class BookmarksDialog : public QDialog
 
 public:
     explicit BookmarksDialog(QWidget *parent = nullptr,
-                             QString iconPath = ":/assets/images/light/",
+                             QString iconPath = ":/images/light/",
                              DBManager *dbMgr = nullptr,
                              int qcfVer = 1);
     void showWindow();

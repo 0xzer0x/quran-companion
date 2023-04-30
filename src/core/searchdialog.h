@@ -30,7 +30,7 @@ public:
     explicit SearchDialog(QWidget *parent = nullptr,
                           QSettings *settings = nullptr,
                           DBManager *dbPtr = nullptr,
-                          const QString &iconPath = ":/assets/images/light/");
+                          const QString &iconPath = ":/images/light/");
     ~SearchDialog();
 
 public slots:

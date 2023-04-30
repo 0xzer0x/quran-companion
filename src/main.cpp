@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationName("0xzer0x");
     QApplication::setApplicationVersion("1.0");
 
-    QSplashScreen splash(QPixmap(":/assets/images/splash.png"));
+    QSplashScreen splash(QPixmap(":/images/splash.png"));
     splash.show();
 
     QDir::setCurrent(QApplication::applicationDirPath());
@@ -176,12 +176,10 @@ void setTheme(int themeIdx)
 void addTranslation(QString lang)
 {
     QTranslator *translation = new QTranslator(qApp), *qtBase = new QTranslator(qApp);
-    QDir baseQtTr = QDir::currentPath() + QDir::separator() + "translations" + QDir::separator();
-
     if (lang == "العربية") {
-        if (translation->load(":/i18n/quran_companion_ar.qm")) {
+        if (translation->load(":/i18n/qc_ar.qm")) {
             qInfo() << "tr" << translation->language() << "loaded";
-            qInfo() << "Qt tr loaded:" << qtBase->load(baseQtTr.filePath("qt_ar.qm"));
+            qInfo() << "Qt tr loaded:" << qtBase->load(":/base/ar.qm");
             qApp->installTranslator(translation);
             qApp->installTranslator(qtBase);
             qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));

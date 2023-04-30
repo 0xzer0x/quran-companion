@@ -20,7 +20,7 @@ public:
                      int initPage = 1,
                      DBManager *dbPtr = nullptr,
                      QSettings *appSettings = nullptr,
-                     const QString &iconsPath = ":/assets/images/light/");
+                     const QString &iconsPath = ":/images/light/");
 
     void createActions();
     void updateFontSize();

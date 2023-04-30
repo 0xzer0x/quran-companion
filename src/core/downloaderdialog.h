@@ -32,7 +32,7 @@ public:
                               QSettings *settingsptr = nullptr,
                               DownloadManager *downloader = nullptr,
                               DBManager *dbMan = nullptr,
-                              const QString &iconsPath = ":/assets/images/light/");
+                              const QString &iconsPath = ":/images/light/");
     void fillTreeView();
     ~DownloaderDialog();
 

@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
 
 void MainWindow::loadIcons()
 {
-    m_iconsPath = ":assets/images/";
+    m_iconsPath = ":/images/";
     m_iconsPath.append(m_darkMode ? "dark/" : "light/");
     ui->actionDownload_manager->setIcon(QIcon(m_iconsPath + "download-manager.png"));
     ui->actionExit->setIcon(QIcon(m_iconsPath + "exit.png"));

@@ -79,7 +79,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normalon>:/assets/images/arrow-left.png</normalon>
+           <normalon>:/images/arrow-left.png</normalon>
           </iconset>
          </property>
          <property name="shortcut">
@@ -215,7 +215,7 @@ border-style:solid;
          </property>
          <property name="icon">
           <iconset>
-           <normalon>:/assets/images/arrow-right.png</normalon>
+           <normalon>:/images/arrow-right.png</normalon>
           </iconset>
          </property>
          <property name="shortcut">
@@ -360,7 +360,7 @@ border-style:solid;
        </property>
        <property name="icon">
         <iconset>
-         <normalon>:/assets/images/play.png</normalon>
+         <normalon>:/images/play.png</normalon>
         </iconset>
        </property>
        <property name="default">
@@ -387,7 +387,7 @@ border-style:solid;
        </property>
        <property name="icon">
         <iconset>
-         <normalon>:/assets/images/pause.png</normalon>
+         <normalon>:/images/pause.png</normalon>
         </iconset>
        </property>
       </widget>
@@ -411,7 +411,7 @@ border-style:solid;
        </property>
        <property name="icon">
         <iconset>
-         <normalon>:/assets/images/stop.png</normalon>
+         <normalon>:/images/stop.png</normalon>
         </iconset>
        </property>
       </widget>
@@ -1089,7 +1089,7 @@ border-style:solid;
   <action name="actionPereferences">
    <property name="icon">
     <iconset>
-     <normaloff>:/assets/images/prefs.png</normaloff>:/assets/images/prefs.png</iconset>
+     <normaloff>:/images/prefs.png</normaloff>:/images/prefs.png</iconset>
    </property>
    <property name="text">
     <string>Preferences</string>
@@ -1101,7 +1101,7 @@ border-style:solid;
   <action name="actionDownload_manager">
    <property name="icon">
     <iconset>
-     <normaloff>:/assets/images/download-manager.png</normaloff>:/assets/images/download-manager.png</iconset>
+     <normaloff>:/images/download-manager.png</normaloff>:/images/download-manager.png</iconset>
    </property>
    <property name="text">
     <string>Download manager</string>
@@ -1114,7 +1114,7 @@ border-style:solid;
    <property name="icon">
     <iconset theme="window-close">
      <normaloff>.</normaloff>
-     <normalon>:/assets/images/exit.png</normalon>.</iconset>
+     <normalon>:/images/exit.png</normalon>.</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -1126,7 +1126,7 @@ border-style:solid;
   <action name="actionFind">
    <property name="icon">
     <iconset>
-     <normaloff>:/assets/images/search.png</normaloff>:/assets/images/search.png</iconset>
+     <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
    </property>
    <property name="text">
     <string>Find</string>

@@ -138,7 +138,7 @@ void QuranPageBrowser::constructPage(int pageNo)
     foreach (QString l, lines) {
         l = l.trimmed();
         if (l.contains("frame")) {
-            QImage frm(":/assets/images/sura_box.png"); // load the empty frame
+            QImage frm(":/images/sura_box.png"); // load the empty frame
 
             // construct the text to be put inside the frame
             QString frmText;
@@ -160,7 +160,7 @@ void QuranPageBrowser::constructPage(int pageNo)
             cur.insertImage(frm.scaledToWidth(m_pageWidth, Qt::SmoothTransformation));
 
         } else if (l.contains("bsml")) {
-            QImage bsml(":/assets/images/basmalah.png");
+            QImage bsml(":/images/basmalah.png");
             if (m_darkMode)
                 bsml.invertPixels();
 

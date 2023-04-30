@@ -36,7 +36,7 @@ NotificationManager::NotificationManager(QObject *parent, DBManager *dbPtr)
             Qt::UniqueConnection);
 
     m_sysTray->setContextMenu(m_trayMenu);
-    m_sysTray->setIcon(QIcon(":/assets/images/tray.png"));
+    m_sysTray->setIcon(QIcon(":/images/tray.png"));
     m_sysTray->show();
 }
 

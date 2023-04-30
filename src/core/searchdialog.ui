@@ -125,7 +125,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normalon>:/assets/images/arrow-left.png</normalon>
+              <normalon>:/images/arrow-left.png</normalon>
              </iconset>
             </property>
             <property name="shortcut">
@@ -140,7 +140,7 @@
             </property>
             <property name="icon">
              <iconset>
-              <normalon>:/assets/images/arrow-right.png</normalon>
+              <normalon>:/images/arrow-right.png</normalon>
              </iconset>
             </property>
             <property name="shortcut">

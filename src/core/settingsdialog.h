@@ -30,7 +30,7 @@ public:
     explicit SettingsDialog(QWidget *parent = nullptr,
                             QSettings *settingsPtr = nullptr,
                             VersePlayer *vPlayerPtr = nullptr,
-                            const QString &iconsPath = ":/assets/images/light/");
+                            const QString &iconsPath = ":/images/light/");
     ~SettingsDialog();
 
 public slots:

@@ -1,6 +1,7 @@
 *.exe
 *.run
-CMakeLists.txt.user
+*.sh
+CMakeLists.txt.*
 dist/windows/*
 dist/linux/*
 !dist/windows/online-installer/

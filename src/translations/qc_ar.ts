@@ -38,10 +38,6 @@
         <source>Verse: </source>
         <translation>آية: </translation>
     </message>
-    <message>
-        <source>Ayah: </source>
-        <translation type="vanished">آية: </translation>
-    </message>
 </context>
 <context>
     <name>DownloadManager</name>
@@ -64,10 +60,6 @@
 <context>
     <name>DownloaderDialog</name>
     <message>
-        <source>Dialog</source>
-        <translation type="vanished">نافذة</translation>
-    </message>
-    <message>
         <location filename="../core/downloaderdialog.ui" line="52"/>
         <source>add to queue &gt;&gt;</source>
         <translation>إضافة تحميل &gt;&gt;</translation>
@@ -81,18 +73,6 @@
         <location filename="../core/downloaderdialog.ui" line="17"/>
         <source>Download Manager</source>
         <translation>إدارة التحميلات</translation>
-    </message>
-    <message>
-        <source>Khalefa Al-tunaiji</source>
-        <translation type="vanished">خليفة الطنيجي</translation>
-    </message>
-    <message>
-        <source>Yasser Ad-dussary</source>
-        <translation type="vanished">ياسر الدوسري</translation>
-    </message>
-    <message>
-        <source>Mahmoud Al-banna</source>
-        <translation type="vanished">محمود البنا</translation>
     </message>
     <message>
         <location filename="../core/downloaderdialog.cpp" line="33"/>
@@ -124,53 +104,13 @@
         <source>Couldn&apos;t download: </source>
         <translation>لم يكتمل تحميل: </translation>
     </message>
-    <message>
-        <source>Al-Husary</source>
-        <translation type="vanished">الحصري</translation>
-    </message>
-    <message>
-        <source>Al-Husary (Mujawwad)</source>
-        <translation type="vanished">الحصري (مجود)</translation>
-    </message>
-    <message>
-        <source>Al-Husary (Qasr)</source>
-        <translation type="vanished">الحصري (بقصر المنفصل)</translation>
-    </message>
-    <message>
-        <source>Abdul-Basit</source>
-        <translation type="vanished">عبدالباسط عبدالصمد</translation>
-    </message>
-    <message>
-        <source>Abdul-Basit (Mujawwad)</source>
-        <translation type="vanished">عبدالباسط عبدالصمد (مجود)</translation>
-    </message>
-    <message>
-        <source>Menshawi</source>
-        <translation type="vanished">المنشاوي</translation>
-    </message>
-    <message>
-        <source>Menshawi (Mujawwad)</source>
-        <translation type="vanished">المنشاوي (مجود)</translation>
-    </message>
-    <message>
-        <source>Mishary Alafasy</source>
-        <translation type="vanished">مشاري العفاسي</translation>
-    </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>next</source>
-        <translation type="vanished">التالي</translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="849"/>
         <source>081 - At-Takwīr</source>
         <translation>081 - التَّكوير</translation>
-    </message>
-    <message>
-        <source>previous</source>
-        <translation type="vanished">السابق</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="242"/>
@@ -196,50 +136,6 @@
         <location filename="../core/mainwindow.ui" line="299"/>
         <source>Reciter</source>
         <translation>القارئ</translation>
-    </message>
-    <message>
-        <source>Al-Husary (Qasr)</source>
-        <translation type="vanished">الحصري (بقصر المنفصل)</translation>
-    </message>
-    <message>
-        <source>Al-Husary</source>
-        <translation type="vanished">الحصري</translation>
-    </message>
-    <message>
-        <source>Al-Husary (Mujawwad)</source>
-        <translation type="vanished">الحصري (مجود)</translation>
-    </message>
-    <message>
-        <source>Abdul-Basit</source>
-        <translation type="vanished">عبدالباسط عبدالصمد</translation>
-    </message>
-    <message>
-        <source>Abdul-Basit (Mujawwad)</source>
-        <translation type="vanished">عبدالباسط عبدالصمد (مجود)</translation>
-    </message>
-    <message>
-        <source>Menshawi</source>
-        <translation type="vanished">المنشاوي</translation>
-    </message>
-    <message>
-        <source>Menshawi (Mujawwad)</source>
-        <translation type="vanished">المنشاوي (مجود)</translation>
-    </message>
-    <message>
-        <source>Mishary Alafasy</source>
-        <translation type="vanished">مشاري العفاسي</translation>
-    </message>
-    <message>
-        <source>Khalefa Al-tunaiji</source>
-        <translation type="vanished">خليفة الطنيجي</translation>
-    </message>
-    <message>
-        <source>Yasser Ad-dussary</source>
-        <translation type="vanished">ياسر الدوسري</translation>
-    </message>
-    <message>
-        <source>Mahmoud Al-banna</source>
-        <translation type="vanished">محمود البنا</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="17"/>
@@ -712,10 +608,6 @@
         <translation></translation>
     </message>
     <message>
-        <source>081- At-Takwīr</source>
-        <translation type="vanished">081 - التَّكوير</translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="854"/>
         <source>082 - Al-Infiṭār</source>
         <translation>082 - الانفِطَار</translation>
@@ -886,18 +778,6 @@
         <translation>الآية</translation>
     </message>
     <message>
-        <source>Khalefa Al-Tunaiji</source>
-        <translation type="vanished">خليفة الطنيجي</translation>
-    </message>
-    <message>
-        <source>Yasser Ad-Dussary</source>
-        <translation type="vanished">ياسر الدوسري</translation>
-    </message>
-    <message>
-        <source>Mahmoud Al-Banna</source>
-        <translation type="vanished">محمود البنا</translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="1036"/>
         <source>Page</source>
         <translation>الصفحة</translation>
@@ -1052,10 +932,6 @@
 <context>
     <name>SearchDialog</name>
     <message>
-        <source>Dialog</source>
-        <translation type="vanished">نافذة</translation>
-    </message>
-    <message>
         <location filename="../core/searchdialog.ui" line="24"/>
         <source>Search</source>
         <translation>البحث</translation>
@@ -1111,10 +987,6 @@
         <translation>السور</translation>
     </message>
     <message>
-        <source>Go</source>
-        <translation type="vanished">بحث</translation>
-    </message>
-    <message>
         <location filename="../core/searchdialog.ui" line="14"/>
         <source>Verse search</source>
         <translation>بحث الآيات</translation>
@@ -1134,21 +1006,9 @@
         <source>Verse: </source>
         <translation>آية: </translation>
     </message>
-    <message>
-        <source>Ayah: </source>
-        <translation type="vanished">آية: </translation>
-    </message>
-    <message>
-        <source> search results</source>
-        <translation type="vanished"> ناتج بحث</translation>
-    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">نافذة</translation>
-    </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="30"/>
         <source>General</source>
@@ -1506,10 +1366,6 @@
         <location filename="../core/settingsdialog.ui" line="360"/>
         <source>72</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Copy verse to clipboard on click</source>
-        <translation type="vanished">نسخ نص الآية عند النقر</translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="230"/>
