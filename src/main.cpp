@@ -65,12 +65,14 @@ checkSettings(QSettings& settings)
               << "Reader/Verse"
               << "Reciter"
               << "Theme"
+              << "VOTD"
               << "WindowState";
 
   if (settings.allKeys() != defaultKeys) {
     settings.setValue("Language",
                       settings.value("Language", (int)QLocale::English));
     settings.setValue("Theme", settings.value("Theme", 0));
+    settings.setValue("VOTD", settings.value("VOTD", true));
 
     settings.beginGroup("Reader");
     // all keys now have "Reader" prefix
