@@ -182,7 +182,7 @@ void addTranslation(QLocale::Language localeCode)
     QTranslator *translation = new QTranslator(qApp), *qtBase = new QTranslator(qApp);
     if (translation->load(":/i18n/qc_" + code + ".qm")) {
         qInfo() << "tr" << translation->language() << "loaded";
-        qInfo() << "Qt tr loaded:" << qtBase->load(":/base/" + code + ".qm");
+        qInfo() << "base tr loaded:" << qtBase->load(":/base/" + code + ".qm");
         qApp->installTranslator(translation);
         qApp->installTranslator(qtBase);
         qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));

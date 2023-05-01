@@ -19,15 +19,14 @@ SettingsDialog::SettingsDialog(QWidget *parent,
     ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 100));
     ui->cmbSideFontSz->setValidator(new QIntValidator(10, 100));
     setWindowIcon(QIcon(m_iconsPath + "prefs.png"));
+    fillLanguageCombobox();
 
     m_settingsPtr = settingsPtr;
     m_vPlayerPtr = vPlayerPtr;
 
     setCurrentSettingsAsRef();
-
-    setLanguageBox();
+    ui->cmbLang->setCurrentIndex(ui->cmbLang->findData(m_lang));
     ui->cmbTheme->setCurrentIndex(m_themeIdx);
-
     ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
     ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
     ui->fntCmbSide->setCurrentFont(m_sideFont);
@@ -61,13 +60,9 @@ void SettingsDialog::updateTheme(int themeIdx)
  * \brief SettingsDialog::updateLang slot to update the app language in the settings file & ask user to restart
  * \param langName
  */
-void SettingsDialog::updateLang(QString langName)
+void SettingsDialog::updateLang(QLocale::Language lang)
 {
-    int code = QLocale::English;
-    if (langName == "العربية")
-        code = QLocale::Arabic;
-
-    m_settingsPtr->setValue("Language", code);
+    m_settingsPtr->setValue("Language", lang);
     QMessageBox::StandardButton btn
         = QMessageBox::question(this,
                                 tr("Restart required"),
@@ -173,12 +168,13 @@ void SettingsDialog::updateSideFontSize(QString size)
  */
 void SettingsDialog::applyAllChanges()
 {
+    QLocale::Language chosenLang = (QLocale::Language) ui->cmbLang->currentData().toInt();
     if (ui->cmbTheme->currentIndex() != m_themeIdx) {
         updateTheme(ui->cmbTheme->currentIndex());
     }
 
-    if (ui->cmbLang->currentText() != m_lang) {
-        updateLang(ui->cmbLang->currentText());
+    if (chosenLang != m_lang) {
+        updateLang(chosenLang);
     }
 
     if (ui->cmbSideContent->currentIndex() != m_sideContent) {
@@ -239,6 +235,12 @@ void SettingsDialog::showWindow()
     this->show();
 }
 
+void SettingsDialog::fillLanguageCombobox()
+{
+    ui->cmbLang->addItem("English", QLocale::English);
+    ui->cmbLang->addItem("العربية", QLocale::Arabic);
+}
+
 /*!
  * \brief SettingsDialog::setCurrentSettingsAsRef slot to update the settings displayed to match the values in the settings file
  */
@@ -265,21 +267,6 @@ void SettingsDialog::setCurrentSettingsAsRef()
 
         if (m_audioDevices.at(i) == m_vPlayerPtr->getOutput()->device())
             m_audioOutIdx = i;
-    }
-}
-
-void SettingsDialog::setLanguageBox()
-{
-    switch (m_lang) {
-    case QLocale::English:
-        ui->cmbLang->setCurrentIndex(0);
-        break;
-    case QLocale::Arabic:
-        ui->cmbLang->setCurrentIndex(1);
-        break;
-
-    default:
-        break;
     }
 }
 

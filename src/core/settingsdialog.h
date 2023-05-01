@@ -36,7 +36,7 @@ public:
 public slots:
     void btnBoxAction(QAbstractButton *btn);
     void updateTheme(int themeIdx);
-    void updateLang(QString langName);
+    void updateLang(QLocale::Language lang);
     void updateSideContent(int idx);
     void updateTafsir(int idx);
     void updateTranslation(int idx);
@@ -63,22 +63,22 @@ private:
     Ui::SettingsDialog *ui;
     QString m_iconsPath;
     QSettings *m_settingsPtr;
-    int m_themeIdx;
     QLocale::Language m_lang;
-    int m_qcfVer;
-    int m_quranFontSize;
     QList<QAudioDevice> m_audioDevices;
     VersePlayer *m_vPlayerPtr;
+    QFont m_sideFont;
+    int m_themeIdx;
+    int m_qcfVer;
+    int m_quranFontSize;
     int m_audioOutIdx;
     int m_sideContent;
     int m_tafsir;
     int m_trans;
-    QFont m_sideFont;
     bool m_renderSideContent = false;
     bool m_renderQuranPage = false;
     bool m_restartReq = false;
+    void fillLanguageCombobox();
     void setCurrentSettingsAsRef();
-    void setLanguageBox();
 
     // QWidget interface
 protected:

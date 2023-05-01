@@ -65,18 +65,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cmbLang">
-           <item>
-            <property name="text">
-             <string>English</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>العربية</string>
-            </property>
-           </item>
-          </widget>
+          <widget class="QComboBox" name="cmbLang"/>
          </item>
         </layout>
        </item>
