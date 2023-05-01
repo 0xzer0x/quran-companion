@@ -290,6 +290,11 @@ MainWindow::setupConnections()
   // ########## system tray ########## //
   connect(m_notifyMgr, &NotificationManager::exit, this, &QApplication::exit);
   connect(m_notifyMgr,
+          &NotificationManager::togglePlayback,
+          this,
+          &MainWindow::spaceKeyPressed,
+          Qt::UniqueConnection);
+  connect(m_notifyMgr,
           &NotificationManager::showWindow,
           this,
           &MainWindow::show,

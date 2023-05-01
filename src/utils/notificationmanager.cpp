@@ -8,11 +8,14 @@ NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)
   , m_sysTray{ new QSystemTrayIcon(this) }
   , m_trayMenu{ new QMenu() }
 {
+  QAction* togglePlay = new QAction(tr("Play/Pause recitation"), m_trayMenu);
   QAction* show = new QAction(tr("Show window"), m_trayMenu);
   QAction* hide = new QAction(tr("Hide window"), m_trayMenu);
   QAction* update = new QAction(tr("Check for updates"), m_trayMenu);
   QAction* website = new QAction(tr("Website"), m_trayMenu);
   QAction* exit = new QAction(tr("Exit"), m_trayMenu);
+  m_trayMenu->addAction(togglePlay);
+  m_trayMenu->addSeparator();
   m_trayMenu->addAction(show);
   m_trayMenu->addAction(hide);
   m_trayMenu->addSeparator();
@@ -21,6 +24,11 @@ NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)
   m_trayMenu->addSeparator();
   m_trayMenu->addAction(exit);
 
+  connect(togglePlay,
+          &QAction::triggered,
+          this,
+          &NotificationManager::togglePlayback,
+          Qt::UniqueConnection);
   connect(show,
           &QAction::triggered,
           this,

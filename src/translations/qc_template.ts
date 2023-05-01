@@ -804,51 +804,51 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="341"/>
+        <location filename="../core/mainwindow.cpp" line="347"/>
         <source>There are currently no updates available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="343"/>
-        <location filename="../core/mainwindow.cpp" line="345"/>
-        <location filename="../core/mainwindow.cpp" line="355"/>
+        <location filename="../core/mainwindow.cpp" line="349"/>
+        <location filename="../core/mainwindow.cpp" line="351"/>
+        <location filename="../core/mainwindow.cpp" line="361"/>
         <source>Update info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="347"/>
+        <location filename="../core/mainwindow.cpp" line="353"/>
         <source>Updates available, do you want to open the update tool?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="350"/>
+        <location filename="../core/mainwindow.cpp" line="356"/>
         <source>Updates info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="356"/>
+        <location filename="../core/mainwindow.cpp" line="362"/>
         <source>Updates are available, use the maintainance tool to install the latest updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="671"/>
+        <location filename="../core/mainwindow.cpp" line="677"/>
         <source>Recitation not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="672"/>
+        <location filename="../core/mainwindow.cpp" line="678"/>
         <source>The recitation files for the current surah is missing, would you like to download it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1111"/>
-        <location filename="../core/mainwindow.cpp" line="1161"/>
-        <location filename="../core/mainwindow.cpp" line="1166"/>
+        <location filename="../core/mainwindow.cpp" line="1117"/>
+        <location filename="../core/mainwindow.cpp" line="1167"/>
+        <location filename="../core/mainwindow.cpp" line="1172"/>
         <source>Expand...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1185"/>
+        <location filename="../core/mainwindow.cpp" line="1191"/>
         <source>Verse Of The Day</source>
         <translation type="unfinished"></translation>
     </message>
@@ -857,36 +857,41 @@
     <name>NotificationManager</name>
     <message>
         <location filename="../utils/notificationmanager.cpp" line="11"/>
-        <source>Show window</source>
+        <source>Play/Pause recitation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../utils/notificationmanager.cpp" line="12"/>
-        <source>Hide window</source>
+        <source>Show window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../utils/notificationmanager.cpp" line="13"/>
-        <source>Check for updates</source>
+        <source>Hide window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../utils/notificationmanager.cpp" line="14"/>
-        <source>Website</source>
+        <source>Check for updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../utils/notificationmanager.cpp" line="15"/>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../utils/notificationmanager.cpp" line="16"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/notificationmanager.cpp" line="100"/>
+        <location filename="../utils/notificationmanager.cpp" line="110"/>
         <source>Surah: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/notificationmanager.cpp" line="101"/>
+        <location filename="../utils/notificationmanager.cpp" line="111"/>
         <source>Verse: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1040,353 +1045,368 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="90"/>
+        <location filename="../core/settingsdialog.ui" line="91"/>
+        <source>Daily verse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="100"/>
+        <source>on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="113"/>
+        <source>off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="125"/>
         <source>Reader</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="96"/>
+        <location filename="../core/settingsdialog.ui" line="131"/>
         <source>Quran page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="104"/>
+        <location filename="../core/settingsdialog.ui" line="139"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="112"/>
+        <location filename="../core/settingsdialog.ui" line="147"/>
         <source>QCF V1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="117"/>
+        <location filename="../core/settingsdialog.ui" line="152"/>
         <source>QCF V2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="129"/>
-        <location filename="../core/settingsdialog.ui" line="252"/>
+        <location filename="../core/settingsdialog.ui" line="164"/>
+        <location filename="../core/settingsdialog.ui" line="287"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="146"/>
-        <location filename="../core/settingsdialog.ui" line="289"/>
-        <source>10</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="151"/>
-        <location filename="../core/settingsdialog.ui" line="294"/>
-        <source>11</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="156"/>
-        <location filename="../core/settingsdialog.ui" line="299"/>
-        <source>12</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="161"/>
-        <location filename="../core/settingsdialog.ui" line="304"/>
-        <source>14</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="166"/>
-        <location filename="../core/settingsdialog.ui" line="309"/>
-        <source>16</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="171"/>
-        <location filename="../core/settingsdialog.ui" line="314"/>
-        <source>18</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="176"/>
-        <location filename="../core/settingsdialog.ui" line="319"/>
-        <source>20</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="181"/>
         <location filename="../core/settingsdialog.ui" line="324"/>
-        <source>22</source>
+        <source>10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="186"/>
         <location filename="../core/settingsdialog.ui" line="329"/>
-        <source>24</source>
+        <source>11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="191"/>
         <location filename="../core/settingsdialog.ui" line="334"/>
-        <source>28</source>
+        <source>12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="196"/>
         <location filename="../core/settingsdialog.ui" line="339"/>
-        <source>36</source>
+        <source>14</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="201"/>
         <location filename="../core/settingsdialog.ui" line="344"/>
-        <source>48</source>
+        <source>16</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="206"/>
         <location filename="../core/settingsdialog.ui" line="349"/>
+        <source>18</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="211"/>
+        <location filename="../core/settingsdialog.ui" line="354"/>
+        <source>20</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="216"/>
+        <location filename="../core/settingsdialog.ui" line="359"/>
+        <source>22</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="221"/>
+        <location filename="../core/settingsdialog.ui" line="364"/>
+        <source>24</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="226"/>
+        <location filename="../core/settingsdialog.ui" line="369"/>
+        <source>28</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="231"/>
+        <location filename="../core/settingsdialog.ui" line="374"/>
+        <source>36</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="236"/>
+        <location filename="../core/settingsdialog.ui" line="379"/>
+        <source>48</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="241"/>
+        <location filename="../core/settingsdialog.ui" line="384"/>
         <source>72</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="219"/>
+        <location filename="../core/settingsdialog.ui" line="254"/>
         <source>Side content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="227"/>
+        <location filename="../core/settingsdialog.ui" line="262"/>
         <source>Font Family</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="269"/>
+        <location filename="../core/settingsdialog.ui" line="304"/>
         <source>6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="274"/>
+        <location filename="../core/settingsdialog.ui" line="309"/>
         <source>7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="279"/>
+        <location filename="../core/settingsdialog.ui" line="314"/>
         <source>8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="284"/>
+        <location filename="../core/settingsdialog.ui" line="319"/>
         <source>9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="363"/>
+        <location filename="../core/settingsdialog.ui" line="398"/>
         <source>Side content type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="371"/>
-        <location filename="../core/settingsdialog.ui" line="388"/>
+        <location filename="../core/settingsdialog.ui" line="406"/>
+        <location filename="../core/settingsdialog.ui" line="423"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="376"/>
-        <location filename="../core/settingsdialog.ui" line="463"/>
+        <location filename="../core/settingsdialog.ui" line="411"/>
+        <location filename="../core/settingsdialog.ui" line="498"/>
         <source>Translation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="396"/>
+        <location filename="../core/settingsdialog.ui" line="431"/>
         <source>Al-Muyassar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="401"/>
+        <location filename="../core/settingsdialog.ui" line="436"/>
         <source>Al-Baghawy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="406"/>
+        <location filename="../core/settingsdialog.ui" line="441"/>
         <source>Earab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="411"/>
+        <location filename="../core/settingsdialog.ui" line="446"/>
         <source>Indonesian - Tafsir Jalalayn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="416"/>
+        <location filename="../core/settingsdialog.ui" line="451"/>
         <source>Ibn-Katheer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="421"/>
+        <location filename="../core/settingsdialog.ui" line="456"/>
         <source>Al-Qortoby</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="426"/>
+        <location filename="../core/settingsdialog.ui" line="461"/>
         <source>Russian - Kuliev &amp; Al-Sa&apos;ady</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="431"/>
+        <location filename="../core/settingsdialog.ui" line="466"/>
         <source>Al-Sa&apos;ady</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="436"/>
+        <location filename="../core/settingsdialog.ui" line="471"/>
         <source>Al-Tabary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="441"/>
+        <location filename="../core/settingsdialog.ui" line="476"/>
         <source>Tafheem-ul-Quran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="446"/>
+        <location filename="../core/settingsdialog.ui" line="481"/>
         <source>Ibn-Ashoor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="451"/>
+        <location filename="../core/settingsdialog.ui" line="486"/>
         <source>Al-Tafsir Al-Waseet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="471"/>
+        <location filename="../core/settingsdialog.ui" line="506"/>
         <source>عربي - معاني الكلمات</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="476"/>
+        <location filename="../core/settingsdialog.ui" line="511"/>
         <source>Bengali - Muhiuddin Khan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="481"/>
+        <location filename="../core/settingsdialog.ui" line="516"/>
         <source>Bosanski - Korkut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="486"/>
+        <location filename="../core/settingsdialog.ui" line="521"/>
         <source>Deutsch - Bubenheim &amp; Elyas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="491"/>
+        <location filename="../core/settingsdialog.ui" line="526"/>
         <source>English - Sahih International</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="496"/>
+        <location filename="../core/settingsdialog.ui" line="531"/>
         <source>Español - Abdel Ghani Navio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="501"/>
+        <location filename="../core/settingsdialog.ui" line="536"/>
         <source>Français - Hamidullah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="506"/>
+        <location filename="../core/settingsdialog.ui" line="541"/>
         <source>Hausa - Gumi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="511"/>
+        <location filename="../core/settingsdialog.ui" line="546"/>
         <source>Indonesian - Bahasa Indonesia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="516"/>
+        <location filename="../core/settingsdialog.ui" line="551"/>
         <source>Italiano - Piccardo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="521"/>
+        <location filename="../core/settingsdialog.ui" line="556"/>
         <source>كوردى - برهان محمد أمين</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="526"/>
+        <location filename="../core/settingsdialog.ui" line="561"/>
         <source>Malayalam - Abdul Hameed and Kunhi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="531"/>
+        <location filename="../core/settingsdialog.ui" line="566"/>
         <source>Melayu - Basmeih</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="536"/>
+        <location filename="../core/settingsdialog.ui" line="571"/>
         <source>Dutch - Sofian Siregar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="541"/>
+        <location filename="../core/settingsdialog.ui" line="576"/>
         <source>فارسى - حسین تاجی گله داری</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="546"/>
+        <location filename="../core/settingsdialog.ui" line="581"/>
         <source>Português - El Hayek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="551"/>
+        <location filename="../core/settingsdialog.ui" line="586"/>
         <source>Russian - Elmir Kuliev</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="556"/>
+        <location filename="../core/settingsdialog.ui" line="591"/>
         <source>Somali - Abduh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="561"/>
+        <location filename="../core/settingsdialog.ui" line="596"/>
         <source>Shqiptar - Efendi Nahi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="566"/>
+        <location filename="../core/settingsdialog.ui" line="601"/>
         <source>Swedish - Bernström</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="571"/>
+        <location filename="../core/settingsdialog.ui" line="606"/>
         <source>Swahili - Al-Barwani</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="576"/>
+        <location filename="../core/settingsdialog.ui" line="611"/>
         <source>Tamil - Jan Turst Foundation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="581"/>
+        <location filename="../core/settingsdialog.ui" line="616"/>
         <source>ภาษาไทย - ภาษาไทย</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="586"/>
+        <location filename="../core/settingsdialog.ui" line="621"/>
         <source>Türkçe - Diyanet Isleri</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="591"/>
+        <location filename="../core/settingsdialog.ui" line="626"/>
         <source>اردو - جالندربرى</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="596"/>
+        <location filename="../core/settingsdialog.ui" line="631"/>
         <source>Uzbek - Мухаммад Содик</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="601"/>
+        <location filename="../core/settingsdialog.ui" line="636"/>
         <source>中国语文 - Ma Jian</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1396,34 +1416,34 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.cpp" line="54"/>
-        <location filename="../core/settingsdialog.cpp" line="72"/>
-        <location filename="../core/settingsdialog.cpp" line="128"/>
+        <location filename="../core/settingsdialog.cpp" line="58"/>
+        <location filename="../core/settingsdialog.cpp" line="77"/>
+        <location filename="../core/settingsdialog.cpp" line="140"/>
         <source>Restart required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.cpp" line="55"/>
+        <location filename="../core/settingsdialog.cpp" line="59"/>
         <source>Application theme was changed, restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.cpp" line="73"/>
+        <location filename="../core/settingsdialog.cpp" line="78"/>
         <source>Application language was changed, restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.cpp" line="129"/>
+        <location filename="../core/settingsdialog.cpp" line="141"/>
         <source>Restart is required to load new quran font, restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.cpp" line="300"/>
+        <location filename="../core/settingsdialog.cpp" line="317"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.cpp" line="302"/>
+        <location filename="../core/settingsdialog.cpp" line="319"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
