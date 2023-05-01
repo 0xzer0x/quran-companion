@@ -16,11 +16,16 @@
   <property name="windowTitle">
    <string>Quran Companion</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normalon>:/images/logo.ico</normalon>
+   </iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
   <property name="dockOptions">
-   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks</set>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>true</bool>

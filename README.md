@@ -7,7 +7,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/0xzer0x/quran-companion">
-    <img src="images/app-icon.ico" alt="Logo" width="80" height="80">
+    <img src="images/logo.ico" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Quran Companion</h3>
@@ -211,7 +211,7 @@ export QT_MEDIA_BACKEND=ffmpeg
 ## Roadmap
 
 - [ ] Add more tafsir books
-- [ ] Add daily verse functionality
+- [x] Add daily verse functionality
 - [x] Add bookmarked verses tab
 - [x] Enhance search functionality
   - [x] Search in a range of pages only
@@ -237,8 +237,6 @@ Don't forget to give the project a star! Thanks again!
 ## License
 
 Distributed under the LGPL License. See `license.txt` for more information.
-
-App icon by InkscapeBoy on [openclipart.org](https://openclipart.org/detail/221028/muslim-icon-quran)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

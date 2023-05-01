@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/app-icon.ico</file>
         <file>images/basmalah.png</file>
         <file>images/dark/arrow-left.png</file>
         <file>images/dark/arrow-right.png</file>
@@ -38,6 +37,7 @@
         <file>images/light/website.png</file>
         <file>images/light/zoom-in.png</file>
         <file>images/light/zoom-out.png</file>
+        <file>images/logo.ico</file>
         <file>images/splash.png</file>
         <file>images/sura_box.png</file>
         <file>images/tray.png</file>
