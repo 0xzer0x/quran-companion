@@ -34,6 +34,10 @@ SettingsDialog::SettingsDialog(QWidget* parent,
   ui->cmbTafsir->setCurrentIndex(m_tafsir);
   ui->cmbTranslation->setCurrentIndex(m_trans);
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
+  if (m_votd)
+    ui->radioDailyVerseOn->setChecked(true);
+  else
+    ui->radioDailyVerseOff->setChecked(true);
 
   connect(ui->buttonBox,
           &QDialogButtonBox::clicked,
@@ -61,7 +65,8 @@ SettingsDialog::updateTheme(int themeIdx)
 
 /*!
  * \brief SettingsDialog::updateLang slot to update the app language in the
- * settings file & ask user to restart \param langName
+ * settings file & ask user to restart
+ * \param lang
  */
 void
 SettingsDialog::updateLang(QLocale::Language lang)
@@ -75,6 +80,12 @@ SettingsDialog::updateLang(QLocale::Language lang)
   if (btn == QMessageBox::Yes) {
     m_restartReq = true;
   }
+}
+
+void
+SettingsDialog::updateDailyVerse(bool on)
+{
+  m_settingsPtr->setValue("VOTD", on);
 }
 
 /*!
@@ -92,7 +103,8 @@ SettingsDialog::updateSideContent(int idx)
 
 /*!
  * \brief SettingsDialog::updateTafsir slot to update the tafsir chosen in the
- * settings file \param idx
+ * settings file
+ * \param idx
  */
 void
 SettingsDialog::updateTafsir(int idx)
@@ -181,14 +193,18 @@ SettingsDialog::updateSideFontSize(QString size)
 void
 SettingsDialog::applyAllChanges()
 {
-  QLocale::Language chosenLang =
-    (QLocale::Language)ui->cmbLang->currentData().toInt();
   if (ui->cmbTheme->currentIndex() != m_themeIdx) {
     updateTheme(ui->cmbTheme->currentIndex());
   }
 
+  QLocale::Language chosenLang =
+    (QLocale::Language)ui->cmbLang->currentData().toInt();
   if (chosenLang != m_lang) {
     updateLang(chosenLang);
+  }
+
+  if (ui->radioDailyVerseOn->isChecked() != m_votd) {
+    updateDailyVerse(ui->radioDailyVerseOn->isChecked());
   }
 
   if (ui->cmbSideContent->currentIndex() != m_sideContent) {
@@ -267,6 +283,7 @@ SettingsDialog::setCurrentSettingsAsRef()
 {
   m_themeIdx = m_settingsPtr->value("Theme").toInt();
   m_lang = (QLocale::Language)m_settingsPtr->value("Language").toInt();
+  m_votd = m_settingsPtr->value("VOTD").toBool();
 
   m_settingsPtr->beginGroup("Reader");
 

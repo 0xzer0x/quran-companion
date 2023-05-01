@@ -33,7 +33,8 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   setupConnections();
   this->show();
 
-  m_notifyMgr->checkDailyVerse();
+  if (m_settingsPtr->value("VOTD").toBool())
+    m_notifyMgr->checkDailyVerse();
 }
 
 /* ------------------------ Initalization methods ------------------------ */
