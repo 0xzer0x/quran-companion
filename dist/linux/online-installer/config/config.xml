@@ -7,7 +7,6 @@
     <Publisher>0xzer0x</Publisher>
     <ProductUrl>http://github.com/0xzer0x/quran-companion.git</ProductUrl>
 
-    <InstallerWindowIcon>qc-icon</InstallerWindowIcon>
     <MaintenanceToolName>QCMaintenanceTool</MaintenanceToolName>
     <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
     <TargetDir>@HomeDir@/QuranCompanion</TargetDir>
