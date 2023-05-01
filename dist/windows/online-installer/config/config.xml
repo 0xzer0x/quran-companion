@@ -6,11 +6,14 @@
     <Publisher>0xzer0x</Publisher>
     <ProductUrl>http://github.com/0xzer0x/quran-companion.git</ProductUrl>
 
-    <InstallerApplicationIcon>app-icon</InstallerApplicationIcon>
+    <WizardStyle>Modern</WizardStyle>
+    <WizardMinimumHeight>200</WizardMinimumHeight>
+    <WizardDefaultHeight>400</WizardDefaultHeight>
+    <InstallerApplicationIcon>installer</InstallerApplicationIcon>
+    
     <StartMenuDir>Quran Companion</StartMenuDir>
     <MaintenanceToolName>QCMaintenanceTool</MaintenanceToolName>
     <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
-
     <TargetDir>@HomeDir@/QuranCompanion</TargetDir>
 	<RunProgram>@TargetDir@/quran-companion.exe</RunProgram>
     

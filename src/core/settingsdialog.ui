@@ -65,18 +65,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cmbLang">
-           <item>
-            <property name="text">
-             <string>English</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>العربية</string>
-            </property>
-           </item>
-          </widget>
+          <widget class="QComboBox" name="cmbLang"/>
          </item>
         </layout>
        </item>
@@ -91,6 +80,41 @@
          </item>
          <item>
           <widget class="QComboBox" name="cmbAudioDevices"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <item>
+          <widget class="QLabel" name="lbDailyVerse">
+           <property name="text">
+            <string>Daily verse</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <item>
+            <widget class="QRadioButton" name="radioDailyVerseOn">
+             <property name="text">
+              <string>on</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioDailyVerseOff">
+             <property name="text">
+              <string>off</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>

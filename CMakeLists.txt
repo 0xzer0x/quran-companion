@@ -60,6 +60,8 @@ set(PROJECT_SOURCES
     src/utils/verseplayer.cpp
     src/utils/downloadmanager.h
     src/utils/downloadmanager.cpp
+    src/utils/notificationmanager.h
+    src/utils/notificationmanager.cpp
     src/utils/logger.h
     src/utils/logger.cpp
     resources.qrc
@@ -67,15 +69,8 @@ set(PROJECT_SOURCES
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
   qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
-
 else()
-  if(ANDROID)
-    add_library(quran-companion SHARED ${PROJECT_SOURCES})
-
-  else()
     add_executable(quran-companion ${PROJECT_SOURCES})
-  endif()
-
 endif()
 
 target_link_libraries(
@@ -101,8 +96,7 @@ install(
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 message(STATUS "Adding translations to executable")
-qt_add_translations(quran-companion TS_FILES
-                    ./src/translations/quran_companion_ar.ts)
+qt_add_translations(quran-companion TS_FILES ./src/translations/qc_ar.ts)
 
 message(STATUS "Copying assets directory")
 file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR})
@@ -110,10 +104,19 @@ file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR})
 message(STATUS "Copying bismillah audio files")
 file(COPY ./audio/bismillah DESTINATION ${PROJECT_BINARY_DIR}/audio)
 
-message(STATUS "Copying qt base translation to translations directory")
-file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/translations)
-file(COPY_FILE ${QT_TR_DIR}/qtbase_ar.qm
-     ${PROJECT_BINARY_DIR}/translations/qt_ar.qm)
+message(STATUS "Copying qt translations to build directory")
+configure_file("${QT_TR_DIR}/qtbase_ar.qm" "${CMAKE_CURRENT_BINARY_DIR}/ar.qm"
+               COPYONLY)
+message(STATUS "Creating qt translations resource file")
+qt_add_resources(
+  quran-companion
+  "qtTranslations"
+  PREFIX
+  "/base"
+  BASE
+  ${CMAKE_CURRENT_BINARY_DIR}
+  FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/ar.qm")
 
 if(QT_VERSION_MAJOR EQUAL 6)
   qt_finalize_executable(quran-companion)
