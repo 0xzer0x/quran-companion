@@ -145,7 +145,7 @@ border-style:solid;
              <x>0</x>
              <y>0</y>
              <width>647</width>
-             <height>834</height>
+             <height>818</height>
             </rect>
            </property>
           </widget>
@@ -239,7 +239,7 @@ border-style:solid;
      <x>0</x>
      <y>0</y>
      <width>1357</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuView">

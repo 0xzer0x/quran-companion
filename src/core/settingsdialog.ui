@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>797</width>
-    <height>392</height>
+    <height>398</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -519,6 +519,11 @@
               <item>
                <property name="text">
                 <string>Deutsch - Bubenheim &amp; Elyas</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>English - Clear Quran (Dr. Mustafa Khattab)</string>
                </property>
               </item>
               <item>

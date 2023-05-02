@@ -77,10 +77,9 @@ MainWindow::init()
                   m_settingsPtr->value("Verse").toInt() };
 
   if (m_settingsPtr->value("SideContent").isNull()) {
-    m_settingsPtr->setValue("SideContent", (int)SideContent::translation);
-    m_settingsPtr->setValue("Tafsir", (int)DBManager::Tafsir::muyassar);
-    m_settingsPtr->setValue("Translation",
-                            (int)DBManager::Translation::en_sahih);
+    m_settingsPtr->setValue("SideContent", (int) SideContent::translation);
+    m_settingsPtr->setValue("Tafsir", (int) DBManager::Tafsir::muyassar);
+    m_settingsPtr->setValue("Translation", (int) DBManager::Translation::en_khattab);
   }
   m_settingsPtr->endGroup();
 

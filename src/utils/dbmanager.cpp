@@ -135,6 +135,9 @@ DBManager::setCurrentTranslation(Translation translationName)
     case de_bubenheim:
       m_transDbFilename = "de_bubenheim.db";
       break;
+    case en_khattab:
+      m_transDbFilename = "en_khattab.db";
+      break;
     case en_sahih:
       m_transDbFilename = "en_sahih.db";
       break;
