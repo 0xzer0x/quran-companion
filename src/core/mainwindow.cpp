@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   setupConnections();
   this->show();
 
+  m_notifyMgr->setTooltip("Quran Companion");
   if (m_settingsPtr->value("VOTD").toBool())
     m_notifyMgr->checkDailyVerse();
 }
@@ -584,6 +585,7 @@ MainWindow::spaceKeyPressed()
 void
 MainWindow::btnPauseClicked()
 {
+  m_notifyMgr->setTooltip("Quran Companion");
   m_player->pause();
 }
 
@@ -601,6 +603,9 @@ MainWindow::btnPlayClicked()
 
   highlightCurrentVerse();
   m_player->play();
+  m_notifyMgr->setTooltip(tr("Now playing: ") + m_player->reciterName() +
+                          " - " + tr("Surah ") +
+                          m_dbMgr->getSurahName(m_currVerse.surah));
 }
 
 /*!
@@ -610,6 +615,7 @@ MainWindow::btnPlayClicked()
 void
 MainWindow::btnStopClicked()
 {
+  m_notifyMgr->setTooltip("Quran Companion");
   m_player->stop();
 
   // set the current verse to the verse at the top of the page
@@ -672,6 +678,7 @@ MainWindow::mediaPosChanged(qint64 position)
 void
 MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 {
+  m_notifyMgr->setTooltip("Quran Companion");
   QMessageBox::StandardButton btn =
     QMessageBox::question(this,
                           tr("Recitation not found"),

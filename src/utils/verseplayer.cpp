@@ -372,6 +372,12 @@ VersePlayer::surahCount() const
   return m_surahCount;
 }
 
+QString
+VersePlayer::reciterName()
+{
+  return m_recitersList.at(m_reciter).displayName;
+}
+
 Verse
 VersePlayer::activeVerse() const
 {

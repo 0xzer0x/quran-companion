@@ -22,6 +22,7 @@ public:
   explicit NotificationManager(QObject* parent = nullptr,
                                DBManager* dbPtr = nullptr);
   void notify(QString title, QString msg);
+  void setTooltip(QString text);
   void checkDailyVerse();
   void showVerseOfTheDay();
 

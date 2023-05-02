@@ -67,6 +67,12 @@ NotificationManager::notify(QString title, QString msg)
 }
 
 void
+NotificationManager::setTooltip(QString text)
+{
+  m_sysTray->setToolTip(text);
+}
+
+void
 NotificationManager::checkDailyVerse()
 {
 

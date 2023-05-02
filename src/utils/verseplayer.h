@@ -34,6 +34,7 @@ public:
   QString constructVerseFilename();
   void updateSurahVerseCount();
   int surahCount() const;
+  QString reciterName();
   Verse activeVerse() const;
   QAudioOutput* getOutput() const;
   QList<Reciter> recitersList() const;
