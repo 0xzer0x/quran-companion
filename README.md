@@ -210,7 +210,6 @@ export QT_MEDIA_BACKEND=ffmpeg
 
 ## Roadmap
 
-- [ ] Add more tafsir books
 - [x] Add daily verse functionality
 - [x] Add bookmarked verses tab
 - [x] Enhance search functionality
@@ -225,10 +224,29 @@ See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a f
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+
+### Translation
+
+To contribute in translating the application, start by:
+
+1. downloading Qt Linguist (either through your package manager or through standalone installers [here](https://github.com/lelegard/qtlinguist-installers/releases))
+
+2. fork the repo
+
+3. download the `src/translations/qc_template.ts` locally
+
+4. open the file in Qt Linguist and choose the langauge to translate to
+
+5. once a sentence is translated, make sure to mark it as finished by clicking the question mark beside it
+
+6. save & exit Qt Linugist
+
+7. rename the file to `qc_{lang}.ts` where lang is the 2-letter code for the translation language
+
+8. upload the file to your github fork
+
+9. open a pull request (make sure your fork is synced with the `main` branch)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -252,7 +270,7 @@ Project Link: [https://github.com/0xzer0x/quran-companion](https://github.com/0x
 
 <!-- ACKNOWLEDGMENTS -->
 
-## Acknowledgments
+## Acknowledgments (great projects/services that were used)
 
 - [Ayat](https://quran.ksu.edu.sa/index.php)
 - [Quran.com API](https://quran.api-docs.io/)
