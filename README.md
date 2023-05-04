@@ -270,6 +270,7 @@ Project Link: [https://github.com/0xzer0x/quran-companion](https://github.com/0x
 
 <!-- ACKNOWLEDGMENTS -->
 
+<a name="acknowledgments"></a>
 ## Acknowledgments (great projects/services that were used)
 
 - [Ayat](https://quran.ksu.edu.sa/index.php)
