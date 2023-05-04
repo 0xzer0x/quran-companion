@@ -53,6 +53,7 @@ checkSettings(QSettings& settings)
 {
   QStringList defaultKeys;
   defaultKeys << "Language"
+              << "Reader/AdaptiveFont"
               << "Reader/Page"
               << "Reader/QCF"
               << "Reader/QCF1Size"
@@ -79,6 +80,7 @@ checkSettings(QSettings& settings)
     settings.setValue("Page", settings.value("Page", 1));
     settings.setValue("Surah", settings.value("Surah", 1));
     settings.setValue("Verse", settings.value("Verse", 1));
+    settings.setValue("AdaptiveFont", settings.value("AdaptiveFont", true));
     settings.setValue("QCF1Size", settings.value("QCF1Size", 22));
     settings.setValue("QCF2Size", settings.value("QCF2Size", 20));
     settings.setValue("QCF", settings.value("QCF", 1));

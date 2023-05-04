@@ -18,6 +18,9 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent,
   , m_fontPrefix{ qcfVersion == 1 ? "QCF_P" : "QCF2" }
 
 {
+
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  verticalScrollBar()->setVisible(false);
   setStyleSheet("QTextBrowser{background-color: transparent;}");
   setTextInteractionFlags(Qt::TextInteractionFlag::LinksAccessibleByMouse);
   createActions();
@@ -91,7 +94,7 @@ QuranPageBrowser::constructPageHeader(int page)
 }
 
 void
-QuranPageBrowser::constructPage(int pageNo)
+QuranPageBrowser::constructPage(int pageNo, bool manualSz)
 {
   if (pageNo != m_page)
     m_highlightedIdx = -1;
@@ -104,18 +107,26 @@ QuranPageBrowser::constructPage(int pageNo)
   this->document()->clear();
   QTextCursor cur(this->document());
 
+  m_page = pageNo;
   m_pageFont = m_fontPrefix;
 
   m_pageFont.append(QString::number(pageNo).rightJustified(3, '0'));
-
-  int fontSize = pageNo < 3 ? m_fontSize + 5 : m_fontSize;
 
   QString header = constructPageHeader(pageNo);
   QStringList lines =
     m_dbMgr->getPageLines(pageNo); // create a qlist of page lines
 
-  int counter = 0, prevAnchor = pageNo < 3 ? 3 : 28;
+  int fontSize;
+  manualSz = manualSz || !m_settingsPtr->value("Reader/AdaptiveFont").toBool();
+  if (manualSz)
+    fontSize = pageNo < 3 ? m_fontSize + 5 : m_fontSize;
+  else {
+    fontSize = m_fontSize = bestFitFontSize(lines);
+    m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
+                            fontSize);
+  }
 
+  int counter = 0, prevAnchor = pageNo < 3 ? 3 : 28;
   QTextBlockFormat pageFormat;
   pageFormat.setAlignment(Qt::AlignCenter);
   pageFormat.setNonBreakableLines(true);
@@ -144,6 +155,9 @@ QuranPageBrowser::constructPage(int pageNo)
     fm.size(Qt::TextSingleLine, measureLine.remove(':')).width() + 5;
   foreach (QString l, lines) {
     l = l.trimmed();
+    if (l.isEmpty())
+      continue;
+
     if (l.contains("frame")) {
       QImage frm(":/images/sura_box.png"); // load the empty frame
 
@@ -211,8 +225,6 @@ QuranPageBrowser::constructPage(int pageNo)
   cur.insertBlock(pageFormat, pageTextFormat);
   cur.insertText(getEasternNum(QString::number(pageNo)));
   setAlignment(Qt::AlignCenter);
-
-  m_page = pageNo;
 }
 
 void
@@ -273,6 +285,24 @@ QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
   return actionIdx;
 }
 
+int
+QuranPageBrowser::bestFitFontSize(QStringList& lines)
+{
+  int sz;
+  int margin = m_qcfVer == 1 ? 100 : 70;
+  for (sz = 28; sz >= 12; sz--) {
+    QFont pf(m_pageFont, sz);
+    QFontMetrics fm(pf);
+
+    QSize textSz = fm.size(0, lines.join('\n'));
+    if (textSz.height() + margin <= viewport()->height()) {
+      break;
+    }
+  }
+
+  return sz;
+}
+
 void
 QuranPageBrowser::createActions()
 {
@@ -315,7 +345,7 @@ QuranPageBrowser::actionZoomIn()
   m_fontSize++;
   m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
                           m_fontSize);
-  constructPage(m_page);
+  constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
 }
 
@@ -325,7 +355,7 @@ QuranPageBrowser::actionZoomOut()
   m_fontSize--;
   m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
                           m_fontSize);
-  constructPage(m_page);
+  constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
 }
 

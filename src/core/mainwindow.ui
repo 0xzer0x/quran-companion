@@ -34,6 +34,18 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QFrame" name="frmCenteralCont">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>550</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
@@ -145,7 +157,7 @@ border-style:solid;
              <x>0</x>
              <y>0</y>
              <width>647</width>
-             <height>818</height>
+             <height>834</height>
             </rect>
            </property>
           </widget>
@@ -239,7 +251,7 @@ border-style:solid;
      <x>0</x>
      <y>0</y>
      <width>1357</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuView">

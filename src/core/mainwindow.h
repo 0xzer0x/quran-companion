@@ -89,7 +89,7 @@ private slots:
   void verseAnchorClicked(const QUrl& hrefUrl);
   void copyVerseText(int IdxInPage);
 
-  void redrawQuranPage();
+  void redrawQuranPage(bool manualSz = false);
   void addSideContent();
 
   void updateSideContentType();

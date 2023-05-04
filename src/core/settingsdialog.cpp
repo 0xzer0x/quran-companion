@@ -34,15 +34,26 @@ SettingsDialog::SettingsDialog(QWidget* parent,
   ui->cmbTafsir->setCurrentIndex(m_tafsir);
   ui->cmbTranslation->setCurrentIndex(m_trans);
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
-  if (m_votd)
-    ui->radioDailyVerseOn->setChecked(true);
-  else
-    ui->radioDailyVerseOff->setChecked(true);
+  setRadios();
 
   connect(ui->buttonBox,
           &QDialogButtonBox::clicked,
           this,
           &SettingsDialog::btnBoxAction);
+}
+
+void
+SettingsDialog::setRadios()
+{
+  if (m_votd)
+    ui->radioDailyVerseOn->setChecked(true);
+  else
+    ui->radioDailyVerseOff->setChecked(true);
+
+  if (m_adaptive)
+    ui->radioAdaptiveOn->setChecked(true);
+  else
+    ui->radioAdaptiveOff->setChecked(true);
 }
 
 /*!
@@ -145,6 +156,12 @@ SettingsDialog::updateQuranFont(int qcfV)
   }
 }
 
+void
+SettingsDialog::updateAdaptiveFont(bool on)
+{
+  m_settingsPtr->setValue("Reader/AdaptiveFont", on);
+}
+
 /*!
  * \brief SettingsDialog::updateQuranFontSize slot to update Quran page font
  * size in the settings file \param size
@@ -193,14 +210,15 @@ SettingsDialog::updateSideFontSize(QString size)
 void
 SettingsDialog::applyAllChanges()
 {
-  if (ui->cmbTheme->currentIndex() != m_themeIdx) {
-    updateTheme(ui->cmbTheme->currentIndex());
-  }
 
   QLocale::Language chosenLang =
-    (QLocale::Language)ui->cmbLang->currentData().toInt();
+    qvariant_cast<QLocale::Language>(ui->cmbLang->currentData());
   if (chosenLang != m_lang) {
     updateLang(chosenLang);
+  }
+
+  if (ui->cmbTheme->currentIndex() != m_themeIdx) {
+    updateTheme(ui->cmbTheme->currentIndex());
   }
 
   if (ui->radioDailyVerseOn->isChecked() != m_votd) {
@@ -221,6 +239,10 @@ SettingsDialog::applyAllChanges()
 
   if (ui->cmbQCF->currentIndex() + 1 != m_qcfVer) {
     updateQuranFont(ui->cmbQCF->currentIndex() + 1);
+  }
+
+  if (ui->radioAdaptiveOn->isChecked() != m_adaptive) {
+    updateAdaptiveFont(ui->radioAdaptiveOn->isChecked());
   }
 
   if (ui->cmbQuranFontSz->currentText() != QString::number(m_quranFontSize)) {
@@ -249,7 +271,7 @@ SettingsDialog::applyAllChanges()
 
   // redraw once if flag is set
   if (m_renderQuranPage)
-    emit redrawQuranPage();
+    emit redrawQuranPage(false);
 
   if (m_renderSideContent)
     emit redrawSideContent();
@@ -286,15 +308,15 @@ SettingsDialog::setCurrentSettingsAsRef()
   m_votd = m_settingsPtr->value("VOTD").toBool();
 
   m_settingsPtr->beginGroup("Reader");
-
+  // all keys have prefix "Reader"
   m_qcfVer = m_settingsPtr->value("QCF").toInt();
+  m_adaptive = m_settingsPtr->value("AdaptiveFont").toBool();
   m_quranFontSize =
     m_settingsPtr->value("QCF" + QString::number(m_qcfVer) + "Size").toInt();
   m_sideFont = qvariant_cast<QFont>(m_settingsPtr->value("SideContentFont"));
   m_sideContent = m_settingsPtr->value("SideContent").toInt();
   m_tafsir = m_settingsPtr->value("Tafsir").toInt();
   m_trans = m_settingsPtr->value("Translation").toInt();
-
   m_settingsPtr->endGroup();
 
   m_audioDevices = QMediaDevices::audioOutputs();

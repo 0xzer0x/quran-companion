@@ -43,6 +43,7 @@ public slots:
   void updateTafsir(int idx);
   void updateTranslation(int idx);
   void updateQuranFont(int qcfV);
+  void updateAdaptiveFont(bool on);
   void updateQuranFontSize(QString size);
   void updateSideFont(QFont fnt);
   void updateSideFontSize(QString size);
@@ -53,7 +54,7 @@ signals:
   void quranFontChanged();
   void highlightColorChanged();
   void redrawSideContent();
-  void redrawQuranPage();
+  void redrawQuranPage(bool manual);
   void sideContentTypeChanged();
   void tafsirChanged();
   void translationChanged();
@@ -77,11 +78,13 @@ private:
   int m_tafsir;
   int m_trans;
   bool m_votd = true;
+  bool m_adaptive = true;
   bool m_renderSideContent = false;
   bool m_renderQuranPage = false;
   bool m_restartReq = false;
   void fillLanguageCombobox();
   void setCurrentSettingsAsRef();
+  void setRadios();
 
   // QWidget interface
 protected:

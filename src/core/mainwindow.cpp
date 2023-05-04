@@ -77,9 +77,10 @@ MainWindow::init()
                   m_settingsPtr->value("Verse").toInt() };
 
   if (m_settingsPtr->value("SideContent").isNull()) {
-    m_settingsPtr->setValue("SideContent", (int) SideContent::translation);
-    m_settingsPtr->setValue("Tafsir", (int) DBManager::Tafsir::muyassar);
-    m_settingsPtr->setValue("Translation", (int) DBManager::Translation::en_khattab);
+    m_settingsPtr->setValue("SideContent", (int)SideContent::translation);
+    m_settingsPtr->setValue("Tafsir", (int)DBManager::Tafsir::muyassar);
+    m_settingsPtr->setValue("Translation",
+                            (int)DBManager::Translation::en_khattab);
   }
   m_settingsPtr->endGroup();
 
@@ -102,7 +103,7 @@ MainWindow::init()
   updateLoadedTranslation();
   updateSideFont();
 
-  redrawQuranPage();
+  redrawQuranPage(true);
   updateVerseDropDown();
 
   QVBoxLayout* vbl = new QVBoxLayout();
@@ -1041,9 +1042,9 @@ MainWindow::updateSideFont()
  * \brief MainWindow::redrawQuranPage redraw the current quran page
  */
 void
-MainWindow::redrawQuranPage()
+MainWindow::redrawQuranPage(bool manualSz)
 {
-  m_quranBrowser->constructPage(m_currVerse.page);
+  m_quranBrowser->constructPage(m_currVerse.page, manualSz);
   updatePageVerseInfoList();
 }
 

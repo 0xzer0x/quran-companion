@@ -5,6 +5,7 @@
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QPainter>
+#include <QScrollBar>
 #include <QSettings>
 #include <QShortcut>
 #include <QTextBrowser>
@@ -26,9 +27,10 @@ public:
   void updateFontSize();
   QString getEasternNum(QString num);
   QString constructPageHeader(int page);
-  void constructPage(int pageNo);
+  void constructPage(int pageNo, bool manualSz = false);
   void highlightVerse(int verseIdxInPage);
   int lmbVerseMenu(bool favoriteVerse);
+  int bestFitFontSize(QStringList& lines);
 
   int fontSize() const;
   QString pageFont() const;

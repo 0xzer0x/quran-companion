@@ -132,6 +132,35 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <item>
+             <widget class="QLabel" name="lbAdaptive">
+              <property name="text">
+               <string>Adaptive font size</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_13">
+              <item>
+               <widget class="QRadioButton" name="radioAdaptiveOn">
+                <property name="text">
+                 <string>on</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioAdaptiveOff">
+                <property name="text">
+                 <string>off</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QLabel" name="label">
