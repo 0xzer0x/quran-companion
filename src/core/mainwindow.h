@@ -69,7 +69,7 @@ private slots:
   void cmbSurahChanged(int newSurahIdx);
   void cmbVerseChanged(int newVerseIdx);
   void updateVerseDropDown();
-  void gotoPage(int page);
+  void gotoPage(int page, bool automaticFlip = false);
   void gotoSurah(int surahIdx);
 
   void activeVerseChanged();
@@ -102,6 +102,10 @@ private:
   void init();
   void updateSurah();
   void updatePageVerseInfoList();
+  void setVerseToStartOfPage();
+  void setCmbPageIdx(int idx);
+  void setCmbSurahIdx(int idx);
+  void setCmbVerseIdx(int idx);
   bool m_endOfPage = false;
   bool m_internalPageChange = false;
   bool m_internalSurahChange = false;
@@ -111,7 +115,7 @@ private:
   QString m_iconsPath;
   QProcess* m_process;
   QString m_updateToolPath;
-  QIntValidator* verseValidator = nullptr;
+  QIntValidator* m_verseValidator = nullptr;
   QuranPageBrowser* m_quranBrowser;
   NotificationManager* m_notifyMgr;
   DBManager* m_dbMgr;

@@ -45,35 +45,36 @@ public:
     tanweer,
     waseet
   };
-  enum Translation {
-      ar_ma3any,
-      bn_bengali,
-      bs_korkut,
-      de_bubenheim,
-      en_khattab,
-      en_sahih,
-      es_navio,
-      fr_hamidullah,
-      ha_gumi,
-      id_indonesian,
-      it_piccardo,
-      ku_asan,
-      ml_abdulhameed,
-      ms_basmeih,
-      nl_siregar,
-      pr_tagi,
-      pt_elhayek,
-      ru_kuliev,
-      so_abduh,
-      sq_nahi,
-      sv_bernstrom,
-      sw_barwani,
-      ta_tamil,
-      th_thai,
-      tr_diyanet,
-      ur_jalandhry,
-      uz_sodik,
-      zh_jian
+  enum Translation
+  {
+    ar_ma3any,
+    bn_bengali,
+    bs_korkut,
+    de_bubenheim,
+    en_khattab,
+    en_sahih,
+    es_navio,
+    fr_hamidullah,
+    ha_gumi,
+    id_indonesian,
+    it_piccardo,
+    ku_asan,
+    ml_abdulhameed,
+    ms_basmeih,
+    nl_siregar,
+    pr_tagi,
+    pt_elhayek,
+    ru_kuliev,
+    so_abduh,
+    sq_nahi,
+    sv_bernstrom,
+    sw_barwani,
+    ta_tamil,
+    th_thai,
+    tr_diyanet,
+    ur_jalandhry,
+    uz_sodik,
+    zh_jian
   };
 
   struct Verse
@@ -84,6 +85,10 @@ public:
     bool operator==(const Verse& v2)
     {
       return (this->number == v2.number && this->surah == v2.surah);
+    }
+    bool operator!=(const Verse& v2)
+    {
+      return (this->number != v2.number || this->surah != v2.surah);
     }
   };
   struct Reciter

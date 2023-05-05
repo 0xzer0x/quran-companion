@@ -304,7 +304,7 @@ void
 SettingsDialog::setCurrentSettingsAsRef()
 {
   m_themeIdx = m_settingsPtr->value("Theme").toInt();
-  m_lang = (QLocale::Language)m_settingsPtr->value("Language").toInt();
+  m_lang = qvariant_cast<QLocale::Language>(m_settingsPtr->value("Language"));
   m_votd = m_settingsPtr->value("VOTD").toBool();
 
   m_settingsPtr->beginGroup("Reader");

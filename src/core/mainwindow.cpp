@@ -78,9 +78,8 @@ MainWindow::init()
 
   if (m_settingsPtr->value("SideContent").isNull()) {
     m_settingsPtr->setValue("SideContent", (int)SideContent::translation);
-    m_settingsPtr->setValue("Tafsir", (int)DBManager::Tafsir::muyassar);
-    m_settingsPtr->setValue("Translation",
-                            (int)DBManager::Translation::en_khattab);
+    m_settingsPtr->setValue("Tafsir", (int)DBManager::muyassar);
+    m_settingsPtr->setValue("Translation", (int)DBManager::en_khattab);
   }
   m_settingsPtr->endGroup();
 
@@ -389,6 +388,44 @@ MainWindow::updatePageVerseInfoList()
   m_vInfoList = m_dbMgr->getVerseInfoList(m_currVerse.page);
 }
 
+void
+MainWindow::setVerseToStartOfPage()
+{
+  // set the current verse to the verse at the top of the page
+  m_currVerse = m_vInfoList.at(0);
+
+  if (m_player->activeVerse() != m_currVerse) {
+    // update the player active verse
+    m_player->setVerse(m_currVerse);
+    // open newly set verse recitation file
+    m_player->setVerseFile(m_player->constructVerseFilename());
+  }
+}
+
+void
+MainWindow::setCmbPageIdx(int idx)
+{
+  m_internalPageChange = true;
+  ui->cmbPage->setCurrentIndex(idx);
+  m_internalPageChange = false;
+}
+
+void
+MainWindow::setCmbSurahIdx(int idx)
+{
+  m_internalSurahChange = true;
+  ui->cmbSurah->setCurrentIndex(idx);
+  m_internalSurahChange = false;
+}
+
+void
+MainWindow::setCmbVerseIdx(int idx)
+{
+  m_internalVerseChange = true;
+  ui->cmbVerse->setCurrentIndex(idx);
+  m_internalVerseChange = false;
+}
+
 /*!
  * \brief MainWindow::updateVerseDropDown sets the verse combobox values
  * according to the current surah verse count, sets the current verse visible
@@ -396,39 +433,47 @@ MainWindow::updatePageVerseInfoList()
 void
 MainWindow::updateVerseDropDown()
 {
-  m_internalVerseChange = true;
-
   m_player->updateSurahVerseCount();
 
-  if (verseValidator != nullptr)
-    delete verseValidator;
+  if (m_verseValidator != nullptr)
+    delete m_verseValidator;
 
-  verseValidator = new QIntValidator(1, m_player->surahCount(), ui->cmbVerse);
+  m_verseValidator = new QIntValidator(1, m_player->surahCount(), ui->cmbVerse);
   // updates values in the combobox with the current surah verses
   ui->cmbVerse->clear();
+  m_internalVerseChange = true;
   for (int i = 1; i <= m_player->surahCount(); i++)
     ui->cmbVerse->addItem(QString::number(i), i);
-
-  ui->cmbVerse->setValidator(verseValidator);
-  ui->cmbVerse->setCurrentIndex(m_currVerse.number - 1);
-
   m_internalVerseChange = false;
+
+  ui->cmbVerse->setValidator(m_verseValidator);
+  setCmbVerseIdx(m_currVerse.number - 1);
 }
 
 /* ------------------------ Page navigation ------------------------ */
 
 /*!
  * \brief MainWindow::gotoPage displays the given page and sets the current
- * verse to the 1st verse in the page \param page
+ * verse to the 1st verse in the page
+ * \param page
  */
 void
-MainWindow::gotoPage(int page)
+MainWindow::gotoPage(int page, bool automaticFlip)
 {
   m_currVerse.page = page;
   redrawQuranPage();
 
-  btnStopClicked(); // stop playback, set verse & surah in player to the page
-                    // selected
+  if (!automaticFlip)
+    btnStopClicked();
+  else {
+    m_endOfPage = false;
+    setVerseToStartOfPage();
+    m_internalSurahChange = true;
+    updateSurah();
+    updateVerseDropDown();
+    m_internalSurahChange = false;
+  }
+
   addSideContent();
 }
 
@@ -441,12 +486,13 @@ MainWindow::nextPage()
 {
   bool keepPlaying = m_player->playbackState() == QMediaPlayer::PlayingState;
   if (m_currVerse.page < 604) {
-    ui->cmbPage->setCurrentIndex(m_currVerse.page);
-    ui->scrlVerseByVerse->verticalScrollBar()->setValue(0);
+    setCmbPageIdx(m_currVerse.page);
+    gotoPage(m_currVerse.page + 1, true);
 
+    ui->scrlVerseByVerse->verticalScrollBar()->setValue(0);
     // if the page is flipped automatically, resume playback
     if (keepPlaying)
-      btnPlayClicked();
+      m_player->play();
   }
 }
 
@@ -459,11 +505,12 @@ MainWindow::prevPage()
 {
   bool keepPlaying = m_player->playbackState() == QMediaPlayer::PlayingState;
   if (m_currVerse.page > 1) {
-    ui->cmbPage->setCurrentIndex(m_currVerse.page - 2);
-    ui->scrlVerseByVerse->verticalScrollBar()->setValue(0);
+    setCmbPageIdx(m_currVerse.page - 2);
+    gotoPage(m_currVerse.page - 1, true);
 
+    ui->scrlVerseByVerse->verticalScrollBar()->setValue(0);
     if (keepPlaying)
-      btnPlayClicked();
+      m_player->play();
   }
 }
 
@@ -477,7 +524,7 @@ MainWindow::gotoSurah(int surahIdx)
 {
   // getting surah index
   m_currVerse.page = m_dbMgr->getSurahStartPage(surahIdx);
-  m_currVerse.surah = ui->cmbSurah->currentIndex() + 1;
+  m_currVerse.surah = surahIdx;
   m_currVerse.number = 1;
 
   // setting up the page of verse 1
@@ -488,11 +535,7 @@ MainWindow::gotoSurah(int surahIdx)
   m_player->setVerse(m_currVerse);
   m_player->playBasmalah();
 
-  m_internalPageChange = true;
-  ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
-  m_internalPageChange = false;
-
-  m_player->updateSurahVerseCount();
+  setCmbPageIdx(m_currVerse.page - 1);
   updateVerseDropDown();
 
   m_endOfPage = false;
@@ -526,12 +569,7 @@ MainWindow::cmbSurahChanged(int newSurahIdx)
     qDebug() << "Internal surah change";
     return;
   }
-
-  m_internalPageChange = true;
-
   gotoSurah(newSurahIdx + 1);
-
-  m_internalPageChange = false;
 }
 
 /*!
@@ -561,9 +599,7 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   // open newly set verse recitation file
   m_player->setVerseFile(m_player->constructVerseFilename());
 
-  m_internalPageChange = true;
-  ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
-  m_internalPageChange = false;
+  setCmbPageIdx(m_currVerse.page - 1);
 
   addSideContent();
   m_endOfPage = false;
@@ -615,15 +651,8 @@ MainWindow::btnPlayClicked()
 void
 MainWindow::btnStopClicked()
 {
-  m_notifyMgr->setTooltip("Quran Companion");
   m_player->stop();
-
-  // set the current verse to the verse at the top of the page
-  m_currVerse = m_vInfoList.at(0);
-  // update the player surah & verse
-  m_player->setVerse(m_currVerse);
-  // open newly set verse recitation file
-  m_player->setVerseFile(m_player->constructVerseFilename());
+  setVerseToStartOfPage();
 
   m_internalSurahChange = true;
   updateSurah();
@@ -631,6 +660,7 @@ MainWindow::btnStopClicked()
   m_internalSurahChange = false;
 
   m_endOfPage = false;
+  m_notifyMgr->setTooltip("Quran Companion");
 }
 
 /*!
@@ -707,15 +737,11 @@ MainWindow::activeVerseChanged()
   if (m_currVerse.number == 0)
     m_currVerse.number = 1;
 
-  m_internalVerseChange = true;
-  ui->cmbVerse->setCurrentIndex(m_currVerse.number - 1);
-  m_internalVerseChange = false;
-
+  setCmbVerseIdx(m_currVerse.number - 1);
   if (m_endOfPage) {
     m_endOfPage = false;
     nextPage();
   }
-
   // If now playing the last verse in the page, set the flag to flip the page
   if (m_currVerse.number == m_vInfoList.last().number &&
       m_currVerse.number != m_player->surahCount()) {
@@ -743,20 +769,13 @@ MainWindow::verseClicked()
 
   if (m_currVerse.surah != surah) {
     m_currVerse.surah = surah;
-
     m_player->setVerse(m_currVerse);
     m_player->updateSurahVerseCount();
     updateVerseDropDown();
-
-    m_internalSurahChange = true;
-    ui->cmbSurah->setCurrentIndex(surah - 1);
-    m_internalSurahChange = false;
+    setCmbSurahIdx(surah - 1);
   }
 
-  m_internalVerseChange = true;
-  ui->cmbVerse->setCurrentIndex(verse - 1);
-  m_internalVerseChange = false;
-
+  setCmbVerseIdx(verse - 1);
   m_endOfPage = false;
   m_player->setVerseFile(m_player->constructVerseFilename());
   btnPlayClicked();
@@ -968,17 +987,9 @@ MainWindow::navigateToVerse(Verse v)
   m_player->updateSurahVerseCount();
   updateVerseDropDown();
 
-  m_internalPageChange = true;
-  ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
-  m_internalPageChange = false;
-
-  m_internalSurahChange = true;
-  ui->cmbSurah->setCurrentIndex(m_currVerse.surah - 1);
-  m_internalSurahChange = false;
-
-  m_internalVerseChange = true;
-  ui->cmbVerse->setCurrentIndex(m_currVerse.number - 1);
-  m_internalVerseChange = false;
+  setCmbPageIdx(m_currVerse.page - 1);
+  setCmbSurahIdx(m_currVerse.surah - 1);
+  setCmbVerseIdx(m_currVerse.number - 1);
 
   highlightCurrentVerse();
 
@@ -1133,7 +1144,7 @@ MainWindow::addSideContent()
     }
 
     if (currLbContent == prevLbContent && (!showTafsir || showFullTafsir)) {
-      currLbContent.clear();
+      currLbContent = '-';
     } else {
       prevLbContent = currLbContent;
     }
