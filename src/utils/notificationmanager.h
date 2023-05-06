@@ -32,10 +32,12 @@ signals:
   void checkForUpdates();
   void showWindow();
   void hideWindow();
+  void openPrefs();
   void openWebsite();
   void showVOTDmessagebox(Verse v, QString msg);
 
 private:
+  void addActions();
   QDateTime m_dtNow;
   DBManager* m_dbMgr;
   QMenu* m_trayMenu;

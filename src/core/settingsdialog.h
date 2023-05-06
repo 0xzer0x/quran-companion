@@ -60,6 +60,7 @@ signals:
   void translationChanged();
   void sideFontChanged();
   void usedAudioDeviceChanged(QAudioDevice dev);
+  void audioVolumeChanged(qreal newVol);
   void restartApp();
 
 private:
@@ -77,6 +78,7 @@ private:
   int m_sideContent;
   int m_tafsir;
   int m_trans;
+  qreal m_volume = 1;
   bool m_votd = true;
   bool m_adaptive = true;
   bool m_renderSideContent = false;

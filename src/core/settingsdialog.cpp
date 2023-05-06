@@ -263,6 +263,14 @@ SettingsDialog::applyAllChanges()
     emit usedAudioDeviceChanged(m_audioDevices.at(m_audioOutIdx));
   }
 
+  qreal linearVolume =
+    QAudio::convertVolume(ui->sldrVolume->value() / qreal(100.0),
+                          QAudio::LogarithmicVolumeScale,
+                          QAudio::LinearVolumeScale);
+  if (linearVolume != m_volume) {
+    m_volume = linearVolume;
+    emit audioVolumeChanged(linearVolume);
+  }
   // restart after applying all changes if required
   if (m_restartReq) {
     emit restartApp();
@@ -285,7 +293,19 @@ void
 SettingsDialog::showWindow()
 {
   setCurrentSettingsAsRef();
+  ui->cmbLang->setCurrentIndex(ui->cmbLang->findData(m_lang));
+  ui->cmbTheme->setCurrentIndex(m_themeIdx);
+  ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
   ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
+  ui->fntCmbSide->setCurrentFont(m_sideFont);
+  ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
+  ui->cmbSideContent->setCurrentIndex(m_sideContent);
+  ui->cmbTafsir->setCurrentIndex(m_tafsir);
+  ui->cmbTranslation->setCurrentIndex(m_trans);
+  ui->sldrVolume->setValue(qRound(m_volume * 100));
+  ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
+  setRadios();
+
   this->show();
 }
 

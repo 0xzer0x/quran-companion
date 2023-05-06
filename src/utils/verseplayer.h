@@ -46,6 +46,7 @@ public slots:
   bool changeReciter(int reciterIdx);
   void verseStateChanged(QMediaPlayer::MediaStatus status);
   void changeUsedAudioDevice(QAudioDevice dev);
+  void setPlayerVolume(qreal volume);
 
 signals:
   void surahChanged();

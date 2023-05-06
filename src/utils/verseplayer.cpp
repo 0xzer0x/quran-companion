@@ -268,6 +268,12 @@ VersePlayer::changeUsedAudioDevice(QAudioDevice dev)
   setAudioOutput(m_output);
 }
 
+void
+VersePlayer::setPlayerVolume(qreal volume)
+{
+  m_output->setVolume(volume);
+}
+
 QString
 VersePlayer::constructVerseFilename()
 {
