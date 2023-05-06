@@ -96,7 +96,7 @@
             <x>0</x>
             <y>0</y>
             <width>634</width>
-            <height>498</height>
+            <height>497</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -120,13 +120,20 @@
           </property>
           <item>
            <widget class="QPushButton" name="btnFwdRes">
-            <property name="text">
-             <string/>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>25</height>
+             </size>
             </property>
-            <property name="icon">
-             <iconset>
-              <normalon>:/images/arrow-left.png</normalon>
-             </iconset>
+            <property name="font">
+             <font>
+              <family>Noto Sans Symbols 2</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string notr="true">🡸</string>
             </property>
             <property name="shortcut">
              <string>Left</string>
@@ -135,13 +142,20 @@
           </item>
           <item>
            <widget class="QPushButton" name="btnBwdRes">
-            <property name="text">
-             <string/>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>25</height>
+             </size>
             </property>
-            <property name="icon">
-             <iconset>
-              <normalon>:/images/arrow-right.png</normalon>
-             </iconset>
+            <property name="font">
+             <font>
+              <family>Noto Sans Symbols 2</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string notr="true">🡺</string>
             </property>
             <property name="shortcut">
              <string>Right</string>
@@ -245,8 +259,38 @@
           </item>
           <item>
            <widget class="QPushButton" name="btnTransfer">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>5</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="sizeIncrement">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Noto Sans Symbols 2</family>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="text">
-             <string/>
+             <string>⮀</string>
             </property>
             <property name="flat">
              <bool>true</bool>

@@ -12,10 +12,9 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   , m_process{ new QProcess(this) }
   , m_settingsPtr{ settingsPtr }
 {
-  m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
+    m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
 
-  m_updateToolPath =
-    QDir::currentPath() + QDir::separator() + "QCMaintenanceTool";
+    m_updateToolPath = QDir::currentPath() + QDir::separator() + "QCMaintenanceTool";
 #ifdef Q_OS_WIN
   m_updateToolPath.append(".exe");
 #endif
@@ -54,8 +53,6 @@ MainWindow::loadIcons()
   ui->btnPlay->setIcon(QIcon(m_iconsPath + "play.png"));
   ui->btnPause->setIcon(QIcon(m_iconsPath + "pause.png"));
   ui->btnStop->setIcon(QIcon(m_iconsPath + "stop.png"));
-  ui->btnNext->setIcon(QIcon(m_iconsPath + "arrow-left.png"));
-  ui->btnPrev->setIcon(QIcon(m_iconsPath + "arrow-right.png"));
   ui->actionCheck_for_updates->setIcon(QIcon(m_iconsPath + "update.png"));
   ui->actionWebsite->setIcon(QIcon(m_iconsPath + "website.png"));
 }
@@ -319,6 +316,11 @@ MainWindow::setupConnections()
           this,
           &MainWindow::showVOTDmessage,
           Qt::UniqueConnection);
+  connect(m_notifyMgr,
+          &NotificationManager::openPrefs,
+          this,
+          &MainWindow::actionPrefTriggered,
+          Qt::UniqueConnection);
 }
 
 /* ------------------------ Help menu actions ------------------------ */
@@ -491,8 +493,10 @@ MainWindow::nextPage()
 
     ui->scrlVerseByVerse->verticalScrollBar()->setValue(0);
     // if the page is flipped automatically, resume playback
-    if (keepPlaying)
+    if (keepPlaying) {
       m_player->play();
+      highlightCurrentVerse();
+    }
   }
 }
 
@@ -509,8 +513,10 @@ MainWindow::prevPage()
     gotoPage(m_currVerse.page - 1, true);
 
     ui->scrlVerseByVerse->verticalScrollBar()->setValue(0);
-    if (keepPlaying)
+    if (keepPlaying) {
       m_player->play();
+      highlightCurrentVerse();
+    }
   }
 }
 
@@ -908,6 +914,12 @@ MainWindow::actionPrefTriggered()
             &SettingsDialog::usedAudioDeviceChanged,
             m_player,
             &VersePlayer::changeUsedAudioDevice,
+            Qt::UniqueConnection);
+
+    connect(m_settingsDlg,
+            &SettingsDialog::audioVolumeChanged,
+            m_player,
+            &VersePlayer::setPlayerVolume,
             Qt::UniqueConnection);
   }
 

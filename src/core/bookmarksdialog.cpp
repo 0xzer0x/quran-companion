@@ -16,8 +16,6 @@ BookmarksDialog::BookmarksDialog(QWidget* parent,
 
   ui->setupUi(this);
   setWindowIcon(QIcon(m_iconsPath + "bookmark-true.png"));
-  ui->btnNext->setIcon(QIcon(m_iconsPath + "arrow-left.png"));
-  ui->btnPrev->setIcon(QIcon(m_iconsPath + "arrow-right.png"));
 
   m_favorites = m_dbMgr->favoriteVerses();
   loadFavorites();

@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>577</width>
-        <height>512</height>
+        <height>511</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -53,8 +53,20 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="btnNext">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Noto Sans Symbols 2</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
-        <string/>
+        <string>🡸</string>
        </property>
        <property name="shortcut">
         <string>Left</string>
@@ -63,8 +75,20 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnPrev">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Noto Sans Symbols 2</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
-        <string/>
+        <string>🡺</string>
        </property>
        <property name="shortcut">
         <string>Right</string>

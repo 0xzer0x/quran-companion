@@ -52,7 +52,7 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,20,1">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="spacing">
         <number>6</number>
        </property>
@@ -85,19 +85,20 @@
          <property name="maximumSize">
           <size>
            <width>60</width>
-           <height>16777215</height>
+           <height>30</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Noto Sans Symbols 2</family>
+           <pointsize>12</pointsize>
+          </font>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
          <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normalon>:/images/arrow-left.png</normalon>
-          </iconset>
+          <string>🡸</string>
          </property>
          <property name="shortcut">
           <string>Left</string>
@@ -221,19 +222,20 @@ border-style:solid;
          <property name="maximumSize">
           <size>
            <width>60</width>
-           <height>16777215</height>
+           <height>30</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Noto Sans Symbols 2</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
-          <string notr="true">b</string>
+          <string notr="true"/>
          </property>
          <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normalon>:/images/arrow-right.png</normalon>
-          </iconset>
+          <string>🡺</string>
          </property>
          <property name="shortcut">
           <string>Right</string>
@@ -398,6 +400,11 @@ border-style:solid;
          <width>40</width>
          <height>25</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Noto Emoji</family>
+        </font>
        </property>
        <property name="text">
         <string/>

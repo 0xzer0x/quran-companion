@@ -23,10 +23,6 @@ SearchDialog::SearchDialog(QWidget* parent,
   setWindowIcon(QIcon(m_iconsPath + "search.png"));
   ui->setupUi(this);
   ui->frmNavBtns->setLayoutDirection(Qt::LeftToRight);
-  ui->btnFwdRes->setIcon(QIcon(m_iconsPath + "arrow-left.png"));
-  ui->btnBwdRes->setIcon(QIcon(m_iconsPath + "arrow-right.png"));
-  ui->btnTransfer->setStyleSheet("QPushButton{image: url(" + m_iconsPath +
-                                 "transfer.png" + ")}");
   ui->btnFwdRes->setDisabled(true);
   ui->btnBwdRes->setDisabled(true);
 
