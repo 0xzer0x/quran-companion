@@ -61,7 +61,7 @@ private:
   QString m_fontPrefix;
   QStringList m_surahNames;
   QMap<QString, int> m_selectedSurahMap;
-  QList<VerseFrame*> m_lbLst;
+  QList<HighlightFrame*> m_lbLst;
   QString m_searchText;
   QList<Verse> m_currResults;
   QStandardItemModel m_modelAllSurahs;

@@ -119,6 +119,7 @@ public:
   QList<QString> surahNameList();
   QString getSurahName(const int sIdx);
   int getVersePage(const int& surahIdx, const int& verse);
+  QList<int> searchSurahNames(QString text);
   QList<Verse> searchSurahs(QString searchText,
                             const QList<int> surahs,
                             const bool whole = false);

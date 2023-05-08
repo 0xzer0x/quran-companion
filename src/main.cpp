@@ -102,20 +102,21 @@ addFonts(int qcfVersion)
 
   QFontDatabase::addApplicationFont(fontsDir.filePath("Amiri.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("noto-symbols.ttf"));
+  QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("droid-sans-org.ttf"));
 
   switch (qcfVersion) {
-  case 1:
-    fontsDir.cd("QCFV1");
-    fontBase = "QCF_P";
-    QFontDatabase::addApplicationFont(fontsDir.filePath("QCF_BSML.ttf"));
-    break;
+    case 1:
+      fontsDir.cd("QCFV1");
+      fontBase = "QCF_P";
+      QFontDatabase::addApplicationFont(fontsDir.filePath("QCF_BSML.ttf"));
+      break;
 
-  case 2:
-    fontsDir.cd("QCFV2");
-    fontBase = "QCF2";
-    QFontDatabase::addApplicationFont(fontsDir.filePath("QCF2BSML.ttf"));
-    break;
+    case 2:
+      fontsDir.cd("QCFV2");
+      fontBase = "QCF2";
+      QFontDatabase::addApplicationFont(fontsDir.filePath("QCF2BSML.ttf"));
+      break;
   }
 
   // add required fonts
@@ -201,15 +202,17 @@ setTheme(int themeIdx)
 void
 addTranslation(QLocale::Language localeCode)
 {
-  qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
-  if (localeCode == QLocale::English)
-      return;
+  if (localeCode == QLocale::English) {
+    qApp->setFont(QFont("Noto Sans Display", qApp->font().pointSize()));
+    return;
+  }
 
   QString code = QLocale::languageToCode(localeCode);
   QTranslator *translation = new QTranslator(qApp),
               *qtBase = new QTranslator(qApp);
 
   if (translation->load(":/i18n/qc_" + code + ".qm")) {
+    qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
     qInfo() << "tr" << translation->language() << "loaded";
     qInfo() << "base tr loaded:" << qtBase->load(":/base/" + code + ".qm");
     qApp->installTranslator(translation);

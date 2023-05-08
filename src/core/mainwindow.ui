@@ -157,7 +157,7 @@ border-style:solid;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>647</width>
+             <width>416</width>
              <height>834</height>
             </rect>
            </property>
@@ -454,593 +454,6 @@ border-style:solid;
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="lblSurah">
-       <property name="text">
-        <string>Surah</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cmbSurah">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <item>
-        <property name="text">
-         <string>001 - Al-Fātiḥah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>002 - Al-Baqarah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>003 - Āl-‘Imrān</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>004 - An-Nisā’</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>005 - Al-Mā’idah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>006 - Al-An‘ām</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>007 - Al-A‘rāf</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>008 - Al-Anfāl</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>009 - At-Taubah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>010 - Yūnus</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>011 - Hūd</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>012 - Yūsuf</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>013 - Ar-Ra‘d</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>014 - Ibrāhīm</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>015 - Al-Ḥijr</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>016 - An-Naḥl</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>017 - Al-Isrā’</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>018 - Al-Kahf</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>019 - Maryam</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>020 - Ṭā-Hā</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>021 - Al-Anbiyā’</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>022 - Al-Ḥajj</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>023 - Al-Mu’minūn</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>024 - An-Nūr</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>025 - Al-Furqān</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>026 - Ash-Shu‘arā’</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>027 - An-Naml</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>028 - Al-Qaṣaṣ</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>029 - Al-‘Ankabūt</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>030 - Ar-Rūm</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>031 - Luqmān</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>032 - As-Sajdah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>033 - Al-Aḥzāb</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>034 - Saba’</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>035 - Fāṭir</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>036 - Yā-Sīn</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>037 - Aṣ-Ṣāffāt</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>038 - Ṣād</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>039 - Az-Zumar</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>040 - Ghāfir</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>041 - Fuṣṣilat</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>042 - Ash-Shūra</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>043 - Az-Zukhruf</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>044 - Ad-Dukhān</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>045 - Al-Jāthiyah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>046 - Al-Aḥqāf</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>047 - Muḥammad</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>048 - Al-Fatḥ</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>049 - Al-Ḥujurāt</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>050 - Qāf</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>051 - Adh-Dhāriyāt</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>052 - Aṭ-Ṭūr</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>053 - An-Najm</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>054 - Al-Qamar</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>055 - Ar-Raḥmān</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>056 - Al-Wāqi‘ah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>057 - Al-Ḥadīd</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>058 - Al-Mujādilah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>059 - Al-Ḥashr</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>060 - Al-Mumtaḥanah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>061 - Aṣ-Ṣaff</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>062 - Al-Jumu‘ah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>063 - Al-Munāfiqūn</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>064 - At-Taghābun</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>065 - Aṭ-Ṭalāq</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>066 - At-Taḥrīm</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>067 - Al-Mulk</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>068 - Al-Qalam</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>069 - Al-Ḥāqqah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>070 - Al-Ma‘ārij</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>071 - Nūḥ</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>072 - Al-Jinn</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>073 - Al-Muzzammil</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>074 - Al-Muddaththir</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>075 - Al-Qiyāmah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>076 - Al-Insān</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>077 - Al-Mursalāt</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>078 - An-Naba’</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>079 - An-Nāzi‘āt</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>080 - ‘Abasa</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>081 - At-Takwīr</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>082 - Al-Infiṭār</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>083 - Al-Muṭaffifīn</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>084 - Al-Inshiqāq</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>085 - Al-Burūj</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>086 - Aṭ-Ṭāriq</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>087 - Al-A‘lā</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>088 - Al-Ghāshiyah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>089 - Al-Fajr</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>090 - Al-Balad</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>091 - Ash-Shams</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>092 - Al-Lail</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>093 - Aḍ-Ḍuḥā</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>094 - Ash-Sharḥ</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>095 - At-Tīn</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>096 - Al-‘Alaq</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>097 - Al-Qadr</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>098 - Al-Bayyinah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>099 - Az-Zalzalah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>100 - Al-‘Ādiyāt</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>101 - Al-Qāri‘ah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>102 - At-Takāthur</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>103 - Al-‘Aṣr</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>104 - Al-Humazah</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>105 - Al-Fīl</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>106 - Quraish</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>107 - Al-Mā‘ūn</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>108 - Al-Kauthar</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>109 - Al-Kāfirūn</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>110 - An-Naṣr</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>111 - Al-Masad</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>112 - Al-Ikhlāṣ</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>113 - Al-Falaq</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>114 - An-Nās</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
       <widget class="QLabel" name="lblVerse">
        <property name="text">
         <string>Verse</string>
@@ -1104,6 +517,87 @@ border-style:solid;
          <width>12</width>
          <height>12</height>
         </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="sideDock">
+   <property name="maximumSize">
+    <size>
+     <width>230</width>
+     <height>524287</height>
+    </size>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Surahs dock</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLineEdit" name="lineEditSearchSurah">
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{
+placeholder-text-color: #c0c0c0;
+}</string>
+       </property>
+       <property name="placeholderText">
+        <string>Search surah</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListView" name="listViewSurahs">
+       <property name="styleSheet">
+        <string notr="true">QListView{
+	font-size: 12pt;
+    spacing: 5px;
+}
+
+QListView::item{
+	border-radius: 5px;
+	padding: 5px;
+}
+
+QListView::item:selected {
+    background: rgba(0, 161, 185, 50);
+}
+
+QListView::item:hover:selected {
+    background: rgba(0, 161, 185, 50);
+}
+
+QListView::item:hover {
+    background: rgba(0, 161, 185, 20);
+}</string>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="resizeMode">
+        <enum>QListView::Fixed</enum>
+       </property>
+       <property name="uniformItemSizes">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

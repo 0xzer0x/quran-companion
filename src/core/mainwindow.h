@@ -19,6 +19,7 @@
 #include <QScrollBar>
 #include <QSettings>
 #include <QShortcut>
+#include <QStringListModel>
 
 typedef DBManager::Verse Verse;
 
@@ -84,6 +85,7 @@ private slots:
   void openSearchDialog();
 
   void verseClicked();
+  void surahClicked(QModelIndex& index);
   void showExpandedVerseTafsir();
   void navigateToVerse(Verse v);
   void verseAnchorClicked(const QUrl& hrefUrl);
@@ -97,14 +99,17 @@ private slots:
   void updateLoadedTranslation();
   void updateSideFont();
 
+  void on_lineEditSearchSurah_textChanged(const QString& arg1);
+  void on_listViewSurahs_clicked(const QModelIndex& index);
+
 private:
   void loadIcons();
   void init();
+  void setupSurahsDock();
   void updateSurah();
   void updatePageVerseInfoList();
   void setVerseToStartOfPage();
   void setCmbPageIdx(int idx);
-  void setCmbSurahIdx(int idx);
   void setCmbVerseIdx(int idx);
   bool m_endOfPage = false;
   bool m_internalPageChange = false;
@@ -115,6 +120,8 @@ private:
   QString m_iconsPath;
   QProcess* m_process;
   QString m_updateToolPath;
+  QStringList m_surahList;
+  QStringListModel m_surahListModel;
   QIntValidator* m_verseValidator = nullptr;
   QuranPageBrowser* m_quranBrowser;
   NotificationManager* m_notifyMgr;
@@ -125,7 +132,7 @@ private:
   BookmarksDialog* m_bookmarksDlg = nullptr;
   DownloaderDialog* m_downloaderDlg = nullptr;
   DownloadManager* m_downManPtr = nullptr;
-  VerseFrame* m_highlightedFrm = nullptr;
+  HighlightFrame* m_highlightedFrm = nullptr;
   QSettings* m_settingsPtr;
   Verse m_currVerse{ 1, 1, 1 };
   SideContent m_sideContent;
