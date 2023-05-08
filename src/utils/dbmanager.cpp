@@ -421,7 +421,7 @@ DBManager::getSurahStartPage(int surahIdx)
 QList<QString>
 DBManager::surahNameList()
 {
-  if (m_surahNames.empty()) {
+  if (m_surahNames.isEmpty()) {
     for (int i = 1; i <= 114; i++) {
       m_surahNames.append(getSurahName(i));
     }

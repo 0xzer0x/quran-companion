@@ -67,7 +67,6 @@ private slots:
   void btnStopClicked();
 
   void cmbPageChanged(int newPageIdx);
-  void cmbSurahChanged(int newSurahIdx);
   void cmbVerseChanged(int newVerseIdx);
   void updateVerseDropDown();
   void gotoPage(int page, bool automaticFlip = false);
@@ -93,6 +92,7 @@ private slots:
 
   void redrawQuranPage(bool manualSz = false);
   void addSideContent();
+  void updateTrayTooltip();
 
   void updateSideContentType();
   void updateLoadedTafsir();
@@ -101,6 +101,7 @@ private slots:
 
   void on_lineEditSearchSurah_textChanged(const QString& arg1);
   void on_listViewSurahs_clicked(const QModelIndex& index);
+  void volumeSliderValueChanged(int position);
 
 private:
   void loadIcons();
@@ -116,6 +117,7 @@ private:
   bool m_internalSurahChange = false;
   bool m_internalVerseChange = false;
   bool m_darkMode = false;
+  qreal m_volume = 1;
   Ui::MainWindow* ui;
   QString m_iconsPath;
   QProcess* m_process;

@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   setupSurahsDock();
   this->show();
 
-  m_notifyMgr->setTooltip("Quran Companion");
+  updateTrayTooltip();
   if (m_settingsPtr->value("VOTD").toBool())
     m_notifyMgr->checkDailyVerse();
 }
@@ -132,7 +132,7 @@ MainWindow::setupSurahsDock()
 {
   for (int i = 1; i < 115; i++) {
     QString item = QString::number(i).rightJustified(3, '0') + ' ' +
-                   m_dbMgr->getSurahName(i);
+                   m_dbMgr->surahNameList().at(i - 1);
     m_surahList.append(item);
   }
 
@@ -143,6 +143,9 @@ MainWindow::setupSurahsDock()
   QItemSelectionModel* select = ui->listViewSurahs->selectionModel();
   select->select(m_surahListModel.index(m_currVerse.surah - 1),
                  QItemSelectionModel::Rows | QItemSelectionModel::Select);
+
+  ui->listViewSurahs->scrollTo(m_surahListModel.index(m_currVerse.surah - 1),
+                               QAbstractItemView::PositionAtCenter);
 }
 
 /*!
@@ -258,6 +261,11 @@ MainWindow::setupConnections()
           m_player,
           &QMediaPlayer::setPosition,
           Qt::UniqueConnection);
+  connect(ui->sldrVolume,
+          &QSlider::valueChanged,
+          this,
+          &MainWindow::volumeSliderValueChanged,
+          Qt::UniqueConnection);
 
   // ########## player control ########## //
   connect(ui->btnPlay,
@@ -294,6 +302,16 @@ MainWindow::setupConnections()
           &QPushButton::clicked,
           this,
           &MainWindow::actionPrefTriggered,
+          Qt::UniqueConnection);
+  connect(ui->btnBookmarks,
+          &QPushButton::clicked,
+          this,
+          &MainWindow::actionBookmarksTriggered,
+          Qt::UniqueConnection);
+  connect(ui->btnDownloads,
+          &QPushButton::clicked,
+          this,
+          &MainWindow::actionDMTriggered,
           Qt::UniqueConnection);
 
   // ########## system tray ########## //
@@ -381,11 +399,6 @@ MainWindow::updateProcessCallback()
 
 /* ------------------------ UI updating ------------------------ */
 
-/*!
- * \brief MainWindow::updateSurah slot is called on surah change by the vcrse
- * player to update the reader interface by navigating to that surah works by
- * firing off the cmbSurahChanged slot
- */
 void
 MainWindow::updateSurah()
 {
@@ -394,8 +407,10 @@ MainWindow::updateSurah()
   QModelIndex surah = m_surahListModel.index(m_player->activeVerse().surah - 1);
   select->select(surah,
                  QItemSelectionModel::Rows | QItemSelectionModel::Select);
-
   ui->listViewSurahs->scrollTo(surah, QAbstractItemView::PositionAtCenter);
+  if (m_player->activeVerse().surah != m_currVerse.surah) {
+    surahClicked(surah);
+  }
 }
 
 /*!
@@ -480,10 +495,8 @@ MainWindow::gotoPage(int page, bool automaticFlip)
   else {
     m_endOfPage = false;
     setVerseToStartOfPage();
-    m_internalSurahChange = true;
     updateSurah();
     updateVerseDropDown();
-    m_internalSurahChange = false;
   }
 
   addSideContent();
@@ -556,6 +569,7 @@ MainWindow::gotoSurah(int surahIdx)
   updateVerseDropDown();
 
   m_endOfPage = false;
+  updateTrayTooltip();
 }
 
 /*!
@@ -572,21 +586,6 @@ MainWindow::cmbPageChanged(int newIdx)
   }
 
   gotoPage(newIdx + 1);
-}
-
-/*!
- * \brief MainWindow::cmbSurahChanged slot for updating the reader page as the
- * user selects a different surah \param newSurahIdx surah idx in the combobox
- * (0-113)
- */
-void
-MainWindow::cmbSurahChanged(int newSurahIdx)
-{
-  if (m_internalSurahChange) {
-    qDebug() << "Internal surah change";
-    return;
-  }
-  gotoSurah(newSurahIdx + 1);
 }
 
 /*!
@@ -638,7 +637,7 @@ MainWindow::spaceKeyPressed()
 void
 MainWindow::btnPauseClicked()
 {
-  m_notifyMgr->setTooltip("Quran Companion");
+  updateTrayTooltip();
   m_player->pause();
 }
 
@@ -656,9 +655,6 @@ MainWindow::btnPlayClicked()
 
   highlightCurrentVerse();
   m_player->play();
-  m_notifyMgr->setTooltip(tr("Now playing: ") + m_player->reciterName() +
-                          " - " + tr("Surah ") +
-                          m_dbMgr->getSurahName(m_currVerse.surah));
 }
 
 /*!
@@ -677,7 +673,7 @@ MainWindow::btnStopClicked()
   m_internalSurahChange = false;
 
   m_endOfPage = false;
-  m_notifyMgr->setTooltip("Quran Companion");
+  updateTrayTooltip();
 }
 
 /*!
@@ -725,7 +721,7 @@ MainWindow::mediaPosChanged(qint64 position)
 void
 MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 {
-  m_notifyMgr->setTooltip("Quran Companion");
+  updateTrayTooltip();
   QMessageBox::StandardButton btn =
     QMessageBox::question(this,
                           tr("Recitation not found"),
@@ -929,12 +925,6 @@ MainWindow::actionPrefTriggered()
             &SettingsDialog::usedAudioDeviceChanged,
             m_player,
             &VersePlayer::changeUsedAudioDevice,
-            Qt::UniqueConnection);
-
-    connect(m_settingsDlg,
-            &SettingsDialog::audioVolumeChanged,
-            m_player,
-            &VersePlayer::setPlayerVolume,
             Qt::UniqueConnection);
   }
 
@@ -1233,6 +1223,17 @@ MainWindow::addSideContent()
   }
 }
 
+void
+MainWindow::updateTrayTooltip()
+{
+  if (m_player->playbackState() == QMediaPlayer::PlayingState) {
+    m_notifyMgr->setTooltip(tr("Now playing: ") + m_player->reciterName() +
+                            " - " + tr("Surah ") +
+                            m_dbMgr->getSurahName(m_currVerse.surah));
+  } else
+    m_notifyMgr->setTooltip("Quran Companion");
+}
+
 /*!
  * \brief MainWindow::showExpandedVerseTafsir toggle a collapsed verse tafsir
  */
@@ -1310,4 +1311,17 @@ MainWindow::~MainWindow()
 {
   saveReaderState();
   delete ui;
+}
+
+void
+MainWindow::volumeSliderValueChanged(int position)
+{
+  qreal linearVolume =
+    QAudio::convertVolume(ui->sldrVolume->value() / qreal(100.0),
+                          QAudio::LogarithmicVolumeScale,
+                          QAudio::LinearVolumeScale);
+  if (linearVolume != m_volume) {
+    m_volume = linearVolume;
+    m_player->setPlayerVolume(m_volume);
+  }
 }

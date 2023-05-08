@@ -305,13 +305,13 @@ border-style:solid;
     <set>Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Controls dock</string>
+    <string>Controls</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>4</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
       <widget class="QLabel" name="lblReciter">
        <property name="text">
@@ -351,7 +351,7 @@ border-style:solid;
        </property>
        <property name="maximumSize">
         <size>
-         <width>200</width>
+         <width>300</width>
          <height>16777215</height>
         </size>
        </property>
@@ -441,43 +441,73 @@ border-style:solid;
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_3">
+      <widget class="QSlider" name="sldrVolume">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="singleStep">
+        <number>5</number>
+       </property>
+       <property name="value">
+        <number>100</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0">
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
         <size>
-         <width>40</width>
-         <height>20</height>
+         <width>25</width>
+         <height>25</height>
         </size>
        </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="lblVerse">
+       <property name="maximumSize">
+        <size>
+         <width>25</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Noto Sans Symbols 2</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
-        <string>Verse</string>
+        <string>🔊</string>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cmbVerse">
-       <property name="editable">
-        <bool>true</bool>
+       <property name="textFormat">
+        <enum>Qt::PlainText</enum>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Page</string>
+       <property name="scaledContents">
+        <bool>false</bool>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cmbPage">
-       <property name="editable">
-        <bool>true</bool>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+       </property>
+       <property name="margin">
+        <number>-3</number>
        </property>
       </widget>
      </item>
@@ -504,6 +534,20 @@ border-style:solid;
          <width>12</width>
          <height>12</height>
         </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnBookmarks">
+       <property name="text">
+        <string>Bookmarks</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnDownloads">
+       <property name="text">
+        <string>Download manager</string>
        </property>
       </widget>
      </item>
@@ -537,13 +581,53 @@ border-style:solid;
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Surahs dock</string>
+    <string>Navigation</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2">
     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="lblVerse">
+             <property name="text">
+              <string>Verse</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="cmbVerse">
+             <property name="editable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Page</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmbPage">
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
      <item>
       <widget class="QLineEdit" name="lineEditSearchSurah">
        <property name="styleSheet">
@@ -555,7 +639,7 @@ placeholder-text-color: #c0c0c0;
         <string>Search surah</string>
        </property>
        <property name="clearButtonEnabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
       </widget>
      </item>
