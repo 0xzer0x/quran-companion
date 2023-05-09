@@ -39,12 +39,12 @@
         <translation>إزالة</translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="76"/>
+        <location filename="../core/bookmarksdialog.cpp" line="80"/>
         <source>Surah: </source>
         <translation>سورة: </translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="77"/>
+        <location filename="../core/bookmarksdialog.cpp" line="82"/>
         <source>Verse: </source>
         <translation>آية: </translation>
     </message>
@@ -133,7 +133,7 @@
         <translation>ملف</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="318"/>
+        <location filename="../core/mainwindow.ui" line="320"/>
         <source>Reciter</source>
         <translation>القارئ</translation>
     </message>
@@ -168,159 +168,181 @@
         <translation>مساعدة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="700"/>
+        <location filename="../core/mainwindow.ui" line="702"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="712"/>
+        <location filename="../core/mainwindow.ui" line="714"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="725"/>
+        <location filename="../core/mainwindow.ui" line="727"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="734"/>
+        <location filename="../core/mainwindow.ui" line="736"/>
         <source>Find</source>
         <translation>البحث</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="737"/>
+        <location filename="../core/mainwindow.ui" line="739"/>
         <source>Ctrl+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="742"/>
+        <location filename="../core/mainwindow.ui" line="744"/>
         <source>Check for updates</source>
         <translation>التحقق من وجود تحديثات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="747"/>
+        <location filename="../core/mainwindow.ui" line="749"/>
         <source>Website</source>
         <translation>صفحة البرنامج</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="543"/>
-        <location filename="../core/mainwindow.ui" line="752"/>
+        <location filename="../core/mainwindow.ui" line="762"/>
+        <location filename="../core/mainwindow.cpp" line="978"/>
+        <source>About Quran Companion</source>
+        <translation>عن البرنامج</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="767"/>
+        <location filename="../core/mainwindow.cpp" line="984"/>
+        <source>About Qt</source>
+        <translation>عن كيوت</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="545"/>
+        <location filename="../core/mainwindow.ui" line="754"/>
         <source>Bookmarks</source>
         <translation>العلامات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="308"/>
+        <location filename="../core/mainwindow.ui" line="310"/>
         <source>Controls</source>
         <translation>التحكم</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="498"/>
+        <location filename="../core/mainwindow.ui" line="500"/>
         <source>🔊</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="584"/>
+        <location filename="../core/mainwindow.ui" line="586"/>
         <source>Navigation</source>
         <translation>التصفح</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="639"/>
+        <location filename="../core/mainwindow.ui" line="641"/>
         <source>Search surah</source>
         <translation>بحث السور</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="755"/>
+        <location filename="../core/mainwindow.ui" line="757"/>
         <source>Ctrl+B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="600"/>
+        <location filename="../core/mainwindow.ui" line="602"/>
         <source>Verse</source>
         <translation>الآية</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="616"/>
+        <location filename="../core/mainwindow.ui" line="618"/>
         <source>Page</source>
         <translation>الصفحة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="530"/>
+        <location filename="../core/mainwindow.ui" line="532"/>
         <source>Search</source>
         <translation>البحث</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="557"/>
-        <location filename="../core/mainwindow.ui" line="697"/>
+        <location filename="../core/mainwindow.ui" line="559"/>
+        <location filename="../core/mainwindow.ui" line="699"/>
         <source>Preferences</source>
         <translation>الإعدادات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="550"/>
-        <location filename="../core/mainwindow.ui" line="709"/>
+        <location filename="../core/mainwindow.ui" line="552"/>
+        <location filename="../core/mainwindow.ui" line="711"/>
         <source>Download manager</source>
         <translation>إدارة التحميلات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="722"/>
+        <location filename="../core/mainwindow.ui" line="724"/>
         <source>Exit</source>
         <translation>خروج</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="376"/>
+        <location filename="../core/mainwindow.cpp" line="373"/>
         <source>There are currently no updates available.</source>
         <translation>لا تتوفر تحديثات حالياً.</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="378"/>
-        <location filename="../core/mainwindow.cpp" line="380"/>
-        <location filename="../core/mainwindow.cpp" line="390"/>
+        <location filename="../core/mainwindow.cpp" line="375"/>
+        <location filename="../core/mainwindow.cpp" line="377"/>
+        <location filename="../core/mainwindow.cpp" line="387"/>
         <source>Update info</source>
         <translation>معلومات التحديث</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="382"/>
+        <location filename="../core/mainwindow.cpp" line="379"/>
         <source>Updates available, do you want to open the update tool?</source>
         <translation>هناك تحديثات متاحة، هل تود تشغيل مدير التحديثات؟</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="385"/>
+        <location filename="../core/mainwindow.cpp" line="382"/>
         <source>Updates info</source>
         <translation>معلومات التحديث</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="391"/>
+        <location filename="../core/mainwindow.cpp" line="388"/>
         <source>Updates are available, use the maintainance tool to install the latest updates.</source>
         <translation>هناك تحديثات متاحة، يمكنك إستخدام اداة التحديث للحصول على اخر التحديثات.</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="654"/>
+        <location filename="../core/mainwindow.cpp" line="970"/>
+        <source>&lt;h2&gt;Quran Companion v</source>
+        <translation>&lt;div dir=&apos;rtl&apos;&gt;&lt;h2&gt;رفيق القرآن إصدار </translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="971"/>
+        <source>&lt;/h2&gt;&lt;p&gt;&lt;a href=&apos;https://github.com/0xzer0x/quran-companion&apos;&gt;Quran Companion&lt;/a&gt; is a free cross-platform Quran reader &amp; player&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&apos;https://www.gnu.org/licenses/gpl-3.0.html&apos;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;</source>
+        <translation>&lt;/h2&gt;&lt;p&gt;&lt;a href=&apos;https://github.com/0xzer0x/quran-companion&apos;&gt;رفيق القرآن&lt;/a&gt; هو برنامج مجاني متعدد-المنصات لقراءة و سماع القرآن الكريم&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&apos;https://www.gnu.org/licenses/gpl-3.0.html&apos;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="1245"/>
         <source>Now playing: </source>
         <translation>يقرأ الآن: </translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="655"/>
+        <location filename="../core/mainwindow.cpp" line="1246"/>
         <source>Surah </source>
         <translation>سورة </translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="726"/>
+        <location filename="../core/mainwindow.cpp" line="721"/>
         <source>Recitation not found</source>
         <translation>التلاوة غير موجودة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="727"/>
+        <location filename="../core/mainwindow.cpp" line="722"/>
         <source>The recitation files for the current surah is missing, would you like to download it?</source>
         <translation>ملفات التلاوة الخاصة بالسورة الحالية غير متوفرة، هل تود الذهاب إلى صفحة التحميل؟</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1183"/>
-        <location filename="../core/mainwindow.cpp" line="1233"/>
-        <location filename="../core/mainwindow.cpp" line="1238"/>
+        <location filename="../core/mainwindow.cpp" line="1199"/>
+        <location filename="../core/mainwindow.cpp" line="1260"/>
+        <location filename="../core/mainwindow.cpp" line="1265"/>
         <source>Expand...</source>
         <translation>إظهار...</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1257"/>
+        <location filename="../core/mainwindow.cpp" line="1284"/>
         <source>Verse Of The Day</source>
         <translation>آية اليوم</translation>
     </message>
@@ -354,8 +376,8 @@
     </message>
     <message>
         <location filename="../utils/notificationmanager.cpp" line="85"/>
-        <source>Website</source>
-        <translation>صفحة البرنامج</translation>
+        <source>About</source>
+        <translation>عن البرنامج</translation>
     </message>
     <message>
         <location filename="../utils/notificationmanager.cpp" line="86"/>

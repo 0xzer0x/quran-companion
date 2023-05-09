@@ -187,15 +187,15 @@ MainWindow::setupConnections()
           this,
           &MainWindow::updateProcessCallback,
           Qt::UniqueConnection);
-  connect(ui->actionWebsite,
-          &QAction::triggered,
-          this,
-          &MainWindow::visitWebsite,
-          Qt::UniqueConnection);
   connect(ui->actionBookmarks,
           &QAction::triggered,
           this,
           &MainWindow::actionBookmarksTriggered,
+          Qt::UniqueConnection);
+  connect(ui->actionAbout_Quran_Companion,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionAboutTriggered,
           Qt::UniqueConnection);
 
   // ########## Quran page ########## //
@@ -337,9 +337,9 @@ MainWindow::setupConnections()
           &MainWindow::checkForUpdates,
           Qt::UniqueConnection);
   connect(m_notifyMgr,
-          &NotificationManager::openWebsite,
+          &NotificationManager::openAbout,
           this,
-          &MainWindow::visitWebsite,
+          &MainWindow::actionAboutTriggered,
           Qt::UniqueConnection);
   connect(m_notifyMgr,
           &NotificationManager::showVOTDmessagebox,
@@ -354,12 +354,6 @@ MainWindow::setupConnections()
 }
 
 /* ------------------------ Help menu actions ------------------------ */
-
-void
-MainWindow::visitWebsite()
-{
-  QDesktopServices::openUrl(QUrl("https://github.com/0xzer0x/quran-companion"));
-}
 
 void
 MainWindow::checkForUpdates()
@@ -570,6 +564,38 @@ MainWindow::gotoSurah(int surahIdx)
 
   m_endOfPage = false;
   updateTrayTooltip();
+}
+
+void
+MainWindow::on_lineEditSearchSurah_textChanged(const QString& arg1)
+{
+  if (arg1.isEmpty()) {
+    m_surahListModel.setStringList(m_surahList);
+    updateSurah();
+  } else {
+    QList<int> suggestions = m_dbMgr->searchSurahNames(arg1);
+    QStringList res;
+    for (int i = 0; i < 114; i++) {
+      if (suggestions.contains(i + 1)) {
+        res.append(m_surahList.at(i));
+      }
+    }
+
+    m_surahListModel.setStringList(res);
+  }
+}
+
+void
+MainWindow::on_listViewSurahs_clicked(const QModelIndex& index)
+{
+  int s = 0;
+  for (int i = 0; i < 114; i++) {
+    if (m_surahList.at(i) == index.data().toString()) {
+      s = i + 1;
+      break;
+    }
+  }
+  gotoSurah(s);
 }
 
 /*!
@@ -969,6 +995,27 @@ MainWindow::actionBookmarksTriggered()
   m_bookmarksDlg->showWindow();
 }
 
+void
+MainWindow::actionAboutTriggered()
+{
+  QString about =
+    tr("<h2>Quran Companion v") + qApp->applicationVersion() +
+    tr("</h2><p><a href='https://github.com/0xzer0x/quran-companion'>Quran "
+       "Companion</a> is a free cross-platform Quran reader & "
+       "player</p><p>Licensed "
+       "under the <a href='https://www.gnu.org/licenses/gpl-3.0.html'>GNU "
+       "General "
+       "Public License v3.0</a></p>");
+
+  QMessageBox::about(this, tr("About Quran Companion"), about);
+}
+
+void
+MainWindow::on_actionAbout_Qt_triggered()
+{
+  QMessageBox::aboutQt(this, tr("About Qt"));
+}
+
 /* ------------------------ Search dialog ------------------------ */
 
 /*!
@@ -1062,38 +1109,6 @@ MainWindow::updateSideFont()
 {
   m_sideFont =
     qvariant_cast<QFont>(m_settingsPtr->value("Reader/SideContentFont"));
-}
-
-void
-MainWindow::on_lineEditSearchSurah_textChanged(const QString& arg1)
-{
-  if (arg1.isEmpty()) {
-    m_surahListModel.setStringList(m_surahList);
-    updateSurah();
-  } else {
-    QList<int> suggestions = m_dbMgr->searchSurahNames(arg1);
-    QStringList res;
-    for (int i = 0; i < 114; i++) {
-      if (suggestions.contains(i + 1)) {
-        res.append(m_surahList.at(i));
-      }
-    }
-
-    m_surahListModel.setStringList(res);
-  }
-}
-
-void
-MainWindow::on_listViewSurahs_clicked(const QModelIndex& index)
-{
-  int s = 0;
-  for (int i = 0; i < 114; i++) {
-    if (m_surahList.at(i) == index.data().toString()) {
-      s = i + 1;
-      break;
-    }
-  }
-  gotoSurah(s);
 }
 
 /* ------------------------ Content generation ------------------------ */

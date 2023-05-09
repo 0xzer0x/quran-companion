@@ -260,8 +260,8 @@ border-style:solid;
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="separator"/>
     <addaction name="actionFind"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -284,7 +284,9 @@ border-style:solid;
      <string>Help</string>
     </property>
     <addaction name="actionCheck_for_updates"/>
-    <addaction name="actionWebsite"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_Quran_Companion"/>
+    <addaction name="actionAbout_Qt"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -753,6 +755,16 @@ QListView::item:hover {
    </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionAbout_Quran_Companion">
+   <property name="text">
+    <string>About Quran Companion</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
    </property>
   </action>
  </widget>

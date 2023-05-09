@@ -52,7 +52,6 @@ public:
 
 public slots:
   void showVOTDmessage(Verse v, QString msg);
-  void visitWebsite();
   void checkForUpdates();
   void updateProcessCallback();
   void saveReaderState();
@@ -102,6 +101,10 @@ private slots:
   void on_lineEditSearchSurah_textChanged(const QString& arg1);
   void on_listViewSurahs_clicked(const QModelIndex& index);
   void volumeSliderValueChanged(int position);
+
+  void actionAboutTriggered();
+
+  void on_actionAbout_Qt_triggered();
 
 private:
   void loadIcons();

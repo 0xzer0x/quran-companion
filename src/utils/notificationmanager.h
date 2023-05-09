@@ -33,7 +33,7 @@ signals:
   void showWindow();
   void hideWindow();
   void openPrefs();
-  void openWebsite();
+  void openAbout();
   void showVOTDmessagebox(Verse v, QString msg);
 
 private:

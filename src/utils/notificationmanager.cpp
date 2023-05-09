@@ -82,7 +82,7 @@ NotificationManager::addActions()
   QAction* hide = new QAction(tr("Hide window"), m_trayMenu);
   QAction* prefs = new QAction(tr("Preferences"), m_trayMenu);
   QAction* update = new QAction(tr("Check for updates"), m_trayMenu);
-  QAction* website = new QAction(tr("Website"), m_trayMenu);
+  QAction* about = new QAction(tr("About"), m_trayMenu);
   QAction* exit = new QAction(tr("Exit"), m_trayMenu);
   m_trayMenu->addAction(togglePlay);
   m_trayMenu->addSeparator();
@@ -92,7 +92,7 @@ NotificationManager::addActions()
   m_trayMenu->addAction(prefs);
   m_trayMenu->addSeparator();
   m_trayMenu->addAction(update);
-  m_trayMenu->addAction(website);
+  m_trayMenu->addAction(about);
   m_trayMenu->addSeparator();
   m_trayMenu->addAction(exit);
 
@@ -121,14 +121,14 @@ NotificationManager::addActions()
           this,
           &NotificationManager::exit,
           Qt::UniqueConnection);
+  connect(about,
+          &QAction::triggered,
+          this,
+          &NotificationManager::openAbout,
+          Qt::UniqueConnection);
   connect(update,
           &QAction::triggered,
           this,
           &NotificationManager::checkForUpdates,
-          Qt::UniqueConnection);
-  connect(website,
-          &QAction::triggered,
-          this,
-          &NotificationManager::openWebsite,
           Qt::UniqueConnection);
 }
