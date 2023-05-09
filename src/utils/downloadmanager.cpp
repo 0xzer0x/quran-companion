@@ -97,6 +97,7 @@ DownloadManager::processQueueHead()
   m_isDownloading = true;
   QNetworkRequest req(m_currentTask.link);
   m_currentTask.networkReply = m_netMan->get(req);
+  m_currentTask.networkReply->ignoreSslErrors();
   m_downloadStart = QTime::currentTime();
 
   connect(m_currentTask.networkReply,

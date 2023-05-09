@@ -107,10 +107,10 @@ VersePlayer::fillRecitersList()
                    m_reciterDir.filePath("bismillah/alafasy.mp3"),
                    "https://everyayah.com/data/Alafasy_64kbps/" };
 
-  Reciter tunaiji{ "Khalefa_Al-Tunaiji",
-                   tr("Khalefa Al-Tunaiji"),
-                   m_reciterDir.filePath("bismillah/tunaiji.mp3"),
-                   "https://quran.ksu.edu.sa/ayat/mp3/tunaiji_64kbps/" };
+  Reciter tunaiji{"Khalefa_Al-Tunaiji",
+                  tr("Khalefa Al-Tunaiji"),
+                  m_reciterDir.filePath("bismillah/tunaiji.mp3"),
+                  "https://everyayah.com/data/khalefa_al_tunaiji_64kbps/"};
 
   Reciter dussary{ "Yasser_Ad-Dussary",
                    tr("Yasser Ad-Dussary"),
