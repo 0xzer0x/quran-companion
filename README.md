@@ -13,7 +13,7 @@
 <h3 align="center">Quran Companion</h3>
 
   <p align="center">
-    cross-platform Qt-based Quran reader/listener
+    cross-platform Qt-based Quran reader & player
     <br />
     <br />
     <a href="https://github.com/0xzer0x/quran-companion/releases/latest"><img src="https://img.shields.io/github/v/release/0xzer0x/quran-companion"></a> <img src="https://img.shields.io/github/v/tag/0xzer0x/quran-companion">
