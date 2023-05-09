@@ -27,6 +27,12 @@
      </property>
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
        <item>
         <widget class="QTreeView" name="treeView">
          <property name="sizePolicy">
@@ -40,6 +46,15 @@
            <width>200</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>0</number>
          </property>
          <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>
@@ -80,7 +95,7 @@
             <x>0</x>
             <y>0</y>
             <width>487</width>
-            <height>516</height>
+            <height>517</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">

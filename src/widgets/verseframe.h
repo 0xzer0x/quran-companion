@@ -4,16 +4,22 @@
 #include <QFrame>
 #include <QVBoxLayout>
 
-class VerseFrame : public QFrame
+class HighlightFrame : public QFrame
 {
 public:
-    VerseFrame(QWidget *parent = nullptr);
-    void highlightFrame();
+  HighlightFrame(QWidget* parent = nullptr);
+  void highlightFrame();
+  void setHighlightColor(int r, int g, int b);
 
-    // QWidget interface
+  // QWidget interface
 protected:
-    void enterEvent(QEnterEvent *event);
-    void leaveEvent(QEvent *event);
+  void enterEvent(QEnterEvent* event);
+  void leaveEvent(QEvent* event);
+
+private:
+  int m_colorR = 0;
+  int m_colorG = 161;
+  int m_colorB = 185;
 };
 
 #endif // VERSEFRAME_H

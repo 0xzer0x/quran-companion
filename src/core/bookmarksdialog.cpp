@@ -61,6 +61,10 @@ BookmarksDialog::loadFavorites()
     QLabel* verseLb = new QLabel(frame);
     QPushButton* goToVerse = new QPushButton(tr("Go to verse"), frame);
     QPushButton* removeFromFav = new QPushButton(tr("Remove"), frame);
+    goToVerse->setMinimumWidth(100);
+    goToVerse->setMaximumWidth(100);
+    removeFromFav->setMinimumWidth(100);
+    removeFromFav->setMaximumWidth(100);
 
     connect(goToVerse,
             &QPushButton::clicked,
@@ -73,7 +77,8 @@ BookmarksDialog::loadFavorites()
             &BookmarksDialog::btnRemove,
             Qt::UniqueConnection);
 
-    QString info = tr("Surah: ") + QString::number(verse.surah) + " - " +
+    QString info = tr("Surah: ") +
+                   m_dbMgr->surahNameList().at(verse.surah - 1) + " - " +
                    tr("Verse: ") + QString::number(verse.number);
     lbMeta->setText(info);
     lbMeta->setAlignment(Qt::AlignLeft);
@@ -90,7 +95,6 @@ BookmarksDialog::loadFavorites()
     btnLayout->addWidget(removeFromFav);
 
     frmLayout->addItem(btnLayout);
-    frmLayout->addStretch();
     frmLayout->addItem(lbLayout);
 
     frame->setLayout(frmLayout);
@@ -125,7 +129,7 @@ BookmarksDialog::btnRemove()
     QFrame* frm = qobject_cast<QFrame*>(sender()->parent());
     int idx = m_frames.indexOf(frm);
     if (idx != -1)
-      m_frames.remove(idx, 1);
+      m_frames.remove(idx);
     delete frm;
   }
 }

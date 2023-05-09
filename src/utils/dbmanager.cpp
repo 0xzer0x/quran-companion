@@ -421,7 +421,7 @@ DBManager::getSurahStartPage(int surahIdx)
 QList<QString>
 DBManager::surahNameList()
 {
-  if (m_surahNames.empty()) {
+  if (m_surahNames.isEmpty()) {
     for (int i = 1; i <= 114; i++) {
       m_surahNames.append(getSurahName(i));
     }
@@ -532,6 +532,32 @@ DBManager::getVersePage(const int& surahIdx, const int& verse)
   dbQuery.next();
 
   return dbQuery.value(0).toInt();
+}
+
+QList<int>
+DBManager::searchSurahNames(QString text)
+{
+  QList<int> results;
+  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  QSqlQuery dbQuery(m_openDBCon);
+  QString q =
+    "SELECT DISTINCT sura_no FROM verses_v1 WHERE (sura_name_ar like '%" +
+    text +
+    "%' OR "
+    "sura_name_en like '%" +
+    text + "%')";
+
+  dbQuery.prepare(q);
+  if (!dbQuery.exec()) {
+    qCritical()
+      << "[CRITICAL] Error occurred during searchSurahNames SQL statment exec";
+  }
+
+  while (dbQuery.next()) {
+    results.append(dbQuery.value(0).toInt());
+  }
+
+  return results;
 }
 
 QList<DBManager::Verse>

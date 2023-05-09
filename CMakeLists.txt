@@ -70,7 +70,7 @@ set(PROJECT_SOURCES
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
   qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
 else()
-    add_executable(quran-companion ${PROJECT_SOURCES})
+  add_executable(quran-companion ${PROJECT_SOURCES})
 endif()
 
 target_link_libraries(

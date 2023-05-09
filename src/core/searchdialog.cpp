@@ -116,7 +116,7 @@ SearchDialog::showResults()
     Verse v = m_currResults.at(i);
     QString fontName =
       m_fontPrefix + QString::number(v.page).rightJustified(3, '0');
-    VerseFrame* vFrame = new VerseFrame(ui->srclResults);
+    HighlightFrame* vFrame = new HighlightFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);
     ClickableLabel* clkLb = new ClickableLabel(vFrame);
 

@@ -19,6 +19,7 @@
 #include <QScrollBar>
 #include <QSettings>
 #include <QShortcut>
+#include <QStringListModel>
 
 typedef DBManager::Verse Verse;
 
@@ -51,7 +52,6 @@ public:
 
 public slots:
   void showVOTDmessage(Verse v, QString msg);
-  void visitWebsite();
   void checkForUpdates();
   void updateProcessCallback();
   void saveReaderState();
@@ -66,7 +66,6 @@ private slots:
   void btnStopClicked();
 
   void cmbPageChanged(int newPageIdx);
-  void cmbSurahChanged(int newSurahIdx);
   void cmbVerseChanged(int newVerseIdx);
   void updateVerseDropDown();
   void gotoPage(int page, bool automaticFlip = false);
@@ -84,6 +83,7 @@ private slots:
   void openSearchDialog();
 
   void verseClicked();
+  void surahClicked(QModelIndex& index);
   void showExpandedVerseTafsir();
   void navigateToVerse(Verse v);
   void verseAnchorClicked(const QUrl& hrefUrl);
@@ -91,30 +91,42 @@ private slots:
 
   void redrawQuranPage(bool manualSz = false);
   void addSideContent();
+  void updateTrayTooltip();
 
   void updateSideContentType();
   void updateLoadedTafsir();
   void updateLoadedTranslation();
   void updateSideFont();
 
+  void on_lineEditSearchSurah_textChanged(const QString& arg1);
+  void on_listViewSurahs_clicked(const QModelIndex& index);
+  void volumeSliderValueChanged(int position);
+
+  void actionAboutTriggered();
+
+  void on_actionAbout_Qt_triggered();
+
 private:
   void loadIcons();
   void init();
+  void setupSurahsDock();
   void updateSurah();
   void updatePageVerseInfoList();
   void setVerseToStartOfPage();
   void setCmbPageIdx(int idx);
-  void setCmbSurahIdx(int idx);
   void setCmbVerseIdx(int idx);
   bool m_endOfPage = false;
   bool m_internalPageChange = false;
   bool m_internalSurahChange = false;
   bool m_internalVerseChange = false;
   bool m_darkMode = false;
+  qreal m_volume = 1;
   Ui::MainWindow* ui;
   QString m_iconsPath;
   QProcess* m_process;
   QString m_updateToolPath;
+  QStringList m_surahList;
+  QStringListModel m_surahListModel;
   QIntValidator* m_verseValidator = nullptr;
   QuranPageBrowser* m_quranBrowser;
   NotificationManager* m_notifyMgr;
@@ -125,7 +137,7 @@ private:
   BookmarksDialog* m_bookmarksDlg = nullptr;
   DownloaderDialog* m_downloaderDlg = nullptr;
   DownloadManager* m_downManPtr = nullptr;
-  VerseFrame* m_highlightedFrm = nullptr;
+  HighlightFrame* m_highlightedFrm = nullptr;
   QSettings* m_settingsPtr;
   Verse m_currVerse{ 1, 1, 1 };
   SideContent m_sideContent;
