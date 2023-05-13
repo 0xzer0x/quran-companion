@@ -45,15 +45,9 @@ SettingsDialog::SettingsDialog(QWidget* parent,
 void
 SettingsDialog::setRadios()
 {
-  if (m_votd)
-    ui->radioDailyVerseOn->setChecked(true);
-  else
-    ui->radioDailyVerseOff->setChecked(true);
-
-  if (m_adaptive)
-    ui->radioAdaptiveOn->setChecked(true);
-  else
-    ui->radioAdaptiveOff->setChecked(true);
+  ui->chkDailyVerse->setChecked(m_votd);
+  ui->chkMissingWarning->setChecked(m_missingFileWarning);
+  ui->chkAdaptive->setChecked(m_adaptive);
 }
 
 /*!
@@ -97,6 +91,12 @@ void
 SettingsDialog::updateDailyVerse(bool on)
 {
   m_settingsPtr->setValue("VOTD", on);
+}
+
+void
+SettingsDialog::updateFileWarning(bool on)
+{
+  m_settingsPtr->setValue("MissingFileWarning", on);
 }
 
 /*!
@@ -217,46 +217,39 @@ SettingsDialog::applyAllChanges()
     updateLang(chosenLang);
   }
 
-  if (ui->cmbTheme->currentIndex() != m_themeIdx) {
+  if (ui->cmbTheme->currentIndex() != m_themeIdx)
     updateTheme(ui->cmbTheme->currentIndex());
-  }
 
-  if (ui->radioDailyVerseOn->isChecked() != m_votd) {
-    updateDailyVerse(ui->radioDailyVerseOn->isChecked());
-  }
+  if (ui->chkDailyVerse->isChecked() != m_votd)
+    updateDailyVerse(ui->chkDailyVerse->isChecked());
 
-  if (ui->cmbSideContent->currentIndex() != m_sideContent) {
+  if (ui->chkMissingWarning->isChecked() != m_missingFileWarning)
+    updateFileWarning(ui->chkMissingWarning->isChecked());
+
+  if (ui->cmbSideContent->currentIndex() != m_sideContent)
     updateSideContent(ui->cmbSideContent->currentIndex());
-  }
 
-  if (ui->cmbTafsir->currentIndex() != m_tafsir) {
+  if (ui->cmbTafsir->currentIndex() != m_tafsir)
     updateTafsir(ui->cmbTafsir->currentIndex());
-  }
 
-  if (ui->cmbTranslation->currentIndex() != m_trans) {
+  if (ui->cmbTranslation->currentIndex() != m_trans)
     updateTranslation(ui->cmbTranslation->currentIndex());
-  }
 
-  if (ui->cmbQCF->currentIndex() + 1 != m_qcfVer) {
+  if (ui->cmbQCF->currentIndex() + 1 != m_qcfVer)
     updateQuranFont(ui->cmbQCF->currentIndex() + 1);
-  }
 
-  if (ui->radioAdaptiveOn->isChecked() != m_adaptive) {
-    updateAdaptiveFont(ui->radioAdaptiveOn->isChecked());
-  }
+  if (ui->chkAdaptive->isChecked() != m_adaptive)
+    updateAdaptiveFont(ui->chkAdaptive->isChecked());
 
-  if (ui->cmbQuranFontSz->currentText() != QString::number(m_quranFontSize)) {
+  if (ui->cmbQuranFontSz->currentText() != QString::number(m_quranFontSize))
     updateQuranFontSize(ui->cmbQuranFontSz->currentText());
-  }
 
-  if (ui->fntCmbSide->currentFont() != m_sideFont) {
+  if (ui->fntCmbSide->currentFont() != m_sideFont)
     updateSideFont(ui->fntCmbSide->currentFont());
-  }
 
   if (ui->cmbSideFontSz->currentText() !=
-      QString::number(m_sideFont.pointSize())) {
+      QString::number(m_sideFont.pointSize()))
     updateSideFontSize(ui->cmbSideFontSz->currentText());
-  }
 
   if (ui->cmbAudioDevices->currentIndex() != m_audioOutIdx) {
     m_audioOutIdx = ui->cmbAudioDevices->currentIndex();
@@ -317,6 +310,7 @@ SettingsDialog::setCurrentSettingsAsRef()
   m_themeIdx = m_settingsPtr->value("Theme").toInt();
   m_lang = qvariant_cast<QLocale::Language>(m_settingsPtr->value("Language"));
   m_votd = m_settingsPtr->value("VOTD").toBool();
+  m_missingFileWarning = m_settingsPtr->value("MissingFileWarning").toBool();
 
   m_settingsPtr->beginGroup("Reader");
   // all keys have prefix "Reader"

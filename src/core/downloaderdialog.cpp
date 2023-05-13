@@ -224,7 +224,16 @@ DownloaderDialog::selectTask(int reciter, int surah)
 void
 DownloaderDialog::surahDownloaded()
 {
-  delete m_frameLst.at(0);
+  m_currentBar->setStyleSheet(
+    "QProgressBar {text-align: center;} QProgressBar::chunk "
+    "{border-radius:4px;background-color: #4BB543;}");
+  m_currentLb->setText(m_currentLb->parent()->objectName());
+  m_currDownSpeedLb->setText(tr("Download Completed"));
+  disconnect(m_downloaderPtr,
+             &DownloadManager::downloadProgressed,
+             m_currentBar,
+             &DownloadProgressBar::updateProgress);
+
   m_frameLst.pop_front();
   setCurrentBar();
 }
@@ -236,8 +245,10 @@ DownloaderDialog::surahDownloaded()
 void
 DownloaderDialog::downloadAborted()
 {
-  qDeleteAll(m_frameLst);
-  m_frameLst.clear();
+  if (!m_frameLst.isEmpty()) {
+    qDeleteAll(m_frameLst);
+    m_frameLst.clear();
+  }
 }
 
 /*!
@@ -249,11 +260,10 @@ DownloaderDialog::topTaskDownloadError()
 {
   m_currentBar->setStyleSheet(
     "QProgressBar {text-align: center;} QProgressBar::chunk "
-    "{border-radius:4px;background-color: red;}");
+    "{border-radius:4px;background-color: #FC100D;}");
 
-  m_currentLb->setText(tr("Couldn't download: ") +
-                       m_currentLb->parent()->objectName());
-  m_currDownSpeedLb->setText("");
+  m_currentLb->setText(m_currentLb->parent()->objectName());
+  m_currDownSpeedLb->setText(tr("Download Failed"));
 }
 
 void

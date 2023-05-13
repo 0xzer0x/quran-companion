@@ -59,6 +59,9 @@
          <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -94,7 +97,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>487</width>
+            <width>481</width>
             <height>517</height>
            </rect>
           </property>

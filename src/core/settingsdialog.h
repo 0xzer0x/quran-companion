@@ -39,6 +39,7 @@ public slots:
   void updateTheme(int themeIdx);
   void updateLang(QLocale::Language lang);
   void updateDailyVerse(bool on);
+  void updateFileWarning(bool on);
   void updateSideContent(int idx);
   void updateTafsir(int idx);
   void updateTranslation(int idx);
@@ -79,6 +80,7 @@ private:
   int m_trans;
   bool m_votd = true;
   bool m_adaptive = true;
+  bool m_missingFileWarning = true;
   bool m_renderSideContent = false;
   bool m_renderQuranPage = false;
   bool m_restartReq = false;

@@ -47,16 +47,14 @@ private slots:
   void actionZoomIn();
   void actionZoomOut();
   void actionCopy();
-  void actionAddToFav();
-  void actionRemoveFromFav();
 
 private:
   bool m_darkMode;
   int m_page;
   int m_qcfVer;
   int m_fontSize;
-  int m_pageWidth;
   int m_highlightedIdx = -1;
+  QSize m_pageLineSize;
   QPoint m_mousePos;
   QPoint m_mouseGlobalPos;
   QString m_iconsPath;

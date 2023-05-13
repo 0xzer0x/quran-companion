@@ -295,10 +295,22 @@ border-style:solid;
   </widget>
   <widget class="QDockWidget" name="dockControls">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>1173</width>
+     <height>62</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>524287</width>
+     <height>62</height>
+    </size>
    </property>
    <property name="floating">
     <bool>false</bool>
@@ -659,11 +671,11 @@ QListView::item{
 }
 
 QListView::item:selected {
-    background: rgba(0, 161, 185, 50);
+    background: rgba(0, 161, 185, 80);
 }
 
 QListView::item:hover:selected {
-    background: rgba(0, 161, 185, 50);
+    background: rgba(0, 161, 185, 80);
 }
 
 QListView::item:hover {
@@ -742,11 +754,6 @@ QListView::item:hover {
   <action name="actionCheck_for_updates">
    <property name="text">
     <string>Check for updates</string>
-   </property>
-  </action>
-  <action name="actionWebsite">
-   <property name="text">
-    <string>Website</string>
    </property>
   </action>
   <action name="actionBookmarks">

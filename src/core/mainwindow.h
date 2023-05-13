@@ -11,6 +11,7 @@
 #include "downloaderdialog.h"
 #include "searchdialog.h"
 #include "settingsdialog.h"
+#include "tafsirdialog.h"
 #include <QBoxLayout>
 #include <QClipboard>
 #include <QDesktopServices>
@@ -132,6 +133,7 @@ private:
   NotificationManager* m_notifyMgr;
   DBManager* m_dbMgr;
   VersePlayer* m_player;
+  TafsirDialog* m_tafsirDlg = nullptr;
   SearchDialog* m_searchDlg = nullptr;
   SettingsDialog* m_settingsDlg = nullptr;
   BookmarksDialog* m_bookmarksDlg = nullptr;

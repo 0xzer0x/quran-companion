@@ -39,6 +39,9 @@ DownloadManager::stopQueue()
 void
 DownloadManager::cancelCurrentTask()
 {
+  if (m_currentTask.networkReply == nullptr)
+    return;
+
   m_currentTask.networkReply->abort();
   m_currentTask.networkReply->close();
   emit downloadCanceled();

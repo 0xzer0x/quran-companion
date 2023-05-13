@@ -70,16 +70,30 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_12">
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
          <item>
-          <widget class="QLabel" name="lbDailyVerse">
+          <widget class="QLabel" name="lbAudioDevice">
            <property name="text">
-            <string>Daily verse</string>
+            <string>Audio output device</string>
            </property>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_2">
+          <widget class="QComboBox" name="cmbAudioDevices"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Features</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -92,42 +106,18 @@
           </spacer>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_11">
-           <item>
-            <widget class="QRadioButton" name="radioDailyVerseOn">
-             <property name="text">
-              <string>on</string>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioDailyVerseOff">
-             <property name="text">
-              <string>off</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_10">
-         <item>
-          <widget class="QLabel" name="lbAudioDevice">
+          <widget class="QCheckBox" name="chkDailyVerse">
            <property name="text">
-            <string>Audio output device</string>
+            <string>Daily verse</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cmbAudioDevices"/>
+          <widget class="QCheckBox" name="chkMissingWarning">
+           <property name="text">
+            <string>Missing recitation warning</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -167,22 +157,11 @@
              </spacer>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_13">
-              <item>
-               <widget class="QRadioButton" name="radioAdaptiveOn">
-                <property name="text">
-                 <string>on</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioAdaptiveOff">
-                <property name="text">
-                 <string>off</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QCheckBox" name="chkAdaptive">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>

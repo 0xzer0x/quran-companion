@@ -53,6 +53,7 @@ checkSettings(QSettings& settings)
 {
   QStringList defaultKeys;
   defaultKeys << "Language"
+              << "MissingFileWarning"
               << "Reader/AdaptiveFont"
               << "Reader/Page"
               << "Reader/QCF"
@@ -74,6 +75,8 @@ checkSettings(QSettings& settings)
                       settings.value("Language", (int)QLocale::English));
     settings.setValue("Theme", settings.value("Theme", 0));
     settings.setValue("VOTD", settings.value("VOTD", true));
+    settings.setValue("MissingFileWarning",
+                      settings.value("MissingFileWarning", true));
 
     settings.beginGroup("Reader");
     // all keys now have "Reader" prefix

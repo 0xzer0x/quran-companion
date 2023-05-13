@@ -46,6 +46,9 @@ set(PROJECT_SOURCES
     src/core/bookmarksdialog.h
     src/core/bookmarksdialog.cpp
     src/core/bookmarksdialog.ui
+    src/core/tafsirdialog.h
+    src/core/tafsirdialog.cpp
+    src/core/tafsirdialog.ui
     src/widgets/quranpagebrowser.h
     src/widgets/quranpagebrowser.cpp
     src/widgets/clickablelabel.cpp

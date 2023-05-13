@@ -56,7 +56,6 @@ MainWindow::loadIcons()
   ui->btnPause->setIcon(QIcon(m_iconsPath + "pause.png"));
   ui->btnStop->setIcon(QIcon(m_iconsPath + "stop.png"));
   ui->actionCheck_for_updates->setIcon(QIcon(m_iconsPath + "update.png"));
-  ui->actionWebsite->setIcon(QIcon(m_iconsPath + "website.png"));
 }
 
 /*!
@@ -748,6 +747,9 @@ void
 MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 {
   updateTrayTooltip();
+  if (!m_settingsPtr->value("MissingFileWarning").toBool())
+    return;
+
   QMessageBox::StandardButton btn =
     QMessageBox::question(this,
                           tr("Recitation not found"),
@@ -1003,9 +1005,8 @@ MainWindow::actionAboutTriggered()
     tr("</h2><p><a href='https://github.com/0xzer0x/quran-companion'>Quran "
        "Companion</a> is a free cross-platform Quran reader & "
        "player</p><p>Licensed "
-       "under the <a href='https://www.gnu.org/licenses/gpl-3.0.html'>GNU "
-       "General "
-       "Public License v3.0</a></p>");
+       "under the <a href='https://www.gnu.org/licenses/lgpl-3.0.html'>GNU "
+       "Lesser General Public License</a></p>");
 
   QMessageBox::about(this, tr("About Quran Companion"), about);
 }
@@ -1255,14 +1256,15 @@ MainWindow::updateTrayTooltip()
 void
 MainWindow::showExpandedVerseTafsir()
 {
-  ClickableLabel* showLb = qobject_cast<ClickableLabel*>(sender());
+  QStringList data = sender()->parent()->objectName().split('_');
+  if (m_tafsirDlg == nullptr) {
+    m_tafsirDlg = new TafsirDialog(this, m_dbMgr, m_settingsPtr);
+  }
 
-  if (showLb->text() == tr("Expand...")) {
-    QStringList data = sender()->parent()->objectName().split('_');
-    QString text = m_dbMgr->getTafsir(data.at(0).toInt(), data.at(1).toInt());
-    showLb->setText(text);
-  } else
-    showLb->setText(tr("Expand..."));
+  m_tafsirDlg->setShownVerse(
+    Verse{ m_currVerse.page, data.at(0).toInt(), data.at(1).toInt() });
+  m_tafsirDlg->loadVerseTafsir();
+  m_tafsirDlg->show();
 }
 
 /* ------------------------ Helper functions ------------------------ */

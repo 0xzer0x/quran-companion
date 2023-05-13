@@ -121,7 +121,7 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
   if (manualSz)
     fontSize = pageNo < 3 ? m_fontSize + 5 : m_fontSize;
   else {
-    fontSize = m_fontSize = bestFitFontSize(lines);
+    m_fontSize = fontSize = bestFitFontSize(lines);
     m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
                             fontSize);
   }
@@ -151,8 +151,11 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
     measureLine = lines.at(lines.size() - 2);
   }
 
-  m_pageWidth =
-    fm.size(Qt::TextSingleLine, measureLine.remove(':')).width() + 5;
+  m_pageLineSize =
+    fm.size(Qt::TextSingleLine, measureLine.remove(':')) + QSize(0, 5);
+  this->parentWidget()->setMinimumWidth(m_pageLineSize.width() + 50);
+  this->setMinimumWidth(m_pageLineSize.width() + 50);
+
   foreach (QString l, lines) {
     l = l.trimmed();
     if (l.isEmpty())
@@ -178,7 +181,8 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
 
       // insert the surah image in the document
       cur.insertBlock(pageFormat, pageTextFormat);
-      cur.insertImage(frm.scaledToWidth(m_pageWidth, Qt::SmoothTransformation));
+      cur.insertImage(
+        frm.scaledToWidth(m_pageLineSize.width(), Qt::SmoothTransformation));
 
     } else if (l.contains("bsml")) {
       QImage bsml(":/images/basmalah.png");
@@ -187,7 +191,7 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
 
       cur.insertBlock(pageFormat, pageTextFormat);
       cur.insertImage(
-        bsml.scaledToWidth(m_pageWidth, Qt::SmoothTransformation));
+        bsml.scaledToWidth(m_pageLineSize.width(), Qt::SmoothTransformation));
 
     } else {
       cur.insertBlock(pageFormat, pageTextFormat);
@@ -289,13 +293,13 @@ int
 QuranPageBrowser::bestFitFontSize(QStringList& lines)
 {
   int sz;
-  int margin = m_qcfVer == 1 ? 100 : 70;
+  int margin = m_qcfVer == 1 ? 50 : 25;
   for (sz = 28; sz >= 12; sz--) {
     QFont pf(m_pageFont, sz);
     QFontMetrics fm(pf);
 
-    QSize textSz = fm.size(0, lines.join('\n'));
-    if (textSz.height() + margin <= viewport()->height()) {
+    QSize textSz = fm.size(0, lines.join('\n')) + m_pageLineSize;
+    if (textSz.height() + margin <= parentWidget()->height()) {
       break;
     }
   }
@@ -372,16 +376,6 @@ QuranPageBrowser::actionCopy()
   }
 
   emit copyVerse(idxInPage);
-}
-
-void
-QuranPageBrowser::actionAddToFav()
-{
-}
-
-void
-QuranPageBrowser::actionRemoveFromFav()
-{
 }
 
 void
