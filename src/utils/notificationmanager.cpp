@@ -64,13 +64,12 @@ NotificationManager::checkDailyVerse()
                               QString::number(m_votd.first.number))
                         .toLatin1());
     } else {
+      m_votdShown = true;
       QList<QByteArray> data = timestamp.readLine(15).split(':');
-
       m_votd.first =
         Verse{ data.at(0).toInt(), data.at(1).toInt(), data.at(2).toInt() };
       m_votd.second =
         m_dbMgr->getVerseText(m_votd.first.surah, m_votd.first.number);
-
       setVotdMsg();
     }
     timestamp.close();
