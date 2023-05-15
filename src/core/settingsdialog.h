@@ -40,7 +40,6 @@ public slots:
   void updateLang(QLocale::Language lang);
   void updateDailyVerse(bool on);
   void updateFileWarning(bool on);
-  void updateSideContent(int idx);
   void updateTafsir(int idx);
   void updateTranslation(int idx);
   void updateQuranFont(int qcfV);
@@ -56,7 +55,6 @@ signals:
   void highlightColorChanged();
   void redrawSideContent();
   void redrawQuranPage(bool manual);
-  void sideContentTypeChanged();
   void tafsirChanged();
   void translationChanged();
   void sideFontChanged();
@@ -75,7 +73,6 @@ private:
   int m_qcfVer;
   int m_quranFontSize;
   int m_audioOutIdx;
-  int m_sideContent;
   int m_tafsir;
   int m_trans;
   bool m_votd = true;

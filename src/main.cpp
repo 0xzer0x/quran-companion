@@ -59,7 +59,6 @@ checkSettings(QSettings& settings)
               << "Reader/QCF"
               << "Reader/QCF1Size"
               << "Reader/QCF2Size"
-              << "Reader/SideContent"
               << "Reader/SideContentFont"
               << "Reader/Surah"
               << "Reader/Tafsir"
@@ -87,6 +86,8 @@ checkSettings(QSettings& settings)
     settings.setValue("QCF1Size", settings.value("QCF1Size", 22));
     settings.setValue("QCF2Size", settings.value("QCF2Size", 20));
     settings.setValue("QCF", settings.value("QCF", 1));
+    settings.setValue("Tafsir", settings.value("Tafsir", 2));
+    settings.setValue("Translation", settings.value("Translation", 5));
     settings.setValue(
       "SideContentFont",
       settings.value("SideContentFont", QFont("Droid Sans Arabic", 14)));

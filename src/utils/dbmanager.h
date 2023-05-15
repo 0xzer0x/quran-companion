@@ -32,21 +32,21 @@ public:
   };
   enum Tafsir
   {
-    muyassar,
     baghawy,
-    e3rab,
-    indonesian,
-    katheer,
     qortoby,
-    russian,
     sa3dy,
     tabary,
-    tafheem,
+    waseet,
+    e3rab,
     tanweer,
-    waseet
+    katheer,
+    indonesian,
+    russian,
+    tafheem
   };
   enum Translation
   {
+    muyassar,
     ar_ma3any,
     bn_bengali,
     bs_korkut,

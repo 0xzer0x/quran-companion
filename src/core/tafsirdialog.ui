@@ -52,6 +52,9 @@
      <property name="readOnly">
       <bool>true</bool>
      </property>
+     <property name="cursorWidth">
+      <number>0</number>
+     </property>
      <property name="textInteractionFlags">
       <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
      </property>
@@ -76,7 +79,12 @@
        <property name="font">
         <font>
          <family>Noto Sans Symbols 2</family>
+         <pointsize>12</pointsize>
+         <underline>false</underline>
         </font>
+       </property>
+       <property name="toolTip">
+        <string>next</string>
        </property>
        <property name="text">
         <string>🡸</string>
@@ -100,7 +108,15 @@
        <property name="font">
         <font>
          <family>Noto Sans Symbols 2</family>
+         <pointsize>12</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+         <underline>false</underline>
+         <kerning>true</kerning>
         </font>
+       </property>
+       <property name="toolTip">
+        <string>previous</string>
        </property>
        <property name="text">
         <string>🡺</string>

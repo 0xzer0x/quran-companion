@@ -65,6 +65,9 @@
          <pointsize>12</pointsize>
         </font>
        </property>
+       <property name="toolTip">
+        <string>next</string>
+       </property>
        <property name="text">
         <string>🡸</string>
        </property>
@@ -86,6 +89,9 @@
          <family>Noto Sans Symbols 2</family>
          <pointsize>12</pointsize>
         </font>
+       </property>
+       <property name="toolTip">
+        <string>previous</string>
        </property>
        <property name="text">
         <string>🡺</string>

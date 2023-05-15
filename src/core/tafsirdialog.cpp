@@ -13,9 +13,13 @@ TafsirDialog::TafsirDialog(QWidget* parent,
   ui->setupUi(this);
   setTafsirAsTitle();
   setLayoutDirection(Qt::LeftToRight);
-
-  m_fontPrefix =
-    m_settings->value("Reader/QCF").toInt() == 1 ? "QCF_P" : "QCF2";
+  if (m_settings->value("Reader/QCF").toInt() == 1) {
+    m_fontPrefix = "QCF_P";
+    m_fontSZ = 18;
+  } else {
+    m_fontPrefix = "QCF2";
+    m_fontSZ = 16;
+  }
 
   connect(
     ui->btnNext, &QPushButton::clicked, this, &TafsirDialog::btnNextClicked);
@@ -119,7 +123,7 @@ TafsirDialog::loadVerseTafsir()
 
   ui->lbVerseInfo->setText(title);
   ui->lbVerseText->setWordWrap(true);
-  ui->lbVerseText->setFont(QFont(fontFamily, 16));
+  ui->lbVerseText->setFont(QFont(fontFamily, m_fontSZ));
   ui->lbVerseText->setText(glyphs);
 
   QFont sideFont =

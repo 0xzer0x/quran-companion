@@ -30,7 +30,6 @@ SettingsDialog::SettingsDialog(QWidget* parent,
   ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
   ui->fntCmbSide->setCurrentFont(m_sideFont);
   ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
-  ui->cmbSideContent->setCurrentIndex(m_sideContent);
   ui->cmbTafsir->setCurrentIndex(m_tafsir);
   ui->cmbTranslation->setCurrentIndex(m_trans);
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
@@ -100,19 +99,6 @@ SettingsDialog::updateFileWarning(bool on)
 }
 
 /*!
- * \brief SettingsDialog::updateSideContent slot to update the side content type
- * in the settings file \param idx
- */
-void
-SettingsDialog::updateSideContent(int idx)
-{
-  m_settingsPtr->setValue("Reader/SideContent", idx);
-  emit sideContentTypeChanged();
-
-  m_renderSideContent = true;
-}
-
-/*!
  * \brief SettingsDialog::updateTafsir slot to update the tafsir chosen in the
  * settings file
  * \param idx
@@ -122,9 +108,6 @@ SettingsDialog::updateTafsir(int idx)
 {
   m_settingsPtr->setValue("Reader/Tafsir", idx);
   emit tafsirChanged();
-
-  if (m_sideContent == 0)
-    m_renderSideContent = true;
 }
 
 /*!
@@ -137,8 +120,7 @@ SettingsDialog::updateTranslation(int idx)
   m_settingsPtr->setValue("Reader/Translation", idx);
   emit translationChanged();
 
-  if (m_sideContent == 1)
-    m_renderSideContent = true;
+  m_renderSideContent = true;
 }
 
 void
@@ -226,9 +208,6 @@ SettingsDialog::applyAllChanges()
   if (ui->chkMissingWarning->isChecked() != m_missingFileWarning)
     updateFileWarning(ui->chkMissingWarning->isChecked());
 
-  if (ui->cmbSideContent->currentIndex() != m_sideContent)
-    updateSideContent(ui->cmbSideContent->currentIndex());
-
   if (ui->cmbTafsir->currentIndex() != m_tafsir)
     updateTafsir(ui->cmbTafsir->currentIndex());
 
@@ -284,7 +263,6 @@ SettingsDialog::showWindow()
   ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
   ui->fntCmbSide->setCurrentFont(m_sideFont);
   ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
-  ui->cmbSideContent->setCurrentIndex(m_sideContent);
   ui->cmbTafsir->setCurrentIndex(m_tafsir);
   ui->cmbTranslation->setCurrentIndex(m_trans);
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
@@ -319,7 +297,6 @@ SettingsDialog::setCurrentSettingsAsRef()
   m_quranFontSize =
     m_settingsPtr->value("QCF" + QString::number(m_qcfVer) + "Size").toInt();
   m_sideFont = qvariant_cast<QFont>(m_settingsPtr->value("SideContentFont"));
-  m_sideContent = m_settingsPtr->value("SideContent").toInt();
   m_tafsir = m_settingsPtr->value("Tafsir").toInt();
   m_trans = m_settingsPtr->value("Translation").toInt();
   m_settingsPtr->endGroup();

@@ -264,6 +264,7 @@ QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
   QMenu lmbMenu(this);
   lmbMenu.addAction(m_playAct);
   lmbMenu.addAction(m_selectAct);
+  lmbMenu.addAction(m_tafsirAct);
   lmbMenu.addSeparator();
   lmbMenu.addAction(m_copyAct);
   if (favoriteVerse) {
@@ -279,12 +280,14 @@ QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
     actionIdx = 0;
   else if (chosen == m_selectAct)
     actionIdx = 1;
-  else if (chosen == m_copyAct)
+  else if (chosen == m_tafsirAct)
     actionIdx = 2;
-  else if (chosen == m_actAddBookmark)
+  else if (chosen == m_copyAct)
     actionIdx = 3;
-  else if (chosen == m_actRemBookmark)
+  else if (chosen == m_actAddBookmark)
     actionIdx = 4;
+  else if (chosen == m_actRemBookmark)
+    actionIdx = 5;
 
   return actionIdx;
 }
@@ -315,12 +318,14 @@ QuranPageBrowser::createActions()
   m_copyAct = new QAction(tr("Copy Verse"), this);
   m_selectAct = new QAction(tr("Select"), this);
   m_playAct = new QAction(tr("Play"), this);
+  m_tafsirAct = new QAction(tr("Tafsir"), this);
   m_actAddBookmark = new QAction(tr("Add Bookmark"), this);
   m_actRemBookmark = new QAction(tr("Remove Bookmark"), this);
   m_zoomIn->setIcon(QIcon(m_iconsPath + "zoom-in.png"));
   m_zoomOut->setIcon(QIcon(m_iconsPath + "zoom-out.png"));
   m_playAct->setIcon(QIcon(m_iconsPath + "play.png"));
   m_selectAct->setIcon(QIcon(m_iconsPath + "select.png"));
+  m_tafsirAct->setIcon(QIcon(m_iconsPath + "tafsir.png"));
   m_copyAct->setIcon(QIcon(m_iconsPath + "copy.png"));
   m_actAddBookmark->setIcon(QIcon(m_iconsPath + "bookmark-false.png"));
   m_actRemBookmark->setIcon(QIcon(m_iconsPath + "bookmark-true.png"));

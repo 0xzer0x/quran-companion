@@ -30,7 +30,7 @@ private slots:
 
 private:
   void setTafsirAsTitle();
-  int m_qcfVer;
+  int m_fontSZ;
   QString m_fontPrefix;
   Ui::TafsirDialog* ui;
   QSettings* m_settings;
@@ -40,10 +40,7 @@ private:
   // QWidget interface
 protected:
   void closeEvent(QCloseEvent* event);
-
-    // QWidget interface
-protected:
-    void showEvent(QShowEvent *event);
+  void showEvent(QShowEvent* event);
 };
 
 #endif // TAFSIRDIALOG_H

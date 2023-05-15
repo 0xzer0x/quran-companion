@@ -59,32 +59,12 @@ DBManager::setCurrentTafsir(Tafsir tafsirName)
   m_currTafsir = tafsirName;
 
   switch (m_currTafsir) {
-    case Tafsir::muyassar:
-      m_tafsirDbFilename = "muyassar.db";
-      break;
-
     case Tafsir::baghawy:
       m_tafsirDbFilename = "baghawy.db";
       break;
 
-    case Tafsir::e3rab:
-      m_tafsirDbFilename = "e3rab.db";
-      break;
-
-    case Tafsir::indonesian:
-      m_tafsirDbFilename = "indonesian.db";
-      break;
-
-    case Tafsir::katheer:
-      m_tafsirDbFilename = "katheer.db";
-      break;
-
     case Tafsir::qortoby:
       m_tafsirDbFilename = "qortoby.db";
-      break;
-
-    case Tafsir::russian:
-      m_tafsirDbFilename = "russian.db";
       break;
 
     case Tafsir::sa3dy:
@@ -95,20 +75,36 @@ DBManager::setCurrentTafsir(Tafsir tafsirName)
       m_tafsirDbFilename = "tabary.db";
       break;
 
-    case Tafsir::tafheem:
-      m_tafsirDbFilename = "tafheem.db";
+    case Tafsir::waseet:
+      m_tafsirDbFilename = "waseet.db";
+      break;
+
+    case Tafsir::e3rab:
+      m_tafsirDbFilename = "e3rab.db";
       break;
 
     case Tafsir::tanweer:
       m_tafsirDbFilename = "tanweer.db";
       break;
 
-    case Tafsir::waseet:
-      m_tafsirDbFilename = "waseet.db";
+    case Tafsir::katheer:
+      m_tafsirDbFilename = "katheer.db";
+      break;
+
+    case Tafsir::indonesian:
+      m_tafsirDbFilename = "indonesian.db";
+      break;
+
+    case Tafsir::russian:
+      m_tafsirDbFilename = "russian.db";
+      break;
+
+    case Tafsir::tafheem:
+      m_tafsirDbFilename = "tafheem.db";
       break;
 
     default:
-      m_tafsirDbFilename = "muyassar.db";
+      m_tafsirDbFilename = "sa3dy.db";
       break;
   }
 
@@ -123,6 +119,9 @@ DBManager::setCurrentTranslation(Translation translationName)
   m_currTrans = translationName;
 
   switch (m_currTrans) {
+    case muyassar:
+      m_transDbFilename = "muyassar.db";
+      break;
     case ar_ma3any:
       m_transDbFilename = "ar_ma3any.db";
       break;

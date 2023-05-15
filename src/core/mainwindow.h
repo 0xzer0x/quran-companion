@@ -44,15 +44,10 @@ public:
   MainWindow(QWidget* parent = nullptr, QSettings* settingsPtr = nullptr);
   void setupConnections();
   void highlightCurrentVerse();
-  enum SideContent
-  {
-    tafsir,
-    translation
-  };
   ~MainWindow();
 
 public slots:
-  void showVOTDmessage(Verse v, QString msg);
+  void showVOTDmessage(QPair<Verse, QString> votd);
   void checkForUpdates();
   void updateProcessCallback();
   void saveReaderState();
@@ -81,11 +76,15 @@ private slots:
   void actionPrefTriggered();
   void actionDMTriggered();
   void actionBookmarksTriggered();
+  void actionTafsirTriggered();
+  void actionVotdTriggered();
   void openSearchDialog();
+  void actionAboutTriggered();
+  void on_actionAbout_Qt_triggered();
 
   void verseClicked();
   void surahClicked(QModelIndex& index);
-  void showExpandedVerseTafsir();
+  void showExpandedVerseTafsir(Verse v);
   void navigateToVerse(Verse v);
   void verseAnchorClicked(const QUrl& hrefUrl);
   void copyVerseText(int IdxInPage);
@@ -94,18 +93,13 @@ private slots:
   void addSideContent();
   void updateTrayTooltip();
 
-  void updateSideContentType();
   void updateLoadedTafsir();
   void updateLoadedTranslation();
   void updateSideFont();
 
-  void on_lineEditSearchSurah_textChanged(const QString& arg1);
-  void on_listViewSurahs_clicked(const QModelIndex& index);
+  void searchSurahTextChanged(const QString& arg1);
+  void listSurahNameClicked(const QModelIndex& index);
   void volumeSliderValueChanged(int position);
-
-  void actionAboutTriggered();
-
-  void on_actionAbout_Qt_triggered();
 
 private:
   void loadIcons();
@@ -142,7 +136,6 @@ private:
   HighlightFrame* m_highlightedFrm = nullptr;
   QSettings* m_settingsPtr;
   Verse m_currVerse{ 1, 1, 1 };
-  SideContent m_sideContent;
   QDir m_assetsDir = QDir::currentPath() + QDir::separator() + "assets";
   QFont m_sideFont;
   QList<Verse> m_vInfoList;
