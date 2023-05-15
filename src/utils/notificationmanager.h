@@ -26,6 +26,8 @@ public:
   void checkDailyVerse();
   void showVerseOfTheDay();
 
+  QPair<Verse, QString> votd();
+
 signals:
   void exit(int ret = 0);
   void togglePlayback();
@@ -34,14 +36,17 @@ signals:
   void hideWindow();
   void openPrefs();
   void openAbout();
-  void showVOTDmessagebox(Verse v, QString msg);
+  void showVOTDmessagebox(QPair<Verse, QString> votd);
 
 private:
   void addActions();
+  void setVotdMsg();
+  bool m_votdShown = false;
   QDateTime m_dtNow;
   DBManager* m_dbMgr;
   QMenu* m_trayMenu;
   QSystemTrayIcon* m_sysTray;
+  QPair<Verse, QString> m_votd;
 };
 
 #endif // NOTIFICATIONMANAGER_H

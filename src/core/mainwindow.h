@@ -47,7 +47,7 @@ public:
   ~MainWindow();
 
 public slots:
-  void showVOTDmessage(Verse v, QString msg);
+  void showVOTDmessage(QPair<Verse, QString> votd);
   void checkForUpdates();
   void updateProcessCallback();
   void saveReaderState();
@@ -77,7 +77,10 @@ private slots:
   void actionDMTriggered();
   void actionBookmarksTriggered();
   void actionTafsirTriggered();
+  void actionVotdTriggered();
   void openSearchDialog();
+  void actionAboutTriggered();
+  void on_actionAbout_Qt_triggered();
 
   void verseClicked();
   void surahClicked(QModelIndex& index);
@@ -97,10 +100,6 @@ private slots:
   void searchSurahTextChanged(const QString& arg1);
   void listSurahNameClicked(const QModelIndex& index);
   void volumeSliderValueChanged(int position);
-
-  void actionAboutTriggered();
-
-  void on_actionAbout_Qt_triggered();
 
 private:
   void loadIcons();

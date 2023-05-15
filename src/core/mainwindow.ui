@@ -94,6 +94,9 @@
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="toolTip">
+          <string>next</string>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -231,6 +234,9 @@ border-style:solid;
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="toolTip">
+          <string>previous</string>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -262,6 +268,7 @@ border-style:solid;
     </property>
     <addaction name="actionFind"/>
     <addaction name="actionTafsir"/>
+    <addaction name="actionVerse_of_the_day"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -781,6 +788,11 @@ QListView::item:hover {
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionVerse_of_the_day">
+   <property name="text">
+    <string>Verse of the day</string>
    </property>
   </action>
  </widget>

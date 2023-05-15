@@ -38,9 +38,14 @@ NotificationManager::checkDailyVerse()
       qWarning() << "Couldn't open timestamp file for daily notification check";
       return;
     }
-    timestamp.write(m_dtNow.toString(Qt::DateFormat::ISODate).toLatin1());
-    timestamp.close();
     showVerseOfTheDay();
+    timestamp.write(m_dtNow.toString(Qt::DateFormat::ISODate).toLatin1());
+    timestamp.write("\n");
+    timestamp.write(QString(QString::number(m_votd.first.page) + ":" +
+                            QString::number(m_votd.first.surah) + ":" +
+                            QString::number(m_votd.first.number))
+                      .toLatin1());
+    timestamp.close();
 
   } else {
     if (!timestamp.open(QIODevice::ReadWrite)) {
@@ -48,11 +53,25 @@ NotificationManager::checkDailyVerse()
       return;
     }
     lastTimestamp =
-      QDateTime::fromString(timestamp.readAll(), Qt::DateFormat::ISODate);
+      QDateTime::fromString(timestamp.readLine(), Qt::DateFormat::ISODate);
     if (lastTimestamp.daysTo(m_dtNow) > 0) {
       showVerseOfTheDay();
       timestamp.seek(0);
       timestamp.write(m_dtNow.toString(Qt::ISODate).toLatin1());
+      timestamp.write("\n");
+      timestamp.write(QString(QString::number(m_votd.first.page) + ":" +
+                              QString::number(m_votd.first.surah) + ":" +
+                              QString::number(m_votd.first.number))
+                        .toLatin1());
+    } else {
+      QList<QByteArray> data = timestamp.readLine(15).split(':');
+
+      m_votd.first =
+        Verse{ data.at(0).toInt(), data.at(1).toInt(), data.at(2).toInt() };
+      m_votd.second =
+        m_dbMgr->getVerseText(m_votd.first.surah, m_votd.first.number);
+
+      setVotdMsg();
     }
     timestamp.close();
   }
@@ -60,18 +79,11 @@ NotificationManager::checkDailyVerse()
 void
 NotificationManager::showVerseOfTheDay()
 {
-  QString msg;
-  QPair<Verse, QString> votd = m_dbMgr->randomVerse();
+  m_votd = m_dbMgr->randomVerse();
+  setVotdMsg();
 
-  votd.second.truncate(votd.second.size() - 2);
-  msg.append("«" + votd.second + "»");
-  msg.append("<br>");
-  msg.append(m_dbMgr->getTranslation(votd.first.surah, votd.first.number));
-  msg.append("<br>");
-  msg.append(tr("Surah: ") + m_dbMgr->getSurahName(votd.first.surah) + " - " +
-             tr("Verse: ") + QString::number(votd.first.number));
-
-  emit showVOTDmessagebox(votd.first, msg);
+  emit showVOTDmessagebox(m_votd);
+  m_votdShown = true;
 }
 
 void
@@ -131,4 +143,29 @@ NotificationManager::addActions()
           this,
           &NotificationManager::checkForUpdates,
           Qt::UniqueConnection);
+}
+
+void
+NotificationManager::setVotdMsg()
+{
+  QString msg;
+
+  m_votd.second.truncate(m_votd.second.size() - 2);
+  msg.append("«" + m_votd.second + "»");
+  msg.append("<br>");
+  msg.append(m_dbMgr->getTranslation(m_votd.first.surah, m_votd.first.number));
+  msg.append("<br>");
+  msg.append(tr("Surah: ") + m_dbMgr->getSurahName(m_votd.first.surah) + " - " +
+             tr("Verse: ") + QString::number(m_votd.first.number));
+
+  m_votd.second = msg;
+}
+
+QPair<Verse, QString>
+NotificationManager::votd()
+{
+  if (!m_votdShown)
+    checkDailyVerse();
+
+  return m_votd;
 }

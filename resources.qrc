@@ -13,6 +13,7 @@
         <file>images/dark/select.png</file>
         <file>images/dark/stop.png</file>
         <file>images/dark/tafsir.png</file>
+        <file>images/dark/today.png</file>
         <file>images/dark/update.png</file>
         <file>images/dark/website.png</file>
         <file>images/dark/zoom-in.png</file>
@@ -29,6 +30,7 @@
         <file>images/light/select.png</file>
         <file>images/light/stop.png</file>
         <file>images/light/tafsir.png</file>
+        <file>images/light/today.png</file>
         <file>images/light/update.png</file>
         <file>images/light/website.png</file>
         <file>images/light/zoom-in.png</file>

@@ -51,6 +51,7 @@ MainWindow::loadIcons()
   ui->actionExit->setIcon(QIcon(m_iconsPath + "exit.png"));
   ui->actionFind->setIcon(QIcon(m_iconsPath + "search.png"));
   ui->actionTafsir->setIcon(QIcon(m_iconsPath + "tafsir.png"));
+  ui->actionVerse_of_the_day->setIcon(QIcon(m_iconsPath + "today.png"));
   ui->actionBookmarks->setIcon(QIcon(m_iconsPath + "bookmark-true.png"));
   ui->actionPereferences->setIcon(QIcon(m_iconsPath + "prefs.png"));
   ui->btnPlay->setIcon(QIcon(m_iconsPath + "play.png"));
@@ -174,6 +175,11 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::actionTafsirTriggered,
+          Qt::UniqueConnection);
+  connect(ui->actionVerse_of_the_day,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionVotdTriggered,
           Qt::UniqueConnection);
   connect(ui->actionCheck_for_updates,
           &QAction::triggered,
@@ -1013,6 +1019,12 @@ MainWindow::actionTafsirTriggered()
 }
 
 void
+MainWindow::actionVotdTriggered()
+{
+  showVOTDmessage(m_notifyMgr->votd());
+}
+
+void
 MainWindow::actionAboutTriggered()
 {
   QString about =
@@ -1262,23 +1274,23 @@ MainWindow::copyVerseText(int IdxInPage)
 }
 
 void
-MainWindow::showVOTDmessage(Verse v, QString msg)
+MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
 {
   QPointer<QDialog> mbox = new QDialog(this);
   mbox->setLayout(new QVBoxLayout);
   mbox->setWindowIcon(QIcon(":/images/tray.png"));
   mbox->setWindowTitle(tr("Verse Of The Day"));
   ClickableLabel* lb = new ClickableLabel(mbox);
-  lb->setText(msg);
+  lb->setText(votd.second);
   lb->setTextFormat(Qt::RichText);
   lb->setAlignment(Qt::AlignCenter);
   lb->setFont(QFont("Amiri", 15));
-  if (msg.length() > 200)
+  if (votd.second.length() > 200)
     lb->setWordWrap(true);
 
-  connect(lb, &ClickableLabel::clicked, this, [v, this, mbox]() {
+  connect(lb, &ClickableLabel::clicked, this, [votd, this, mbox]() {
     mbox->close();
-    navigateToVerse(v);
+    navigateToVerse(votd.first);
   });
 
   mbox->layout()->addWidget(lb);
