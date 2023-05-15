@@ -66,6 +66,7 @@ private:
   QAction* m_copyAct;
   QAction* m_selectAct;
   QAction* m_playAct;
+  QAction* m_tafsirAct;
   QAction* m_actAddBookmark;
   QAction* m_actRemBookmark;
   QTextCursor* m_highlighter;

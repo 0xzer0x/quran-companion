@@ -50,6 +50,7 @@ MainWindow::loadIcons()
     QIcon(m_iconsPath + "download-manager.png"));
   ui->actionExit->setIcon(QIcon(m_iconsPath + "exit.png"));
   ui->actionFind->setIcon(QIcon(m_iconsPath + "search.png"));
+  ui->actionTafsir->setIcon(QIcon(m_iconsPath + "tafsir.png"));
   ui->actionBookmarks->setIcon(QIcon(m_iconsPath + "bookmark-true.png"));
   ui->actionPereferences->setIcon(QIcon(m_iconsPath + "prefs.png"));
   ui->btnPlay->setIcon(QIcon(m_iconsPath + "play.png"));
@@ -65,7 +66,7 @@ MainWindow::loadIcons()
 void
 MainWindow::init()
 {
-  if (m_settingsPtr->value("Language").toInt() == 14) {
+  if (m_settingsPtr->value("Language").toInt() == QLocale::Arabic) {
     ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
   }
 
@@ -73,12 +74,6 @@ MainWindow::init()
   m_currVerse = { m_settingsPtr->value("Page").toInt(),
                   m_settingsPtr->value("Surah").toInt(),
                   m_settingsPtr->value("Verse").toInt() };
-
-  if (m_settingsPtr->value("SideContent").isNull()) {
-    m_settingsPtr->setValue("SideContent", (int)SideContent::translation);
-    m_settingsPtr->setValue("Tafsir", (int)DBManager::muyassar);
-    m_settingsPtr->setValue("Translation", (int)DBManager::en_khattab);
-  }
   m_settingsPtr->endGroup();
 
   // initalization
@@ -95,7 +90,6 @@ MainWindow::init()
   ui->frmPageContent->layout()->addWidget(m_quranBrowser);
   m_notifyMgr = new NotificationManager(this, m_dbMgr);
 
-  updateSideContentType();
   updateLoadedTafsir();
   updateLoadedTranslation();
   updateSideFont();
@@ -176,6 +170,11 @@ MainWindow::setupConnections()
           this,
           &MainWindow::openSearchDialog,
           Qt::UniqueConnection);
+  connect(ui->actionTafsir,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionTafsirTriggered,
+          Qt::UniqueConnection);
   connect(ui->actionCheck_for_updates,
           &QAction::triggered,
           this,
@@ -242,6 +241,18 @@ MainWindow::setupConnections()
           &VersePlayer::missingVerseFile,
           this,
           &MainWindow::missingRecitationFileWarn,
+          Qt::UniqueConnection);
+
+  // ########## navigation dock ########## //
+  connect(ui->lineEditSearchSurah,
+          &QLineEdit::textChanged,
+          this,
+          &MainWindow::searchSurahTextChanged,
+          Qt::UniqueConnection);
+  connect(ui->listViewSurahs,
+          &QListView::clicked,
+          this,
+          &MainWindow::listSurahNameClicked,
           Qt::UniqueConnection);
 
   // ########## audio slider ########## //
@@ -566,7 +577,7 @@ MainWindow::gotoSurah(int surahIdx)
 }
 
 void
-MainWindow::on_lineEditSearchSurah_textChanged(const QString& arg1)
+MainWindow::searchSurahTextChanged(const QString& arg1)
 {
   if (arg1.isEmpty()) {
     m_surahListModel.setStringList(m_surahList);
@@ -585,7 +596,7 @@ MainWindow::on_lineEditSearchSurah_textChanged(const QString& arg1)
 }
 
 void
-MainWindow::on_listViewSurahs_clicked(const QModelIndex& index)
+MainWindow::listSurahNameClicked(const QModelIndex& index)
 {
   int s = 0;
   for (int i = 0; i < 114; i++) {
@@ -844,15 +855,18 @@ MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
 
   int chosenAction = m_quranBrowser->lmbVerseMenu(m_dbMgr->isBookmarked(v));
   // remove from / add to favorites
-  if (chosenAction == 4) {
+  if (chosenAction == 5) {
     m_dbMgr->removeBookmark(v);
-  } else if (chosenAction == 3) {
+  } else if (chosenAction == 4) {
     m_dbMgr->addBookmark(v);
   }
   // copy
-  else if (chosenAction == 2) {
+  else if (chosenAction == 3) {
     copyVerseText(idx.toInt());
   }
+  // open tafsir
+  else if (chosenAction == 2)
+    showExpandedVerseTafsir(v);
   // select or play
   else if (chosenAction == 0 || chosenAction == 1) {
     m_currVerse.number = v.number;
@@ -928,11 +942,6 @@ MainWindow::actionPrefTriggered()
             &MainWindow::addSideContent,
             Qt::UniqueConnection);
     connect(m_settingsDlg,
-            &SettingsDialog::sideContentTypeChanged,
-            this,
-            &MainWindow::updateSideContentType,
-            Qt::UniqueConnection);
-    connect(m_settingsDlg,
             &SettingsDialog::tafsirChanged,
             this,
             &MainWindow::updateLoadedTafsir,
@@ -995,6 +1004,12 @@ MainWindow::actionBookmarksTriggered()
   }
 
   m_bookmarksDlg->showWindow();
+}
+
+void
+MainWindow::actionTafsirTriggered()
+{
+  showExpandedVerseTafsir(m_currVerse);
 }
 
 void
@@ -1065,25 +1080,14 @@ MainWindow::navigateToVerse(Verse v)
 /* ------------------------ Settings update methods ------------------------ */
 
 /*!
- * \brief MainWindow::updateSideContentType set side content type to the one in
- * the settings
- */
-void
-MainWindow::updateSideContentType()
-{
-  m_sideContent = static_cast<SideContent>(
-    m_settingsPtr->value("Reader/SideContent").toInt());
-}
-
-/*!
  * \brief MainWindow::updateLoadedTafsir set tafsir to the one in the settings,
  * update the selected db
  */
 void
 MainWindow::updateLoadedTafsir()
 {
-  DBManager::Tafsir currTafsir = static_cast<DBManager::Tafsir>(
-    m_settingsPtr->value("Reader/Tafsir").toInt());
+  DBManager::Tafsir currTafsir =
+    qvariant_cast<DBManager::Tafsir>(m_settingsPtr->value("Reader/Tafsir"));
 
   m_dbMgr->setCurrentTafsir(currTafsir);
 }
@@ -1095,8 +1099,8 @@ MainWindow::updateLoadedTafsir()
 void
 MainWindow::updateLoadedTranslation()
 {
-  DBManager::Translation currTrans = static_cast<DBManager::Translation>(
-    m_settingsPtr->value("Reader/Translation").toInt());
+  DBManager::Translation currTrans = qvariant_cast<DBManager::Translation>(
+    m_settingsPtr->value("Reader/Translation"));
 
   m_dbMgr->setCurrentTranslation(currTrans);
 }
@@ -1168,10 +1172,6 @@ MainWindow::addSideContent()
     m_highlightedFrm = nullptr;
   }
 
-  bool showTafsir = m_sideContent == SideContent::tafsir;
-  bool showFullTafsir = m_settingsPtr->value("Reader/Tafsir").toInt() ==
-                        DBManager::Tafsir::muyassar;
-
   ClickableLabel* verselb;
   ClickableLabel* contentLb;
   HighlightFrame* verseContFrame;
@@ -1192,23 +1192,9 @@ MainWindow::addSideContent()
     verselb->setAlignment(Qt::AlignCenter);
     verselb->setWordWrap(true);
 
-    if (showTafsir) {
-      QString txt = m_dbMgr->getTafsir(vInfo.surah, vInfo.number);
-      if (showFullTafsir)
-        currLbContent = txt;
-      else {
-        currLbContent = tr("Expand...");
-        connect(contentLb,
-                &ClickableLabel::clicked,
-                this,
-                &MainWindow::showExpandedVerseTafsir);
-      }
+    currLbContent = m_dbMgr->getTranslation(vInfo.surah, vInfo.number);
 
-    } else {
-      currLbContent = m_dbMgr->getTranslation(vInfo.surah, vInfo.number);
-    }
-
-    if (currLbContent == prevLbContent && (!showTafsir || showFullTafsir)) {
+    if (currLbContent == prevLbContent) {
       currLbContent = '-';
     } else {
       prevLbContent = currLbContent;
@@ -1254,15 +1240,13 @@ MainWindow::updateTrayTooltip()
  * \brief MainWindow::showExpandedVerseTafsir toggle a collapsed verse tafsir
  */
 void
-MainWindow::showExpandedVerseTafsir()
+MainWindow::showExpandedVerseTafsir(Verse v)
 {
-  QStringList data = sender()->parent()->objectName().split('_');
   if (m_tafsirDlg == nullptr) {
     m_tafsirDlg = new TafsirDialog(this, m_dbMgr, m_settingsPtr);
   }
 
-  m_tafsirDlg->setShownVerse(
-    Verse{ m_currVerse.page, data.at(0).toInt(), data.at(1).toInt() });
+  m_tafsirDlg->setShownVerse(v);
   m_tafsirDlg->loadVerseTafsir();
   m_tafsirDlg->show();
 }
