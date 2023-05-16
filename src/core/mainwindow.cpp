@@ -1185,7 +1185,7 @@ MainWindow::addSideContent()
   }
 
   ClickableLabel* verselb;
-  ClickableLabel* contentLb;
+  QLabel* contentLb;
   HighlightFrame* verseContFrame;
   QString prevLbContent, currLbContent;
   for (int i = m_vInfoList.size() - 1; i >= 0; i--) {
@@ -1193,7 +1193,7 @@ MainWindow::addSideContent()
 
     verseContFrame = new HighlightFrame(ui->scrlVerseCont);
     verselb = new ClickableLabel(verseContFrame);
-    contentLb = new ClickableLabel(verseContFrame);
+    contentLb = new QLabel(verseContFrame);
 
     verseContFrame->setObjectName(
       QString("%0_%1").arg(vInfo.surah).arg(vInfo.number));
@@ -1255,7 +1255,7 @@ void
 MainWindow::showExpandedVerseTafsir(Verse v)
 {
   if (m_tafsirDlg == nullptr) {
-    m_tafsirDlg = new TafsirDialog(this, m_dbMgr, m_settingsPtr);
+    m_tafsirDlg = new TafsirDialog(this, m_dbMgr, m_settingsPtr, m_iconsPath);
   }
 
   m_tafsirDlg->setShownVerse(v);

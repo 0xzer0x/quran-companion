@@ -57,6 +57,9 @@ void
 SettingsDialog::updateTheme(int themeIdx)
 {
   m_settingsPtr->setValue("Theme", themeIdx);
+  if (m_restartReq)
+    return;
+
   QMessageBox::StandardButton btn =
     QMessageBox::question(this,
                           tr("Restart required"),
@@ -76,6 +79,9 @@ void
 SettingsDialog::updateLang(QLocale::Language lang)
 {
   m_settingsPtr->setValue("Language", lang);
+  if (m_restartReq)
+    return;
+
   QMessageBox::StandardButton btn =
     QMessageBox::question(this,
                           tr("Restart required"),
@@ -127,6 +133,8 @@ void
 SettingsDialog::updateQuranFont(int qcfV)
 {
   m_settingsPtr->setValue("Reader/QCF", qcfV);
+  if (m_restartReq)
+    return;
 
   QMessageBox::StandardButton btn = QMessageBox::question(
     this,
