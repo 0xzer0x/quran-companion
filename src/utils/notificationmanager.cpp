@@ -150,7 +150,9 @@ NotificationManager::setVotdMsg()
   QString msg;
 
   m_votd.second.truncate(m_votd.second.size() - 2);
+  msg.append("<font color=#00afc3>");
   msg.append("«" + m_votd.second + "»");
+  msg.append("</font>");
   msg.append("<br>");
   msg.append(m_dbMgr->getTranslation(m_votd.first.surah, m_votd.first.number));
   msg.append("<br>");

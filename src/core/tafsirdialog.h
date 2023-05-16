@@ -17,7 +17,8 @@ class TafsirDialog : public QDialog
 public:
   explicit TafsirDialog(QWidget* parent = nullptr,
                         DBManager* dbPtr = nullptr,
-                        QSettings* settings = nullptr);
+                        QSettings* settings = nullptr,
+                        const QString& iconsPath = ":/images/light/");
   ~TafsirDialog();
 
   void loadVerseTafsir();

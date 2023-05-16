@@ -3,13 +3,15 @@
 
 TafsirDialog::TafsirDialog(QWidget* parent,
                            DBManager* dbPtr,
-                           QSettings* settings)
+                           QSettings* settings,
+                           const QString& iconsPath)
   : QDialog(parent)
   , ui(new Ui::TafsirDialog)
   , m_dbMgr{ dbPtr }
   , m_settings{ settings }
 {
 
+  setWindowIcon(QIcon(iconsPath + "tafsir.png"));
   ui->setupUi(this);
   setTafsirAsTitle();
   setLayoutDirection(Qt::LeftToRight);
