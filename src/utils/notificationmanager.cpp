@@ -1,8 +1,12 @@
 
 #include "notificationmanager.h"
 
-NotificationManager::NotificationManager(QObject *parent, DBManager *dbPtr)
-    : QObject{parent}, m_dbMgr{dbPtr}, m_dtNow{QDateTime::currentDateTime()}, m_sysTray{new QSystemTrayIcon(this)}, m_trayMenu{new QMenu()}
+NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)
+  : QObject{ parent }
+  , m_dbMgr{ dbPtr }
+  , m_dtNow{ QDateTime::currentDateTime() }
+  , m_sysTray{ new QSystemTrayIcon(this) }
+  , m_trayMenu{ new QMenu() }
 {
 
   addActions();
@@ -11,25 +15,26 @@ NotificationManager::NotificationManager(QObject *parent, DBManager *dbPtr)
   m_sysTray->show();
 }
 
-void NotificationManager::notify(QString title, QString msg)
+void
+NotificationManager::notify(QString title, QString msg)
 {
   m_sysTray->showMessage(title, msg);
 }
 
-void NotificationManager::setTooltip(QString text)
+void
+NotificationManager::setTooltip(QString text)
 {
   m_sysTray->setToolTip(text);
 }
 
-void NotificationManager::checkDailyVerse()
+void
+NotificationManager::checkDailyVerse()
 {
 
   QDateTime lastTimestamp;
   QFile timestamp = QDir::currentPath() + QDir::separator() + "ts";
-  if (!timestamp.exists())
-  {
-    if (!timestamp.open(QIODevice::WriteOnly))
-    {
+  if (!timestamp.exists()) {
+    if (!timestamp.open(QIODevice::WriteOnly)) {
       qWarning() << "Couldn't open timestamp file for daily notification check";
       return;
     }
@@ -39,20 +44,16 @@ void NotificationManager::checkDailyVerse()
     timestamp.write(QString(QString::number(m_votd.first.page) + ":" +
                             QString::number(m_votd.first.surah) + ":" +
                             QString::number(m_votd.first.number))
-                        .toLatin1());
+                      .toLatin1());
     timestamp.close();
-  }
-  else
-  {
-    if (!timestamp.open(QIODevice::ReadWrite))
-    {
+  } else {
+    if (!timestamp.open(QIODevice::ReadWrite)) {
       qWarning() << "Couldn't open timestamp file for daily notification check";
       return;
     }
-    lastTimestamp =
-        QDateTime::fromString(timestamp.readLine(), Qt::DateFormat::ISODate);
-    if (lastTimestamp.daysTo(m_dtNow) > 0)
-    {
+    lastTimestamp = QDateTime::fromString(timestamp.readLine().trimmed(),
+                                          Qt::DateFormat::ISODate);
+    if (lastTimestamp.daysTo(m_dtNow) > 0) {
       showVerseOfTheDay();
       timestamp.seek(0);
       timestamp.write(m_dtNow.toString(Qt::ISODate).toLatin1());
@@ -60,22 +61,21 @@ void NotificationManager::checkDailyVerse()
       timestamp.write(QString(QString::number(m_votd.first.page) + ":" +
                               QString::number(m_votd.first.surah) + ":" +
                               QString::number(m_votd.first.number))
-                          .toLatin1());
-    }
-    else
-    {
+                        .toLatin1());
+    } else {
       m_votdShown = true;
       QList<QByteArray> data = timestamp.readLine(15).split(':');
       m_votd.first =
-          Verse{data.at(0).toInt(), data.at(1).toInt(), data.at(2).toInt()};
+        Verse{ data.at(0).toInt(), data.at(1).toInt(), data.at(2).toInt() };
       m_votd.second =
-          m_dbMgr->getVerseText(m_votd.first.surah, m_votd.first.number);
+        m_dbMgr->getVerseText(m_votd.first.surah, m_votd.first.number);
       setVotdMsg();
     }
     timestamp.close();
   }
 }
-void NotificationManager::showVerseOfTheDay()
+void
+NotificationManager::showVerseOfTheDay()
 {
   m_votd = m_dbMgr->randomVerse();
   setVotdMsg();
@@ -84,15 +84,16 @@ void NotificationManager::showVerseOfTheDay()
   m_votdShown = true;
 }
 
-void NotificationManager::addActions()
+void
+NotificationManager::addActions()
 {
-  QAction *togglePlay = new QAction(tr("Play/Pause recitation"), m_trayMenu);
-  QAction *show = new QAction(tr("Show window"), m_trayMenu);
-  QAction *hide = new QAction(tr("Hide window"), m_trayMenu);
-  QAction *prefs = new QAction(tr("Preferences"), m_trayMenu);
-  QAction *update = new QAction(tr("Check for updates"), m_trayMenu);
-  QAction *about = new QAction(tr("About"), m_trayMenu);
-  QAction *exit = new QAction(tr("Exit"), m_trayMenu);
+  QAction* togglePlay = new QAction(tr("Play/Pause recitation"), m_trayMenu);
+  QAction* show = new QAction(tr("Show window"), m_trayMenu);
+  QAction* hide = new QAction(tr("Hide window"), m_trayMenu);
+  QAction* prefs = new QAction(tr("Preferences"), m_trayMenu);
+  QAction* update = new QAction(tr("Check for updates"), m_trayMenu);
+  QAction* about = new QAction(tr("About"), m_trayMenu);
+  QAction* exit = new QAction(tr("Exit"), m_trayMenu);
   m_trayMenu->addAction(togglePlay);
   m_trayMenu->addSeparator();
   m_trayMenu->addAction(show);
@@ -142,7 +143,8 @@ void NotificationManager::addActions()
           Qt::UniqueConnection);
 }
 
-void NotificationManager::setVotdMsg()
+void
+NotificationManager::setVotdMsg()
 {
   QString msg;
 
