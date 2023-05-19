@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   setupSurahsDock();
   this->show();
 
-  updateTrayTooltip();
+  m_notifyMgr->setTooltip("Quran Companion");
   if (m_settingsPtr->value("VOTD").toBool())
     m_notifyMgr->checkDailyVerse();
 }
@@ -331,6 +331,11 @@ MainWindow::setupConnections()
           Qt::UniqueConnection);
 
   // ########## system tray ########## //
+  connect(m_player,
+          &QMediaPlayer::playbackStateChanged,
+          this,
+          &MainWindow::updateTrayTooltip,
+          Qt::UniqueConnection);
   connect(m_notifyMgr, &NotificationManager::exit, this, &QApplication::exit);
   connect(m_notifyMgr,
           &NotificationManager::togglePlayback,
@@ -579,7 +584,6 @@ MainWindow::gotoSurah(int surahIdx)
   updateVerseDropDown();
 
   m_endOfPage = false;
-  updateTrayTooltip();
 }
 
 void
@@ -679,7 +683,6 @@ MainWindow::spaceKeyPressed()
 void
 MainWindow::btnPauseClicked()
 {
-  updateTrayTooltip();
   m_player->pause();
 }
 
@@ -715,7 +718,6 @@ MainWindow::btnStopClicked()
   m_internalSurahChange = false;
 
   m_endOfPage = false;
-  updateTrayTooltip();
 }
 
 /*!
@@ -763,7 +765,6 @@ MainWindow::mediaPosChanged(qint64 position)
 void
 MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 {
-  updateTrayTooltip();
   if (!m_settingsPtr->value("MissingFileWarning").toBool())
     return;
 
@@ -1238,9 +1239,9 @@ MainWindow::addSideContent()
 }
 
 void
-MainWindow::updateTrayTooltip()
+MainWindow::updateTrayTooltip(QMediaPlayer::PlaybackState newState)
 {
-  if (m_player->playbackState() == QMediaPlayer::PlayingState) {
+  if (newState == QMediaPlayer::PlayingState) {
     m_notifyMgr->setTooltip(tr("Now playing: ") + m_player->reciterName() +
                             " - " + tr("Surah ") +
                             m_dbMgr->getSurahName(m_currVerse.surah));

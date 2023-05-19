@@ -91,7 +91,7 @@ private slots:
 
   void redrawQuranPage(bool manualSz = false);
   void addSideContent();
-  void updateTrayTooltip();
+  void updateTrayTooltip(QMediaPlayer::PlaybackState newState);
 
   void updateLoadedTafsir();
   void updateLoadedTranslation();
