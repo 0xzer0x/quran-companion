@@ -24,6 +24,7 @@ public:
   explicit DBManager(QObject* parent = nullptr, QSettings* settings = nullptr);
   enum Database
   {
+    null,
     quran,
     glyphs,
     bookmarks,
@@ -79,9 +80,9 @@ public:
 
   struct Verse
   {
-    int page{ 1 };
-    int surah{ 1 };
-    int number{ 1 };
+    int page{ -1 };
+    int surah{ -1 };
+    int number{ -1 };
     bool operator==(const Verse& v2)
     {
       return (this->number == v2.number && this->surah == v2.surah);
@@ -99,26 +100,27 @@ public:
     QString baseUrl{};
   };
 
+  QList<QString> surahNameList();
   void setCurrentTafsir(Tafsir tafsirName);
   void setCurrentTranslation(Translation translationName);
   void setOpenDatabase(Database db, QString filePath);
 
   QList<int> getPageMetadata(const int page);
   QStringList getPageLines(const int page);
-  QList<int> getVerseBounds(const int surah, const int ayah);
   QList<Verse> getVerseInfoList(const int page);
 
   QString getSurahNameGlyph(const int sura);
   QString getJuzGlyph(const int juz);
   QString getVerseGlyphs(const int sIdx, const int vIdx);
-
   QString getVerseText(const int sIdx, const int vIdx);
-  QPair<Verse, QString> randomVerse();
+
   int getSurahVerseCount(const int surahIdx);
   int getSurahStartPage(int surahIdx);
-  QList<QString> surahNameList();
   QString getSurahName(const int sIdx);
   int getVersePage(const int& surahIdx, const int& verse);
+  int getJozzStartPage(const int jozz);
+  int getJozzOfPage(const int page);
+
   QList<int> searchSurahNames(QString text);
   QList<Verse> searchSurahs(QString searchText,
                             const QList<int> surahs,
@@ -130,6 +132,7 @@ public:
   QString getTafsir(const int sIdx, const int vIdx);
   QString getTranslation(const int sIdx, const int vIdx);
 
+  QPair<Verse, QString> randomVerse();
   QList<Verse> favoriteVerses();
   bool isBookmarked(Verse v);
   bool addBookmark(Verse v);
@@ -137,6 +140,7 @@ public:
 
 private:
   int m_qcfVer;
+  Database m_currentDb = null;
   QSqlDatabase m_openDBCon;
   QDir m_dbDir = QDir::currentPath() + QDir::separator() + "assets";
   QSettings* m_settings;

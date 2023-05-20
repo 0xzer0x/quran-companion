@@ -11,18 +11,19 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   , ui(new Ui::MainWindow)
   , m_process{ new QProcess(this) }
   , m_settingsPtr{ settingsPtr }
+  , m_darkMode{ settingsPtr->value("Theme").toInt() == 1 }
 {
-  m_darkMode = m_settingsPtr->value("Theme").toInt() == 1;
 
   m_updateToolPath =
     QDir::currentPath() + QDir::separator() + "QCMaintenanceTool";
 #ifdef Q_OS_WIN
   m_updateToolPath.append(".exe");
 #endif
-
   ui->setupUi(this);
   ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
+  ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
   loadIcons();
+  loadSettings();
   init();
 
   if (m_settingsPtr->value("WindowState").isNull())
@@ -60,6 +61,16 @@ MainWindow::loadIcons()
   ui->actionCheck_for_updates->setIcon(QIcon(m_iconsPath + "update.png"));
 }
 
+void
+MainWindow::loadSettings()
+{
+  m_settingsPtr->beginGroup("Reader");
+  m_currVerse.page = m_settingsPtr->value("Page").toInt();
+  m_currVerse.surah = m_settingsPtr->value("Surah").toInt();
+  m_currVerse.number = m_settingsPtr->value("Verse").toInt();
+  m_settingsPtr->endGroup();
+}
+
 /*!
  * \brief MainWindow::init initalizes different parts used by the app, such as
  * the quran page widget, db manager, and the verse player objects
@@ -67,16 +78,6 @@ MainWindow::loadIcons()
 void
 MainWindow::init()
 {
-  if (m_settingsPtr->value("Language").toInt() == QLocale::Arabic) {
-    ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
-  }
-
-  m_settingsPtr->beginGroup("Reader");
-  m_currVerse = { m_settingsPtr->value("Page").toInt(),
-                  m_settingsPtr->value("Surah").toInt(),
-                  m_settingsPtr->value("Verse").toInt() };
-  m_settingsPtr->endGroup();
-
   // initalization
   m_dbMgr = new DBManager(this, m_settingsPtr);
   m_player = new VersePlayer(
@@ -96,7 +97,7 @@ MainWindow::init()
   updateSideFont();
 
   redrawQuranPage(true);
-  updateVerseDropDown();
+  updateVerseDropDown(true);
 
   QVBoxLayout* vbl = new QVBoxLayout();
   vbl->setDirection(QBoxLayout::BottomToTop);
@@ -113,9 +114,9 @@ MainWindow::init()
     ui->cmbReciter->addItem(r.displayName);
   }
 
-  m_internalVerseChange = true;
-  ui->cmbVerse->setCurrentIndex(m_currVerse.number - 1);
-  m_internalVerseChange = false;
+  // sets without emitting signal
+  setCmbVerseIdx(m_currVerse.number - 1);
+  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
   ui->cmbReciter->setCurrentIndex(m_settingsPtr->value("Reciter", 0).toInt());
@@ -232,6 +233,11 @@ MainWindow::setupConnections()
           &QComboBox::currentIndexChanged,
           this,
           &MainWindow::cmbVerseChanged,
+          Qt::UniqueConnection);
+  connect(ui->cmbJozz,
+          &QComboBox::currentIndexChanged,
+          this,
+          &MainWindow::cmbJozzChanged,
           Qt::UniqueConnection);
   connect(m_player,
           &VersePlayer::surahChanged,
@@ -392,18 +398,23 @@ MainWindow::updateProcessCallback()
 
   if (output.contains("There are currently no updates available.")) {
     displayText = tr("There are currently no updates available.");
+
     if (this->isVisible())
       QMessageBox::information(this, tr("Update info"), displayText);
     else
       m_notifyMgr->notify(tr("Update info"), displayText);
-  } else {
+  }
+
+  else {
     displayText = tr("Updates available, do you want to open the update tool?");
     if (this->isVisible()) {
       QMessageBox::StandardButton btn =
         QMessageBox::question(this, tr("Updates info"), displayText);
       if (btn == QMessageBox::Yes)
         m_process->startDetached(m_updateToolPath);
-    } else {
+    }
+
+    else {
       m_notifyMgr->notify(
         tr("Update info"),
         tr("Updates are available, use the maintainance tool to install "
@@ -468,27 +479,40 @@ MainWindow::setCmbVerseIdx(int idx)
   m_internalVerseChange = false;
 }
 
+void
+MainWindow::setCmbJozzIdx(int idx)
+{
+  m_internalJozzChange = true;
+  ui->cmbJozz->setCurrentIndex(idx);
+  m_internalJozzChange = false;
+}
+
 /*!
  * \brief MainWindow::updateVerseDropDown sets the verse combobox values
  * according to the current surah verse count, sets the current verse visible
  */
 void
-MainWindow::updateVerseDropDown()
+MainWindow::updateVerseDropDown(bool forceUpdate)
 {
+  int oldCount = m_player->surahCount();
   m_player->updateSurahVerseCount();
+  int updatedCount = m_player->surahCount();
 
-  if (m_verseValidator != nullptr)
-    delete m_verseValidator;
+  if (updatedCount != oldCount || forceUpdate) {
+    if (m_verseValidator != nullptr)
+      delete m_verseValidator;
+    m_verseValidator = new QIntValidator(1, updatedCount, ui->cmbVerse);
 
-  m_verseValidator = new QIntValidator(1, m_player->surahCount(), ui->cmbVerse);
-  // updates values in the combobox with the current surah verses
-  ui->cmbVerse->clear();
-  m_internalVerseChange = true;
-  for (int i = 1; i <= m_player->surahCount(); i++)
-    ui->cmbVerse->addItem(QString::number(i), i);
-  m_internalVerseChange = false;
+    // updates values in the combobox with the current surah verses
+    ui->cmbVerse->clear();
+    m_internalVerseChange = true;
+    for (int i = 1; i <= updatedCount; i++)
+      ui->cmbVerse->addItem(QString::number(i), i);
+    m_internalVerseChange = false;
 
-  ui->cmbVerse->setValidator(m_verseValidator);
+    ui->cmbVerse->setValidator(m_verseValidator);
+  }
+
   setCmbVerseIdx(m_currVerse.number - 1);
 }
 
@@ -514,6 +538,7 @@ MainWindow::gotoPage(int page, bool automaticFlip)
     updateVerseDropDown();
   }
 
+  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
   addSideContent();
 }
 
@@ -581,6 +606,7 @@ MainWindow::gotoSurah(int surahIdx)
   highlightCurrentVerse();
 
   setCmbPageIdx(m_currVerse.page - 1);
+  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
   updateVerseDropDown();
 
   m_endOfPage = false;
@@ -662,9 +688,21 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   m_player->setVerseFile(m_player->constructVerseFilename());
 
   setCmbPageIdx(m_currVerse.page - 1);
+  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
 
   addSideContent();
   m_endOfPage = false;
+}
+
+void
+MainWindow::cmbJozzChanged(int newJozzIdx)
+{
+  if (m_internalJozzChange) {
+    qDebug() << "Internal jozz change";
+    return;
+  }
+
+  gotoPage(m_dbMgr->getJozzStartPage(newJozzIdx + 1));
 }
 
 /* ------------------------ Player controls / highlighting
@@ -829,7 +867,6 @@ MainWindow::verseClicked()
   if (m_currVerse.surah != surah) {
     m_currVerse.surah = surah;
     m_player->setVerse(m_currVerse);
-    m_player->updateSurahVerseCount();
     updateVerseDropDown();
     updateSurah();
   }
@@ -1082,6 +1119,7 @@ MainWindow::navigateToVerse(Verse v)
 
   setCmbPageIdx(m_currVerse.page - 1);
   setCmbVerseIdx(m_currVerse.number - 1);
+  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
 
   updateSurah();
   highlightCurrentVerse();

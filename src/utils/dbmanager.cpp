@@ -23,6 +23,11 @@ DBManager::DBManager(QObject* parent, QSettings* settings)
 void
 DBManager::setOpenDatabase(Database db, QString filePath)
 {
+  if (m_currentDb == db)
+    return;
+  else
+    m_currentDb = db;
+
   m_openDBCon.close();
 
   switch (db) {
@@ -44,6 +49,9 @@ DBManager::setOpenDatabase(Database db, QString filePath)
 
     case translation:
       m_openDBCon = QSqlDatabase::database("TranslationCon");
+      break;
+
+    case null:
       break;
   }
 
@@ -216,28 +224,6 @@ DBManager::setCurrentTranslation(Translation translationName)
 }
 
 /* ---------------- Page-related methods ---------------- */
-
-QList<int>
-DBManager::getVerseBounds(const int surah, const int ayah)
-{
-  QList<int> bounds;
-  setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
-  QSqlQuery dbQuery(m_openDBCon);
-
-  QString q = "SELECT start_pos,end_pos FROM %0 WHERE surah=%1 AND ayah=%2";
-  dbQuery.prepare(q.arg("coordinates_v" + QString::number(m_qcfVer),
-                        QString::number(surah),
-                        QString::number(ayah)));
-
-  if (!dbQuery.exec())
-    qWarning() << "Couldn't execute DBManager::getVerseBounds query!";
-
-  dbQuery.next();
-  bounds.append(dbQuery.value(0).toInt());
-  bounds.append(dbQuery.value(1).toInt());
-
-  return bounds;
-}
 
 QList<int>
 DBManager::getPageMetadata(const int page)
@@ -524,6 +510,43 @@ DBManager::getVersePage(const int& surahIdx, const int& verse)
   dbQuery.prepare(query.arg(QString::number(m_qcfVer),
                             QString::number(surahIdx),
                             QString::number(verse)));
+
+  if (!dbQuery.exec()) {
+    qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+  }
+  dbQuery.next();
+
+  return dbQuery.value(0).toInt();
+}
+
+int
+DBManager::getJozzStartPage(const int jozz)
+{
+  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  QSqlQuery dbQuery(m_openDBCon);
+
+  QString query =
+    "SELECT page FROM verses_v1 WHERE jozz=" + QString::number(jozz);
+  dbQuery.prepare(query);
+
+  if (!dbQuery.exec()) {
+    qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+  }
+  dbQuery.next();
+
+  return dbQuery.value(0).toInt();
+}
+
+int
+DBManager::getJozzOfPage(const int page)
+{
+  // returns the jozz number which the passed page belongs to
+  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  QSqlQuery dbQuery(m_openDBCon);
+
+  QString query =
+    "SELECT jozz FROM verses_v1 WHERE page=" + QString::number(page);
+  dbQuery.prepare(query);
 
   if (!dbQuery.exec()) {
     qCritical() << "Error occurred during getVerseInfo SQL statment exec";

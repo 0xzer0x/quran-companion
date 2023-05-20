@@ -42,7 +42,6 @@ class MainWindow : public QMainWindow
 
 public:
   MainWindow(QWidget* parent = nullptr, QSettings* settingsPtr = nullptr);
-  void setupConnections();
   void highlightCurrentVerse();
   ~MainWindow();
 
@@ -56,6 +55,9 @@ public slots:
 private slots:
   void nextPage();
   void prevPage();
+  void gotoPage(int page, bool automaticFlip = false);
+  void gotoSurah(int surahIdx);
+  void updateVerseDropDown(bool forceUpdate = false);
 
   void btnPlayClicked();
   void btnPauseClicked();
@@ -63,9 +65,7 @@ private slots:
 
   void cmbPageChanged(int newPageIdx);
   void cmbVerseChanged(int newVerseIdx);
-  void updateVerseDropDown();
-  void gotoPage(int page, bool automaticFlip = false);
-  void gotoSurah(int surahIdx);
+  void cmbJozzChanged(int newJozzIdx);
 
   void activeVerseChanged();
   void missingRecitationFileWarn(int reciterIdx, int surah);
@@ -103,17 +103,21 @@ private slots:
 
 private:
   void loadIcons();
+  void loadSettings();
   void init();
+  void setupConnections();
   void setupSurahsDock();
   void updateSurah();
   void updatePageVerseInfoList();
   void setVerseToStartOfPage();
   void setCmbPageIdx(int idx);
   void setCmbVerseIdx(int idx);
+  void setCmbJozzIdx(int idx);
   bool m_endOfPage = false;
   bool m_internalPageChange = false;
   bool m_internalSurahChange = false;
   bool m_internalVerseChange = false;
+  bool m_internalJozzChange = false;
   bool m_darkMode = false;
   qreal m_volume = 1;
   Ui::MainWindow* ui;
