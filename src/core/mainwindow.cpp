@@ -1114,7 +1114,6 @@ MainWindow::navigateToVerse(Verse v)
   addSideContent();
 
   m_player->setVerse(m_currVerse);
-  m_player->updateSurahVerseCount();
   updateVerseDropDown();
 
   setCmbPageIdx(m_currVerse.page - 1);

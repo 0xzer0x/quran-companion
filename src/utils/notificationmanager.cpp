@@ -58,10 +58,7 @@ NotificationManager::checkDailyVerse()
       timestamp.seek(0);
       timestamp.write(m_dtNow.toString(Qt::ISODate).toLatin1());
       timestamp.write("\n");
-      timestamp.write(QString(QString::number(m_votd.first.page) + ":" +
-                              QString::number(m_votd.first.surah) + ":" +
-                              QString::number(m_votd.first.number))
-                        .toLatin1());
+      timestamp.write(votdStringEntry().toLatin1());
     } else {
       m_votdShown = true;
       QList<QByteArray> data = timestamp.readLine(15).split(':');
@@ -82,6 +79,17 @@ NotificationManager::showVerseOfTheDay()
 
   emit showVOTDmessagebox(m_votd);
   m_votdShown = true;
+}
+
+QString
+NotificationManager::votdStringEntry() const
+{
+  QString entry =
+    QString::number(m_votd.first.page).rightJustified(3, '0') + ":" +
+    QString::number(m_votd.first.surah).rightJustified(3, '0') + ":" +
+    QString::number(m_votd.first.number).rightJustified(3, '0');
+
+  return entry;
 }
 
 void

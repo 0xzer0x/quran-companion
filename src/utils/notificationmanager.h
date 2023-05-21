@@ -25,6 +25,7 @@ public:
   void setTooltip(QString text);
   void checkDailyVerse();
   void showVerseOfTheDay();
+  QString votdStringEntry() const;
 
   QPair<Verse, QString> votd();
 
