@@ -10,6 +10,13 @@ namespace Ui {
 class TafsirDialog;
 }
 
+/*!
+ * \class TafsirDialog
+ * \brief The TafsirDialog class displays tafsir for a specific verse
+ *
+ * Tafsir is shown for a single verse at a time. Navigation between verses is
+ * independant of the main Quran reader navigation for easier navigation.
+ */
 class TafsirDialog : public QDialog
 {
   Q_OBJECT

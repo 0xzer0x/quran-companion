@@ -4,8 +4,9 @@
 
 /*!
  * \brief SearchDialog::SearchDialog class constructor
- * \param parent pointer to parent widget
- * \param dbPtr pointer to database management interface
+ *
+ * @param parent pointer to parent widget
+ * @param dbPtr pointer to database management interface
  */
 SearchDialog::SearchDialog(QWidget* parent,
                            QSettings* settings,

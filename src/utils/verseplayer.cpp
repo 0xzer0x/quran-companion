@@ -107,10 +107,10 @@ VersePlayer::fillRecitersList()
                    m_reciterDir.filePath("bismillah/alafasy.mp3"),
                    "https://everyayah.com/data/Alafasy_64kbps/" };
 
-  Reciter tunaiji{"Khalefa_Al-Tunaiji",
-                  tr("Khalefa Al-Tunaiji"),
-                  m_reciterDir.filePath("bismillah/tunaiji.mp3"),
-                  "https://everyayah.com/data/khalefa_al_tunaiji_64kbps/"};
+  Reciter tunaiji{ "Khalefa_Al-Tunaiji",
+                   tr("Khalefa Al-Tunaiji"),
+                   m_reciterDir.filePath("bismillah/tunaiji.mp3"),
+                   "https://everyayah.com/data/khalefa_al_tunaiji_64kbps/" };
 
   Reciter dussary{ "Yasser_Ad-Dussary",
                    tr("Yasser Ad-Dussary"),
@@ -239,8 +239,7 @@ VersePlayer::nextVerse()
     if ((m_activeVerse.surah < 114)) {
       m_activeVerse.surah++;
       m_activeVerse.number = 1;
-      updateSurahVerseCount(); // set new surah verse count
-      emit surahChanged();     // signals surah change
+      emit surahChanged(); // signals surah change
     }
 
   } else {
@@ -251,7 +250,9 @@ VersePlayer::nextVerse()
 
 /*!
  * \brief VersePlayer::verseStateChanged slot to call the nextVerse() method on
- * verse audio end \param status status of the media file, refer to QMediaPlayer
+ * verse audio end
+ *
+ * @param status status of the media file, refer to QMediaPlayer
  * docs for enum.
  */
 void

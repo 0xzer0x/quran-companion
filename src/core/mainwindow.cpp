@@ -3,8 +3,10 @@
 
 /*!
  * \brief MainWindow::MainWindow initalizes the main application window and sets
- * up UI connections \param parent is a pointer to the parent widget \param
- * settingsPtr is a pointer to the QSettings object to acess app settings
+ * up UI connections.
+ *
+ * @param parent is a pointer to the parent widget
+ * @param settingsPtr is a pointer to the QSettings object to acess app settings
  */
 MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   : QMainWindow(parent)
@@ -97,7 +99,7 @@ MainWindow::init()
   updateSideFont();
 
   redrawQuranPage(true);
-  updateVerseDropDown(true);
+  setVerseComboBoxRange(true);
 
   QVBoxLayout* vbl = new QVBoxLayout();
   vbl->setDirection(QBoxLayout::BottomToTop);
@@ -488,11 +490,13 @@ MainWindow::setCmbJozzIdx(int idx)
 }
 
 /*!
- * \brief MainWindow::updateVerseDropDown sets the verse combobox values
+ * \brief MainWindow::setVerseComboBoxRange sets the verse combobox values
  * according to the current surah verse count, sets the current verse visible
+ *
+ * @param forceUpdate flag forces the combobox to update it's surah verse count
  */
 void
-MainWindow::updateVerseDropDown(bool forceUpdate)
+MainWindow::setVerseComboBoxRange(bool forceUpdate)
 {
   int oldCount = m_player->surahCount();
   m_player->updateSurahVerseCount();
@@ -521,7 +525,8 @@ MainWindow::updateVerseDropDown(bool forceUpdate)
 /*!
  * \brief MainWindow::gotoPage displays the given page and sets the current
  * verse to the 1st verse in the page
- * \param page
+ *
+ * @param page to navigate to
  */
 void
 MainWindow::gotoPage(int page, bool automaticFlip)
@@ -535,7 +540,7 @@ MainWindow::gotoPage(int page, bool automaticFlip)
     m_endOfPage = false;
     setVerseToStartOfPage();
     updateSurah();
-    updateVerseDropDown();
+    setVerseComboBoxRange();
   }
 
   setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
@@ -585,7 +590,9 @@ MainWindow::prevPage()
 
 /*!
  * \brief MainWindow::gotoSurah gets the page of the 1st verse in this surah,
- * moves to that page, and starts playback of the surah \param surahIdx surah
+ * moves to that page, and starts playback of the surah.
+ *
+ * @param surahIdx surah
  * number in the mushaf (1-114)
  */
 void
@@ -607,7 +614,7 @@ MainWindow::gotoSurah(int surahIdx)
 
   setCmbPageIdx(m_currVerse.page - 1);
   setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
-  updateVerseDropDown();
+  setVerseComboBoxRange();
 
   m_endOfPage = false;
 }
@@ -646,8 +653,9 @@ MainWindow::listSurahNameClicked(const QModelIndex& index)
 
 /*!
  * \brief MainWindow::cmbPageChanged slot for updating the reader page as the
- * user selects a different page from the combobox \param newIdx the selected
- * idx in the combobox (0-603)
+ * user selects a different page from the combobox.
+ *
+ * @param newIdx the selected idx in the combobox (0-603)
  */
 void
 MainWindow::cmbPageChanged(int newIdx)
@@ -662,8 +670,9 @@ MainWindow::cmbPageChanged(int newIdx)
 
 /*!
  * \brief MainWindow::cmbVerseChanged slot for updating the reader page as the
- * user selects a different verse in the same surah \param newVerseIdx verse idx
- * in the combobox (0 -> (surahVerseCount-1))
+ * user selects a different verse in the same surah.
+ *
+ * @param newVerseIdx verse idx in the combobox (0 -> (surahVerseCount-1))
  */
 void
 MainWindow::cmbVerseChanged(int newVerseIdx)
@@ -752,7 +761,7 @@ MainWindow::btnStopClicked()
 
   m_internalSurahChange = true;
   updateSurah();
-  updateVerseDropDown();
+  setVerseComboBoxRange();
   m_internalSurahChange = false;
 
   m_endOfPage = false;
@@ -760,7 +769,9 @@ MainWindow::btnStopClicked()
 
 /*!
  * \brief MainWindow::mediaStateChanged disables/enables control buttons
- * according to the media player state \param state
+ * according to the media player state.
+ *
+ * @param state
  */
 void
 MainWindow::mediaStateChanged(QMediaPlayer::PlaybackState state)
@@ -784,7 +795,9 @@ MainWindow::mediaStateChanged(QMediaPlayer::PlaybackState state)
 
 /*!
  * \brief MainWindow::mediaPosChanged sets the current position in the audio
- * file as the position of the slider \param position
+ * file as the position of the slider.
+ *
+ * @param position position in audio file in milliseconds
  */
 void
 MainWindow::mediaPosChanged(qint64 position)
@@ -794,6 +807,19 @@ MainWindow::mediaPosChanged(qint64 position)
 
   if (!ui->sldrAudioPlayer->isSliderDown())
     ui->sldrAudioPlayer->setValue(position);
+}
+
+void
+MainWindow::volumeSliderValueChanged(int position)
+{
+  qreal linearVolume =
+    QAudio::convertVolume(ui->sldrVolume->value() / qreal(100.0),
+                          QAudio::LogarithmicVolumeScale,
+                          QAudio::LinearVolumeScale);
+  if (linearVolume != m_volume) {
+    m_volume = linearVolume;
+    m_player->setPlayerVolume(m_volume);
+  }
 }
 
 /*!
@@ -867,7 +893,7 @@ MainWindow::verseClicked()
   if (m_currVerse.surah != surah) {
     m_currVerse.surah = surah;
     m_player->setVerse(m_currVerse);
-    updateVerseDropDown();
+    setVerseComboBoxRange();
     updateSurah();
   }
 
@@ -887,7 +913,9 @@ MainWindow::surahClicked(QModelIndex& index)
 /*!
  * \brief MainWindow::verseAnchorClicked is the callback function for clicking
  * verses in the QuranPageBrowser that determines which action to take based on
- * the chosen option in the menu \param hrefUrl "#idx" where idx is the verse
+ * the chosen option in the menu.
+ *
+ * @param hrefUrl "#idx" where idx is the verse
  * index in the page/pageVerseInfo list
  */
 void
@@ -921,7 +949,7 @@ MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
 
       m_player->setVerse(m_currVerse);
       m_player->updateSurahVerseCount();
-      updateVerseDropDown();
+      setVerseComboBoxRange();
       updateSurah();
     }
 
@@ -1103,7 +1131,9 @@ MainWindow::openSearchDialog()
 
 /*!
  * \brief MainWindow::navigateToVerse navigate to a selected verse from the
- * search results \param v Verse to navigate to
+ * search results
+ *
+ * @param v Verse to navigate to
  */
 void
 MainWindow::navigateToVerse(Verse v)
@@ -1114,7 +1144,7 @@ MainWindow::navigateToVerse(Verse v)
   addSideContent();
 
   m_player->setVerse(m_currVerse);
-  updateVerseDropDown();
+  setVerseComboBoxRange();
 
   setCmbPageIdx(m_currVerse.page - 1);
   setCmbVerseIdx(m_currVerse.number - 1);
@@ -1362,17 +1392,4 @@ MainWindow::~MainWindow()
 {
   saveReaderState();
   delete ui;
-}
-
-void
-MainWindow::volumeSliderValueChanged(int position)
-{
-  qreal linearVolume =
-    QAudio::convertVolume(ui->sldrVolume->value() / qreal(100.0),
-                          QAudio::LogarithmicVolumeScale,
-                          QAudio::LinearVolumeScale);
-  if (linearVolume != m_volume) {
-    m_volume = linearVolume;
-    m_player->setPlayerVolume(m_volume);
-  }
 }

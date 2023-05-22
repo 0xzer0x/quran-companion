@@ -3,9 +3,10 @@
 
 /*!
  * \brief SettingsDialog::SettingsDialog class constructor
- * \param parent pointer to parent widget
- * \param settingsPtr pointer to application settings
- * \param vPlayerPtr pointer to The VersePlayer object
+ *
+ * @param parent pointer to parent widget
+ * @param settingsPtr pointer to application settings
+ * @param vPlayerPtr pointer to The VersePlayer object
  */
 SettingsDialog::SettingsDialog(QWidget* parent,
                                QSettings* settingsPtr,
@@ -51,7 +52,9 @@ SettingsDialog::setRadios()
 
 /*!
  * \brief SettingsDialog::updateTheme slot to update the theme in the settings
- * file & ask user to restart \param themeIdx
+ * file & ask user to restart.
+ *
+ * @param themeIdx
  */
 void
 SettingsDialog::updateTheme(int themeIdx)
@@ -73,7 +76,7 @@ SettingsDialog::updateTheme(int themeIdx)
 /*!
  * \brief SettingsDialog::updateLang slot to update the app language in the
  * settings file & ask user to restart
- * \param lang
+ * @param lang
  */
 void
 SettingsDialog::updateLang(QLocale::Language lang)
@@ -107,7 +110,7 @@ SettingsDialog::updateFileWarning(bool on)
 /*!
  * \brief SettingsDialog::updateTafsir slot to update the tafsir chosen in the
  * settings file
- * \param idx
+ * @param idx
  */
 void
 SettingsDialog::updateTafsir(int idx)
@@ -118,7 +121,9 @@ SettingsDialog::updateTafsir(int idx)
 
 /*!
  * \brief SettingsDialog::updateTranslation slot to update the translation
- * chosen in the settings file \param idx
+ * chosen in the settings file.
+ *
+ * @param idx
  */
 void
 SettingsDialog::updateTranslation(int idx)
@@ -154,7 +159,9 @@ SettingsDialog::updateAdaptiveFont(bool on)
 
 /*!
  * \brief SettingsDialog::updateQuranFontSize slot to update Quran page font
- * size in the settings file \param size
+ * size in the settings file
+ *
+ * @param size
  */
 void
 SettingsDialog::updateQuranFontSize(QString size)
@@ -167,7 +174,9 @@ SettingsDialog::updateQuranFontSize(QString size)
 
 /*!
  * \brief SettingsDialog::updateSideFont slot to update the side font in the
- * settings file \param fnt
+ * settings file
+ *
+ * @param fnt newly selected font
  */
 void
 SettingsDialog::updateSideFont(QFont fnt)
@@ -182,7 +191,9 @@ SettingsDialog::updateSideFont(QFont fnt)
 
 /*!
  * \brief SettingsDialog::updateSideFontSize slot to update the side font size
- * in the settings file \param size
+ * in the settings file
+ *
+ * @param size
  */
 void
 SettingsDialog::updateSideFontSize(QString size)
@@ -321,7 +332,9 @@ SettingsDialog::setCurrentSettingsAsRef()
 
 /*!
  * \brief SettingsDialog::btnBoxAction slot takes action according to the button
- * clicked in the dialog \param btn
+ * clicked in the dialog
+ *
+ * @param btn
  */
 void
 SettingsDialog::btnBoxAction(QAbstractButton* btn)

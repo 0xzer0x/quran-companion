@@ -24,6 +24,16 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialogButtonBox {
+dialogbuttonbox-buttons-have-icons: true;
+dialog-apply-icon: off;
+dialog-cancel-icon: off;
+dialog-ok-icon: off;
+dialog-yes-icon: off;
+dialog-no-icon: off;
+}</string>
+  </property>
   <property name="dockOptions">
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks</set>
   </property>

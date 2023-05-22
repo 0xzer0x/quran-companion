@@ -57,7 +57,7 @@ private slots:
   void prevPage();
   void gotoPage(int page, bool automaticFlip = false);
   void gotoSurah(int surahIdx);
-  void updateVerseDropDown(bool forceUpdate = false);
+  void setVerseComboBoxRange(bool forceUpdate = false);
 
   void btnPlayClicked();
   void btnPauseClicked();

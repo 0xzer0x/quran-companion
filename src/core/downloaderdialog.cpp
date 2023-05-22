@@ -3,11 +3,11 @@
 
 /*!
  * \brief DownloaderDialog::DownloaderDialog class constructor
- * \param parent pointer to parent widget
- * \param settingsptr pointer to settings instance to access app settings
- * \param downloader pointer to backend downloader object
- * \param dbMan pointer to database management/interaction object
- * \param iconsPath path to current theme icons
+ * @param parent pointer to parent widget
+ * @param settingsptr pointer to settings instance to access app settings
+ * @param downloader pointer to backend downloader object
+ * @param dbMan pointer to database management/interaction object
+ * @param iconsPath path to current theme icons
  */
 DownloaderDialog::DownloaderDialog(QWidget* parent,
                                    QSettings* settingsptr,
@@ -132,9 +132,11 @@ DownloaderDialog::addToQueue()
 
 /*!
  * \brief DownloaderDialog::addTaskProgress adds a download progress bar to the
- * downloader dialog to indicate download state \param reciterIdx index for the
- * chosen reciter as in the treeView & in the Reciters list \param surah integer
- * value represents the surah number to download (1-114)
+ * downloader dialog to indicate download state
+ *
+ * @param reciterIdx index for the chosen reciter as in the treeView & in the
+ * Reciters list
+ * @param surah integer value represents the surah number to download (1-114)
  */
 void
 DownloaderDialog::addTaskProgress(int reciterIdx, int surah)

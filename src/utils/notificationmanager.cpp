@@ -41,10 +41,7 @@ NotificationManager::checkDailyVerse()
     showVerseOfTheDay();
     timestamp.write(m_dtNow.toString(Qt::DateFormat::ISODate).toLatin1());
     timestamp.write("\n");
-    timestamp.write(QString(QString::number(m_votd.first.page) + ":" +
-                            QString::number(m_votd.first.surah) + ":" +
-                            QString::number(m_votd.first.number))
-                      .toLatin1());
+    timestamp.write(votdStringEntry().toLatin1());
     timestamp.close();
   } else {
     if (!timestamp.open(QIODevice::ReadWrite)) {

@@ -13,6 +13,14 @@
   <property name="windowTitle">
    <string>Preferences</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialogButtonBox {
+dialogbuttonbox-buttons-have-icons: true;
+dialog-apply-icon: off;
+dialog-cancel-icon: off;
+dialog-ok-icon: off;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
@@ -644,12 +652,7 @@
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="styleSheet">
-      <string notr="true">QDialogButtonBox {
-dialogbuttonbox-buttons-have-icons: true;
-dialog-apply-icon: off;
-dialog-cancel-icon: off;
-dialog-ok-icon: off;
-}</string>
+      <string notr="true"/>
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
