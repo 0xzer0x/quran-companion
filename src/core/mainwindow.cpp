@@ -1338,7 +1338,14 @@ MainWindow::copyVerseText(int IdxInPage)
 {
   const Verse& v = m_vInfoList.at(IdxInPage);
   QClipboard* clip = QApplication::clipboard();
-  clip->setText(m_dbMgr->getVerseText(v.surah, v.number));
+  QString text = m_dbMgr->getVerseText(v.surah, v.number);
+  QString vNum = QString::number(v.number);
+  text.remove(text.size() - 1, 1);
+  text = text.trimmed();
+  text = "{" + text + "}";
+  text += ' ';
+  text += "[" + m_dbMgr->surahNameList().at(v.surah - 1) + ":" + vNum + "]";
+  clip->setText(text);
 }
 
 void
