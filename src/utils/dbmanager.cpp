@@ -620,13 +620,16 @@ DBManager::searchVerses(QString searchText,
 }
 
 QList<DBManager::Verse>
-DBManager::favoriteVerses()
+DBManager::bookmarkedVerses(int surahIdx)
 {
   QList<Verse> results;
   setOpenDatabase(Database::bookmarks, m_bookmarksDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
+  QString q = "SELECT page,surah,number FROM favorites";
+  if (surahIdx != -1)
+    q.append(" WHERE surah=" + QString::number(surahIdx));
 
-  dbQuery.prepare("SELECT page,surah,number FROM favorites ORDER BY id");
+  dbQuery.prepare(q.append(" ORDER BY surah, number"));
   if (!dbQuery.exec())
     qCritical() << "Couldn't execute favoriteVerses SELECT query";
 

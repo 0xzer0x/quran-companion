@@ -4,6 +4,8 @@
 #include "../utils/dbmanager.h"
 #include <QDialog>
 #include <QLabel>
+#include <QStandardItem>
+#include <QStringListModel>
 #include <QVBoxLayout>
 
 namespace Ui {
@@ -21,7 +23,8 @@ public:
                            DBManager* dbMgr = nullptr,
                            int qcfVer = 1);
   void showWindow();
-  void loadFavorites();
+  void loadBookmarks(int surah = -1);
+  void loadSurahs();
   ~BookmarksDialog();
 
 signals:
@@ -33,16 +36,25 @@ public slots:
   void btnNextClicked();
   void btnPrevClicked();
 
+private slots:
+  void surahSelected(const QModelIndex& index);
+
 private:
   Ui::BookmarksDialog* ui;
+  void setupConnections();
+  void setStyling(bool dark = false);
   DBManager* m_dbMgr = nullptr;
   int m_qcfVer = 1;
   int m_startIdx = 0;
+  int m_shownSurah = 0;
   QString m_iconsPath;
   QString m_fontPrefix;
   QVBoxLayout* m_scrollAreaLayout;
-  QList<DBManager::Verse> m_favorites;
+  QList<DBManager::Verse> m_allBookmarked;
+  QList<DBManager::Verse> m_shownVerses;
   QList<QFrame*> m_frames;
+  QStandardItemModel m_surahsModel;
+  QStringList m_favSurahList;
 
   // QWidget interface
 protected:

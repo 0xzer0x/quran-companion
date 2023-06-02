@@ -23,10 +23,8 @@ TafsirDialog::TafsirDialog(QWidget* parent,
     m_fontSZ = 16;
   }
 
-  connect(
-    ui->btnNext, &QPushButton::clicked, this, &TafsirDialog::btnNextClicked);
-  connect(
-    ui->btnPrev, &QPushButton::clicked, this, &TafsirDialog::btnPrevClicked);
+  // connectors
+  setupConnections();
 }
 
 void
@@ -64,6 +62,21 @@ TafsirDialog::btnPrevClicked()
   m_shownVerse.page =
     m_dbMgr->getVersePage(m_shownVerse.surah, m_shownVerse.number);
   loadVerseTafsir();
+}
+
+void
+TafsirDialog::setupConnections()
+{
+  connect(ui->btnNext,
+          &QPushButton::clicked,
+          this,
+          &TafsirDialog::btnNextClicked,
+          Qt::UniqueConnection);
+  connect(ui->btnPrev,
+          &QPushButton::clicked,
+          this,
+          &TafsirDialog::btnPrevClicked,
+          Qt::UniqueConnection);
 }
 
 void

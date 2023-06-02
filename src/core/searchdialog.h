@@ -51,6 +51,7 @@ private slots:
   void btnTransferClicked();
 
 private:
+  void setupConnections();
   void fillListView();
   int m_qcfVer;
   int m_startResult = 0;

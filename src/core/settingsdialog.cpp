@@ -36,10 +36,8 @@ SettingsDialog::SettingsDialog(QWidget* parent,
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
   setRadios();
 
-  connect(ui->buttonBox,
-          &QDialogButtonBox::clicked,
-          this,
-          &SettingsDialog::btnBoxAction);
+  // connectors
+  setupConnections();
 }
 
 void
@@ -251,6 +249,8 @@ SettingsDialog::applyAllChanges()
 
   if (ui->cmbAudioDevices->currentIndex() != m_audioOutIdx) {
     m_audioOutIdx = ui->cmbAudioDevices->currentIndex();
+    ui->cmbAudioDevices->setCurrentText(
+      m_audioDevices.at(m_audioOutIdx).description());
     emit usedAudioDeviceChanged(m_audioDevices.at(m_audioOutIdx));
   }
 
@@ -291,6 +291,15 @@ SettingsDialog::showWindow()
 }
 
 void
+SettingsDialog::setupConnections()
+{
+  connect(ui->buttonBox,
+          &QDialogButtonBox::clicked,
+          this,
+          &SettingsDialog::btnBoxAction);
+}
+
+void
 SettingsDialog::fillLanguageCombobox()
 {
   ui->cmbLang->addItem("English", QLocale::English);
@@ -328,6 +337,7 @@ SettingsDialog::setCurrentSettingsAsRef()
     if (m_audioDevices.at(i) == m_vPlayerPtr->getOutput()->device())
       m_audioOutIdx = i;
   }
+  ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
 }
 
 /*!
