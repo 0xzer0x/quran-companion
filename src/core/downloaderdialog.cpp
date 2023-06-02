@@ -38,6 +38,13 @@ DownloaderDialog::DownloaderDialog(QWidget* parent,
   fillTreeView();
 
   // connectors
+  setupConnections();
+}
+
+void
+DownloaderDialog::setupConnections()
+{
+
   connect(ui->btnAddToQueue,
           &QPushButton::clicked,
           this,

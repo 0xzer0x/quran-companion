@@ -69,6 +69,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="btnAddToQueue">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
          <property name="text">
           <string>add to queue &gt;&gt;</string>
          </property>
@@ -142,6 +145,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="btnClearQueue">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="text">
             <string>clear</string>
            </property>
@@ -149,6 +155,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="btnStopQueue">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="text">
             <string>stop</string>
            </property>

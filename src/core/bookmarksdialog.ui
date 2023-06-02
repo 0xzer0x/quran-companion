@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>776</width>
-    <height>645</height>
+    <width>790</width>
+    <height>683</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -131,11 +131,11 @@ background-color: transparent;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>756</width>
-        <height>538</height>
+        <width>770</width>
+        <height>576</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,100">
        <item>
         <layout class="QVBoxLayout" name="layoutFavorites"/>
        </item>

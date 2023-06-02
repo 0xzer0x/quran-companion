@@ -25,7 +25,6 @@ public:
   void showWindow();
   void loadBookmarks(int surah = -1);
   void loadSurahs();
-  void setupConnections();
   ~BookmarksDialog();
 
 signals:
@@ -42,6 +41,7 @@ private slots:
 
 private:
   Ui::BookmarksDialog* ui;
+  void setupConnections();
   void setStyling(bool dark = false);
   DBManager* m_dbMgr = nullptr;
   int m_qcfVer = 1;

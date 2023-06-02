@@ -1,5 +1,6 @@
 #include "bookmarksdialog.h"
 #include "ui_bookmarksdialog.h"
+#include <set>
 
 BookmarksDialog::BookmarksDialog(QWidget* parent,
                                  QString iconPath,
@@ -56,6 +57,7 @@ BookmarksDialog::showWindow()
     m_frames.clear();
   }
 
+  m_shownSurah = 0;
   loadBookmarks();
   loadSurahs();
   this->show();
@@ -91,9 +93,9 @@ BookmarksDialog::loadBookmarks(int surah)
     QString fontName =
       m_fontPrefix + QString::number(verse.page).rightJustified(3, '0');
     QFrame* frame = new QFrame(ui->scrlBookmarks);
-    QHBoxLayout* frmLayout = new QHBoxLayout(frame);
-    QVBoxLayout* lbLayout = new QVBoxLayout(frame);
-    QVBoxLayout* btnLayout = new QVBoxLayout(frame);
+    QHBoxLayout* frmLayout = new QHBoxLayout();
+    QVBoxLayout* lbLayout = new QVBoxLayout();
+    QVBoxLayout* btnLayout = new QVBoxLayout();
     QLabel* lbMeta = new QLabel(frame);
     QLabel* verseLb = new QLabel(frame);
     QPushButton* goToVerse = new QPushButton(tr("Go to verse"), frame);
@@ -154,19 +156,17 @@ BookmarksDialog::loadBookmarks(int surah)
 void
 BookmarksDialog::loadSurahs()
 {
+  qDeleteAll(m_surahsModel.children());
   m_surahsModel.clear();
   QStandardItem* item = new QStandardItem(tr("All"));
   item->setData(Qt::AlignCenter, Qt::TextAlignmentRole);
   item->setSizeHint(QSize(100, 40));
   m_surahsModel.appendRow(item);
 
-  QList<int> surahs;
+  std::set<int> surahs;
   foreach (const DBManager::Verse& v, m_allBookmarked) {
-    if (surahs.indexOf(v.surah) == -1)
-      surahs.append(v.surah);
+    surahs.insert(v.surah);
   }
-  std::sort(surahs.begin(), surahs.end());
-  qInfo() << surahs;
 
   for (int s : surahs) {
     item = new QStandardItem(m_dbMgr->surahNameList().at(s - 1));

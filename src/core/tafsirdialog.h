@@ -29,7 +29,6 @@ public:
   ~TafsirDialog();
 
   void loadVerseTafsir();
-
   void setShownVerse(const Verse& newShownVerse);
 
 private slots:
@@ -37,10 +36,11 @@ private slots:
   void btnPrevClicked();
 
 private:
+  Ui::TafsirDialog* ui;
+  void setupConnections();
   void setTafsirAsTitle();
   int m_fontSZ;
   QString m_fontPrefix;
-  Ui::TafsirDialog* ui;
   QSettings* m_settings;
   DBManager* m_dbMgr;
   Verse m_shownVerse{ 1, 1, 1 };

@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   else
     restoreState(m_settingsPtr->value("WindowState").toByteArray());
 
+  // connectors
   setupConnections();
   setupSurahsDock();
   this->show();

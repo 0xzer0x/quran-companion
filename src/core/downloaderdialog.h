@@ -54,6 +54,7 @@ protected:
 
 private:
   Ui::DownloaderDialog* ui;
+  void setupConnections();
   QString m_iconsPath;
   DownloadProgressBar* m_currentBar;
   QLabel* m_currentLb;
