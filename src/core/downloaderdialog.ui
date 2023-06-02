@@ -22,6 +22,9 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="handleWidth">
+      <number>2</number>
+     </property>
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
@@ -97,7 +100,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>481</width>
+            <width>482</width>
             <height>517</height>
            </rect>
           </property>
@@ -136,6 +139,13 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnClearQueue">
+           <property name="text">
+            <string>clear</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnStopQueue">

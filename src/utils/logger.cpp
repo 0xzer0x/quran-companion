@@ -1,6 +1,6 @@
 #include "logger.h"
 
-QString Logger::filename = "qc-logs.txt";
+QString Logger::filename = "qc.log";
 static const QtMessageHandler QT_DEFAULT_MESSAGE_HANDLER =
   qInstallMessageHandler(nullptr);
 QFile Logger::logFile = QFile(filename);

@@ -46,6 +46,7 @@ public slots:
   void topTaskDownloadError();
   void updateDownloadSpeed(int value, QString unit);
   void selectTask(int reciter, int surah);
+  void clearQueue();
 
   // QWidget interface
 protected:
@@ -58,12 +59,17 @@ private:
   QLabel* m_currentLb;
   QLabel* m_currDownSpeedLb;
   QList<QFrame*> m_frameLst;
+  QList<QFrame*> m_finishedFrames;
   QStandardItemModel m_treeModel;
   DownloadManager* m_downloaderPtr;
   DBManager* m_dbMgr;
   QSettings* m_appSettings;
-  QString m_ssProgBar;
   QStringList m_surahDisplayNames;
+  QString m_ssProgBar =
+    "QProgressBar {text-align: center; color:palette(text); "
+    "border-radius: 2px; border: 1px "
+    "solid palette(dark); }";
+  ;
 };
 
 #endif // DOWNLOADERDIALOG_H

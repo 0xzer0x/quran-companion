@@ -1,11 +1,13 @@
 #include "clickablelabel.h"
 
-ClickableLabel::ClickableLabel(QWidget *parent)
-    : QLabel(parent)
+ClickableLabel::ClickableLabel(QWidget* parent)
+  : QLabel(parent)
 {
+  setCursor(Qt::PointingHandCursor);
 }
 
-void ClickableLabel::mousePressEvent(QMouseEvent *event)
+void
+ClickableLabel::mousePressEvent(QMouseEvent* event)
 {
-    emit clicked();
+  emit clicked();
 }

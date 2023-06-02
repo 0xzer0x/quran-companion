@@ -100,6 +100,8 @@ BookmarksDialog::loadBookmarks(int surah)
     QPushButton* removeFromFav = new QPushButton(tr("Remove"), frame);
     goToVerse->setMinimumWidth(100);
     goToVerse->setMaximumWidth(100);
+    goToVerse->setCursor(Qt::PointingHandCursor);
+    removeFromFav->setCursor(Qt::PointingHandCursor);
     removeFromFav->setMinimumWidth(100);
     removeFromFav->setMaximumWidth(100);
 
@@ -124,12 +126,17 @@ BookmarksDialog::loadBookmarks(int surah)
     verseLb->setText(m_dbMgr->getVerseGlyphs(verse.surah, verse.number));
     verseLb->setAlignment(Qt::AlignLeft);
     verseLb->setWordWrap(true);
+    verseLb->setMargin(5);
 
+    lbLayout->addStretch();
     lbLayout->addWidget(lbMeta);
     lbLayout->addWidget(verseLb);
+    lbLayout->addStretch();
 
+    btnLayout->addStretch();
     btnLayout->addWidget(goToVerse);
     btnLayout->addWidget(removeFromFav);
+    btnLayout->addStretch();
 
     frmLayout->addItem(btnLayout);
     frmLayout->addItem(lbLayout);

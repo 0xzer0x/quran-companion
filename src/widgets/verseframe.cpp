@@ -12,7 +12,7 @@ HighlightFrame::highlightFrame()
   // rgba(0, 161, 185, 50)
   QString rgba = "rgba(" + QString::number(m_colorR) + ',' +
                  QString::number(m_colorG) + ',' + QString::number(m_colorB) +
-                 ",50)";
+                 ",60)";
   setStyleSheet(QString("QFrame#%0 "
                         "{background-color:%1;"
                         "border-radius:4px}")
@@ -44,7 +44,7 @@ HighlightFrame::enterEvent(QEnterEvent* event)
 void
 HighlightFrame::leaveEvent(QEvent* event)
 {
-  if (!styleSheet().contains(",50)")) {
+  if (!styleSheet().contains(",60)")) {
     setStyleSheet("");
   }
 }

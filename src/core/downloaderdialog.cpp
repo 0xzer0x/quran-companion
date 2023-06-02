@@ -37,12 +37,6 @@ DownloaderDialog::DownloaderDialog(QWidget* parent,
     QAbstractItemView::SelectionMode::ExtendedSelection);
   fillTreeView();
 
-  if (m_appSettings->value("Theme").toInt() == 0) {
-    m_ssProgBar = "QProgressBar {text-align: center;color:black;}";
-  } else {
-    m_ssProgBar = "QProgressBar {text-align: center;color:white;}";
-  }
-
   // connectors
   connect(ui->btnAddToQueue,
           &QPushButton::clicked,
@@ -54,6 +48,12 @@ DownloaderDialog::DownloaderDialog(QWidget* parent,
           &QPushButton::clicked,
           m_downloaderPtr,
           &DownloadManager::stopQueue,
+          Qt::UniqueConnection);
+
+  connect(ui->btnClearQueue,
+          &QPushButton::clicked,
+          this,
+          &DownloaderDialog::clearQueue,
           Qt::UniqueConnection);
 
   connect(m_downloaderPtr,
@@ -219,6 +219,16 @@ DownloaderDialog::selectTask(int reciter, int surah)
                    QItemSelectionModel::Rows | QItemSelectionModel::Select);
 }
 
+void
+DownloaderDialog::clearQueue()
+{
+  m_downloaderPtr->stopQueue();
+  if (!m_finishedFrames.isEmpty()) {
+    qDeleteAll(m_finishedFrames);
+    m_finishedFrames.clear();
+  }
+}
+
 /*!
  * \brief DownloaderDialog::surahDownloaded slot to delete the finished progress
  * bar on download completion
@@ -227,8 +237,8 @@ void
 DownloaderDialog::surahDownloaded()
 {
   m_currentBar->setStyleSheet(
-    "QProgressBar {text-align: center;} QProgressBar::chunk "
-    "{border-radius:4px;background-color: #4BB543;}");
+    m_ssProgBar + " QProgressBar::chunk "
+                  "{border-radius:2px; background-color: #008296;}");
   m_currentLb->setText(m_currentLb->parent()->objectName());
   m_currDownSpeedLb->setText(tr("Download Completed"));
   disconnect(m_downloaderPtr,
@@ -236,6 +246,7 @@ DownloaderDialog::surahDownloaded()
              m_currentBar,
              &DownloadProgressBar::updateProgress);
 
+  m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
   setCurrentBar();
 }
@@ -261,11 +272,18 @@ void
 DownloaderDialog::topTaskDownloadError()
 {
   m_currentBar->setStyleSheet(
-    "QProgressBar {text-align: center;} QProgressBar::chunk "
-    "{border-radius:4px;background-color: #FC100D;}");
-
+    m_ssProgBar + " QProgressBar::chunk "
+                  "{border-radius:2px; background-color: #900D09;}");
   m_currentLb->setText(m_currentLb->parent()->objectName());
   m_currDownSpeedLb->setText(tr("Download Failed"));
+  disconnect(m_downloaderPtr,
+             &DownloadManager::downloadProgressed,
+             m_currentBar,
+             &DownloadProgressBar::updateProgress);
+
+  m_finishedFrames.append(m_frameLst.front());
+  m_frameLst.pop_front();
+  setCurrentBar();
 }
 
 void

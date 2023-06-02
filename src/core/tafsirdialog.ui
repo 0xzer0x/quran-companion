@@ -83,11 +83,17 @@
          <underline>false</underline>
         </font>
        </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="toolTip">
         <string>next</string>
        </property>
        <property name="text">
         <string>🡸</string>
+       </property>
+       <property name="shortcut">
+        <string>Left</string>
        </property>
       </widget>
      </item>
@@ -115,11 +121,17 @@
          <kerning>true</kerning>
         </font>
        </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="toolTip">
         <string>previous</string>
        </property>
        <property name="text">
         <string>🡺</string>
+       </property>
+       <property name="shortcut">
+        <string>Right</string>
        </property>
       </widget>
      </item>

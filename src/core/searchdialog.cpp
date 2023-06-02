@@ -101,7 +101,7 @@ SearchDialog::verseClicked()
 void
 SearchDialog::showResults()
 {
-  int endIdx = m_currResults.size() > m_startResult + 50 ? m_startResult + 50
+  int endIdx = m_currResults.size() > m_startResult + 25 ? m_startResult + 25
                                                          : m_currResults.size();
 
   if (m_startResult == 0)
@@ -154,13 +154,13 @@ SearchDialog::showResults()
 void
 SearchDialog::moveFwd()
 {
-  if (!m_currResults.empty() && m_startResult + 50 < m_currResults.size()) {
+  if (!m_currResults.empty() && m_startResult + 25 < m_currResults.size()) {
     if (!m_lbLst.empty()) {
       qDeleteAll(m_lbLst);
       m_lbLst.clear();
     }
 
-    m_startResult += 50;
+    m_startResult += 25;
     showResults();
   }
 }
@@ -178,7 +178,7 @@ SearchDialog::moveBwd()
       m_lbLst.clear();
     }
 
-    m_startResult -= 50;
+    m_startResult -= 25;
     showResults();
   }
 }
