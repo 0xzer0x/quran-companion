@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Installer>
     <Name>Quran Companion</Name>
-    <Version>1.0-alpha</Version>
+    <Version>1.1</Version>
     <Title>Quran Companion</Title>
     <Publisher>0xzer0x</Publisher>
     <ProductUrl>http://github.com/0xzer0x/quran-companion.git</ProductUrl>
