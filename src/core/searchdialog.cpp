@@ -29,16 +29,10 @@ SearchDialog::SearchDialog(QWidget* parent,
 
   ui->listViewAllSurahs->setModel(&m_modelAllSurahs);
   ui->listViewSelected->setModel(&m_modelSelectedSurahs);
-
-  connect(ui->btnSrch, &QPushButton::clicked, this, &SearchDialog::getResults);
-  connect(ui->btnFwdRes, &QPushButton::clicked, this, &SearchDialog::moveFwd);
-  connect(ui->btnBwdRes, &QPushButton::clicked, this, &SearchDialog::moveBwd);
-  connect(ui->btnTransfer,
-          &QPushButton::clicked,
-          this,
-          &SearchDialog::btnTransferClicked);
-
   fillListView();
+
+  // connectors
+  setupConnections();
 }
 
 /*!
@@ -101,7 +95,7 @@ SearchDialog::verseClicked()
 void
 SearchDialog::showResults()
 {
-  int endIdx = m_currResults.size() > m_startResult + 50 ? m_startResult + 50
+  int endIdx = m_currResults.size() > m_startResult + 25 ? m_startResult + 25
                                                          : m_currResults.size();
 
   if (m_startResult == 0)
@@ -154,13 +148,13 @@ SearchDialog::showResults()
 void
 SearchDialog::moveFwd()
 {
-  if (!m_currResults.empty() && m_startResult + 50 < m_currResults.size()) {
+  if (!m_currResults.empty() && m_startResult + 25 < m_currResults.size()) {
     if (!m_lbLst.empty()) {
       qDeleteAll(m_lbLst);
       m_lbLst.clear();
     }
 
-    m_startResult += 50;
+    m_startResult += 25;
     showResults();
   }
 }
@@ -178,7 +172,7 @@ SearchDialog::moveBwd()
       m_lbLst.clear();
     }
 
-    m_startResult -= 50;
+    m_startResult -= 25;
     showResults();
   }
 }
@@ -221,6 +215,31 @@ SearchDialog::btnTransferClicked()
     int r = m_modelSelectedSurahs.findItems(rem).at(0)->row();
     m_modelSelectedSurahs.removeRow(r);
   }
+}
+
+void
+SearchDialog::setupConnections()
+{
+  connect(ui->btnSrch,
+          &QPushButton::clicked,
+          this,
+          &SearchDialog::getResults,
+          Qt::UniqueConnection);
+  connect(ui->btnFwdRes,
+          &QPushButton::clicked,
+          this,
+          &SearchDialog::moveFwd,
+          Qt::UniqueConnection);
+  connect(ui->btnBwdRes,
+          &QPushButton::clicked,
+          this,
+          &SearchDialog::moveBwd,
+          Qt::UniqueConnection);
+  connect(ui->btnTransfer,
+          &QPushButton::clicked,
+          this,
+          &SearchDialog::btnTransferClicked,
+          Qt::UniqueConnection);
 }
 
 void

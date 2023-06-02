@@ -63,6 +63,7 @@ signals:
 
 private:
   Ui::SettingsDialog* ui;
+  void setupConnections();
   QString m_iconsPath;
   QSettings* m_settingsPtr;
   QLocale::Language m_lang;

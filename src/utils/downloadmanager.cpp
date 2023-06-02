@@ -9,7 +9,7 @@ DownloadManager::DownloadManager(QObject* parent,
   , m_dbMgr{ dbptr }
 {
   m_topLevelPath.setPath(QDir::currentPath() + QDir::separator() + "audio");
-
+  m_netMan->setTransferTimeout(3000);
   connect(m_netMan,
           &QNetworkAccessManager::finished,
           this,
@@ -99,6 +99,7 @@ DownloadManager::processQueueHead()
 
   m_isDownloading = true;
   QNetworkRequest req(m_currentTask.link);
+  req.setTransferTimeout(3000);
   m_currentTask.networkReply = m_netMan->get(req);
   m_currentTask.networkReply->ignoreSslErrors();
   m_downloadStart = QTime::currentTime();

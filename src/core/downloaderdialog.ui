@@ -22,6 +22,9 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="handleWidth">
+      <number>2</number>
+     </property>
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
@@ -66,6 +69,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="btnAddToQueue">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
          <property name="text">
           <string>add to queue &gt;&gt;</string>
          </property>
@@ -97,7 +103,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>481</width>
+            <width>482</width>
             <height>517</height>
            </rect>
           </property>
@@ -138,7 +144,20 @@
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="btnClearQueue">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="text">
+            <string>clear</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="btnStopQueue">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="text">
             <string>stop</string>
            </property>

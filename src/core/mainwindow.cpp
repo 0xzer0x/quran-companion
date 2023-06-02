@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   else
     restoreState(m_settingsPtr->value("WindowState").toByteArray());
 
+  // connectors
   setupConnections();
   setupSurahsDock();
   this->show();
@@ -1360,6 +1361,7 @@ MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
   lb->setTextFormat(Qt::RichText);
   lb->setAlignment(Qt::AlignCenter);
   lb->setFont(QFont("Amiri", 15));
+  lb->setCursor(Qt::PointingHandCursor);
   if (votd.second.length() > 200)
     lb->setWordWrap(true);
 

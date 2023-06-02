@@ -133,7 +133,7 @@ public:
   QString getTranslation(const int sIdx, const int vIdx);
 
   QPair<Verse, QString> randomVerse();
-  QList<Verse> favoriteVerses();
+  QList<Verse> bookmarkedVerses(int surahIdx = -1);
   bool isBookmarked(Verse v);
   bool addBookmark(Verse v);
   bool removeBookmark(Verse v);
