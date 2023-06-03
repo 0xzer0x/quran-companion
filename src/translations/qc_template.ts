@@ -39,27 +39,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="99"/>
+        <location filename="../core/bookmarksdialog.cpp" line="101"/>
         <source>Go to verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="100"/>
+        <location filename="../core/bookmarksdialog.cpp" line="102"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="119"/>
+        <location filename="../core/bookmarksdialog.cpp" line="121"/>
         <source>Surah: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="121"/>
+        <location filename="../core/bookmarksdialog.cpp" line="123"/>
         <source>Verse: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="159"/>
+        <location filename="../core/bookmarksdialog.cpp" line="161"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -921,207 +921,212 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="490"/>
+        <location filename="../core/settingsdialog.ui" line="495"/>
         <source>Translation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="428"/>
+        <location filename="../core/settingsdialog.ui" line="433"/>
         <source>Al-Baghawy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="453"/>
+        <location filename="../core/settingsdialog.ui" line="458"/>
         <source>Earab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="468"/>
+        <location filename="../core/settingsdialog.ui" line="473"/>
         <source>Indonesian - Tafsir Jalalayn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="463"/>
+        <location filename="../core/settingsdialog.ui" line="468"/>
         <source>Ibn-Katheer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="433"/>
+        <location filename="../core/settingsdialog.ui" line="438"/>
         <source>Al-Qortoby</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="473"/>
+        <location filename="../core/settingsdialog.ui" line="478"/>
         <source>Russian - Kuliev &amp; Al-Sa&apos;ady</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="438"/>
+        <location filename="../core/settingsdialog.ui" line="443"/>
         <source>Al-Sa&apos;ady</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="443"/>
+        <location filename="../core/settingsdialog.ui" line="448"/>
         <source>Al-Tabary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="478"/>
+        <location filename="../core/settingsdialog.ui" line="483"/>
         <source>Tafheem-ul-Quran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="458"/>
+        <location filename="../core/settingsdialog.ui" line="463"/>
         <source>Ibn-Ashoor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="448"/>
+        <location filename="../core/settingsdialog.ui" line="428"/>
+        <source>Aysar Al-Tafasir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="453"/>
         <source>Al-Tafsir Al-Waseet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="498"/>
+        <location filename="../core/settingsdialog.ui" line="503"/>
         <source>عربي - التفسير الميسّر</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="503"/>
+        <location filename="../core/settingsdialog.ui" line="508"/>
         <source>عربي - معاني الكلمات</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="508"/>
+        <location filename="../core/settingsdialog.ui" line="513"/>
         <source>Bengali - Muhiuddin Khan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="513"/>
+        <location filename="../core/settingsdialog.ui" line="518"/>
         <source>Bosanski - Korkut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="518"/>
+        <location filename="../core/settingsdialog.ui" line="523"/>
         <source>Deutsch - Bubenheim &amp; Elyas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="523"/>
+        <location filename="../core/settingsdialog.ui" line="528"/>
         <source>English - Clear Quran (Dr. Mustafa Khattab)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="528"/>
+        <location filename="../core/settingsdialog.ui" line="533"/>
         <source>English - Sahih International</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="533"/>
+        <location filename="../core/settingsdialog.ui" line="538"/>
         <source>Español - Abdel Ghani Navio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="538"/>
+        <location filename="../core/settingsdialog.ui" line="543"/>
         <source>Français - Hamidullah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="543"/>
+        <location filename="../core/settingsdialog.ui" line="548"/>
         <source>Hausa - Gumi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="548"/>
+        <location filename="../core/settingsdialog.ui" line="553"/>
         <source>Indonesian - Bahasa Indonesia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="553"/>
+        <location filename="../core/settingsdialog.ui" line="558"/>
         <source>Italiano - Piccardo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="558"/>
+        <location filename="../core/settingsdialog.ui" line="563"/>
         <source>كوردى - برهان محمد أمين</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="563"/>
+        <location filename="../core/settingsdialog.ui" line="568"/>
         <source>Malayalam - Abdul Hameed and Kunhi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="568"/>
+        <location filename="../core/settingsdialog.ui" line="573"/>
         <source>Melayu - Basmeih</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="573"/>
+        <location filename="../core/settingsdialog.ui" line="578"/>
         <source>Dutch - Sofian Siregar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="578"/>
+        <location filename="../core/settingsdialog.ui" line="583"/>
         <source>فارسى - حسین تاجی گله داری</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="583"/>
+        <location filename="../core/settingsdialog.ui" line="588"/>
         <source>Português - El Hayek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="588"/>
+        <location filename="../core/settingsdialog.ui" line="593"/>
         <source>Russian - Elmir Kuliev</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="593"/>
+        <location filename="../core/settingsdialog.ui" line="598"/>
         <source>Somali - Abduh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="598"/>
+        <location filename="../core/settingsdialog.ui" line="603"/>
         <source>Shqiptar - Efendi Nahi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="603"/>
+        <location filename="../core/settingsdialog.ui" line="608"/>
         <source>Swedish - Bernström</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="608"/>
+        <location filename="../core/settingsdialog.ui" line="613"/>
         <source>Swahili - Al-Barwani</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="613"/>
+        <location filename="../core/settingsdialog.ui" line="618"/>
         <source>Tamil - Jan Turst Foundation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="618"/>
+        <location filename="../core/settingsdialog.ui" line="623"/>
         <source>ภาษาไทย - ภาษาไทย</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="623"/>
+        <location filename="../core/settingsdialog.ui" line="628"/>
         <source>Türkçe - Diyanet Isleri</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="628"/>
+        <location filename="../core/settingsdialog.ui" line="633"/>
         <source>اردو - جالندربرى</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="633"/>
+        <location filename="../core/settingsdialog.ui" line="638"/>
         <source>Uzbek - Мухаммад Содик</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="638"/>
+        <location filename="../core/settingsdialog.ui" line="643"/>
         <source>中国语文 - Ma Jian</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1206,67 +1211,72 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="90"/>
+        <location filename="../core/tafsirdialog.cpp" line="93"/>
         <source>Al-Baghawy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="93"/>
+        <location filename="../core/tafsirdialog.cpp" line="96"/>
         <source>Earab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="102"/>
+        <location filename="../core/tafsirdialog.cpp" line="105"/>
         <source>Al-Qortoby</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="96"/>
+        <location filename="../core/tafsirdialog.cpp" line="99"/>
         <source>Indonesian - Tafsir Jalalayn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="99"/>
+        <location filename="../core/tafsirdialog.cpp" line="90"/>
+        <source>Aysar Al-Tafasir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="102"/>
         <source>Ibn-Katheer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="105"/>
+        <location filename="../core/tafsirdialog.cpp" line="108"/>
         <source>Russian - Kuliev &amp; Al-Sa&apos;ady</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="108"/>
+        <location filename="../core/tafsirdialog.cpp" line="111"/>
         <source>Al-Tabary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="111"/>
+        <location filename="../core/tafsirdialog.cpp" line="114"/>
         <source>Al-Sa&apos;ady</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="114"/>
+        <location filename="../core/tafsirdialog.cpp" line="117"/>
         <source>Tafheem-ul-Quran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="117"/>
+        <location filename="../core/tafsirdialog.cpp" line="120"/>
         <source>Ibn-Ashoor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="120"/>
+        <location filename="../core/tafsirdialog.cpp" line="123"/>
         <source>Al-Tafsir Al-Waseet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="132"/>
+        <location filename="../core/tafsirdialog.cpp" line="135"/>
         <source>Surah: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="133"/>
+        <location filename="../core/tafsirdialog.cpp" line="136"/>
         <source>Verse: </source>
         <translation type="unfinished"></translation>
     </message>

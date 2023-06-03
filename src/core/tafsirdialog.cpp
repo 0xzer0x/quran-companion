@@ -86,6 +86,9 @@ TafsirDialog::setTafsirAsTitle()
   DBManager::Tafsir id =
     qvariant_cast<DBManager::Tafsir>(m_settings->value("Reader/Tafsir"));
   switch (id) {
+    case DBManager::aysar:
+      title.append(tr("Aysar Al-Tafasir"));
+      break;
     case DBManager::baghawy:
       title.append(tr("Al-Baghawy"));
       break;
@@ -144,7 +147,7 @@ TafsirDialog::loadVerseTafsir()
   QFont sideFont =
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
   ui->textEdit->setFont(sideFont);
-  ui->textEdit->setText(
+  ui->textEdit->setHtml(
     m_dbMgr->getTafsir(m_shownVerse.surah, m_shownVerse.number));
 
   if (m_shownVerse.surah == 1 && m_shownVerse.number == 1)
