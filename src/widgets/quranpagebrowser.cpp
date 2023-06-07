@@ -225,7 +225,7 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
     }
   }
 
-  pageTextFormat.setFont(QFont("Amiri", m_fontSize - 4));
+  pageTextFormat.setFont(QFont("PakType Naskh Basic", m_fontSize - 4));
   cur.insertBlock(pageFormat, pageTextFormat);
   cur.insertText(getEasternNum(QString::number(pageNo)));
   setAlignment(Qt::AlignCenter);
