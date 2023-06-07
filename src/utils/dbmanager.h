@@ -41,6 +41,7 @@ public:
     waseet,
     e3rab,
     tanweer,
+    juzayy,
     katheer,
     indonesian,
     russian,

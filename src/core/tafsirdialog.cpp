@@ -98,6 +98,9 @@ TafsirDialog::setTafsirAsTitle()
     case DBManager::indonesian:
       title.append(tr("Indonesian - Tafsir Jalalayn"));
       break;
+    case DBManager::juzayy:
+      title.append(tr("Ibn-Juzayy"));
+      break;
     case DBManager::katheer:
       title.append(tr("Ibn-Katheer"));
       break;

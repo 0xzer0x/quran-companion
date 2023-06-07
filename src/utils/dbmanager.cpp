@@ -99,6 +99,10 @@ DBManager::setCurrentTafsir(Tafsir tafsirName)
       m_tafsirDbFilename = "tanweer.db";
       break;
 
+    case Tafsir::juzayy:
+      m_tafsirDbFilename = "tasheel.db";
+      break;
+
     case Tafsir::katheer:
       m_tafsirDbFilename = "katheer.db";
       break;

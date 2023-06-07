@@ -1354,13 +1354,18 @@ MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
 {
   QPointer<QDialog> mbox = new QDialog(this);
   mbox->setLayout(new QVBoxLayout);
-  mbox->setWindowIcon(QIcon(":/images/tray.png"));
+  mbox->setStyleSheet(
+    "QDialog:hover{ background-color: rgba(0, 161, 185, 40); }");
+  mbox->setWindowIcon(QIcon(m_iconsPath + "today.png"));
   mbox->setWindowTitle(tr("Verse Of The Day"));
   ClickableLabel* lb = new ClickableLabel(mbox);
   lb->setText(votd.second);
   lb->setTextFormat(Qt::RichText);
   lb->setAlignment(Qt::AlignCenter);
-  lb->setFont(QFont("Amiri", 15));
+  QStringList uiFonts;
+  uiFonts << "Noto Sans Display"
+          << "PakType Naskh Basic";
+  lb->setFont(QFont(uiFonts, 15));
   lb->setCursor(Qt::PointingHandCursor);
   if (votd.second.length() > 200)
     lb->setWordWrap(true);

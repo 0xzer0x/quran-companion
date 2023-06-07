@@ -465,6 +465,11 @@ dialog-ok-icon: off;
               </item>
               <item>
                <property name="text">
+                <string>Ibn-Juzayy</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
                 <string>Ibn-Katheer</string>
                </property>
               </item>
