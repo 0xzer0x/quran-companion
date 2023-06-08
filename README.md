@@ -7,7 +7,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/0xzer0x/quran-companion">
-    <img src="images/tray.png" alt="Logo" width="80" height="80">
+    <img src="resources/tray.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Quran Companion</h3>
