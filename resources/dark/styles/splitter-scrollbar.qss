@@ -3,7 +3,7 @@ QDialogButtonBox {
 }
 
 QSplitter#centeralSplitter {
-  border: 2px solid #222222;
+  border: 2px solid #2e2e2e;
   border-radius: 4px;
   background-color: #222222;
 }
@@ -44,5 +44,41 @@ QScrollBar::add-line:vertical {
   background: none;
   height: 0px;
   subcontrol-position: bottom;
+  subcontrol-origin: margin;
+}
+
+/* HORIZONTAL SCROLLBAR */
+QScrollBar:horizontal {
+  border: none;
+  border-radius: 4px;
+  background: #222222;
+  height: 10px;
+  margin: 0;
+}
+
+/*  HANDLE BAR HORIZONTAL */
+QScrollBar::handle:horizontal {
+  background-color: #3b3b3b;
+  min-width: 2px;
+  border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal:hover {
+  background-color: #515151;
+}
+
+/* BTN RIGHT - SCROLLBAR */
+QScrollBar::add-line:horizontal {
+  background: transparent;
+  width: 0;
+  subcontrol-position: right;
+  subcontrol-origin: margin;
+}
+
+/* BTN LEFT - SCROLLBAR */
+QScrollBar::sub-line:horizontal {
+  background: transparent;
+  width: 0;
+  subcontrol-position: left;
   subcontrol-origin: margin;
 }

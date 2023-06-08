@@ -289,6 +289,7 @@ QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
   else if (chosen == m_actRemBookmark)
     actionIdx = 5;
 
+  this->clearFocus();
   return actionIdx;
 }
 

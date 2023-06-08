@@ -425,6 +425,11 @@ dialog-ok-icon: off;
              <widget class="QComboBox" name="cmbTafsir">
               <item>
                <property name="text">
+                <string>Adwa' ul-Bayan</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
                 <string>Aysar Al-Tafasir</string>
                </property>
               </item>

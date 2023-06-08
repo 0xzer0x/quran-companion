@@ -33,6 +33,7 @@ public:
   };
   enum Tafsir
   {
+    adwa,
     aysar,
     baghawy,
     qortoby,

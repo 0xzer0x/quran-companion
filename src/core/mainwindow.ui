@@ -130,10 +130,10 @@ dialog-no-icon: off;
           <string notr="true"/>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Box</enum>
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
+          <enum>QFrame::Raised</enum>
          </property>
          <property name="lineWidth">
           <number>1</number>
@@ -669,10 +669,11 @@ background-color: transparent;
      <height>524287</height>
     </size>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="styleSheet">
-    <string notr="true">QDockWidget{
-background-color: rgb(52, 58, 64);
-}</string>
+    <string notr="true"/>
    </property>
    <property name="features">
     <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
@@ -686,7 +687,10 @@ background-color: rgb(52, 58, 64);
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_2">
+   <widget class="QWidget" name="sideDockWidget">
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4">

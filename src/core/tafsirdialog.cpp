@@ -86,6 +86,9 @@ TafsirDialog::setTafsirAsTitle()
   DBManager::Tafsir id =
     qvariant_cast<DBManager::Tafsir>(m_settings->value("Reader/Tafsir"));
   switch (id) {
+    case DBManager::adwa:
+      title.append(tr("Adwa' ul-Bayan"));
+      break;
     case DBManager::aysar:
       title.append(tr("Aysar Al-Tafasir"));
       break;
@@ -126,6 +129,7 @@ TafsirDialog::setTafsirAsTitle()
       title.append(tr("Al-Tafsir Al-Waseet"));
       break;
     default:
+      title.append(tr("Tafsir"));
       break;
   }
 

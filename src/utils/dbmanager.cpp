@@ -67,6 +67,10 @@ DBManager::setCurrentTafsir(Tafsir tafsirName)
   m_currTafsir = tafsirName;
 
   switch (m_currTafsir) {
+    case Tafsir::adwa:
+      m_tafsirDbFilename = "adwa.db";
+      break;
+
     case Tafsir::aysar:
       m_tafsirDbFilename = "aysar.db";
       break;
