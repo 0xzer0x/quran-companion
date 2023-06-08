@@ -30,7 +30,7 @@ public:
   explicit SearchDialog(QWidget* parent = nullptr,
                         QSettings* settings = nullptr,
                         DBManager* dbPtr = nullptr,
-                        const QString& iconPath = ":/images/light/");
+                        const QString& iconPath = ":/resources/light/");
   ~SearchDialog();
 
 public slots:
@@ -58,7 +58,7 @@ private:
   Ui::SearchDialog* ui;
   DBManager* m_dbMgr;
   QSettings* m_settings;
-  QString m_iconsPath;
+  QString m_resourcePath;
   QString m_fontPrefix;
   QStringList m_surahNames;
   QMap<QString, int> m_selectedSurahMap;

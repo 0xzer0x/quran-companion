@@ -21,9 +21,13 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
 #ifdef Q_OS_WIN
   m_updateToolPath.append(".exe");
 #endif
+  m_resourcePath = ":/resources/";
+  m_resourcePath.append(m_darkMode ? "dark/" : "light/");
+
   ui->setupUi(this);
   ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
   ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
+  loadStyles();
   loadIcons();
   loadSettings();
   init();
@@ -48,20 +52,31 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
 void
 MainWindow::loadIcons()
 {
-  m_iconsPath = ":/images/";
-  m_iconsPath.append(m_darkMode ? "dark/" : "light/");
   ui->actionDownload_manager->setIcon(
-    QIcon(m_iconsPath + "download-manager.png"));
-  ui->actionExit->setIcon(QIcon(m_iconsPath + "exit.png"));
-  ui->actionFind->setIcon(QIcon(m_iconsPath + "search.png"));
-  ui->actionTafsir->setIcon(QIcon(m_iconsPath + "tafsir.png"));
-  ui->actionVerse_of_the_day->setIcon(QIcon(m_iconsPath + "today.png"));
-  ui->actionBookmarks->setIcon(QIcon(m_iconsPath + "bookmark-true.png"));
-  ui->actionPereferences->setIcon(QIcon(m_iconsPath + "prefs.png"));
-  ui->btnPlay->setIcon(QIcon(m_iconsPath + "play.png"));
-  ui->btnPause->setIcon(QIcon(m_iconsPath + "pause.png"));
-  ui->btnStop->setIcon(QIcon(m_iconsPath + "stop.png"));
-  ui->actionCheck_for_updates->setIcon(QIcon(m_iconsPath + "update.png"));
+    QIcon(m_resourcePath + "/icons/download-manager.png"));
+  ui->actionExit->setIcon(QIcon(m_resourcePath + "/icons/exit.png"));
+  ui->actionFind->setIcon(QIcon(m_resourcePath + "/icons/search.png"));
+  ui->actionTafsir->setIcon(QIcon(m_resourcePath + "/icons/tafsir.png"));
+  ui->actionVerse_of_the_day->setIcon(
+    QIcon(m_resourcePath + "/icons/today.png"));
+  ui->actionBookmarks->setIcon(
+    QIcon(m_resourcePath + "/icons/bookmark-true.png"));
+  ui->actionPereferences->setIcon(QIcon(m_resourcePath + "/icons/prefs.png"));
+  ui->btnPlay->setIcon(QIcon(m_resourcePath + "/icons/play.png"));
+  ui->btnPause->setIcon(QIcon(m_resourcePath + "/icons/pause.png"));
+  ui->btnStop->setIcon(QIcon(m_resourcePath + "/icons/stop.png"));
+  ui->actionCheck_for_updates->setIcon(
+    QIcon(m_resourcePath + "/icons/update.png"));
+}
+
+void
+MainWindow::loadStyles()
+{
+  QFile ss(m_resourcePath + "/styles/splitter-scrollbar.qss");
+  if (ss.open(QIODevice::ReadOnly)) {
+    this->setStyleSheet(ss.readAll());
+    ss.close();
+  }
 }
 
 void
@@ -91,7 +106,7 @@ MainWindow::init()
                          m_currVerse.page,
                          m_dbMgr,
                          m_settingsPtr,
-                         m_iconsPath);
+                         m_resourcePath);
   ui->frmPageContent->layout()->addWidget(m_quranBrowser);
   m_notifyMgr = new NotificationManager(this, m_dbMgr);
 
@@ -781,12 +796,10 @@ MainWindow::mediaStateChanged(QMediaPlayer::PlaybackState state)
     ui->btnPlay->setEnabled(false);
     ui->btnPause->setEnabled(true);
     ui->btnStop->setEnabled(true);
-
   } else if (state == QMediaPlayer::PausedState) {
     ui->btnPlay->setEnabled(true);
     ui->btnPause->setEnabled(false);
     ui->btnStop->setEnabled(true);
-
   } else if (state == QMediaPlayer::StoppedState) {
     ui->btnPlay->setEnabled(true);
     ui->btnPause->setEnabled(false);
@@ -987,7 +1000,7 @@ MainWindow::actionPrefTriggered()
 {
   if (m_settingsDlg == nullptr) {
     m_settingsDlg =
-      new SettingsDialog(this, m_settingsPtr, m_player, m_iconsPath);
+      new SettingsDialog(this, m_settingsPtr, m_player, m_resourcePath);
 
     // Restart signal
     connect(m_settingsDlg,
@@ -1054,7 +1067,7 @@ MainWindow::actionDMTriggered()
         new DownloadManager(this, m_dbMgr, m_player->recitersList());
 
     m_downloaderDlg = new DownloaderDialog(
-      this, m_settingsPtr, m_downManPtr, m_dbMgr, m_iconsPath);
+      this, m_settingsPtr, m_downManPtr, m_dbMgr, m_resourcePath);
   }
 
   m_downloaderDlg->show();
@@ -1066,7 +1079,7 @@ MainWindow::actionBookmarksTriggered()
   if (m_bookmarksDlg == nullptr) {
     m_bookmarksDlg =
       new BookmarksDialog(this,
-                          m_iconsPath,
+                          m_resourcePath,
                           m_dbMgr,
                           m_settingsPtr->value("Reader/QCF", 1).toInt());
     connect(m_bookmarksDlg,
@@ -1120,7 +1133,8 @@ void
 MainWindow::openSearchDialog()
 {
   if (m_searchDlg == nullptr) {
-    m_searchDlg = new SearchDialog(this, m_settingsPtr, m_dbMgr, m_iconsPath);
+    m_searchDlg =
+      new SearchDialog(this, m_settingsPtr, m_dbMgr, m_resourcePath);
     connect(m_searchDlg,
             &SearchDialog::navigateToVerse,
             this,
@@ -1324,7 +1338,8 @@ void
 MainWindow::showExpandedVerseTafsir(Verse v)
 {
   if (m_tafsirDlg == nullptr) {
-    m_tafsirDlg = new TafsirDialog(this, m_dbMgr, m_settingsPtr, m_iconsPath);
+    m_tafsirDlg =
+      new TafsirDialog(this, m_dbMgr, m_settingsPtr, m_resourcePath);
   }
 
   m_tafsirDlg->setShownVerse(v);
@@ -1354,13 +1369,18 @@ MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
 {
   QPointer<QDialog> mbox = new QDialog(this);
   mbox->setLayout(new QVBoxLayout);
-  mbox->setWindowIcon(QIcon(":/images/tray.png"));
+  mbox->setStyleSheet(
+    "QDialog:hover{ background-color: rgba(0, 161, 185, 40); }");
+  mbox->setWindowIcon(QIcon(m_resourcePath + "/icons/today.png"));
   mbox->setWindowTitle(tr("Verse Of The Day"));
   ClickableLabel* lb = new ClickableLabel(mbox);
   lb->setText(votd.second);
   lb->setTextFormat(Qt::RichText);
   lb->setAlignment(Qt::AlignCenter);
-  lb->setFont(QFont("Amiri", 15));
+  QStringList uiFonts;
+  uiFonts << "Noto Sans Display"
+          << "PakType Naskh Basic";
+  lb->setFont(QFont(uiFonts, 15));
   lb->setCursor(Qt::PointingHandCursor);
   if (votd.second.length() > 200)
     lb->setWordWrap(true);

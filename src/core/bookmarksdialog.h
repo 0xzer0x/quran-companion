@@ -8,8 +8,9 @@
 #include <QStringListModel>
 #include <QVBoxLayout>
 
-namespace Ui {
-class BookmarksDialog;
+namespace Ui
+{
+  class BookmarksDialog;
 }
 
 class BookmarksDialog : public QDialog
@@ -18,9 +19,9 @@ class BookmarksDialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit BookmarksDialog(QWidget* parent = nullptr,
-                           QString iconPath = ":/images/light/",
-                           DBManager* dbMgr = nullptr,
+  explicit BookmarksDialog(QWidget *parent = nullptr,
+                           QString iconPath = ":/resources/light/",
+                           DBManager *dbMgr = nullptr,
                            int qcfVer = 1);
   void showWindow();
   void loadBookmarks(int surah = -1);
@@ -37,28 +38,28 @@ public slots:
   void btnPrevClicked();
 
 private slots:
-  void surahSelected(const QModelIndex& index);
+  void surahSelected(const QModelIndex &index);
 
 private:
-  Ui::BookmarksDialog* ui;
+  Ui::BookmarksDialog *ui;
   void setupConnections();
-  void setStyling(bool dark = false);
-  DBManager* m_dbMgr = nullptr;
+  void loadStyles();
+  DBManager *m_dbMgr = nullptr;
   int m_qcfVer = 1;
   int m_startIdx = 0;
   int m_shownSurah = 0;
-  QString m_iconsPath;
+  QString m_resourcePath;
   QString m_fontPrefix;
-  QVBoxLayout* m_scrollAreaLayout;
+  QVBoxLayout *m_scrollAreaLayout;
   QList<DBManager::Verse> m_allBookmarked;
   QList<DBManager::Verse> m_shownVerses;
-  QList<QFrame*> m_frames;
+  QList<QFrame *> m_frames;
   QStandardItemModel m_surahsModel;
   QStringList m_favSurahList;
 
   // QWidget interface
 protected:
-  void closeEvent(QCloseEvent* event);
+  void closeEvent(QCloseEvent *event);
 };
 
 #endif // BOOKMARKSDIALOG_H

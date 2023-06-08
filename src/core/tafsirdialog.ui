@@ -42,7 +42,7 @@
     <widget class="QTextEdit" name="textEdit">
      <property name="font">
       <font>
-       <family>Amiri</family>
+       <family>PakType Naskh Basic</family>
        <pointsize>15</pointsize>
       </font>
      </property>

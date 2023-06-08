@@ -33,6 +33,8 @@ public:
   };
   enum Tafsir
   {
+    adwa,
+    aysar,
     baghawy,
     qortoby,
     sa3dy,
@@ -40,6 +42,7 @@ public:
     waseet,
     e3rab,
     tanweer,
+    juzayy,
     katheer,
     indonesian,
     russian,

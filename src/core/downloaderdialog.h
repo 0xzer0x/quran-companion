@@ -14,8 +14,9 @@
 
 typedef DBManager::Reciter Reciter;
 
-namespace Ui {
-class DownloaderDialog;
+namespace Ui
+{
+  class DownloaderDialog;
 }
 
 /*!
@@ -29,11 +30,11 @@ class DownloaderDialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit DownloaderDialog(QWidget* parent = nullptr,
-                            QSettings* settingsptr = nullptr,
-                            DownloadManager* downloader = nullptr,
-                            DBManager* dbMan = nullptr,
-                            const QString& iconsPath = ":/images/light/");
+  explicit DownloaderDialog(QWidget *parent = nullptr,
+                            QSettings *settingsptr = nullptr,
+                            DownloadManager *downloader = nullptr,
+                            DBManager *dbMan = nullptr,
+                            const QString &iconsPath = ":/resources/light/");
   void fillTreeView();
   ~DownloaderDialog();
 
@@ -50,26 +51,26 @@ public slots:
 
   // QWidget interface
 protected:
-  void closeEvent(QCloseEvent* event);
+  void closeEvent(QCloseEvent *event);
 
 private:
-  Ui::DownloaderDialog* ui;
+  Ui::DownloaderDialog *ui;
   void setupConnections();
-  QString m_iconsPath;
-  DownloadProgressBar* m_currentBar;
-  QLabel* m_currentLb;
-  QLabel* m_currDownSpeedLb;
-  QList<QFrame*> m_frameLst;
-  QList<QFrame*> m_finishedFrames;
+  QString m_resourcePath;
+  DownloadProgressBar *m_currentBar;
+  QLabel *m_currentLb;
+  QLabel *m_currDownSpeedLb;
+  QList<QFrame *> m_frameLst;
+  QList<QFrame *> m_finishedFrames;
   QStandardItemModel m_treeModel;
-  DownloadManager* m_downloaderPtr;
-  DBManager* m_dbMgr;
-  QSettings* m_appSettings;
+  DownloadManager *m_downloaderPtr;
+  DBManager *m_dbMgr;
+  QSettings *m_appSettings;
   QStringList m_surahDisplayNames;
   QString m_ssProgBar =
-    "QProgressBar {text-align: center; color:palette(text); "
-    "border-radius: 2px; border: 1px "
-    "solid palette(dark); }";
+      "QProgressBar {text-align: center; color:palette(text); "
+      "border-radius: 2px; border: 1px "
+      "solid palette(dark); }";
   ;
 };
 

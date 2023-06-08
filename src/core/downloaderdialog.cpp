@@ -9,23 +9,17 @@
  * @param dbMan pointer to database management/interaction object
  * @param iconsPath path to current theme icons
  */
-DownloaderDialog::DownloaderDialog(QWidget* parent,
-                                   QSettings* settingsptr,
-                                   DownloadManager* downloader,
-                                   DBManager* dbMan,
-                                   const QString& iconsPath)
-  : QDialog(parent)
-  , ui(new Ui::DownloaderDialog)
-  , m_iconsPath{ iconsPath }
-  , m_appSettings{ settingsptr }
-  , m_downloaderPtr{ downloader }
-  , m_dbMgr{ dbMan }
-  , m_surahDisplayNames{ m_dbMgr->surahNameList() }
+DownloaderDialog::DownloaderDialog(QWidget *parent,
+                                   QSettings *settingsptr,
+                                   DownloadManager *downloader,
+                                   DBManager *dbMan,
+                                   const QString &iconsPath)
+    : QDialog(parent), ui(new Ui::DownloaderDialog), m_resourcePath{iconsPath}, m_appSettings{settingsptr}, m_downloaderPtr{downloader}, m_dbMgr{dbMan}, m_surahDisplayNames{m_dbMgr->surahNameList()}
 
 {
 
   ui->setupUi(this);
-  setWindowIcon(QIcon(m_iconsPath + "download-manager.png"));
+  setWindowIcon(QIcon(m_resourcePath + "/icons/download-manager.png"));
 
   // treeview setup
   QStringList headers;
@@ -34,15 +28,14 @@ DownloaderDialog::DownloaderDialog(QWidget* parent,
   m_treeModel.setHorizontalHeaderLabels(headers);
   ui->treeView->setModel(&m_treeModel);
   ui->treeView->setSelectionMode(
-    QAbstractItemView::SelectionMode::ExtendedSelection);
+      QAbstractItemView::SelectionMode::ExtendedSelection);
   fillTreeView();
 
   // connectors
   setupConnections();
 }
 
-void
-DownloaderDialog::setupConnections()
+void DownloaderDialog::setupConnections()
 {
 
   connect(ui->btnAddToQueue,
@@ -91,19 +84,20 @@ DownloaderDialog::setupConnections()
  * \brief DownloaderDialog::fillTreeView fill the treeView model with the
  * reciters info
  */
-void
-DownloaderDialog::fillTreeView()
+void DownloaderDialog::fillTreeView()
 {
-  for (Reciter& reciter : m_downloaderPtr->recitersList()) {
-    QStandardItem* item = new QStandardItem(reciter.displayName);
+  for (Reciter &reciter : m_downloaderPtr->recitersList())
+  {
+    QStandardItem *item = new QStandardItem(reciter.displayName);
 
     m_treeModel.invisibleRootItem()->appendRow(item);
 
-    for (int j = 1; j <= 114; j++) {
-      QStandardItem* suraItem =
-        new QStandardItem(m_surahDisplayNames.at(j - 1));
+    for (int j = 1; j <= 114; j++)
+    {
+      QStandardItem *suraItem =
+          new QStandardItem(m_surahDisplayNames.at(j - 1));
 
-      QList<QStandardItem*> rw;
+      QList<QStandardItem *> rw;
       rw.append(new QStandardItem(QString::number(j)));
       rw.append(suraItem);
 
@@ -116,18 +110,19 @@ DownloaderDialog::fillTreeView()
  * \brief DownloaderDialog::addToQueue adds selected surahs to the download
  * queue
  */
-void
-DownloaderDialog::addToQueue()
+void DownloaderDialog::addToQueue()
 {
   QModelIndexList selected = ui->treeView->selectionModel()->selectedRows();
 
-  foreach (QModelIndex i, selected) {
+  foreach (QModelIndex i, selected)
+  {
     if (i.parent().row() < 0)
       continue;
 
     addTaskProgress(i.parent().row(), i.row() + 1);
 
-    for (int j = 1; j <= m_dbMgr->getSurahVerseCount(i.row() + 1); j++) {
+    for (int j = 1; j <= m_dbMgr->getSurahVerseCount(i.row() + 1); j++)
+    {
       m_downloaderPtr->enqeueVerseTask(i.parent().row(), i.row() + 1, j);
     }
   }
@@ -145,28 +140,27 @@ DownloaderDialog::addToQueue()
  * Reciters list
  * @param surah integer value represents the surah number to download (1-114)
  */
-void
-DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
+void DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
 {
   QString reciter = m_downloaderPtr->recitersList().at(reciterIdx).displayName;
   QString surahName = m_surahDisplayNames.at(surah - 1);
 
   QString objName = reciter + tr(" // Surah: ") + surahName;
 
-  QFrame* prgFrm = new QFrame(ui->scrollAreaWidgetContents);
+  QFrame *prgFrm = new QFrame(ui->scrollAreaWidgetContents);
   prgFrm->setLayout(new QVBoxLayout);
   prgFrm->setObjectName(objName);
 
-  QBoxLayout* downInfo;
+  QBoxLayout *downInfo;
   if (m_appSettings->value("Language").toInt() == 14)
     downInfo = new QBoxLayout(QBoxLayout::RightToLeft, prgFrm);
   else
     downInfo = new QHBoxLayout(prgFrm);
 
-  QLabel* lbTitle = new QLabel(prgFrm);
+  QLabel *lbTitle = new QLabel(prgFrm);
   lbTitle->setObjectName("DownloadInfo");
   lbTitle->setText(prgFrm->objectName());
-  QLabel* downSpeed = new QLabel(prgFrm);
+  QLabel *downSpeed = new QLabel(prgFrm);
   downSpeed->setObjectName("DownloadSpeed");
   downSpeed->setAlignment(Qt::AlignRight);
 
@@ -174,8 +168,8 @@ DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
   downInfo->addWidget(downSpeed);
   prgFrm->layout()->addItem(downInfo);
 
-  DownloadProgressBar* dpb =
-    new DownloadProgressBar(prgFrm, m_dbMgr->getSurahVerseCount(surah));
+  DownloadProgressBar *dpb =
+      new DownloadProgressBar(prgFrm, m_dbMgr->getSurahVerseCount(surah));
   prgFrm->layout()->addWidget(dpb);
   m_frameLst.append(prgFrm);
 
@@ -186,18 +180,17 @@ DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
  * \brief DownloaderDialog::setCurrentBar sets the currently active download
  * task progress bar in order to update displayed info
  */
-void
-DownloaderDialog::setCurrentBar()
+void DownloaderDialog::setCurrentBar()
 {
   if (m_frameLst.empty())
     return;
 
-  m_currentLb = m_frameLst.at(0)->findChild<QLabel*>("DownloadInfo");
-  m_currDownSpeedLb = m_frameLst.at(0)->findChild<QLabel*>("DownloadSpeed");
+  m_currentLb = m_frameLst.at(0)->findChild<QLabel *>("DownloadInfo");
+  m_currDownSpeedLb = m_frameLst.at(0)->findChild<QLabel *>("DownloadSpeed");
   m_currentLb->setText(tr("Downloading: ") +
                        m_currentLb->parent()->objectName());
 
-  m_currentBar = m_frameLst.at(0)->findChild<DownloadProgressBar*>();
+  m_currentBar = m_frameLst.at(0)->findChild<DownloadProgressBar *>();
 
   m_currentBar->setStyleSheet(m_ssProgBar);
 
@@ -208,16 +201,14 @@ DownloaderDialog::setCurrentBar()
           Qt::UniqueConnection);
 }
 
-void
-DownloaderDialog::updateDownloadSpeed(int value, QString unit)
+void DownloaderDialog::updateDownloadSpeed(int value, QString unit)
 {
   m_currDownSpeedLb->setText(QString::number(value) + " " + unit + tr("/sec"));
 }
 
-void
-DownloaderDialog::selectTask(int reciter, int surah)
+void DownloaderDialog::selectTask(int reciter, int surah)
 {
-  QItemSelectionModel* selector = ui->treeView->selectionModel();
+  QItemSelectionModel *selector = ui->treeView->selectionModel();
   QModelIndex reciterIdx = m_treeModel.index(reciter, 0);
   ui->treeView->collapseAll();
   ui->treeView->expand(reciterIdx);
@@ -226,11 +217,11 @@ DownloaderDialog::selectTask(int reciter, int surah)
                    QItemSelectionModel::Rows | QItemSelectionModel::Select);
 }
 
-void
-DownloaderDialog::clearQueue()
+void DownloaderDialog::clearQueue()
 {
   m_downloaderPtr->stopQueue();
-  if (!m_finishedFrames.isEmpty()) {
+  if (!m_finishedFrames.isEmpty())
+  {
     qDeleteAll(m_finishedFrames);
     m_finishedFrames.clear();
   }
@@ -240,12 +231,9 @@ DownloaderDialog::clearQueue()
  * \brief DownloaderDialog::surahDownloaded slot to delete the finished progress
  * bar on download completion
  */
-void
-DownloaderDialog::surahDownloaded()
+void DownloaderDialog::surahDownloaded()
 {
-  m_currentBar->setStyleSheet(
-    m_ssProgBar + " QProgressBar::chunk "
-                  "{border-radius:2px; background-color: #008296;}");
+  m_currentBar->setStyling(DownloadProgressBar::completed);
   m_currentLb->setText(m_currentLb->parent()->objectName());
   m_currDownSpeedLb->setText(tr("Download Completed"));
   disconnect(m_downloaderPtr,
@@ -262,10 +250,10 @@ DownloaderDialog::surahDownloaded()
  * \brief DownloaderDialog::downloadAborted slot to delete all download tasks /
  * progress bars from dialog
  */
-void
-DownloaderDialog::downloadAborted()
+void DownloaderDialog::downloadAborted()
 {
-  if (!m_frameLst.isEmpty()) {
+  if (!m_frameLst.isEmpty())
+  {
     qDeleteAll(m_frameLst);
     m_frameLst.clear();
   }
@@ -275,12 +263,9 @@ DownloaderDialog::downloadAborted()
  * \brief DownloaderDialog::topTaskDownloadError slot to update the current task
  * in case of download error
  */
-void
-DownloaderDialog::topTaskDownloadError()
+void DownloaderDialog::topTaskDownloadError()
 {
-  m_currentBar->setStyleSheet(
-    m_ssProgBar + " QProgressBar::chunk "
-                  "{border-radius:2px; background-color: #900D09;}");
+  m_currentBar->setStyling(DownloadProgressBar::aborted);
   m_currentLb->setText(m_currentLb->parent()->objectName());
   m_currDownSpeedLb->setText(tr("Download Failed"));
   disconnect(m_downloaderPtr,
@@ -293,8 +278,7 @@ DownloaderDialog::topTaskDownloadError()
   setCurrentBar();
 }
 
-void
-DownloaderDialog::closeEvent(QCloseEvent* event)
+void DownloaderDialog::closeEvent(QCloseEvent *event)
 {
   this->hide();
 }

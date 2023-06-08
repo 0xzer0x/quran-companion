@@ -11,7 +11,7 @@ TafsirDialog::TafsirDialog(QWidget* parent,
   , m_settings{ settings }
 {
 
-  setWindowIcon(QIcon(iconsPath + "tafsir.png"));
+  setWindowIcon(QIcon(iconsPath + "/icons/tafsir.png"));
   ui->setupUi(this);
   setTafsirAsTitle();
   setLayoutDirection(Qt::LeftToRight);
@@ -86,6 +86,12 @@ TafsirDialog::setTafsirAsTitle()
   DBManager::Tafsir id =
     qvariant_cast<DBManager::Tafsir>(m_settings->value("Reader/Tafsir"));
   switch (id) {
+    case DBManager::adwa:
+      title.append(tr("Adwa' ul-Bayan"));
+      break;
+    case DBManager::aysar:
+      title.append(tr("Aysar Al-Tafasir"));
+      break;
     case DBManager::baghawy:
       title.append(tr("Al-Baghawy"));
       break;
@@ -94,6 +100,9 @@ TafsirDialog::setTafsirAsTitle()
       break;
     case DBManager::indonesian:
       title.append(tr("Indonesian - Tafsir Jalalayn"));
+      break;
+    case DBManager::juzayy:
+      title.append(tr("Ibn-Juzayy"));
       break;
     case DBManager::katheer:
       title.append(tr("Ibn-Katheer"));
@@ -120,6 +129,7 @@ TafsirDialog::setTafsirAsTitle()
       title.append(tr("Al-Tafsir Al-Waseet"));
       break;
     default:
+      title.append(tr("Tafsir"));
       break;
   }
 
@@ -144,7 +154,7 @@ TafsirDialog::loadVerseTafsir()
   QFont sideFont =
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
   ui->textEdit->setFont(sideFont);
-  ui->textEdit->setText(
+  ui->textEdit->setHtml(
     m_dbMgr->getTafsir(m_shownVerse.surah, m_shownVerse.number));
 
   if (m_shownVerse.surah == 1 && m_shownVerse.number == 1)

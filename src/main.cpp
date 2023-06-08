@@ -25,7 +25,7 @@ main(int argc, char* argv[])
   QApplication::setOrganizationName("0xzer0x");
   QApplication::setApplicationVersion("1.1");
 
-  QSplashScreen splash(QPixmap(":/images/splash.png"));
+  QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
 
   QDir::setCurrent(QApplication::applicationDirPath());
@@ -104,7 +104,7 @@ addFonts(int qcfVersion)
   fontsDir = QApplication::applicationDirPath() + QDir::separator() + "assets" +
              QDir::separator() + "fonts";
 
-  QFontDatabase::addApplicationFont(fontsDir.filePath("Amiri.ttf"));
+  QFontDatabase::addApplicationFont(fontsDir.filePath("PakTypeNaskhBasic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("noto-symbols.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("droid-sans-org.ttf"));
@@ -131,6 +131,12 @@ addFonts(int qcfVersion)
 
     QFontDatabase::addApplicationFont(fontsDir.filePath(fontName));
   }
+
+  // set default UI fonts to use
+  QStringList uiFonts;
+  uiFonts << "Noto Sans Display"
+          << "Droid Sans Arabic";
+  qApp->setFont(QFont(uiFonts, qApp->font().pointSize()));
 }
 
 void
@@ -206,17 +212,14 @@ setTheme(int themeIdx)
 void
 addTranslation(QLocale::Language localeCode)
 {
-  if (localeCode == QLocale::English) {
-    qApp->setFont(QFont("Noto Sans Display", qApp->font().pointSize()));
+  if (localeCode == QLocale::English)
     return;
-  }
 
   QString code = QLocale::languageToCode(localeCode);
   QTranslator *translation = new QTranslator(qApp),
               *qtBase = new QTranslator(qApp);
 
   if (translation->load(":/i18n/qc_" + code + ".qm")) {
-    qApp->setFont(QFont("Droid Sans Arabic", qApp->font().pointSize()));
     qInfo() << "tr" << translation->language() << "loaded";
     qInfo() << "base tr loaded:" << qtBase->load(":/base/" + code + ".qm");
     qApp->installTranslator(translation);
@@ -224,5 +227,7 @@ addTranslation(QLocale::Language localeCode)
 
   } else {
     qWarning() << code + " translation not loaded!";
+    delete translation;
+    delete qtBase;
   }
 }

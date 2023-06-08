@@ -20,7 +20,7 @@
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="searchTab">
       <attribute name="title">
@@ -205,7 +205,7 @@
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Start</string>
+               <string>From</string>
               </property>
              </widget>
             </item>
@@ -232,7 +232,7 @@
             <item>
              <widget class="QLabel" name="label_2">
               <property name="text">
-               <string>End</string>
+               <string>To</string>
               </property>
              </widget>
             </item>

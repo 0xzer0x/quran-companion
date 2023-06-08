@@ -11,7 +11,7 @@ NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)
 
   addActions();
   m_sysTray->setContextMenu(m_trayMenu);
-  m_sysTray->setIcon(QIcon(":/images/tray.png"));
+  m_sysTray->setIcon(QIcon(":/resources/tray.png"));
   m_sysTray->show();
 }
 
@@ -154,14 +154,16 @@ NotificationManager::setVotdMsg()
   QString msg;
 
   m_votd.second.truncate(m_votd.second.size() - 2);
-  msg.append("<font color=#00afc3>");
-  msg.append("«" + m_votd.second + "»");
+
+  msg.append("<font>");
+  msg.append("« " + m_votd.second + " »");
   msg.append("</font>");
-  msg.append("<br>");
+  msg.append("<hr/>");
   msg.append(m_dbMgr->getTranslation(m_votd.first.surah, m_votd.first.number));
-  msg.append("<br>");
+  msg.append("<p align='center'>");
   msg.append(tr("Surah: ") + m_dbMgr->getSurahName(m_votd.first.surah) + " - " +
              tr("Verse: ") + QString::number(m_votd.first.number));
+  msg.append("</p>");
 
   m_votd.second = msg;
 }

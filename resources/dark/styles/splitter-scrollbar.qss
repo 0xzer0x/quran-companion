@@ -1,0 +1,84 @@
+QDialogButtonBox {
+  dialogbuttonbox-buttons-have-icons: 0;
+}
+
+QSplitter#centeralSplitter {
+  border: 2px solid #2e2e2e;
+  border-radius: 7px;
+  background-color: #222222;
+}
+
+/* VERTICAL SCROLLBAR */
+QScrollBar:vertical {
+  border: none;
+  background: #222222;
+  width: 10px;
+  margin: 0;
+  border-radius: 3px;
+}
+
+/*  HANDLE BAR VERTICAL */
+QScrollBar::handle:vertical {
+  background-color: #3b3b3b;
+  min-height: 10px;
+  border-radius: 4px;
+}
+QScrollBar::handle:vertical:hover {
+  background-color: #515151;
+}
+QScrollBar::handle:vertical:pressed {
+  background-color: #515151;
+}
+
+/* BTN TOP - SCROLLBAR */
+QScrollBar::sub-line:vertical {
+  border: none;
+  background: none;
+  height: 0px;
+  subcontrol-position: top;
+  subcontrol-origin: margin;
+}
+/* BTN BOTTOM - SCROLLBAR */
+QScrollBar::add-line:vertical {
+  border: none;
+  background: none;
+  height: 0px;
+  subcontrol-position: bottom;
+  subcontrol-origin: margin;
+}
+
+/* HORIZONTAL SCROLLBAR */
+QScrollBar:horizontal {
+  border: none;
+  border-radius: 4px;
+  background: #222222;
+  height: 10px;
+  margin: 0;
+}
+
+/*  HANDLE BAR HORIZONTAL */
+QScrollBar::handle:horizontal {
+  background-color: #3b3b3b;
+  min-width: 2px;
+  border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal:hover {
+  background-color: #515151;
+}
+
+/* BTN RIGHT - SCROLLBAR */
+QScrollBar::add-line:horizontal {
+  background: transparent;
+  width: 0;
+  subcontrol-position: right;
+  subcontrol-origin: margin;
+}
+
+/* BTN LEFT - SCROLLBAR */
+QScrollBar::sub-line:horizontal {
+  background: transparent;
+  width: 0;
+  subcontrol-position: left;
+  subcontrol-origin: margin;
+}

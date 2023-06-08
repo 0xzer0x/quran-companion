@@ -425,6 +425,16 @@ dialog-ok-icon: off;
              <widget class="QComboBox" name="cmbTafsir">
               <item>
                <property name="text">
+                <string>Adwa' ul-Bayan</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Aysar Al-Tafasir</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
                 <string>Al-Baghawy</string>
                </property>
               </item>
@@ -456,6 +466,11 @@ dialog-ok-icon: off;
               <item>
                <property name="text">
                 <string>Ibn-Ashoor</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Ibn-Juzayy</string>
                </property>
               </item>
               <item>
@@ -493,6 +508,12 @@ dialog-ok-icon: off;
             </item>
             <item>
              <widget class="QComboBox" name="cmbTranslation">
+              <property name="maxVisibleItems">
+               <number>3</number>
+              </property>
+              <property name="frame">
+               <bool>true</bool>
+              </property>
               <item>
                <property name="text">
                 <string>عربي - التفسير الميسّر</string>

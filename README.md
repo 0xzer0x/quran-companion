@@ -7,7 +7,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/0xzer0x/quran-companion">
-    <img src="images/logo.ico" alt="Logo" width="80" height="80">
+    <img src="resources/tray.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Quran Companion</h3>
@@ -215,6 +215,10 @@ export QT_MEDIA_BACKEND=ffmpeg
 - [x] Enhance search functionality
   - [x] Search in a range of pages only
   - [x] Search in a specific surah only
+- [x] Add new tafsir books
+  - [x] Aysar Al-Tafasir (al-Jazaeri)
+  - [x] al-Tashil li Ulum al-Tanzil (Ibn Juzayy)
+  - [x] Adwa' ul-Bayan (al-Shinqiti)
 
 See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a full list of proposed features (and known issues).
 
@@ -271,11 +275,13 @@ Project Link: [https://github.com/0xzer0x/quran-companion](https://github.com/0x
 <!-- ACKNOWLEDGMENTS -->
 
 <a name="acknowledgments"></a>
+
 ## Acknowledgments (great projects/services that were used)
 
 - [Ayat](https://quran.ksu.edu.sa/index.php)
 - [Quran.com API](https://quran.api-docs.io/)
 - [Every Ayah recitations](https://everyayah.com/recitations_ayat.html)
+- [Mosshaf](https://mosshaf.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
