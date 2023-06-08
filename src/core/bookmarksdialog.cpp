@@ -8,17 +8,17 @@ BookmarksDialog::BookmarksDialog(QWidget* parent,
                                  int qcfVer)
   : QDialog(parent)
   , ui(new Ui::BookmarksDialog)
-  , m_iconsPath{ iconPath }
+  , m_resourcePath{ iconPath }
   , m_dbMgr{ dbMgr }
   , m_qcfVer{ qcfVer }
   , m_fontPrefix{ qcfVer == 1 ? "QCF_P" : "QCF2" }
 {
 
   ui->setupUi(this);
-  setStyling(m_iconsPath.contains("dark"));
+    loadStyles();
   ui->scrollArea->setLayoutDirection(Qt::LeftToRight);
   ui->navBar->setLayoutDirection(Qt::LeftToRight);
-  setWindowIcon(QIcon(m_iconsPath + "bookmark-true.png"));
+  setWindowIcon(QIcon(m_resourcePath + "/icons/bookmark-true.png"));
   ui->listSurahsView->setModel(&m_surahsModel);
   ui->listSurahsView->selectionModel()->select(
     m_surahsModel.index(0, 0),
@@ -195,18 +195,13 @@ BookmarksDialog::surahSelected(const QModelIndex& index)
 }
 
 void
-BookmarksDialog::setStyling(bool dark)
+BookmarksDialog::loadStyles()
 {
-  QString darkStyle =
-    "QListView{ font-size: 10pt; background-color: transparent; }  "
-    "QListView::item{ color: rgb(222, 219, 215); margin: 0px 5px 0px 0px; "
-    "background-color: rgb(24, 26, 27); border: 1px solid rgb(47, 47, 47); "
-    "border-radius: 8px; }  QListView::item:selected { text-align: center; "
-    "border-color: #008296; outline: 0; } QListView::item:hover:selected { "
-    "border-color: #008296; outline: 0; }  QListView::item:hover { "
-    "background-color: rgb(23, 36, 36); }";
-  if (dark)
-    ui->listSurahsView->setStyleSheet(darkStyle);
+  QFile ss(m_resourcePath + "/styles/bookmarks-listview.qss");
+  if (ss.open(QIODevice::ReadOnly)) {
+    ui->listSurahsView->setStyleSheet(ss.readAll());
+    ss.close();
+  }
 }
 
 void

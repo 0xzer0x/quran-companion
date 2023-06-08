@@ -33,7 +33,7 @@ public:
                             QSettings* settingsptr = nullptr,
                             DownloadManager* downloader = nullptr,
                             DBManager* dbMan = nullptr,
-                            const QString& iconsPath = ":/images/light/");
+                            const QString& iconsPath = ":/resources/light/");
   void fillTreeView();
   ~DownloaderDialog();
 
@@ -55,7 +55,7 @@ protected:
 private:
   Ui::DownloaderDialog* ui;
   void setupConnections();
-  QString m_iconsPath;
+  QString m_resourcePath;
   DownloadProgressBar* m_currentBar;
   QLabel* m_currentLb;
   QLabel* m_currDownSpeedLb;

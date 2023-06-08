@@ -31,7 +31,7 @@ public:
   explicit SettingsDialog(QWidget* parent = nullptr,
                           QSettings* settingsPtr = nullptr,
                           VersePlayer* vPlayerPtr = nullptr,
-                          const QString& iconsPath = ":/images/light/");
+                          const QString& iconsPath = ":/resources/light/");
   ~SettingsDialog();
 
 public slots:
@@ -64,7 +64,7 @@ signals:
 private:
   Ui::SettingsDialog* ui;
   void setupConnections();
-  QString m_iconsPath;
+  QString m_resourcePath;
   QSettings* m_settingsPtr;
   QLocale::Language m_lang;
   QList<QAudioDevice> m_audioDevices;

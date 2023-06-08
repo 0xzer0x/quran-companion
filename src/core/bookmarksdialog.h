@@ -19,7 +19,7 @@ class BookmarksDialog : public QDialog
 
 public:
   explicit BookmarksDialog(QWidget* parent = nullptr,
-                           QString iconPath = ":/images/light/",
+                           QString iconPath = ":/resources/light/",
                            DBManager* dbMgr = nullptr,
                            int qcfVer = 1);
   void showWindow();
@@ -42,12 +42,12 @@ private slots:
 private:
   Ui::BookmarksDialog* ui;
   void setupConnections();
-  void setStyling(bool dark = false);
+  void loadStyles();
   DBManager* m_dbMgr = nullptr;
   int m_qcfVer = 1;
   int m_startIdx = 0;
   int m_shownSurah = 0;
-  QString m_iconsPath;
+  QString m_resourcePath;
   QString m_fontPrefix;
   QVBoxLayout* m_scrollAreaLayout;
   QList<DBManager::Verse> m_allBookmarked;

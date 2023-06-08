@@ -18,7 +18,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normalon>:/images/logo.ico</normalon>
+    <normalon>:/resources/logo.ico</normalon>
    </iconset>
   </property>
   <property name="autoFillBackground">
@@ -125,17 +125,18 @@ dialog-no-icon: off;
         </widget>
        </item>
        <item>
-        <widget class="QSplitter" name="splitter">
+        <widget class="QSplitter" name="centeralSplitter">
          <property name="styleSheet">
-          <string notr="true">QSplitter{
-background-color: transparent;
-border-width:2px;
-border-radius:4px;
-border-style:solid;
-}</string>
+          <string notr="true"/>
          </property>
          <property name="frameShape">
           <enum>QFrame::Box</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>1</number>
          </property>
          <property name="midLineWidth">
           <number>0</number>
@@ -144,7 +145,7 @@ border-style:solid;
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="handleWidth">
-          <number>6</number>
+          <number>4</number>
          </property>
          <widget class="QScrollArea" name="scrlVerseByVerse">
           <property name="sizePolicy">
@@ -158,6 +159,12 @@ border-style:solid;
             <width>300</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">*{
+background-color: transparent;
+} 
+</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
@@ -173,9 +180,12 @@ border-style:solid;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>406</width>
-             <height>834</height>
+             <width>410</width>
+             <height>836</height>
             </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
           </widget>
          </widget>
@@ -191,6 +201,11 @@ border-style:solid;
             <width>550</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">*.a {
+	background-color:palette(base);
+}</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
@@ -423,7 +438,7 @@ border-style:solid;
        </property>
        <property name="icon">
         <iconset>
-         <normalon>:/images/play.png</normalon>
+         <normalon>:/resources/play.png</normalon>
         </iconset>
        </property>
        <property name="default">
@@ -458,7 +473,7 @@ border-style:solid;
        </property>
        <property name="icon">
         <iconset>
-         <normalon>:/images/pause.png</normalon>
+         <normalon>:/resources/pause.png</normalon>
         </iconset>
        </property>
       </widget>
@@ -485,7 +500,7 @@ border-style:solid;
        </property>
        <property name="icon">
         <iconset>
-         <normalon>:/images/stop.png</normalon>
+         <normalon>:/resources/stop.png</normalon>
         </iconset>
        </property>
       </widget>
@@ -653,6 +668,11 @@ border-style:solid;
      <width>240</width>
      <height>524287</height>
     </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QDockWidget{
+background-color: rgb(52, 58, 64);
+}</string>
    </property>
    <property name="features">
     <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
@@ -938,7 +958,7 @@ background-color: rgba(0, 161, 185, 40);
   <action name="actionPereferences">
    <property name="icon">
     <iconset>
-     <normaloff>:/images/prefs.png</normaloff>:/images/prefs.png</iconset>
+     <normaloff>:/resources/prefs.png</normaloff>:/resources/prefs.png</iconset>
    </property>
    <property name="text">
     <string>Preferences</string>
@@ -950,7 +970,7 @@ background-color: rgba(0, 161, 185, 40);
   <action name="actionDownload_manager">
    <property name="icon">
     <iconset>
-     <normaloff>:/images/download-manager.png</normaloff>:/images/download-manager.png</iconset>
+     <normaloff>:/resources/download-manager.png</normaloff>:/resources/download-manager.png</iconset>
    </property>
    <property name="text">
     <string>Download manager</string>
@@ -963,7 +983,7 @@ background-color: rgba(0, 161, 185, 40);
    <property name="icon">
     <iconset theme="window-close">
      <normaloff>.</normaloff>
-     <normalon>:/images/exit.png</normalon>.</iconset>
+     <normalon>:/resources/exit.png</normalon>.</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -975,7 +995,7 @@ background-color: rgba(0, 161, 185, 40);
   <action name="actionFind">
    <property name="icon">
     <iconset>
-     <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
+     <normaloff>:/resources/search.png</normaloff>:/resources/search.png</iconset>
    </property>
    <property name="text">
     <string>Find</string>

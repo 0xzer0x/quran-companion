@@ -25,7 +25,7 @@ main(int argc, char* argv[])
   QApplication::setOrganizationName("0xzer0x");
   QApplication::setApplicationVersion("1.1");
 
-  QSplashScreen splash(QPixmap(":/images/splash.png"));
+  QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
 
   QDir::setCurrent(QApplication::applicationDirPath());

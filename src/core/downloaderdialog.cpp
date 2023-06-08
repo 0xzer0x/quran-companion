@@ -16,7 +16,7 @@ DownloaderDialog::DownloaderDialog(QWidget* parent,
                                    const QString& iconsPath)
   : QDialog(parent)
   , ui(new Ui::DownloaderDialog)
-  , m_iconsPath{ iconsPath }
+  , m_resourcePath{ iconsPath }
   , m_appSettings{ settingsptr }
   , m_downloaderPtr{ downloader }
   , m_dbMgr{ dbMan }
@@ -25,7 +25,7 @@ DownloaderDialog::DownloaderDialog(QWidget* parent,
 {
 
   ui->setupUi(this);
-  setWindowIcon(QIcon(m_iconsPath + "download-manager.png"));
+  setWindowIcon(QIcon(m_resourcePath + "/icons/download-manager.png"));
 
   // treeview setup
   QStringList headers;
@@ -243,9 +243,7 @@ DownloaderDialog::clearQueue()
 void
 DownloaderDialog::surahDownloaded()
 {
-  m_currentBar->setStyleSheet(
-    m_ssProgBar + " QProgressBar::chunk "
-                  "{border-radius:2px; background-color: #008296;}");
+  m_currentBar->setStyling(DownloadProgressBar::completed);
   m_currentLb->setText(m_currentLb->parent()->objectName());
   m_currDownSpeedLb->setText(tr("Download Completed"));
   disconnect(m_downloaderPtr,
@@ -278,9 +276,7 @@ DownloaderDialog::downloadAborted()
 void
 DownloaderDialog::topTaskDownloadError()
 {
-  m_currentBar->setStyleSheet(
-    m_ssProgBar + " QProgressBar::chunk "
-                  "{border-radius:2px; background-color: #900D09;}");
+  m_currentBar->setStyling(DownloadProgressBar::aborted);
   m_currentLb->setText(m_currentLb->parent()->objectName());
   m_currDownSpeedLb->setText(tr("Download Failed"));
   disconnect(m_downloaderPtr,

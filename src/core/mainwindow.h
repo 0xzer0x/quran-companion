@@ -102,9 +102,10 @@ private slots:
   void volumeSliderValueChanged(int position);
 
 private:
-  void loadIcons();
-  void loadSettings();
   void init();
+  void loadIcons();
+  void loadStyles();
+  void loadSettings();
   void setupConnections();
   void setupSurahsDock();
   void updateSurah();
@@ -121,7 +122,7 @@ private:
   bool m_darkMode = false;
   qreal m_volume = 1;
   Ui::MainWindow* ui;
-  QString m_iconsPath;
+  QString m_resourcePath;
   QProcess* m_process;
   QString m_updateToolPath;
   QStringList m_surahList;
