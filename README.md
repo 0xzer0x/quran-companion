@@ -215,9 +215,10 @@ export QT_MEDIA_BACKEND=ffmpeg
 - [x] Enhance search functionality
   - [x] Search in a range of pages only
   - [x] Search in a specific surah only
-- [ ] Add new tafsir books
+- [x] Add new tafsir books
   - [x] Aysar Al-Tafasir (al-Jazaeri)
   - [x] al-Tashil li Ulum al-Tanzil (Ibn Juzayy)
+  - [x] Adwa' ul-Bayan (al-Shinqiti)
 
 See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a full list of proposed features (and known issues).
 

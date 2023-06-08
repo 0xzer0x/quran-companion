@@ -4,7 +4,7 @@ QDialogButtonBox {
 
 QSplitter#centeralSplitter {
   border: 2px solid #2e2e2e;
-  border-radius: 4px;
+  border-radius: 7px;
   background-color: #222222;
 }
 
