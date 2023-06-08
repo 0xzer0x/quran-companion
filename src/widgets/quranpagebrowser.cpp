@@ -327,7 +327,8 @@ QuranPageBrowser::createActions()
   m_selectAct->setIcon(QIcon(m_resourcePath + "/icons/select.png"));
   m_tafsirAct->setIcon(QIcon(m_resourcePath + "/icons/tafsir.png"));
   m_copyAct->setIcon(QIcon(m_resourcePath + "/icons/copy.png"));
-  m_actAddBookmark->setIcon(QIcon(m_resourcePath + "/icons/bookmark-false.png"));
+  m_actAddBookmark->setIcon(
+    QIcon(m_resourcePath + "/icons/bookmark-false.png"));
   m_actRemBookmark->setIcon(QIcon(m_resourcePath + "/icons/bookmark-true.png"));
   connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
   connect(

@@ -1,3 +1,7 @@
+QDialogButtonBox {
+  dialogbuttonbox-buttons-have-icons: 0;
+}
+
 QSplitter#centeralSplitter {
   border: 2px solid #e0e0e0;
   border-radius: 4px;

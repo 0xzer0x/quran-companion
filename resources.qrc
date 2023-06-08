@@ -19,7 +19,6 @@
         <file>resources/dark/icons/zoom-in.png</file>
         <file>resources/dark/icons/zoom-out.png</file>
         <file>resources/dark/styles/bookmarks-listview.qss</file>
-        <file>resources/dark/styles/centeral-splitter.qss</file>
         <file>resources/light/icons/bookmark-false.png</file>
         <file>resources/light/icons/bookmark-true.png</file>
         <file>resources/light/icons/copy.png</file>
@@ -38,10 +37,11 @@
         <file>resources/light/icons/zoom-in.png</file>
         <file>resources/light/icons/zoom-out.png</file>
         <file>resources/light/styles/bookmarks-listview.qss</file>
-        <file>resources/light/styles/centeral-splitter.qss</file>
         <file>resources/logo.ico</file>
         <file>resources/splash.png</file>
         <file>resources/sura_box.png</file>
         <file>resources/tray.png</file>
+        <file>resources/light/styles/splitter-scrollbar.qss</file>
+        <file>resources/dark/styles/splitter-scrollbar.qss</file>
     </qresource>
 </RCC>
