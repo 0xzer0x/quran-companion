@@ -1,0 +1,24 @@
+QListView {
+  font-size: 10pt;
+  background-color: transparent;
+}
+
+QListView::item {
+  color: rgb(222, 219, 215);
+  margin: 0px 5px 0px 0px;
+  background-color: rgb(24, 26, 27);
+  border: 1px solid rgb(47, 47, 47);
+  border-radius: 8px;
+}
+QListView::item:selected {
+  text-align: center;
+  border-color: #008296;
+  outline: 0;
+}
+QListView::item:hover:selected {
+  border-color: #008296;
+  outline: 0;
+}
+QListView::item:hover {
+  background-color: rgb(23, 36, 36);
+}

@@ -11,7 +11,7 @@ TafsirDialog::TafsirDialog(QWidget* parent,
   , m_settings{ settings }
 {
 
-  setWindowIcon(QIcon(iconsPath + "tafsir.png"));
+  setWindowIcon(QIcon(iconsPath + "/icons/tafsir.png"));
   ui->setupUi(this);
   setTafsirAsTitle();
   setLayoutDirection(Qt::LeftToRight);

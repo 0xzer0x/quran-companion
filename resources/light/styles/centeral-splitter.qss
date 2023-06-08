@@ -1,0 +1,42 @@
+QSplitter#centeralSplitter {
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #fafafa;
+}
+
+/* VERTICAL SCROLLBAR */
+QScrollBar:vertical {
+  border: none;
+  background: #fafafa;
+  width: 10px;
+  margin: 0;
+  border-radius: 3px;
+}
+
+/*  HANDLE BAR VERTICAL */
+QScrollBar::handle:vertical {
+  background-color: #cfcfcf;
+  min-height: 10px;
+  border-radius: 4px;
+}
+QScrollBar::handle:vertical:hover {
+  background-color: #b1b1b1;
+}
+QScrollBar::handle:vertical:pressed {
+  background-color: #b1b1b1;
+}
+
+/* BTN TOP - SCROLLBAR */
+QScrollBar::sub-line:vertical {
+  border: none;
+  height: 0px;
+  subcontrol-position: top;
+  subcontrol-origin: margin;
+}
+/* BTN BOTTOM - SCROLLBAR */
+QScrollBar::add-line:vertical {
+  border: none;
+  height: 0px;
+  subcontrol-position: bottom;
+  subcontrol-origin: margin;
+}

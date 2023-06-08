@@ -13,8 +13,9 @@
 #include <QSettings>
 #include <QValidator>
 
-namespace Ui {
-class SettingsDialog;
+namespace Ui
+{
+  class SettingsDialog;
 }
 
 /*!
@@ -28,14 +29,14 @@ class SettingsDialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit SettingsDialog(QWidget* parent = nullptr,
-                          QSettings* settingsPtr = nullptr,
-                          VersePlayer* vPlayerPtr = nullptr,
-                          const QString& iconsPath = ":/images/light/");
+  explicit SettingsDialog(QWidget *parent = nullptr,
+                          QSettings *settingsPtr = nullptr,
+                          VersePlayer *vPlayerPtr = nullptr,
+                          const QString &iconsPath = ":/resources/light/");
   ~SettingsDialog();
 
 public slots:
-  void btnBoxAction(QAbstractButton* btn);
+  void btnBoxAction(QAbstractButton *btn);
   void updateTheme(int themeIdx);
   void updateLang(QLocale::Language lang);
   void updateDailyVerse(bool on);
@@ -62,13 +63,13 @@ signals:
   void restartApp();
 
 private:
-  Ui::SettingsDialog* ui;
+  Ui::SettingsDialog *ui;
   void setupConnections();
-  QString m_iconsPath;
-  QSettings* m_settingsPtr;
+  QString m_resourcePath;
+  QSettings *m_settingsPtr;
   QLocale::Language m_lang;
   QList<QAudioDevice> m_audioDevices;
-  VersePlayer* m_vPlayerPtr;
+  VersePlayer *m_vPlayerPtr;
   QFont m_sideFont;
   int m_themeIdx;
   int m_qcfVer;
@@ -88,7 +89,7 @@ private:
 
   // QWidget interface
 protected:
-  void closeEvent(QCloseEvent* event);
+  void closeEvent(QCloseEvent *event);
 };
 
 #endif // SETTINGSDIALOG_H

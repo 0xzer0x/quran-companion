@@ -14,14 +14,14 @@ SearchDialog::SearchDialog(QWidget* parent,
                            const QString& iconPath)
   : QDialog(parent)
   , ui(new Ui::SearchDialog)
-  , m_iconsPath{ iconPath }
+  , m_resourcePath{ iconPath }
   , m_settings{ settings }
   , m_dbMgr{ dbPtr }
   , m_surahNames{ m_dbMgr->surahNameList() }
   , m_fontPrefix{ m_settings->value("Reader/QCF", 1).toInt() == 1 ? "QCF_P"
                                                                   : "QCF2" }
 {
-  setWindowIcon(QIcon(m_iconsPath + "search.png"));
+  setWindowIcon(QIcon(m_resourcePath + "/icons/search.png"));
   ui->setupUi(this);
   ui->frmNavBtns->setLayoutDirection(Qt::LeftToRight);
   ui->btnFwdRes->setDisabled(true);

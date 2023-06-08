@@ -7,7 +7,7 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent,
                                    QSettings* appSettings,
                                    const QString& iconsPath)
   : QTextBrowser(parent)
-  , m_iconsPath{ iconsPath }
+  , m_resourcePath{ iconsPath }
   , m_dbMgr{ dbPtr }
   , m_qcfVer{ qcfVersion }
   , m_settingsPtr{ appSettings }
@@ -162,7 +162,7 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
       continue;
 
     if (l.contains("frame")) {
-      QImage frm(":/images/sura_box.png"); // load the empty frame
+      QImage frm(":/resources/sura_box.png"); // load the empty frame
 
       // construct the text to be put inside the frame
       QString frmText;
@@ -185,7 +185,7 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
         frm.scaledToWidth(m_pageLineSize.width(), Qt::SmoothTransformation));
 
     } else if (l.contains("bsml")) {
-      QImage bsml(":/images/basmalah.png");
+      QImage bsml(":/resources/basmalah.png");
       if (m_darkMode)
         bsml.invertPixels();
 
@@ -321,14 +321,14 @@ QuranPageBrowser::createActions()
   m_tafsirAct = new QAction(tr("Tafsir"), this);
   m_actAddBookmark = new QAction(tr("Add Bookmark"), this);
   m_actRemBookmark = new QAction(tr("Remove Bookmark"), this);
-  m_zoomIn->setIcon(QIcon(m_iconsPath + "zoom-in.png"));
-  m_zoomOut->setIcon(QIcon(m_iconsPath + "zoom-out.png"));
-  m_playAct->setIcon(QIcon(m_iconsPath + "play.png"));
-  m_selectAct->setIcon(QIcon(m_iconsPath + "select.png"));
-  m_tafsirAct->setIcon(QIcon(m_iconsPath + "tafsir.png"));
-  m_copyAct->setIcon(QIcon(m_iconsPath + "copy.png"));
-  m_actAddBookmark->setIcon(QIcon(m_iconsPath + "bookmark-false.png"));
-  m_actRemBookmark->setIcon(QIcon(m_iconsPath + "bookmark-true.png"));
+  m_zoomIn->setIcon(QIcon(m_resourcePath + "/icons/zoom-in.png"));
+  m_zoomOut->setIcon(QIcon(m_resourcePath + "/icons/zoom-out.png"));
+  m_playAct->setIcon(QIcon(m_resourcePath + "/icons/play.png"));
+  m_selectAct->setIcon(QIcon(m_resourcePath + "/icons/select.png"));
+  m_tafsirAct->setIcon(QIcon(m_resourcePath + "/icons/tafsir.png"));
+  m_copyAct->setIcon(QIcon(m_resourcePath + "/icons/copy.png"));
+  m_actAddBookmark->setIcon(QIcon(m_resourcePath + "/icons/bookmark-false.png"));
+  m_actRemBookmark->setIcon(QIcon(m_resourcePath + "/icons/bookmark-true.png"));
   connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
   connect(
     m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);

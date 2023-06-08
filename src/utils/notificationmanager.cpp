@@ -11,7 +11,7 @@ NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)
 
   addActions();
   m_sysTray->setContextMenu(m_trayMenu);
-  m_sysTray->setIcon(QIcon(":/images/tray.png"));
+  m_sysTray->setIcon(QIcon(":/resources/tray.png"));
   m_sysTray->show();
 }
 

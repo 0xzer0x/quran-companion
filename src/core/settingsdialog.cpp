@@ -14,14 +14,14 @@ SettingsDialog::SettingsDialog(QWidget* parent,
                                const QString& iconsPath)
   : QDialog(parent)
   , ui(new Ui::SettingsDialog)
-  , m_iconsPath{ iconsPath }
+  , m_resourcePath{ iconsPath }
   , m_settingsPtr{ settingsPtr }
   , m_vPlayerPtr{ vPlayerPtr }
 {
   ui->setupUi(this);
   ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 100));
   ui->cmbSideFontSz->setValidator(new QIntValidator(10, 100));
-  setWindowIcon(QIcon(m_iconsPath + "prefs.png"));
+  setWindowIcon(QIcon(m_resourcePath + "/icons/prefs.png"));
   fillLanguageCombobox();
 
   setCurrentSettingsAsRef();

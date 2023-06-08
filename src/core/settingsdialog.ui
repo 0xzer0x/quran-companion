@@ -503,6 +503,12 @@ dialog-ok-icon: off;
             </item>
             <item>
              <widget class="QComboBox" name="cmbTranslation">
+              <property name="maxVisibleItems">
+               <number>3</number>
+              </property>
+              <property name="frame">
+               <bool>true</bool>
+              </property>
               <item>
                <property name="text">
                 <string>عربي - التفسير الميسّر</string>
