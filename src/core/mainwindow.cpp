@@ -1108,12 +1108,15 @@ void
 MainWindow::actionAboutTriggered()
 {
   QString about =
-    tr("<h2>Quran Companion v") + qApp->applicationVersion() +
-    tr("</h2><p><a href='https://github.com/0xzer0x/quran-companion'>Quran "
-       "Companion</a> is a free cross-platform Quran reader & "
-       "player</p><p>Licensed "
-       "under the <a href='https://www.gnu.org/licenses/lgpl-3.0.html'>GNU "
-       "Lesser General Public License</a></p>");
+    "<h2>" + tr("Quran Companion v") + qApp->applicationVersion() +
+    +"</h2><p><a href='https://github.com/0xzer0x/quran-companion'>" +
+    tr("Quran Companion") + "</a>" +
+    tr(" is a free cross-platform Quran reader & player.") + "</p><p>" +
+    tr("Licensed under the ") +
+    "<a href='https://ojuba.org/"
+    "waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%"
+    "B9%D8%A7%D9%85%D8%A9'>" +
+    tr("'Waqf' General Public License") + "</a>.</p>";
 
   QMessageBox::about(this, tr("About Quran Companion"), about);
 }

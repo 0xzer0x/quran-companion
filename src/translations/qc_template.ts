@@ -144,6 +144,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="../core/mainwindow.ui" line="17"/>
+        <location filename="../core/mainwindow.cpp" line="1113"/>
         <source>Quran Companion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -364,13 +365,13 @@
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="1026"/>
-        <location filename="../core/mainwindow.cpp" line="1118"/>
+        <location filename="../core/mainwindow.cpp" line="1121"/>
         <source>About Quran Companion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="1031"/>
-        <location filename="../core/mainwindow.cpp" line="1124"/>
+        <location filename="../core/mainwindow.cpp" line="1127"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
@@ -506,16 +507,21 @@
     </message>
     <message>
         <location filename="../core/mainwindow.cpp" line="1111"/>
-        <source>&lt;h2&gt;Quran Companion v</source>
+        <source>Quran Companion v</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1327"/>
+        <location filename="../core/mainwindow.cpp" line="1115"/>
+        <source>Licensed under the </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="1330"/>
         <source>Now playing: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1328"/>
+        <location filename="../core/mainwindow.cpp" line="1331"/>
         <source>Surah </source>
         <translation type="unfinished"></translation>
     </message>
@@ -530,12 +536,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1112"/>
-        <source>&lt;/h2&gt;&lt;p&gt;&lt;a href=&apos;https://github.com/0xzer0x/quran-companion&apos;&gt;Quran Companion&lt;/a&gt; is a free cross-platform Quran reader &amp; player&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&apos;https://www.gnu.org/licenses/lgpl-3.0.html&apos;&gt;GNU Lesser General Public License&lt;/a&gt;&lt;/p&gt;</source>
+        <location filename="../core/mainwindow.cpp" line="1114"/>
+        <source> is a free cross-platform Quran reader &amp; player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1375"/>
+        <location filename="../core/mainwindow.cpp" line="1119"/>
+        <source>&apos;Waqf&apos; General Public License</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="1378"/>
         <source>Verse Of The Day</source>
         <translation type="unfinished"></translation>
     </message>
