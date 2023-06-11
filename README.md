@@ -258,7 +258,7 @@ To contribute in translating the application, start by:
 
 ## License
 
-Distributed under the LGPL License. See `license.txt` for more information.
+Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9). See `license-en.txt` for the English version.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
