@@ -17,6 +17,7 @@
 #include <QDesktopServices>
 #include <QIntValidator>
 #include <QMainWindow>
+#include <QPropertyAnimation>
 #include <QScrollBar>
 #include <QSettings>
 #include <QShortcut>
@@ -104,7 +105,6 @@ private slots:
 private:
   void init();
   void loadIcons();
-  void loadStyles();
   void loadSettings();
   void setupConnections();
   void setupSurahsDock();

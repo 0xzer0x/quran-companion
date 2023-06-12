@@ -25,9 +25,7 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   m_resourcePath.append(m_darkMode ? "dark/" : "light/");
 
   ui->setupUi(this);
-  ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
   ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
-  loadStyles();
   loadIcons();
   loadSettings();
   init();
@@ -53,30 +51,20 @@ void
 MainWindow::loadIcons()
 {
   ui->actionDownload_manager->setIcon(
-    QIcon(m_resourcePath + "/icons/download-manager.png"));
-  ui->actionExit->setIcon(QIcon(m_resourcePath + "/icons/exit.png"));
-  ui->actionFind->setIcon(QIcon(m_resourcePath + "/icons/search.png"));
-  ui->actionTafsir->setIcon(QIcon(m_resourcePath + "/icons/tafsir.png"));
+    QIcon(m_resourcePath + "icons/download-manager.png"));
+  ui->actionExit->setIcon(QIcon(m_resourcePath + "icons/exit.png"));
+  ui->actionFind->setIcon(QIcon(m_resourcePath + "icons/search.png"));
+  ui->actionTafsir->setIcon(QIcon(m_resourcePath + "icons/tafsir.png"));
   ui->actionVerse_of_the_day->setIcon(
-    QIcon(m_resourcePath + "/icons/today.png"));
+    QIcon(m_resourcePath + "icons/today.png"));
   ui->actionBookmarks->setIcon(
-    QIcon(m_resourcePath + "/icons/bookmark-true.png"));
-  ui->actionPereferences->setIcon(QIcon(m_resourcePath + "/icons/prefs.png"));
-  ui->btnPlay->setIcon(QIcon(m_resourcePath + "/icons/play.png"));
-  ui->btnPause->setIcon(QIcon(m_resourcePath + "/icons/pause.png"));
-  ui->btnStop->setIcon(QIcon(m_resourcePath + "/icons/stop.png"));
+    QIcon(m_resourcePath + "icons/bookmark-true.png"));
+  ui->actionPereferences->setIcon(QIcon(m_resourcePath + "icons/prefs.png"));
+  ui->btnPlay->setIcon(QIcon(m_resourcePath + "icons/play.png"));
+  ui->btnPause->setIcon(QIcon(m_resourcePath + "icons/pause.png"));
+  ui->btnStop->setIcon(QIcon(m_resourcePath + "icons/stop.png"));
   ui->actionCheck_for_updates->setIcon(
-    QIcon(m_resourcePath + "/icons/update.png"));
-}
-
-void
-MainWindow::loadStyles()
-{
-  QFile ss(m_resourcePath + "/styles/splitter-scrollbar.qss");
-  if (ss.open(QIODevice::ReadOnly)) {
-    this->setStyleSheet(ss.readAll());
-    ss.close();
-  }
+    QIcon(m_resourcePath + "icons/update.png"));
 }
 
 void
@@ -107,7 +95,10 @@ MainWindow::init()
                          m_dbMgr,
                          m_settingsPtr,
                          m_resourcePath);
+
   ui->frmPageContent->layout()->addWidget(m_quranBrowser);
+
+  ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
   m_notifyMgr = new NotificationManager(this, m_dbMgr);
 
   updateLoadedTafsir();
@@ -153,9 +144,9 @@ MainWindow::setupSurahsDock()
   m_surahListModel.setStringList(m_surahList);
   ui->listViewSurahs->setModel(&m_surahListModel);
 
-  QItemSelectionModel* select = ui->listViewSurahs->selectionModel();
-  select->select(m_surahListModel.index(m_currVerse.surah - 1),
-                 QItemSelectionModel::Rows | QItemSelectionModel::Select);
+  QItemSelectionModel* selector = ui->listViewSurahs->selectionModel();
+  selector->select(m_surahListModel.index(m_currVerse.surah - 1),
+                   QItemSelectionModel::Rows | QItemSelectionModel::Select);
 
   ui->listViewSurahs->scrollTo(m_surahListModel.index(m_currVerse.surah - 1),
                                QAbstractItemView::PositionAtCenter);
@@ -252,7 +243,7 @@ MainWindow::setupConnections()
           this,
           &MainWindow::cmbVerseChanged,
           Qt::UniqueConnection);
-  connect(ui->cmbJozz,
+  connect(ui->cmbJuz,
           &QComboBox::currentIndexChanged,
           this,
           &MainWindow::cmbJozzChanged,
@@ -501,7 +492,7 @@ void
 MainWindow::setCmbJozzIdx(int idx)
 {
   m_internalJozzChange = true;
-  ui->cmbJozz->setCurrentIndex(idx);
+  ui->cmbJuz->setCurrentIndex(idx);
   m_internalJozzChange = false;
 }
 

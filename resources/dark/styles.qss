@@ -2,6 +2,12 @@ QDialogButtonBox {
   dialogbuttonbox-buttons-have-icons: 0;
 }
 
+QLineEdit {
+  placeholder-text-color: #c0c0c0;
+}
+
+/* --------- Reader Styles --------- */
+
 QSplitter#centeralSplitter {
   border: 2px solid #2e2e2e;
   border-radius: 7px;
@@ -82,3 +88,65 @@ QScrollBar::sub-line:horizontal {
   subcontrol-position: left;
   subcontrol-origin: margin;
 }
+
+/* ------------------------------------ */
+
+/* ------------ ListView Styles ------------ */
+
+QListView#listViewSurahs {
+  font-size: 12pt;
+  spacing: 5px;
+  border-width: 1px;
+  border-radius: 4px;
+  outline: none;
+}
+
+QListView#listViewSurahs::item {
+  border-radius: 3px;
+  padding: 5px;
+  outline: none;
+}
+
+QListView#listViewSurahs::item:selected {
+  border: 1px solid #008296;
+  background-color: rgba(0, 161, 185, 90);
+}
+
+QListView#listViewSurahs::item:hover:selected {
+  border: 1px solid #008296;
+  background-color: rgba(0, 161, 185, 90);
+}
+
+QListView#listViewSurahs::item:hover {
+  background-color: rgba(0, 161, 185, 40);
+}
+
+QListView#listViewBookmarkedSurahs {
+  font-size: 10pt;
+  background-color: transparent;
+}
+
+QListView#listViewBookmarkedSurahs::item {
+  color: rgb(222, 219, 215);
+  margin: 0px 5px 0px 0px;
+  background-color: rgb(24, 26, 27);
+  border: 1px solid rgb(47, 47, 47);
+  border-radius: 8px;
+}
+
+QListView#listViewBookmarkedSurahs::item:selected {
+  text-align: center;
+  border-color: #008296;
+  outline: 0;
+}
+
+QListView#listViewBookmarkedSurahs::item:hover:selected {
+  border-color: #008296;
+  outline: 0;
+}
+
+QListView#listViewBookmarkedSurahs::item:hover {
+  background-color: rgb(23, 36, 36);
+}
+
+/* ------------------------------------------------ */

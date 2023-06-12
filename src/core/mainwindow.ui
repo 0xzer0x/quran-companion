@@ -149,14 +149,14 @@ dialog-no-icon: off;
          </property>
          <widget class="QScrollArea" name="scrlVerseByVerse">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="minimumSize">
            <size>
-            <width>300</width>
+            <width>0</width>
             <height>0</height>
            </size>
           </property>
@@ -191,7 +191,7 @@ background-color: transparent;
          </widget>
          <widget class="QFrame" name="frmPageContent">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -702,7 +702,7 @@ background-color: transparent;
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="cmbJozz">
+        <widget class="QComboBox" name="cmbJuz">
          <property name="editable">
           <bool>true</bool>
          </property>

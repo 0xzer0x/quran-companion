@@ -145,6 +145,7 @@ setTheme(int themeIdx)
   qApp->setStyle(QStyleFactory::create("Fusion"));
 
   QPalette themeColors;
+  QFile ss;
   switch (themeIdx) {
     case 0: // light
       themeColors.setColor(QPalette::Window, QColor(240, 240, 240));
@@ -173,6 +174,12 @@ setTheme(int themeIdx)
       themeColors.setColor(
         QPalette::Disabled, QPalette::HighlightedText, QColor(255, 255, 255));
       qApp->setPalette(themeColors);
+      // load light stylesheet
+      ss.setFileName(":/resources/light/styles.qss");
+      if (ss.open(QIODevice::ReadOnly)) {
+        qApp->setStyleSheet(ss.readAll());
+        ss.close();
+      }
       break;
 
     case 1: // dark
@@ -202,6 +209,12 @@ setTheme(int themeIdx)
       themeColors.setColor(
         QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
       qApp->setPalette(themeColors);
+      // load dark stylesheet
+      ss.setFileName(":/resources/dark/styles.qss");
+      if (ss.open(QIODevice::ReadOnly)) {
+        qApp->setStyleSheet(ss.readAll());
+        ss.close();
+      }
       break;
 
     default:
