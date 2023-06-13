@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   // connectors
   setupConnections();
   setupSurahsDock();
+  setupMenubarToggles();
   this->show();
 
   m_notifyMgr->setTooltip("Quran Companion");
@@ -127,8 +128,6 @@ MainWindow::init()
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
   ui->cmbReciter->setCurrentIndex(m_settingsPtr->value("Reciter", 0).toInt());
-
-  setupMenubarToggles();
 }
 
 void
@@ -160,13 +159,13 @@ MainWindow::setupMenubarToggles()
   QPushButton* toggleControls = new QPushButton(toggleFrm);
   toggleControls->setObjectName("btnToggleControls");
   toggleControls->setCheckable(true);
-  toggleControls->setChecked(true);
+  toggleControls->setChecked(!ui->dockControls->isHidden());
   QPushButton* toggleNav = new QPushButton(toggleFrm);
   toggleNav->setObjectName("btnToggleNav");
   toggleNav->setCheckable(true);
-  toggleNav->setChecked(true);
+  toggleNav->setChecked(!ui->sideDock->isHidden());
 
-  toggleFrm->layout()->setContentsMargins(0, 0, 5, 0);
+  toggleFrm->layout()->setContentsMargins(0, 0, 0, 0);
   toggleFrm->layout()->setSpacing(2);
   toggleFrm->layout()->addWidget(toggleNav);
   toggleFrm->layout()->addWidget(toggleControls);

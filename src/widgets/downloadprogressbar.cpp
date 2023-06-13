@@ -3,7 +3,6 @@
 DownloadProgressBar::DownloadProgressBar(QWidget* parent, int max)
   : QProgressBar(parent)
 {
-  qInfo() << this->styleSheet();
   setStyling(downloading);
   setFormat("%v / %m");
   setMaximum(max);
