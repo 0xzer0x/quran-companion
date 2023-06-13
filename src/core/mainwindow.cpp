@@ -113,8 +113,6 @@ MainWindow::init()
   ui->scrlVerseCont->setLayout(vbl);
   addSideContent();
 
-  ui->menuView->addAction(ui->dockControls->toggleViewAction());
-
   for (int i = 1; i < 605; i++) {
     ui->cmbPage->addItem(QString::number(i));
   }
@@ -129,6 +127,8 @@ MainWindow::init()
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
   ui->cmbReciter->setCurrentIndex(m_settingsPtr->value("Reciter", 0).toInt());
+
+  setupMenubarToggles();
 }
 
 void
@@ -140,7 +140,6 @@ MainWindow::setupSurahsDock()
     m_surahList.append(item);
   }
 
-  ui->menuView->addAction(ui->sideDock->toggleViewAction());
   m_surahListModel.setStringList(m_surahList);
   ui->listViewSurahs->setModel(&m_surahListModel);
 
@@ -150,6 +149,41 @@ MainWindow::setupSurahsDock()
 
   ui->listViewSurahs->scrollTo(m_surahListModel.index(m_currVerse.surah - 1),
                                QAbstractItemView::PositionAtCenter);
+}
+
+void
+MainWindow::setupMenubarToggles()
+{
+  QFrame* toggleFrm = new QFrame(this);
+  toggleFrm->setFrameStyle(QFrame::NoFrame);
+  toggleFrm->setLayout(new QHBoxLayout());
+  QPushButton* toggleControls = new QPushButton(toggleFrm);
+  toggleControls->setObjectName("btnToggleControls");
+  toggleControls->setCheckable(true);
+  toggleControls->setChecked(true);
+  QPushButton* toggleNav = new QPushButton(toggleFrm);
+  toggleNav->setObjectName("btnToggleNav");
+  toggleNav->setCheckable(true);
+  toggleNav->setChecked(true);
+
+  toggleFrm->layout()->setContentsMargins(0, 0, 5, 0);
+  toggleFrm->layout()->setSpacing(2);
+  toggleFrm->layout()->addWidget(toggleNav);
+  toggleFrm->layout()->addWidget(toggleControls);
+
+  ui->menubar->setCornerWidget(toggleFrm);
+
+  connect(toggleControls,
+          &QPushButton::toggled,
+          ui->dockControls->toggleViewAction(),
+          &QAction::triggered,
+          Qt::UniqueConnection);
+
+  connect(toggleNav,
+          &QPushButton::toggled,
+          ui->sideDock->toggleViewAction(),
+          &QAction::triggered,
+          Qt::UniqueConnection);
 }
 
 /*!

@@ -103,18 +103,14 @@ QListView#listViewSurahs::item {
   outline: none;
 }
 
-QListView#listViewSurahs::item:selected {
-  border: 1px solid #008296;
-  background-color: rgba(0, 161, 185, 90);
+QListView#listViewSurahs::item:hover {
+  background-color: rgba(0, 161, 185, 40);
 }
 
+QListView#listViewSurahs::item:selected,
 QListView#listViewSurahs::item:hover:selected {
   border: 1px solid #008296;
   background-color: rgba(0, 161, 185, 90);
-}
-
-QListView#listViewSurahs::item:hover {
-  background-color: rgba(0, 161, 185, 40);
 }
 
 QListView#listViewBookmarkedSurahs {
@@ -129,19 +125,50 @@ QListView#listViewBookmarkedSurahs::item {
   border-radius: 8px;
 }
 
-QListView#listViewBookmarkedSurahs::item:selected {
+QListView#listViewBookmarkedSurahs::item:hover {
+  background-color: #f7fafa;
+}
+
+QListView#listViewBookmarkedSurahs::item:selected,
+QListView#listViewBookmarkedSurahs::item:hover:selected {
   text-align: center;
   border-color: #008296;
   outline: 0;
 }
 
-QListView#listViewBookmarkedSurahs::item:hover:selected {
-  border-color: #008296;
-  outline: 0;
+/* ------------------------------------------------ */
+
+/* ---------------- Toggle Styles ---------------- */
+
+QPushButton#btnToggleControls {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  image: url(":/resources/light/icons/controls.png");
+  width: 30px;
+  height: 20px;
 }
 
-QListView#listViewBookmarkedSurahs::item:hover {
+QPushButton#btnToggleNav {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  image: url(":/resources/light/icons/navigation.png");
+  width: 30px;
+  height: 20px;
+}
+
+QPushButton#btnToggleControls:!checked:hover,
+QPushButton#btnToggleNav:!checked:hover {
+  border-radius: 6px;
   background-color: #f7fafa;
+}
+
+QPushButton#btnToggleControls:checked,
+QPushButton#btnToggleNav:checked {
+  border-radius: 6px;
+  border: 1px solid #008296;
+  background-color: #fff;
 }
 
 /* ------------------------------------------------ */

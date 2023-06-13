@@ -108,6 +108,7 @@ private:
   void loadSettings();
   void setupConnections();
   void setupSurahsDock();
+  void setupMenubarToggles();
   void updateSurah();
   void updatePageVerseInfoList();
   void setVerseToStartOfPage();

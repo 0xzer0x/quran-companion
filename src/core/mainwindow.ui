@@ -34,6 +34,9 @@ dialog-yes-icon: off;
 dialog-no-icon: off;
 }</string>
   </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
   <property name="dockOptions">
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks</set>
   </property>
@@ -297,10 +300,12 @@ background-color: transparent;
     <property name="title">
      <string>View</string>
     </property>
+    <property name="separatorsCollapsible">
+     <bool>false</bool>
+    </property>
     <addaction name="actionFind"/>
     <addaction name="actionTafsir"/>
     <addaction name="actionVerse_of_the_day"/>
-    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -353,6 +358,9 @@ background-color: transparent;
    </property>
    <property name="floating">
     <bool>false</bool>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
     <set>Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea</set>
@@ -676,7 +684,7 @@ background-color: transparent;
     <string notr="true"/>
    </property>
    <property name="features">
-    <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
+    <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -1025,10 +1033,16 @@ background-color: rgba(0, 161, 185, 40);
    <property name="text">
     <string>About Quran Companion</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::TextHeuristicRole</enum>
+   </property>
   </action>
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About Qt</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutQtRole</enum>
    </property>
   </action>
   <action name="actionTafsir">

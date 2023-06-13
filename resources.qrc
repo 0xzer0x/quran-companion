@@ -3,9 +3,11 @@
         <file>resources/basmalah.png</file>
         <file>resources/dark/icons/bookmark-false.png</file>
         <file>resources/dark/icons/bookmark-true.png</file>
+        <file>resources/dark/icons/controls.png</file>
         <file>resources/dark/icons/copy.png</file>
         <file>resources/dark/icons/download-manager.png</file>
         <file>resources/dark/icons/exit.png</file>
+        <file>resources/dark/icons/navigation.png</file>
         <file>resources/dark/icons/pause.png</file>
         <file>resources/dark/icons/play.png</file>
         <file>resources/dark/icons/prefs.png</file>
@@ -21,9 +23,11 @@
         <file>resources/dark/styles.qss</file>
         <file>resources/light/icons/bookmark-false.png</file>
         <file>resources/light/icons/bookmark-true.png</file>
+        <file>resources/light/icons/controls.png</file>
         <file>resources/light/icons/copy.png</file>
         <file>resources/light/icons/download-manager.png</file>
         <file>resources/light/icons/exit.png</file>
+        <file>resources/light/icons/navigation.png</file>
         <file>resources/light/icons/pause.png</file>
         <file>resources/light/icons/play.png</file>
         <file>resources/light/icons/prefs.png</file>
