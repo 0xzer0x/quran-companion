@@ -3,6 +3,7 @@
 DownloadProgressBar::DownloadProgressBar(QWidget* parent, int max)
   : QProgressBar(parent)
 {
+  qInfo() << this->styleSheet();
   setStyling(downloading);
   setFormat("%v / %m");
   setMaximum(max);
@@ -26,12 +27,16 @@ DownloadProgressBar::setStyling(State downState)
     case downloading:
       break;
     case completed:
-      ss.append(" QProgressBar::chunk "
-                "{border-radius:2px; background-color: #008296;}");
+      ss.append(
+        " QProgressBar::chunk "
+        "{border-radius:2px; background-color: qlineargradient(x1:0, y1:0, "
+        "x2:0, y2:1, stop:0.5 #00a57f, stop:1 #00916f);}");
       break;
     case aborted:
-      ss.append(" QProgressBar::chunk "
-                "{border-radius:2px; background-color: #900D09;}");
+      ss.append(
+        " QProgressBar::chunk "
+        "{border-radius:2px; background-color: qlineargradient(x1:0, y1:0, "
+        "x2:0, y2:1, stop:0.5 #a50500, stop:1 #930400);}");
       break;
   }
 

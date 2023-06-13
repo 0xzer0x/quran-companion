@@ -65,8 +65,7 @@ VersePlayer::fillRecitersList()
     "Al-Husary_(Qasr)",
     tr("Al-Husary (Qasr)"),
     husary.basmallahPath,
-    "https://github.com/0xzer0x/quran-companion/raw/audio-files/audio/"
-    "husary_qasr_64kbps/"
+    "https://gitlab.com/0xzer0x/qc-audio/-/raw/main/husary_qasr_64kbps/"
   };
 
   Reciter husaryMujawwad{

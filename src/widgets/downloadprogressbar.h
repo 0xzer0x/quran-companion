@@ -21,9 +21,8 @@ public slots:
 
 private:
   QString m_defStylesheet =
-    "QProgressBar {text-align: center; color:palette(text); "
-    "border-radius: 2px; border: 1px "
-    "solid palette(dark); }";
+    "QProgressBar {text-align: center; "
+    "color:palette(text); border-radius: 3px; border: 1px solid #424242; }";
 };
 
 #endif // DOWNLOADPROGRESSBAR_H
