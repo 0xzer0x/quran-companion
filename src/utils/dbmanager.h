@@ -101,6 +101,7 @@ public:
     QString displayName{};
     QString basmallahPath{};
     QString baseUrl{};
+    bool useId{ false };
   };
 
   QList<QString> surahNameList();
@@ -120,9 +121,10 @@ public:
   int getSurahVerseCount(const int surahIdx);
   int getSurahStartPage(int surahIdx);
   QString getSurahName(const int sIdx);
+  int getVerseId(const int sIdx, const int vIdx);
   int getVersePage(const int& surahIdx, const int& verse);
-  int getJozzStartPage(const int jozz);
-  int getJozzOfPage(const int page);
+  int getJuzStartPage(const int jozz);
+  int getJuzOfPage(const int page);
 
   QList<int> searchSurahNames(QString text);
   QList<Verse> searchSurahs(QString searchText,

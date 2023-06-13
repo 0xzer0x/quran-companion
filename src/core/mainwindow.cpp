@@ -124,7 +124,7 @@ MainWindow::init()
 
   // sets without emitting signal
   setCmbVerseIdx(m_currVerse.number - 1);
-  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
+  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
   ui->cmbReciter->setCurrentIndex(m_settingsPtr->value("Reciter", 0).toInt());
@@ -582,8 +582,8 @@ MainWindow::gotoPage(int page, bool automaticFlip)
     updateSurah();
     setVerseComboBoxRange();
   }
-
-  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
+  
+  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
   addSideContent();
 }
 
@@ -653,7 +653,7 @@ MainWindow::gotoSurah(int surahIdx)
   highlightCurrentVerse();
 
   setCmbPageIdx(m_currVerse.page - 1);
-  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
+  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
   setVerseComboBoxRange();
 
   m_endOfPage = false;
@@ -737,7 +737,7 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   m_player->setVerseFile(m_player->constructVerseFilename());
 
   setCmbPageIdx(m_currVerse.page - 1);
-  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
+  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
   addSideContent();
   m_endOfPage = false;
@@ -750,8 +750,8 @@ MainWindow::cmbJozzChanged(int newJozzIdx)
     qDebug() << "Internal jozz change";
     return;
   }
-
-  gotoPage(m_dbMgr->getJozzStartPage(newJozzIdx + 1));
+  
+  gotoPage(m_dbMgr->getJuzStartPage(newJozzIdx + 1));
 }
 
 /* ------------------------ Player controls / highlighting
@@ -1190,7 +1190,7 @@ MainWindow::navigateToVerse(Verse v)
 
   setCmbPageIdx(m_currVerse.page - 1);
   setCmbVerseIdx(m_currVerse.number - 1);
-  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
+  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
   updateSurah();
   highlightCurrentVerse();
