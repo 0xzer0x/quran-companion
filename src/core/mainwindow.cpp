@@ -159,18 +159,21 @@ MainWindow::setupMenubarToggle()
   toggleNav->setCheckable(true);
   toggleNav->setChecked(!ui->sideDock->isHidden());
   toggleNav->setCursor(Qt::PointingHandCursor);
+  toggleNav->setToolTip(tr("Navigation"));
   ui->menubar->setCornerWidget(toggleNav);
 
-  connect(toggleNav,
-          &QPushButton::toggled,
-          ui->sideDock->toggleViewAction(),
-          &QAction::triggered,
-          Qt::UniqueConnection);
-  connect(ui->sideDock,
-          &QDockWidget::visibilityChanged,
+  connect(toggleNav, &QPushButton::toggled, this, [this](bool checked) {
+    if (ui->sideDock->isVisible() != checked)
+      ui->sideDock->setVisible(checked);
+  });
+
+  connect(ui->sideDock->toggleViewAction(),
+          &QAction::toggled,
           toggleNav,
-          &QPushButton::setChecked,
-          Qt::UniqueConnection);
+          [this, toggleNav](bool visible) {
+            if (toggleNav->isChecked() != visible && !this->isMinimized())
+              toggleNav->setChecked(visible);
+          });
 }
 
 /*!
