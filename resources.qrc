@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/basmalah.png</file>
+        <file>resources/dark/icons/arrow-down.svg</file>
         <file>resources/dark/icons/bookmark-false.png</file>
         <file>resources/dark/icons/bookmark-true.png</file>
         <file>resources/dark/icons/controls.png</file>
@@ -21,6 +22,7 @@
         <file>resources/dark/icons/zoom-in.png</file>
         <file>resources/dark/icons/zoom-out.png</file>
         <file>resources/dark/styles.qss</file>
+        <file>resources/light/icons/arrow-down.svg</file>
         <file>resources/light/icons/bookmark-false.png</file>
         <file>resources/light/icons/bookmark-true.png</file>
         <file>resources/light/icons/controls.png</file>

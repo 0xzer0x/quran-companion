@@ -6,10 +6,52 @@ QLineEdit {
   placeholder-text-color: #c0c0c0;
 }
 
+/* --------- Player Styles --------- */
+
+QFrame#framePlayer {
+  background-color: #222222;
+  border-radius: 8px;
+}
+
+QPushButton#btnPlay:enabled:hover,
+QPushButton#btnPause:enabled:hover,
+QPushButton#btnStop:hover {
+  background-color: #3b3b3b;
+}
+
+QPushButton#btnPlay:disabled,
+QPushButton#btnPause:disabled {
+  background-color: #515151;
+}
+
+QPushButton#btnPlay,
+QPushButton#btnPause,
+QPushButton#btnStop {
+  background-color: palette(dark);
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+
+QComboBox#cmbReciter {
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 1px 3px 1px 3px;
+}
+
+QComboBox#cmbReciter::drop-down {
+  subcontrol-origin: padding;
+  subcontrol-position: top right;
+  width: 15px;
+  border-radius: 3px;
+}
+
+QComboBox#cmbReciter::down-arrow {
+  image: url(":/resources/dark/icons/arrow-down.svg");
+}
+
 /* --------- Reader Styles --------- */
 
 QSplitter#centeralSplitter {
-  border: 2px solid #2e2e2e;
   border-radius: 7px;
   background-color: #222222;
 }
@@ -89,15 +131,12 @@ QScrollBar::sub-line:horizontal {
   subcontrol-origin: margin;
 }
 
-/* ------------------------------------ */
-
 /* ------------ ListView Styles ------------ */
 
 QListView#listViewSurahs {
   font-size: 12pt;
   spacing: 5px;
-  border-width: 1px;
-  border-radius: 4px;
+  border-radius: 1px;
   outline: none;
 }
 
@@ -118,6 +157,7 @@ QListView#listViewSurahs::item:hover {
 }
 
 QListView#listViewBookmarkedSurahs {
+  outline: none;
   font-size: 10pt;
   background-color: transparent;
 }
@@ -141,16 +181,7 @@ QListView#listViewBookmarkedSurahs::item:hover {
   background-color: rgb(23, 36, 36);
 }
 
-/* ------------------------------------------------ */
-
-QPushButton#btnToggleControls {
-  outline: none;
-  border: none;
-  background-color: transparent;
-  image: url(":/resources/dark/icons/controls.png");
-  width: 30px;
-  height: 20px;
-}
+/* --------------- Toggle Styles --------------- */
 
 QPushButton#btnToggleNav {
   outline: none;
@@ -161,15 +192,11 @@ QPushButton#btnToggleNav {
   height: 20px;
 }
 
-QPushButton#btnToggleControls:!checked:hover,
 QPushButton#btnToggleNav:!checked:hover {
-  border-radius: 6px;
-  background-color: #424242;
+  background-color: #3b3b3b;
 }
 
-QPushButton#btnToggleControls:checked,
 QPushButton#btnToggleNav:checked {
-  border-radius: 6px;
   border: 1px solid #008296;
-  background-color: #424242;
+  background-color: palette(highlight);
 }

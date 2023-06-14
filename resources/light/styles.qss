@@ -6,6 +6,51 @@ QLineEdit {
   placeholder-text-color: #c0c0c0;
 }
 
+/* --------- Player Styles --------- */
+
+QFrame#framePlayer {
+  background-color: #fafafa;
+  border-radius: 8px;
+  border: 2px solid #e3e3e3;
+}
+
+QPushButton#btnPlay,
+QPushButton#btnPause,
+QPushButton#btnStop {
+  background-color: #fafafa;
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+
+QPushButton#btnPlay:enabled:hover,
+QPushButton#btnPause:enabled:hover,
+QPushButton#btnStop:hover {
+  background-color: #eeeeee;
+}
+
+QPushButton#btnPlay:disabled,
+QPushButton#btnPause:disabled {
+  background-color: #e3e3e3;
+}
+
+QComboBox#cmbReciter {
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 1px 3px 1px 3px;
+  min-width: 6em;
+}
+
+QComboBox#cmbReciter::drop-down {
+  subcontrol-origin: padding;
+  subcontrol-position: top right;
+  width: 15px;
+  border-radius: 3px;
+}
+
+QComboBox#cmbReciter::down-arrow {
+  image: url(":/resources/light/icons/arrow-down.svg");
+}
+
 /* --------- Reader Styles --------- */
 
 QSplitter#centeralSplitter {
@@ -87,8 +132,6 @@ QScrollBar::sub-line:horizontal {
   subcontrol-origin: margin;
 }
 
-/* ------------------------------------ */
-
 /* ------------ ListView Styles ------------ */
 
 QListView#listViewSurahs {
@@ -136,18 +179,7 @@ QListView#listViewBookmarkedSurahs::item:hover:selected {
   outline: 0;
 }
 
-/* ------------------------------------------------ */
-
 /* ---------------- Toggle Styles ---------------- */
-
-QPushButton#btnToggleControls {
-  outline: none;
-  border: none;
-  background-color: transparent;
-  image: url(":/resources/light/icons/controls.png");
-  width: 30px;
-  height: 20px;
-}
 
 QPushButton#btnToggleNav {
   outline: none;
@@ -158,17 +190,11 @@ QPushButton#btnToggleNav {
   height: 20px;
 }
 
-QPushButton#btnToggleControls:!checked:hover,
 QPushButton#btnToggleNav:!checked:hover {
-  border-radius: 6px;
-  background-color: #f7fafa;
+  background-color: #d3d3d3;
 }
 
-QPushButton#btnToggleControls:checked,
 QPushButton#btnToggleNav:checked {
-  border-radius: 6px;
   border: 1px solid #008296;
-  background-color: #fff;
+  background-color: palette(highlight);
 }
-
-/* ------------------------------------------------ */

@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   m_resourcePath.append(m_darkMode ? "dark/" : "light/");
 
   ui->setupUi(this);
+  ui->menuView->addAction(ui->sideDock->toggleViewAction());
   ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
   loadIcons();
   loadSettings();
@@ -38,7 +39,7 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   // connectors
   setupConnections();
   setupSurahsDock();
-  setupMenubarToggles();
+  setupMenubarToggle();
   this->show();
 
   m_notifyMgr->setTooltip("Quran Companion");
@@ -151,37 +152,24 @@ MainWindow::setupSurahsDock()
 }
 
 void
-MainWindow::setupMenubarToggles()
+MainWindow::setupMenubarToggle()
 {
-  QFrame* toggleFrm = new QFrame(this);
-  toggleFrm->setFrameStyle(QFrame::NoFrame);
-  toggleFrm->setLayout(new QHBoxLayout());
-  QPushButton* toggleControls = new QPushButton(toggleFrm);
-  toggleControls->setObjectName("btnToggleControls");
-  toggleControls->setCheckable(true);
-  toggleControls->setChecked(!ui->dockControls->isHidden());
-  QPushButton* toggleNav = new QPushButton(toggleFrm);
+  QPushButton* toggleNav = new QPushButton(this);
   toggleNav->setObjectName("btnToggleNav");
   toggleNav->setCheckable(true);
   toggleNav->setChecked(!ui->sideDock->isHidden());
-
-  toggleFrm->layout()->setContentsMargins(0, 0, 0, 0);
-  toggleFrm->layout()->setSpacing(2);
-  toggleFrm->layout()->addWidget(toggleNav);
-  toggleFrm->layout()->addWidget(toggleControls);
-
-  ui->menubar->setCornerWidget(toggleFrm);
-
-  connect(toggleControls,
-          &QPushButton::toggled,
-          ui->dockControls->toggleViewAction(),
-          &QAction::triggered,
-          Qt::UniqueConnection);
+  toggleNav->setCursor(Qt::PointingHandCursor);
+  ui->menubar->setCornerWidget(toggleNav);
 
   connect(toggleNav,
           &QPushButton::toggled,
           ui->sideDock->toggleViewAction(),
           &QAction::triggered,
+          Qt::UniqueConnection);
+  connect(ui->sideDock,
+          &QDockWidget::visibilityChanged,
+          toggleNav,
+          &QPushButton::setChecked,
           Qt::UniqueConnection);
 }
 
@@ -356,26 +344,6 @@ MainWindow::setupConnections()
           &QShortcut::activated,
           this,
           &MainWindow::spaceKeyPressed,
-          Qt::UniqueConnection);
-  connect(ui->btnSearch,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::openSearchDialog,
-          Qt::UniqueConnection);
-  connect(ui->btnPreferences,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::actionPrefTriggered,
-          Qt::UniqueConnection);
-  connect(ui->btnBookmarks,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::actionBookmarksTriggered,
-          Qt::UniqueConnection);
-  connect(ui->btnDownloads,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::actionDMTriggered,
           Qt::UniqueConnection);
 
   // ########## system tray ########## //
@@ -582,7 +550,7 @@ MainWindow::gotoPage(int page, bool automaticFlip)
     updateSurah();
     setVerseComboBoxRange();
   }
-  
+
   setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
   addSideContent();
 }
@@ -750,7 +718,7 @@ MainWindow::cmbJozzChanged(int newJozzIdx)
     qDebug() << "Internal jozz change";
     return;
   }
-  
+
   gotoPage(m_dbMgr->getJuzStartPage(newJozzIdx + 1));
 }
 

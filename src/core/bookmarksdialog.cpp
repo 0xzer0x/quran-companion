@@ -160,7 +160,7 @@ BookmarksDialog::loadSurahs()
   m_surahsModel.clear();
   QStandardItem* item = new QStandardItem(tr("All"));
   item->setData(Qt::AlignCenter, Qt::TextAlignmentRole);
-  item->setSizeHint(QSize(100, 40));
+  item->setSizeHint(QSize(70, 40));
   m_surahsModel.appendRow(item);
 
   std::set<int> surahs;
@@ -173,6 +173,7 @@ BookmarksDialog::loadSurahs()
     item->setData(Qt::AlignCenter, Qt::TextAlignmentRole);
     item->setToolTip(item->text());
     item->setData(s, Qt::UserRole);
+    item->setSizeHint(QSize(70, 40));
     m_surahsModel.appendRow(item);
   }
 }
