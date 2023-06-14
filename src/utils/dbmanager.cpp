@@ -248,8 +248,7 @@ DBManager::getPageMetadata(const int page)
   dbQuery.bindValue(0, page);
 
   if (!dbQuery.exec())
-    qCritical()
-      << "Error occurred during getFirstSurahInPage SQL statment exec";
+    qCritical() << "Error occurred during getPageMetadata SQL statment exec";
 
   dbQuery.next();
   data.push_back(dbQuery.value(0).toInt());
@@ -289,7 +288,7 @@ DBManager::getVerseInfoList(int page)
   dbQuery.prepare(query.arg(QString::number(m_qcfVer), QString::number(page)));
 
   if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    qCritical() << "Error occurred during getVerseInfoList SQL statment exec";
   }
 
   while (dbQuery.next()) {
@@ -311,7 +310,7 @@ DBManager::getSurahNameGlyph(const int sura)
   dbQuery.prepare("SELECT qcf_v1 FROM surah_glyphs WHERE surah=:i");
   dbQuery.bindValue(0, sura);
   if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    qCritical() << "Error occurred during getSurahNameGlyph SQL statment exec";
   }
 
   dbQuery.next();
@@ -372,11 +371,28 @@ DBManager::getSurahName(const int sIdx)
 
   dbQuery.bindValue(0, sIdx);
   if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    qCritical() << "Error occurred during getSurahName SQL statment exec";
   }
 
   dbQuery.next();
   return dbQuery.value(0).toString();
+}
+
+int
+DBManager::getVerseId(const int sIdx, const int vIdx)
+{
+  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  QSqlQuery dbQuery(m_openDBCon);
+  dbQuery.prepare("SELECT id FROM verses_v1 WHERE sura_no=:s AND aya_no=:v");
+  dbQuery.bindValue(0, sIdx);
+  dbQuery.bindValue(1, vIdx);
+
+  if (!dbQuery.exec()) {
+    qCritical() << "Error occurred during getVerseId SQL statment exec";
+  }
+
+  dbQuery.next();
+  return dbQuery.value(0).toInt();
 }
 
 int
@@ -390,7 +406,7 @@ DBManager::getSurahVerseCount(const int surahIdx)
   dbQuery.bindValue(0, surahIdx);
 
   if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during SQL statment exec";
+    qCritical() << "Error occurred during getSurahVerseCount SQL statment exec";
     return -1;
   }
 
@@ -408,7 +424,7 @@ DBManager::getSurahStartPage(int surahIdx)
   dbQuery.bindValue(0, surahIdx);
 
   if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    qCritical() << "Error occurred during getSurahStartPage SQL statment exec";
   }
   dbQuery.next();
 
@@ -453,8 +469,7 @@ DBManager::searchSurahs(QString searchText,
 
   dbQuery.prepare(q);
   if (!dbQuery.exec()) {
-    qCritical()
-      << "[CRITICAL] Error occurred during searchSurahs SQL statment exec";
+    qCritical() << "Error occurred during searchSurahs SQL statment exec";
   }
 
   while (dbQuery.next()) {
@@ -524,7 +539,7 @@ DBManager::getVersePage(const int& surahIdx, const int& verse)
                             QString::number(verse)));
 
   if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    qCritical() << "Error occurred during getVersePage SQL statment exec";
   }
   dbQuery.next();
 
@@ -532,7 +547,7 @@ DBManager::getVersePage(const int& surahIdx, const int& verse)
 }
 
 int
-DBManager::getJozzStartPage(const int jozz)
+DBManager::getJuzStartPage(const int jozz)
 {
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
@@ -542,7 +557,7 @@ DBManager::getJozzStartPage(const int jozz)
   dbQuery.prepare(query);
 
   if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    qCritical() << "Error occurred during getJuzStartPage SQL statment exec";
   }
   dbQuery.next();
 
@@ -550,7 +565,7 @@ DBManager::getJozzStartPage(const int jozz)
 }
 
 int
-DBManager::getJozzOfPage(const int page)
+DBManager::getJuzOfPage(const int page)
 {
   // returns the jozz number which the passed page belongs to
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
@@ -561,7 +576,7 @@ DBManager::getJozzOfPage(const int page)
   dbQuery.prepare(query);
 
   if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVerseInfo SQL statment exec";
+    qCritical() << "Error occurred during getJuzOfPage SQL statment exec";
   }
   dbQuery.next();
 
@@ -583,8 +598,7 @@ DBManager::searchSurahNames(QString text)
 
   dbQuery.prepare(q);
   if (!dbQuery.exec()) {
-    qCritical()
-      << "[CRITICAL] Error occurred during searchSurahNames SQL statment exec";
+    qCritical() << "Error occurred during searchSurahNames SQL statment exec";
   }
 
   while (dbQuery.next()) {
@@ -617,8 +631,7 @@ DBManager::searchVerses(QString searchText,
 
   dbQuery.prepare(q);
   if (!dbQuery.exec()) {
-    qCritical()
-      << "[CRITICAL] Error occurred during searchVerses SQL statment exec";
+    qCritical() << "Error occurred during searchVerses SQL statment exec";
   }
 
   while (dbQuery.next()) {
@@ -643,7 +656,7 @@ DBManager::bookmarkedVerses(int surahIdx)
 
   dbQuery.prepare(q.append(" ORDER BY surah, number"));
   if (!dbQuery.exec())
-    qCritical() << "Couldn't execute favoriteVerses SELECT query";
+    qCritical() << "Couldn't execute bookmarkedVerses SELECT query";
 
   while (dbQuery.next()) {
     results.append(Verse{ dbQuery.value(0).toInt(),
@@ -667,7 +680,7 @@ DBManager::isBookmarked(Verse v)
   dbQuery.bindValue(2, v.number);
 
   if (!dbQuery.exec()) {
-    qWarning() << "Couldn't check if verse is favorites";
+    qWarning() << "Couldn't check if verse is bookmarked";
     return false;
   }
 
@@ -694,7 +707,7 @@ DBManager::addBookmark(Verse v)
   dbQuery.bindValue(2, v.number);
 
   if (!dbQuery.exec()) {
-    qWarning() << "Couldn't add verse to favorites db";
+    qWarning() << "Couldn't add verse to bookmarks db";
     return false;
   }
 
@@ -717,7 +730,7 @@ DBManager::removeBookmark(Verse v)
   dbQuery.bindValue(2, v.number);
 
   if (!dbQuery.exec()) {
-    qWarning() << "Couldn't remove verse from favorites";
+    qWarning() << "Couldn't remove verse from bookmarks";
     return false;
   }
 
@@ -758,7 +771,7 @@ DBManager::getTranslation(const int sIdx, const int vIdx)
   dbQuery.prepare(q);
 
   if (!dbQuery.exec())
-    qFatal("Couldn't execute getTrans query!");
+    qFatal("Couldn't execute getTranslation query!");
 
   dbQuery.next();
 

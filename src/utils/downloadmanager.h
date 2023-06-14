@@ -25,12 +25,12 @@ public:
 
   struct DownloadTask
   {
-    int surah;
-    int verse;
-    int reciterIdx;
-    QUrl link;
+    int surah{ -1 };
+    int verse{ -1 };
+    int reciterIdx{ -1 };
+    QUrl link{};
+    QString filename{};
     QNetworkReply* networkReply = nullptr;
-    DownloadTask() {}
     void clear()
     {
       surah = verse = reciterIdx = -1;
@@ -52,7 +52,7 @@ public slots:
   void processQueueHead();
   void downloadProgress(qint64 bytes, qint64 total);
   void finishupTask(QNetworkReply* replyData);
-  bool saveFile(QNetworkReply* data, QString filename);
+  bool saveFile(QNetworkReply* data);
 
 signals:
   void downloadStarted();
@@ -64,6 +64,9 @@ signals:
   void queueEmpty();
 
 private:
+  QUrl downloadUrl(const int reciterIdx,
+                   const int surah,
+                   const int verse) const;
   void handleConError(QNetworkReply::NetworkError err);
   bool m_isDownloading = false;
   int m_currSurahCount;

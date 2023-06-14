@@ -39,27 +39,27 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="96"/>
+        <location filename="../core/bookmarksdialog.cpp" line="101"/>
         <source>Go to verse</source>
         <translation>الذهاب إلى الآية</translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="97"/>
+        <location filename="../core/bookmarksdialog.cpp" line="102"/>
         <source>Remove</source>
         <translation>إزالة</translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="116"/>
+        <location filename="../core/bookmarksdialog.cpp" line="121"/>
         <source>Surah: </source>
         <translation>سورة: </translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="118"/>
+        <location filename="../core/bookmarksdialog.cpp" line="123"/>
         <source>Verse: </source>
         <translation>آية: </translation>
     </message>
     <message>
-        <location filename="../core/bookmarksdialog.cpp" line="155"/>
+        <location filename="../core/bookmarksdialog.cpp" line="161"/>
         <source>All</source>
         <translation>الكل</translation>
     </message>
@@ -164,7 +164,7 @@
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="17"/>
-        <location filename="../core/mainwindow.cpp" line="1113"/>
+        <location filename="../core/mainwindow.cpp" line="1104"/>
         <source>Quran Companion</source>
         <translation>رفيق القرآن</translation>
     </message>
@@ -385,13 +385,13 @@
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="1026"/>
-        <location filename="../core/mainwindow.cpp" line="1121"/>
+        <location filename="../core/mainwindow.cpp" line="1112"/>
         <source>About Quran Companion</source>
         <translation>عن البرنامج</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="1031"/>
-        <location filename="../core/mainwindow.cpp" line="1127"/>
+        <location filename="../core/mainwindow.cpp" line="1118"/>
         <source>About Qt</source>
         <translation>عن كيوت</translation>
     </message>
@@ -479,74 +479,74 @@
         <translation>خروج</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="418"/>
+        <location filename="../core/mainwindow.cpp" line="409"/>
         <source>There are currently no updates available.</source>
         <translation>لا تتوفر تحديثات حالياً.</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="421"/>
-        <location filename="../core/mainwindow.cpp" line="423"/>
-        <location filename="../core/mainwindow.cpp" line="437"/>
+        <location filename="../core/mainwindow.cpp" line="412"/>
+        <location filename="../core/mainwindow.cpp" line="414"/>
+        <location filename="../core/mainwindow.cpp" line="428"/>
         <source>Update info</source>
         <translation>معلومات التحديث</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="427"/>
+        <location filename="../core/mainwindow.cpp" line="418"/>
         <source>Updates available, do you want to open the update tool?</source>
         <translation>هناك تحديثات متاحة، هل تود تشغيل مدير التحديثات؟</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="430"/>
+        <location filename="../core/mainwindow.cpp" line="421"/>
         <source>Updates info</source>
         <translation>معلومات التحديث</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="438"/>
+        <location filename="../core/mainwindow.cpp" line="429"/>
         <source>Updates are available, use the maintainance tool to install the latest updates.</source>
         <translation>هناك تحديثات متاحة، يمكنك إستخدام اداة التحديث للحصول على اخر التحديثات.</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1111"/>
+        <location filename="../core/mainwindow.cpp" line="1102"/>
         <source>Quran Companion v</source>
         <translation>رفيق القرآن إصدار </translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1115"/>
+        <location filename="../core/mainwindow.cpp" line="1106"/>
         <source>Licensed under the </source>
         <translation>مرخّص بموجب </translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1330"/>
+        <location filename="../core/mainwindow.cpp" line="1321"/>
         <source>Now playing: </source>
         <translation>يقرأ الآن: </translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1331"/>
+        <location filename="../core/mainwindow.cpp" line="1322"/>
         <source>Surah </source>
         <translation>سورة </translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="851"/>
+        <location filename="../core/mainwindow.cpp" line="842"/>
         <source>Recitation not found</source>
         <translation>التلاوة غير موجودة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="852"/>
+        <location filename="../core/mainwindow.cpp" line="843"/>
         <source>The recitation files for the current surah is missing, would you like to download it?</source>
         <translation>ملفات التلاوة الخاصة بالسورة الحالية غير متوفرة، هل تود الذهاب إلى صفحة التحميل؟</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1114"/>
+        <location filename="../core/mainwindow.cpp" line="1105"/>
         <source> is a free cross-platform Quran reader &amp; player.</source>
         <translation> هو برنامج مجاني متعدد-المنصات لقراءة و سماع القرآن الكريم.</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1119"/>
+        <location filename="../core/mainwindow.cpp" line="1110"/>
         <source>&apos;Waqf&apos; General Public License</source>
-        <translation type="unfinished">رخصة &apos;وقف&apos; العامة</translation>
+        <translation>رخصة &apos;وقف&apos; العامة</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1378"/>
+        <location filename="../core/mainwindow.cpp" line="1369"/>
         <source>Verse Of The Day</source>
         <translation>آية اليوم</translation>
     </message>

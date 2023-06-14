@@ -1,11 +1,14 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/basmalah.png</file>
+        <file>resources/dark/icons/arrow-down.svg</file>
         <file>resources/dark/icons/bookmark-false.png</file>
         <file>resources/dark/icons/bookmark-true.png</file>
+        <file>resources/dark/icons/controls.png</file>
         <file>resources/dark/icons/copy.png</file>
         <file>resources/dark/icons/download-manager.png</file>
         <file>resources/dark/icons/exit.png</file>
+        <file>resources/dark/icons/navigation.png</file>
         <file>resources/dark/icons/pause.png</file>
         <file>resources/dark/icons/play.png</file>
         <file>resources/dark/icons/prefs.png</file>
@@ -18,12 +21,15 @@
         <file>resources/dark/icons/website.png</file>
         <file>resources/dark/icons/zoom-in.png</file>
         <file>resources/dark/icons/zoom-out.png</file>
-        <file>resources/dark/styles/bookmarks-listview.qss</file>
+        <file>resources/dark/styles.qss</file>
+        <file>resources/light/icons/arrow-down.svg</file>
         <file>resources/light/icons/bookmark-false.png</file>
         <file>resources/light/icons/bookmark-true.png</file>
+        <file>resources/light/icons/controls.png</file>
         <file>resources/light/icons/copy.png</file>
         <file>resources/light/icons/download-manager.png</file>
         <file>resources/light/icons/exit.png</file>
+        <file>resources/light/icons/navigation.png</file>
         <file>resources/light/icons/pause.png</file>
         <file>resources/light/icons/play.png</file>
         <file>resources/light/icons/prefs.png</file>
@@ -36,12 +42,10 @@
         <file>resources/light/icons/website.png</file>
         <file>resources/light/icons/zoom-in.png</file>
         <file>resources/light/icons/zoom-out.png</file>
-        <file>resources/light/styles/bookmarks-listview.qss</file>
+        <file>resources/light/styles.qss</file>
         <file>resources/logo.ico</file>
         <file>resources/splash.png</file>
         <file>resources/sura_box.png</file>
         <file>resources/tray.png</file>
-        <file>resources/light/styles/splitter-scrollbar.qss</file>
-        <file>resources/dark/styles/splitter-scrollbar.qss</file>
     </qresource>
 </RCC>

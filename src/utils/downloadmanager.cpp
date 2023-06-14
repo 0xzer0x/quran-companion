@@ -50,18 +50,15 @@ DownloadManager::cancelCurrentTask()
 void
 DownloadManager::enqeueVerseTask(int reciterIdx, int surah, int verse)
 {
-  QString url = m_recitersList.at(reciterIdx).baseUrl;
-  url.append(QString::number(surah).rightJustified(3, '0'));
-  url.append(QString::number(verse).rightJustified(3, '0'));
-  url.append(".mp3");
 
-  QUrl dl = QUrl::fromEncoded(url.toLocal8Bit());
-
+  QUrl dl = downloadUrl(reciterIdx, surah, verse);
   DownloadTask t;
   t.surah = surah;
   t.verse = verse;
   t.reciterIdx = reciterIdx;
   t.link = dl;
+  t.filename = QString::number(surah).rightJustified(3, '0') +
+               QString::number(verse).rightJustified(3, '0') + ".mp3";
 
   m_downloadQueue.enqueue(t);
 }
@@ -81,7 +78,8 @@ DownloadManager::processQueueHead()
   m_downloadPath = m_topLevelPath;
   m_downloadPath.cd(m_recitersList.at(m_currentTask.reciterIdx).baseDirName);
 
-  while (m_downloadPath.exists(m_currentTask.link.fileName())) {
+  qInfo() << m_currentTask.filename;
+  while (m_downloadPath.exists(m_currentTask.filename)) {
     emit downloadProgressed(m_currentTask.verse, m_currSurahCount);
 
     if (m_currentTask.verse == m_currSurahCount) {
@@ -140,7 +138,7 @@ DownloadManager::finishupTask(QNetworkReply* replyData)
     return;
   }
 
-  saveFile(replyData, m_currentTask.link.fileName());
+  saveFile(replyData);
 
   emit downloadProgressed(m_currentTask.verse, m_currSurahCount);
   if (m_currentTask.verse == m_currSurahCount) {
@@ -158,12 +156,12 @@ DownloadManager::finishupTask(QNetworkReply* replyData)
 }
 
 bool
-DownloadManager::saveFile(QNetworkReply* data, QString filename)
+DownloadManager::saveFile(QNetworkReply* data)
 {
-  QFile localFile(m_downloadPath.filePath(filename));
+  QFile localFile(m_downloadPath.filePath(m_currentTask.filename));
 
   if (!localFile.open(QIODevice::WriteOnly)) {
-    qWarning() << "Couldn't open file:" << filename;
+    qWarning() << "Couldn't open file:" << m_currentTask.filename;
     return false;
   }
 
@@ -174,6 +172,21 @@ DownloadManager::saveFile(QNetworkReply* data, QString filename)
   localFile.close();
 
   return true;
+}
+
+QUrl
+DownloadManager::downloadUrl(const int reciterIdx,
+                             const int surah,
+                             const int verse) const
+{
+  Reciter r = m_recitersList.at(reciterIdx);
+  QString url = r.baseUrl;
+  if (r.useId)
+    url.append(QString::number(m_dbMgr->getVerseId(surah, verse)) + ".mp3");
+  else
+    url.append(m_currentTask.filename);
+
+  return QUrl::fromEncoded(url.toLocal8Bit());
 }
 
 bool

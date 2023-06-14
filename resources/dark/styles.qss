@@ -1,0 +1,202 @@
+QDialogButtonBox {
+  dialogbuttonbox-buttons-have-icons: 0;
+}
+
+QLineEdit {
+  placeholder-text-color: #c0c0c0;
+}
+
+/* --------- Player Styles --------- */
+
+QFrame#framePlayer {
+  background-color: #222222;
+  border-radius: 8px;
+}
+
+QPushButton#btnPlay:enabled:hover,
+QPushButton#btnPause:enabled:hover,
+QPushButton#btnStop:hover {
+  background-color: #3b3b3b;
+}
+
+QPushButton#btnPlay:disabled,
+QPushButton#btnPause:disabled {
+  background-color: #515151;
+}
+
+QPushButton#btnPlay,
+QPushButton#btnPause,
+QPushButton#btnStop {
+  background-color: palette(dark);
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+
+QComboBox#cmbReciter {
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 1px 3px 1px 3px;
+}
+
+QComboBox#cmbReciter::drop-down {
+  subcontrol-origin: padding;
+  subcontrol-position: top right;
+  width: 15px;
+  border-radius: 3px;
+}
+
+QComboBox#cmbReciter::down-arrow {
+  image: url(":/resources/dark/icons/arrow-down.svg");
+}
+
+/* --------- Reader Styles --------- */
+
+QSplitter#centeralSplitter {
+  border-radius: 7px;
+  background-color: #222222;
+}
+
+/* VERTICAL SCROLLBAR */
+QScrollBar:vertical {
+  border: none;
+  background: #222222;
+  width: 10px;
+  margin: 0;
+  border-radius: 3px;
+}
+
+/*  HANDLE BAR VERTICAL */
+QScrollBar::handle:vertical {
+  background-color: #3b3b3b;
+  min-height: 10px;
+  border-radius: 4px;
+}
+QScrollBar::handle:vertical:hover {
+  background-color: #515151;
+}
+QScrollBar::handle:vertical:pressed {
+  background-color: #515151;
+}
+
+/* BTN TOP - SCROLLBAR */
+QScrollBar::sub-line:vertical {
+  border: none;
+  background: none;
+  height: 0px;
+  subcontrol-position: top;
+  subcontrol-origin: margin;
+}
+/* BTN BOTTOM - SCROLLBAR */
+QScrollBar::add-line:vertical {
+  border: none;
+  background: none;
+  height: 0px;
+  subcontrol-position: bottom;
+  subcontrol-origin: margin;
+}
+
+/* HORIZONTAL SCROLLBAR */
+QScrollBar:horizontal {
+  border: none;
+  border-radius: 4px;
+  background: #222222;
+  height: 10px;
+  margin: 0;
+}
+
+/*  HANDLE BAR HORIZONTAL */
+QScrollBar::handle:horizontal {
+  background-color: #3b3b3b;
+  min-width: 2px;
+  border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal:hover {
+  background-color: #515151;
+}
+
+/* BTN RIGHT - SCROLLBAR */
+QScrollBar::add-line:horizontal {
+  background: transparent;
+  width: 0;
+  subcontrol-position: right;
+  subcontrol-origin: margin;
+}
+
+/* BTN LEFT - SCROLLBAR */
+QScrollBar::sub-line:horizontal {
+  background: transparent;
+  width: 0;
+  subcontrol-position: left;
+  subcontrol-origin: margin;
+}
+
+/* ------------ ListView Styles ------------ */
+
+QListView#listViewSurahs {
+  font-size: 12pt;
+  spacing: 5px;
+  border-radius: 1px;
+  outline: none;
+}
+
+QListView#listViewSurahs::item {
+  border-radius: 3px;
+  padding: 5px;
+  outline: none;
+}
+
+QListView#listViewSurahs::item:selected,
+QListView#listViewSurahs::item:hover:selected {
+  border: 1px solid #008296;
+  background-color: rgba(0, 161, 185, 90);
+}
+
+QListView#listViewSurahs::item:hover {
+  background-color: rgba(0, 161, 185, 40);
+}
+
+QListView#listViewBookmarkedSurahs {
+  outline: none;
+  font-size: 10pt;
+  background-color: transparent;
+}
+
+QListView#listViewBookmarkedSurahs::item {
+  color: rgb(222, 219, 215);
+  margin: 0px 5px 0px 0px;
+  background-color: rgb(24, 26, 27);
+  border: 1px solid rgb(47, 47, 47);
+  border-radius: 8px;
+}
+
+QListView#listViewBookmarkedSurahs::item:selected,
+QListView#listViewBookmarkedSurahs::item:hover:selected {
+  text-align: center;
+  border-color: #008296;
+  outline: 0;
+}
+
+QListView#listViewBookmarkedSurahs::item:hover {
+  background-color: rgb(23, 36, 36);
+}
+
+/* --------------- Toggle Styles --------------- */
+
+QPushButton#btnToggleNav {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  image: url(":/resources/dark/icons/navigation.png");
+  width: 30px;
+  height: 20px;
+}
+
+QPushButton#btnToggleNav:!checked:hover {
+  background-color: #3b3b3b;
+}
+
+QPushButton#btnToggleNav:checked {
+  border: 1px solid #008296;
+  background-color: palette(highlight);
+}

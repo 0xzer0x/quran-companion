@@ -25,9 +25,8 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   m_resourcePath.append(m_darkMode ? "dark/" : "light/");
 
   ui->setupUi(this);
-  ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
+  ui->menuView->addAction(ui->sideDock->toggleViewAction());
   ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
-  loadStyles();
   loadIcons();
   loadSettings();
   init();
@@ -40,6 +39,7 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   // connectors
   setupConnections();
   setupSurahsDock();
+  setupMenubarToggle();
   this->show();
 
   m_notifyMgr->setTooltip("Quran Companion");
@@ -53,30 +53,20 @@ void
 MainWindow::loadIcons()
 {
   ui->actionDownload_manager->setIcon(
-    QIcon(m_resourcePath + "/icons/download-manager.png"));
-  ui->actionExit->setIcon(QIcon(m_resourcePath + "/icons/exit.png"));
-  ui->actionFind->setIcon(QIcon(m_resourcePath + "/icons/search.png"));
-  ui->actionTafsir->setIcon(QIcon(m_resourcePath + "/icons/tafsir.png"));
+    QIcon(m_resourcePath + "icons/download-manager.png"));
+  ui->actionExit->setIcon(QIcon(m_resourcePath + "icons/exit.png"));
+  ui->actionFind->setIcon(QIcon(m_resourcePath + "icons/search.png"));
+  ui->actionTafsir->setIcon(QIcon(m_resourcePath + "icons/tafsir.png"));
   ui->actionVerse_of_the_day->setIcon(
-    QIcon(m_resourcePath + "/icons/today.png"));
+    QIcon(m_resourcePath + "icons/today.png"));
   ui->actionBookmarks->setIcon(
-    QIcon(m_resourcePath + "/icons/bookmark-true.png"));
-  ui->actionPereferences->setIcon(QIcon(m_resourcePath + "/icons/prefs.png"));
-  ui->btnPlay->setIcon(QIcon(m_resourcePath + "/icons/play.png"));
-  ui->btnPause->setIcon(QIcon(m_resourcePath + "/icons/pause.png"));
-  ui->btnStop->setIcon(QIcon(m_resourcePath + "/icons/stop.png"));
+    QIcon(m_resourcePath + "icons/bookmark-true.png"));
+  ui->actionPereferences->setIcon(QIcon(m_resourcePath + "icons/prefs.png"));
+  ui->btnPlay->setIcon(QIcon(m_resourcePath + "icons/play.png"));
+  ui->btnPause->setIcon(QIcon(m_resourcePath + "icons/pause.png"));
+  ui->btnStop->setIcon(QIcon(m_resourcePath + "icons/stop.png"));
   ui->actionCheck_for_updates->setIcon(
-    QIcon(m_resourcePath + "/icons/update.png"));
-}
-
-void
-MainWindow::loadStyles()
-{
-  QFile ss(m_resourcePath + "/styles/splitter-scrollbar.qss");
-  if (ss.open(QIODevice::ReadOnly)) {
-    this->setStyleSheet(ss.readAll());
-    ss.close();
-  }
+    QIcon(m_resourcePath + "icons/update.png"));
 }
 
 void
@@ -107,7 +97,10 @@ MainWindow::init()
                          m_dbMgr,
                          m_settingsPtr,
                          m_resourcePath);
+
   ui->frmPageContent->layout()->addWidget(m_quranBrowser);
+
+  ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
   m_notifyMgr = new NotificationManager(this, m_dbMgr);
 
   updateLoadedTafsir();
@@ -122,8 +115,6 @@ MainWindow::init()
   ui->scrlVerseCont->setLayout(vbl);
   addSideContent();
 
-  ui->menuView->addAction(ui->dockControls->toggleViewAction());
-
   for (int i = 1; i < 605; i++) {
     ui->cmbPage->addItem(QString::number(i));
   }
@@ -134,7 +125,7 @@ MainWindow::init()
 
   // sets without emitting signal
   setCmbVerseIdx(m_currVerse.number - 1);
-  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
+  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
   ui->cmbReciter->setCurrentIndex(m_settingsPtr->value("Reciter", 0).toInt());
@@ -149,16 +140,40 @@ MainWindow::setupSurahsDock()
     m_surahList.append(item);
   }
 
-  ui->menuView->addAction(ui->sideDock->toggleViewAction());
   m_surahListModel.setStringList(m_surahList);
   ui->listViewSurahs->setModel(&m_surahListModel);
 
-  QItemSelectionModel* select = ui->listViewSurahs->selectionModel();
-  select->select(m_surahListModel.index(m_currVerse.surah - 1),
-                 QItemSelectionModel::Rows | QItemSelectionModel::Select);
+  QItemSelectionModel* selector = ui->listViewSurahs->selectionModel();
+  selector->select(m_surahListModel.index(m_currVerse.surah - 1),
+                   QItemSelectionModel::Rows | QItemSelectionModel::Select);
 
   ui->listViewSurahs->scrollTo(m_surahListModel.index(m_currVerse.surah - 1),
                                QAbstractItemView::PositionAtCenter);
+}
+
+void
+MainWindow::setupMenubarToggle()
+{
+  QPushButton* toggleNav = new QPushButton(this);
+  toggleNav->setObjectName("btnToggleNav");
+  toggleNav->setCheckable(true);
+  toggleNav->setChecked(!ui->sideDock->isHidden());
+  toggleNav->setCursor(Qt::PointingHandCursor);
+  toggleNav->setToolTip(tr("Navigation"));
+  ui->menubar->setCornerWidget(toggleNav);
+
+  connect(toggleNav, &QPushButton::toggled, this, [this](bool checked) {
+    if (ui->sideDock->isVisible() != checked)
+      ui->sideDock->setVisible(checked);
+  });
+
+  connect(ui->sideDock->toggleViewAction(),
+          &QAction::toggled,
+          toggleNav,
+          [this, toggleNav](bool visible) {
+            if (toggleNav->isChecked() != visible && !this->isMinimized())
+              toggleNav->setChecked(visible);
+          });
 }
 
 /*!
@@ -252,7 +267,7 @@ MainWindow::setupConnections()
           this,
           &MainWindow::cmbVerseChanged,
           Qt::UniqueConnection);
-  connect(ui->cmbJozz,
+  connect(ui->cmbJuz,
           &QComboBox::currentIndexChanged,
           this,
           &MainWindow::cmbJozzChanged,
@@ -332,26 +347,6 @@ MainWindow::setupConnections()
           &QShortcut::activated,
           this,
           &MainWindow::spaceKeyPressed,
-          Qt::UniqueConnection);
-  connect(ui->btnSearch,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::openSearchDialog,
-          Qt::UniqueConnection);
-  connect(ui->btnPreferences,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::actionPrefTriggered,
-          Qt::UniqueConnection);
-  connect(ui->btnBookmarks,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::actionBookmarksTriggered,
-          Qt::UniqueConnection);
-  connect(ui->btnDownloads,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::actionDMTriggered,
           Qt::UniqueConnection);
 
   // ########## system tray ########## //
@@ -501,7 +496,7 @@ void
 MainWindow::setCmbJozzIdx(int idx)
 {
   m_internalJozzChange = true;
-  ui->cmbJozz->setCurrentIndex(idx);
+  ui->cmbJuz->setCurrentIndex(idx);
   m_internalJozzChange = false;
 }
 
@@ -559,7 +554,7 @@ MainWindow::gotoPage(int page, bool automaticFlip)
     setVerseComboBoxRange();
   }
 
-  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
+  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
   addSideContent();
 }
 
@@ -629,7 +624,7 @@ MainWindow::gotoSurah(int surahIdx)
   highlightCurrentVerse();
 
   setCmbPageIdx(m_currVerse.page - 1);
-  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
+  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
   setVerseComboBoxRange();
 
   m_endOfPage = false;
@@ -713,7 +708,7 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   m_player->setVerseFile(m_player->constructVerseFilename());
 
   setCmbPageIdx(m_currVerse.page - 1);
-  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
+  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
   addSideContent();
   m_endOfPage = false;
@@ -727,7 +722,7 @@ MainWindow::cmbJozzChanged(int newJozzIdx)
     return;
   }
 
-  gotoPage(m_dbMgr->getJozzStartPage(newJozzIdx + 1));
+  gotoPage(m_dbMgr->getJuzStartPage(newJozzIdx + 1));
 }
 
 /* ------------------------ Player controls / highlighting
@@ -1166,7 +1161,7 @@ MainWindow::navigateToVerse(Verse v)
 
   setCmbPageIdx(m_currVerse.page - 1);
   setCmbVerseIdx(m_currVerse.number - 1);
-  setCmbJozzIdx(m_dbMgr->getJozzOfPage(m_currVerse.page) - 1);
+  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
   updateSurah();
   highlightCurrentVerse();
