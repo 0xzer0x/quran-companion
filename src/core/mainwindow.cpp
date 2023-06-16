@@ -160,6 +160,9 @@ MainWindow::setupMenubarToggle()
   toggleNav->setChecked(!ui->sideDock->isHidden());
   toggleNav->setCursor(Qt::PointingHandCursor);
   toggleNav->setToolTip(tr("Navigation"));
+  toggleNav->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+  toggleNav->setMinimumSize(
+    QSize(ui->menubar->height() + 10, ui->menubar->height()));
   ui->menubar->setCornerWidget(toggleNav);
 
   connect(toggleNav, &QPushButton::toggled, this, [this](bool checked) {

@@ -186,8 +186,6 @@ QPushButton#btnToggleNav {
   border: none;
   background-color: transparent;
   image: url(":/resources/light/icons/navigation.png");
-  width: 30px;
-  height: 20px;
 }
 
 QPushButton#btnToggleNav:!checked:hover {

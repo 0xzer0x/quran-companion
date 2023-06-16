@@ -118,7 +118,9 @@ SearchDialog::showResults()
     QString info = tr("Surah: ") + m_surahNames.at(v.surah - 1) + " - " +
                    tr("Verse: ") + QString::number(v.number);
     lbInfo->setText(info);
+    lbInfo->setMaximumHeight(50);
     lbInfo->setAlignment(Qt::AlignLeft);
+    lbInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     clkLb->setMargin(5);
     clkLb->setObjectName(QString::number(v.page) + '-' +
