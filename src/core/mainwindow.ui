@@ -46,7 +46,7 @@ dialog-no-icon: off;
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
     <item>
-     <layout class="QHBoxLayout" name="layoutPlayerControls">
+     <layout class="QHBoxLayout" name="layoutPlayerControls" stretch="0,1,0">
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -54,7 +54,7 @@ dialog-no-icon: off;
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>66</width>
           <height>20</height>
          </size>
         </property>
@@ -62,6 +62,18 @@ dialog-no-icon: off;
       </item>
       <item>
        <widget class="QFrame" name="framePlayer">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>900</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,0,1,0,0,0,0,0">
          <property name="leftMargin">
           <number>20</number>
@@ -77,6 +89,12 @@ dialog-no-icon: off;
          </property>
          <item>
           <widget class="QLabel" name="lblReciter">
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Reciter</string>
            </property>
@@ -94,6 +112,12 @@ dialog-no-icon: off;
             <size>
              <width>150</width>
              <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="cursor">
@@ -117,7 +141,7 @@ dialog-no-icon: off;
            </property>
            <property name="maximumSize">
             <size>
-             <width>300</width>
+             <width>350</width>
              <height>16777215</height>
             </size>
            </property>
@@ -138,6 +162,12 @@ dialog-no-icon: off;
             </sizepolicy>
            </property>
            <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
             <size>
              <width>40</width>
              <height>25</height>
@@ -168,6 +198,12 @@ dialog-no-icon: off;
             </sizepolicy>
            </property>
            <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
             <size>
              <width>40</width>
              <height>25</height>
@@ -230,6 +266,12 @@ dialog-no-icon: off;
             <size>
              <width>160</width>
              <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="cursor">
@@ -305,13 +347,13 @@ dialog-no-icon: off;
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer_3">
+       <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>66</width>
           <height>20</height>
          </size>
         </property>
@@ -339,7 +381,7 @@ dialog-no-icon: off;
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0">
        <property name="spacing">
         <number>6</number>
        </property>

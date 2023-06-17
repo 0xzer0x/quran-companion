@@ -16,8 +16,8 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   , m_darkMode{ settingsPtr->value("Theme").toInt() == 1 }
 {
 
-  m_updateToolPath =
-    QDir::currentPath() + QDir::separator() + "QCMaintenanceTool";
+  m_updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
+                     "QCMaintenanceTool";
 #ifdef Q_OS_WIN
   m_updateToolPath.append(".exe");
 #endif
