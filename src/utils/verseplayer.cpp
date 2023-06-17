@@ -63,7 +63,6 @@ VersePlayer::fillRecitersList()
                   "https://cdn.islamic.network/quran/audio/64/ar.husary/",
                   true };
 
-  qInfo() << husary.basmallahPath;
   Reciter husaryQasr{
     "Al-Husary_(Qasr)",
     tr("Al-Husary (Qasr)"),
