@@ -104,10 +104,10 @@ qt_add_translations(quran-companion TS_FILES ./src/translations/qc_ar.ts)
 message(STATUS "Copying assets directory")
 file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR})
 
-message(STATUS "Copying bismillah audio files")
-file(COPY ./audio/bismillah DESTINATION ${PROJECT_BINARY_DIR}/audio)
+message(STATUS "Copying bismillah directory")
+file(COPY ./bismillah DESTINATION ${PROJECT_BINARY_DIR})
 
-message(STATUS "Copying qt translations to build directory")
+message(STATUS "Copying qt translations")
 configure_file("${QT_TR_DIR}/qtbase_ar.qm" "${CMAKE_CURRENT_BINARY_DIR}/ar.qm"
                COPYONLY)
 message(STATUS "Creating qt translations resource file")

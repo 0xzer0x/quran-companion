@@ -142,7 +142,8 @@ private:
   HighlightFrame* m_highlightedFrm = nullptr;
   QSettings* m_settingsPtr;
   Verse m_currVerse{ 1, 1, 1 };
-  QDir m_assetsDir = QDir::currentPath() + QDir::separator() + "assets";
+  QDir m_assetsDir =
+    QApplication::applicationDirPath() + QDir::separator() + "assets";
   QFont m_sideFont;
   QList<Verse> m_vInfoList;
   QList<QFrame*> m_verseFrameList;

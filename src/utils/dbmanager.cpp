@@ -697,7 +697,6 @@ DBManager::addBookmark(Verse v)
   dbQuery.exec("CREATE TABLE IF NOT EXISTS favorites(id INTEGER PRIMARY KEY "
                "AUTOINCREMENT,"
                "page INTEGER, surah INTEGER, number INTEGER)");
-  // code to check whether verse exists in db or no
 
   dbQuery.clear();
   dbQuery.prepare(

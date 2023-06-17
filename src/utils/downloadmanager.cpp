@@ -8,7 +8,8 @@ DownloadManager::DownloadManager(QObject* parent,
   , m_netMan{ new QNetworkAccessManager(this) }
   , m_dbMgr{ dbptr }
 {
-  m_topLevelPath.setPath(QDir::currentPath() + QDir::separator() + "audio");
+  m_topLevelPath.setPath(QDir::currentPath() + QDir::separator() +
+                         "recitations");
   m_netMan->setTransferTimeout(3000);
   connect(m_netMan,
           &QNetworkAccessManager::finished,

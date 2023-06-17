@@ -67,17 +67,17 @@
 <context>
     <name>DownloadManager</name>
     <message>
-        <location filename="../utils/downloadmanager.cpp" line="121"/>
+        <location filename="../utils/downloadmanager.cpp" line="120"/>
         <source>bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/downloadmanager.cpp" line="123"/>
+        <location filename="../utils/downloadmanager.cpp" line="122"/>
         <source>KB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/downloadmanager.cpp" line="128"/>
+        <location filename="../utils/downloadmanager.cpp" line="127"/>
         <source>MB</source>
         <translation type="unfinished"></translation>
     </message>
@@ -144,409 +144,407 @@
     <name>MainWindow</name>
     <message>
         <location filename="../core/mainwindow.ui" line="17"/>
-        <location filename="../core/mainwindow.cpp" line="1104"/>
+        <location filename="../core/mainwindow.cpp" line="1115"/>
         <source>Quran Companion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="111"/>
+        <location filename="../core/mainwindow.ui" line="430"/>
         <source>next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="117"/>
+        <location filename="../core/mainwindow.ui" line="436"/>
         <source>🡸</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="120"/>
+        <location filename="../core/mainwindow.ui" line="439"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="269"/>
+        <location filename="../core/mainwindow.ui" line="588"/>
         <source>previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="275"/>
+        <location filename="../core/mainwindow.ui" line="594"/>
         <source>🡺</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="278"/>
+        <location filename="../core/mainwindow.ui" line="597"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="298"/>
+        <location filename="../core/mainwindow.ui" line="617"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="307"/>
+        <location filename="../core/mainwindow.ui" line="629"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="315"/>
+        <location filename="../core/mainwindow.ui" line="637"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="323"/>
+        <location filename="../core/mainwindow.ui" line="645"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="371"/>
+        <location filename="../core/mainwindow.ui" line="99"/>
         <source>Reciter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="711"/>
+        <location filename="../core/mainwindow.ui" line="709"/>
         <source>1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="716"/>
+        <location filename="../core/mainwindow.ui" line="714"/>
         <source>2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="721"/>
+        <location filename="../core/mainwindow.ui" line="719"/>
         <source>3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="726"/>
+        <location filename="../core/mainwindow.ui" line="724"/>
         <source>4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="731"/>
+        <location filename="../core/mainwindow.ui" line="729"/>
         <source>5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="736"/>
+        <location filename="../core/mainwindow.ui" line="734"/>
         <source>6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="741"/>
+        <location filename="../core/mainwindow.ui" line="739"/>
         <source>7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="746"/>
+        <location filename="../core/mainwindow.ui" line="744"/>
         <source>8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="751"/>
+        <location filename="../core/mainwindow.ui" line="749"/>
         <source>9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="756"/>
+        <location filename="../core/mainwindow.ui" line="754"/>
         <source>10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="761"/>
+        <location filename="../core/mainwindow.ui" line="759"/>
         <source>11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="766"/>
+        <location filename="../core/mainwindow.ui" line="764"/>
         <source>12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="771"/>
+        <location filename="../core/mainwindow.ui" line="769"/>
         <source>13</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="776"/>
+        <location filename="../core/mainwindow.ui" line="774"/>
         <source>14</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="781"/>
+        <location filename="../core/mainwindow.ui" line="779"/>
         <source>15</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="786"/>
+        <location filename="../core/mainwindow.ui" line="784"/>
         <source>16</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="791"/>
+        <location filename="../core/mainwindow.ui" line="789"/>
         <source>17</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="796"/>
+        <location filename="../core/mainwindow.ui" line="794"/>
         <source>18</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="801"/>
+        <location filename="../core/mainwindow.ui" line="799"/>
         <source>19</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="806"/>
+        <location filename="../core/mainwindow.ui" line="804"/>
         <source>20</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="811"/>
+        <location filename="../core/mainwindow.ui" line="809"/>
         <source>21</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="816"/>
+        <location filename="../core/mainwindow.ui" line="814"/>
         <source>22</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="821"/>
+        <location filename="../core/mainwindow.ui" line="819"/>
         <source>23</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="826"/>
+        <location filename="../core/mainwindow.ui" line="824"/>
         <source>24</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="831"/>
+        <location filename="../core/mainwindow.ui" line="829"/>
         <source>25</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="836"/>
+        <location filename="../core/mainwindow.ui" line="834"/>
         <source>26</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="841"/>
+        <location filename="../core/mainwindow.ui" line="839"/>
         <source>27</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="846"/>
+        <location filename="../core/mainwindow.ui" line="844"/>
         <source>28</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="851"/>
+        <location filename="../core/mainwindow.ui" line="849"/>
         <source>29</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="856"/>
+        <location filename="../core/mainwindow.ui" line="854"/>
         <source>30</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="868"/>
+        <location filename="../core/mainwindow.ui" line="880"/>
         <source>Verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="882"/>
+        <location filename="../core/mainwindow.ui" line="866"/>
         <source>Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1026"/>
-        <location filename="../core/mainwindow.cpp" line="1112"/>
+        <location filename="../core/mainwindow.ui" line="1000"/>
+        <location filename="../core/mainwindow.cpp" line="1123"/>
         <source>About Quran Companion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1031"/>
-        <location filename="../core/mainwindow.cpp" line="1118"/>
+        <location filename="../core/mainwindow.ui" line="1008"/>
+        <location filename="../core/mainwindow.cpp" line="1129"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1036"/>
+        <location filename="../core/mainwindow.ui" line="1016"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1039"/>
+        <location filename="../core/mainwindow.ui" line="1019"/>
         <source>Ctrl+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1044"/>
+        <location filename="../core/mainwindow.ui" line="1024"/>
         <source>Verse of the day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="610"/>
-        <source>Search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="646"/>
-        <location filename="../core/mainwindow.ui" line="968"/>
+        <location filename="../core/mainwindow.ui" line="942"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="971"/>
+        <location filename="../core/mainwindow.ui" line="945"/>
         <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="636"/>
-        <location filename="../core/mainwindow.ui" line="980"/>
+        <location filename="../core/mainwindow.ui" line="954"/>
         <source>Download manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="361"/>
-        <source>Controls</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="575"/>
+        <location filename="../core/mainwindow.ui" line="330"/>
         <source>🔊</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="685"/>
+        <location filename="../core/mainwindow.ui" line="683"/>
+        <location filename="../core/mainwindow.cpp" line="162"/>
         <source>Navigation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="700"/>
+        <location filename="../core/mainwindow.ui" line="698"/>
         <source>Juz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="903"/>
+        <location filename="../core/mainwindow.ui" line="901"/>
         <source>Search surah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="983"/>
+        <location filename="../core/mainwindow.ui" line="957"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="993"/>
+        <location filename="../core/mainwindow.ui" line="967"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="996"/>
+        <location filename="../core/mainwindow.ui" line="970"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1005"/>
+        <location filename="../core/mainwindow.ui" line="979"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1008"/>
+        <location filename="../core/mainwindow.ui" line="982"/>
         <source>Ctrl+F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1013"/>
+        <location filename="../core/mainwindow.ui" line="987"/>
         <source>Check for updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="626"/>
-        <location filename="../core/mainwindow.ui" line="1018"/>
+        <location filename="../core/mainwindow.ui" line="992"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1021"/>
+        <location filename="../core/mainwindow.ui" line="995"/>
         <source>Ctrl+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
+        <location filename="../core/mainwindow.cpp" line="420"/>
         <source>There are currently no updates available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="412"/>
-        <location filename="../core/mainwindow.cpp" line="414"/>
-        <location filename="../core/mainwindow.cpp" line="428"/>
+        <location filename="../core/mainwindow.cpp" line="423"/>
+        <location filename="../core/mainwindow.cpp" line="425"/>
+        <location filename="../core/mainwindow.cpp" line="439"/>
         <source>Update info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="418"/>
+        <location filename="../core/mainwindow.cpp" line="429"/>
         <source>Updates available, do you want to open the update tool?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="421"/>
+        <location filename="../core/mainwindow.cpp" line="432"/>
         <source>Updates info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="429"/>
+        <location filename="../core/mainwindow.cpp" line="440"/>
         <source>Updates are available, use the maintainance tool to install the latest updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1102"/>
+        <location filename="../core/mainwindow.cpp" line="1113"/>
         <source>Quran Companion v</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1106"/>
+        <location filename="../core/mainwindow.cpp" line="1117"/>
         <source>Licensed under the </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1321"/>
+        <location filename="../core/mainwindow.cpp" line="1332"/>
         <source>Now playing: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1322"/>
+        <location filename="../core/mainwindow.cpp" line="1333"/>
         <source>Surah </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="842"/>
+        <location filename="../core/mainwindow.cpp" line="853"/>
         <source>Recitation not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="843"/>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Update tool is unavailable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="854"/>
         <source>The recitation files for the current surah is missing, would you like to download it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1105"/>
+        <location filename="../core/mainwindow.cpp" line="1116"/>
         <source> is a free cross-platform Quran reader &amp; player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1110"/>
+        <location filename="../core/mainwindow.cpp" line="1121"/>
         <source>&apos;Waqf&apos; General Public License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="1369"/>
+        <location filename="../core/mainwindow.cpp" line="1380"/>
         <source>Verse Of The Day</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1316,122 +1314,122 @@
 <context>
     <name>VersePlayer</name>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="60"/>
+        <location filename="../utils/verseplayer.cpp" line="61"/>
         <source>Al-Husary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="66"/>
+        <location filename="../utils/verseplayer.cpp" line="69"/>
         <source>Al-Husary (Qasr)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="74"/>
+        <location filename="../utils/verseplayer.cpp" line="76"/>
         <source>Al-Husary (Mujawwad)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="81"/>
+        <location filename="../utils/verseplayer.cpp" line="84"/>
         <source>Abdul-Basit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="88"/>
+        <location filename="../utils/verseplayer.cpp" line="92"/>
         <source>Abdul-Basit (Mujawwad)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="94"/>
+        <location filename="../utils/verseplayer.cpp" line="99"/>
         <source>Menshawi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="100"/>
+        <location filename="../utils/verseplayer.cpp" line="106"/>
         <source>Menshawi (Mujawwad)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="106"/>
+        <location filename="../utils/verseplayer.cpp" line="113"/>
         <source>Mishary Alafasy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="111"/>
+        <location filename="../utils/verseplayer.cpp" line="119"/>
         <source>Khalefa Al-Tunaiji</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="116"/>
+        <location filename="../utils/verseplayer.cpp" line="124"/>
         <source>Yasser Ad-Dussary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="121"/>
+        <location filename="../utils/verseplayer.cpp" line="129"/>
         <source>Mahmoud Al-Banna</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="126"/>
+        <location filename="../utils/verseplayer.cpp" line="135"/>
         <source>Abdullah Basfar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="131"/>
+        <location filename="../utils/verseplayer.cpp" line="142"/>
         <source>Abu Bakr Ash-Shaatree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="136"/>
+        <location filename="../utils/verseplayer.cpp" line="148"/>
         <source>Ahmed Al-Ajamy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="141"/>
+        <location filename="../utils/verseplayer.cpp" line="154"/>
         <source>Ali Jaber</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="146"/>
+        <location filename="../utils/verseplayer.cpp" line="159"/>
         <source>Fares Abbad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="151"/>
+        <location filename="../utils/verseplayer.cpp" line="164"/>
         <source>Saad Al-Ghamadi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="156"/>
+        <location filename="../utils/verseplayer.cpp" line="169"/>
         <source>Hani Rifai</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="161"/>
+        <location filename="../utils/verseplayer.cpp" line="175"/>
         <source>Hudhaify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="166"/>
+        <location filename="../utils/verseplayer.cpp" line="182"/>
         <source>Saood Ash-Shuraym</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="171"/>
+        <location filename="../utils/verseplayer.cpp" line="189"/>
         <source>Nasser Alqatami</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="176"/>
+        <location filename="../utils/verseplayer.cpp" line="195"/>
         <source>Maher Al-Muaiqly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="182"/>
+        <location filename="../utils/verseplayer.cpp" line="203"/>
         <source>Mostafa Ismail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/verseplayer.cpp" line="189"/>
+        <location filename="../utils/verseplayer.cpp" line="210"/>
         <source>Muhammad Jibreel</source>
         <translation type="unfinished"></translation>
     </message>

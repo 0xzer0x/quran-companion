@@ -14,14 +14,6 @@ QFrame#framePlayer {
   border: 2px solid #e3e3e3;
 }
 
-QPushButton#btnPlay,
-QPushButton#btnPause,
-QPushButton#btnStop {
-  background-color: #fafafa;
-  border: 1px solid gray;
-  border-radius: 4px;
-}
-
 QPushButton#btnPlay:enabled:hover,
 QPushButton#btnPause:enabled:hover,
 QPushButton#btnStop:hover {
@@ -31,6 +23,14 @@ QPushButton#btnStop:hover {
 QPushButton#btnPlay:disabled,
 QPushButton#btnPause:disabled {
   background-color: #e3e3e3;
+}
+
+QPushButton#btnPlay,
+QPushButton#btnPause,
+QPushButton#btnStop {
+  background-color: #fafafa;
+  border: 1px solid gray;
+  border-radius: 4px;
 }
 
 QComboBox#cmbReciter {

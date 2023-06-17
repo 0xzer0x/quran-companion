@@ -13,6 +13,8 @@ VersePlayer::VersePlayer(QObject* parent,
                          Verse initVerse,
                          int reciterIdx)
   : QMediaPlayer(parent)
+  , m_bismillahDir{ QApplication::applicationDirPath() + QDir::separator() +
+                    "bismillah" }
   , m_activeVerse{ initVerse }
   , m_reciter{ reciterIdx }
   , m_dbMgr{ dbPtr }
@@ -24,10 +26,10 @@ VersePlayer::VersePlayer(QObject* parent,
   fillRecitersList();
 
   m_reciterDir.setPath(QDir::currentPath());
-  if (!m_reciterDir.exists("audio"))
-    m_reciterDir.mkdir("audio");
+  if (!m_reciterDir.exists("recitations"))
+    m_reciterDir.mkdir("recitations");
 
-  m_reciterDir.cd("audio");
+  m_reciterDir.cd("recitations");
   foreach (const Reciter& r, m_recitersList) {
     if (!m_reciterDir.exists(r.baseDirName)) {
       m_reciterDir.mkdir(r.baseDirName);
@@ -54,11 +56,10 @@ VersePlayer::VersePlayer(QObject* parent,
 void
 VersePlayer::fillRecitersList()
 {
-  m_reciterDir.cd("audio");
 
   Reciter husary{ "Al-Husary",
                   tr("Al-Husary"),
-                  m_reciterDir.filePath("bismillah/husary.mp3"),
+                  m_bismillahDir.absoluteFilePath("husary.mp3"),
                   "https://cdn.islamic.network/quran/audio/64/ar.husary/",
                   true };
 
@@ -80,7 +81,7 @@ VersePlayer::fillRecitersList()
   Reciter abdulbasit{
     "Abdul-Basit",
     tr("Abdul-Basit"),
-    m_reciterDir.filePath("bismillah/abdul-basit.mp3"),
+    m_bismillahDir.filePath("abdul-basit.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.abdulbasitmurattal/",
     true
   };
@@ -95,7 +96,7 @@ VersePlayer::fillRecitersList()
 
   Reciter menshawi{ "Menshawi",
                     tr("Menshawi"),
-                    m_reciterDir.filePath("bismillah/menshawi.mp3"),
+                    m_bismillahDir.absoluteFilePath("menshawi.mp3"),
                     "https://cdn.islamic.network/quran/audio/128/ar.minshawi/",
                     true };
 
@@ -109,89 +110,89 @@ VersePlayer::fillRecitersList()
 
   Reciter alafasy{ "Mishary_Alafasy",
                    tr("Mishary Alafasy"),
-                   m_reciterDir.filePath("bismillah/alafasy.mp3"),
+                   m_bismillahDir.absoluteFilePath("alafasy.mp3"),
                    "https://cdn.islamic.network/quran/audio/64/ar.alafasy/",
                    true };
 
   Reciter tunaiji{ "Khalefa_Al-Tunaiji",
                    tr("Khalefa Al-Tunaiji"),
-                   m_reciterDir.filePath("bismillah/tunaiji.mp3"),
+                   m_bismillahDir.absoluteFilePath("tunaiji.mp3"),
                    "https://everyayah.com/data/khalefa_al_tunaiji_64kbps/" };
 
   Reciter dussary{ "Yasser_Ad-Dussary",
                    tr("Yasser Ad-Dussary"),
-                   m_reciterDir.filePath("bismillah/ad-dussary.mp3"),
+                   m_bismillahDir.absoluteFilePath("ad-dussary.mp3"),
                    "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/" };
 
   Reciter banna{ "Mahmoud_Al-Banna",
                  tr("Mahmoud Al-Banna"),
-                 m_reciterDir.filePath("bismillah/al-banna.mp3"),
+                 m_bismillahDir.absoluteFilePath("al-banna.mp3"),
                  "https://everyayah.com/data/mahmoud_ali_al_banna_32kbps/" };
 
   Reciter basfar{
     "Abdullah_Basfar",
     tr("Abdullah Basfar"),
-    m_reciterDir.filePath("bismillah/basfar.mp3"),
+    m_bismillahDir.absoluteFilePath("basfar.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.abdullahbasfar/",
     true
   };
 
   Reciter shatree{ "Ash-Shaatree",
                    tr("Abu Bakr Ash-Shaatree"),
-                   m_reciterDir.filePath("bismillah/shatree.mp3"),
+                   m_bismillahDir.absoluteFilePath("shatree.mp3"),
                    "https://cdn.islamic.network/quran/audio/64/ar.shaatree/",
                    true };
 
   Reciter ajamy{ "Al-Ajamy",
                  tr("Ahmed Al-Ajamy"),
-                 m_reciterDir.filePath("bismillah/ajamy.mp3"),
+                 m_bismillahDir.absoluteFilePath("ajamy.mp3"),
                  "https://cdn.islamic.network/quran/audio/64/ar.ahmedajamy/",
                  true };
 
   Reciter aliJaber{ "Ali_Jaber",
                     tr("Ali Jaber"),
-                    m_reciterDir.filePath("bismillah/ajaber.mp3"),
+                    m_bismillahDir.absoluteFilePath("ajaber.mp3"),
                     "https://everyayah.com/data/Ali_Jaber_64kbps/" };
 
   Reciter fAbbad{ "Fares_Abbad",
                   tr("Fares Abbad"),
-                  m_reciterDir.filePath("bismillah/fabbad.mp3"),
+                  m_bismillahDir.absoluteFilePath("fabbad.mp3"),
                   "https://everyayah.com/data/Fares_Abbad_64kbps/" };
 
   Reciter ghamadi{ "Ghamadi",
                    tr("Saad Al-Ghamadi"),
-                   m_reciterDir.filePath("bismillah/ghamadi.mp3"),
+                   m_bismillahDir.absoluteFilePath("ghamadi.mp3"),
                    "https://everyayah.com/data/Ghamadi_40kbps/" };
 
   Reciter hRifai{ "Hani_Rifai",
                   tr("Hani Rifai"),
-                  m_reciterDir.filePath("bismillah/rifai.mp3"),
+                  m_bismillahDir.absoluteFilePath("rifai.mp3"),
                   "https://cdn.islamic.network/quran/audio/64/ar.hanirifai/",
                   true };
 
   Reciter hudhaify{ "Hudhaify",
                     tr("Hudhaify"),
-                    m_reciterDir.filePath("bismillah/hudhaify.mp3"),
+                    m_bismillahDir.absoluteFilePath("hudhaify.mp3"),
                     "https://cdn.islamic.network/quran/audio/64/ar.hudhaify/",
                     true };
 
   Reciter shuraym{
     "Saood_Ash-Shuraym",
     tr("Saood Ash-Shuraym"),
-    m_reciterDir.filePath("bismillah/shuraym.mp3"),
+    m_bismillahDir.absoluteFilePath("shuraym.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.saoodshuraym/",
     true
   };
 
   Reciter alqatami{ "Nasser_Alqatami",
                     tr("Nasser Alqatami"),
-                    m_reciterDir.filePath("bismillah/qatami.mp3"),
+                    m_bismillahDir.absoluteFilePath("qatami.mp3"),
                     "https://everyayah.com/data/Nasser_Alqatami_128kbps/" };
 
   Reciter muaiqly{
     "Maher_AlMuaiqly",
     tr("Maher Al-Muaiqly"),
-    m_reciterDir.filePath("bismillah/muaiqly.mp3"),
+    m_bismillahDir.absoluteFilePath("muaiqly.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.mahermuaiqly/",
     true
   };
@@ -199,14 +200,14 @@ VersePlayer::fillRecitersList()
   Reciter mIsmail{
     "Mostafa_Ismail",
     tr("Mostafa Ismail"),
-    m_reciterDir.filePath("bismillah/mismail.mp3"),
+    m_bismillahDir.absoluteFilePath("mismail.mp3"),
     "https://quran.ksu.edu.sa/ayat/mp3/Mostafa_Ismail_128kbps/"
   };
 
   Reciter mJibreel{
     "Muhammad_Jibreel",
     tr("Muhammad Jibreel"),
-    m_reciterDir.filePath("bismillah/mjibreel.mp3"),
+    m_bismillahDir.absoluteFilePath("mjibreel.mp3"),
     "https://quran.ksu.edu.sa/ayat/mp3/Muhammad_Jibreel_64kbps/"
   };
 
@@ -234,8 +235,6 @@ VersePlayer::fillRecitersList()
   m_recitersList.append(muaiqly);
   m_recitersList.append(mIsmail);
   m_recitersList.append(mJibreel);
-
-  m_reciterDir.cdUp();
 }
 
 void

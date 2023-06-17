@@ -32,7 +32,7 @@ NotificationManager::checkDailyVerse()
 {
 
   QDateTime lastTimestamp;
-  QFile timestamp = QDir::currentPath() + QDir::separator() + "ts";
+  QFile timestamp = QDir::currentPath() + QDir::separator() + "votd.log";
   if (!timestamp.exists()) {
     if (!timestamp.open(QIODevice::WriteOnly)) {
       qWarning() << "Couldn't open timestamp file for daily notification check";

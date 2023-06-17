@@ -28,11 +28,16 @@ main(int argc, char* argv[])
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
 
-  QDir::setCurrent(QApplication::applicationDirPath());
+  QDir configDir(QDir::homePath());
+  configDir.mkpath(".qurancompanion");
+  configDir.cd(".qurancompanion");
+  QDir::setCurrent(configDir.absolutePath());
+
   Logger::startLogger(QDir::currentPath());
   Logger::attach();
 
-  QSettings appSettings("qc-config.ini", QSettings::Format::IniFormat, &a);
+  QSettings appSettings(
+    configDir.filePath("qurancompanion.conf"), QSettings::IniFormat, &a);
   checkSettings(appSettings);
 
   setTheme(appSettings.value("Theme").toInt());
