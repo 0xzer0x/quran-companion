@@ -401,9 +401,13 @@ MainWindow::setupConnections()
 void
 MainWindow::checkForUpdates()
 {
-  m_process->setWorkingDirectory(QDir::currentPath());
-
-  m_process->start(m_updateToolPath, QStringList("ch"));
+  QFileInfo tool(m_updateToolPath);
+  if (tool.exists()) {
+    m_process->setWorkingDirectory(QApplication::applicationDirPath());
+    m_process->start(m_updateToolPath, QStringList("ch"));
+  } else {
+    QMessageBox::warning(this, tr("Error"), tr("Update tool is unavailable."));
+  }
 }
 
 void
