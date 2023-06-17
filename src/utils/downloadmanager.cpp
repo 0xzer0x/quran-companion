@@ -184,7 +184,8 @@ DownloadManager::downloadUrl(const int reciterIdx,
   if (r.useId)
     url.append(QString::number(m_dbMgr->getVerseId(surah, verse)) + ".mp3");
   else
-    url.append(m_currentTask.filename);
+    url.append(QString::number(surah).rightJustified(3, '0') +
+               QString::number(verse).rightJustified(3, '0') + ".mp3");
 
   return QUrl::fromEncoded(url.toLocal8Bit());
 }
