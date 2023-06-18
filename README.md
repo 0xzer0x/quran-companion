@@ -7,24 +7,24 @@
 <br />
 <div align="center">
   <a href="https://github.com/0xzer0x/quran-companion">
-    <img src="resources/tray.png" alt="Logo" width="80" height="80">
+    <img src="resources/tray.png" alt="Logo" width="120" height="120">
   </a>
+</div>
 
-<h3 align="center">Quran Companion</h3>
+  <h2 align="center">Quran Companion</h2>
+
+  <h4 align="center">
+    cross-platform desktop Qt-based Quran reader & player
+  </h4>
 
   <p align="center">
-    cross-platform Qt-based Quran reader & player
-    <br />
-    <br />
-    <a href="https://github.com/0xzer0x/quran-companion/releases/latest"><img src="https://img.shields.io/github/v/release/0xzer0x/quran-companion"></a> <img src="https://img.shields.io/github/v/tag/0xzer0x/quran-companion">
-    <br />
-    <a href="https://github.com/0xzer0x/quran-companion#screenshots">View Demo</a>
-    ·
-    <a href="https://github.com/0xzer0x/quran-companion/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/0xzer0x/quran-companion/issues">Request Feature</a>
+    <a href="#features">Key Features</a> •
+    <a href="#screenshots">Screenshots</a> •
+    <a href="https://github.com/0xzer0x/quran-companion/releases/latest">Download</a> •
+    <a href="#credits">Credits</a> •
+    <a href="https://github.com/0xzer0x/quran-companion/issues">Report Bug</a> •
+    <a href="#license">License</a> 
   </p>
-</div>
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -32,12 +32,12 @@
   <ol>
     <li>
       <a href="#about-the-project">About the project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
     </li>
     <li>
-      <a href="#features">Features</a>
+      <a href="#key-features">Key Features</a>
+    <li>
+      <a href="#screenshots">Screenshots</a>
+    </li>
     </li>
     <li>
     <a href="#installation">Installation</a>
@@ -59,23 +59,24 @@
         </ul>
     </li>
     </li>
-    <li><a href="#screenshots">Screenshots</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#credits">Credits</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
 
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
 
-## About the project
+<a name="about-the-project"></a>
+
+## About the project ✨
 
 Quran Companion is a cross-platform Quran reader/listener with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books & translations
 
-### Features
+### Key Features
 
 - Modern UI with dark theme support
 - Read the Quran from the mushaf page or read the page verses one-by-one
@@ -88,15 +89,27 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Built With
+<!-- SCREENSHOTS -->
 
-- [![qt-badge][qt-badge]][qt-url]
+### Screenshots
+
+![light.png](screenshots/light.png)
+
+![dark.png](screenshots/dark.png)
+
+#### Arabic UI
+
+![ar_dark.png](screenshots/ar_light.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Installation
+<a name="installation"></a>
 
-- Online installers are provided for Windows & Linux in the [release page][latest-release], this is the recommended method as it provides updating functionality through the `QCMaintenanceTool`
+## Installation ⚙️
+
+- Online installers are provided for Windows & Linux in the [release page][latest-release], this is the recommended method as it provides updating functionality through the `QCMaintenanceTool`.
+
+- Additional [AppImage](https://appimage.org) binaries are provided for Linux users.
 
 ### Keyboard Shortcuts
 
@@ -113,7 +126,9 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Compilation
+<a name="compilation"></a>
+
+## Compilation 🛠️
 
 To build the application in your system, you'll need to install the dependencies needed for it and package names might be different for each distribution, see Dependencies below for more information. You can also install most of the Qt dependencies via their [installer](https://www.qt.io/download-qt-installer). If you were developing Qt apps before, you probably already have them.
 
@@ -192,23 +207,11 @@ export QT_MEDIA_BACKEND=ffmpeg
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- SCREENSHOTS -->
-
-## Screenshots
-
-![light.png](screenshots/light.png)
-
-![dark.png](screenshots/dark.png)
-
-### Arabic UI
-
-![ar_dark.png](screenshots/ar_light.png)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- ROADMAP -->
 
-## Roadmap
+<a name="roadmap"></a>
+
+## Roadmap 🎯
 
 - [x] Add daily verse functionality
 - [x] Add bookmarked verses tab
@@ -226,11 +229,13 @@ See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a f
 
 <!-- CONTRIBUTING -->
 
-## Contributing
+<a name="contributing"></a>
+
+## Contributing 💡
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 
-### Translation
+### Translation 🌐
 
 To contribute in translating the application, start by:
 
@@ -254,7 +259,24 @@ To contribute in translating the application, start by:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- CREDITS -->
+
+<a name="credits"></a>
+
+## Credits 📌
+
+The following projects/services that were used in development:
+
+- [Ayat](https://quran.ksu.edu.sa/index.php)
+- [Quran.com API](https://quran.api-docs.io/)
+- [Every Ayah recitations](https://everyayah.com/recitations_ayat.html)
+- [Mosshaf](https://mosshaf.com/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- LICENSE -->
+
+<a name="license"></a>
 
 ## License
 
@@ -264,29 +286,16 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 
 <!-- CONTACT -->
 
+<a name="contact"></a>
+
 ## Contact
 
-0xzer0x - y.essam2256@nu.edu.eg
-
-Project Link: [https://github.com/0xzer0x/quran-companion](https://github.com/0xzer0x/quran-companion)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-
-<a name="acknowledgments"></a>
-
-## Acknowledgments (great projects/services that were used)
-
-- [Ayat](https://quran.ksu.edu.sa/index.php)
-- [Quran.com API](https://quran.api-docs.io/)
-- [Every Ayah recitations](https://everyayah.com/recitations_ayat.html)
-- [Mosshaf](https://mosshaf.com/)
+> 0xzer0x - y.essam2256@nu.edu.eg
+>
+> Project Link: [https://github.com/0xzer0x/quran-companion](https://github.com/0xzer0x/quran-companion)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [latest-release]: https://github.com/0xzer0x/quran-companion/releases/latest
-[qt-badge]: https://shields.io/badge/Qt-Framework-green?logo=qt&style=for-the-badge
-[qt-url]: https://qt.io
