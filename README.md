@@ -18,7 +18,7 @@
   </h4>
 
   <p align="center">
-    <a href="#features">Key Features</a> •
+    <a href="#key-features">Key Features</a> •
     <a href="#screenshots">Screenshots</a> •
     <a href="https://github.com/0xzer0x/quran-companion/releases/latest">Download</a> •
     <a href="#credits">Credits</a> •
