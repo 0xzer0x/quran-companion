@@ -371,7 +371,7 @@ dialog-no-icon: off;
       </property>
       <property name="minimumSize">
        <size>
-        <width>550</width>
+        <width>900</width>
         <height>0</height>
        </size>
       </property>

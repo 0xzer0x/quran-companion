@@ -95,7 +95,7 @@ checkSettings(QSettings& settings)
     settings.setValue("Translation", settings.value("Translation", 5));
     settings.setValue(
       "SideContentFont",
-      settings.value("SideContentFont", QFont("Droid Sans Arabic", 14)));
+      settings.value("SideContentFont", QFont("Expo Arabic", 14)));
 
     settings.endGroup();
   }
@@ -110,9 +110,9 @@ addFonts(int qcfVersion)
              QDir::separator() + "fonts";
 
   QFontDatabase::addApplicationFont(fontsDir.filePath("PakTypeNaskhBasic.ttf"));
+  QFontDatabase::addApplicationFont(fontsDir.filePath("ExpoArabic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("noto-symbols.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
-  QFontDatabase::addApplicationFont(fontsDir.filePath("droid-sans-org.ttf"));
 
   switch (qcfVersion) {
     case 1:
@@ -140,7 +140,7 @@ addFonts(int qcfVersion)
   // set default UI fonts to use
   QStringList uiFonts;
   uiFonts << "Noto Sans Display"
-          << "Droid Sans Arabic";
+          << "Expo Arabic";
   qApp->setFont(QFont(uiFonts, qApp->font().pointSize()));
 }
 
