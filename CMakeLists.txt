@@ -24,8 +24,11 @@ if(WIN32)
 elseif(EXISTS "/home/$ENV{USER}/Qt/${Qt6Widgets_VERSION}/gcc_64/translations")
   set(QT_TR_DIR "/home/$ENV{USER}/Qt/${Qt6Widgets_VERSION}/gcc_64/translations")
 
-else()
+elseif(EXISTS "/usr/share/qt6/translations")
   set(QT_TR_DIR "/usr/share/qt6/translations")
+
+else()
+  set(QT_TR_DIR "dist/translations")
 
 endif()
 
@@ -101,11 +104,11 @@ install(
 message(STATUS "Adding translations to executable")
 qt_add_translations(quran-companion TS_FILES ./src/translations/qc_ar.ts)
 
-message(STATUS "Copying assets directory")
-file(COPY ./assets DESTINATION ${PROJECT_BINARY_DIR})
+message(STATUS "Installing assets directory")
+install(DIRECTORY ./assets TYPE BIN)
 
-message(STATUS "Copying bismillah directory")
-file(COPY ./bismillah DESTINATION ${PROJECT_BINARY_DIR})
+message(STATUS "Installing bismillah directory")
+install(DIRECTORY ./bismillah TYPE BIN)
 
 message(STATUS "Copying qt translations")
 configure_file("${QT_TR_DIR}/qtbase_ar.qm" "${CMAKE_CURRENT_BINARY_DIR}/ar.qm"
