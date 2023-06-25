@@ -127,3 +127,7 @@ qt_add_resources(
 if(QT_VERSION_MAJOR EQUAL 6)
   qt_finalize_executable(quran-companion)
 endif()
+
+if(UNIX)
+  add_subdirectory(./dist/flatpak)
+endif()
