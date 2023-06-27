@@ -11,13 +11,13 @@
   </a>
 </div>
 
-  <h2 align="center">Quran Companion</h2>
+<h2 align="center">Quran Companion</h2>
 
-  <h4 align="center">
+<h4 align="center">
     cross-platform desktop Qt-based Quran reader & player
   </h4>
 
-  <p align="center">
+<p align="center">
     <a href="#key-features">Key Features</a> •
     <a href="#screenshots">Screenshots</a> •
     <a href="https://github.com/0xzer0x/quran-companion/releases/latest">Download</a> •
@@ -27,6 +27,7 @@
   </p>
 
 <!-- TABLE OF CONTENTS -->
+
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -65,7 +66,7 @@
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
 
-  </ol>
+</ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
@@ -144,9 +145,8 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 - Qt >= 6.4
   - Qt Tools
   - Qt Multimedia
+  - 
 - CMake >= 3.22
-- ffmpeg
-- openssl
 
 ### Build
 
@@ -174,7 +174,6 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 #### Linux
 
 2. Install dependencies (through the Qt [online installer](https://www.qt.io/download-qt-installer) or using your distro's package manager)
-
 - **Ubuntu**
 
 ```sh
@@ -265,7 +264,7 @@ To contribute in translating the application, start by:
 
 ## Credits 📌
 
-The following projects/services that were used in development:
+The following projects/services were used in development:
 
 - [Ayat](https://quran.ksu.edu.sa/index.php)
 - [Quran.com API](https://quran.api-docs.io/)
@@ -291,7 +290,7 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 ## Contact
 
 > 0xzer0x - y.essam2256@nu.edu.eg
->
+> 
 > Project Link: [https://github.com/0xzer0x/quran-companion](https://github.com/0xzer0x/quran-companion)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
