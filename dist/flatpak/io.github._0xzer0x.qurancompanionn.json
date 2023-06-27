@@ -1,0 +1,52 @@
+{
+    "app-id": "io.github._0xzer0x.qurancompanionn",
+    "runtime": "org.kde.Platform",
+    "sdk": "org.kde.Sdk",
+    "runtime-version": "6.5",
+    "command": "quran-companion",
+    "rename-icon": "io.github._0xzer0x.qurancompanion",
+    "rename-desktop-file": "io.github._0xzer0x.qurancompanion.desktop",
+    "rename-appdata-file": "io.github._0xzer0x.qurancompanion.metainfo.xml",
+    "finish-args": [
+        "--share=network",
+        "--socket=pulseaudio",
+        "--socket=wayland",
+        "--socket=fallback-x11",
+        "--share=ipc",
+        "--filesystem=home",
+        "--device=dri",
+        "--env=QT_MEDIA_BACKEND=ffmpeg"
+    ],
+    "add-extensions": {
+        "org.freedesktop.Platform.ffmpeg-full": {
+            "directory": "lib/ffmpeg",
+            "version": "22.08",
+            "add-ld-path": "."
+        }
+    },
+    "cleanup-commands": [
+        "mkdir -p /app/lib/ffmpeg"
+    ],
+    "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/share/man",
+        "*.la",
+        "*.a"
+    ],
+    "modules": [
+        {
+            "name": "quran-companion",
+            "buildsystem": "cmake-ninja",
+            "builddir" : true,
+            "sources": [
+                {
+                    "type": "git",
+                    "branch" : "main",
+                    "url": "https://github.com/0xzer0x/quran-companion/",
+                    "commit": "a2f8aad1fa68931260276c59cff7160d84def30a"
+                }
+            ]
+        }
+    ]
+}
