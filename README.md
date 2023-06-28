@@ -53,8 +53,8 @@
           <li><a href="#dependencies">Dependencies</a></li>
           <li><a href="#build">Build</a>
             <ul>
-            <li><a href="#windows">Windows</a></li>
-            <li><a href="#linux">Linux</a></li>
+            <li><a href="#windows-1">Windows</a></li>
+            <li><a href="#linux-1">Linux</a></li>
             </ul>
           </li>
         </ul>
@@ -108,9 +108,21 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 
 ## Installation ⚙️
 
-- Online installers are provided for Windows & Linux in the [release page][latest-release], this is the recommended method as it provides updating functionality through the `QCMaintenanceTool`.
+##### Windows
 
-- Additional [AppImage](https://appimage.org) binaries are provided for Linux users.
+- Online installer can be downloaded from [here][win-installer].
+
+#### Linux
+
+- Online installer can be downloaded from [here][linux-installer].
+<p align="left">
+ <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
+    <img width='240' alt='Download Flatpak' src='https://flathub.org/assets/badges/flathub-badge-i-en.svg'/>
+ </a>
+ <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.1.5/Quran_Companion-1.1.5-x86_64.AppImage'>
+    <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 13px'/>
+ </a>
+</p>
 
 ### Keyboard Shortcuts
 
@@ -145,7 +157,7 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 - Qt >= 6.4
   - Qt Tools
   - Qt Multimedia
-  - 
+  -
 - CMake >= 3.22
 
 ### Build
@@ -174,6 +186,7 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 #### Linux
 
 2. Install dependencies (through the Qt [online installer](https://www.qt.io/download-qt-installer) or using your distro's package manager)
+
 - **Ubuntu**
 
 ```sh
@@ -290,7 +303,7 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 ## Contact
 
 > 0xzer0x - y.essam2256@nu.edu.eg
-> 
+>
 > Project Link: [https://github.com/0xzer0x/quran-companion](https://github.com/0xzer0x/quran-companion)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -298,3 +311,5 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [latest-release]: https://github.com/0xzer0x/quran-companion/releases/latest
+[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.5/qc_online_installer_x64_win.exe
+[linux-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.5/qc_online_installer_x64_linux.run
