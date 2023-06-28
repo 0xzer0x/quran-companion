@@ -108,7 +108,7 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 
 ## Installation ⚙️
 
-##### Windows
+#### Windows
 
 - Online installer can be downloaded from [here][win-installer].
 
