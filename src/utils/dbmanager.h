@@ -121,10 +121,10 @@ public:
 
   int getSurahVerseCount(const int surahIdx);
   int getSurahStartPage(int surahIdx);
-  QString getSurahName(const int sIdx);
+  QString getSurahName(const int sIdx, bool ar = false);
   int getVerseId(const int sIdx, const int vIdx);
   int getVersePage(const int& surahIdx, const int& verse);
-  int getJuzStartPage(const int jozz);
+  int getJuzStartPage(const int juz);
   int getJuzOfPage(const int page);
 
   QList<int> searchSurahNames(QString text);

@@ -324,7 +324,7 @@ DBManager::getJuzGlyph(const int juz)
   setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
-  dbQuery.prepare("SELECT qcf_v1 FROM juzz_glyphs WHERE juzz=:j");
+  dbQuery.prepare("SELECT text FROM juz_glyphs WHERE juz=:j");
   dbQuery.bindValue(0, juz);
   if (!dbQuery.exec()) {
     qCritical() << "Error occurred during getJuzGlyph SQL statment exec";
@@ -359,12 +359,12 @@ DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
 /* ---------------- Surah-related methods ---------------- */
 
 QString
-DBManager::getSurahName(const int sIdx)
+DBManager::getSurahName(const int sIdx, bool ar)
 {
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
-  if (m_settings->value("Language").toInt() == QLocale::Arabic)
+  if (m_settings->value("Language").toInt() == QLocale::Arabic || ar)
     dbQuery.prepare("SELECT sura_name_ar FROM verses_v1 WHERE sura_no=:i");
   else
     dbQuery.prepare("SELECT sura_name_en FROM verses_v1 WHERE sura_no=:i");
@@ -547,13 +547,13 @@ DBManager::getVersePage(const int& surahIdx, const int& verse)
 }
 
 int
-DBManager::getJuzStartPage(const int jozz)
+DBManager::getJuzStartPage(const int juz)
 {
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   QString query =
-    "SELECT page FROM verses_v1 WHERE jozz=" + QString::number(jozz);
+    "SELECT page FROM juz_glyphs WHERE juz=" + QString::number(juz);
   dbQuery.prepare(query);
 
   if (!dbQuery.exec()) {
@@ -568,11 +568,11 @@ int
 DBManager::getJuzOfPage(const int page)
 {
   // returns the jozz number which the passed page belongs to
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   QString query =
-    "SELECT jozz FROM verses_v1 WHERE page=" + QString::number(page);
+    "SELECT juz FROM juz_glyphs WHERE page=" + QString::number(page);
   dbQuery.prepare(query);
 
   if (!dbQuery.exec()) {

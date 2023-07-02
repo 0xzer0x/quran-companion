@@ -3,8 +3,10 @@
 
 #include "../utils/dbmanager.h"
 #include <QContextMenuEvent>
+#include <QHBoxLayout>
 #include <QMenu>
 #include <QPainter>
+#include <QPushButton>
 #include <QScrollBar>
 #include <QSettings>
 #include <QShortcut>
@@ -26,11 +28,11 @@ public:
   void createActions();
   void updateFontSize();
   QString getEasternNum(QString num);
-  QString constructPageHeader(int page);
+  QString pageHeader(int page);
   void constructPage(int pageNo, bool manualSz = false);
   void highlightVerse(int verseIdxInPage);
   int lmbVerseMenu(bool favoriteVerse);
-  int bestFitFontSize(QStringList& lines);
+  int bestFitFontSize();
 
   int fontSize() const;
   QString pageFont() const;
@@ -49,12 +51,17 @@ private slots:
   void actionCopy();
 
 private:
+  QString& justifyHeader(QString& baseHeader);
+  QSize calcPageLineSize(QStringList& lines);
+  QImage surahFrame(int surah);
   bool m_darkMode;
-  int m_page;
+  int m_page = -1;
   int m_qcfVer;
   int m_fontSize;
   int m_highlightedIdx = -1;
   QSize m_pageLineSize;
+  QStringList m_currPageLines;
+  QString m_currPageHeader;
   QPoint m_mousePos;
   QPoint m_mouseGlobalPos;
   QString m_resourcePath;
@@ -70,6 +77,9 @@ private:
   QAction* m_actAddBookmark;
   QAction* m_actRemBookmark;
   QTextCursor* m_highlighter;
+  QTextBlockFormat m_pageFormat;
+  QTextCharFormat m_headerTextFormat;
+  QTextCharFormat m_bodyTextFormat;
   QBrush m_highlightColor;
   QList<int*> m_pageVerseCoords;
   QMap<QString, QString> m_easternNumsMap;
