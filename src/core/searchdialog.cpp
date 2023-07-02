@@ -24,8 +24,8 @@ SearchDialog::SearchDialog(QWidget* parent,
   setWindowIcon(QIcon(m_resourcePath + "/icons/search.png"));
   ui->setupUi(this);
   ui->frmNavBtns->setLayoutDirection(Qt::LeftToRight);
-  ui->btnFwdRes->setDisabled(true);
-  ui->btnBwdRes->setDisabled(true);
+  ui->btnNext->setDisabled(true);
+  ui->btnPrev->setDisabled(true);
 
   ui->listViewAllSurahs->setModel(&m_modelAllSurahs);
   ui->listViewSelected->setModel(&m_modelSelectedSurahs);
@@ -52,8 +52,8 @@ SearchDialog::getResults()
 
   if (m_searchText.isEmpty()) {
     ui->lbResultCount->setText("");
-    ui->btnFwdRes->setDisabled(true);
-    ui->btnBwdRes->setDisabled(true);
+    ui->btnNext->setDisabled(true);
+    ui->btnPrev->setDisabled(true);
     return;
   }
 
@@ -99,13 +99,13 @@ SearchDialog::showResults()
                                                          : m_currResults.size();
 
   if (m_startResult == 0)
-    ui->btnBwdRes->setDisabled(true);
+    ui->btnPrev->setDisabled(true);
   else
-    ui->btnBwdRes->setDisabled(false);
+    ui->btnPrev->setDisabled(false);
   if (endIdx == m_currResults.size())
-    ui->btnFwdRes->setDisabled(true);
+    ui->btnNext->setDisabled(true);
   else
-    ui->btnFwdRes->setDisabled(false);
+    ui->btnNext->setDisabled(false);
 
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
@@ -227,12 +227,12 @@ SearchDialog::setupConnections()
           this,
           &SearchDialog::getResults,
           Qt::UniqueConnection);
-  connect(ui->btnFwdRes,
+  connect(ui->btnNext,
           &QPushButton::clicked,
           this,
           &SearchDialog::moveFwd,
           Qt::UniqueConnection);
-  connect(ui->btnBwdRes,
+  connect(ui->btnPrev,
           &QPushButton::clicked,
           this,
           &SearchDialog::moveBwd,
@@ -253,8 +253,8 @@ SearchDialog::closeEvent(QCloseEvent* event)
     ui->lbResultCount->setText("");
     ui->ledSearchBar->clear();
     m_currResults.clear();
-    ui->btnFwdRes->setDisabled(true);
-    ui->btnBwdRes->setDisabled(true);
+    ui->btnNext->setDisabled(true);
+    ui->btnPrev->setDisabled(true);
   }
 
   this->hide();

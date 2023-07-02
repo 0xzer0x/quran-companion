@@ -15,8 +15,16 @@ QFrame#framePlayer {
 
 QPushButton#btnPlay:enabled:hover,
 QPushButton#btnPause:enabled:hover,
-QPushButton#btnStop:hover {
+QPushButton#btnStop:hover,
+QPushButton#btnNext:hover,
+QPushButton#btnPrev:hover {
   background-color: #3b3b3b;
+}
+
+QPushButton#btnStop:pressed,
+QPushButton#btnNext:pressed,
+QPushButton#btnPrev:pressed {
+  background-color: #4c4c4c;
 }
 
 QPushButton#btnPlay:disabled,
@@ -26,7 +34,9 @@ QPushButton#btnPause:disabled {
 
 QPushButton#btnPlay,
 QPushButton#btnPause,
-QPushButton#btnStop {
+QPushButton#btnStop,
+QPushButton#btnPrev,
+QPushButton#btnNext {
   background-color: palette(dark);
   border: 1px solid gray;
   border-radius: 4px;
