@@ -13,9 +13,8 @@
 #include <QSettings>
 #include <QValidator>
 
-namespace Ui
-{
-  class SettingsDialog;
+namespace Ui {
+class SettingsDialog;
 }
 
 /*!
@@ -26,7 +25,7 @@ namespace Ui
  */
 class SettingsDialog : public QDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
   explicit SettingsDialog(QWidget *parent = nullptr,

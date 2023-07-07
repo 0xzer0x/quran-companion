@@ -19,36 +19,36 @@ class TafsirDialog;
  */
 class TafsirDialog : public QDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit TafsirDialog(QWidget* parent = nullptr,
-                        DBManager* dbPtr = nullptr,
-                        QSettings* settings = nullptr,
-                        const QString& iconsPath = ":/resources/light/");
-  ~TafsirDialog();
+    explicit TafsirDialog(QWidget *parent = nullptr,
+                          DBManager *dbPtr = nullptr,
+                          QSettings *settings = nullptr,
+                          const QString &iconsPath = ":/resources/light/");
+    ~TafsirDialog();
 
-  void loadVerseTafsir();
-  void setShownVerse(const Verse& newShownVerse);
+    void loadVerseTafsir();
+    void setShownVerse(const Verse &newShownVerse);
 
 private slots:
   void btnNextClicked();
   void btnPrevClicked();
 
-private:
-  Ui::TafsirDialog* ui;
+  private:
+  Ui::TafsirDialog *ui;
   void setupConnections();
   void setTafsirAsTitle();
   int m_fontSZ;
   QString m_fontPrefix;
-  QSettings* m_settings;
-  DBManager* m_dbMgr;
-  Verse m_shownVerse{ 1, 1, 1 };
+  QSettings *m_settings;
+  DBManager *m_dbMgr;
+  Verse m_shownVerse{1, 1, 1};
 
   // QWidget interface
-protected:
-  void closeEvent(QCloseEvent* event);
-  void showEvent(QShowEvent* event);
+  protected:
+  void closeEvent(QCloseEvent *event);
+  void showEvent(QShowEvent *event);
 };
 
 #endif // TAFSIRDIALOG_H

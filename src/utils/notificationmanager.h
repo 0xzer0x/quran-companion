@@ -16,18 +16,17 @@ typedef DBManager::Verse Verse;
 
 class NotificationManager : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit NotificationManager(QObject* parent = nullptr,
-                               DBManager* dbPtr = nullptr);
-  void notify(QString title, QString msg);
-  void setTooltip(QString text);
-  void checkDailyVerse();
-  void showVerseOfTheDay();
-  QString votdStringEntry() const;
+    explicit NotificationManager(QObject *parent = nullptr, DBManager *dbPtr = nullptr);
+    void notify(QString title, QString msg);
+    void setTooltip(QString text);
+    void checkDailyVerse();
+    void showVerseOfTheDay();
+    QString votdStringEntry() const;
 
-  QPair<Verse, QString> votd();
+    QPair<Verse, QString> votd();
 
 signals:
   void exit(int ret = 0);
@@ -44,9 +43,9 @@ private:
   void setVotdMsg();
   bool m_votdShown = false;
   QDateTime m_dtNow;
-  DBManager* m_dbMgr;
-  QMenu* m_trayMenu;
-  QSystemTrayIcon* m_sysTray;
+  DBManager *m_dbMgr;
+  QMenu *m_trayMenu;
+  QSystemTrayIcon *m_sysTray;
   QPair<Verse, QString> m_votd;
 };
 

@@ -20,24 +20,24 @@ typedef DBManager::Reciter Reciter;
  */
 class VersePlayer : public QMediaPlayer
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit VersePlayer(QObject* parent = nullptr,
-                       DBManager* dbPtr = nullptr,
-                       Verse initVerse = Verse{},
-                       int reciterIdx = 0);
-  void fillRecitersList();
-  void setVerse(Verse& newVerse);
-  QString verseFilename() const;
-  bool setVerseFile(const QString& newVerseFilename);
-  QString constructVerseFilename();
-  void updateSurahVerseCount();
-  int surahCount() const;
-  QString reciterName();
-  Verse activeVerse() const;
-  QAudioOutput* getOutput() const;
-  QList<Reciter> recitersList() const;
+    explicit VersePlayer(QObject *parent = nullptr,
+                         DBManager *dbPtr = nullptr,
+                         Verse initVerse = Verse{},
+                         int reciterIdx = 0);
+    void fillRecitersList();
+    void setVerse(Verse &newVerse);
+    QString verseFilename() const;
+    bool setVerseFile(const QString &newVerseFilename);
+    QString constructVerseFilename();
+    void updateSurahVerseCount();
+    int surahCount() const;
+    QString reciterName();
+    Verse activeVerse() const;
+    QAudioOutput *getOutput() const;
+    QList<Reciter> recitersList() const;
 
 public slots:
   void playBasmalah();
@@ -60,10 +60,10 @@ private:
   Reciter m_currentReciter;
   QList<Reciter> m_recitersList;
   QString m_verseFile;
-  QDir m_bismillahDir;
+  QDir m_bismillahDir = QDir::currentPath() + QDir::separator() + "bismillah";
   QDir m_reciterDir;
-  QAudioOutput* m_output;
-  DBManager* m_dbMgr;
+  QAudioOutput *m_output;
+  DBManager *m_dbMgr;
 };
 
 #endif // VERSEPLAYER_H
