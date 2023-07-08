@@ -27,6 +27,8 @@ endif()
 if(DEFINED BUILD_FLATPAK)
   message(STATUS "Adding flatpak specific files")
   add_subdirectory(dist/flatpak)
+  set(QC_DATA_DIR
+      "$ENV{HOME}/.var/app/io.github._0xzer0x.qurancompanion/.qurancompanion")
 endif()
 
 if(NOT EXISTS ${QC_DATA_DIR})

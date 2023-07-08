@@ -8,6 +8,3 @@ install(FILES io.github._0xzer0x.qurancompanion.metainfo.xml DESTINATION /app/sh
 
 message(STATUS "Installing desktop file")
 install(FILES io.github._0xzer0x.qurancompanion.desktop DESTINATION /app/share/applications)
-
-set(QC_DATA_DIR "$ENV{HOME}/.var/app/io.github._0xzer0x.qurancompanion/.qurancompanion")
-
