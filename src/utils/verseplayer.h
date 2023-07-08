@@ -60,7 +60,7 @@ private:
   Reciter m_currentReciter;
   QList<Reciter> m_recitersList;
   QString m_verseFile;
-  QDir m_bismillahDir = QDir::currentPath() + QDir::separator() + "bismillah";
+  QDir m_bismillahDir;
   QDir m_reciterDir;
   QAudioOutput *m_output;
   DBManager *m_dbMgr;

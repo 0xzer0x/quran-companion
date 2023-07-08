@@ -13,6 +13,7 @@ VersePlayer::VersePlayer(QObject *parent, DBManager *dbPtr, Verse initVerse, int
     , m_activeVerse{initVerse}
     , m_reciter{reciterIdx}
     , m_dbMgr{dbPtr}
+    , m_bismillahDir{QApplication::applicationDirPath() + QDir::separator() + "bismillah"}
 {
     updateSurahVerseCount();
     m_output = new QAudioOutput(this);
