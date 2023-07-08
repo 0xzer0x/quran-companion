@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent, QSettings *settingsPtr)
     , m_process{new QProcess(this)}
     , m_settingsPtr{settingsPtr}
     , m_darkMode{settingsPtr->value("Theme").toInt() == 1}
-    , m_assetsDir{QDir::currentPath() + QDir::separator() + "assets"}
+    , m_assetsDir{QApplication::applicationDirPath() + QDir::separator() + "assets"}
     , m_updateToolPath{QApplication::applicationDirPath() + QDir::separator() + "QCMaintenanceTool"}
 {
 #ifdef Q_OS_WIN

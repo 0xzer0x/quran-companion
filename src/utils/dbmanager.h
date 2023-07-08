@@ -136,7 +136,7 @@ private:
   int m_qcfVer;
   Database m_currentDb = null;
   QSqlDatabase m_openDBCon;
-  QDir m_dbDir = QDir::currentPath() + QDir::separator() + "assets";
+  QDir m_dbDir;
   QSettings *m_settings;
   Tafsir m_currTafsir = Tafsir::sa3dy;
   Translation m_currTrans = Translation::en_sahih;

@@ -19,21 +19,11 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia
 
 if(WIN32)
   set(Vulkan_INCLUDE_DIR "$ENV{VULKAN_SDK}\\Include\\vulkan")
-  set(QC_DATA_DIR "$ENV{USERPROFILE}\\.qurancompanion")
-else()
-  set(QC_DATA_DIR "$ENV{HOME}/.qurancompanion")
 endif()
 
 if(DEFINED BUILD_FLATPAK)
   message(STATUS "Adding flatpak specific files")
   add_subdirectory(dist/flatpak)
-endif()
-
-if(NOT EXISTS ${QC_DATA_DIR})
-  message(STATUS "Creating ${QC_DATA_DIR}")
-  file(MAKE_DIRECTORY ${QC_DATA_DIR})
-else()
-  message(STATUS "Found ${QC_DATA_DIR}")
 endif()
 
 set(PROJECT_SOURCES
@@ -104,8 +94,12 @@ install(
   TARGETS quran-companion
   BUNDLE DESTINATION .
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY ./assets DESTINATION ${QC_DATA_DIR})
-install(DIRECTORY ./bismillah DESTINATION ${QC_DATA_DIR})
+install(DIRECTORY ./assets TYPE BIN)
+install(DIRECTORY ./bismillah TYPE BIN)
+
+message(STATUS "Copying application assets to build tree")
+file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY bismillah DESTINATION ${CMAKE_BINARY_DIR})
 
 message(STATUS "Adding translations to executable")
 qt_add_translations(quran-companion TS_FILES src/translations/qc_ar.ts)

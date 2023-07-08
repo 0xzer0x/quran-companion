@@ -95,7 +95,8 @@ void addFonts(int qcfVersion)
 {
     QDir fontsDir;
     QString fontBase;
-    fontsDir = QDir::currentPath() + QDir::separator() + "assets" + QDir::separator() + "fonts";
+    fontsDir = QApplication::applicationDirPath() + QDir::separator() + "assets" + QDir::separator()
+               + "fonts";
 
     QFontDatabase::addApplicationFont(fontsDir.filePath("PakTypeNaskhBasic.ttf"));
     QFontDatabase::addApplicationFont(fontsDir.filePath("ExpoArabic.ttf"));

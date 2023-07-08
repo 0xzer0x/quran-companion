@@ -4,6 +4,7 @@ DBManager::DBManager(QObject *parent, QSettings *settings)
     : QObject(parent)
     , m_settings{settings}
     , m_qcfVer{settings->value("Reader/QCF").toInt()}
+    , m_dbDir{QApplication::applicationDirPath() + QDir::separator() + "assets"}
 {
     m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
     m_glyphsDbPath.setFile(m_dbDir.filePath("glyphs.db"));
@@ -290,6 +291,39 @@ QList<DBManager::Verse> DBManager::getVerseInfoList(int page)
     return viList;
 }
 
+int DBManager::getJuzStartPage(const int juz)
+{
+    setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
+    QSqlQuery dbQuery(m_openDBCon);
+
+    QString query = "SELECT page FROM juz_glyphs WHERE juz=" + QString::number(juz);
+    dbQuery.prepare(query);
+
+    if (!dbQuery.exec()) {
+        qCritical() << "Error occurred during getJuzStartPage SQL statment exec";
+    }
+    dbQuery.next();
+
+    return dbQuery.value(0).toInt();
+}
+
+int DBManager::getJuzOfPage(const int page)
+{
+    // returns the jozz number which the passed page belongs to
+    setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
+    QSqlQuery dbQuery(m_openDBCon);
+
+    QString query = "SELECT juz FROM juz_glyphs WHERE page=" + QString::number(page);
+    dbQuery.prepare(query);
+
+    if (!dbQuery.exec()) {
+        qCritical() << "Error occurred during getJuzOfPage SQL statment exec";
+    }
+    dbQuery.next();
+
+    return dbQuery.value(0).toInt();
+}
+
 /* ---------------- Glyph-related methods ---------------- */
 
 QString DBManager::getSurahNameGlyph(const int sura)
@@ -459,6 +493,28 @@ QList<DBManager::Verse> DBManager::searchSurahs(QString searchText,
     return results;
 }
 
+QList<int> DBManager::searchSurahNames(QString text)
+{
+    QList<int> results;
+    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+    QSqlQuery dbQuery(m_openDBCon);
+    QString q = "SELECT DISTINCT sura_no FROM verses_v1 WHERE (sura_name_ar like '%" + text
+                + "%' OR "
+                  "sura_name_en like '%"
+                + text + "%')";
+
+    dbQuery.prepare(q);
+    if (!dbQuery.exec()) {
+        qCritical() << "Error occurred during searchSurahNames SQL statment exec";
+    }
+
+    while (dbQuery.next()) {
+        results.append(dbQuery.value(0).toInt());
+    }
+
+    return results;
+}
+
 /* ---------------- Verse-related methods ---------------- */
 
 QString DBManager::getVerseText(const int sIdx, const int vIdx)
@@ -514,61 +570,6 @@ int DBManager::getVersePage(const int &surahIdx, const int &verse)
     dbQuery.next();
 
     return dbQuery.value(0).toInt();
-}
-
-int DBManager::getJuzStartPage(const int juz)
-{
-    setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
-    QSqlQuery dbQuery(m_openDBCon);
-
-    QString query = "SELECT page FROM juz_glyphs WHERE juz=" + QString::number(juz);
-    dbQuery.prepare(query);
-
-    if (!dbQuery.exec()) {
-        qCritical() << "Error occurred during getJuzStartPage SQL statment exec";
-    }
-    dbQuery.next();
-
-    return dbQuery.value(0).toInt();
-}
-
-int DBManager::getJuzOfPage(const int page)
-{
-    // returns the jozz number which the passed page belongs to
-    setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
-    QSqlQuery dbQuery(m_openDBCon);
-
-    QString query = "SELECT juz FROM juz_glyphs WHERE page=" + QString::number(page);
-    dbQuery.prepare(query);
-
-    if (!dbQuery.exec()) {
-        qCritical() << "Error occurred during getJuzOfPage SQL statment exec";
-    }
-    dbQuery.next();
-
-    return dbQuery.value(0).toInt();
-}
-
-QList<int> DBManager::searchSurahNames(QString text)
-{
-    QList<int> results;
-    setOpenDatabase(Database::quran, m_quranDbPath.filePath());
-    QSqlQuery dbQuery(m_openDBCon);
-    QString q = "SELECT DISTINCT sura_no FROM verses_v1 WHERE (sura_name_ar like '%" + text
-                + "%' OR "
-                  "sura_name_en like '%"
-                + text + "%')";
-
-    dbQuery.prepare(q);
-    if (!dbQuery.exec()) {
-        qCritical() << "Error occurred during searchSurahNames SQL statment exec";
-    }
-
-    while (dbQuery.next()) {
-        results.append(dbQuery.value(0).toInt());
-    }
-
-    return results;
 }
 
 QList<DBManager::Verse> DBManager::searchVerses(QString searchText,
