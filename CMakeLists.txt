@@ -24,6 +24,11 @@ else()
   set(QC_DATA_DIR "$ENV{HOME}/.qurancompanion")
 endif()
 
+if(DEFINED BUILD_FLATPAK)
+  message(STATUS "Adding flatpak specific files")
+  add_subdirectory(dist/flatpak)
+endif()
+
 if(NOT EXISTS ${QC_DATA_DIR})
   message(STATUS "Creating ${QC_DATA_DIR}")
   file(MAKE_DIRECTORY ${QC_DATA_DIR})
@@ -122,11 +127,4 @@ qt_add_resources(
 
 if(QT_VERSION_MAJOR EQUAL 6)
   qt_finalize_executable(quran-companion)
-endif()
-
-if(UNIX)
-  if(DEFINED BUILD_FLATPAK)
-    message(STATUS "Adding flatpak specific files")
-    add_subdirectory(dist/flatpak)
-  endif()
 endif()
