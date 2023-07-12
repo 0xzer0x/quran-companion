@@ -26,49 +26,49 @@ class DownloaderDialog;
  */
 class DownloaderDialog : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit DownloaderDialog(QWidget *parent = nullptr,
-                              QSettings *settingsptr = nullptr,
-                              DownloadManager *downloader = nullptr,
-                              DBManager *dbMan = nullptr,
-                              const QString &iconsPath = ":/resources/light/");
-    void fillTreeView();
-    ~DownloaderDialog();
+  explicit DownloaderDialog(QWidget* parent = nullptr,
+                            QSettings* settingsptr = nullptr,
+                            DownloadManager* downloader = nullptr,
+                            DBManager* dbMan = nullptr,
+                            const QString& iconsPath = ":/resources/light/");
+  void fillTreeView();
+  ~DownloaderDialog();
 
 public slots:
-    void addToQueue();
-    void addTaskProgress(int reciterIdx, int surah);
-    void setCurrentBar();
-    void surahDownloaded(int reciter, int surah);
-    void downloadAborted();
-    void topTaskDownloadError(int reciter, int surah);
-    void updateDownloadSpeed(int value, QString unit);
-    void selectTask(int reciter, int surah);
-    void clearQueue();
+  void addToQueue();
+  void addTaskProgress(int reciterIdx, int surah);
+  void setCurrentBar();
+  void surahDownloaded(int reciter, int surah);
+  void downloadAborted();
+  void topTaskDownloadError(int reciter, int surah);
+  void updateDownloadSpeed(int value, QString unit);
+  void selectTask(int reciter, int surah);
+  void clearQueue();
 
-    // QWidget interface
+  // QWidget interface
 protected:
-    void closeEvent(QCloseEvent *event);
+  void closeEvent(QCloseEvent* event);
 
 private:
-    void setupConnections();
-    void addToDownloading(int reciter, int surah);
-    void removeFromDownloading(int reciter, int surah);
-    Ui::DownloaderDialog *ui;
-    QString m_resourcePath;
-    DownloadProgressBar *m_currentBar;
-    QLabel *m_currentLb;
-    QLabel *m_currDownSpeedLb;
-    QList<QFrame *> m_frameLst;
-    QList<QFrame *> m_finishedFrames;
-    QStandardItemModel m_treeModel;
-    DownloadManager *m_downloaderPtr;
-    DBManager *m_dbMgr;
-    QSettings *m_appSettings;
-    QStringList m_surahDisplayNames;
-    QMap<int, QSet<int>> m_downloadingTasks;
+  void setupConnections();
+  void addToDownloading(int reciter, int surah);
+  void removeFromDownloading(int reciter, int surah);
+  Ui::DownloaderDialog* ui;
+  QString m_resourcePath;
+  DownloadProgressBar* m_currentBar;
+  QLabel* m_currentLb;
+  QLabel* m_currDownSpeedLb;
+  QList<QFrame*> m_frameLst;
+  QList<QFrame*> m_finishedFrames;
+  QStandardItemModel m_treeModel;
+  DownloadManager* m_downloaderPtr;
+  DBManager* m_dbMgr;
+  QSettings* m_appSettings;
+  QStringList m_surahDisplayNames;
+  QMap<int, QSet<int>> m_downloadingTasks;
 };
 
 #endif // DOWNLOADERDIALOG_H

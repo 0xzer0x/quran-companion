@@ -1,41 +1,46 @@
 #include "downloadprogressbar.h"
 
-DownloadProgressBar::DownloadProgressBar(QWidget *parent, int max)
-    : QProgressBar(parent)
+DownloadProgressBar::DownloadProgressBar(QWidget* parent, int max)
+  : QProgressBar(parent)
 {
-    m_defStylesheet = "QProgressBar {text-align: center; "
-                      "color:palette(text); border-radius: 3px; border: 1px solid #424242; }";
-    setStyling(downloading);
-    setFormat("%v / %m");
-    setMaximum(max);
-    setValue(0);
+  m_defStylesheet =
+    "QProgressBar {text-align: center; "
+    "color:palette(text); border-radius: 3px; border: 1px solid #424242; }";
+  setStyling(downloading);
+  setFormat("%v / %m");
+  setMaximum(max);
+  setValue(0);
 }
 
-void DownloadProgressBar::updateProgress(qint64 downloaded, qint64 total)
+void
+DownloadProgressBar::updateProgress(qint64 downloaded, qint64 total)
 {
-    if (maximum() != total)
-        setMaximum(total);
+  if (maximum() != total)
+    setMaximum(total);
 
-    setValue(downloaded);
+  setValue(downloaded);
 }
 
-void DownloadProgressBar::setStyling(State downState)
+void
+DownloadProgressBar::setStyling(State downState)
 {
-    QString ss = m_defStylesheet;
-    switch (downState) {
+  QString ss = m_defStylesheet;
+  switch (downState) {
     case downloading:
-        break;
+      break;
     case completed:
-        ss.append(" QProgressBar::chunk "
-                  "{border-radius:2px; background-color: qlineargradient(x1:0, y1:0, "
-                  "x2:0, y2:1, stop:0.5 #00a57f, stop:1 #00916f);}");
-        break;
+      ss.append(
+        " QProgressBar::chunk "
+        "{border-radius:2px; background-color: qlineargradient(x1:0, y1:0, "
+        "x2:0, y2:1, stop:0.5 #00a57f, stop:1 #00916f);}");
+      break;
     case aborted:
-        ss.append(" QProgressBar::chunk "
-                  "{border-radius:2px; background-color: qlineargradient(x1:0, y1:0, "
-                  "x2:0, y2:1, stop:0.5 #a50500, stop:1 #930400);}");
-        break;
-    }
+      ss.append(
+        " QProgressBar::chunk "
+        "{border-radius:2px; background-color: qlineargradient(x1:0, y1:0, "
+        "x2:0, y2:1, stop:0.5 #a50500, stop:1 #930400);}");
+      break;
+  }
 
-    setStyleSheet(ss);
+  setStyleSheet(ss);
 }

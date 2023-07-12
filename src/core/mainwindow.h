@@ -39,12 +39,12 @@ QT_END_NAMESPACE
  */
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr, QSettings *settingsPtr = nullptr);
-    void highlightCurrentVerse();
-    ~MainWindow();
+  MainWindow(QWidget* parent = nullptr, QSettings* settingsPtr = nullptr);
+  void highlightCurrentVerse();
+  ~MainWindow();
 
 public slots:
   void showVOTDmessage(QPair<Verse, QString> votd);
@@ -84,10 +84,10 @@ private slots:
   void on_actionAbout_Qt_triggered();
 
   void verseClicked();
-  void surahClicked(QModelIndex &index);
+  void surahClicked(QModelIndex& index);
   void showExpandedVerseTafsir(Verse v);
   void navigateToVerse(Verse v);
-  void verseAnchorClicked(const QUrl &hrefUrl);
+  void verseAnchorClicked(const QUrl& hrefUrl);
   void copyVerseText(int IdxInPage);
 
   void redrawQuranPage(bool manualSz = false);
@@ -98,8 +98,8 @@ private slots:
   void updateLoadedTranslation();
   void updateSideFont();
 
-  void searchSurahTextChanged(const QString &arg1);
-  void listSurahNameClicked(const QModelIndex &index);
+  void searchSurahTextChanged(const QString& arg1);
+  void listSurahNameClicked(const QModelIndex& index);
   void volumeSliderValueChanged(int position);
 
 private:
@@ -122,29 +122,29 @@ private:
   bool m_internalJozzChange = false;
   bool m_darkMode = false;
   qreal m_volume = 1;
-  Ui::MainWindow *ui;
+  Ui::MainWindow* ui;
   QString m_resourcePath;
-  QProcess *m_process;
+  QProcess* m_process;
   QString m_updateToolPath;
   QStringList m_surahList;
   QStringListModel m_surahListModel;
-  QIntValidator *m_verseValidator = nullptr;
-  QuranPageBrowser *m_quranBrowser;
-  NotificationManager *m_notifyMgr;
-  DBManager *m_dbMgr;
-  VersePlayer *m_player;
-  TafsirDialog *m_tafsirDlg = nullptr;
-  SearchDialog *m_searchDlg = nullptr;
-  SettingsDialog *m_settingsDlg = nullptr;
-  BookmarksDialog *m_bookmarksDlg = nullptr;
-  DownloaderDialog *m_downloaderDlg = nullptr;
-  DownloadManager *m_downManPtr = nullptr;
-  HighlightFrame *m_highlightedFrm = nullptr;
-  QSettings *m_settingsPtr;
-  Verse m_currVerse{1, 1, 1};
+  QIntValidator* m_verseValidator = nullptr;
+  QuranPageBrowser* m_quranBrowser;
+  NotificationManager* m_notifyMgr;
+  DBManager* m_dbMgr;
+  VersePlayer* m_player;
+  TafsirDialog* m_tafsirDlg = nullptr;
+  SearchDialog* m_searchDlg = nullptr;
+  SettingsDialog* m_settingsDlg = nullptr;
+  BookmarksDialog* m_bookmarksDlg = nullptr;
+  DownloaderDialog* m_downloaderDlg = nullptr;
+  DownloadManager* m_downManPtr = nullptr;
+  HighlightFrame* m_highlightedFrm = nullptr;
+  QSettings* m_settingsPtr;
+  Verse m_currVerse{ 1, 1, 1 };
   QDir m_assetsDir;
   QFont m_sideFont;
   QList<Verse> m_vInfoList;
-  QList<QFrame *> m_verseFrameList;
+  QList<QFrame*> m_verseFrameList;
 };
 #endif // MAINWINDOW_H

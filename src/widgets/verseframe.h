@@ -7,20 +7,20 @@
 class HighlightFrame : public QFrame
 {
 public:
-    HighlightFrame(QWidget *parent = nullptr);
-    void highlightFrame();
-    void setHighlightColor(int r, int g, int b);
+  HighlightFrame(QWidget* parent = nullptr);
+  void highlightFrame();
+  void setHighlightColor(int r, int g, int b);
 
-    // QWidget interface
+  // QWidget interface
 protected:
-    void enterEvent(QEnterEvent *event);
-    void leaveEvent(QEvent *event);
+  void enterEvent(QEnterEvent* event);
+  void leaveEvent(QEvent* event);
 
 private:
-    int m_colorR = 0;
-    int m_colorG = 161;
-    int m_colorB = 185;
-    QString m_frameStylesheet;
+  int m_colorR = 0;
+  int m_colorG = 161;
+  int m_colorB = 185;
+  QString m_frameStylesheet;
 };
 
 #endif // VERSEFRAME_H

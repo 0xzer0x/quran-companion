@@ -24,14 +24,14 @@ class SearchDialog;
  */
 class SearchDialog : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit SearchDialog(QWidget *parent = nullptr,
-                          QSettings *settings = nullptr,
-                          DBManager *dbPtr = nullptr,
-                          const QString &iconPath = ":/resources/light/");
-    ~SearchDialog();
+  explicit SearchDialog(QWidget* parent = nullptr,
+                        QSettings* settings = nullptr,
+                        DBManager* dbPtr = nullptr,
+                        const QString& iconPath = ":/resources/light/");
+  ~SearchDialog();
 
 public slots:
   void getResults();
@@ -44,10 +44,10 @@ signals:
   void navigateToVerse(Verse v);
 
   // QWidget interface
-  protected:
-  void closeEvent(QCloseEvent *event);
+protected:
+  void closeEvent(QCloseEvent* event);
 
-  private slots:
+private slots:
   void btnTransferClicked();
 
 private:
@@ -55,14 +55,14 @@ private:
   void fillListView();
   int m_qcfVer;
   int m_startResult = 0;
-  Ui::SearchDialog *ui;
-  DBManager *m_dbMgr;
-  QSettings *m_settings;
+  Ui::SearchDialog* ui;
+  DBManager* m_dbMgr;
+  QSettings* m_settings;
   QString m_resourcePath;
   QString m_fontPrefix;
   QStringList m_surahNames;
   QMap<QString, int> m_selectedSurahMap;
-  QList<HighlightFrame *> m_lbLst;
+  QList<HighlightFrame*> m_lbLst;
   QString m_searchText;
   QList<Verse> m_currResults;
   QStandardItemModel m_modelAllSurahs;
