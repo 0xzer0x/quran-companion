@@ -31,24 +31,24 @@ public:
     void loadVerseTafsir();
     void setShownVerse(const Verse &newShownVerse);
 
+    // QWidget interface
+protected:
+    void closeEvent(QCloseEvent *event);
+    void showEvent(QShowEvent *event);
+
 private slots:
-  void btnNextClicked();
-  void btnPrevClicked();
+    void btnNextClicked();
+    void btnPrevClicked();
 
-  private:
-  Ui::TafsirDialog *ui;
-  void setupConnections();
-  void setTafsirAsTitle();
-  int m_fontSZ;
-  QString m_fontPrefix;
-  QSettings *m_settings;
-  DBManager *m_dbMgr;
-  Verse m_shownVerse{1, 1, 1};
-
-  // QWidget interface
-  protected:
-  void closeEvent(QCloseEvent *event);
-  void showEvent(QShowEvent *event);
+private:
+    Ui::TafsirDialog *ui;
+    void setupConnections();
+    void setTafsirAsTitle();
+    int m_fontSZ;
+    QString m_fontPrefix;
+    QSettings *m_settings;
+    DBManager *m_dbMgr;
+    Verse m_shownVerse{1, 1, 1};
 };
 
 #endif // TAFSIRDIALOG_H

@@ -1,12 +1,14 @@
 #ifndef BOOKMARKSDIALOG_H
 #define BOOKMARKSDIALOG_H
 
-#include "../utils/dbmanager.h"
 #include <QDialog>
 #include <QLabel>
+#include <QShortcut>
 #include <QStandardItem>
 #include <QStringListModel>
 #include <QVBoxLayout>
+#include "../utils/dbmanager.h"
+#include <set>
 
 namespace Ui {
 class BookmarksDialog;
@@ -35,13 +37,16 @@ public slots:
     void btnNextClicked();
     void btnPrevClicked();
 
+    // QWidget interface
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void surahSelected(const QModelIndex &index);
 
 private:
-    Ui::BookmarksDialog *ui;
     void setupConnections();
-    void loadStyles();
+    Ui::BookmarksDialog *ui;
     DBManager *m_dbMgr = nullptr;
     int m_qcfVer = 1;
     int m_startIdx = 0;
@@ -54,10 +59,6 @@ private:
     QList<QFrame *> m_frames;
     QStandardItemModel m_surahsModel;
     QStringList m_favSurahList;
-
-    // QWidget interface
-protected:
-    void closeEvent(QCloseEvent *event);
 };
 
 #endif // BOOKMARKSDIALOG_H

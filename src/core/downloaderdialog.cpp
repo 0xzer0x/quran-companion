@@ -25,9 +25,6 @@ DownloaderDialog::DownloaderDialog(QWidget *parent,
 {
     ui->setupUi(this);
     setWindowIcon(QIcon(m_resourcePath + "/icons/download-manager.png"));
-    m_ssProgBar = "QProgressBar {text-align: center; color:palette(text); "
-                  "border-radius: 2px; border: 1px "
-                  "solid palette(dark); }";
 
     // treeview setup
     QStringList headers;
@@ -152,7 +149,7 @@ void DownloaderDialog::addToQueue()
 
     setCurrentBar();
 
-    m_downloaderPtr->processQueueHead();
+    m_downloaderPtr->startQueue();
 }
 
 /*!
@@ -210,10 +207,7 @@ void DownloaderDialog::setCurrentBar()
     m_currentLb = m_frameLst.at(0)->findChild<QLabel *>("DownloadInfo");
     m_currDownSpeedLb = m_frameLst.at(0)->findChild<QLabel *>("DownloadSpeed");
     m_currentLb->setText(tr("Downloading: ") + m_currentLb->parent()->objectName());
-
     m_currentBar = m_frameLst.at(0)->findChild<DownloadProgressBar *>();
-
-    m_currentBar->setStyleSheet(m_ssProgBar);
 
     connect(m_downloaderPtr,
             &DownloadManager::downloadProgressed,

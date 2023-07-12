@@ -1,6 +1,5 @@
 #include "bookmarksdialog.h"
 #include "ui_bookmarksdialog.h"
-#include <set>
 
 BookmarksDialog::BookmarksDialog(QWidget *parent, QString iconPath, DBManager *dbMgr, int qcfVer)
     : QDialog(parent)
@@ -11,7 +10,6 @@ BookmarksDialog::BookmarksDialog(QWidget *parent, QString iconPath, DBManager *d
     , m_fontPrefix{qcfVer == 1 ? "QCF_P" : "QCF2"}
 {
     ui->setupUi(this);
-    loadStyles();
     ui->scrollArea->setLayoutDirection(Qt::LeftToRight);
     ui->navBar->setLayoutDirection(Qt::LeftToRight);
     setWindowIcon(QIcon(m_resourcePath + "/icons/bookmark-true.png"));
@@ -179,15 +177,6 @@ void BookmarksDialog::surahSelected(const QModelIndex &index)
         loadBookmarks();
     } else {
         loadBookmarks(idx);
-    }
-}
-
-void BookmarksDialog::loadStyles()
-{
-    QFile ss(m_resourcePath + "/styles/bookmarks-listview.qss");
-    if (ss.open(QIODevice::ReadOnly)) {
-        ui->listViewBookmarkedSurahs->setStyleSheet(ss.readAll());
-        ss.close();
     }
 }
 

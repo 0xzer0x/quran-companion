@@ -174,8 +174,8 @@ void QuranPageBrowser::constructPage(int pageNo, bool manualSz)
     textCursor.insertText(this->justifyHeader(m_currPageHeader));
   }
 
-  this->parentWidget()->setMinimumWidth(m_pageLineSize.width() + 50);
-  this->setMinimumWidth(m_pageLineSize.width() + 50);
+  this->parentWidget()->setMinimumWidth(m_pageLineSize.width() + 70);
+  this->setMinimumWidth(m_pageLineSize.width() + 70);
 
   // page lines drawing
   int counter = 0, prevAnchor = pageNo < 3 ? 3 : m_currPageHeader.size() + 2;

@@ -68,7 +68,6 @@ private:
     DBManager *m_dbMgr;
     QSettings *m_appSettings;
     QStringList m_surahDisplayNames;
-    QString m_ssProgBar;
     QMap<int, QSet<int>> m_downloadingTasks;
 };
 

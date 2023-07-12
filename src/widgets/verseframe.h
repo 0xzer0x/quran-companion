@@ -17,9 +17,10 @@ protected:
     void leaveEvent(QEvent *event);
 
 private:
-  int m_colorR = 0;
-  int m_colorG = 161;
-  int m_colorB = 185;
+    int m_colorR = 0;
+    int m_colorG = 161;
+    int m_colorB = 185;
+    QString m_frameStylesheet;
 };
 
 #endif // VERSEFRAME_H
