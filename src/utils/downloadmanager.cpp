@@ -70,13 +70,10 @@ void DownloadManager::processQueueHead()
     m_downloadPath = m_topLevelPath;
     m_downloadPath.cd(m_recitersList.at(m_currentTask.reciterIdx).baseDirName);
 
-    qInfo() << m_currentTask.filename;
     while (m_downloadPath.exists(m_currentTask.filename)) {
         emit downloadProgressed(m_currentTask.verse, m_currSurahCount);
-
-        if (m_currentTask.verse == m_currSurahCount) {
-            emit downloadComplete();
-        }
+        if (m_currentTask.verse == m_currSurahCount)
+            emit downloadComplete(m_currentTask.reciterIdx, m_currentTask.surah);
 
         if (m_downloadQueue.empty()) {
             m_isDownloading = false;
@@ -89,7 +86,7 @@ void DownloadManager::processQueueHead()
 
     m_isDownloading = true;
     QNetworkRequest req(m_currentTask.link);
-    req.setTransferTimeout(3000);
+    req.setTransferTimeout(1500);
     m_currentTask.networkReply = m_netMan->get(req);
     m_currentTask.networkReply->ignoreSslErrors();
     m_downloadStart = QTime::currentTime();
@@ -131,9 +128,8 @@ void DownloadManager::finishupTask(QNetworkReply *replyData)
     saveFile(replyData);
 
     emit downloadProgressed(m_currentTask.verse, m_currSurahCount);
-    if (m_currentTask.verse == m_currSurahCount) {
-        emit downloadComplete();
-    }
+    if (m_currentTask.verse == m_currSurahCount)
+        emit downloadComplete(m_currentTask.reciterIdx, m_currentTask.surah);
 
     disconnect(m_currentTask.networkReply,
                &QNetworkReply::downloadProgress,
@@ -176,11 +172,6 @@ QUrl DownloadManager::downloadUrl(const int reciterIdx, const int surah, const i
     return QUrl::fromEncoded(url.toLocal8Bit());
 }
 
-bool DownloadManager::isDownloading() const
-{
-    return m_isDownloading;
-}
-
 void DownloadManager::handleConError(QNetworkReply::NetworkError err)
 {
     switch (err) {
@@ -190,7 +181,7 @@ void DownloadManager::handleConError(QNetworkReply::NetworkError err)
 
     default:
         qInfo() << m_currentTask.networkReply->errorString();
-        emit downloadError();
+        emit downloadError(m_currentTask.reciterIdx, m_currentTask.surah);
     }
 }
 
@@ -207,4 +198,9 @@ QNetworkAccessManager *DownloadManager::netMan() const
 DownloadManager::DownloadTask DownloadManager::currentTask() const
 {
     return m_currentTask;
+}
+
+bool DownloadManager::isDownloading() const
+{
+    return m_isDownloading;
 }

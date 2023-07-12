@@ -109,6 +109,24 @@ void DownloaderDialog::fillTreeView()
     }
 }
 
+void DownloaderDialog::addToDownloading(int reciter, int surah)
+{
+    // add surah to downloading tasks
+    QSet<int> downloading = m_downloadingTasks.value(reciter);
+    downloading.insert(surah);
+    m_downloadingTasks.insert(reciter, downloading);
+}
+
+void DownloaderDialog::removeFromDownloading(int reciter, int surah)
+{
+    QSet<int> downloading = m_downloadingTasks.value(reciter);
+    downloading.remove(surah);
+    if (downloading.isEmpty())
+        m_downloadingTasks.remove(reciter);
+    else
+        m_downloadingTasks.insert(reciter, downloading);
+}
+
 /*!
  * \brief DownloaderDialog::addToQueue adds selected surahs to the download
  * queue
@@ -117,14 +135,18 @@ void DownloaderDialog::addToQueue()
 {
     QModelIndexList selected = ui->treeView->selectionModel()->selectedRows();
 
+    int reciter = -1, surah = -1;
     foreach (QModelIndex i, selected) {
-        if (i.parent().row() < 0)
+        reciter = i.parent().row();
+        surah = i.row() + 1;
+        bool currentlyDownloading = m_downloadingTasks.value(reciter).contains(surah);
+        if (reciter < 0 || currentlyDownloading)
             continue;
 
-        addTaskProgress(i.parent().row(), i.row() + 1);
-
-        for (int j = 1; j <= m_dbMgr->getSurahVerseCount(i.row() + 1); j++) {
-            m_downloaderPtr->enqeueVerseTask(i.parent().row(), i.row() + 1, j);
+        addToDownloading(reciter, surah);
+        addTaskProgress(reciter, surah);
+        for (int j = 1; j <= m_dbMgr->getSurahVerseCount(surah); j++) {
+            m_downloaderPtr->enqeueVerseTask(reciter, surah, j);
         }
     }
 
@@ -218,6 +240,7 @@ void DownloaderDialog::selectTask(int reciter, int surah)
 
 void DownloaderDialog::clearQueue()
 {
+    m_downloadingTasks.clear();
     m_downloaderPtr->stopQueue();
     if (!m_finishedFrames.isEmpty()) {
         qDeleteAll(m_finishedFrames);
@@ -229,7 +252,7 @@ void DownloaderDialog::clearQueue()
  * \brief DownloaderDialog::surahDownloaded slot to delete the finished progress
  * bar on download completion
  */
-void DownloaderDialog::surahDownloaded()
+void DownloaderDialog::surahDownloaded(int reciter, int surah)
 {
     m_currentBar->setStyling(DownloadProgressBar::completed);
     m_currentLb->setText(m_currentLb->parent()->objectName());
@@ -239,6 +262,7 @@ void DownloaderDialog::surahDownloaded()
                m_currentBar,
                &DownloadProgressBar::updateProgress);
 
+    removeFromDownloading(reciter, surah);
     m_finishedFrames.append(m_frameLst.front());
     m_frameLst.pop_front();
     setCurrentBar();
@@ -250,6 +274,7 @@ void DownloaderDialog::surahDownloaded()
  */
 void DownloaderDialog::downloadAborted()
 {
+    m_downloadingTasks.clear();
     if (!m_frameLst.isEmpty()) {
         qDeleteAll(m_frameLst);
         m_frameLst.clear();
@@ -260,7 +285,7 @@ void DownloaderDialog::downloadAborted()
  * \brief DownloaderDialog::topTaskDownloadError slot to update the current task
  * in case of download error
  */
-void DownloaderDialog::topTaskDownloadError()
+void DownloaderDialog::topTaskDownloadError(int reciter, int surah)
 {
     m_currentBar->setStyling(DownloadProgressBar::aborted);
     m_currentLb->setText(m_currentLb->parent()->objectName());
@@ -270,6 +295,7 @@ void DownloaderDialog::topTaskDownloadError()
                m_currentBar,
                &DownloadProgressBar::updateProgress);
 
+    removeFromDownloading(reciter, surah);
     m_finishedFrames.append(m_frameLst.front());
     m_frameLst.pop_front();
     setCurrentBar();

@@ -59,8 +59,8 @@ signals:
     void downloadProgressed(int downloaded, int total);
     void downloadSpeedUpdated(int valuePerSec, QString unit);
     void downloadCanceled();
-    void downloadComplete();
-    void downloadError();
+    void downloadComplete(int reciterIdx, int surah);
+    void downloadError(int reciterIdx, int surah);
     void queueEmpty();
 
 private:

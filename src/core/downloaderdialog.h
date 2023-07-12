@@ -41,9 +41,9 @@ public slots:
     void addToQueue();
     void addTaskProgress(int reciterIdx, int surah);
     void setCurrentBar();
-    void surahDownloaded();
+    void surahDownloaded(int reciter, int surah);
     void downloadAborted();
-    void topTaskDownloadError();
+    void topTaskDownloadError(int reciter, int surah);
     void updateDownloadSpeed(int value, QString unit);
     void selectTask(int reciter, int surah);
     void clearQueue();
@@ -54,6 +54,8 @@ protected:
 
 private:
     void setupConnections();
+    void addToDownloading(int reciter, int surah);
+    void removeFromDownloading(int reciter, int surah);
     Ui::DownloaderDialog *ui;
     QString m_resourcePath;
     DownloadProgressBar *m_currentBar;
@@ -67,7 +69,7 @@ private:
     QSettings *m_appSettings;
     QStringList m_surahDisplayNames;
     QString m_ssProgBar;
-    ;
+    QMap<int, QSet<int>> m_downloadingTasks;
 };
 
 #endif // DOWNLOADERDIALOG_H
