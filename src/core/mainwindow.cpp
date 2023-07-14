@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget* parent)
   m_notifyMgr->setTooltip("Quran Companion");
   if (m_settings->value("VOTD").toBool())
     m_notifyMgr->checkDailyVerse();
+
+  m_popup->dockLocationChanged(dockWidgetArea(ui->sideDock));
 }
 
 /* ------------------------ Initalization methods ------------------------ */
@@ -287,6 +289,11 @@ MainWindow::setupConnections()
           &QListView::clicked,
           this,
           &MainWindow::listSurahNameClicked,
+          Qt::UniqueConnection);
+  connect(ui->sideDock,
+          &QDockWidget::dockLocationChanged,
+          m_popup,
+          &NotificationPopup::dockLocationChanged,
           Qt::UniqueConnection);
 
   // ########## audio slider ########## //
@@ -930,13 +937,17 @@ MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
   int chosenAction = m_quranBrowser->lmbVerseMenu(m_dbMgr->isBookmarked(v));
   // remove from / add to favorites
   if (chosenAction == 5) {
-    m_dbMgr->removeBookmark(v);
+    if (m_dbMgr->removeBookmark(v))
+      m_popup->bookmarkRemoved();
+
   } else if (chosenAction == 4) {
     m_dbMgr->addBookmark(v);
+    m_popup->bookmarkAdded();
   }
   // copy
   else if (chosenAction == 3) {
     copyVerseText(idx.toInt());
+    m_popup->copiedToClipboard();
   }
   // open tafsir
   else if (chosenAction == 2)
@@ -1054,7 +1065,7 @@ MainWindow::actionDMTriggered()
       connect(m_downManPtr,
               &DownloadManager::downloadComplete,
               m_popup,
-              &NotificationPopup::notifyCompletedDownload,
+              &NotificationPopup::completedDownload,
               Qt::UniqueConnection);
     }
 
@@ -1409,8 +1420,10 @@ void
 MainWindow::resizeEvent(QResizeEvent* event)
 {
   QMainWindow::resizeEvent(event);
-  if (m_popup)
-    m_popup->move(this->width() - m_popup->width() - 5, 30);
+  if (m_popup) {
+    m_popup->adjustLocation();
+    m_popup->move(m_popup->notificationPos());
+  }
 }
 
 MainWindow::~MainWindow()

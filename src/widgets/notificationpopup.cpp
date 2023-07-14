@@ -35,25 +35,36 @@ NotificationPopup::NotificationPopup(QWidget* parent, DBManager* dbMgr)
     if (m_opacityEffect->opacity() == 1)
       m_fadeoutAnim->start();
   });
+
+  this->show();
 }
 
 void
-NotificationPopup::notify(QString message, NotificationPopup::Type icon)
+NotificationPopup::dockLocationChanged(Qt::DockWidgetArea dockPos)
+{
+  m_dockArea = dockPos;
+}
+
+void
+NotificationPopup::notify(QString message, NotificationPopup::Action icon)
 {
   QFontMetrics fm(m_textWidget->fontMetrics());
   m_textWidget->setText(message);
   setNotificationIcon(icon);
+
   resize(fm.size(Qt::TextSingleLine, message).width() + 50, 40);
-  move(parentWidget()->width() - this->width() - 5, 30);
-  this->show();
+  adjustLocation();
+  move(m_notificationPos);
+
+  if (m_fadeoutAnim->state() == QAbstractAnimation::Running)
+    m_fadeoutAnim->stop();
   m_opacityEffect->setOpacity(1);
   m_notificationPeriod.start();
 }
 
 void
-NotificationPopup::notifyCompletedDownload(int reciterIdx, int surah)
+NotificationPopup::completedDownload(int reciterIdx, int surah)
 {
-  qInfo() << "Fired off slot";
   QString msg = tr("Download Completed") + ": " +
                 m_recitersList.at(reciterIdx).displayName + " - " +
                 tr("Surah") + " " + m_dbMgr->surahNameList().at(surah - 1);
@@ -61,7 +72,47 @@ NotificationPopup::notifyCompletedDownload(int reciterIdx, int surah)
 }
 
 void
-NotificationPopup::setNotificationIcon(Type icon)
+NotificationPopup::bookmarkAdded()
+{
+  QString msg = tr("Verse added to bookmarks");
+  this->notify(msg, bookmarkAdd);
+}
+
+void
+NotificationPopup::bookmarkRemoved()
+{
+  QString msg = tr("Verse removed from bookmarks");
+  this->notify(msg, bookmarkRemove);
+}
+
+void
+NotificationPopup::copiedToClipboard()
+{
+  QString msg = tr("Verse text copied to clipboard");
+  this->notify(msg, copiedText);
+}
+
+void
+NotificationPopup::adjustLocation()
+{
+  switch (m_dockArea) {
+    case Qt::LeftDockWidgetArea:
+      m_notificationPos.setX(parentWidget()->width() - this->width() - 5);
+      m_notificationPos.setY(30);
+      break;
+
+    case Qt::RightDockWidgetArea:
+      m_notificationPos.setX(5);
+      m_notificationPos.setY(30);
+      break;
+
+    default:
+      break;
+  }
+}
+
+void
+NotificationPopup::setNotificationIcon(Action icon)
 {
   QPixmap image;
   switch (icon) {
@@ -71,10 +122,22 @@ NotificationPopup::setNotificationIcon(Type icon)
     case NotificationPopup::downloads:
       image = QPixmap(m_resources.filePath("icons/download-manager.png"));
       break;
-    case NotificationPopup::bookmarks:
+    case NotificationPopup::bookmarkAdd:
       image = QPixmap(m_resources.filePath("icons/bookmark-true.png"));
+      break;
+    case NotificationPopup::bookmarkRemove:
+      image = QPixmap(m_resources.filePath("icons/bookmark-false.png"));
+      break;
+    case NotificationPopup::copiedText:
+      image = QPixmap(m_resources.filePath("icons/copy.png"));
       break;
   }
 
   m_iconWidget->setPixmap(image.scaledToWidth(24, Qt::SmoothTransformation));
+}
+
+QPoint
+NotificationPopup::notificationPos() const
+{
+  return m_notificationPos;
 }
