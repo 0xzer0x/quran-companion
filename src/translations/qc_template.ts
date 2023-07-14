@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="ar">
 <context>
     <name>BookmarksDialog</name>
     <message>
@@ -36,6 +36,11 @@
     <message>
         <location filename="../core/bookmarksdialog.ui" line="209"/>
         <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/bookmarksdialog.cpp" line="53"/>
+        <source>No bookmarks available. Start bookmarking verses to see them here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -85,6 +90,11 @@
 <context>
     <name>DownloaderDialog</name>
     <message>
+        <location filename="../core/downloaderdialog.ui" line="17"/>
+        <source>Download Manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/downloaderdialog.ui" line="76"/>
         <source>add to queue &gt;&gt;</source>
         <translation type="unfinished"></translation>
@@ -97,11 +107,6 @@
     <message>
         <location filename="../core/downloaderdialog.ui" line="162"/>
         <source>stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/downloaderdialog.ui" line="17"/>
-        <source>Download Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -146,6 +151,16 @@
         <location filename="../core/mainwindow.ui" line="17"/>
         <location filename="../core/mainwindow.cpp" line="1115"/>
         <source>Quran Companion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="99"/>
+        <source>Reciter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="330"/>
+        <source>🔊</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -199,8 +214,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="99"/>
-        <source>Reciter</source>
+        <location filename="../core/mainwindow.ui" line="683"/>
+        <location filename="../core/mainwindow.cpp" line="162"/>
+        <source>Navigation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="698"/>
+        <source>Juz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -354,40 +375,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="880"/>
-        <source>Verse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="866"/>
         <source>Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1000"/>
-        <location filename="../core/mainwindow.cpp" line="1123"/>
-        <source>About Quran Companion</source>
+        <location filename="../core/mainwindow.ui" line="880"/>
+        <source>Verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1008"/>
-        <location filename="../core/mainwindow.cpp" line="1129"/>
-        <source>About Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="1016"/>
-        <source>Tafsir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="1019"/>
-        <source>Ctrl+T</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="1024"/>
-        <source>Verse of the day</source>
+        <location filename="../core/mainwindow.ui" line="901"/>
+        <source>Search surah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -403,27 +402,6 @@
     <message>
         <location filename="../core/mainwindow.ui" line="954"/>
         <source>Download manager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="330"/>
-        <source>🔊</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="683"/>
-        <location filename="../core/mainwindow.cpp" line="162"/>
-        <source>Navigation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="698"/>
-        <source>Juz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="901"/>
-        <source>Search surah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -467,6 +445,43 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.ui" line="1000"/>
+        <location filename="../core/mainwindow.cpp" line="1123"/>
+        <source>About Quran Companion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="1008"/>
+        <location filename="../core/mainwindow.cpp" line="1129"/>
+        <source>About Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="1016"/>
+        <source>Tafsir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="1019"/>
+        <source>Ctrl+T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="1024"/>
+        <source>Verse of the day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Update tool is unavailable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.cpp" line="420"/>
         <source>There are currently no updates available.</source>
         <translation type="unfinished"></translation>
@@ -494,13 +509,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.cpp" line="853"/>
+        <source>Recitation not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="854"/>
+        <source>The recitation files for the current surah is missing, would you like to download it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.cpp" line="1113"/>
         <source>Quran Companion v</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.cpp" line="1116"/>
+        <source> is a free cross-platform Quran reader &amp; player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.cpp" line="1117"/>
         <source>Licensed under the </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="1121"/>
+        <source>&apos;Waqf&apos; General Public License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -514,38 +549,128 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.cpp" line="853"/>
-        <source>Recitation not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
-        <source>Update tool is unavailable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="854"/>
-        <source>The recitation files for the current surah is missing, would you like to download it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="1116"/>
-        <source> is a free cross-platform Quran reader &amp; player.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="1121"/>
-        <source>&apos;Waqf&apos; General Public License</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.cpp" line="1380"/>
         <source>Verse Of The Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="274"/>
+        <source>Al-Husary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="281"/>
+        <source>Al-Husary (Qasr)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="288"/>
+        <source>Al-Husary (Mujawwad)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="296"/>
+        <source>Abdul-Basit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="304"/>
+        <source>Abdul-Basit (Mujawwad)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="311"/>
+        <source>Menshawi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="318"/>
+        <source>Menshawi (Mujawwad)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="325"/>
+        <source>Mishary Alafasy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="331"/>
+        <source>Khalefa Al-Tunaiji</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="336"/>
+        <source>Yasser Ad-Dussary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="341"/>
+        <source>Mahmoud Al-Banna</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="347"/>
+        <source>Abdullah Basfar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="354"/>
+        <source>Abu Bakr Ash-Shaatree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="360"/>
+        <source>Ahmed Al-Ajamy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="366"/>
+        <source>Ali Jaber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="371"/>
+        <source>Fares Abbad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="376"/>
+        <source>Saad Al-Ghamadi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="381"/>
+        <source>Hani Rifai</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="387"/>
+        <source>Hudhaify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="394"/>
+        <source>Saood Ash-Shuraym</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="401"/>
+        <source>Nasser Alqatami</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="407"/>
+        <source>Maher Al-Muaiqly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="415"/>
+        <source>Mostafa Ismail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="422"/>
+        <source>Muhammad Jibreel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -598,6 +723,34 @@
     </message>
 </context>
 <context>
+    <name>NotificationPopup</name>
+    <message>
+        <location filename="../widgets/notificationpopup.cpp" line="68"/>
+        <source>Download Completed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/notificationpopup.cpp" line="70"/>
+        <source>Surah</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/notificationpopup.cpp" line="77"/>
+        <source>Verse added to bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/notificationpopup.cpp" line="84"/>
+        <source>Verse removed from bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/notificationpopup.cpp" line="91"/>
+        <source>Verse text copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QuranPageBrowser</name>
     <message>
         <location filename="../widgets/quranpagebrowser.cpp" line="317"/>
@@ -642,6 +795,11 @@
 </context>
 <context>
     <name>SearchDialog</name>
+    <message>
+        <location filename="../core/searchdialog.ui" line="14"/>
+        <source>Verse search</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../core/searchdialog.ui" line="27"/>
         <source>Search</source>
@@ -713,11 +871,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/searchdialog.ui" line="14"/>
-        <source>Verse search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/searchdialog.cpp" line="74"/>
         <source> Search results</source>
         <translation type="unfinished"></translation>
@@ -735,6 +888,11 @@
 </context>
 <context>
     <name>SettingsDialog</name>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="14"/>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="38"/>
         <source>General</source>
@@ -766,13 +924,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="119"/>
-        <source>Daily verse</source>
+        <location filename="../core/settingsdialog.ui" line="99"/>
+        <source>Features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="136"/>
-        <source>Reader</source>
+        <location filename="../core/settingsdialog.ui" line="119"/>
+        <source>Daily verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -781,18 +939,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="99"/>
-        <source>Features</source>
+        <location filename="../core/settingsdialog.ui" line="136"/>
+        <source>Reader</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="142"/>
         <source>Quran page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="175"/>
-        <source>Adaptive font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -808,6 +961,11 @@
     <message>
         <location filename="../core/settingsdialog.ui" line="163"/>
         <source>QCF V2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="175"/>
+        <source>Adaptive font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -930,8 +1088,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="505"/>
-        <source>Translation</source>
+        <location filename="../core/settingsdialog.ui" line="428"/>
+        <source>Adwa&apos; ul-Bayan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="433"/>
+        <source>Aysar Al-Tafasir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -940,28 +1103,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="463"/>
-        <source>Earab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="483"/>
-        <source>Indonesian - Tafsir Jalalayn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="478"/>
-        <source>Ibn-Katheer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/settingsdialog.ui" line="443"/>
         <source>Al-Qortoby</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="488"/>
-        <source>Russian - Kuliev &amp; Al-Sa&apos;ady</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -975,8 +1118,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="493"/>
-        <source>Tafheem-ul-Quran</source>
+        <location filename="../core/settingsdialog.ui" line="458"/>
+        <source>Al-Tafsir Al-Waseet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="463"/>
+        <source>Earab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -985,23 +1133,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="428"/>
-        <source>Adwa&apos; ul-Bayan</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="433"/>
-        <source>Aysar Al-Tafasir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="458"/>
-        <source>Al-Tafsir Al-Waseet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/settingsdialog.ui" line="473"/>
         <source>Ibn-Juzayy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="478"/>
+        <source>Ibn-Katheer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="483"/>
+        <source>Indonesian - Tafsir Jalalayn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="488"/>
+        <source>Russian - Kuliev &amp; Al-Sa&apos;ady</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="493"/>
+        <source>Tafheem-ul-Quran</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="505"/>
+        <source>Translation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1150,11 +1308,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="14"/>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/settingsdialog.cpp" line="66"/>
         <location filename="../core/settingsdialog.cpp" line="88"/>
         <location filename="../core/settingsdialog.cpp" line="144"/>
@@ -1231,26 +1384,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="96"/>
-        <source>Al-Baghawy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/tafsirdialog.cpp" line="99"/>
-        <source>Earab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/tafsirdialog.cpp" line="111"/>
-        <source>Al-Qortoby</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/tafsirdialog.cpp" line="102"/>
-        <source>Indonesian - Tafsir Jalalayn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/tafsirdialog.cpp" line="90"/>
         <source>Adwa&apos; ul-Bayan</source>
         <translation type="unfinished"></translation>
@@ -1261,6 +1394,21 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/tafsirdialog.cpp" line="96"/>
+        <source>Al-Baghawy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="99"/>
+        <source>Earab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="102"/>
+        <source>Indonesian - Tafsir Jalalayn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/tafsirdialog.cpp" line="105"/>
         <source>Ibn-Juzayy</source>
         <translation type="unfinished"></translation>
@@ -1268,6 +1416,11 @@
     <message>
         <location filename="../core/tafsirdialog.cpp" line="108"/>
         <source>Ibn-Katheer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="111"/>
+        <source>Al-Qortoby</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1308,6 +1461,129 @@
     <message>
         <location filename="../core/tafsirdialog.cpp" line="143"/>
         <source>Verse: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <location filename="../main.cpp" line="262"/>
+        <source>Al-Husary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="269"/>
+        <source>Al-Husary (Qasr)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="276"/>
+        <source>Al-Husary (Mujawwad)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="284"/>
+        <source>Abdul-Basit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="292"/>
+        <source>Abdul-Basit (Mujawwad)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="299"/>
+        <source>Menshawi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="306"/>
+        <source>Menshawi (Mujawwad)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="313"/>
+        <source>Mishary Alafasy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="319"/>
+        <source>Khalefa Al-Tunaiji</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="324"/>
+        <source>Yasser Ad-Dussary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="329"/>
+        <source>Mahmoud Al-Banna</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="335"/>
+        <source>Abdullah Basfar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="342"/>
+        <source>Abu Bakr Ash-Shaatree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="348"/>
+        <source>Ahmed Al-Ajamy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="354"/>
+        <source>Ali Jaber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="359"/>
+        <source>Fares Abbad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="364"/>
+        <source>Saad Al-Ghamadi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="369"/>
+        <source>Hani Rifai</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="375"/>
+        <source>Hudhaify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="382"/>
+        <source>Saood Ash-Shuraym</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="389"/>
+        <source>Nasser Alqatami</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="395"/>
+        <source>Maher Al-Muaiqly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="403"/>
+        <source>Mostafa Ismail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="410"/>
+        <source>Muhammad Jibreel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

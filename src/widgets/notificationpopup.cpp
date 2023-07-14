@@ -18,7 +18,7 @@ NotificationPopup::NotificationPopup(QWidget* parent, DBManager* dbMgr)
   m_fadeoutAnim->setEasingCurve(QEasingCurve::OutBack);
 
   QFont fnt = m_textWidget->font();
-  fnt.setPointSize(10);
+  fnt.setPointSize(12);
   m_textWidget->setFont(fnt);
   m_iconWidget->setScaledContents(true);
   m_iconWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);

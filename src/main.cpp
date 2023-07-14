@@ -47,6 +47,7 @@ main(int argc, char* argv[])
   setTheme(g_themeId);
   addFonts(g_qcfVersion);
   addTranslation(g_language);
+  fillRecitersList();
 
   MainWindow w(nullptr);
   splash.finish(&w);
@@ -258,22 +259,33 @@ addTranslation(QLocale::Language localeCode)
 void
 fillRecitersList()
 {
+  g_recitationsDir.setPath(QDir::currentPath());
+  if (!g_recitationsDir.exists("recitations"))
+    g_recitationsDir.mkdir("recitations");
+
+  g_recitationsDir.cd("recitations");
+  foreach (const Reciter& r, g_recitersList) {
+    if (!g_recitationsDir.exists(r.baseDirName)) {
+      g_recitationsDir.mkdir(r.baseDirName);
+    }
+  }
+
   Reciter husary{ "Al-Husary",
-                  qApp->tr("Al-Husary"),
+                  qApp->translate("MainWindow", "Al-Husary"),
                   g_bismillahDir.absoluteFilePath("husary.mp3"),
                   "https://cdn.islamic.network/quran/audio/64/ar.husary/",
                   true };
 
   Reciter husaryQasr{
     "Al-Husary_(Qasr)",
-    qApp->tr("Al-Husary (Qasr)"),
+    qApp->translate("MainWindow", "Al-Husary (Qasr)"),
     husary.basmallahPath,
     "https://gitlab.com/0xzer0x/qc-audio/-/raw/main/husary_qasr_64kbps/"
   };
 
   Reciter husaryMujawwad{
     "Al-Husary_(Mujawwad)",
-    qApp->tr("Al-Husary (Mujawwad)"),
+    qApp->translate("MainWindow", "Al-Husary (Mujawwad)"),
     husary.basmallahPath,
     "https://cdn.islamic.network/quran/audio/64/ar.husarymujawwad/",
     true
@@ -281,7 +293,7 @@ fillRecitersList()
 
   Reciter abdulbasit{
     "Abdul-Basit",
-    qApp->tr("Abdul-Basit"),
+    qApp->translate("MainWindow", "Abdul-Basit"),
     g_bismillahDir.filePath("abdul-basit.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.abdulbasitmurattal/",
     true
@@ -289,110 +301,110 @@ fillRecitersList()
 
   Reciter abdulbaitMujawwad{
     "Abdul-Basit_(Mujawwad)",
-    qApp->tr("Abdul-Basit (Mujawwad)"),
+    qApp->translate("MainWindow", "Abdul-Basit (Mujawwad)"),
     abdulbasit.basmallahPath,
     "https://cdn.islamic.network/quran/audio/64/ar.abdulsamad/",
     true
   };
 
   Reciter menshawi{ "Menshawi",
-                    qApp->tr("Menshawi"),
+                    qApp->translate("MainWindow", "Menshawi"),
                     g_bismillahDir.absoluteFilePath("menshawi.mp3"),
                     "https://cdn.islamic.network/quran/audio/128/ar.minshawi/",
                     true };
 
   Reciter menshawiMujawwad{
     "Menshawi_(Mujawwad)",
-    qApp->tr("Menshawi (Mujawwad)"),
+    qApp->translate("MainWindow", "Menshawi (Mujawwad)"),
     menshawi.basmallahPath,
     "https://cdn.islamic.network/quran/audio/64/ar.minshawimujawwad/",
     true
   };
 
   Reciter alafasy{ "Mishary_Alafasy",
-                   qApp->tr("Mishary Alafasy"),
+                   qApp->translate("MainWindow", "Mishary Alafasy"),
                    g_bismillahDir.absoluteFilePath("alafasy.mp3"),
                    "https://cdn.islamic.network/quran/audio/64/ar.alafasy/",
                    true };
 
   Reciter tunaiji{ "Khalefa_Al-Tunaiji",
-                   qApp->tr("Khalefa Al-Tunaiji"),
+                   qApp->translate("MainWindow", "Khalefa Al-Tunaiji"),
                    g_bismillahDir.absoluteFilePath("tunaiji.mp3"),
                    "https://everyayah.com/data/khalefa_al_tunaiji_64kbps/" };
 
   Reciter dussary{ "Yasser_Ad-Dussary",
-                   qApp->tr("Yasser Ad-Dussary"),
+                   qApp->translate("MainWindow", "Yasser Ad-Dussary"),
                    g_bismillahDir.absoluteFilePath("ad-dussary.mp3"),
                    "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/" };
 
   Reciter banna{ "Mahmoud_Al-Banna",
-                 qApp->tr("Mahmoud Al-Banna"),
+                 qApp->translate("MainWindow", "Mahmoud Al-Banna"),
                  g_bismillahDir.absoluteFilePath("al-banna.mp3"),
                  "https://everyayah.com/data/mahmoud_ali_al_banna_32kbps/" };
 
   Reciter basfar{
     "Abdullah_Basfar",
-    qApp->tr("Abdullah Basfar"),
+    qApp->translate("MainWindow", "Abdullah Basfar"),
     g_bismillahDir.absoluteFilePath("basfar.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.abdullahbasfar/",
     true
   };
 
   Reciter shatree{ "Ash-Shaatree",
-                   qApp->tr("Abu Bakr Ash-Shaatree"),
+                   qApp->translate("MainWindow", "Abu Bakr Ash-Shaatree"),
                    g_bismillahDir.absoluteFilePath("shatree.mp3"),
                    "https://cdn.islamic.network/quran/audio/64/ar.shaatree/",
                    true };
 
   Reciter ajamy{ "Al-Ajamy",
-                 qApp->tr("Ahmed Al-Ajamy"),
+                 qApp->translate("MainWindow", "Ahmed Al-Ajamy"),
                  g_bismillahDir.absoluteFilePath("ajamy.mp3"),
                  "https://cdn.islamic.network/quran/audio/64/ar.ahmedajamy/",
                  true };
 
   Reciter aliJaber{ "Ali_Jaber",
-                    qApp->tr("Ali Jaber"),
+                    qApp->translate("MainWindow", "Ali Jaber"),
                     g_bismillahDir.absoluteFilePath("ajaber.mp3"),
                     "https://everyayah.com/data/Ali_Jaber_64kbps/" };
 
   Reciter fAbbad{ "Fares_Abbad",
-                  qApp->tr("Fares Abbad"),
+                  qApp->translate("MainWindow", "Fares Abbad"),
                   g_bismillahDir.absoluteFilePath("fabbad.mp3"),
                   "https://everyayah.com/data/Fares_Abbad_64kbps/" };
 
   Reciter ghamadi{ "Ghamadi",
-                   qApp->tr("Saad Al-Ghamadi"),
+                   qApp->translate("MainWindow", "Saad Al-Ghamadi"),
                    g_bismillahDir.absoluteFilePath("ghamadi.mp3"),
                    "https://everyayah.com/data/Ghamadi_40kbps/" };
 
   Reciter hRifai{ "Hani_Rifai",
-                  qApp->tr("Hani Rifai"),
+                  qApp->translate("MainWindow", "Hani Rifai"),
                   g_bismillahDir.absoluteFilePath("rifai.mp3"),
                   "https://cdn.islamic.network/quran/audio/64/ar.hanirifai/",
                   true };
 
   Reciter hudhaify{ "Hudhaify",
-                    qApp->tr("Hudhaify"),
+                    qApp->translate("MainWindow", "Hudhaify"),
                     g_bismillahDir.absoluteFilePath("hudhaify.mp3"),
                     "https://cdn.islamic.network/quran/audio/64/ar.hudhaify/",
                     true };
 
   Reciter shuraym{
     "Saood_Ash-Shuraym",
-    qApp->tr("Saood Ash-Shuraym"),
+    qApp->translate("MainWindow", "Saood Ash-Shuraym"),
     g_bismillahDir.absoluteFilePath("shuraym.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.saoodshuraym/",
     true
   };
 
   Reciter alqatami{ "Nasser_Alqatami",
-                    qApp->tr("Nasser Alqatami"),
+                    qApp->translate("MainWindow", "Nasser Alqatami"),
                     g_bismillahDir.absoluteFilePath("qatami.mp3"),
                     "https://everyayah.com/data/Nasser_Alqatami_128kbps/" };
 
   Reciter muaiqly{
     "Maher_AlMuaiqly",
-    qApp->tr("Maher Al-Muaiqly"),
+    qApp->translate("MainWindow", "Maher Al-Muaiqly"),
     g_bismillahDir.absoluteFilePath("muaiqly.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.mahermuaiqly/",
     true
@@ -400,14 +412,14 @@ fillRecitersList()
 
   Reciter mIsmail{
     "Mostafa_Ismail",
-    qApp->tr("Mostafa Ismail"),
+    qApp->translate("MainWindow", "Mostafa Ismail"),
     g_bismillahDir.absoluteFilePath("mismail.mp3"),
     "https://quran.ksu.edu.sa/ayat/mp3/Mostafa_Ismail_128kbps/"
   };
 
   Reciter mJibreel{
     "Muhammad_Jibreel",
-    qApp->tr("Muhammad Jibreel"),
+    qApp->translate("MainWindow", "Muhammad Jibreel"),
     g_bismillahDir.absoluteFilePath("mjibreel.mp3"),
     "https://quran.ksu.edu.sa/ayat/mp3/Muhammad_Jibreel_64kbps/"
   };
@@ -451,19 +463,6 @@ setGlobals()
   g_configDir.mkpath(".qurancompanion");
   g_configDir.cd(".qurancompanion");
   QDir::setCurrent(g_configDir.absolutePath());
-
-  // recitations
-  fillRecitersList();
-  g_recitationsDir.setPath(QDir::currentPath());
-  if (!g_recitationsDir.exists("recitations"))
-    g_recitationsDir.mkdir("recitations");
-
-  g_recitationsDir.cd("recitations");
-  foreach (const Reciter& r, g_recitersList) {
-    if (!g_recitationsDir.exists(r.baseDirName)) {
-      g_recitationsDir.mkdir(r.baseDirName);
-    }
-  }
 
   g_updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
                      "QCMaintenanceTool";
