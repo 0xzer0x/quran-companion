@@ -29,9 +29,7 @@ class SettingsDialog : public QDialog
 
 public:
   explicit SettingsDialog(QWidget* parent = nullptr,
-                          QSettings* settingsPtr = nullptr,
-                          VersePlayer* vPlayerPtr = nullptr,
-                          const QString& iconsPath = ":/resources/light/");
+                          VersePlayer* vPlayerPtr = nullptr);
   ~SettingsDialog();
 
 public slots:
@@ -66,14 +64,11 @@ protected:
   void closeEvent(QCloseEvent* event);
 
 private:
+  QSettings* const m_settings = g_settings;
+  const QDir& m_resources = g_themeResources;
   void setupConnections();
-  Ui::SettingsDialog* ui;
-  QString m_resourcePath;
-  QSettings* m_settingsPtr;
-  QLocale::Language m_lang;
-  QList<QAudioDevice> m_audioDevices;
-  VersePlayer* m_vPlayerPtr;
-  QFont m_sideFont;
+  void fillLanguageCombobox();
+  void setCurrentSettingsAsRef();
   int m_themeIdx;
   int m_qcfVer;
   int m_quranFontSize;
@@ -86,9 +81,11 @@ private:
   bool m_renderSideContent = false;
   bool m_renderQuranPage = false;
   bool m_restartReq = false;
-  void fillLanguageCombobox();
-  void setCurrentSettingsAsRef();
-  void setRadios();
+  Ui::SettingsDialog* ui;
+  VersePlayer* m_vPlayerPtr;
+  QList<QAudioDevice> m_audioDevices;
+  QLocale::Language m_languageCode;
+  QFont m_sideFont;
 };
 
 #endif // SETTINGSDIALOG_H

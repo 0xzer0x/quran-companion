@@ -1,6 +1,7 @@
 #ifndef BOOKMARKSDIALOG_H
 #define BOOKMARKSDIALOG_H
 
+#include "../globals.h"
 #include "../utils/dbmanager.h"
 #include <QDialog>
 #include <QLabel>
@@ -20,16 +21,15 @@ class BookmarksDialog : public QDialog
 
 public:
   explicit BookmarksDialog(QWidget* parent = nullptr,
-                           QString iconPath = ":/resources/light/",
-                           DBManager* dbMgr = nullptr,
-                           int qcfVer = 1);
+                           DBManager* dbMgr = nullptr);
+  ~BookmarksDialog();
+
   void showWindow();
   void loadBookmarks(int surah = -1);
   void loadSurahs();
-  ~BookmarksDialog();
 
 signals:
-  void navigateToVerse(DBManager::Verse v);
+  void navigateToVerse(Verse v);
 
 public slots:
   void btnGoToVerse();
@@ -45,17 +45,18 @@ private slots:
   void surahSelected(const QModelIndex& index);
 
 private:
+  const QDir& m_resources = g_themeResources;
+  const QString& m_fontPrefix = g_qcfFontPrefix;
+  const int m_qcfVer = g_qcfVersion;
   void setupConnections();
-  Ui::BookmarksDialog* ui;
-  DBManager* m_dbMgr = nullptr;
-  int m_qcfVer = 1;
+  void addEmptyBookmarksLabel();
   int m_startIdx = 0;
   int m_shownSurah = 0;
-  QString m_resourcePath;
-  QString m_fontPrefix;
+  Ui::BookmarksDialog* ui;
+  DBManager* m_dbMgr = nullptr;
   QVBoxLayout* m_scrollAreaLayout;
-  QList<DBManager::Verse> m_allBookmarked;
-  QList<DBManager::Verse> m_shownVerses;
+  QList<Verse> m_allBookmarked;
+  QList<Verse> m_shownVerses;
   QList<QFrame*> m_frames;
   QStandardItemModel m_surahsModel;
   QStringList m_favSurahList;

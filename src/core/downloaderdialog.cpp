@@ -10,21 +10,17 @@
  * @param iconsPath path to current theme icons
  */
 DownloaderDialog::DownloaderDialog(QWidget* parent,
-                                   QSettings* settingsptr,
                                    DownloadManager* downloader,
-                                   DBManager* dbMan,
-                                   const QString& iconsPath)
+                                   DBManager* dbMan)
   : QDialog(parent)
   , ui(new Ui::DownloaderDialog)
-  , m_resourcePath{ iconsPath }
-  , m_appSettings{ settingsptr }
   , m_downloaderPtr{ downloader }
   , m_dbMgr{ dbMan }
   , m_surahDisplayNames{ m_dbMgr->surahNameList() }
 
 {
   ui->setupUi(this);
-  setWindowIcon(QIcon(m_resourcePath + "/icons/download-manager.png"));
+  setWindowIcon(QIcon(m_resources.filePath("icons/download-manager.png")));
 
   // treeview setup
   QStringList headers;
@@ -49,11 +45,10 @@ DownloaderDialog::setupConnections()
           &DownloaderDialog::addToQueue,
           Qt::UniqueConnection);
 
-  connect(ui->btnStopQueue,
-          &QPushButton::clicked,
-          m_downloaderPtr,
-          &DownloadManager::stopQueue,
-          Qt::UniqueConnection);
+  connect(ui->btnStopQueue, &QPushButton::clicked, m_downloaderPtr, [this]() {
+    m_downloadingTasks.clear();
+    m_downloaderPtr->stopQueue();
+  });
 
   connect(ui->btnClearQueue,
           &QPushButton::clicked,
@@ -92,7 +87,7 @@ DownloaderDialog::setupConnections()
 void
 DownloaderDialog::fillTreeView()
 {
-  for (Reciter& reciter : m_downloaderPtr->recitersList()) {
+  for (const Reciter& reciter : m_recitersList) {
     QStandardItem* item = new QStandardItem(reciter.displayName);
 
     m_treeModel.invisibleRootItem()->appendRow(item);
@@ -171,7 +166,7 @@ DownloaderDialog::addToQueue()
 void
 DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
 {
-  QString reciter = m_downloaderPtr->recitersList().at(reciterIdx).displayName;
+  QString reciter = m_recitersList.at(reciterIdx).displayName;
   QString surahName = m_surahDisplayNames.at(surah - 1);
 
   QString objName = reciter + tr(" // Surah: ") + surahName;
@@ -181,7 +176,7 @@ DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
   prgFrm->setObjectName(objName);
 
   QBoxLayout* downInfo;
-  if (m_appSettings->value("Language").toInt() == 14)
+  if (m_languageCode == 14)
     downInfo = new QBoxLayout(QBoxLayout::RightToLeft, prgFrm);
   else
     downInfo = new QHBoxLayout(prgFrm);

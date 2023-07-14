@@ -1,10 +1,7 @@
 #include "dbmanager.h"
 
-DBManager::DBManager(QObject* parent, QSettings* settings)
+DBManager::DBManager(QObject* parent)
   : QObject(parent)
-  , m_settings{ settings }
-  , m_qcfVer{ settings->value("Reader/QCF").toInt() }
-  , m_dbDir{ QApplication::applicationDirPath() + QDir::separator() + "assets" }
 {
   m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
   m_glyphsDbPath.setFile(m_dbDir.filePath("glyphs.db"));
@@ -277,7 +274,7 @@ DBManager::getPageLines(const int page)
   return lines;
 }
 
-QList<DBManager::Verse>
+QList<Verse>
 DBManager::getVerseInfoList(int page)
 {
   QList<Verse> viList;
@@ -402,7 +399,7 @@ DBManager::getSurahName(const int sIdx, bool ar)
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
-  if (m_settings->value("Language").toInt() == QLocale::Arabic || ar)
+  if (m_languageCode == QLocale::Arabic || ar)
     dbQuery.prepare("SELECT sura_name_ar FROM verses_v1 WHERE sura_no=:i");
   else
     dbQuery.prepare("SELECT sura_name_en FROM verses_v1 WHERE sura_no=:i");
@@ -481,12 +478,12 @@ DBManager::surahNameList()
   return m_surahNames;
 }
 
-QList<DBManager::Verse>
+QList<Verse>
 DBManager::searchSurahs(QString searchText,
                         const QList<int> surahs,
                         const bool whole)
 {
-  QList<DBManager::Verse> results;
+  QList<Verse> results;
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -565,10 +562,10 @@ DBManager::getVerseText(const int sIdx, const int vIdx)
   return dbQuery.value(0).toString();
 }
 
-QPair<DBManager::Verse, QString>
+QPair<Verse, QString>
 DBManager::randomVerse()
 {
-  QPair<DBManager::Verse, QString> res;
+  QPair<Verse, QString> res;
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -609,12 +606,12 @@ DBManager::getVersePage(const int& surahIdx, const int& verse)
   return dbQuery.value(0).toInt();
 }
 
-QList<DBManager::Verse>
+QList<Verse>
 DBManager::searchVerses(QString searchText,
                         const int range[2],
                         const bool whole)
 {
-  QList<DBManager::Verse> results;
+  QList<Verse> results;
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -645,7 +642,7 @@ DBManager::searchVerses(QString searchText,
   return results;
 }
 
-QList<DBManager::Verse>
+QList<Verse>
 DBManager::bookmarkedVerses(int surahIdx)
 {
   QList<Verse> results;

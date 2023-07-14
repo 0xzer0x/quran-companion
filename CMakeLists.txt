@@ -28,6 +28,8 @@ endif()
 
 set(PROJECT_SOURCES
     src/main.cpp
+    src/globals.h
+    src/globals.cpp
     src/core/mainwindow.cpp
     src/core/mainwindow.h
     src/core/mainwindow.ui
@@ -54,6 +56,8 @@ set(PROJECT_SOURCES
     src/widgets/downloadprogressbar.h
     src/widgets/verseframe.cpp
     src/widgets/verseframe.h
+    src/widgets/notificationpopup.h
+    src/widgets/notificationpopup.cpp
     src/utils/dbmanager.h
     src/utils/dbmanager.cpp
     src/utils/verseplayer.h

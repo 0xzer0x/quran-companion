@@ -16,25 +16,19 @@ VersePlayer::VersePlayer(QObject* parent,
   , m_activeVerse{ initVerse }
   , m_reciter{ reciterIdx }
   , m_dbMgr{ dbPtr }
-  , m_bismillahDir{ QApplication::applicationDirPath() + QDir::separator() +
-                    "bismillah" }
+  , m_output{ new QAudioOutput(this) }
 {
   updateSurahVerseCount();
-  m_output = new QAudioOutput(this);
   setAudioOutput(m_output);
-  fillRecitersList();
+  setupConnections();
 
-  m_reciterDir.setPath(QDir::currentPath());
-  if (!m_reciterDir.exists("recitations"))
-    m_reciterDir.mkdir("recitations");
+  m_reciterDir.cd(m_recitersList.at(m_reciter).baseDirName);
+  setVerseFile(constructVerseFilename());
+}
 
-  m_reciterDir.cd("recitations");
-  foreach (const Reciter& r, m_recitersList) {
-    if (!m_reciterDir.exists(r.baseDirName)) {
-      m_reciterDir.mkdir(r.baseDirName);
-    }
-  }
-
+void
+VersePlayer::setupConnections()
+{
   // Connectors
   connect(this,
           &QMediaPlayer::mediaStatusChanged,
@@ -47,192 +41,6 @@ VersePlayer::VersePlayer(QObject* parent,
           this,
           &VersePlayer::playCurrentVerse,
           Qt::UniqueConnection);
-
-  m_reciterDir.cd(m_recitersList.at(m_reciter).baseDirName);
-  setVerseFile(constructVerseFilename());
-}
-
-void
-VersePlayer::fillRecitersList()
-{
-  Reciter husary{ "Al-Husary",
-                  tr("Al-Husary"),
-                  m_bismillahDir.absoluteFilePath("husary.mp3"),
-                  "https://cdn.islamic.network/quran/audio/64/ar.husary/",
-                  true };
-
-  Reciter husaryQasr{
-    "Al-Husary_(Qasr)",
-    tr("Al-Husary (Qasr)"),
-    husary.basmallahPath,
-    "https://gitlab.com/0xzer0x/qc-audio/-/raw/main/husary_qasr_64kbps/"
-  };
-
-  Reciter husaryMujawwad{
-    "Al-Husary_(Mujawwad)",
-    tr("Al-Husary (Mujawwad)"),
-    husary.basmallahPath,
-    "https://cdn.islamic.network/quran/audio/64/ar.husarymujawwad/",
-    true
-  };
-
-  Reciter abdulbasit{
-    "Abdul-Basit",
-    tr("Abdul-Basit"),
-    m_bismillahDir.filePath("abdul-basit.mp3"),
-    "https://cdn.islamic.network/quran/audio/64/ar.abdulbasitmurattal/",
-    true
-  };
-
-  Reciter abdulbaitMujawwad{
-    "Abdul-Basit_(Mujawwad)",
-    tr("Abdul-Basit (Mujawwad)"),
-    abdulbasit.basmallahPath,
-    "https://cdn.islamic.network/quran/audio/64/ar.abdulsamad/",
-    true
-  };
-
-  Reciter menshawi{ "Menshawi",
-                    tr("Menshawi"),
-                    m_bismillahDir.absoluteFilePath("menshawi.mp3"),
-                    "https://cdn.islamic.network/quran/audio/128/ar.minshawi/",
-                    true };
-
-  Reciter menshawiMujawwad{
-    "Menshawi_(Mujawwad)",
-    tr("Menshawi (Mujawwad)"),
-    menshawi.basmallahPath,
-    "https://cdn.islamic.network/quran/audio/64/ar.minshawimujawwad/",
-    true
-  };
-
-  Reciter alafasy{ "Mishary_Alafasy",
-                   tr("Mishary Alafasy"),
-                   m_bismillahDir.absoluteFilePath("alafasy.mp3"),
-                   "https://cdn.islamic.network/quran/audio/64/ar.alafasy/",
-                   true };
-
-  Reciter tunaiji{ "Khalefa_Al-Tunaiji",
-                   tr("Khalefa Al-Tunaiji"),
-                   m_bismillahDir.absoluteFilePath("tunaiji.mp3"),
-                   "https://everyayah.com/data/khalefa_al_tunaiji_64kbps/" };
-
-  Reciter dussary{ "Yasser_Ad-Dussary",
-                   tr("Yasser Ad-Dussary"),
-                   m_bismillahDir.absoluteFilePath("ad-dussary.mp3"),
-                   "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/" };
-
-  Reciter banna{ "Mahmoud_Al-Banna",
-                 tr("Mahmoud Al-Banna"),
-                 m_bismillahDir.absoluteFilePath("al-banna.mp3"),
-                 "https://everyayah.com/data/mahmoud_ali_al_banna_32kbps/" };
-
-  Reciter basfar{
-    "Abdullah_Basfar",
-    tr("Abdullah Basfar"),
-    m_bismillahDir.absoluteFilePath("basfar.mp3"),
-    "https://cdn.islamic.network/quran/audio/64/ar.abdullahbasfar/",
-    true
-  };
-
-  Reciter shatree{ "Ash-Shaatree",
-                   tr("Abu Bakr Ash-Shaatree"),
-                   m_bismillahDir.absoluteFilePath("shatree.mp3"),
-                   "https://cdn.islamic.network/quran/audio/64/ar.shaatree/",
-                   true };
-
-  Reciter ajamy{ "Al-Ajamy",
-                 tr("Ahmed Al-Ajamy"),
-                 m_bismillahDir.absoluteFilePath("ajamy.mp3"),
-                 "https://cdn.islamic.network/quran/audio/64/ar.ahmedajamy/",
-                 true };
-
-  Reciter aliJaber{ "Ali_Jaber",
-                    tr("Ali Jaber"),
-                    m_bismillahDir.absoluteFilePath("ajaber.mp3"),
-                    "https://everyayah.com/data/Ali_Jaber_64kbps/" };
-
-  Reciter fAbbad{ "Fares_Abbad",
-                  tr("Fares Abbad"),
-                  m_bismillahDir.absoluteFilePath("fabbad.mp3"),
-                  "https://everyayah.com/data/Fares_Abbad_64kbps/" };
-
-  Reciter ghamadi{ "Ghamadi",
-                   tr("Saad Al-Ghamadi"),
-                   m_bismillahDir.absoluteFilePath("ghamadi.mp3"),
-                   "https://everyayah.com/data/Ghamadi_40kbps/" };
-
-  Reciter hRifai{ "Hani_Rifai",
-                  tr("Hani Rifai"),
-                  m_bismillahDir.absoluteFilePath("rifai.mp3"),
-                  "https://cdn.islamic.network/quran/audio/64/ar.hanirifai/",
-                  true };
-
-  Reciter hudhaify{ "Hudhaify",
-                    tr("Hudhaify"),
-                    m_bismillahDir.absoluteFilePath("hudhaify.mp3"),
-                    "https://cdn.islamic.network/quran/audio/64/ar.hudhaify/",
-                    true };
-
-  Reciter shuraym{
-    "Saood_Ash-Shuraym",
-    tr("Saood Ash-Shuraym"),
-    m_bismillahDir.absoluteFilePath("shuraym.mp3"),
-    "https://cdn.islamic.network/quran/audio/64/ar.saoodshuraym/",
-    true
-  };
-
-  Reciter alqatami{ "Nasser_Alqatami",
-                    tr("Nasser Alqatami"),
-                    m_bismillahDir.absoluteFilePath("qatami.mp3"),
-                    "https://everyayah.com/data/Nasser_Alqatami_128kbps/" };
-
-  Reciter muaiqly{
-    "Maher_AlMuaiqly",
-    tr("Maher Al-Muaiqly"),
-    m_bismillahDir.absoluteFilePath("muaiqly.mp3"),
-    "https://cdn.islamic.network/quran/audio/64/ar.mahermuaiqly/",
-    true
-  };
-
-  Reciter mIsmail{
-    "Mostafa_Ismail",
-    tr("Mostafa Ismail"),
-    m_bismillahDir.absoluteFilePath("mismail.mp3"),
-    "https://quran.ksu.edu.sa/ayat/mp3/Mostafa_Ismail_128kbps/"
-  };
-
-  Reciter mJibreel{
-    "Muhammad_Jibreel",
-    tr("Muhammad Jibreel"),
-    m_bismillahDir.absoluteFilePath("mjibreel.mp3"),
-    "https://quran.ksu.edu.sa/ayat/mp3/Muhammad_Jibreel_64kbps/"
-  };
-
-  m_recitersList.append(husary);
-  m_recitersList.append(husaryQasr);
-  m_recitersList.append(husaryMujawwad);
-  m_recitersList.append(abdulbasit);
-  m_recitersList.append(abdulbaitMujawwad);
-  m_recitersList.append(menshawi);
-  m_recitersList.append(menshawiMujawwad);
-  m_recitersList.append(alafasy);
-  m_recitersList.append(tunaiji);
-  m_recitersList.append(dussary);
-  m_recitersList.append(banna);
-  m_recitersList.append(basfar);
-  m_recitersList.append(shatree);
-  m_recitersList.append(ajamy);
-  m_recitersList.append(aliJaber);
-  m_recitersList.append(fAbbad);
-  m_recitersList.append(ghamadi);
-  m_recitersList.append(hRifai);
-  m_recitersList.append(hudhaify);
-  m_recitersList.append(shuraym);
-  m_recitersList.append(alqatami);
-  m_recitersList.append(muaiqly);
-  m_recitersList.append(mIsmail);
-  m_recitersList.append(mJibreel);
 }
 
 void
@@ -377,6 +185,12 @@ VersePlayer::updateSurahVerseCount()
 
 /* -------------------- Getters ----------------------- */
 
+QString
+VersePlayer::reciterName() const
+{
+  return m_recitersList.at(m_reciter).displayName;
+}
+
 QAudioOutput*
 VersePlayer::getOutput() const
 {
@@ -395,20 +209,8 @@ VersePlayer::surahCount() const
   return m_surahCount;
 }
 
-QString
-VersePlayer::reciterName()
-{
-  return m_recitersList.at(m_reciter).displayName;
-}
-
 Verse
 VersePlayer::activeVerse() const
 {
   return m_activeVerse;
-}
-
-QList<Reciter>
-VersePlayer::recitersList() const
-{
-  return m_recitersList;
 }

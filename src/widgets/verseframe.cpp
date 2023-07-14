@@ -16,7 +16,6 @@ HighlightFrame::HighlightFrame(QWidget* parent)
 void
 HighlightFrame::highlightFrame()
 {
-  // rgba(0, 161, 185, 50)
   QString rgba = "rgba(" + QString::number(m_colorR) + ',' +
                  QString::number(m_colorG) + ',' + QString::number(m_colorB) +
                  ",60)";

@@ -1,6 +1,7 @@
 #ifndef QURANPAGEBROWSER_H
 #define QURANPAGEBROWSER_H
 
+#include "../globals.h"
 #include "../utils/dbmanager.h"
 #include <QContextMenuEvent>
 #include <QHBoxLayout>
@@ -19,11 +20,8 @@ class QuranPageBrowser : public QTextBrowser
 
 public:
   QuranPageBrowser(QWidget* parent = nullptr,
-                   int qcfVersion = 1,
-                   int initPage = 1,
-                   DBManager* dbPtr = nullptr,
-                   QSettings* appSettings = nullptr,
-                   const QString& iconsPath = ":/resources/light/");
+                   DBManager* dbMgr = nullptr,
+                   int initPage = 1);
 
   void createActions();
   void updateFontSize();
@@ -48,15 +46,18 @@ protected:
 private slots:
   void actionZoomIn();
   void actionZoomOut();
-  void actionCopy();
 
 private:
+  QSettings* const m_settings = g_settings;
+  const QDir& m_resources = g_themeResources;
+  const QString& m_bsmlFont = g_qcfBSMLFont;
+  const QString& m_fontnamePrefix = g_qcfFontPrefix;
+  const int m_qcfVer = g_qcfVersion;
+  const bool m_darkMode = g_darkMode;
   QString& justifyHeader(QString& baseHeader);
   QSize calcPageLineSize(QStringList& lines);
   QImage surahFrame(int surah);
-  bool m_darkMode;
   int m_page = -1;
-  int m_qcfVer;
   int m_fontSize;
   int m_highlightedIdx = -1;
   QSize m_pageLineSize;
@@ -64,10 +65,7 @@ private:
   QString m_currPageHeader;
   QPoint m_mousePos;
   QPoint m_mouseGlobalPos;
-  QString m_resourcePath;
   QString m_pageFont;
-  QString m_fontPrefix;
-  QString m_bsmlFont;
   QAction* m_zoomIn;
   QAction* m_zoomOut;
   QAction* m_copyAct;
@@ -84,7 +82,6 @@ private:
   QList<int*> m_pageVerseCoords;
   QMap<QString, QString> m_easternNumsMap;
   DBManager* m_dbMgr;
-  QSettings* m_settingsPtr;
 };
 
 #endif // QURANPAGEBROWSER_H

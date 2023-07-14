@@ -1,4 +1,3 @@
-
 #include "notificationmanager.h"
 
 NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)
@@ -66,6 +65,7 @@ NotificationManager::checkDailyVerse()
     timestamp.close();
   }
 }
+
 void
 NotificationManager::showVerseOfTheDay()
 {
@@ -173,4 +173,9 @@ NotificationManager::votd()
     checkDailyVerse();
 
   return m_votd;
+}
+
+NotificationManager::~NotificationManager()
+{
+  delete m_trayMenu;
 }

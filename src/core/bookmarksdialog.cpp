@@ -1,21 +1,15 @@
 #include "bookmarksdialog.h"
 #include "ui_bookmarksdialog.h"
 
-BookmarksDialog::BookmarksDialog(QWidget* parent,
-                                 QString iconPath,
-                                 DBManager* dbMgr,
-                                 int qcfVer)
+BookmarksDialog::BookmarksDialog(QWidget* parent, DBManager* dbMgr)
   : QDialog(parent)
   , ui(new Ui::BookmarksDialog)
-  , m_resourcePath{ iconPath }
   , m_dbMgr{ dbMgr }
-  , m_qcfVer{ qcfVer }
-  , m_fontPrefix{ qcfVer == 1 ? "QCF_P" : "QCF2" }
 {
   ui->setupUi(this);
   ui->scrollArea->setLayoutDirection(Qt::LeftToRight);
   ui->navBar->setLayoutDirection(Qt::LeftToRight);
-  setWindowIcon(QIcon(m_resourcePath + "/icons/bookmark-true.png"));
+  setWindowIcon(QIcon(m_resources.filePath("icons/bookmark-true.png")));
   ui->listViewBookmarkedSurahs->setModel(&m_surahsModel);
   ui->listViewBookmarkedSurahs->selectionModel()->select(
     m_surahsModel.index(0, 0),
@@ -44,6 +38,22 @@ BookmarksDialog::setupConnections()
           this,
           &BookmarksDialog::btnPrevClicked,
           Qt::UniqueConnection);
+}
+
+void
+BookmarksDialog::addEmptyBookmarksLabel()
+{
+  if (!m_frames.empty()) {
+    qDeleteAll(m_frames);
+    m_frames.clear();
+  }
+
+  QLabel* empty = new QLabel(this);
+  empty->setText(
+    tr("No bookmarks available. Start bookmarking verses to see them here."));
+  empty->setAlignment(Qt::AlignCenter);
+  ui->layoutFavorites->addWidget(empty);
+  m_frames.append(empty);
 }
 
 void
@@ -86,7 +96,7 @@ BookmarksDialog::loadBookmarks(int surah)
     ui->btnNext->setDisabled(false);
 
   for (int i = m_startIdx; i < end; i++) {
-    DBManager::Verse verse = m_shownVerses.at(i);
+    Verse verse = m_shownVerses.at(i);
     QString fontName =
       m_fontPrefix + QString::number(verse.page).rightJustified(3, '0');
     QFrame* frame = new QFrame(ui->scrlBookmarks);
@@ -161,7 +171,7 @@ BookmarksDialog::loadSurahs()
   m_surahsModel.appendRow(item);
 
   std::set<int> surahs;
-  foreach (const DBManager::Verse& v, m_allBookmarked) {
+  foreach (const Verse& v, m_allBookmarked) {
     surahs.insert(v.surah);
   }
 
@@ -196,9 +206,7 @@ void
 BookmarksDialog::btnGoToVerse()
 {
   QStringList info = sender()->parent()->objectName().split('-');
-  DBManager::Verse verse{ info.at(0).toInt(),
-                          info.at(1).toInt(),
-                          info.at(2).toInt() };
+  Verse verse{ info.at(0).toInt(), info.at(1).toInt(), info.at(2).toInt() };
   emit navigateToVerse(verse);
 }
 
@@ -206,9 +214,7 @@ void
 BookmarksDialog::btnRemove()
 {
   QStringList info = sender()->parent()->objectName().split('-');
-  DBManager::Verse verse{ info.at(0).toInt(),
-                          info.at(1).toInt(),
-                          info.at(2).toInt() };
+  Verse verse{ info.at(0).toInt(), info.at(1).toInt(), info.at(2).toInt() };
 
   if (m_dbMgr->removeBookmark(verse)) {
     QFrame* frm = qobject_cast<QFrame*>(sender()->parent());

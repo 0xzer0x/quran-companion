@@ -1,10 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "../globals.h"
 #include "../utils/dbmanager.h"
 #include "../utils/notificationmanager.h"
 #include "../utils/verseplayer.h"
-#include "../widgets/clickablelabel.h"
+#include "../widgets/notificationpopup.h"
 #include "../widgets/quranpagebrowser.h"
 #include "../widgets/verseframe.h"
 #include "bookmarksdialog.h"
@@ -23,8 +24,6 @@
 #include <QShortcut>
 #include <QStringListModel>
 
-typedef DBManager::Verse Verse;
-
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -42,9 +41,10 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
 public:
-  MainWindow(QWidget* parent = nullptr, QSettings* settingsPtr = nullptr);
-  void highlightCurrentVerse();
+  MainWindow(QWidget* parent = nullptr);
   ~MainWindow();
+
+  void highlightCurrentVerse();
 
 public slots:
   void showVOTDmessage(QPair<Verse, QString> votd);
@@ -52,6 +52,10 @@ public slots:
   void updateProcessCallback();
   void saveReaderState();
   void restartApp();
+
+  // QWidget interface
+protected:
+  void resizeEvent(QResizeEvent* event);
 
 private slots:
   void nextPage();
@@ -103,6 +107,11 @@ private slots:
   void volumeSliderValueChanged(int position);
 
 private:
+  QSettings* const m_settings = g_settings;
+  const QList<Reciter>& m_recitersList = g_recitersList;
+  const QDir m_resources = g_themeResources;
+  const QString& m_updateToolPath = g_updateToolPath;
+  const bool m_darkMode = g_darkMode;
   void init();
   void loadIcons();
   void loadSettings();
@@ -120,17 +129,11 @@ private:
   bool m_internalSurahChange = false;
   bool m_internalVerseChange = false;
   bool m_internalJozzChange = false;
-  bool m_darkMode = false;
   qreal m_volume = 1;
   Ui::MainWindow* ui;
-  QString m_resourcePath;
-  QProcess* m_process;
-  QString m_updateToolPath;
-  QStringList m_surahList;
-  QStringListModel m_surahListModel;
-  QIntValidator* m_verseValidator = nullptr;
   QuranPageBrowser* m_quranBrowser;
   NotificationManager* m_notifyMgr;
+  NotificationPopup* m_popup = nullptr;
   DBManager* m_dbMgr;
   VersePlayer* m_player;
   TafsirDialog* m_tafsirDlg = nullptr;
@@ -140,11 +143,14 @@ private:
   DownloaderDialog* m_downloaderDlg = nullptr;
   DownloadManager* m_downManPtr = nullptr;
   HighlightFrame* m_highlightedFrm = nullptr;
-  QSettings* m_settingsPtr;
   Verse m_currVerse{ 1, 1, 1 };
+  QList<QFrame*> m_verseFrameList;
+  QList<Verse> m_vInfoList;
+  QProcess* m_process;
+  QIntValidator* m_verseValidator = nullptr;
+  QStringList m_surahList;
+  QStringListModel m_surahListModel;
   QDir m_assetsDir;
   QFont m_sideFont;
-  QList<Verse> m_vInfoList;
-  QList<QFrame*> m_verseFrameList;
 };
 #endif // MAINWINDOW_H

@@ -1,22 +1,12 @@
 #include "quranpagebrowser.h"
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent,
-                                   int qcfVersion,
-                                   int initPage,
-                                   DBManager* dbPtr,
-                                   QSettings* appSettings,
-                                   const QString& iconsPath)
+                                   DBManager* dbMgr,
+                                   int initPage)
   : QTextBrowser(parent)
-  , m_resourcePath{ iconsPath }
-  , m_dbMgr{ dbPtr }
-  , m_qcfVer{ qcfVersion }
-  , m_settingsPtr{ appSettings }
+  , m_dbMgr{ dbMgr }
   , m_highlighter{ new QTextCursor(document()) }
   , m_highlightColor{ QBrush(QColor(0, 161, 185)) }
-  , m_darkMode{ appSettings->value("Theme").toInt() == 1 }
-  , m_bsmlFont{ qcfVersion == 1 ? "QCF_BSML" : "QCF2BSML" }
-  , m_fontPrefix{ qcfVersion == 1 ? "QCF_P" : "QCF2" }
-
 {
 
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -53,7 +43,7 @@ void
 QuranPageBrowser::updateFontSize()
 {
   m_fontSize =
-    m_settingsPtr->value("Reader/QCF" + QString::number(m_qcfVer) + "Size", 22)
+    m_settings->value("Reader/QCF" + QString::number(m_qcfVer) + "Size", 22)
       .toInt();
 }
 
@@ -158,7 +148,7 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
   }
   this->document()->clear();
 
-  m_pageFont = m_fontPrefix;
+  m_pageFont = m_fontnamePrefix;
   m_pageFont.append(QString::number(m_page).rightJustified(3, '0'));
   QTextCursor textCursor(this->document());
 
@@ -166,12 +156,12 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
   m_currPageLines = m_dbMgr->getPageLines(m_page);
 
   // automatic font adjustment check
-  if (manualSz || !m_settingsPtr->value("Reader/AdaptiveFont").toBool())
+  if (manualSz || !m_settings->value("Reader/AdaptiveFont").toBool())
     m_fontSize = pageNo < 3 ? m_fontSize + 5 : m_fontSize;
   else {
     m_fontSize = this->bestFitFontSize();
-    m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
-                            m_fontSize);
+    m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
+                         m_fontSize);
   }
 
   m_pageLineSize = this->calcPageLineSize(m_currPageLines);
@@ -317,7 +307,7 @@ int
 QuranPageBrowser::bestFitFontSize()
 {
   int sz;
-  int margin = m_qcfVer == 1 ? 50 : 50;
+  int margin = 50;
   for (sz = 28; sz >= 12; sz--) {
     QFont pf(m_pageFont, sz);
     QFontMetrics fm(pf);
@@ -344,15 +334,16 @@ QuranPageBrowser::createActions()
   m_tafsirAct = new QAction(tr("Tafsir"), this);
   m_actAddBookmark = new QAction(tr("Add Bookmark"), this);
   m_actRemBookmark = new QAction(tr("Remove Bookmark"), this);
-  m_zoomIn->setIcon(QIcon(m_resourcePath + "/icons/zoom-in.png"));
-  m_zoomOut->setIcon(QIcon(m_resourcePath + "/icons/zoom-out.png"));
-  m_playAct->setIcon(QIcon(m_resourcePath + "/icons/play.png"));
-  m_selectAct->setIcon(QIcon(m_resourcePath + "/icons/select.png"));
-  m_tafsirAct->setIcon(QIcon(m_resourcePath + "/icons/tafsir.png"));
-  m_copyAct->setIcon(QIcon(m_resourcePath + "/icons/copy.png"));
+  m_zoomIn->setIcon(QIcon(m_resources.filePath("icons/zoom-in.png")));
+  m_zoomOut->setIcon(QIcon(m_resources.filePath("icons/zoom-out.png")));
+  m_playAct->setIcon(QIcon(m_resources.filePath("icons/play.png")));
+  m_selectAct->setIcon(QIcon(m_resources.filePath("icons/select.png")));
+  m_tafsirAct->setIcon(QIcon(m_resources.filePath("icons/tafsir.png")));
+  m_copyAct->setIcon(QIcon(m_resources.filePath("icons/copy.png")));
   m_actAddBookmark->setIcon(
-    QIcon(m_resourcePath + "/icons/bookmark-false.png"));
-  m_actRemBookmark->setIcon(QIcon(m_resourcePath + "/icons/bookmark-true.png"));
+    QIcon(m_resources.filePath("icons/bookmark-false.png")));
+  m_actRemBookmark->setIcon(
+    QIcon(m_resources.filePath("icons/bookmark-true.png")));
   connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
   connect(
     m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);
@@ -376,8 +367,8 @@ void
 QuranPageBrowser::actionZoomIn()
 {
   m_fontSize++;
-  m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
-                          m_fontSize);
+  m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
+                       m_fontSize);
   constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
 }
@@ -386,25 +377,10 @@ void
 QuranPageBrowser::actionZoomOut()
 {
   m_fontSize--;
-  m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
-                          m_fontSize);
+  m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
+                       m_fontSize);
   constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
-}
-
-void
-QuranPageBrowser::actionCopy()
-{
-  int posInDoc = cursorForPosition(m_mousePos).position();
-
-  int idxInPage;
-  for (idxInPage = 0; idxInPage < m_pageVerseCoords.size(); ++idxInPage) {
-    const int* const vCoord = m_pageVerseCoords.at(idxInPage);
-    if (vCoord[0] <= posInDoc && vCoord[1] >= posInDoc)
-      break;
-  }
-
-  emit copyVerse(idxInPage);
 }
 
 int

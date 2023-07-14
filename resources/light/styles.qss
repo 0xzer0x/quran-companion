@@ -206,3 +206,10 @@ QPushButton#btnToggleNav:checked {
   border: 1px solid #008296;
   background-color: palette(highlight);
 }
+
+/* --------------- Notification Popup Styles --------------- */
+
+QFrame#Popup {
+  background: #008296;
+  border-radius: 6px;
+}

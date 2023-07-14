@@ -1,15 +1,10 @@
 #include "downloadmanager.h"
 
-DownloadManager::DownloadManager(QObject* parent,
-                                 DBManager* dbptr,
-                                 QList<Reciter> reciters)
+DownloadManager::DownloadManager(QObject* parent, DBManager* dbptr)
   : QObject(parent)
-  , m_recitersList{ reciters }
   , m_netMan{ new QNetworkAccessManager(this) }
   , m_dbMgr{ dbptr }
 {
-  m_topLevelPath.setPath(QDir::currentPath() + QDir::separator() +
-                         "recitations");
   m_netMan->setTransferTimeout(3000);
   connect(m_netMan,
           &QNetworkAccessManager::finished,
@@ -75,7 +70,7 @@ DownloadManager::processQueueHead()
   qInfo() << "current download task - " << m_currentTask.link;
   m_currSurahCount = m_dbMgr->getSurahVerseCount(m_currentTask.surah);
 
-  m_downloadPath = m_topLevelPath;
+  m_downloadPath = g_recitationsDir;
   m_downloadPath.cd(m_recitersList.at(m_currentTask.reciterIdx).baseDirName);
 
   while (m_downloadPath.exists(m_currentTask.filename)) {
@@ -197,12 +192,6 @@ DownloadManager::handleConError(QNetworkReply::NetworkError err)
       qInfo() << m_currentTask.networkReply->errorString();
       emit downloadError(m_currentTask.reciterIdx, m_currentTask.surah);
   }
-}
-
-QList<Reciter>
-DownloadManager::recitersList() const
-{
-  return m_recitersList;
 }
 
 QNetworkAccessManager*

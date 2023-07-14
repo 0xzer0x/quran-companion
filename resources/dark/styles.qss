@@ -81,9 +81,11 @@ QScrollBar::handle:vertical {
   min-height: 10px;
   border-radius: 4px;
 }
+
 QScrollBar::handle:vertical:hover {
   background-color: #515151;
 }
+
 QScrollBar::handle:vertical:pressed {
   background-color: #515151;
 }
@@ -96,6 +98,7 @@ QScrollBar::sub-line:vertical {
   subcontrol-position: top;
   subcontrol-origin: margin;
 }
+
 /* BTN BOTTOM - SCROLLBAR */
 QScrollBar::add-line:vertical {
   border: none;
@@ -207,4 +210,11 @@ QPushButton#btnToggleNav:!checked:hover {
 QPushButton#btnToggleNav:checked {
   border: 1px solid #008296;
   background-color: palette(highlight);
+}
+
+/* --------------- Notification Popup Styles --------------- */
+
+QFrame#Popup {
+  background: rgb(23, 36, 36);
+  border-radius: 6px;
 }

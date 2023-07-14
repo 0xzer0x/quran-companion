@@ -1,6 +1,7 @@
 #ifndef DOWNLOADERDIALOG_H
 #define DOWNLOADERDIALOG_H
 
+#include "../globals.h"
 #include "../utils/dbmanager.h"
 #include "../utils/downloadmanager.h"
 #include "../widgets/downloadprogressbar.h"
@@ -8,11 +9,8 @@
 #include <QDialog>
 #include <QLabel>
 #include <QProgressBar>
-#include <QSettings>
 #include <QStandardItem>
 #include <QStandardItemModel>
-
-typedef DBManager::Reciter Reciter;
 
 namespace Ui {
 class DownloaderDialog;
@@ -30,12 +28,11 @@ class DownloaderDialog : public QDialog
 
 public:
   explicit DownloaderDialog(QWidget* parent = nullptr,
-                            QSettings* settingsptr = nullptr,
                             DownloadManager* downloader = nullptr,
-                            DBManager* dbMan = nullptr,
-                            const QString& iconsPath = ":/resources/light/");
-  void fillTreeView();
+                            DBManager* dbMan = nullptr);
   ~DownloaderDialog();
+
+  void fillTreeView();
 
 public slots:
   void addToQueue();
@@ -53,20 +50,21 @@ protected:
   void closeEvent(QCloseEvent* event);
 
 private:
+  const int m_languageCode = g_language;
+  const QList<Reciter>& m_recitersList = g_recitersList;
+  const QDir& m_resources = g_themeResources;
   void setupConnections();
   void addToDownloading(int reciter, int surah);
   void removeFromDownloading(int reciter, int surah);
   Ui::DownloaderDialog* ui;
-  QString m_resourcePath;
   DownloadProgressBar* m_currentBar;
+  DownloadManager* m_downloaderPtr;
+  DBManager* m_dbMgr;
   QLabel* m_currentLb;
   QLabel* m_currDownSpeedLb;
   QList<QFrame*> m_frameLst;
   QList<QFrame*> m_finishedFrames;
   QStandardItemModel m_treeModel;
-  DownloadManager* m_downloaderPtr;
-  DBManager* m_dbMgr;
-  QSettings* m_appSettings;
   QStringList m_surahDisplayNames;
   QMap<int, QSet<int>> m_downloadingTasks;
 };
