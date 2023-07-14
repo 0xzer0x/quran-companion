@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>resources/about.html</file>
         <file>resources/basmalah.png</file>
         <file>resources/dark/icons/arrow-down.svg</file>
         <file>resources/dark/icons/bookmark-false.png</file>

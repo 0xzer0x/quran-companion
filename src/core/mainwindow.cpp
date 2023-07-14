@@ -1105,18 +1105,22 @@ MainWindow::actionVotdTriggered()
 void
 MainWindow::actionAboutTriggered()
 {
-  QString about =
-    "<h2>" + tr("Quran Companion v") + qApp->applicationVersion() +
-    +"</h2><p><a href='https://github.com/0xzer0x/quran-companion'>" +
-    tr("Quran Companion") + "</a>" +
-    tr(" is a free cross-platform Quran reader & player.") + "</p><p>" +
-    tr("Licensed under the ") +
-    "<a href='https://ojuba.org/"
-    "waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%"
-    "B9%D8%A7%D9%85%D8%A9'>" +
-    tr("'Waqf' General Public License") + "</a>.</p>";
+  QFile about(":/resources/about.html");
+  QString text;
+  if (about.open(QIODevice::ReadOnly))
+    text = about.readAll();
+  about.close();
 
-  QMessageBox::about(this, tr("About Quran Companion"), about);
+  text = text.arg(tr("Quran Companion v"))
+           .arg(QApplication::applicationVersion())
+           .arg(tr("Quran Companion"))
+           .arg(tr(" is a free cross-platform Quran reader & player."))
+           .arg(tr("Licensed under the "))
+           .arg(tr("'Waqf' General Public License"))
+           .arg(tr("Recitations"))
+           .arg(tr("Tafsir/Translations"));
+
+  QMessageBox::about(this, tr("About Quran Companion"), text);
 }
 
 void

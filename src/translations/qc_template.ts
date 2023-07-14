@@ -539,6 +539,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.cpp" line="1120"/>
+        <source>Recitations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="1121"/>
+        <source>Tafsir/Translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.cpp" line="1332"/>
         <source>Now playing: </source>
         <translation type="unfinished"></translation>
