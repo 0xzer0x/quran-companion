@@ -126,16 +126,17 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 
 ### Keyboard Shortcuts
 
-| Key                            | Description                     |
-| ------------------------------ | ------------------------------- |
-| <kbd>&#8592;</kbd>             | Next page                       |
-| <kbd>&#8594;</kbd>             | Previous page                   |
-| <kbd>Space</kbd>               | start/pause recitation playback |
-| <kbd>Ctrl</kbd> + <kbd>B</kbd> | Open Bookmarks dialog           |
-| <kbd>Ctrl</kbd> + <kbd>F</kbd> | Open Search dialog              |
-| <kbd>Ctrl</kbd> + <kbd>P</kbd> | Open Preferences dialog         |
-| <kbd>Ctrl</kbd> + <kbd>D</kbd> | Open the download manager       |
-| <kbd>Ctrl</kbd> + <kbd>Q</kbd> | Exit                            |
+| Key                                               | Description                     |
+| ------------------------------------------------- | ------------------------------- |
+| <kbd>&#8592;</kbd>                                | Next page                       |
+| <kbd>&#8594;</kbd>                                | Previous page                   |
+| <kbd>Space</kbd>                                  | start/pause recitation playback |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Bookmark current verse          |
+| <kbd>Ctrl</kbd> + <kbd>B</kbd>                    | Open Bookmarks dialog           |
+| <kbd>Ctrl</kbd> + <kbd>F</kbd>                    | Open Search dialog              |
+| <kbd>Ctrl</kbd> + <kbd>P</kbd>                    | Open Preferences dialog         |
+| <kbd>Ctrl</kbd> + <kbd>D</kbd>                    | Open the download manager       |
+| <kbd>Ctrl</kbd> + <kbd>Q</kbd>                    | Exit                            |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
