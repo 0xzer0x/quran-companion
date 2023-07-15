@@ -36,6 +36,8 @@ public:
 
   explicit DownloadManager(QObject* parent = nullptr,
                            DBManager* dbptr = nullptr);
+
+  void getLatestVersion();
   bool isDownloading() const;
   DownloadTask currentTask() const;
   QNetworkAccessManager* netMan() const;
@@ -51,6 +53,7 @@ public slots:
   bool saveFile(QNetworkReply* data);
 
 signals:
+  void latestVersionFound(QString appVer);
   void downloadStarted();
   void downloadProgressed(int downloaded, int total);
   void downloadSpeedUpdated(int valuePerSec, QString unit);
@@ -65,8 +68,10 @@ private:
                    const int surah,
                    const int verse) const;
   void handleConError(QNetworkReply::NetworkError err);
+  void handleVersionReply();
   bool m_isDownloading = false;
   int m_currSurahCount;
+  QNetworkReply* m_versionReply;
   QNetworkAccessManager* m_netMan;
   DBManager* m_dbMgr;
   DownloadTask m_currentTask;

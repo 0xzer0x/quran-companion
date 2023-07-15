@@ -65,15 +65,27 @@ NotificationPopup::notify(QString message, NotificationPopup::Action icon)
 void
 NotificationPopup::completedDownload(int reciterIdx, int surah)
 {
+  setStyleSheet("");
   QString msg = tr("Download Completed") + ": " +
                 m_recitersList.at(reciterIdx).displayName + " - " +
                 tr("Surah") + " " + m_dbMgr->surahNameList().at(surah - 1);
-  this->notify(msg, downloads);
+  this->notify(msg, success);
+}
+
+void
+NotificationPopup::downloadError(int reciterIdx, int surah)
+{
+  setStyleSheet("QFrame#Popup { background-color: #a50500 }");
+  QString msg = tr("Download Failed") + ": " +
+                m_recitersList.at(reciterIdx).displayName + " - " +
+                tr("Surah") + " " + m_dbMgr->surahNameList().at(surah - 1);
+  this->notify(msg, fail);
 }
 
 void
 NotificationPopup::bookmarkAdded()
 {
+  setStyleSheet("");
   QString msg = tr("Verse added to bookmarks");
   this->notify(msg, bookmarkAdd);
 }
@@ -81,6 +93,7 @@ NotificationPopup::bookmarkAdded()
 void
 NotificationPopup::bookmarkRemoved()
 {
+  setStyleSheet("");
   QString msg = tr("Verse removed from bookmarks");
   this->notify(msg, bookmarkRemove);
 }
@@ -88,8 +101,25 @@ NotificationPopup::bookmarkRemoved()
 void
 NotificationPopup::copiedToClipboard()
 {
+  setStyleSheet("");
   QString msg = tr("Verse text copied to clipboard");
   this->notify(msg, copiedText);
+}
+
+void
+NotificationPopup::checkUpdate(QString appVer)
+{
+  if (appVer.isEmpty())
+    return;
+
+  QString msg;
+  if (qApp->applicationVersion() == appVer) {
+    msg = tr("You are running the latest version");
+    this->notify(msg, success);
+  } else {
+    msg = tr("New update available") + ": " + appVer;
+    this->notify(msg, updateInfo);
+  }
 }
 
 void
@@ -119,8 +149,11 @@ NotificationPopup::setNotificationIcon(Action icon)
     case NotificationPopup::info:
       image = qApp->style()->standardPixmap(QStyle::SP_MessageBoxInformation);
       break;
-    case NotificationPopup::downloads:
-      image = QPixmap(m_resources.filePath("icons/download-manager.png"));
+    case NotificationPopup::success:
+      image = QPixmap(m_resources.filePath("icons/success.png"));
+      break;
+    case NotificationPopup::fail:
+      image = QPixmap(m_resources.filePath("icons/exit.png"));
       break;
     case NotificationPopup::bookmarkAdd:
       image = QPixmap(m_resources.filePath("icons/bookmark-true.png"));
@@ -130,6 +163,9 @@ NotificationPopup::setNotificationIcon(Action icon)
       break;
     case NotificationPopup::copiedText:
       image = QPixmap(m_resources.filePath("icons/copy.png"));
+      break;
+    case NotificationPopup::updateInfo:
+      image = QPixmap(m_resources.filePath("icons/update.png"));
       break;
   }
 

@@ -14,6 +14,22 @@ DownloadManager::DownloadManager(QObject* parent, DBManager* dbptr)
 }
 
 void
+DownloadManager::getLatestVersion()
+{
+  QNetworkAccessManager* updater = new QNetworkAccessManager(this);
+  QNetworkRequest req(QUrl::fromEncoded(
+    "https://raw.githubusercontent.com/0xzer0x/quran-companion/main/VERSION"));
+  req.setTransferTimeout(1500);
+  m_versionReply = updater->get(req);
+  m_versionReply->ignoreSslErrors();
+
+  connect(m_versionReply,
+          &QNetworkReply::finished,
+          this,
+          &DownloadManager::handleVersionReply);
+}
+
+void
 DownloadManager::startQueue()
 {
   if (!m_isDownloading) {
@@ -192,6 +208,15 @@ DownloadManager::handleConError(QNetworkReply::NetworkError err)
       qInfo() << m_currentTask.networkReply->errorString();
       emit downloadError(m_currentTask.reciterIdx, m_currentTask.surah);
   }
+}
+
+void
+DownloadManager::handleVersionReply()
+{
+  int status =
+    m_versionReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+  if (status != 404)
+    emit latestVersionFound(m_versionReply->readAll().trimmed());
 }
 
 QNetworkAccessManager*

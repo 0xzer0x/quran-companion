@@ -20,10 +20,12 @@ public:
   enum Action
   {
     info,
-    downloads,
+    success,
+    fail,
     bookmarkAdd,
     bookmarkRemove,
-    copiedText
+    copiedText,
+    updateInfo
   };
   explicit NotificationPopup(QWidget* parent = nullptr,
                              DBManager* dbMgr = nullptr);
@@ -35,9 +37,11 @@ public:
 public slots:
   void dockLocationChanged(Qt::DockWidgetArea dockPos);
   void completedDownload(int reciterIdx, int surah);
+  void downloadError(int reciterIdx, int surah);
   void bookmarkAdded();
   void bookmarkRemoved();
   void copiedToClipboard();
+  void checkUpdate(QString appVer);
 
 private:
   const QDir& m_resources = g_themeResources;

@@ -16,6 +16,7 @@
         <file>resources/dark/icons/search.png</file>
         <file>resources/dark/icons/select.png</file>
         <file>resources/dark/icons/stop.png</file>
+        <file>resources/dark/icons/success.png</file>
         <file>resources/dark/icons/tafsir.png</file>
         <file>resources/dark/icons/today.png</file>
         <file>resources/dark/icons/update.png</file>
@@ -37,6 +38,7 @@
         <file>resources/light/icons/search.png</file>
         <file>resources/light/icons/select.png</file>
         <file>resources/light/icons/stop.png</file>
+        <file>resources/light/icons/success.png</file>
         <file>resources/light/icons/tafsir.png</file>
         <file>resources/light/icons/today.png</file>
         <file>resources/light/icons/update.png</file>

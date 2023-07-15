@@ -45,6 +45,9 @@ public slots:
   void selectTask(int reciter, int surah);
   void clearQueue();
 
+private slots:
+  void btnStopClicked();
+
   // QWidget interface
 protected:
   void closeEvent(QCloseEvent* event);

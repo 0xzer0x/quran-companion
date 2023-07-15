@@ -45,10 +45,11 @@ DownloaderDialog::setupConnections()
           &DownloaderDialog::addToQueue,
           Qt::UniqueConnection);
 
-  connect(ui->btnStopQueue, &QPushButton::clicked, m_downloaderPtr, [this]() {
-    m_downloadingTasks.clear();
-    m_downloaderPtr->stopQueue();
-  });
+  connect(ui->btnStopQueue,
+          &QPushButton::clicked,
+          this,
+          &DownloaderDialog::btnStopClicked,
+          Qt::UniqueConnection);
 
   connect(ui->btnClearQueue,
           &QPushButton::clicked,
@@ -250,6 +251,13 @@ DownloaderDialog::clearQueue()
     qDeleteAll(m_finishedFrames);
     m_finishedFrames.clear();
   }
+}
+
+void
+DownloaderDialog::btnStopClicked()
+{
+  m_downloadingTasks.clear();
+  m_downloaderPtr->stopQueue();
 }
 
 /*!

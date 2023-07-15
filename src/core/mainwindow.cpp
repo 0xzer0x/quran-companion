@@ -80,11 +80,12 @@ MainWindow::init()
 {
   // initalization
   m_dbMgr = new DBManager(this);
-  m_player = new VersePlayer(
-    this, m_dbMgr, m_currVerse, m_settings->value("Reciter", 0).toInt());
   m_quranBrowser =
     new QuranPageBrowser(ui->frmPageContent, m_dbMgr, m_currVerse.page);
+  m_player = new VersePlayer(
+    this, m_dbMgr, m_currVerse, m_settings->value("Reciter", 0).toInt());
   m_popup = new NotificationPopup(this, m_dbMgr);
+  m_downManPtr = new DownloadManager(this, m_dbMgr);
 
   ui->frmPageContent->layout()->addWidget(m_quranBrowser);
 
@@ -290,11 +291,6 @@ MainWindow::setupConnections()
           this,
           &MainWindow::listSurahNameClicked,
           Qt::UniqueConnection);
-  connect(ui->sideDock,
-          &QDockWidget::dockLocationChanged,
-          m_popup,
-          &NotificationPopup::dockLocationChanged,
-          Qt::UniqueConnection);
 
   // ########## audio slider ########## //
   connect(m_player,
@@ -387,6 +383,28 @@ MainWindow::setupConnections()
           this,
           &MainWindow::actionPrefTriggered,
           Qt::UniqueConnection);
+
+  // ########## Notification Popup ########## //
+  connect(ui->sideDock,
+          &QDockWidget::dockLocationChanged,
+          m_popup,
+          &NotificationPopup::dockLocationChanged,
+          Qt::UniqueConnection);
+  connect(m_downManPtr,
+          &DownloadManager::downloadComplete,
+          m_popup,
+          &NotificationPopup::completedDownload,
+          Qt::UniqueConnection);
+  connect(m_downManPtr,
+          &DownloadManager::downloadError,
+          m_popup,
+          &NotificationPopup::downloadError,
+          Qt::UniqueConnection);
+  connect(m_downManPtr,
+          &DownloadManager::latestVersionFound,
+          m_popup,
+          &NotificationPopup::checkUpdate,
+          Qt::UniqueConnection);
 }
 
 /* ------------------------ Help menu actions ------------------------ */
@@ -399,7 +417,7 @@ MainWindow::checkForUpdates()
     m_process->setWorkingDirectory(QApplication::applicationDirPath());
     m_process->start(m_updateToolPath, QStringList("ch"));
   } else {
-    QMessageBox::warning(this, tr("Error"), tr("Update tool is unavailable."));
+    m_downManPtr->getLatestVersion();
   }
 }
 
@@ -1059,18 +1077,8 @@ MainWindow::actionPrefTriggered()
 void
 MainWindow::actionDMTriggered()
 {
-  if (m_downloaderDlg == nullptr) {
-    if (m_downManPtr == nullptr) {
-      m_downManPtr = new DownloadManager(this, m_dbMgr);
-      connect(m_downManPtr,
-              &DownloadManager::downloadComplete,
-              m_popup,
-              &NotificationPopup::completedDownload,
-              Qt::UniqueConnection);
-    }
-
+  if (m_downloaderDlg == nullptr)
     m_downloaderDlg = new DownloaderDialog(this, m_downManPtr, m_dbMgr);
-  }
 
   m_downloaderDlg->show();
 }
