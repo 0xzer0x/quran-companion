@@ -467,6 +467,6 @@ setGlobals()
   g_updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
                      "QCMaintenanceTool";
 #ifdef Q_OS_WIN
-  m_updateToolPath.append(".exe");
+  g_updateToolPath.append(".exe");
 #endif
 }
