@@ -9,6 +9,7 @@
 #include <QDialog>
 #include <QLabel>
 #include <QProgressBar>
+#include <QShortcut>
 #include <QStandardItem>
 #include <QStandardItemModel>
 

@@ -8,6 +8,7 @@
 #include <QDialog>
 #include <QScrollBar>
 #include <QSettings>
+#include <QShortcut>
 #include <QSpinBox>
 #include <QStandardItem>
 #include <QStandardItemModel>

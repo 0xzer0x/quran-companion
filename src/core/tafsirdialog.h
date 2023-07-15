@@ -5,6 +5,7 @@
 #include "../utils/dbmanager.h"
 #include <QDialog>
 #include <QSettings>
+#include <QShortcut>
 
 namespace Ui {
 class TafsirDialog;

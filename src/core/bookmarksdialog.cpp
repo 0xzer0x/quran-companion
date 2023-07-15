@@ -23,6 +23,8 @@ BookmarksDialog::BookmarksDialog(QWidget* parent, DBManager* dbMgr)
 void
 BookmarksDialog::setupConnections()
 {
+  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
+  connect(ctrlQ, &QShortcut::activated, this, &BookmarksDialog::close);
   connect(ui->listViewBookmarkedSurahs,
           &QListView::clicked,
           this,
@@ -222,6 +224,14 @@ BookmarksDialog::btnRemove()
     if (idx != -1)
       m_frames.remove(idx);
     delete frm;
+
+    if (m_frames.isEmpty()) {
+      loadBookmarks();
+      loadSurahs();
+      ui->listViewBookmarkedSurahs->selectionModel()->select(
+        m_surahsModel.index(0, 0),
+        QItemSelectionModel::SelectionFlag::Rows | QItemSelectionModel::Select);
+    }
   }
 }
 

@@ -77,6 +77,7 @@ private slots:
   void mediaPosChanged(qint64 position);
   void mediaStateChanged(QMediaPlayer::PlaybackState state);
 
+  void addCurrentToBookmarks();
   void spaceKeyPressed();
   void actionPrefTriggered();
   void actionDMTriggered();

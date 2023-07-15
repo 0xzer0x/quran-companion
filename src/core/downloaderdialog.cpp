@@ -39,6 +39,8 @@ DownloaderDialog::DownloaderDialog(QWidget* parent,
 void
 DownloaderDialog::setupConnections()
 {
+  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
+  connect(ctrlQ, &QShortcut::activated, this, &DownloaderDialog::close);
   connect(ui->btnAddToQueue,
           &QPushButton::clicked,
           this,

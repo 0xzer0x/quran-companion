@@ -176,9 +176,23 @@ void
 MainWindow::setupConnections()
 {
   QShortcut* spaceKey = new QShortcut(Qt::Key_Space, this);
+  QShortcut* ctrlShiftB = new QShortcut(QKeySequence("Ctrl+Shift+B"), this);
   spaceKey->setContext(Qt::ApplicationShortcut);
+  ctrlShiftB->setContext(Qt::ApplicationShortcut);
 
   /* ------------------ UI connectors ------------------ */
+
+  // ########## Shortcuts ########## //
+  connect(spaceKey,
+          &QShortcut::activated,
+          this,
+          &MainWindow::spaceKeyPressed,
+          Qt::UniqueConnection);
+  connect(ctrlShiftB,
+          &QShortcut::activated,
+          this,
+          &MainWindow::addCurrentToBookmarks,
+          Qt::UniqueConnection);
 
   // ########## Menubar ########## //
   connect(ui->actionExit, &QAction::triggered, this, &QApplication::exit);
@@ -334,11 +348,6 @@ MainWindow::setupConnections()
           &QComboBox::currentIndexChanged,
           m_player,
           &VersePlayer::changeReciter,
-          Qt::UniqueConnection);
-  connect(spaceKey,
-          &QShortcut::activated,
-          this,
-          &MainWindow::spaceKeyPressed,
           Qt::UniqueConnection);
 
   // ########## system tray ########## //
@@ -817,6 +826,15 @@ MainWindow::mediaStateChanged(QMediaPlayer::PlaybackState state)
     ui->btnPlay->setEnabled(true);
     ui->btnPause->setEnabled(false);
     ui->btnStop->setEnabled(false);
+  }
+}
+
+void
+MainWindow::addCurrentToBookmarks()
+{
+  if (!m_dbMgr->isBookmarked(m_currVerse)) {
+    m_dbMgr->addBookmark(m_currVerse);
+    m_popup->bookmarkAdded();
   }
 }
 

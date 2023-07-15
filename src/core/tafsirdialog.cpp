@@ -59,6 +59,8 @@ TafsirDialog::btnPrevClicked()
 void
 TafsirDialog::setupConnections()
 {
+  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
+  connect(ctrlQ, &QShortcut::activated, this, &TafsirDialog::close);
   connect(ui->btnNext,
           &QPushButton::clicked,
           this,

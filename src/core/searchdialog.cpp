@@ -30,6 +30,8 @@ SearchDialog::SearchDialog(QWidget* parent, DBManager* dbPtr)
 void
 SearchDialog::setupConnections()
 {
+  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
+  connect(ctrlQ, &QShortcut::activated, this, &SearchDialog::close);
   connect(ui->btnSrch,
           &QPushButton::clicked,
           this,
