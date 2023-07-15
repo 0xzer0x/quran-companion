@@ -177,7 +177,7 @@ DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
   prgFrm->setObjectName(objName);
 
   QBoxLayout* downInfo;
-  if (m_languageCode == 14)
+  if (m_languageCode == QLocale::Arabic)
     downInfo = new QBoxLayout(QBoxLayout::RightToLeft, prgFrm);
   else
     downInfo = new QHBoxLayout(prgFrm);

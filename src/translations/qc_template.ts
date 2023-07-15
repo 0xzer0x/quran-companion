@@ -745,6 +745,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../widgets/notificationpopup.cpp" line="79"/>
+        <source>Download Failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../widgets/notificationpopup.cpp" line="77"/>
         <source>Verse added to bookmarks</source>
         <translation type="unfinished"></translation>
@@ -757,6 +762,16 @@
     <message>
         <location filename="../widgets/notificationpopup.cpp" line="91"/>
         <source>Verse text copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/notificationpopup.cpp" line="117"/>
+        <source>You are running the latest version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/notificationpopup.cpp" line="120"/>
+        <source>Update available</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

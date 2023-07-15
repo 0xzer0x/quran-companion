@@ -745,6 +745,11 @@
         <translation>سورة</translation>
     </message>
     <message>
+        <location filename="../widgets/notificationpopup.cpp" line="79"/>
+        <source>Download Failed</source>
+        <translation>فشل التحميل</translation>
+    </message>
+    <message>
         <location filename="../widgets/notificationpopup.cpp" line="77"/>
         <source>Verse added to bookmarks</source>
         <translation>تم إضافة علامة</translation>
@@ -758,6 +763,16 @@
         <location filename="../widgets/notificationpopup.cpp" line="91"/>
         <source>Verse text copied to clipboard</source>
         <translation>تم نسخ نص الآية</translation>
+    </message>
+    <message>
+        <location filename="../widgets/notificationpopup.cpp" line="117"/>
+        <source>You are running the latest version</source>
+        <translation>لديك أحدث إصدار</translation>
+    </message>
+    <message>
+        <location filename="../widgets/notificationpopup.cpp" line="120"/>
+        <source>Update available</source>
+        <translation>تحديث متاح</translation>
     </message>
 </context>
 <context>

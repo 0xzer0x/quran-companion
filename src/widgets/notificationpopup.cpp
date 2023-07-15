@@ -117,7 +117,7 @@ NotificationPopup::checkUpdate(QString appVer)
     msg = tr("You are running the latest version");
     this->notify(msg, success);
   } else {
-    msg = tr("New update available") + ": " + appVer;
+    msg = tr("Update available") + ": " + appVer;
     this->notify(msg, updateInfo);
   }
 }
