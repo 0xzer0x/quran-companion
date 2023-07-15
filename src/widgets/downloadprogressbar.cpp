@@ -3,6 +3,9 @@
 DownloadProgressBar::DownloadProgressBar(QWidget* parent, int max)
   : QProgressBar(parent)
 {
+  m_defStylesheet =
+    "QProgressBar {text-align: center; "
+    "color:palette(text); border-radius: 3px; border: 1px solid #424242; }";
   setStyling(downloading);
   setFormat("%v / %m");
   setMaximum(max);

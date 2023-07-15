@@ -6,11 +6,11 @@
   <summary>Cross-platform desktop offline Quran reader &amp; player</summary>
   
   <metadata_license>MIT</metadata_license>
-  <project_license>LGPL-3.0-or-later</project_license>
+  <project_license>LicenseRef=https://raw.githubusercontent.com/0xzer0x/quran-companion/main/license-en.txt</project_license>
   
   <description>
     <p>
-      Quran Companion is a cross-platform Quran reader/listener with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books &amp; translations
+      Quran Companion is a cross-platform Quran reader &amp; listener with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books &amp; translations
     </p>
   </description>
   
@@ -29,6 +29,19 @@
   <url type="homepage">https://github.com/0xzer0x/quran-companion</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.1.6" date="2023-07-15">
+      <description>
+        <p>
+          <ul>
+            <li>Recitation downloading bugs fixed</li>
+            <li>On-screen notifications for download status &amp; other actions</li>
+            <li>Updated Quran page header font</li>
+            <li>Bookmark the current verse through Ctrl+Shift+B</li>
+            <li>Platform-independent Update checking</li>
+          </ul>
+        </p>
+      </description>
+    </release>
     <release version="1.1.5" date="2023-06-25">
     </release>
   </releases>

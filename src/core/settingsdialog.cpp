@@ -8,24 +8,73 @@
  * @param settingsPtr pointer to application settings
  * @param vPlayerPtr pointer to The VersePlayer object
  */
-SettingsDialog::SettingsDialog(QWidget* parent,
-                               QSettings* settingsPtr,
-                               VersePlayer* vPlayerPtr,
-                               const QString& iconsPath)
+SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   : QDialog(parent)
   , ui(new Ui::SettingsDialog)
-  , m_resourcePath{ iconsPath }
-  , m_settingsPtr{ settingsPtr }
   , m_vPlayerPtr{ vPlayerPtr }
 {
   ui->setupUi(this);
   ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 100));
   ui->cmbSideFontSz->setValidator(new QIntValidator(10, 100));
-  setWindowIcon(QIcon(m_resourcePath + "/icons/prefs.png"));
+  setWindowIcon(QIcon(m_resources.filePath("icons/prefs.png")));
   fillLanguageCombobox();
 
   setCurrentSettingsAsRef();
-  ui->cmbLang->setCurrentIndex(ui->cmbLang->findData(m_lang));
+  // connectors
+  setupConnections();
+}
+
+void
+SettingsDialog::setupConnections()
+{
+  connect(ui->buttonBox,
+          &QDialogButtonBox::clicked,
+          this,
+          &SettingsDialog::btnBoxAction);
+}
+
+void
+SettingsDialog::fillLanguageCombobox()
+{
+  ui->cmbLang->addItem("English", QLocale::English);
+  ui->cmbLang->addItem("العربية", QLocale::Arabic);
+}
+
+/*!
+ * \brief SettingsDialog::setCurrentSettingsAsRef slot to update the settings
+ * displayed to match the values in the settings file
+ */
+void
+SettingsDialog::setCurrentSettingsAsRef()
+{
+  m_themeIdx = m_settings->value("Theme").toInt();
+  m_languageCode =
+    qvariant_cast<QLocale::Language>(m_settings->value("Language"));
+  m_votd = m_settings->value("VOTD").toBool();
+  m_missingFileWarning = m_settings->value("MissingFileWarning").toBool();
+
+  m_settings->beginGroup("Reader");
+  // all keys have prefix "Reader"
+  m_qcfVer = m_settings->value("QCF").toInt();
+  m_adaptive = m_settings->value("AdaptiveFont").toBool();
+  m_quranFontSize =
+    m_settings->value("QCF" + QString::number(m_qcfVer) + "Size").toInt();
+  m_sideFont = qvariant_cast<QFont>(m_settings->value("SideContentFont"));
+  m_tafsir = m_settings->value("Tafsir").toInt();
+  m_trans = m_settings->value("Translation").toInt();
+  m_settings->endGroup();
+
+  m_audioDevices = QMediaDevices::audioOutputs();
+  ui->cmbAudioDevices->clear();
+  for (int i = 0; i < m_audioDevices.length(); i++) {
+    ui->cmbAudioDevices->addItem(m_audioDevices.at(i).description());
+    if (m_audioDevices.at(i) == m_vPlayerPtr->getOutput()->device())
+      m_audioOutIdx = i;
+  }
+
+  // set ui elements to current settings
+  ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
+  ui->cmbLang->setCurrentIndex(ui->cmbLang->findData(m_languageCode));
   ui->cmbTheme->setCurrentIndex(m_themeIdx);
   ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
   ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
@@ -34,18 +83,9 @@ SettingsDialog::SettingsDialog(QWidget* parent,
   ui->cmbTafsir->setCurrentIndex(m_tafsir);
   ui->cmbTranslation->setCurrentIndex(m_trans);
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
-  setRadios();
-
-  // connectors
-  setupConnections();
-}
-
-void
-SettingsDialog::setRadios()
-{
   ui->chkDailyVerse->setChecked(m_votd);
-  ui->chkMissingWarning->setChecked(m_missingFileWarning);
   ui->chkAdaptive->setChecked(m_adaptive);
+  ui->chkMissingWarning->setChecked(m_missingFileWarning);
 }
 
 /*!
@@ -57,7 +97,7 @@ SettingsDialog::setRadios()
 void
 SettingsDialog::updateTheme(int themeIdx)
 {
-  m_settingsPtr->setValue("Theme", themeIdx);
+  m_settings->setValue("Theme", themeIdx);
   if (m_restartReq)
     return;
 
@@ -79,7 +119,7 @@ SettingsDialog::updateTheme(int themeIdx)
 void
 SettingsDialog::updateLang(QLocale::Language lang)
 {
-  m_settingsPtr->setValue("Language", lang);
+  m_settings->setValue("Language", lang);
   if (m_restartReq)
     return;
 
@@ -96,13 +136,13 @@ SettingsDialog::updateLang(QLocale::Language lang)
 void
 SettingsDialog::updateDailyVerse(bool on)
 {
-  m_settingsPtr->setValue("VOTD", on);
+  m_settings->setValue("VOTD", on);
 }
 
 void
 SettingsDialog::updateFileWarning(bool on)
 {
-  m_settingsPtr->setValue("MissingFileWarning", on);
+  m_settings->setValue("MissingFileWarning", on);
 }
 
 /*!
@@ -113,7 +153,7 @@ SettingsDialog::updateFileWarning(bool on)
 void
 SettingsDialog::updateTafsir(int idx)
 {
-  m_settingsPtr->setValue("Reader/Tafsir", idx);
+  m_settings->setValue("Reader/Tafsir", idx);
   emit tafsirChanged();
 }
 
@@ -126,7 +166,7 @@ SettingsDialog::updateTafsir(int idx)
 void
 SettingsDialog::updateTranslation(int idx)
 {
-  m_settingsPtr->setValue("Reader/Translation", idx);
+  m_settings->setValue("Reader/Translation", idx);
   emit translationChanged();
 
   m_renderSideContent = true;
@@ -135,7 +175,7 @@ SettingsDialog::updateTranslation(int idx)
 void
 SettingsDialog::updateQuranFont(int qcfV)
 {
-  m_settingsPtr->setValue("Reader/QCF", qcfV);
+  m_settings->setValue("Reader/QCF", qcfV);
   if (m_restartReq)
     return;
 
@@ -152,7 +192,7 @@ SettingsDialog::updateQuranFont(int qcfV)
 void
 SettingsDialog::updateAdaptiveFont(bool on)
 {
-  m_settingsPtr->setValue("Reader/AdaptiveFont", on);
+  m_settings->setValue("Reader/AdaptiveFont", on);
 }
 
 /*!
@@ -164,8 +204,7 @@ SettingsDialog::updateAdaptiveFont(bool on)
 void
 SettingsDialog::updateQuranFontSize(QString size)
 {
-  m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
-                          size);
+  m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size", size);
   emit quranFontChanged();
   m_renderQuranPage = true;
 }
@@ -182,7 +221,7 @@ SettingsDialog::updateSideFont(QFont fnt)
   fnt.setPointSize(m_sideFont.pointSize());
   m_sideFont = fnt;
 
-  m_settingsPtr->setValue("Reader/SideContentFont", m_sideFont);
+  m_settings->setValue("Reader/SideContentFont", m_sideFont);
   emit sideFontChanged();
   m_renderSideContent = true;
 }
@@ -197,7 +236,7 @@ void
 SettingsDialog::updateSideFontSize(QString size)
 {
   m_sideFont.setPointSize(size.toInt());
-  m_settingsPtr->setValue("Reader/SideContentFont", m_sideFont);
+  m_settings->setValue("Reader/SideContentFont", m_sideFont);
   emit sideFontChanged();
   m_renderSideContent = true;
 }
@@ -209,10 +248,9 @@ SettingsDialog::updateSideFontSize(QString size)
 void
 SettingsDialog::applyAllChanges()
 {
-
   QLocale::Language chosenLang =
     qvariant_cast<QLocale::Language>(ui->cmbLang->currentData());
-  if (chosenLang != m_lang) {
+  if (chosenLang != m_languageCode) {
     updateLang(chosenLang);
   }
 
@@ -272,74 +310,6 @@ SettingsDialog::applyAllChanges()
   setCurrentSettingsAsRef();
 }
 
-void
-SettingsDialog::showWindow()
-{
-  setCurrentSettingsAsRef();
-  ui->cmbLang->setCurrentIndex(ui->cmbLang->findData(m_lang));
-  ui->cmbTheme->setCurrentIndex(m_themeIdx);
-  ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
-  ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
-  ui->fntCmbSide->setCurrentFont(m_sideFont);
-  ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
-  ui->cmbTafsir->setCurrentIndex(m_tafsir);
-  ui->cmbTranslation->setCurrentIndex(m_trans);
-  ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
-  setRadios();
-
-  this->show();
-}
-
-void
-SettingsDialog::setupConnections()
-{
-  connect(ui->buttonBox,
-          &QDialogButtonBox::clicked,
-          this,
-          &SettingsDialog::btnBoxAction);
-}
-
-void
-SettingsDialog::fillLanguageCombobox()
-{
-  ui->cmbLang->addItem("English", QLocale::English);
-  ui->cmbLang->addItem("العربية", QLocale::Arabic);
-}
-
-/*!
- * \brief SettingsDialog::setCurrentSettingsAsRef slot to update the settings
- * displayed to match the values in the settings file
- */
-void
-SettingsDialog::setCurrentSettingsAsRef()
-{
-  m_themeIdx = m_settingsPtr->value("Theme").toInt();
-  m_lang = qvariant_cast<QLocale::Language>(m_settingsPtr->value("Language"));
-  m_votd = m_settingsPtr->value("VOTD").toBool();
-  m_missingFileWarning = m_settingsPtr->value("MissingFileWarning").toBool();
-
-  m_settingsPtr->beginGroup("Reader");
-  // all keys have prefix "Reader"
-  m_qcfVer = m_settingsPtr->value("QCF").toInt();
-  m_adaptive = m_settingsPtr->value("AdaptiveFont").toBool();
-  m_quranFontSize =
-    m_settingsPtr->value("QCF" + QString::number(m_qcfVer) + "Size").toInt();
-  m_sideFont = qvariant_cast<QFont>(m_settingsPtr->value("SideContentFont"));
-  m_tafsir = m_settingsPtr->value("Tafsir").toInt();
-  m_trans = m_settingsPtr->value("Translation").toInt();
-  m_settingsPtr->endGroup();
-
-  m_audioDevices = QMediaDevices::audioOutputs();
-  ui->cmbAudioDevices->clear();
-  for (int i = 0; i < m_audioDevices.length(); i++) {
-    ui->cmbAudioDevices->addItem(m_audioDevices.at(i).description());
-
-    if (m_audioDevices.at(i) == m_vPlayerPtr->getOutput()->device())
-      m_audioOutIdx = i;
-  }
-  ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
-}
-
 /*!
  * \brief SettingsDialog::btnBoxAction slot takes action according to the button
  * clicked in the dialog
@@ -357,6 +327,13 @@ SettingsDialog::btnBoxAction(QAbstractButton* btn)
     applyAllChanges();
     this->accept();
   }
+}
+
+void
+SettingsDialog::showWindow()
+{
+  setCurrentSettingsAsRef();
+  this->show();
 }
 
 void

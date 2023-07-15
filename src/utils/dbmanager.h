@@ -1,6 +1,7 @@
-#ifndef DBMANAGER_H
+﻿#ifndef DBMANAGER_H
 #define DBMANAGER_H
 
+#include "../globals.h"
 #include <QApplication>
 #include <QDebug>
 #include <QDir>
@@ -22,7 +23,6 @@ class DBManager : public QObject
   Q_OBJECT
 
 public:
-  explicit DBManager(QObject* parent = nullptr, QSettings* settings = nullptr);
   enum Database
   {
     null,
@@ -82,29 +82,7 @@ public:
     zh_jian
   };
 
-  struct Verse
-  {
-    int page{ -1 };
-    int surah{ -1 };
-    int number{ -1 };
-    bool operator==(const Verse& v2)
-    {
-      return (this->number == v2.number && this->surah == v2.surah);
-    }
-    bool operator!=(const Verse& v2)
-    {
-      return (this->number != v2.number || this->surah != v2.surah);
-    }
-  };
-  struct Reciter
-  {
-    QString baseDirName{};
-    QString displayName{};
-    QString basmallahPath{};
-    QString baseUrl{};
-    bool useId{ false };
-  };
-
+  explicit DBManager(QObject* parent = nullptr);
   QList<QString> surahNameList();
   void setCurrentTafsir(Tafsir tafsirName);
   void setCurrentTranslation(Translation translationName);
@@ -121,10 +99,10 @@ public:
 
   int getSurahVerseCount(const int surahIdx);
   int getSurahStartPage(int surahIdx);
-  QString getSurahName(const int sIdx);
+  QString getSurahName(const int sIdx, bool ar = false);
   int getVerseId(const int sIdx, const int vIdx);
   int getVersePage(const int& surahIdx, const int& verse);
-  int getJuzStartPage(const int jozz);
+  int getJuzStartPage(const int juz);
   int getJuzOfPage(const int page);
 
   QList<int> searchSurahNames(QString text);
@@ -145,12 +123,12 @@ public:
   bool removeBookmark(Verse v);
 
 private:
-  int m_qcfVer;
+  QDir m_dbDir = g_assetsDir;
+  const QSettings* m_settings = g_settings;
+  const QLocale::Language m_languageCode = g_language;
+  const int m_qcfVer = g_qcfVersion;
   Database m_currentDb = null;
   QSqlDatabase m_openDBCon;
-  QDir m_dbDir =
-    QApplication::applicationDirPath() + QDir::separator() + "assets";
-  QSettings* m_settings;
   Tafsir m_currTafsir = Tafsir::sa3dy;
   Translation m_currTrans = Translation::en_sahih;
   QString m_tafsirDbFilename;

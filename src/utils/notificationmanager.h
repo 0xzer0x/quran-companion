@@ -2,6 +2,7 @@
 #ifndef NOTIFICATIONMANAGER_H
 #define NOTIFICATIONMANAGER_H
 
+#include "../globals.h"
 #include "dbmanager.h"
 #include <QDateTime>
 #include <QDir>
@@ -12,8 +13,6 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 
-typedef DBManager::Verse Verse;
-
 class NotificationManager : public QObject
 {
   Q_OBJECT
@@ -21,12 +20,13 @@ class NotificationManager : public QObject
 public:
   explicit NotificationManager(QObject* parent = nullptr,
                                DBManager* dbPtr = nullptr);
+  ~NotificationManager();
+
   void notify(QString title, QString msg);
   void setTooltip(QString text);
   void checkDailyVerse();
   void showVerseOfTheDay();
   QString votdStringEntry() const;
-
   QPair<Verse, QString> votd();
 
 signals:

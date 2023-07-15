@@ -1,22 +1,12 @@
 #include "quranpagebrowser.h"
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent,
-                                   int qcfVersion,
-                                   int initPage,
-                                   DBManager* dbPtr,
-                                   QSettings* appSettings,
-                                   const QString& iconsPath)
+                                   DBManager* dbMgr,
+                                   int initPage)
   : QTextBrowser(parent)
-  , m_resourcePath{ iconsPath }
-  , m_dbMgr{ dbPtr }
-  , m_qcfVer{ qcfVersion }
-  , m_settingsPtr{ appSettings }
+  , m_dbMgr{ dbMgr }
   , m_highlighter{ new QTextCursor(document()) }
   , m_highlightColor{ QBrush(QColor(0, 161, 185)) }
-  , m_darkMode{ appSettings->value("Theme").toInt() == 1 }
-  , m_bsmlFont{ qcfVersion == 1 ? "QCF_BSML" : "QCF2BSML" }
-  , m_fontPrefix{ qcfVersion == 1 ? "QCF_P" : "QCF2" }
-
 {
 
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -25,6 +15,11 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent,
   setTextInteractionFlags(Qt::TextInteractionFlag::LinksAccessibleByMouse);
   createActions();
   updateFontSize();
+
+  m_pageFormat.setAlignment(Qt::AlignCenter);
+  m_pageFormat.setNonBreakableLines(true);
+  m_pageFormat.setLayoutDirection(Qt::RightToLeft);
+  m_headerTextFormat.setFont(QFont("PakType Naskh Basic"));
 
   m_easternNumsMap.insert("0", "٠");
   m_easternNumsMap.insert("1", "١");
@@ -44,6 +39,14 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent,
     zoomOut, &QShortcut::activated, this, &QuranPageBrowser::actionZoomOut);
 }
 
+void
+QuranPageBrowser::updateFontSize()
+{
+  m_fontSize =
+    m_settings->value("Reader/QCF" + QString::number(m_qcfVer) + "Size", 22)
+      .toInt();
+}
+
 QString
 QuranPageBrowser::getEasternNum(QString num)
 {
@@ -55,39 +58,77 @@ QuranPageBrowser::getEasternNum(QString num)
   return easternNum;
 }
 
+/*!
+ * \brief QuranPageBrowser::justifyHeader adjusts the header string according to
+ * the page width
+ * \param baseHeader header string
+ * \return reference to the adjusted string
+ */
+QString&
+QuranPageBrowser::justifyHeader(QString& baseHeader)
+{
+  int margin = 20;
+  int spacePos = baseHeader.indexOf('$');
+  baseHeader.remove('$');
+
+  QFontMetrics headerSpacing(m_headerTextFormat.font());
+  while (headerSpacing.size(Qt::TextSingleLine, baseHeader).width() <
+         m_pageLineSize.width() - margin) {
+    baseHeader.insert(spacePos, " ");
+  }
+
+  return baseHeader;
+}
+
+QSize
+QuranPageBrowser::calcPageLineSize(QStringList& lines)
+{
+  QFontMetrics fm(QFont(m_pageFont, m_fontSize));
+  QString measureLine;
+  if (m_page < 3) {
+    measureLine = lines.at(3);
+  } else if (m_page >= 602 || m_page == 596) {
+    measureLine = lines.at(2);
+  } else {
+    measureLine = lines.at(lines.size() - 2);
+  }
+
+  return fm.size(Qt::TextSingleLine, measureLine.remove(':')) + QSize(0, 5);
+}
+
+QImage
+QuranPageBrowser::surahFrame(int surah)
+{
+  QImage baseImage(":/resources/sura_box.png"); // load the empty frame
+
+  // construct the text to be put inside the frame
+  QString frmText;
+  frmText.append("ﰦ");
+  frmText.append("ﮌ");
+  frmText.append(m_dbMgr->getSurahNameGlyph(surah));
+
+  // draw on top of the image the surah name text
+  QPainter p(&baseImage);
+  p.setPen(QPen(Qt::black));
+  p.setFont(QFont(m_bsmlFont, 77));
+  p.drawText(baseImage.rect(), Qt::AlignCenter, frmText);
+
+  if (m_darkMode)
+    baseImage.invertPixels();
+
+  return baseImage;
+}
+
 QString
-QuranPageBrowser::constructPageHeader(int page)
+QuranPageBrowser::pageHeader(int page)
 {
   QList<int> headerData = m_dbMgr->getPageMetadata(page);
 
   QString suraHeader, jozzHeader;
-  suraHeader.append("ﮌ");
-  suraHeader.append(m_dbMgr->getSurahNameGlyph(headerData.at(0)));
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  suraHeader.append("ﰦ");
-  // construct jozz part
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰦ");
-  jozzHeader.append("ﰸ");
+  suraHeader.append("سورة ");
+  suraHeader.append(m_dbMgr->getSurahName(headerData.at(0), true));
+  suraHeader.append("$");
+  jozzHeader.append("الجزء ");
   jozzHeader.append(m_dbMgr->getJuzGlyph(headerData.at(1)));
 
   return suraHeader + jozzHeader;
@@ -96,118 +137,85 @@ QuranPageBrowser::constructPageHeader(int page)
 void
 QuranPageBrowser::constructPage(int pageNo, bool manualSz)
 {
-  if (pageNo != m_page)
+  if (pageNo != m_page) {
+    m_page = pageNo;
     m_highlightedIdx = -1;
-
+  }
+  // cleanup
   if (!m_pageVerseCoords.empty()) {
     qDeleteAll(m_pageVerseCoords);
     m_pageVerseCoords.clear();
   }
-
   this->document()->clear();
-  QTextCursor cur(this->document());
 
-  m_page = pageNo;
-  m_pageFont = m_fontPrefix;
+  m_pageFont = m_fontnamePrefix;
+  m_pageFont.append(QString::number(m_page).rightJustified(3, '0'));
+  QTextCursor textCursor(this->document());
 
-  m_pageFont.append(QString::number(pageNo).rightJustified(3, '0'));
+  m_currPageHeader = this->pageHeader(m_page);
+  m_currPageLines = m_dbMgr->getPageLines(m_page);
 
-  QString header = constructPageHeader(pageNo);
-  QStringList lines =
-    m_dbMgr->getPageLines(pageNo); // create a qlist of page lines
-
-  int fontSize;
-  manualSz = manualSz || !m_settingsPtr->value("Reader/AdaptiveFont").toBool();
-  if (manualSz)
-    fontSize = pageNo < 3 ? m_fontSize + 5 : m_fontSize;
+  // automatic font adjustment check
+  if (manualSz || !m_settings->value("Reader/AdaptiveFont").toBool())
+    m_fontSize = pageNo < 3 ? m_fontSize + 5 : m_fontSize;
   else {
-    m_fontSize = fontSize = bestFitFontSize(lines);
-    m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
-                            fontSize);
+    m_fontSize = this->bestFitFontSize();
+    m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
+                         m_fontSize);
   }
 
-  int counter = 0, prevAnchor = pageNo < 3 ? 3 : 28;
-  QTextBlockFormat pageFormat;
-  pageFormat.setAlignment(Qt::AlignCenter);
-  pageFormat.setNonBreakableLines(true);
-  pageFormat.setLayoutDirection(Qt::RightToLeft);
+  m_pageLineSize = this->calcPageLineSize(m_currPageLines);
 
-  QTextCharFormat bsmlFormat, pageTextFormat;
-  bsmlFormat.setFont(QFont(m_bsmlFont, fontSize - 6));
-  pageTextFormat.setFont(QFont(m_pageFont, fontSize));
+  // insert header in pages 3-604
   if (pageNo > 2) {
-    cur.insertBlock(pageFormat, bsmlFormat);
-    cur.insertText(header);
-    bsmlFormat.setFontPointSize(fontSize - 2);
+    m_headerTextFormat.setForeground(QBrush(Qt::gray));
+    m_headerTextFormat.setFontPointSize(m_fontSize - 6);
+    textCursor.insertBlock(m_pageFormat, m_headerTextFormat);
+    textCursor.insertText(this->justifyHeader(m_currPageHeader));
   }
 
-  QFontMetrics fm(QFont(m_pageFont, fontSize));
-  QString measureLine;
-  if (pageNo < 3) {
-    measureLine = lines.at(3);
-  } else if (pageNo >= 602 || pageNo == 596) {
-    measureLine = lines.at(2);
-  } else {
-    measureLine = lines.at(lines.size() - 2);
-  }
+  this->parentWidget()->setMinimumWidth(m_pageLineSize.width() + 70);
+  this->setMinimumWidth(m_pageLineSize.width() + 70);
 
-  m_pageLineSize =
-    fm.size(Qt::TextSingleLine, measureLine.remove(':')) + QSize(0, 5);
-  this->parentWidget()->setMinimumWidth(m_pageLineSize.width() + 50);
-  this->setMinimumWidth(m_pageLineSize.width() + 50);
-
-  foreach (QString l, lines) {
+  // page lines drawing
+  int counter = 0, prevAnchor = pageNo < 3 ? 3 : m_currPageHeader.size() + 2;
+  m_bodyTextFormat.setFont(QFont(m_pageFont, m_fontSize));
+  foreach (QString l, m_currPageLines) {
     l = l.trimmed();
     if (l.isEmpty())
       continue;
 
     if (l.contains("frame")) {
-      QImage frm(":/resources/sura_box.png"); // load the empty frame
-
-      // construct the text to be put inside the frame
-      QString frmText;
-      frmText.append("ﰦ");
-      frmText.append("ﮌ");
-      frmText.append(m_dbMgr->getSurahNameGlyph(l.split('_').at(1).toInt()));
-
-      // draw on top of the image the surah name text
-      QPainter p(&frm);
-      p.setPen(QPen(Qt::black));
-      p.setFont(QFont(m_bsmlFont, 77));
-      p.drawText(frm.rect(), Qt::AlignCenter, frmText);
-
-      if (m_darkMode)
-        frm.invertPixels();
-
+      // generate frame for surah
+      QImage surahFrame = this->surahFrame(l.split('_').at(1).toInt());
       // insert the surah image in the document
-      cur.insertBlock(pageFormat, pageTextFormat);
-      cur.insertImage(
-        frm.scaledToWidth(m_pageLineSize.width(), Qt::SmoothTransformation));
-
+      textCursor.insertBlock(m_pageFormat, m_bodyTextFormat);
+      textCursor.insertImage(surahFrame.scaledToWidth(
+        m_pageLineSize.width() + 5, Qt::SmoothTransformation));
     } else if (l.contains("bsml")) {
       QImage bsml(":/resources/basmalah.png");
       if (m_darkMode)
         bsml.invertPixels();
 
-      cur.insertBlock(pageFormat, pageTextFormat);
-      cur.insertImage(
+      textCursor.insertBlock(m_pageFormat, m_bodyTextFormat);
+      textCursor.insertImage(
         bsml.scaledToWidth(m_pageLineSize.width(), Qt::SmoothTransformation));
-
     } else {
-      cur.insertBlock(pageFormat, pageTextFormat);
+      // pageline inertion operation
+      textCursor.insertBlock(m_pageFormat, m_bodyTextFormat);
+      // if contains verse separator character, add anchors
       if (l.contains(':')) {
         foreach (QChar glyph, l) {
           if (glyph != ':') {
-            cur.insertText(glyph);
-
+            textCursor.insertText(glyph);
           } else {
             QTextCharFormat anchorFormat;
             anchorFormat.setAnchor(true);
             anchorFormat.setAnchorHref("#" + QString::number(counter));
 
-            int lastInsertPos = cur.position();
-            cur.setPosition(prevAnchor, QTextCursor::KeepAnchor);
-            cur.mergeCharFormat(anchorFormat);
+            int lastInsertPos = textCursor.position();
+            textCursor.setPosition(prevAnchor, QTextCursor::KeepAnchor);
+            textCursor.mergeCharFormat(anchorFormat);
 
             int* coords = new int[2];
             coords[0] = prevAnchor;
@@ -216,18 +224,20 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
 
             counter++;
             prevAnchor = lastInsertPos;
-            cur.setPosition(lastInsertPos);
+            textCursor.setPosition(lastInsertPos);
           }
         }
 
       } else
-        cur.insertText(l);
+        textCursor.insertText(l);
     }
   }
 
-  pageTextFormat.setFont(QFont("PakType Naskh Basic", m_fontSize - 4));
-  cur.insertBlock(pageFormat, pageTextFormat);
-  cur.insertText(getEasternNum(QString::number(pageNo)));
+  // insert footer (page number)
+  m_headerTextFormat.setForeground(qApp->palette().text());
+  m_headerTextFormat.setFontPointSize(m_fontSize - 4);
+  textCursor.insertBlock(m_pageFormat, m_headerTextFormat);
+  textCursor.insertText(getEasternNum(QString::number(pageNo)));
   setAlignment(Qt::AlignCenter);
 }
 
@@ -294,15 +304,17 @@ QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
 }
 
 int
-QuranPageBrowser::bestFitFontSize(QStringList& lines)
+QuranPageBrowser::bestFitFontSize()
 {
   int sz;
-  int margin = m_qcfVer == 1 ? 50 : 25;
+  int margin = 50;
   for (sz = 28; sz >= 12; sz--) {
     QFont pf(m_pageFont, sz);
     QFontMetrics fm(pf);
+    QFontMetrics headerMetrics(QFont("PakType Naskh Basic", sz - 6));
 
-    QSize textSz = fm.size(0, lines.join('\n')) + m_pageLineSize;
+    QSize textSz = headerMetrics.size(Qt::TextSingleLine, m_currPageHeader) +
+                   fm.size(0, m_currPageLines.join('\n'));
     if (textSz.height() + margin <= parentWidget()->height()) {
       break;
     }
@@ -322,15 +334,16 @@ QuranPageBrowser::createActions()
   m_tafsirAct = new QAction(tr("Tafsir"), this);
   m_actAddBookmark = new QAction(tr("Add Bookmark"), this);
   m_actRemBookmark = new QAction(tr("Remove Bookmark"), this);
-  m_zoomIn->setIcon(QIcon(m_resourcePath + "/icons/zoom-in.png"));
-  m_zoomOut->setIcon(QIcon(m_resourcePath + "/icons/zoom-out.png"));
-  m_playAct->setIcon(QIcon(m_resourcePath + "/icons/play.png"));
-  m_selectAct->setIcon(QIcon(m_resourcePath + "/icons/select.png"));
-  m_tafsirAct->setIcon(QIcon(m_resourcePath + "/icons/tafsir.png"));
-  m_copyAct->setIcon(QIcon(m_resourcePath + "/icons/copy.png"));
+  m_zoomIn->setIcon(QIcon(m_resources.filePath("icons/zoom-in.png")));
+  m_zoomOut->setIcon(QIcon(m_resources.filePath("icons/zoom-out.png")));
+  m_playAct->setIcon(QIcon(m_resources.filePath("icons/play.png")));
+  m_selectAct->setIcon(QIcon(m_resources.filePath("icons/select.png")));
+  m_tafsirAct->setIcon(QIcon(m_resources.filePath("icons/tafsir.png")));
+  m_copyAct->setIcon(QIcon(m_resources.filePath("icons/copy.png")));
   m_actAddBookmark->setIcon(
-    QIcon(m_resourcePath + "/icons/bookmark-false.png"));
-  m_actRemBookmark->setIcon(QIcon(m_resourcePath + "/icons/bookmark-true.png"));
+    QIcon(m_resources.filePath("icons/bookmark-false.png")));
+  m_actRemBookmark->setIcon(
+    QIcon(m_resources.filePath("icons/bookmark-true.png")));
   connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
   connect(
     m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);
@@ -354,8 +367,8 @@ void
 QuranPageBrowser::actionZoomIn()
 {
   m_fontSize++;
-  m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
-                          m_fontSize);
+  m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
+                       m_fontSize);
   constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
 }
@@ -364,33 +377,10 @@ void
 QuranPageBrowser::actionZoomOut()
 {
   m_fontSize--;
-  m_settingsPtr->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
-                          m_fontSize);
+  m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
+                       m_fontSize);
   constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
-}
-
-void
-QuranPageBrowser::actionCopy()
-{
-  int posInDoc = cursorForPosition(m_mousePos).position();
-
-  int idxInPage;
-  for (idxInPage = 0; idxInPage < m_pageVerseCoords.size(); ++idxInPage) {
-    const int* const vCoord = m_pageVerseCoords.at(idxInPage);
-    if (vCoord[0] <= posInDoc && vCoord[1] >= posInDoc)
-      break;
-  }
-
-  emit copyVerse(idxInPage);
-}
-
-void
-QuranPageBrowser::updateFontSize()
-{
-  m_fontSize =
-    m_settingsPtr->value("Reader/QCF" + QString::number(m_qcfVer) + "Size", 22)
-      .toInt();
 }
 
 int

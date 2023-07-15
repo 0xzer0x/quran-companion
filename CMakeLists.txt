@@ -18,22 +18,18 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia
                                                        Network LinguistTools)
 
 if(WIN32)
-  set(QT_TR_DIR "C:/Qt/${Qt6Widgets_VERSION}/mingw_64/translations")
   set(Vulkan_INCLUDE_DIR "$ENV{VULKAN_SDK}\\Include\\vulkan")
+endif()
 
-elseif(EXISTS "/home/$ENV{USER}/Qt/${Qt6Widgets_VERSION}/gcc_64/translations")
-  set(QT_TR_DIR "/home/$ENV{USER}/Qt/${Qt6Widgets_VERSION}/gcc_64/translations")
-
-elseif(EXISTS "/usr/share/qt6/translations")
-  set(QT_TR_DIR "/usr/share/qt6/translations")
-
-else()
-  set(QT_TR_DIR "dist/translations")
-
+if(DEFINED BUILD_FLATPAK)
+  message(STATUS "Adding flatpak specific files")
+  add_subdirectory(dist/flatpak)
 endif()
 
 set(PROJECT_SOURCES
     src/main.cpp
+    src/globals.h
+    src/globals.cpp
     src/core/mainwindow.cpp
     src/core/mainwindow.h
     src/core/mainwindow.ui
@@ -60,6 +56,8 @@ set(PROJECT_SOURCES
     src/widgets/downloadprogressbar.h
     src/widgets/verseframe.cpp
     src/widgets/verseframe.h
+    src/widgets/notificationpopup.h
+    src/widgets/notificationpopup.cpp
     src/utils/dbmanager.h
     src/utils/dbmanager.cpp
     src/utils/verseplayer.h
@@ -100,19 +98,20 @@ install(
   TARGETS quran-companion
   BUNDLE DESTINATION .
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-message(STATUS "Adding translations to executable")
-qt_add_translations(quran-companion TS_FILES ./src/translations/qc_ar.ts)
-
-message(STATUS "Installing assets directory")
 install(DIRECTORY ./assets TYPE BIN)
-
-message(STATUS "Installing bismillah directory")
 install(DIRECTORY ./bismillah TYPE BIN)
 
+message(STATUS "Copying application assets to build tree")
+file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY bismillah DESTINATION ${CMAKE_BINARY_DIR})
+
+message(STATUS "Adding translations to executable")
+qt_add_translations(quran-companion TS_FILES src/translations/qc_ar.ts)
+
 message(STATUS "Copying qt translations")
-configure_file("${QT_TR_DIR}/qtbase_ar.qm" "${CMAKE_CURRENT_BINARY_DIR}/ar.qm"
+configure_file("dist/translations/qtbase_ar.qm" "${CMAKE_BINARY_DIR}/ar.qm"
                COPYONLY)
+
 message(STATUS "Creating qt translations resource file")
 qt_add_resources(
   quran-companion
@@ -120,17 +119,10 @@ qt_add_resources(
   PREFIX
   "/base"
   BASE
-  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_BINARY_DIR}
   FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/ar.qm")
+  "${CMAKE_BINARY_DIR}/ar.qm")
 
 if(QT_VERSION_MAJOR EQUAL 6)
   qt_finalize_executable(quran-companion)
-endif()
-
-if(UNIX)
-  if(DEFINED BUILD_FLATPAK)
-    message(STATUS "Adding flatpak specific files")
-    add_subdirectory(dist/flatpak)
-  endif()
 endif()

@@ -1,4 +1,3 @@
-
 #include "notificationmanager.h"
 
 NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)
@@ -8,7 +7,6 @@ NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)
   , m_sysTray{ new QSystemTrayIcon(this) }
   , m_trayMenu{ new QMenu() }
 {
-
   addActions();
   m_sysTray->setContextMenu(m_trayMenu);
   m_sysTray->setIcon(QIcon(":/resources/tray.png"));
@@ -30,7 +28,6 @@ NotificationManager::setTooltip(QString text)
 void
 NotificationManager::checkDailyVerse()
 {
-
   QDateTime lastTimestamp;
   QFile timestamp = QDir::currentPath() + QDir::separator() + "votd.log";
   if (!timestamp.exists()) {
@@ -68,6 +65,7 @@ NotificationManager::checkDailyVerse()
     timestamp.close();
   }
 }
+
 void
 NotificationManager::showVerseOfTheDay()
 {
@@ -175,4 +173,9 @@ NotificationManager::votd()
     checkDailyVerse();
 
   return m_votd;
+}
+
+NotificationManager::~NotificationManager()
+{
+  delete m_trayMenu;
 }

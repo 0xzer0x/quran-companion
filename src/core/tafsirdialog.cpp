@@ -1,27 +1,19 @@
 #include "tafsirdialog.h"
 #include "ui_tafsirdialog.h"
 
-TafsirDialog::TafsirDialog(QWidget* parent,
-                           DBManager* dbPtr,
-                           QSettings* settings,
-                           const QString& iconsPath)
+TafsirDialog::TafsirDialog(QWidget* parent, DBManager* dbPtr)
   : QDialog(parent)
   , ui(new Ui::TafsirDialog)
   , m_dbMgr{ dbPtr }
-  , m_settings{ settings }
 {
-
-  setWindowIcon(QIcon(iconsPath + "/icons/tafsir.png"));
+  setWindowIcon(QIcon(m_resources.filePath("icons/tafsir.png")));
   ui->setupUi(this);
   setTafsirAsTitle();
   setLayoutDirection(Qt::LeftToRight);
-  if (m_settings->value("Reader/QCF").toInt() == 1) {
-    m_fontPrefix = "QCF_P";
+  if (m_qcfVer == 1)
     m_fontSZ = 18;
-  } else {
-    m_fontPrefix = "QCF2";
+  else
     m_fontSZ = 16;
-  }
 
   // connectors
   setupConnections();
@@ -67,6 +59,8 @@ TafsirDialog::btnPrevClicked()
 void
 TafsirDialog::setupConnections()
 {
+  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
+  connect(ctrlQ, &QShortcut::activated, this, &TafsirDialog::close);
   connect(ui->btnNext,
           &QPushButton::clicked,
           this,

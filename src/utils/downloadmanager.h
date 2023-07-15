@@ -1,6 +1,7 @@
 #ifndef DOWNLOADMANAGER_H
 #define DOWNLOADMANAGER_H
 
+#include "../globals.h"
 #include "dbmanager.h"
 #include <QApplication>
 #include <QDialog>
@@ -13,16 +14,10 @@
 #include <QTime>
 #include <QUrl>
 
-typedef DBManager::Reciter Reciter;
-
 class DownloadManager : public QObject
 {
   Q_OBJECT
 public:
-  explicit DownloadManager(QObject* parent = nullptr,
-                           DBManager* dbptr = nullptr,
-                           QList<Reciter> reciters = QList<Reciter>());
-
   struct DownloadTask
   {
     int surah{ -1 };
@@ -39,10 +34,13 @@ public:
     }
   };
 
+  explicit DownloadManager(QObject* parent = nullptr,
+                           DBManager* dbptr = nullptr);
+
+  void getLatestVersion();
   bool isDownloading() const;
   DownloadTask currentTask() const;
   QNetworkAccessManager* netMan() const;
-  QList<Reciter> recitersList() const;
 
 public slots:
   void startQueue();
@@ -55,28 +53,30 @@ public slots:
   bool saveFile(QNetworkReply* data);
 
 signals:
+  void latestVersionFound(QString appVer);
   void downloadStarted();
   void downloadProgressed(int downloaded, int total);
   void downloadSpeedUpdated(int valuePerSec, QString unit);
   void downloadCanceled();
-  void downloadComplete();
-  void downloadError();
+  void downloadComplete(int reciterIdx, int surah);
+  void downloadError(int reciterIdx, int surah);
   void queueEmpty();
 
 private:
+  const QList<Reciter>& m_recitersList = g_recitersList;
   QUrl downloadUrl(const int reciterIdx,
                    const int surah,
                    const int verse) const;
   void handleConError(QNetworkReply::NetworkError err);
+  void handleVersionReply();
   bool m_isDownloading = false;
   int m_currSurahCount;
+  QNetworkReply* m_versionReply;
   QNetworkAccessManager* m_netMan;
   DBManager* m_dbMgr;
   DownloadTask m_currentTask;
   QQueue<DownloadTask> m_downloadQueue;
-  const QList<Reciter> m_recitersList;
   QDir m_downloadPath;
-  QDir m_topLevelPath;
   QTime m_downloadStart;
 };
 

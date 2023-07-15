@@ -16,8 +16,16 @@ QFrame#framePlayer {
 
 QPushButton#btnPlay:enabled:hover,
 QPushButton#btnPause:enabled:hover,
-QPushButton#btnStop:hover {
+QPushButton#btnStop:hover,
+QPushButton#btnNext:hover,
+QPushButton#btnPrev:hover {
   background-color: #eeeeee;
+}
+
+QPushButton#btnStop:pressed,
+QPushButton#btnNext:pressed,
+QPushButton#btnPrev:pressed {
+  background-color: #e0e0e0;
 }
 
 QPushButton#btnPlay:disabled,
@@ -27,7 +35,9 @@ QPushButton#btnPause:disabled {
 
 QPushButton#btnPlay,
 QPushButton#btnPause,
-QPushButton#btnStop {
+QPushButton#btnStop,
+QPushButton#btnPrev,
+QPushButton#btnNext {
   background-color: #fafafa;
   border: 1px solid gray;
   border-radius: 4px;
@@ -195,4 +205,11 @@ QPushButton#btnToggleNav:!checked:hover {
 QPushButton#btnToggleNav:checked {
   border: 1px solid #008296;
   background-color: palette(highlight);
+}
+
+/* --------------- Notification Popup Styles --------------- */
+
+QFrame#Popup {
+  background: #008b8b;
+  border-radius: 6px;
 }

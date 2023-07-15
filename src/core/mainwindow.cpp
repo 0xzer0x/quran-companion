@@ -1,6 +1,6 @@
 #include "mainwindow.h"
+#include "../widgets/clickablelabel.h"
 #include "ui_mainwindow.h"
-
 /*!
  * \brief MainWindow::MainWindow initalizes the main application window and sets
  * up UI connections.
@@ -8,22 +8,11 @@
  * @param parent is a pointer to the parent widget
  * @param settingsPtr is a pointer to the QSettings object to acess app settings
  */
-MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
+MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
   , m_process{ new QProcess(this) }
-  , m_settingsPtr{ settingsPtr }
-  , m_darkMode{ settingsPtr->value("Theme").toInt() == 1 }
 {
-
-  m_updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
-                     "QCMaintenanceTool";
-#ifdef Q_OS_WIN
-  m_updateToolPath.append(".exe");
-#endif
-  m_resourcePath = ":/resources/";
-  m_resourcePath.append(m_darkMode ? "dark/" : "light/");
-
   ui->setupUi(this);
   ui->menuView->addAction(ui->sideDock->toggleViewAction());
   ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
@@ -31,10 +20,10 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   loadSettings();
   init();
 
-  if (m_settingsPtr->value("WindowState").isNull())
-    m_settingsPtr->setValue("WindowState", saveState());
+  if (m_settings->value("WindowState").isNull())
+    m_settings->setValue("WindowState", saveState());
   else
-    restoreState(m_settingsPtr->value("WindowState").toByteArray());
+    restoreState(m_settings->value("WindowState").toByteArray());
 
   // connectors
   setupConnections();
@@ -43,8 +32,10 @@ MainWindow::MainWindow(QWidget* parent, QSettings* settingsPtr)
   this->show();
 
   m_notifyMgr->setTooltip("Quran Companion");
-  if (m_settingsPtr->value("VOTD").toBool())
+  if (m_settings->value("VOTD").toBool())
     m_notifyMgr->checkDailyVerse();
+
+  m_popup->dockLocationChanged(dockWidgetArea(ui->sideDock));
 }
 
 /* ------------------------ Initalization methods ------------------------ */
@@ -53,30 +44,31 @@ void
 MainWindow::loadIcons()
 {
   ui->actionDownload_manager->setIcon(
-    QIcon(m_resourcePath + "icons/download-manager.png"));
-  ui->actionExit->setIcon(QIcon(m_resourcePath + "icons/exit.png"));
-  ui->actionFind->setIcon(QIcon(m_resourcePath + "icons/search.png"));
-  ui->actionTafsir->setIcon(QIcon(m_resourcePath + "icons/tafsir.png"));
+    QIcon(m_resources.filePath("icons/download-manager.png")));
+  ui->actionExit->setIcon(QIcon(m_resources.filePath("icons/exit.png")));
+  ui->actionFind->setIcon(QIcon(m_resources.filePath("icons/search.png")));
+  ui->actionTafsir->setIcon(QIcon(m_resources.filePath("icons/tafsir.png")));
   ui->actionVerse_of_the_day->setIcon(
-    QIcon(m_resourcePath + "icons/today.png"));
+    QIcon(m_resources.filePath("icons/today.png")));
   ui->actionBookmarks->setIcon(
-    QIcon(m_resourcePath + "icons/bookmark-true.png"));
-  ui->actionPereferences->setIcon(QIcon(m_resourcePath + "icons/prefs.png"));
-  ui->btnPlay->setIcon(QIcon(m_resourcePath + "icons/play.png"));
-  ui->btnPause->setIcon(QIcon(m_resourcePath + "icons/pause.png"));
-  ui->btnStop->setIcon(QIcon(m_resourcePath + "icons/stop.png"));
+    QIcon(m_resources.filePath("icons/bookmark-true.png")));
+  ui->actionPereferences->setIcon(
+    QIcon(m_resources.filePath("icons/prefs.png")));
+  ui->btnPlay->setIcon(QIcon(m_resources.filePath("icons/play.png")));
+  ui->btnPause->setIcon(QIcon(m_resources.filePath("icons/pause.png")));
+  ui->btnStop->setIcon(QIcon(m_resources.filePath("icons/stop.png")));
   ui->actionCheck_for_updates->setIcon(
-    QIcon(m_resourcePath + "icons/update.png"));
+    QIcon(m_resources.filePath("icons/update.png")));
 }
 
 void
 MainWindow::loadSettings()
 {
-  m_settingsPtr->beginGroup("Reader");
-  m_currVerse.page = m_settingsPtr->value("Page").toInt();
-  m_currVerse.surah = m_settingsPtr->value("Surah").toInt();
-  m_currVerse.number = m_settingsPtr->value("Verse").toInt();
-  m_settingsPtr->endGroup();
+  m_settings->beginGroup("Reader");
+  m_currVerse.page = m_settings->value("Page").toInt();
+  m_currVerse.surah = m_settings->value("Surah").toInt();
+  m_currVerse.number = m_settings->value("Verse").toInt();
+  m_settings->endGroup();
 }
 
 /*!
@@ -87,16 +79,13 @@ void
 MainWindow::init()
 {
   // initalization
-  m_dbMgr = new DBManager(this, m_settingsPtr);
-  m_player = new VersePlayer(
-    this, m_dbMgr, m_currVerse, m_settingsPtr->value("Reciter", 0).toInt());
+  m_dbMgr = new DBManager(this);
   m_quranBrowser =
-    new QuranPageBrowser(ui->frmPageContent,
-                         m_settingsPtr->value("Reader/QCF").toInt(),
-                         m_currVerse.page,
-                         m_dbMgr,
-                         m_settingsPtr,
-                         m_resourcePath);
+    new QuranPageBrowser(ui->frmPageContent, m_dbMgr, m_currVerse.page);
+  m_player = new VersePlayer(
+    this, m_dbMgr, m_currVerse, m_settings->value("Reciter", 0).toInt());
+  m_popup = new NotificationPopup(this, m_dbMgr);
+  m_downManPtr = new DownloadManager(this, m_dbMgr);
 
   ui->frmPageContent->layout()->addWidget(m_quranBrowser);
 
@@ -119,7 +108,7 @@ MainWindow::init()
     ui->cmbPage->addItem(QString::number(i));
   }
 
-  foreach (Reciter r, m_player->recitersList()) {
+  foreach (Reciter r, m_recitersList) {
     ui->cmbReciter->addItem(r.displayName);
   }
 
@@ -128,7 +117,7 @@ MainWindow::init()
   setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
-  ui->cmbReciter->setCurrentIndex(m_settingsPtr->value("Reciter", 0).toInt());
+  ui->cmbReciter->setCurrentIndex(m_settings->value("Reciter", 0).toInt());
 }
 
 void
@@ -187,9 +176,23 @@ void
 MainWindow::setupConnections()
 {
   QShortcut* spaceKey = new QShortcut(Qt::Key_Space, this);
+  QShortcut* ctrlShiftB = new QShortcut(QKeySequence("Ctrl+Shift+B"), this);
   spaceKey->setContext(Qt::ApplicationShortcut);
+  ctrlShiftB->setContext(Qt::ApplicationShortcut);
 
   /* ------------------ UI connectors ------------------ */
+
+  // ########## Shortcuts ########## //
+  connect(spaceKey,
+          &QShortcut::activated,
+          this,
+          &MainWindow::spaceKeyPressed,
+          Qt::UniqueConnection);
+  connect(ctrlShiftB,
+          &QShortcut::activated,
+          this,
+          &MainWindow::addCurrentToBookmarks,
+          Qt::UniqueConnection);
 
   // ########## Menubar ########## //
   connect(ui->actionExit, &QAction::triggered, this, &QApplication::exit);
@@ -346,11 +349,6 @@ MainWindow::setupConnections()
           m_player,
           &VersePlayer::changeReciter,
           Qt::UniqueConnection);
-  connect(spaceKey,
-          &QShortcut::activated,
-          this,
-          &MainWindow::spaceKeyPressed,
-          Qt::UniqueConnection);
 
   // ########## system tray ########## //
   connect(m_player,
@@ -394,6 +392,28 @@ MainWindow::setupConnections()
           this,
           &MainWindow::actionPrefTriggered,
           Qt::UniqueConnection);
+
+  // ########## Notification Popup ########## //
+  connect(ui->sideDock,
+          &QDockWidget::dockLocationChanged,
+          m_popup,
+          &NotificationPopup::dockLocationChanged,
+          Qt::UniqueConnection);
+  connect(m_downManPtr,
+          &DownloadManager::downloadComplete,
+          m_popup,
+          &NotificationPopup::completedDownload,
+          Qt::UniqueConnection);
+  connect(m_downManPtr,
+          &DownloadManager::downloadError,
+          m_popup,
+          &NotificationPopup::downloadError,
+          Qt::UniqueConnection);
+  connect(m_downManPtr,
+          &DownloadManager::latestVersionFound,
+          m_popup,
+          &NotificationPopup::checkUpdate,
+          Qt::UniqueConnection);
 }
 
 /* ------------------------ Help menu actions ------------------------ */
@@ -406,7 +426,7 @@ MainWindow::checkForUpdates()
     m_process->setWorkingDirectory(QApplication::applicationDirPath());
     m_process->start(m_updateToolPath, QStringList("ch"));
   } else {
-    QMessageBox::warning(this, tr("Error"), tr("Update tool is unavailable."));
+    m_downManPtr->getLatestVersion();
   }
 }
 
@@ -809,6 +829,15 @@ MainWindow::mediaStateChanged(QMediaPlayer::PlaybackState state)
   }
 }
 
+void
+MainWindow::addCurrentToBookmarks()
+{
+  if (!m_dbMgr->isBookmarked(m_currVerse)) {
+    m_dbMgr->addBookmark(m_currVerse);
+    m_popup->bookmarkAdded();
+  }
+}
+
 /*!
  * \brief MainWindow::mediaPosChanged sets the current position in the audio
  * file as the position of the slider.
@@ -845,7 +874,7 @@ MainWindow::volumeSliderValueChanged(int position)
 void
 MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 {
-  if (!m_settingsPtr->value("MissingFileWarning").toBool())
+  if (!m_settings->value("MissingFileWarning").toBool())
     return;
 
   QMessageBox::StandardButton btn =
@@ -944,13 +973,17 @@ MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
   int chosenAction = m_quranBrowser->lmbVerseMenu(m_dbMgr->isBookmarked(v));
   // remove from / add to favorites
   if (chosenAction == 5) {
-    m_dbMgr->removeBookmark(v);
+    if (m_dbMgr->removeBookmark(v))
+      m_popup->bookmarkRemoved();
+
   } else if (chosenAction == 4) {
     m_dbMgr->addBookmark(v);
+    m_popup->bookmarkAdded();
   }
   // copy
   else if (chosenAction == 3) {
     copyVerseText(idx.toInt());
+    m_popup->copiedToClipboard();
   }
   // open tafsir
   else if (chosenAction == 2)
@@ -1001,8 +1034,7 @@ void
 MainWindow::actionPrefTriggered()
 {
   if (m_settingsDlg == nullptr) {
-    m_settingsDlg =
-      new SettingsDialog(this, m_settingsPtr, m_player, m_resourcePath);
+    m_settingsDlg = new SettingsDialog(this, m_player);
 
     // Restart signal
     connect(m_settingsDlg,
@@ -1063,14 +1095,8 @@ MainWindow::actionPrefTriggered()
 void
 MainWindow::actionDMTriggered()
 {
-  if (m_downloaderDlg == nullptr) {
-    if (m_downManPtr == nullptr)
-      m_downManPtr =
-        new DownloadManager(this, m_dbMgr, m_player->recitersList());
-
-    m_downloaderDlg = new DownloaderDialog(
-      this, m_settingsPtr, m_downManPtr, m_dbMgr, m_resourcePath);
-  }
+  if (m_downloaderDlg == nullptr)
+    m_downloaderDlg = new DownloaderDialog(this, m_downManPtr, m_dbMgr);
 
   m_downloaderDlg->show();
 }
@@ -1079,11 +1105,7 @@ void
 MainWindow::actionBookmarksTriggered()
 {
   if (m_bookmarksDlg == nullptr) {
-    m_bookmarksDlg =
-      new BookmarksDialog(this,
-                          m_resourcePath,
-                          m_dbMgr,
-                          m_settingsPtr->value("Reader/QCF", 1).toInt());
+    m_bookmarksDlg = new BookmarksDialog(this, m_dbMgr);
     connect(m_bookmarksDlg,
             &BookmarksDialog::navigateToVerse,
             this,
@@ -1109,18 +1131,22 @@ MainWindow::actionVotdTriggered()
 void
 MainWindow::actionAboutTriggered()
 {
-  QString about =
-    "<h2>" + tr("Quran Companion v") + qApp->applicationVersion() +
-    +"</h2><p><a href='https://github.com/0xzer0x/quran-companion'>" +
-    tr("Quran Companion") + "</a>" +
-    tr(" is a free cross-platform Quran reader & player.") + "</p><p>" +
-    tr("Licensed under the ") +
-    "<a href='https://ojuba.org/"
-    "waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%"
-    "B9%D8%A7%D9%85%D8%A9'>" +
-    tr("'Waqf' General Public License") + "</a>.</p>";
+  QFile about(":/resources/about.html");
+  QString text;
+  if (about.open(QIODevice::ReadOnly))
+    text = about.readAll();
+  about.close();
 
-  QMessageBox::about(this, tr("About Quran Companion"), about);
+  text = text.arg(tr("Quran Companion v"))
+           .arg(QApplication::applicationVersion())
+           .arg(tr("Quran Companion"))
+           .arg(tr(" is a free cross-platform Quran reader & player."))
+           .arg(tr("Licensed under the "))
+           .arg(tr("'Waqf' General Public License"))
+           .arg(tr("Recitations"))
+           .arg(tr("Tafsir/Translations"));
+
+  QMessageBox::about(this, tr("About Quran Companion"), text);
 }
 
 void
@@ -1138,8 +1164,7 @@ void
 MainWindow::openSearchDialog()
 {
   if (m_searchDlg == nullptr) {
-    m_searchDlg =
-      new SearchDialog(this, m_settingsPtr, m_dbMgr, m_resourcePath);
+    m_searchDlg = new SearchDialog(this, m_dbMgr);
     connect(m_searchDlg,
             &SearchDialog::navigateToVerse,
             this,
@@ -1187,7 +1212,7 @@ void
 MainWindow::updateLoadedTafsir()
 {
   DBManager::Tafsir currTafsir =
-    qvariant_cast<DBManager::Tafsir>(m_settingsPtr->value("Reader/Tafsir"));
+    qvariant_cast<DBManager::Tafsir>(m_settings->value("Reader/Tafsir"));
 
   m_dbMgr->setCurrentTafsir(currTafsir);
 }
@@ -1200,7 +1225,7 @@ void
 MainWindow::updateLoadedTranslation()
 {
   DBManager::Translation currTrans = qvariant_cast<DBManager::Translation>(
-    m_settingsPtr->value("Reader/Translation"));
+    m_settings->value("Reader/Translation"));
 
   m_dbMgr->setCurrentTranslation(currTrans);
 }
@@ -1213,7 +1238,7 @@ void
 MainWindow::updateSideFont()
 {
   m_sideFont =
-    qvariant_cast<QFont>(m_settingsPtr->value("Reader/SideContentFont"));
+    qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
 }
 
 /* ------------------------ Content generation ------------------------ */
@@ -1343,8 +1368,7 @@ void
 MainWindow::showExpandedVerseTafsir(Verse v)
 {
   if (m_tafsirDlg == nullptr) {
-    m_tafsirDlg =
-      new TafsirDialog(this, m_dbMgr, m_settingsPtr, m_resourcePath);
+    m_tafsirDlg = new TafsirDialog(this, m_dbMgr);
   }
 
   m_tafsirDlg->setShownVerse(v);
@@ -1376,7 +1400,7 @@ MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
   mbox->setLayout(new QVBoxLayout);
   mbox->setStyleSheet(
     "QDialog:hover{ background-color: rgba(0, 161, 185, 40); }");
-  mbox->setWindowIcon(QIcon(m_resourcePath + "/icons/today.png"));
+  mbox->setWindowIcon(QIcon(m_resources.filePath("/icons/today.png")));
   mbox->setWindowTitle(tr("Verse Of The Day"));
   ClickableLabel* lb = new ClickableLabel(mbox);
   lb->setText(votd.second);
@@ -1402,16 +1426,16 @@ MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
 void
 MainWindow::saveReaderState()
 {
-  m_settingsPtr->setValue("WindowState", saveState());
-  m_settingsPtr->setValue("Reciter", ui->cmbReciter->currentIndex());
+  m_settings->setValue("WindowState", saveState());
+  m_settings->setValue("Reciter", ui->cmbReciter->currentIndex());
 
-  m_settingsPtr->beginGroup("Reader");
-  m_settingsPtr->setValue("Page", m_currVerse.page);
-  m_settingsPtr->setValue("Surah", m_currVerse.surah);
-  m_settingsPtr->setValue("Verse", m_currVerse.number);
-  m_settingsPtr->endGroup();
+  m_settings->beginGroup("Reader");
+  m_settings->setValue("Page", m_currVerse.page);
+  m_settings->setValue("Surah", m_currVerse.surah);
+  m_settings->setValue("Verse", m_currVerse.number);
+  m_settings->endGroup();
 
-  m_settingsPtr->sync();
+  m_settings->sync();
 }
 
 void
@@ -1420,6 +1444,16 @@ MainWindow::restartApp()
   saveReaderState();
   emit QApplication::exit();
   QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+}
+
+void
+MainWindow::resizeEvent(QResizeEvent* event)
+{
+  QMainWindow::resizeEvent(event);
+  if (m_popup) {
+    m_popup->adjustLocation();
+    m_popup->move(m_popup->notificationPos());
+  }
 }
 
 MainWindow::~MainWindow()

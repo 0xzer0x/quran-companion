@@ -4,19 +4,23 @@ HighlightFrame::HighlightFrame(QWidget* parent)
   : QFrame(parent)
 {
   this->setLayout(new QVBoxLayout);
+  m_frameStylesheet = "QFrame {"
+                      "background-color:%1;"
+                      "border-radius:4px"
+                      "}"
+                      "QLabel {"
+                      "background-color:transparent"
+                      "}";
 }
 
 void
 HighlightFrame::highlightFrame()
 {
-  // rgba(0, 161, 185, 50)
   QString rgba = "rgba(" + QString::number(m_colorR) + ',' +
                  QString::number(m_colorG) + ',' + QString::number(m_colorB) +
                  ",60)";
-  setStyleSheet(QString("QFrame#%0 "
-                        "{background-color:%1;"
-                        "border-radius:4px}")
-                  .arg(objectName(), rgba));
+
+  setStyleSheet(m_frameStylesheet.arg(rgba));
 }
 
 void
@@ -34,10 +38,7 @@ HighlightFrame::enterEvent(QEnterEvent* event)
     QString rgba = "rgba(" + QString::number(m_colorR) + ',' +
                    QString::number(m_colorG) + ',' + QString::number(m_colorB) +
                    ",20)";
-    setStyleSheet(QString("QFrame#%0 "
-                          "{background-color:%1;"
-                          "border-radius:4px}")
-                    .arg(objectName(), rgba));
+    setStyleSheet(m_frameStylesheet.arg(rgba));
   }
 }
 

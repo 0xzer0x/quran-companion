@@ -1,10 +1,11 @@
 #ifndef TAFSIRDIALOG_H
 #define TAFSIRDIALOG_H
 
+#include "../globals.h"
 #include "../utils/dbmanager.h"
 #include <QDialog>
 #include <QSettings>
-typedef DBManager::Verse Verse;
+#include <QShortcut>
 
 namespace Ui {
 class TafsirDialog;
@@ -22,33 +23,32 @@ class TafsirDialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit TafsirDialog(QWidget* parent = nullptr,
-                        DBManager* dbPtr = nullptr,
-                        QSettings* settings = nullptr,
-                        const QString& iconsPath = ":/resources/light/");
+  explicit TafsirDialog(QWidget* parent = nullptr, DBManager* dbPtr = nullptr);
   ~TafsirDialog();
 
   void loadVerseTafsir();
   void setShownVerse(const Verse& newShownVerse);
+
+  // QWidget interface
+protected:
+  void closeEvent(QCloseEvent* event);
+  void showEvent(QShowEvent* event);
 
 private slots:
   void btnNextClicked();
   void btnPrevClicked();
 
 private:
+  const int m_qcfVer = g_qcfVersion;
+  const QDir& m_resources = g_themeResources;
+  const QString& m_fontPrefix = g_qcfFontPrefix;
+  const QSettings* m_settings = g_settings;
   Ui::TafsirDialog* ui;
   void setupConnections();
   void setTafsirAsTitle();
   int m_fontSZ;
-  QString m_fontPrefix;
-  QSettings* m_settings;
   DBManager* m_dbMgr;
   Verse m_shownVerse{ 1, 1, 1 };
-
-  // QWidget interface
-protected:
-  void closeEvent(QCloseEvent* event);
-  void showEvent(QShowEvent* event);
 };
 
 #endif // TAFSIRDIALOG_H

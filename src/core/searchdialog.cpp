@@ -1,5 +1,4 @@
 #include "searchdialog.h"
-
 #include "ui_searchdialog.h"
 
 /*!
@@ -8,24 +7,17 @@
  * @param parent pointer to parent widget
  * @param dbPtr pointer to database management interface
  */
-SearchDialog::SearchDialog(QWidget* parent,
-                           QSettings* settings,
-                           DBManager* dbPtr,
-                           const QString& iconPath)
+SearchDialog::SearchDialog(QWidget* parent, DBManager* dbPtr)
   : QDialog(parent)
   , ui(new Ui::SearchDialog)
-  , m_resourcePath{ iconPath }
-  , m_settings{ settings }
   , m_dbMgr{ dbPtr }
   , m_surahNames{ m_dbMgr->surahNameList() }
-  , m_fontPrefix{ m_settings->value("Reader/QCF", 1).toInt() == 1 ? "QCF_P"
-                                                                  : "QCF2" }
 {
-  setWindowIcon(QIcon(m_resourcePath + "/icons/search.png"));
+  setWindowIcon(QIcon(m_resources.filePath("icons/search.png")));
   ui->setupUi(this);
   ui->frmNavBtns->setLayoutDirection(Qt::LeftToRight);
-  ui->btnFwdRes->setDisabled(true);
-  ui->btnBwdRes->setDisabled(true);
+  ui->btnNext->setDisabled(true);
+  ui->btnPrev->setDisabled(true);
 
   ui->listViewAllSurahs->setModel(&m_modelAllSurahs);
   ui->listViewSelected->setModel(&m_modelSelectedSurahs);
@@ -33,6 +25,33 @@ SearchDialog::SearchDialog(QWidget* parent,
 
   // connectors
   setupConnections();
+}
+
+void
+SearchDialog::setupConnections()
+{
+  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
+  connect(ctrlQ, &QShortcut::activated, this, &SearchDialog::close);
+  connect(ui->btnSrch,
+          &QPushButton::clicked,
+          this,
+          &SearchDialog::getResults,
+          Qt::UniqueConnection);
+  connect(ui->btnNext,
+          &QPushButton::clicked,
+          this,
+          &SearchDialog::moveFwd,
+          Qt::UniqueConnection);
+  connect(ui->btnPrev,
+          &QPushButton::clicked,
+          this,
+          &SearchDialog::moveBwd,
+          Qt::UniqueConnection);
+  connect(ui->btnTransfer,
+          &QPushButton::clicked,
+          this,
+          &SearchDialog::btnTransferClicked,
+          Qt::UniqueConnection);
 }
 
 /*!
@@ -52,8 +71,8 @@ SearchDialog::getResults()
 
   if (m_searchText.isEmpty()) {
     ui->lbResultCount->setText("");
-    ui->btnFwdRes->setDisabled(true);
-    ui->btnBwdRes->setDisabled(true);
+    ui->btnNext->setDisabled(true);
+    ui->btnPrev->setDisabled(true);
     return;
   }
 
@@ -99,13 +118,13 @@ SearchDialog::showResults()
                                                          : m_currResults.size();
 
   if (m_startResult == 0)
-    ui->btnBwdRes->setDisabled(true);
+    ui->btnPrev->setDisabled(true);
   else
-    ui->btnBwdRes->setDisabled(false);
+    ui->btnPrev->setDisabled(false);
   if (endIdx == m_currResults.size())
-    ui->btnFwdRes->setDisabled(true);
+    ui->btnNext->setDisabled(true);
   else
-    ui->btnFwdRes->setDisabled(false);
+    ui->btnNext->setDisabled(false);
 
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
@@ -220,31 +239,6 @@ SearchDialog::btnTransferClicked()
 }
 
 void
-SearchDialog::setupConnections()
-{
-  connect(ui->btnSrch,
-          &QPushButton::clicked,
-          this,
-          &SearchDialog::getResults,
-          Qt::UniqueConnection);
-  connect(ui->btnFwdRes,
-          &QPushButton::clicked,
-          this,
-          &SearchDialog::moveFwd,
-          Qt::UniqueConnection);
-  connect(ui->btnBwdRes,
-          &QPushButton::clicked,
-          this,
-          &SearchDialog::moveBwd,
-          Qt::UniqueConnection);
-  connect(ui->btnTransfer,
-          &QPushButton::clicked,
-          this,
-          &SearchDialog::btnTransferClicked,
-          Qt::UniqueConnection);
-}
-
-void
 SearchDialog::closeEvent(QCloseEvent* event)
 {
   if (!m_lbLst.empty()) {
@@ -253,8 +247,8 @@ SearchDialog::closeEvent(QCloseEvent* event)
     ui->lbResultCount->setText("");
     ui->ledSearchBar->clear();
     m_currResults.clear();
-    ui->btnFwdRes->setDisabled(true);
-    ui->btnBwdRes->setDisabled(true);
+    ui->btnNext->setDisabled(true);
+    ui->btnPrev->setDisabled(true);
   }
 
   this->hide();
