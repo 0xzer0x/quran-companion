@@ -45,12 +45,10 @@ BookmarksDialog::setupConnections()
 void
 BookmarksDialog::addEmptyBookmarksLabel()
 {
-  if (!m_frames.empty()) {
-    qDeleteAll(m_frames);
-    m_frames.clear();
-  }
-
   QLabel* empty = new QLabel(this);
+  QFont fnt = empty->font();
+  fnt.setPointSize(14);
+  empty->setFont(fnt);
   empty->setText(
     tr("No bookmarks available. Start bookmarking verses to see them here."));
   empty->setAlignment(Qt::AlignCenter);
@@ -96,6 +94,11 @@ BookmarksDialog::loadBookmarks(int surah)
     ui->btnNext->setDisabled(true);
   else
     ui->btnNext->setDisabled(false);
+
+  if (end == 0) {
+    addEmptyBookmarksLabel();
+    return;
+  }
 
   for (int i = m_startIdx; i < end; i++) {
     Verse verse = m_shownVerses.at(i);
@@ -226,6 +229,7 @@ BookmarksDialog::btnRemove()
     delete frm;
 
     if (m_frames.isEmpty()) {
+      m_shownSurah = 0;
       loadBookmarks();
       loadSurahs();
       ui->listViewBookmarkedSurahs->selectionModel()->select(

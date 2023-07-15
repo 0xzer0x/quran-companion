@@ -41,7 +41,7 @@
     <message>
         <location filename="../core/bookmarksdialog.cpp" line="53"/>
         <source>No bookmarks available. Start bookmarking verses to see them here.</source>
-        <translation></translation>
+        <translation>لا توجد علامات متاحة. قم بإضافة علامات على الآيات لرؤيتها هنا.</translation>
     </message>
     <message>
         <location filename="../core/bookmarksdialog.cpp" line="101"/>
