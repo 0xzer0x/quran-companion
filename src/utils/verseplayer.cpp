@@ -60,7 +60,7 @@ VersePlayer::nextVerse()
   // if last verse in surah, play basmalah before playing first verse
   if (m_activeVerse.number == m_surahCount) {
     // if last verse in surah an-nas (114), do nothing (i.e stop playback)
-    if ((m_activeVerse.surah < 114)) {
+    if (m_activeVerse.surah < 114) {
       m_activeVerse.surah++;
       m_activeVerse.number = 1;
       emit surahChanged(); // signals surah change
