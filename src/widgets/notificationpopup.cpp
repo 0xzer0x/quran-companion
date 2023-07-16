@@ -36,7 +36,12 @@ NotificationPopup::NotificationPopup(QWidget* parent, DBManager* dbMgr)
       m_fadeoutAnim->start();
   });
 
-  this->show();
+  this->hide();
+  connect(m_fadeoutAnim,
+          &QPropertyAnimation::finished,
+          this,
+          &NotificationPopup::hide,
+          Qt::UniqueConnection);
 }
 
 void
@@ -55,6 +60,7 @@ NotificationPopup::notify(QString message, NotificationPopup::Action icon)
   resize(fm.size(Qt::TextSingleLine, message).width() + 50, 40);
   adjustLocation();
   move(m_notificationPos);
+  this->show();
 
   if (m_fadeoutAnim->state() == QAbstractAnimation::Running)
     m_fadeoutAnim->stop();

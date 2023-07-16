@@ -28,7 +28,7 @@ main(int argc, char* argv[])
   QApplication a(argc, argv);
   QApplication::setApplicationName("Quran Companion");
   QApplication::setOrganizationName("0xzer0x");
-  QApplication::setApplicationVersion("1.1.6");
+  QApplication::setApplicationVersion("1.1.7");
 
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
@@ -259,17 +259,6 @@ addTranslation(QLocale::Language localeCode)
 void
 fillRecitersList()
 {
-  g_recitationsDir.setPath(QDir::currentPath());
-  if (!g_recitationsDir.exists("recitations"))
-    g_recitationsDir.mkdir("recitations");
-
-  g_recitationsDir.cd("recitations");
-  foreach (const Reciter& r, g_recitersList) {
-    if (!g_recitationsDir.exists(r.baseDirName)) {
-      g_recitationsDir.mkdir(r.baseDirName);
-    }
-  }
-
   Reciter husary{ "Al-Husary",
                   qApp->translate("MainWindow", "Al-Husary"),
                   g_bismillahDir.absoluteFilePath("husary.mp3"),
@@ -448,6 +437,18 @@ fillRecitersList()
   g_recitersList.append(muaiqly);
   g_recitersList.append(mIsmail);
   g_recitersList.append(mJibreel);
+
+  // create reciters directories
+  g_recitationsDir.setPath(QDir::currentPath());
+  if (!g_recitationsDir.exists("recitations"))
+    g_recitationsDir.mkdir("recitations");
+
+  g_recitationsDir.cd("recitations");
+  foreach (const Reciter& r, g_recitersList) {
+    if (!g_recitationsDir.exists(r.baseDirName)) {
+      g_recitationsDir.mkdir(r.baseDirName);
+    }
+  }
 }
 
 void
