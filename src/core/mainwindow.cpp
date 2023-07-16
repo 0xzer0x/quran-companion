@@ -778,7 +778,7 @@ void
 MainWindow::btnPlayClicked()
 {
   // If now playing the last verse in the page, set the flag to flip the page
-  if (m_currVerse.number == m_vInfoList.last().number &&
+  if (m_currVerse == m_vInfoList.last() &&
       m_currVerse.number != m_player->surahCount()) {
     m_endOfPage = true;
   }
