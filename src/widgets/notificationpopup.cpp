@@ -37,11 +37,7 @@ NotificationPopup::NotificationPopup(QWidget* parent, DBManager* dbMgr)
   });
 
   this->hide();
-  connect(m_fadeoutAnim,
-          &QPropertyAnimation::finished,
-          this,
-          &NotificationPopup::hide,
-          Qt::UniqueConnection);
+  setupConnections();
 }
 
 void
@@ -126,6 +122,16 @@ NotificationPopup::checkUpdate(QString appVer)
     msg = tr("Update available") + ": " + appVer;
     this->notify(msg, updateInfo);
   }
+}
+
+void
+NotificationPopup::setupConnections()
+{
+  connect(m_fadeoutAnim,
+          &QPropertyAnimation::finished,
+          this,
+          &NotificationPopup::hide,
+          Qt::UniqueConnection);
 }
 
 void

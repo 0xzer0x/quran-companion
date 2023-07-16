@@ -46,6 +46,7 @@ public slots:
 private:
   const QDir& m_resources = g_themeResources;
   const QList<Reciter>& m_recitersList = g_recitersList;
+  void setupConnections();
   void setNotificationIcon(Action icon);
   DBManager* m_dbMgr;
   QDockWidget* m_dockPtr;
