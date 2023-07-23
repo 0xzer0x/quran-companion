@@ -1,3 +1,8 @@
+/**
+ * @file bookmarksdialog.cpp
+ * @brief Implementation for BookmarksDialog
+ */
+
 #include "bookmarksdialog.h"
 #include "ui_bookmarksdialog.h"
 
@@ -11,12 +16,8 @@ BookmarksDialog::BookmarksDialog(QWidget* parent, DBManager* dbMgr)
   ui->navBar->setLayoutDirection(Qt::LeftToRight);
   setWindowIcon(QIcon(m_resources.filePath("icons/bookmark-true.png")));
   ui->listViewBookmarkedSurahs->setModel(&m_surahsModel);
-  ui->listViewBookmarkedSurahs->selectionModel()->select(
-    m_surahsModel.index(0, 0),
-    QItemSelectionModel::SelectionFlag::Rows | QItemSelectionModel::Select);
 
-  loadBookmarks();
-  loadSurahs();
+  loadDefault();
   setupConnections();
 }
 
@@ -57,6 +58,17 @@ BookmarksDialog::addEmptyBookmarksLabel()
 }
 
 void
+BookmarksDialog::loadDefault()
+{
+  m_shownSurah = 0;
+  loadBookmarks();
+  loadSurahs();
+  ui->listViewBookmarkedSurahs->selectionModel()->select(
+    m_surahsModel.index(0, 0),
+    QItemSelectionModel::SelectionFlag::Rows | QItemSelectionModel::Select);
+}
+
+void
 BookmarksDialog::showWindow()
 {
   if (!m_frames.empty()) {
@@ -64,13 +76,8 @@ BookmarksDialog::showWindow()
     m_frames.clear();
   }
 
-  m_shownSurah = 0;
-  loadBookmarks();
-  loadSurahs();
+  loadDefault();
   this->show();
-  ui->listViewBookmarkedSurahs->selectionModel()->select(
-    m_surahsModel.index(0, 0),
-    QItemSelectionModel::SelectionFlag::Rows | QItemSelectionModel::Select);
 }
 
 void
@@ -228,14 +235,9 @@ BookmarksDialog::btnRemove()
       m_frames.remove(idx);
     delete frm;
 
-    if (m_frames.isEmpty()) {
-      m_shownSurah = 0;
-      loadBookmarks();
-      loadSurahs();
-      ui->listViewBookmarkedSurahs->selectionModel()->select(
-        m_surahsModel.index(0, 0),
-        QItemSelectionModel::SelectionFlag::Rows | QItemSelectionModel::Select);
-    }
+    // no more bookmarks in this surah
+    if (m_frames.isEmpty())
+      loadDefault();
   }
 }
 

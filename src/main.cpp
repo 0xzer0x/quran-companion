@@ -1,3 +1,8 @@
+/**
+ * @file main.cpp
+ * @brief Application entry point.
+ */
+
 #include "core/mainwindow.h"
 #include "globals.h"
 #include "utils/logger.h"
@@ -9,19 +14,76 @@
 #include <QStyleFactory>
 #include <QTranslator>
 
+/*!
+ * @brief sets the theme for the application.
+ * @details Application theme consists of a QPalette for the application and a
+ * custom stylesheet for different UI components. works through passing the
+ * theme index (0 = light, 1 = dark).
+ *
+ * @param themeIdx - index for theme as it appears in the application settings.
+ */
 void
 setTheme(int themeIdx);
+/**
+ * @brief loads the QCF fonts for Quran pages before starting the
+ * GUI.
+ * @details The application depends mainly on QCF fonts to display Quranic
+ * verses and pages, the QCF fonts are a set of fonts designed specifically for
+ * Madani Mushaf printing. As each page font includes unicode glyphs for each
+ * word in that page. The fonts are loaded at application startup by loading 604
+ * truetype files (ttf). The available QCF versions are 1 and 2.
+ *
+ * @param qcfVersion - font version to use.
+ */
 void
 addFonts(int qcfVersion);
+/**
+ * @brief loads UI translation.
+ * @details Application UI translation is done through compiled Qt translation
+ * files (.qm). addTranslation() loads the correct qm files for the language
+ * given. The loaded translation files consist of a Qt base translation and a
+ * custom application translation file.
+ *
+ * @param localeCode - instance from QLocale::Language that defines a
+ * specific language
+ */
 void
 addTranslation(QLocale::Language localeCode);
+/**
+ * @brief checks the default settings keys exist and sets them with default
+ * values if not found.
+ * @details application settings are stored as ini-formatted files in order to
+ * provide the same functionality on different platforms. The configuration file
+ * is stored in the user's home directory under the application config
+ * directory.
+ *
+ * @param settings pointer to QSettings instance to access app settings
+ */
 void
 checkSettings(QSettings* settings);
+/**
+ * @brief fills the global reciters list and creates their corresponding
+ * directories.
+ * @details Fills the QList that contains #Reciter instances
+ * that represent the reciters supported by the application. The reciters list
+ * is used in many parts of the application by creating a constant reference to
+ * the global QList. It also creates the reciters directories in the application
+ * recitations directory as needed.
+ */
 void
 fillRecitersList();
+/**
+ * @brief set application-wide variables.
+ */
 void
 setGlobals();
 
+/**
+ * @brief application entry point
+ * @param argc - the number of arguments passed to the application
+ * @param argv - command line arguments passed to the application
+ * @return application exit code.
+ */
 int
 main(int argc, char* argv[])
 {

@@ -1,3 +1,8 @@
+/**
+ * @file downloaderdialog.h
+ * @brief Header file for DownloaderDialog
+ */
+
 #ifndef DOWNLOADERDIALOG_H
 #define DOWNLOADERDIALOG_H
 
@@ -17,59 +22,188 @@ namespace Ui {
 class DownloaderDialog;
 }
 
-/*!
- * \class DownloaderDialog
- *
- * \brief The DownloaderDialog class is responsible for downloading surah
- * recitation files for any reciter available
+/**
+ * @brief DownloaderDialog is an interface for downloading surah
+ * recitation files for any reciter available.
+ * @details Downloading recitations works through enqueuing download tasks for
+ * DownloadManager instance to download. Filling the reciters QTreeView requires
+ * access to the DBManager instance.
  */
 class DownloaderDialog : public QDialog
 {
   Q_OBJECT
 
 public:
+  /**
+   * @brief Class constructor
+   * @param parent - parent widget that initalized this instance
+   * @param downloader - pointer to a DownloadManager instance
+   * @param dbMan - pointer to DBManager instance.
+   */
   explicit DownloaderDialog(QWidget* parent = nullptr,
                             DownloadManager* downloader = nullptr,
                             DBManager* dbMan = nullptr);
   ~DownloaderDialog();
 
+  /**
+   * @brief Populates the QTreeView through which the user selects the surahs to
+   * add to queue.
+   */
   void fillTreeView();
 
 public slots:
+  /**
+   * @brief Adds the currently selected surahs in the QTreeView to the
+   * DownloadManager download queue.
+   * @details Adding surah to download queue is done through getting the surah
+   * length through the database instance, then adding download tasks for every
+   * verse in the surah selected.
+   */
   void addToQueue();
+  /**
+   * @brief Adds a download progress bar to the
+   * downloader dialog to indicate download state
+   * @param reciterIdx - ::g_recitersList index for the reciter whose
+   * recitations are being downloaded
+   * @param surah - number of surah being downloaded
+   */
   void addTaskProgress(int reciterIdx, int surah);
+  /**
+   * @brief Sets the currently active download
+   * task progress bar in order to update displayed info.
+   * @details This is typically the first incomplete bar in the dialog.
+   */
   void setCurrentBar();
+  /**
+   * @brief slot to delete the finished progress bar on download completion
+   * @param reciter - ::g_recitersList index for the reciter whose
+   * recitations are downloaded
+   * @param surah - surah number
+   */
   void surahDownloaded(int reciter, int surah);
+  /**
+   * @brief slot to delete all download tasks /
+   * progress bars from dialog
+   */
   void downloadAborted();
+  /**
+   * @brief  slot to update the current task
+   * in case of download error
+   * @param reciter - ::g_recitersList index for the reciter
+   * @param surah - surah number
+   */
   void topTaskDownloadError(int reciter, int surah);
+  /**
+   * @brief slot to update the displayed download speed in the currently active
+   * download.
+   * @param value - download speed value
+   * @param unit - unit which is being downloaded per second (KB, MB, etc.)
+   */
   void updateDownloadSpeed(int value, QString unit);
+  /**
+   * @brief Selects a surah within a specific reciter in order to download.
+   * @details Typically called when recitaion is missing in order to select the
+   * missing surah automatically.
+   * @param reciter - ::g_recitersList index for the reciter
+   * @param surah - surah number
+   */
   void selectTask(int reciter, int surah);
+  /**
+   * @brief Stops downloading tasks and clears the downloads scrollarea
+   * (including completed tasks)
+   */
   void clearQueue();
 
 private slots:
+  /**
+   * @brief Stops all downloading tasks.
+   */
   void btnStopClicked();
 
-  // QWidget interface
 protected:
+  /**
+   * @brief Re-implementation of QWidget::closeEvent() in order to hide the
+   * window instead of closing it.
+   *
+   * @param event
+   */
   void closeEvent(QCloseEvent* event);
 
 private:
   const int m_languageCode = g_language;
   const QList<Reciter>& m_recitersList = g_recitersList;
   const QDir& m_resources = g_themeResources;
+  /**
+   * @brief connects signals and slots for different UI
+   * components and shortcuts.
+   */
   void setupConnections();
+  /**
+   * @brief Adds the combination of reciter & surah to the currently active
+   * downloads QMap.
+   * @param reciter - ::g_recitersList index for the reciter whose
+   * recitations are being downloaded
+   * @param surah - surah number
+   */
   void addToDownloading(int reciter, int surah);
+  /**
+   * @brief Removes the surah from the reciters currently active
+   * downloads.
+   * @param reciter - ::g_recitersList index for the reciter whose
+   * recitations are being downloaded
+   * @param surah - surah number
+   */
   void removeFromDownloading(int reciter, int surah);
+  /**
+   * @brief Pointer to access ui elements generated from .ui files.
+   */
   Ui::DownloaderDialog* ui;
+  /**
+   * @brief Pointer to the currently active DownloadProgressBar to update as
+   * verses are downloaded.
+   */
   DownloadProgressBar* m_currentBar;
+  /**
+   * @brief Pointer to DownloadManager instance.
+   */
   DownloadManager* m_downloaderPtr;
+  /**
+   * @brief Pointer to DBManager instance.
+   */
   DBManager* m_dbMgr;
+  /**
+   * @brief Pointer to QLabel which contains the state and information for the
+   * currently active download.
+   */
   QLabel* m_currentLb;
+  /**
+   * @brief Pointer to QLabel which contains the download speed/state.
+   */
   QLabel* m_currDownSpeedLb;
+  /**
+   * @brief QFrames for the currently active & queued download tasks.
+   */
   QList<QFrame*> m_frameLst;
+  /**
+   * @brief QFrames for the downloaded tasks.
+   */
   QList<QFrame*> m_finishedFrames;
+  /**
+   * @brief Model for the recitation download QTreeView.
+   */
   QStandardItemModel m_treeModel;
+  /**
+   * @brief QStringList for the surah names which are displayed in the
+   * QTreeView.
+   */
   QStringList m_surahDisplayNames;
+  /**
+   * @brief QMap for the currently active & queued download tasks.
+   * @details Keys in the QMap represent the reciters indices. values are a set
+   * of surah numbers. When adding downloads, the reciter - surah combination is
+   * checked against this QMap in order to determine whether its a duplicate or
+   * not.
+   */
   QMap<int, QSet<int>> m_downloadingTasks;
 };
 

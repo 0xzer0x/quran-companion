@@ -1,3 +1,7 @@
+/**
+ * @file globals.cpp
+ */
+
 #include "globals.h"
 
 // app settings
