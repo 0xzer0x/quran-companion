@@ -136,7 +136,8 @@ private:
    */
   void addEmptyBookmarksLabel();
   /**
-   * @brief Index of the first bookmark to show in the ::Verse QList.
+   * @brief Index of the first bookmark to show in
+   * BookmarksDialog::m_shownVerses.
    */
   int m_startIdx = 0;
   /**

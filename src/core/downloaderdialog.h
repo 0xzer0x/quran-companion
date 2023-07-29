@@ -36,9 +36,9 @@ class DownloaderDialog : public QDialog
 public:
   /**
    * @brief Class constructor
-   * @param parent - parent widget that initalized this instance
+   * @param parent - pointer to parent widget
    * @param downloader - pointer to a DownloadManager instance
-   * @param dbMan - pointer to DBManager instance.
+   * @param dbMan - pointer to DBManager instance
    */
   explicit DownloaderDialog(QWidget* parent = nullptr,
                             DownloadManager* downloader = nullptr,

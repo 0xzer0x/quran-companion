@@ -1,12 +1,7 @@
 #include "searchdialog.h"
+#include "../widgets/clickablelabel.h"
 #include "ui_searchdialog.h"
 
-/*!
- * \brief SearchDialog::SearchDialog class constructor
- *
- * @param parent pointer to parent widget
- * @param dbPtr pointer to database management interface
- */
 SearchDialog::SearchDialog(QWidget* parent, DBManager* dbPtr)
   : QDialog(parent)
   , ui(new Ui::SearchDialog)
@@ -54,10 +49,6 @@ SearchDialog::setupConnections()
           Qt::UniqueConnection);
 }
 
-/*!
- * \brief SearchDialog::getResults slot to get search results and update UI
- * accordingly
- */
 void
 SearchDialog::getResults()
 {
@@ -95,10 +86,6 @@ SearchDialog::getResults()
   showResults();
 }
 
-/*!
- * \brief SearchDialog::verseClicked slot to emit signal for mainwindow to
- * navigate to the clicked verse
- */
 void
 SearchDialog::verseClicked()
 {
@@ -107,10 +94,6 @@ SearchDialog::verseClicked()
   emit navigateToVerse(selected);
 }
 
-/*!
- * \brief SearchDialog::showResults slot to display 50 search results according
- * to the startIdx
- */
 void
 SearchDialog::showResults()
 {
@@ -162,10 +145,6 @@ SearchDialog::showResults()
   ui->scrollArea->verticalScrollBar()->setValue(0);
 }
 
-/*!
- * \brief SearchDialog::moveFwd slot for displaying the next 50 results from the
- * search results
- */
 void
 SearchDialog::moveFwd()
 {
@@ -180,10 +159,6 @@ SearchDialog::moveFwd()
   }
 }
 
-/*!
- * \brief SearchDialog::moveBwd slot for displaying the previous 50 results from
- * the search results
- */
 void
 SearchDialog::moveBwd()
 {
