@@ -21,7 +21,7 @@ namespace Ui {
 class SearchDialog;
 }
 
-/*!
+/**
  * @brief SearchDialog is an interface for searching Quran verses.
  * @details Searching Quran verses is done through SQL Queries to the Quran
  * sqlite database. Searching options include using whole-word search, searching
@@ -73,7 +73,6 @@ signals:
    * @fn void navigateToVerse(Verse v)
    * @brief Emitted when a search result is clicked to signal the
    * navigation and selection of that verse.
-   *
    * @param v - ::Verse to navigate to
    */
   void navigateToVerse(Verse v);
@@ -81,7 +80,6 @@ signals:
 protected:
   /** @brief Re-implementation of QWidget::closeEvent() in order to hide the
    * window instead of closing it.
-   *
    * @param event
    */
   void closeEvent(QCloseEvent* event);
@@ -98,8 +96,8 @@ private slots:
   void btnTransferClicked();
 
 private:
-  const QDir& m_resources = g_themeResources;
-  const QString& m_fontPrefix = g_qcfFontPrefix;
+  const QDir& m_resources = Globals::themeResources;
+  const QString& m_fontPrefix = Globals::qcfFontPrefix;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

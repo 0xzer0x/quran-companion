@@ -5,23 +5,23 @@
 #include "globals.h"
 
 // app settings
-int g_themeId = 0;
-bool g_darkMode = false;
-QSettings* g_settings = nullptr;
-QLocale::Language g_language;
-QString g_updateToolPath;
+int Globals::themeId = 0;
+bool Globals::darkMode = false;
+QSettings* Globals::settings = nullptr;
+QLocale::Language Globals::language;
 
 // qcf fonts
-int g_qcfVersion = 1;
-QString g_qcfFontPrefix;
-QString g_qcfBSMLFont;
+int Globals::qcfVersion = 1;
+QString Globals::qcfFontPrefix;
+QString Globals::qcfBSMLFont;
 
 // app directories
-QDir g_themeResources;
-QDir g_configDir = QDir::homePath();
-QDir g_assetsDir;
-QDir g_bismillahDir;
-QDir g_recitationsDir;
+QDir Globals::themeResources;
+QDir Globals::configDir = QDir::homePath();
+QDir Globals::assetsDir;
+QDir Globals::bismillahDir;
+QDir Globals::recitationsDir;
 
 // application specific
-QList<Reciter> g_recitersList;
+QList<Reciter> Globals::recitersList;
+QString Globals::updateToolPath;

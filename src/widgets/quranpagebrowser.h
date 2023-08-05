@@ -48,12 +48,12 @@ private slots:
   void actionZoomOut();
 
 private:
-  QSettings* const m_settings = g_settings;
-  const QDir& m_resources = g_themeResources;
-  const QString& m_bsmlFont = g_qcfBSMLFont;
-  const QString& m_fontnamePrefix = g_qcfFontPrefix;
-  const int m_qcfVer = g_qcfVersion;
-  const bool m_darkMode = g_darkMode;
+  QSettings* const m_settings = Globals::settings;
+  const QDir& m_resources = Globals::themeResources;
+  const QString& m_bsmlFont = Globals::qcfBSMLFont;
+  const QString& m_fontnamePrefix = Globals::qcfFontPrefix;
+  const int m_qcfVer = Globals::qcfVersion;
+  const bool m_darkMode = Globals::darkMode;
   QString& justifyHeader(QString& baseHeader);
   QSize calcPageLineSize(QStringList& lines);
   QImage surahFrame(int surah);

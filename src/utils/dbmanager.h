@@ -123,10 +123,10 @@ public:
   bool removeBookmark(Verse v);
 
 private:
-  QDir m_dbDir = g_assetsDir;
-  const QSettings* m_settings = g_settings;
-  const QLocale::Language m_languageCode = g_language;
-  const int m_qcfVer = g_qcfVersion;
+  QDir m_dbDir = Globals::assetsDir;
+  const QSettings* m_settings = Globals::settings;
+  const QLocale::Language m_languageCode = Globals::language;
+  const int m_qcfVer = Globals::qcfVersion;
   Database m_currentDb = null;
   QSqlDatabase m_openDBCon;
   Tafsir m_currTafsir = Tafsir::sa3dy;

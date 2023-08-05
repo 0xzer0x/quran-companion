@@ -53,8 +53,8 @@ signals:
   void missingVerseFile(int reciterIdx, int surah);
 
 private:
-  QDir m_reciterDir = g_recitationsDir;
-  const QList<Reciter>& m_recitersList = g_recitersList;
+  QDir m_reciterDir = Globals::recitationsDir;
+  const QList<Reciter>& m_recitersList = Globals::recitersList;
   void setupConnections();
   int m_reciter = 0;
   int m_surahCount = 0;

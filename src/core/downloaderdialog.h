@@ -63,7 +63,7 @@ public slots:
   /**
    * @brief Adds a download progress bar to the
    * downloader dialog to indicate download state
-   * @param reciterIdx - ::g_recitersList index for the reciter whose
+   * @param reciterIdx - ::Globals::recitersList index for the reciter whose
    * recitations are being downloaded
    * @param surah - number of surah being downloaded
    */
@@ -76,7 +76,7 @@ public slots:
   void setCurrentBar();
   /**
    * @brief slot to delete the finished progress bar on download completion
-   * @param reciter - ::g_recitersList index for the reciter whose
+   * @param reciter - ::Globals::recitersList index for the reciter whose
    * recitations are downloaded
    * @param surah - surah number
    */
@@ -89,7 +89,7 @@ public slots:
   /**
    * @brief  slot to update the current task
    * in case of download error
-   * @param reciter - ::g_recitersList index for the reciter
+   * @param reciter - ::Globals::recitersList index for the reciter
    * @param surah - surah number
    */
   void topTaskDownloadError(int reciter, int surah);
@@ -104,7 +104,7 @@ public slots:
    * @brief Selects a surah within a specific reciter in order to download.
    * @details Typically called when recitaion is missing in order to select the
    * missing surah automatically.
-   * @param reciter - ::g_recitersList index for the reciter
+   * @param reciter - ::Globals::recitersList index for the reciter
    * @param surah - surah number
    */
   void selectTask(int reciter, int surah);
@@ -124,15 +124,14 @@ protected:
   /**
    * @brief Re-implementation of QWidget::closeEvent() in order to hide the
    * window instead of closing it.
-   *
    * @param event
    */
   void closeEvent(QCloseEvent* event);
 
 private:
-  const int m_languageCode = g_language;
-  const QList<Reciter>& m_recitersList = g_recitersList;
-  const QDir& m_resources = g_themeResources;
+  const int m_languageCode = Globals::language;
+  const QList<Reciter>& m_recitersList = Globals::recitersList;
+  const QDir& m_resources = Globals::themeResources;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -141,7 +140,7 @@ private:
   /**
    * @brief Adds the combination of reciter & surah to the currently active
    * downloads QMap.
-   * @param reciter - ::g_recitersList index for the reciter whose
+   * @param reciter - ::Globals::recitersList index for the reciter whose
    * recitations are being downloaded
    * @param surah - surah number
    */
@@ -149,7 +148,7 @@ private:
   /**
    * @brief Removes the surah from the reciters currently active
    * downloads.
-   * @param reciter - ::g_recitersList index for the reciter whose
+   * @param reciter - ::Globals::recitersList index for the reciter whose
    * recitations are being downloaded
    * @param surah - surah number
    */

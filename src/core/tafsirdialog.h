@@ -39,10 +39,10 @@ private slots:
   void btnPrevClicked();
 
 private:
-  const int m_qcfVer = g_qcfVersion;
-  const QDir& m_resources = g_themeResources;
-  const QString& m_fontPrefix = g_qcfFontPrefix;
-  const QSettings* m_settings = g_settings;
+  const int m_qcfVer = Globals::qcfVersion;
+  const QDir& m_resources = Globals::themeResources;
+  const QString& m_fontPrefix = Globals::qcfFontPrefix;
+  const QSettings* m_settings = Globals::settings;
   Ui::TafsirDialog* ui;
   void setupConnections();
   void setTafsirAsTitle();

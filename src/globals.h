@@ -51,35 +51,47 @@ struct Reciter
      ///< Quran or a combination of surah and verse numbers.
 };
 
+namespace Globals {
 extern int
-  g_themeId; ///< global variable represnting the application theme index
+  themeId; ///< global variable represnting the application theme index.
+
 extern QSettings*
-  g_settings; ///< global pointer to the application settings instance
-extern QLocale::Language
-  g_language; ///< global QLocale::Language instance for application languge.
+  settings; ///< global pointer to the application QSettings instance.
+
 extern bool
-  g_darkMode; ///< global boolean to indicate if application is in dark mode.
+  darkMode; ///< global boolean to indicate if application is in dark mode.
+
+extern QLocale::Language
+  language; ///< global QLocale::Language instance for application languge.
+
 extern QString
-  g_updateToolPath; ///< global absolute path for the application update tool.
+  updateToolPath; ///< global absolute path for the application update tool.
 
-extern int g_qcfVersion;        ///< global variable for the QCF version in use.
-extern QString g_qcfFontPrefix; ///< global variable for the QCF font prefix to
-                                ///< generate font name from.
+extern int qcfVersion; ///< global variable for the QCF version in use.
+
+extern QString qcfFontPrefix; ///< global variable for the QCF font prefix to
+                              ///< generate font name from.
+
 extern QString
-  g_qcfBSMLFont; ///< global variable for the name of the QCF basmallah font.
+  qcfBSMLFont; ///< global variable for the name of the QCF basmallah font.
 
-extern QDir g_themeResources; ///< global QDir for the current theme resources
-                              ///< (icons & styles).
+extern QDir themeResources; ///< global QDir for the current theme resources
+                            ///< (icons & styles).
 extern QDir
-  g_configDir; ///< global QDir representing application config directiory.
-extern QDir g_assetsDir; ///< global QDir representing the application assets
-                         ///< directory (fonts, translations, tafsir).
-extern QDir
-  g_bismillahDir; ///< global QDir representing the reciters basmallah files.
-extern QDir g_recitationsDir; ///< global QDir representing the top-level path
-                              ///< for recitations.
+  configDir; ///< global QDir representing application config directiory.
 
-extern QList<Reciter> g_recitersList; ///< global QList containing reciters
-                                      ///< supported by the application.
+extern QDir assetsDir; ///< global QDir representing the application assets
+                       ///< directory (fonts, translations, tafsir).
+
+extern QDir
+  bismillahDir; ///< global QDir representing the reciters basmallah files.
+
+extern QDir recitationsDir; ///< global QDir representing the top-level path
+                            ///< for recitations.
+
+extern QList<Reciter> recitersList; ///< global QList containing reciters
+                                    ///< supported by the application.
+
+};
 
 #endif // GLOBALS_H

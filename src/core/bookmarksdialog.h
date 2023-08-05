@@ -34,7 +34,6 @@ public:
   /**
    * @brief BookmarksDialog class constructor
    * @details sets up the UI and displays all bookmarks as the default.
-   *
    * @param parent - pointer to the parent widget
    * @param dbMgr - pointer to a DBManager instance for accessing database
    * functionality
@@ -58,7 +57,6 @@ public:
    * @details If surah parameter is -1 all bookmarks will be loaded, otherwise
    * bookmarks with the surah number passed are loaded. Loaded bookmarks are
    * limited to 10 per page for faster loading of results.
-   *
    * @param surah - surah number to load bookmarks from
    */
   void loadBookmarks(int surah = -1);
@@ -75,7 +73,6 @@ signals:
    * @fn void navigateToVerse(Verse v)
    * @brief Emitted when 'go to verse' button is clicked to signal the
    * navigation and selection of a verse.
-   *
    * @param v - ::Verse to navigate to
    */
   void navigateToVerse(Verse v);
@@ -108,7 +105,6 @@ protected:
   /**
    * @brief Re-implementation of QWidget::closeEvent() in order to hide the
    * window instead of closing it.
-   *
    * @param event
    */
   void closeEvent(QCloseEvent* event);
@@ -116,15 +112,14 @@ protected:
 private slots:
   /**
    * @brief Slot that loads bookmarks for the clicked surah.
-   *
    * @param index - QModelIndex instance for the clicked surah.
    */
   void surahSelected(const QModelIndex& index);
 
 private:
-  const QDir& m_resources = g_themeResources;
-  const QString& m_fontPrefix = g_qcfFontPrefix;
-  const int m_qcfVer = g_qcfVersion;
+  const QDir& m_resources = Globals::themeResources;
+  const QString& m_fontPrefix = Globals::qcfFontPrefix;
+  const int m_qcfVer = Globals::qcfVersion;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

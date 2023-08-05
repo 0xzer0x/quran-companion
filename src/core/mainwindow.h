@@ -108,11 +108,11 @@ private slots:
   void volumeSliderValueChanged(int position);
 
 private:
-  QSettings* const m_settings = g_settings;
-  const QList<Reciter>& m_recitersList = g_recitersList;
-  const QDir m_resources = g_themeResources;
-  const QString& m_updateToolPath = g_updateToolPath;
-  const bool m_darkMode = g_darkMode;
+  QSettings* const m_settings = Globals::settings;
+  const QList<Reciter>& m_recitersList = Globals::recitersList;
+  const QDir m_resources = Globals::themeResources;
+  const QString& m_updateToolPath = Globals::updateToolPath;
+  const bool m_darkMode = Globals::darkMode;
   void init();
   void loadIcons();
   void loadSettings();

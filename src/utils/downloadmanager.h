@@ -63,7 +63,7 @@ signals:
   void queueEmpty();
 
 private:
-  const QList<Reciter>& m_recitersList = g_recitersList;
+  const QList<Reciter>& m_recitersList = Globals::recitersList;
   QUrl downloadUrl(const int reciterIdx,
                    const int surah,
                    const int verse) const;

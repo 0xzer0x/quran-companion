@@ -44,8 +44,8 @@ public slots:
   void checkUpdate(QString appVer);
 
 private:
-  const QDir& m_resources = g_themeResources;
-  const QList<Reciter>& m_recitersList = g_recitersList;
+  const QDir& m_resources = Globals::themeResources;
+  const QList<Reciter>& m_recitersList = Globals::recitersList;
   void setupConnections();
   void setNotificationIcon(Action icon);
   DBManager* m_dbMgr;
