@@ -125,7 +125,7 @@ private:
    * @brief QList for all visible HighlightFrame widgets containing search
    * results.
    */
-  QList<HighlightFrame*> m_lbLst;
+  QList<VerseFrame*> m_lbLst;
   /**
    * @brief ::Verse QList for the current search results.
    */

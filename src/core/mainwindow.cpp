@@ -1269,17 +1269,16 @@ MainWindow::highlightCurrentVerse()
   m_quranBrowser->highlightVerse(idx);
 
   if (m_highlightedFrm != nullptr)
-    m_highlightedFrm->setStyleSheet("");
+    m_highlightedFrm->setSelected(false);
 
-  HighlightFrame* verseFrame =
-    ui->scrlVerseCont->findChild<HighlightFrame*>(QString("%0_%1").arg(
+  VerseFrame* verseFrame =
+      ui->scrlVerseCont->findChild<VerseFrame*>(QString("%0_%1").arg(
       QString::number(m_currVerse.surah), QString::number(m_currVerse.number)));
 
-  verseFrame->highlightFrame();
+  verseFrame->setSelected(true);
 
-  if (m_highlightedFrm != nullptr) {
+  if (m_highlightedFrm != nullptr)
     ui->scrlVerseByVerse->ensureWidgetVisible(verseFrame);
-  }
 
   m_highlightedFrm = verseFrame;
 }
@@ -1299,12 +1298,12 @@ MainWindow::addSideContent()
 
   ClickableLabel* verselb;
   QLabel* contentLb;
-  HighlightFrame* verseContFrame;
+  VerseFrame* verseContFrame;
   QString prevLbContent, currLbContent;
   for (int i = m_vInfoList.size() - 1; i >= 0; i--) {
     Verse vInfo = m_vInfoList.at(i);
 
-    verseContFrame = new HighlightFrame(ui->scrlVerseCont);
+    verseContFrame = new VerseFrame(ui->scrlVerseCont);
     verselb = new ClickableLabel(verseContFrame);
     contentLb = new QLabel(verseContFrame);
 

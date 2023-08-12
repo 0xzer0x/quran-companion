@@ -430,6 +430,24 @@ DBManager::getVerseId(const int sIdx, const int vIdx)
   return dbQuery.value(0).toInt();
 }
 
+Verse
+DBManager::getVerseById(const int id)
+{
+  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  QSqlQuery dbQuery(m_openDBCon);
+  dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v1 WHERE id=:i");
+  dbQuery.bindValue(0, id);
+
+  if (!dbQuery.exec())
+    qCritical() << "Error occurred during getVerseById SQL statement exec";
+
+  dbQuery.next();
+
+  return Verse{ dbQuery.value(0).toInt(),
+                dbQuery.value(1).toInt(),
+                dbQuery.value(2).toInt() };
+}
+
 int
 DBManager::getSurahVerseCount(const int surahIdx)
 {

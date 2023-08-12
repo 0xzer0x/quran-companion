@@ -1,13 +1,11 @@
+/**
+ * @file settingsdialog.cpp
+ * @brief Implementation file for SettingsDialog
+ */
+
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
-/*!
- * \brief SettingsDialog::SettingsDialog class constructor
- *
- * @param parent pointer to parent widget
- * @param settingsPtr pointer to application settings
- * @param vPlayerPtr pointer to The VersePlayer object
- */
 SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   : QDialog(parent)
   , ui(new Ui::SettingsDialog)

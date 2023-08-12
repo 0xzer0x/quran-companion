@@ -13,7 +13,6 @@ public:
 signals:
   void clicked();
 
-  // QWidget interface
 protected:
   void mousePressEvent(QMouseEvent* event);
 };

@@ -1,3 +1,8 @@
+/**
+ * @file settingsdialog.h
+ * @brief Header file for SettingsDialog
+ */
+
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 

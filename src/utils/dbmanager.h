@@ -101,6 +101,7 @@ public:
   int getSurahStartPage(int surahIdx);
   QString getSurahName(const int sIdx, bool ar = false);
   int getVerseId(const int sIdx, const int vIdx);
+  Verse getVerseById(const int id);
   int getVersePage(const int& surahIdx, const int& verse);
   int getJuzStartPage(const int juz);
   int getJuzOfPage(const int page);

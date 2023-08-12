@@ -143,7 +143,7 @@ private:
   BookmarksDialog* m_bookmarksDlg = nullptr;
   DownloaderDialog* m_downloaderDlg = nullptr;
   DownloadManager* m_downManPtr = nullptr;
-  HighlightFrame* m_highlightedFrm = nullptr;
+  VerseFrame* m_highlightedFrm = nullptr;
   Verse m_currVerse{ 1, 1, 1 };
   QList<QFrame*> m_verseFrameList;
   QList<Verse> m_vInfoList;

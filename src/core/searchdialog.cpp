@@ -1,3 +1,8 @@
+/**
+ * @file searchdialog.cpp
+ * @brief Implementation file for SearchDialog
+ */
+
 #include "searchdialog.h"
 #include "../widgets/clickablelabel.h"
 #include "ui_searchdialog.h"
@@ -113,7 +118,7 @@ SearchDialog::showResults()
     Verse v = m_currResults.at(i);
     QString fontName =
       m_fontPrefix + QString::number(v.page).rightJustified(3, '0');
-    HighlightFrame* vFrame = new HighlightFrame(ui->srclResults);
+    VerseFrame* vFrame = new VerseFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);
     ClickableLabel* clkLb = new ClickableLabel(vFrame);
 

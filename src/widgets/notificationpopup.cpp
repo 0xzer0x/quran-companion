@@ -41,6 +41,16 @@ NotificationPopup::NotificationPopup(QWidget* parent, DBManager* dbMgr)
 }
 
 void
+NotificationPopup::setupConnections()
+{
+  connect(m_fadeoutAnim,
+          &QPropertyAnimation::finished,
+          this,
+          &NotificationPopup::hide,
+          Qt::UniqueConnection);
+}
+
+void
 NotificationPopup::dockLocationChanged(Qt::DockWidgetArea dockPos)
 {
   m_dockArea = dockPos;
@@ -122,16 +132,6 @@ NotificationPopup::checkUpdate(QString appVer)
     msg = tr("Update available") + ": " + appVer;
     this->notify(msg, updateInfo);
   }
-}
-
-void
-NotificationPopup::setupConnections()
-{
-  connect(m_fadeoutAnim,
-          &QPropertyAnimation::finished,
-          this,
-          &NotificationPopup::hide,
-          Qt::UniqueConnection);
 }
 
 void
