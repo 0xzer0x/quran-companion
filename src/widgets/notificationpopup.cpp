@@ -1,3 +1,8 @@
+/**
+ * @file notificationpopup.cpp
+ * @brief Implementation file for NotificationPopup
+ */
+
 #include "notificationpopup.h"
 
 NotificationPopup::NotificationPopup(QWidget* parent, DBManager* dbMgr)

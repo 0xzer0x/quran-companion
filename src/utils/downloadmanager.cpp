@@ -1,3 +1,8 @@
+/**
+ * @file downloadmanager.cpp
+ * @brief Implementation file for DownloadManager
+ */
+
 #include "downloadmanager.h"
 
 DownloadManager::DownloadManager(QObject* parent, DBManager* dbptr)
@@ -105,7 +110,7 @@ DownloadManager::processQueueHead()
 
   m_isDownloading = true;
   QNetworkRequest req(m_currentTask.link);
-  req.setTransferTimeout(1500);
+  req.setTransferTimeout(3000);
   m_currentTask.networkReply = m_netMan->get(req);
   m_currentTask.networkReply->ignoreSslErrors();
   m_downloadStart = QTime::currentTime();

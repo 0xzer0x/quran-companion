@@ -1,3 +1,8 @@
+/**
+ * @file verseframe.cpp
+ * @brief Implementation file for VerseFrame
+ */
+
 #include "verseframe.h"
 
 VerseFrame::VerseFrame(QWidget* parent)

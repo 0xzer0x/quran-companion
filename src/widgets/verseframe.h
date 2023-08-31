@@ -1,3 +1,8 @@
+/**
+ * @file verseframe.h
+ * @brief Header file for VerseFrame
+ */
+
 #ifndef VERSEFRAME_H
 #define VERSEFRAME_H
 

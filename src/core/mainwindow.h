@@ -53,7 +53,6 @@ public slots:
   void saveReaderState();
   void restartApp();
 
-  // QWidget interface
 protected:
   void resizeEvent(QResizeEvent* event);
 

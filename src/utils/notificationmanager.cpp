@@ -1,3 +1,8 @@
+/**
+ * @file notificationmanager.cpp
+ * @brief Implementation file for NotificationManager
+ */
+
 #include "notificationmanager.h"
 
 NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)

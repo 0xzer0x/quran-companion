@@ -1,3 +1,8 @@
+/**
+ * @file clickablelabel.cpp
+ * @brief Implementation file for ClickableLabel
+ */
+
 #include "clickablelabel.h"
 
 ClickableLabel::ClickableLabel(QWidget* parent)

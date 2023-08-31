@@ -1,3 +1,8 @@
+/**
+ * @file dbmanager.cpp
+ * @brief Implementation for DBManager
+ */
+
 #include "dbmanager.h"
 
 DBManager::DBManager(QObject* parent)
