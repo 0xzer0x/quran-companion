@@ -37,11 +37,12 @@ public:
                        int reciterIdx = 0);
 
   /**
-   * @brief construct the verse filename for the current active verse using the
+   * @brief construct the verse filename for the ::Verse given using the
    * surah and verse number (002005.mp3)
+   * @param v - ::Verse to get the filename of
    * @return QString of the filename
    */
-  QString constructVerseFilename();
+  QString constructVerseFilename(Verse v);
   /**
    * @brief updates m_surahCount to match the verse count of the currently
    * active verse
@@ -60,6 +61,12 @@ public:
    * @return boolean value indicating successful load
    */
   bool setVerseFile(const QString& newVerseFilename);
+  /**
+   * @brief utility function that provides a convinent interface for loading the
+   * current m_activeVerse
+   * @return boolean indicating successful load
+   */
+  bool loadActiveVerse();
 
   /**
    * @brief getter for the currently set reciter name

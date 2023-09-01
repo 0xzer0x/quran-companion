@@ -11,7 +11,7 @@
 
 /**
  * @brief VerseFrame represents a custom QFrame component surrounding a Quran
- * frame.
+ * verse.
  */
 class VerseFrame : public QFrame
 {

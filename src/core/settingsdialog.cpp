@@ -215,8 +215,10 @@ SettingsDialog::applyAllChanges()
   if (ui->chkAdaptive->isChecked() != m_adaptive)
     updateAdaptiveFont(ui->chkAdaptive->isChecked());
 
+  bool forceManualFont = false;
   if (ui->cmbQuranFontSz->currentText() != QString::number(m_quranFontSize))
-    updateQuranFontSize(ui->cmbQuranFontSz->currentText());
+    updateQuranFontSize(ui->cmbQuranFontSz->currentText()),
+      forceManualFont = true;
 
   if (ui->fntCmbSide->currentFont() != m_sideFont)
     updateSideFont(ui->fntCmbSide->currentFont());
@@ -240,7 +242,7 @@ SettingsDialog::applyAllChanges()
 
   // redraw once if flag is set
   if (m_renderQuranPage)
-    emit redrawQuranPage(false);
+    emit redrawQuranPage(forceManualFont);
 
   if (m_renderSideContent)
     emit redrawSideContent();

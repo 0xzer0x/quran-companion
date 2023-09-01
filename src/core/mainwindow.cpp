@@ -499,7 +499,7 @@ MainWindow::setVerseToStartOfPage()
     // update the player active verse
     m_player->setVerse(m_currVerse);
     // open newly set verse recitation file
-    m_player->setVerseFile(m_player->constructVerseFilename());
+    m_player->loadActiveVerse();
   }
 }
 
@@ -732,7 +732,7 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   // update the player surah & verse
   m_player->setVerse(m_currVerse);
   // open newly set verse recitation file
-  m_player->setVerseFile(m_player->constructVerseFilename());
+  m_player->loadActiveVerse();
 
   setCmbPageIdx(m_currVerse.page - 1);
   setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
@@ -944,7 +944,7 @@ MainWindow::verseClicked()
 
   setCmbVerseIdx(verse - 1);
   m_endOfPage = false;
-  m_player->setVerseFile(m_player->constructVerseFilename());
+  m_player->loadActiveVerse();
   btnPlayClicked();
 }
 
@@ -966,60 +966,69 @@ MainWindow::surahClicked(QModelIndex& index)
 void
 MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
 {
-  QString idx = hrefUrl.toString();
-  idx.remove('#');
-  Verse v = m_vInfoList.at(idx.toInt());
+  int idx = hrefUrl.toString().remove('#').toInt();
+  Verse v = m_vInfoList.at(idx);
 
-  int chosenAction = m_quranBrowser->lmbVerseMenu(m_dbMgr->isBookmarked(v));
-  // remove from / add to favorites
-  if (chosenAction == 5) {
-    if (m_dbMgr->removeBookmark(v))
-      m_popup->bookmarkRemoved();
+  QuranPageBrowser::Action chosenAction =
+    m_quranBrowser->lmbVerseMenu(m_dbMgr->isBookmarked(v));
 
-  } else if (chosenAction == 4) {
-    m_dbMgr->addBookmark(v);
-    m_popup->bookmarkAdded();
-  }
-  // copy
-  else if (chosenAction == 3) {
-    copyVerseText(idx.toInt());
-    m_popup->copiedToClipboard();
-  }
-  // open tafsir
-  else if (chosenAction == 2)
-    showExpandedVerseTafsir(v);
-  // select or play
-  else if (chosenAction == 0 || chosenAction == 1) {
-    m_currVerse.number = v.number;
-    m_player->setVerse(m_currVerse);
+  switch (chosenAction) {
+    case QuranPageBrowser::play:
+      m_currVerse.number = v.number;
+      if (m_currVerse.surah != v.surah) {
+        m_currVerse.surah = v.surah;
+        m_player->setVerse(m_currVerse);
+        setVerseComboBoxRange();
+        updateSurah();
 
-    if (m_currVerse.surah != v.surah) {
-      m_currVerse.surah = v.surah;
+      } else {
+        // same surah & page, different number
+        m_player->setVerse(m_currVerse);
+        setCmbVerseIdx(v.number - 1);
+      }
 
-      m_player->setVerse(m_currVerse);
-      m_player->updateSurahVerseCount();
-      setVerseComboBoxRange();
-      updateSurah();
-    }
+      m_endOfPage = false;
 
-    m_internalVerseChange = true;
-    ui->cmbVerse->setCurrentIndex(v.number - 1);
+      m_player->loadActiveVerse();
+      btnPlayClicked();
+      break;
+    case QuranPageBrowser::select:
+      m_currVerse.number = v.number;
+      if (m_currVerse.surah != v.surah) {
+        m_currVerse.surah = v.surah;
+        m_player->setVerse(m_currVerse);
+        setVerseComboBoxRange();
+        updateSurah();
 
-    m_internalVerseChange = false;
+      } else {
+        // same surah & page, different number
+        m_player->setVerse(m_currVerse);
+        setCmbVerseIdx(v.number - 1);
+      }
 
-    m_endOfPage = false;
-    switch (chosenAction) {
-      case 0:
-        m_player->setVerseFile(m_player->constructVerseFilename());
-        btnPlayClicked();
-        break;
-      case 1:
-        m_player->setSource(QUrl());
-        highlightCurrentVerse();
-        break;
-      default:
-        break;
-    }
+      m_endOfPage = false;
+
+      m_player->setSource(QUrl());
+      highlightCurrentVerse();
+      break;
+
+    case QuranPageBrowser::tafsir:
+      showExpandedVerseTafsir(v);
+      break;
+    case QuranPageBrowser::copy:
+      copyVerseText(idx);
+      m_popup->copiedToClipboard();
+      break;
+    case QuranPageBrowser::addBookmark:
+      m_dbMgr->addBookmark(v);
+      m_popup->bookmarkAdded();
+      break;
+    case QuranPageBrowser::removeBookmark:
+      if (m_dbMgr->removeBookmark(v))
+        m_popup->bookmarkRemoved();
+      break;
+    default:
+      break;
   }
 }
 
@@ -1198,7 +1207,7 @@ MainWindow::navigateToVerse(Verse v)
   updateSurah();
   highlightCurrentVerse();
 
-  m_player->setVerseFile(m_player->constructVerseFilename());
+  m_player->loadActiveVerse();
   m_endOfPage = false;
 }
 
@@ -1272,7 +1281,7 @@ MainWindow::highlightCurrentVerse()
     m_highlightedFrm->setSelected(false);
 
   VerseFrame* verseFrame =
-      ui->scrlVerseCont->findChild<VerseFrame*>(QString("%0_%1").arg(
+    ui->scrlVerseCont->findChild<VerseFrame*>(QString("%0_%1").arg(
       QString::number(m_currVerse.surah), QString::number(m_currVerse.number)));
 
   verseFrame->setSelected(true);

@@ -20,7 +20,7 @@ VersePlayer::VersePlayer(QObject* parent,
   setupConnections();
 
   m_reciterDir.cd(m_recitersList.at(m_reciter).baseDirName);
-  setVerseFile(constructVerseFilename());
+  loadActiveVerse();
 }
 
 void
@@ -84,12 +84,12 @@ VersePlayer::setPlayerVolume(qreal volume)
 }
 
 QString
-VersePlayer::constructVerseFilename()
+VersePlayer::constructVerseFilename(Verse v)
 {
   // construct verse mp3 filename e.g. 002005.mp3
   QString filename;
-  filename.append(QString::number(m_activeVerse.surah).rightJustified(3, '0'));
-  filename.append(QString::number(m_activeVerse.number).rightJustified(3, '0'));
+  filename.append(QString::number(v.surah).rightJustified(3, '0'));
+  filename.append(QString::number(v.number).rightJustified(3, '0'));
 
   filename.append(".mp3");
   return filename;
@@ -98,9 +98,7 @@ VersePlayer::constructVerseFilename()
 void
 VersePlayer::playCurrentVerse()
 {
-  QString filename = constructVerseFilename();
-  // set the attribute / source for QMediaPlayer
-  if (setVerseFile(filename))
+  if (loadActiveVerse())
     play(); // start playback of audio
 }
 
@@ -134,7 +132,7 @@ VersePlayer::changeReciter(int reciterIdx)
     m_reciter = reciterIdx;
   }
 
-  return setVerseFile(constructVerseFilename());
+  return loadActiveVerse();
 }
 
 bool
@@ -151,6 +149,12 @@ VersePlayer::setVerseFile(const QString& newVerseFilename)
   setSource(QUrl::fromLocalFile(m_reciterDir.filePath(m_verseFile)));
 
   return true;
+}
+
+bool
+VersePlayer::loadActiveVerse()
+{
+  return setVerseFile(constructVerseFilename(m_activeVerse));
 }
 
 void

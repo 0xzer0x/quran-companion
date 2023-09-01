@@ -18,7 +18,7 @@
 #include <QSqlQuery>
 
 /**
- * @brief DBManager acts as an interface to preforming queries to
+ * @brief DBManager acts as an interface for preforming queries to
  * different database files holding application data.
  */
 class DBManager : public QObject
@@ -60,6 +60,10 @@ public:
     russian,    ///< (Russian) Tafsir ul-Sa'ady
     tafheem     ///< (English) Tafheem ul-Quran - Sheikh Abul-Aa'la al-Maududy
   };
+  /**
+   * @brief Translation enum holds different values representing available Quran
+   * translations
+   */
   enum Translation
   {
     muyassar,       ///< (Arabic) Tafsir muyassar
@@ -296,6 +300,12 @@ public:
    * @return boolean indicating successful removal
    */
   bool removeBookmark(Verse v);
+
+  /**
+   * @brief getter for m_currTafsir
+   * @return the currently set DBManager::Tafsir
+   */
+  Tafsir currTafsir() const;
 
 private:
   QDir m_dbDir = Globals::assetsDir;

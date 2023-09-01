@@ -797,3 +797,9 @@ DBManager::getTranslation(const int sIdx, const int vIdx)
 
   return dbQuery.value(0).toString();
 }
+
+DBManager::Tafsir
+DBManager::currTafsir() const
+{
+  return m_currTafsir;
+}
