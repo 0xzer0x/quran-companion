@@ -1,5 +1,6 @@
 /**
  * @file globals.cpp
+ * @brief Instantiation of application-wide variables.
  */
 
 #include "globals.h"
