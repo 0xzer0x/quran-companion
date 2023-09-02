@@ -1,13 +1,12 @@
+/**
+ * @file mainwindow.cpp
+ * @brief Implementation file for MainWindow
+ */
+
 #include "mainwindow.h"
 #include "../widgets/clickablelabel.h"
 #include "ui_mainwindow.h"
-/*!
- * \brief MainWindow::MainWindow initalizes the main application window and sets
- * up UI connections.
- *
- * @param parent is a pointer to the parent widget
- * @param settingsPtr is a pointer to the QSettings object to acess app settings
- */
+
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
@@ -37,8 +36,6 @@ MainWindow::MainWindow(QWidget* parent)
 
   m_popup->dockLocationChanged(dockWidgetArea(ui->sideDock));
 }
-
-/* ------------------------ Initalization methods ------------------------ */
 
 void
 MainWindow::loadIcons()
@@ -71,10 +68,6 @@ MainWindow::loadSettings()
   m_settings->endGroup();
 }
 
-/*!
- * \brief MainWindow::init initalizes different parts used by the app, such as
- * the quran page widget, db manager, and the verse player objects
- */
 void
 MainWindow::init()
 {
@@ -114,7 +107,7 @@ MainWindow::init()
 
   // sets without emitting signal
   setCmbVerseIdx(m_currVerse.number - 1);
-  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
+  setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page - 1);
   ui->cmbReciter->setCurrentIndex(m_settings->value("Reciter", 0).toInt());
@@ -168,10 +161,6 @@ MainWindow::setupMenubarToggle()
           });
 }
 
-/*!
- * \brief MainWindow::setupConnections connects different UI components with
- * signals and slots
- */
 void
 MainWindow::setupConnections()
 {
@@ -209,7 +198,7 @@ MainWindow::setupConnections()
   connect(ui->actionFind,
           &QAction::triggered,
           this,
-          &MainWindow::openSearchDialog,
+          &MainWindow::actionSearchTriggered,
           Qt::UniqueConnection);
   connect(ui->actionTafsir,
           &QAction::triggered,
@@ -276,7 +265,7 @@ MainWindow::setupConnections()
   connect(ui->cmbJuz,
           &QComboBox::currentIndexChanged,
           this,
-          &MainWindow::cmbJozzChanged,
+          &MainWindow::cmbJuzChanged,
           Qt::UniqueConnection);
   connect(m_player,
           &VersePlayer::surahChanged,
@@ -416,8 +405,6 @@ MainWindow::setupConnections()
           Qt::UniqueConnection);
 }
 
-/* ------------------------ Help menu actions ------------------------ */
-
 void
 MainWindow::checkForUpdates()
 {
@@ -463,8 +450,6 @@ MainWindow::updateProcessCallback()
   }
 }
 
-/* ------------------------ UI updating ------------------------ */
-
 void
 MainWindow::updateSurah()
 {
@@ -475,14 +460,10 @@ MainWindow::updateSurah()
                  QItemSelectionModel::Rows | QItemSelectionModel::Select);
   ui->listViewSurahs->scrollTo(surah, QAbstractItemView::PositionAtCenter);
   if (m_player->activeVerse().surah != m_currVerse.surah) {
-    surahClicked(surah);
+    navigateToSurah(surah);
   }
 }
 
-/*!
- * \brief MainWindow::updatePageVerseInfoList updates the list that contains all
- * verses in the current page each as a QMap of keys "surah" & "ayah"
- */
 void
 MainWindow::updatePageVerseInfoList()
 {
@@ -520,19 +501,13 @@ MainWindow::setCmbVerseIdx(int idx)
 }
 
 void
-MainWindow::setCmbJozzIdx(int idx)
+MainWindow::setCmbJuzIdx(int idx)
 {
-  m_internalJozzChange = true;
+  m_internalJuzChange = true;
   ui->cmbJuz->setCurrentIndex(idx);
-  m_internalJozzChange = false;
+  m_internalJuzChange = false;
 }
 
-/*!
- * \brief MainWindow::setVerseComboBoxRange sets the verse combobox values
- * according to the current surah verse count, sets the current verse visible
- *
- * @param forceUpdate flag forces the combobox to update it's surah verse count
- */
 void
 MainWindow::setVerseComboBoxRange(bool forceUpdate)
 {
@@ -558,14 +533,6 @@ MainWindow::setVerseComboBoxRange(bool forceUpdate)
   setCmbVerseIdx(m_currVerse.number - 1);
 }
 
-/* ------------------------ Page navigation ------------------------ */
-
-/*!
- * \brief MainWindow::gotoPage displays the given page and sets the current
- * verse to the 1st verse in the page
- *
- * @param page to navigate to
- */
 void
 MainWindow::gotoPage(int page, bool automaticFlip)
 {
@@ -581,14 +548,10 @@ MainWindow::gotoPage(int page, bool automaticFlip)
     setVerseComboBoxRange();
   }
 
-  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
+  setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
   addSideContent();
 }
 
-/*!
- * \brief MainWindow::nextPage navigates to the next page relative to the
- * current page
- */
 void
 MainWindow::nextPage()
 {
@@ -606,10 +569,6 @@ MainWindow::nextPage()
   }
 }
 
-/*!
- * \brief MainWindow::prevPage navigates to the previous page relative to the
- * current page
- */
 void
 MainWindow::prevPage()
 {
@@ -626,13 +585,6 @@ MainWindow::prevPage()
   }
 }
 
-/*!
- * \brief MainWindow::gotoSurah gets the page of the 1st verse in this surah,
- * moves to that page, and starts playback of the surah.
- *
- * @param surahIdx surah
- * number in the mushaf (1-114)
- */
 void
 MainWindow::gotoSurah(int surahIdx)
 {
@@ -651,7 +603,7 @@ MainWindow::gotoSurah(int surahIdx)
   highlightCurrentVerse();
 
   setCmbPageIdx(m_currVerse.page - 1);
-  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
+  setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
   setVerseComboBoxRange();
 
   m_endOfPage = false;
@@ -666,11 +618,8 @@ MainWindow::searchSurahTextChanged(const QString& arg1)
   } else {
     QList<int> suggestions = m_dbMgr->searchSurahNames(arg1);
     QStringList res;
-    for (int i = 0; i < 114; i++) {
-      if (suggestions.contains(i + 1)) {
-        res.append(m_surahList.at(i));
-      }
-    }
+    foreach (int sura, suggestions)
+      res.append(m_surahList.at(sura - 1));
 
     m_surahListModel.setStringList(res);
   }
@@ -689,12 +638,6 @@ MainWindow::listSurahNameClicked(const QModelIndex& index)
   gotoSurah(s);
 }
 
-/*!
- * \brief MainWindow::cmbPageChanged slot for updating the reader page as the
- * user selects a different page from the combobox.
- *
- * @param newIdx the selected idx in the combobox (0-603)
- */
 void
 MainWindow::cmbPageChanged(int newIdx)
 {
@@ -706,12 +649,6 @@ MainWindow::cmbPageChanged(int newIdx)
   gotoPage(newIdx + 1);
 }
 
-/*!
- * \brief MainWindow::cmbVerseChanged slot for updating the reader page as the
- * user selects a different verse in the same surah.
- *
- * @param newVerseIdx verse idx in the combobox (0 -> (surahVerseCount-1))
- */
 void
 MainWindow::cmbVerseChanged(int newVerseIdx)
 {
@@ -735,25 +672,22 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   m_player->loadActiveVerse();
 
   setCmbPageIdx(m_currVerse.page - 1);
-  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
+  setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
   addSideContent();
   m_endOfPage = false;
 }
 
 void
-MainWindow::cmbJozzChanged(int newJozzIdx)
+MainWindow::cmbJuzChanged(int newJuzIdx)
 {
-  if (m_internalJozzChange) {
+  if (m_internalJuzChange) {
     qDebug() << "Internal jozz change";
     return;
   }
 
-  gotoPage(m_dbMgr->getJuzStartPage(newJozzIdx + 1));
+  gotoPage(m_dbMgr->getJuzStartPage(newJuzIdx + 1));
 }
-
-/* ------------------------ Player controls / highlighting
- * ------------------------ */
 
 void
 MainWindow::spaceKeyPressed()
@@ -771,9 +705,6 @@ MainWindow::btnPauseClicked()
   m_player->pause();
 }
 
-/*!
- * \brief MainWindow::btnPlayClicked continues playback of the current verse
- */
 void
 MainWindow::btnPlayClicked()
 {
@@ -787,10 +718,6 @@ MainWindow::btnPlayClicked()
   m_player->play();
 }
 
-/*!
- * \brief MainWindow::btnStopClicked stops playback, sets the current vers to
- * the 1st in the page, updates comboboxes as it might be a different surah
- */
 void
 MainWindow::btnStopClicked()
 {
@@ -805,12 +732,6 @@ MainWindow::btnStopClicked()
   m_endOfPage = false;
 }
 
-/*!
- * \brief MainWindow::mediaStateChanged disables/enables control buttons
- * according to the media player state.
- *
- * @param state
- */
 void
 MainWindow::mediaStateChanged(QMediaPlayer::PlaybackState state)
 {
@@ -838,12 +759,6 @@ MainWindow::addCurrentToBookmarks()
   }
 }
 
-/*!
- * \brief MainWindow::mediaPosChanged sets the current position in the audio
- * file as the position of the slider.
- *
- * @param position position in audio file in milliseconds
- */
 void
 MainWindow::mediaPosChanged(qint64 position)
 {
@@ -867,10 +782,6 @@ MainWindow::volumeSliderValueChanged(int position)
   }
 }
 
-/*!
- * \brief MainWindow::missingRecitationFileWarn display warning message box in
- * case that recitation files are missing
- */
 void
 MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 {
@@ -885,16 +796,10 @@ MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    if (m_downloaderDlg != nullptr)
-      m_downloaderDlg->selectTask(reciterIdx, surah);
+    m_downloaderDlg->selectTask(reciterIdx, surah);
   }
 }
 
-/*!
- * \brief MainWindow::activeVerseChanged sync the main window with the verse
- * player as active verse changes, set the endOfPage flag or flip page if the
- * flag is set
- */
 void
 MainWindow::activeVerseChanged()
 {
@@ -919,10 +824,6 @@ MainWindow::activeVerseChanged()
   highlightCurrentVerse();
 }
 
-/*!
- * \brief MainWindow::verseClicked slot to navigate to the clicked verse in the
- * side panel, sync player, and copy aya text to clipboard
- */
 void
 MainWindow::verseClicked()
 {
@@ -948,21 +849,6 @@ MainWindow::verseClicked()
   btnPlayClicked();
 }
 
-void
-MainWindow::surahClicked(QModelIndex& index)
-{
-  int s = index.row() + 1;
-  gotoSurah(s);
-}
-
-/*!
- * \brief MainWindow::verseAnchorClicked is the callback function for clicking
- * verses in the QuranPageBrowser that determines which action to take based on
- * the chosen option in the menu.
- *
- * @param hrefUrl "#idx" where idx is the verse
- * index in the page/pageVerseInfo list
- */
 void
 MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
 {
@@ -1013,7 +899,7 @@ MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
       break;
 
     case QuranPageBrowser::tafsir:
-      showExpandedVerseTafsir(v);
+      showVerseTafsir(v);
       break;
     case QuranPageBrowser::copy:
       copyVerseText(idx);
@@ -1032,13 +918,6 @@ MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
   }
 }
 
-/* ------------------------ Preferences/Downloader dialog methods
- * ------------------------ */
-
-/*!
- * \brief MainWindow::actionPrefTriggered open the settings dialog and connect
- * settings change slots
- */
 void
 MainWindow::actionPrefTriggered()
 {
@@ -1097,10 +976,6 @@ MainWindow::actionPrefTriggered()
   m_settingsDlg->showWindow();
 }
 
-/*!
- * \brief MainWindow::actionDMTriggered open the download manager dialog, create
- * downloadmanager instance if it's not set
- */
 void
 MainWindow::actionDMTriggered()
 {
@@ -1128,7 +1003,7 @@ MainWindow::actionBookmarksTriggered()
 void
 MainWindow::actionTafsirTriggered()
 {
-  showExpandedVerseTafsir(m_currVerse);
+  showVerseTafsir(m_currVerse);
 }
 
 void
@@ -1147,13 +1022,13 @@ MainWindow::actionAboutTriggered()
   about.close();
 
   text = text.arg(tr("Quran Companion v"))
-           .arg(QApplication::applicationVersion())
-           .arg(tr("Quran Companion"))
-           .arg(tr(" is a free cross-platform Quran reader & player."))
-           .arg(tr("Licensed under the "))
-           .arg(tr("'Waqf' General Public License"))
-           .arg(tr("Recitations"))
-           .arg(tr("Tafsir/Translations"));
+           .arg(QApplication::applicationVersion(),
+                tr("Quran Companion"),
+                tr(" is a free cross-platform Quran reader & player."),
+                tr("Licensed under the "),
+                tr("'Waqf' General Public License"),
+                tr("Recitations"),
+                tr("Tafsir/Translations"));
 
   QMessageBox::about(this, tr("About Quran Companion"), text);
 }
@@ -1164,13 +1039,8 @@ MainWindow::on_actionAbout_Qt_triggered()
   QMessageBox::aboutQt(this, tr("About Qt"));
 }
 
-/* ------------------------ Search dialog ------------------------ */
-
-/*!
- * \brief MainWindow::openSearchDialog open the verse search dialog
- */
 void
-MainWindow::openSearchDialog()
+MainWindow::actionSearchTriggered()
 {
   if (m_searchDlg == nullptr) {
     m_searchDlg = new SearchDialog(this, m_dbMgr);
@@ -1183,12 +1053,6 @@ MainWindow::openSearchDialog()
   m_searchDlg->show();
 }
 
-/*!
- * \brief MainWindow::navigateToVerse navigate to a selected verse from the
- * search results
- *
- * @param v Verse to navigate to
- */
 void
 MainWindow::navigateToVerse(Verse v)
 {
@@ -1202,7 +1066,7 @@ MainWindow::navigateToVerse(Verse v)
 
   setCmbPageIdx(m_currVerse.page - 1);
   setCmbVerseIdx(m_currVerse.number - 1);
-  setCmbJozzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
+  setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
   updateSurah();
   highlightCurrentVerse();
@@ -1211,12 +1075,13 @@ MainWindow::navigateToVerse(Verse v)
   m_endOfPage = false;
 }
 
-/* ------------------------ Settings update methods ------------------------ */
+void
+MainWindow::navigateToSurah(QModelIndex& index)
+{
+  int s = index.row() + 1;
+  gotoSurah(s);
+}
 
-/*!
- * \brief MainWindow::updateLoadedTafsir set tafsir to the one in the settings,
- * update the selected db
- */
 void
 MainWindow::updateLoadedTafsir()
 {
@@ -1226,10 +1091,6 @@ MainWindow::updateLoadedTafsir()
   m_dbMgr->setCurrentTafsir(currTafsir);
 }
 
-/*!
- * \brief MainWindow::updateLoadedTranslation set translation to the one in the
- * settings, update the selected db
- */
 void
 MainWindow::updateLoadedTranslation()
 {
@@ -1239,10 +1100,6 @@ MainWindow::updateLoadedTranslation()
   m_dbMgr->setCurrentTranslation(currTrans);
 }
 
-/*!
- * \brief MainWindow::updateSideFont set side content font to the one in the
- * settings
- */
 void
 MainWindow::updateSideFont()
 {
@@ -1250,11 +1107,6 @@ MainWindow::updateSideFont()
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
 }
 
-/* ------------------------ Content generation ------------------------ */
-
-/*!
- * \brief MainWindow::redrawQuranPage redraw the current quran page
- */
 void
 MainWindow::redrawQuranPage(bool manualSz)
 {
@@ -1262,10 +1114,6 @@ MainWindow::redrawQuranPage(bool manualSz)
   updatePageVerseInfoList();
 }
 
-/*!
- * \brief MainWindow::highlightCurrentVerse highlights the currently
- * selected/recited verse in the quran page & side panel
- */
 void
 MainWindow::highlightCurrentVerse()
 {
@@ -1292,10 +1140,6 @@ MainWindow::highlightCurrentVerse()
   m_highlightedFrm = verseFrame;
 }
 
-/*!
- * \brief MainWindow::addSideContent updates the side panel with the chosen side
- * content type
- */
 void
 MainWindow::addSideContent()
 {
@@ -1369,11 +1213,8 @@ MainWindow::updateTrayTooltip(QMediaPlayer::PlaybackState newState)
     m_notifyMgr->setTooltip("Quran Companion");
 }
 
-/*!
- * \brief MainWindow::showExpandedVerseTafsir toggle a collapsed verse tafsir
- */
 void
-MainWindow::showExpandedVerseTafsir(Verse v)
+MainWindow::showVerseTafsir(Verse v)
 {
   if (m_tafsirDlg == nullptr) {
     m_tafsirDlg = new TafsirDialog(this, m_dbMgr);
@@ -1383,8 +1224,6 @@ MainWindow::showExpandedVerseTafsir(Verse v)
   m_tafsirDlg->loadVerseTafsir();
   m_tafsirDlg->show();
 }
-
-/* ------------------------ Helper functions ------------------------ */
 
 void
 MainWindow::copyVerseText(int IdxInPage)
