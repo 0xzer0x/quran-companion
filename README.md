@@ -158,7 +158,6 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 - Qt >= 6.4
   - Qt Tools
   - Qt Multimedia
-  -
 - CMake >= 3.22
 
 ### Build
