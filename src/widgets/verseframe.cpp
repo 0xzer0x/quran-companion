@@ -1,6 +1,11 @@
+/**
+ * @file verseframe.cpp
+ * @brief Implementation file for VerseFrame
+ */
+
 #include "verseframe.h"
 
-HighlightFrame::HighlightFrame(QWidget* parent)
+VerseFrame::VerseFrame(QWidget* parent)
   : QFrame(parent)
 {
   this->setLayout(new QVBoxLayout);
@@ -11,20 +16,17 @@ HighlightFrame::HighlightFrame(QWidget* parent)
                       "QLabel {"
                       "background-color:transparent"
                       "}";
+
+  m_rgbHover = "rgba(" + QString::number(m_colorR) + ',' +
+               QString::number(m_colorG) + ',' + QString::number(m_colorB) +
+               ",20)";
+  m_rgbSelected = "rgba(" + QString::number(m_colorR) + ',' +
+                  QString::number(m_colorG) + ',' + QString::number(m_colorB) +
+                  ",60)";
 }
 
 void
-HighlightFrame::highlightFrame()
-{
-  QString rgba = "rgba(" + QString::number(m_colorR) + ',' +
-                 QString::number(m_colorG) + ',' + QString::number(m_colorB) +
-                 ",60)";
-
-  setStyleSheet(m_frameStylesheet.arg(rgba));
-}
-
-void
-HighlightFrame::setHighlightColor(int r, int g, int b)
+VerseFrame::setHighlightColor(int r, int g, int b)
 {
   m_colorR = r;
   m_colorG = g;
@@ -32,20 +34,26 @@ HighlightFrame::setHighlightColor(int r, int g, int b)
 }
 
 void
-HighlightFrame::enterEvent(QEnterEvent* event)
+VerseFrame::setSelected(bool selected)
 {
-  if (styleSheet().isEmpty()) {
-    QString rgba = "rgba(" + QString::number(m_colorR) + ',' +
-                   QString::number(m_colorG) + ',' + QString::number(m_colorB) +
-                   ",20)";
-    setStyleSheet(m_frameStylesheet.arg(rgba));
-  }
+  if (selected)
+    setStyleSheet(m_frameStylesheet.arg(m_rgbSelected));
+  else
+    setStyleSheet("");
+
+  m_selected = selected;
 }
 
 void
-HighlightFrame::leaveEvent(QEvent* event)
+VerseFrame::enterEvent(QEnterEvent* event)
 {
-  if (!styleSheet().contains(",60)")) {
+  if (styleSheet().isEmpty())
+    setStyleSheet(m_frameStylesheet.arg(m_rgbHover));
+}
+
+void
+VerseFrame::leaveEvent(QEvent* event)
+{
+  if (!m_selected)
     setStyleSheet("");
-  }
 }

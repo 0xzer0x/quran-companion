@@ -1,3 +1,8 @@
+/**
+ * @file quranpagebrowser.cpp
+ * @brief Implementation file for QuranPageBrowser
+ */
+
 #include "quranpagebrowser.h"
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent,
@@ -58,12 +63,6 @@ QuranPageBrowser::getEasternNum(QString num)
   return easternNum;
 }
 
-/*!
- * \brief QuranPageBrowser::justifyHeader adjusts the header string according to
- * the page width
- * \param baseHeader header string
- * \return reference to the adjusted string
- */
 QString&
 QuranPageBrowser::justifyHeader(QString& baseHeader)
 {
@@ -135,7 +134,7 @@ QuranPageBrowser::pageHeader(int page)
 }
 
 void
-QuranPageBrowser::constructPage(int pageNo, bool manualSz)
+QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
 {
   if (pageNo != m_page) {
     m_page = pageNo;
@@ -156,9 +155,7 @@ QuranPageBrowser::constructPage(int pageNo, bool manualSz)
   m_currPageLines = m_dbMgr->getPageLines(m_page);
 
   // automatic font adjustment check
-  if (manualSz || !m_settings->value("Reader/AdaptiveFont").toBool())
-    m_fontSize = pageNo < 3 ? m_fontSize + 5 : m_fontSize;
-  else {
+  if (!forceCustomSize && m_settings->value("Reader/AdaptiveFont").toBool()) {
     m_fontSize = this->bestFitFontSize();
     m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
                          m_fontSize);
@@ -268,7 +265,7 @@ QuranPageBrowser::highlightVerse(int verseIdxInPage)
   m_highlightedIdx = verseIdxInPage;
 }
 
-int
+QuranPageBrowser::Action
 QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
 {
   QMenu lmbMenu(this);
@@ -285,19 +282,19 @@ QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
 
   QAction* chosen = lmbMenu.exec(QCursor::pos());
 
-  int actionIdx = -1;
+  QuranPageBrowser::Action actionIdx = null;
   if (chosen == m_playAct)
-    actionIdx = 0;
+    actionIdx = play;
   else if (chosen == m_selectAct)
-    actionIdx = 1;
+    actionIdx = select;
   else if (chosen == m_tafsirAct)
-    actionIdx = 2;
+    actionIdx = tafsir;
   else if (chosen == m_copyAct)
-    actionIdx = 3;
+    actionIdx = copy;
   else if (chosen == m_actAddBookmark)
-    actionIdx = 4;
+    actionIdx = addBookmark;
   else if (chosen == m_actRemBookmark)
-    actionIdx = 5;
+    actionIdx = removeBookmark;
 
   this->clearFocus();
   return actionIdx;

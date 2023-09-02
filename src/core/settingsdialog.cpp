@@ -1,13 +1,11 @@
+/**
+ * @file settingsdialog.cpp
+ * @brief Implementation file for SettingsDialog
+ */
+
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
-/*!
- * \brief SettingsDialog::SettingsDialog class constructor
- *
- * @param parent pointer to parent widget
- * @param settingsPtr pointer to application settings
- * @param vPlayerPtr pointer to The VersePlayer object
- */
 SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   : QDialog(parent)
   , ui(new Ui::SettingsDialog)
@@ -40,22 +38,14 @@ SettingsDialog::fillLanguageCombobox()
   ui->cmbLang->addItem("العربية", QLocale::Arabic);
 }
 
-/*!
- * \brief SettingsDialog::setCurrentSettingsAsRef slot to update the settings
- * displayed to match the values in the settings file
- */
 void
 SettingsDialog::setCurrentSettingsAsRef()
 {
-  m_themeIdx = m_settings->value("Theme").toInt();
-  m_languageCode =
-    qvariant_cast<QLocale::Language>(m_settings->value("Language"));
   m_votd = m_settings->value("VOTD").toBool();
   m_missingFileWarning = m_settings->value("MissingFileWarning").toBool();
 
   m_settings->beginGroup("Reader");
   // all keys have prefix "Reader"
-  m_qcfVer = m_settings->value("QCF").toInt();
   m_adaptive = m_settings->value("AdaptiveFont").toBool();
   m_quranFontSize =
     m_settings->value("QCF" + QString::number(m_qcfVer) + "Size").toInt();
@@ -88,12 +78,6 @@ SettingsDialog::setCurrentSettingsAsRef()
   ui->chkMissingWarning->setChecked(m_missingFileWarning);
 }
 
-/*!
- * \brief SettingsDialog::updateTheme slot to update the theme in the settings
- * file & ask user to restart.
- *
- * @param themeIdx
- */
 void
 SettingsDialog::updateTheme(int themeIdx)
 {
@@ -106,16 +90,9 @@ SettingsDialog::updateTheme(int themeIdx)
                           tr("Restart required"),
                           tr("Application theme was changed, restart now?"));
 
-  if (btn == QMessageBox::Yes) {
-    m_restartReq = true;
-  }
+  m_restartReq = btn == QMessageBox::Yes;
 }
 
-/*!
- * \brief SettingsDialog::updateLang slot to update the app language in the
- * settings file & ask user to restart
- * @param lang
- */
 void
 SettingsDialog::updateLang(QLocale::Language lang)
 {
@@ -128,9 +105,7 @@ SettingsDialog::updateLang(QLocale::Language lang)
                           tr("Restart required"),
                           tr("Application language was changed, restart now?"));
 
-  if (btn == QMessageBox::Yes) {
-    m_restartReq = true;
-  }
+  m_restartReq = btn == QMessageBox::Yes;
 }
 
 void
@@ -145,11 +120,6 @@ SettingsDialog::updateFileWarning(bool on)
   m_settings->setValue("MissingFileWarning", on);
 }
 
-/*!
- * \brief SettingsDialog::updateTafsir slot to update the tafsir chosen in the
- * settings file
- * @param idx
- */
 void
 SettingsDialog::updateTafsir(int idx)
 {
@@ -157,12 +127,6 @@ SettingsDialog::updateTafsir(int idx)
   emit tafsirChanged();
 }
 
-/*!
- * \brief SettingsDialog::updateTranslation slot to update the translation
- * chosen in the settings file.
- *
- * @param idx
- */
 void
 SettingsDialog::updateTranslation(int idx)
 {
@@ -184,9 +148,7 @@ SettingsDialog::updateQuranFont(int qcfV)
     tr("Restart required"),
     tr("Restart is required to load new quran font, restart now?"));
 
-  if (btn == QMessageBox::Yes) {
-    m_restartReq = true;
-  }
+  m_restartReq = btn == QMessageBox::Yes;
 }
 
 void
@@ -195,12 +157,6 @@ SettingsDialog::updateAdaptiveFont(bool on)
   m_settings->setValue("Reader/AdaptiveFont", on);
 }
 
-/*!
- * \brief SettingsDialog::updateQuranFontSize slot to update Quran page font
- * size in the settings file
- *
- * @param size
- */
 void
 SettingsDialog::updateQuranFontSize(QString size)
 {
@@ -209,12 +165,6 @@ SettingsDialog::updateQuranFontSize(QString size)
   m_renderQuranPage = true;
 }
 
-/*!
- * \brief SettingsDialog::updateSideFont slot to update the side font in the
- * settings file
- *
- * @param fnt newly selected font
- */
 void
 SettingsDialog::updateSideFont(QFont fnt)
 {
@@ -226,12 +176,6 @@ SettingsDialog::updateSideFont(QFont fnt)
   m_renderSideContent = true;
 }
 
-/*!
- * \brief SettingsDialog::updateSideFontSize slot to update the side font size
- * in the settings file
- *
- * @param size
- */
 void
 SettingsDialog::updateSideFontSize(QString size)
 {
@@ -241,10 +185,6 @@ SettingsDialog::updateSideFontSize(QString size)
   m_renderSideContent = true;
 }
 
-/*!
- * \brief SettingsDialog::applyAllChanges slot to check whether any value of the
- * settings in the dialog changed and apply it
- */
 void
 SettingsDialog::applyAllChanges()
 {
@@ -275,8 +215,10 @@ SettingsDialog::applyAllChanges()
   if (ui->chkAdaptive->isChecked() != m_adaptive)
     updateAdaptiveFont(ui->chkAdaptive->isChecked());
 
+  bool forceManualFont = false;
   if (ui->cmbQuranFontSz->currentText() != QString::number(m_quranFontSize))
-    updateQuranFontSize(ui->cmbQuranFontSz->currentText());
+    updateQuranFontSize(ui->cmbQuranFontSz->currentText()),
+      forceManualFont = true;
 
   if (ui->fntCmbSide->currentFont() != m_sideFont)
     updateSideFont(ui->fntCmbSide->currentFont());
@@ -300,7 +242,7 @@ SettingsDialog::applyAllChanges()
 
   // redraw once if flag is set
   if (m_renderQuranPage)
-    emit redrawQuranPage(false);
+    emit redrawQuranPage(forceManualFont);
 
   if (m_renderSideContent)
     emit redrawSideContent();
@@ -310,12 +252,6 @@ SettingsDialog::applyAllChanges()
   setCurrentSettingsAsRef();
 }
 
-/*!
- * \brief SettingsDialog::btnBoxAction slot takes action according to the button
- * clicked in the dialog
- *
- * @param btn
- */
 void
 SettingsDialog::btnBoxAction(QAbstractButton* btn)
 {

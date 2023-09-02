@@ -1,3 +1,8 @@
+/**
+ * @file downloadprogressbar.cpp
+ * @brief Implementation file for DownloadProgressBar
+ */
+
 #include "downloadprogressbar.h"
 
 DownloadProgressBar::DownloadProgressBar(QWidget* parent, int max)

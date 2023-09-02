@@ -158,7 +158,6 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 - Qt >= 6.4
   - Qt Tools
   - Qt Multimedia
-  -
 - CMake >= 3.22
 
 ### Build
@@ -247,6 +246,16 @@ See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a f
 ## Contributing 💡
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+
+### Documetation 📚
+
+- [Doxygen](https://www.doxygen.nl/) documentation is provided for the project, to generate the documentation preform the following steps
+
+  - `git clone https://github.com/0xzer0x/quran-companion.git`
+  - `cd quran-companion/docs`
+  - `doxygen`
+
+- default documentaion format is html, if you want to generate any other format modify `Doxyfile` accordingly
 
 ### Translation 🌐
 

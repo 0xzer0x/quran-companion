@@ -1,3 +1,8 @@
+/**
+ * @file tafsirdialog.cpp
+ * @brief Implementation file for TafsirDialog
+ */
+
 #include "tafsirdialog.h"
 #include "ui_tafsirdialog.h"
 
@@ -77,8 +82,7 @@ void
 TafsirDialog::setTafsirAsTitle()
 {
   QString title;
-  DBManager::Tafsir id =
-    qvariant_cast<DBManager::Tafsir>(m_settings->value("Reader/Tafsir"));
+  Tafsir id = m_dbMgr->currTafsir();
   switch (id) {
     case DBManager::adwa:
       title.append(tr("Adwa' ul-Bayan"));

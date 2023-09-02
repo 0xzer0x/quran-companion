@@ -1,13 +1,10 @@
+/**
+ * @file verseplayer.cpp
+ * @brief Implementation file for VersePlayer
+ */
+
 #include "verseplayer.h"
 
-/*!
- * \brief VersePlayer::VersePlayer class constructor
- * \param parent QObject for pointer memory management
- * \param dbPtr pointer to the DBManager API to query data from different
- * database files
- * \param initSurah surah to start recitation with
- * \param initVerse verse in the inital surah to start with
- */
 VersePlayer::VersePlayer(QObject* parent,
                          DBManager* dbPtr,
                          Verse initVerse,
@@ -23,7 +20,7 @@ VersePlayer::VersePlayer(QObject* parent,
   setupConnections();
 
   m_reciterDir.cd(m_recitersList.at(m_reciter).baseDirName);
-  setVerseFile(constructVerseFilename());
+  loadActiveVerse();
 }
 
 void
@@ -49,11 +46,6 @@ VersePlayer::setVerse(Verse& newVerse)
   m_activeVerse = newVerse;
 }
 
-/*!
- * \brief VersePlayer::nextVerse method to increment the verse & surah variables
- * appropriately according to the surah. emits a signal on verse change & on
- * changing from surah to another
- */
 void
 VersePlayer::nextVerse()
 {
@@ -62,7 +54,6 @@ VersePlayer::nextVerse()
     // if last verse in surah an-nas (114), do nothing (i.e stop playback)
     if (m_activeVerse.surah < 114) {
       m_activeVerse.surah++;
-      m_activeVerse.number = 1;
       emit surahChanged(); // signals surah change
     }
 
@@ -72,13 +63,6 @@ VersePlayer::nextVerse()
   }
 }
 
-/*!
- * \brief VersePlayer::verseStateChanged slot to call the nextVerse() method on
- * verse audio end
- *
- * @param status status of the media file, refer to QMediaPlayer
- * docs for enum.
- */
 void
 VersePlayer::verseStateChanged(QMediaPlayer::MediaStatus status)
 {
@@ -100,12 +84,12 @@ VersePlayer::setPlayerVolume(qreal volume)
 }
 
 QString
-VersePlayer::constructVerseFilename()
+VersePlayer::constructVerseFilename(Verse v)
 {
   // construct verse mp3 filename e.g. 002005.mp3
   QString filename;
-  filename.append(QString::number(m_activeVerse.surah).rightJustified(3, '0'));
-  filename.append(QString::number(m_activeVerse.number).rightJustified(3, '0'));
+  filename.append(QString::number(v.surah).rightJustified(3, '0'));
+  filename.append(QString::number(v.number).rightJustified(3, '0'));
 
   filename.append(".mp3");
   return filename;
@@ -114,12 +98,8 @@ VersePlayer::constructVerseFilename()
 void
 VersePlayer::playCurrentVerse()
 {
-  QString filename = constructVerseFilename();
-
-  // set the attribute / source for QMediaPlayer
-  if (setVerseFile(filename))
-    // start playback of audio
-    play();
+  if (loadActiveVerse())
+    play(); // start playback of audio
 }
 
 void
@@ -139,8 +119,6 @@ VersePlayer::playBasmalah()
   }
 }
 
-/* -------------------- Setters ----------------------- */
-
 bool
 VersePlayer::changeReciter(int reciterIdx)
 {
@@ -154,11 +132,7 @@ VersePlayer::changeReciter(int reciterIdx)
     m_reciter = reciterIdx;
   }
 
-  if (hasAudio())
-    if (!setVerseFile(constructVerseFilename()))
-      setSource(QUrl());
-
-  return true;
+  return loadActiveVerse();
 }
 
 bool
@@ -175,6 +149,12 @@ VersePlayer::setVerseFile(const QString& newVerseFilename)
   setSource(QUrl::fromLocalFile(m_reciterDir.filePath(m_verseFile)));
 
   return true;
+}
+
+bool
+VersePlayer::loadActiveVerse()
+{
+  return setVerseFile(constructVerseFilename(m_activeVerse));
 }
 
 void

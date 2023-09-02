@@ -1,12 +1,31 @@
+/**
+ * @file downloadprogressbar.h
+ * @brief Header file for DownloadProgressBar
+ */
+
 #ifndef DOWNLOADPROGRESSBAR_H
 #define DOWNLOADPROGRESSBAR_H
 
 #include <QProgressBar>
 
+/**
+ * @brief DownloadProgressBar class is a modified QProgressBar to change its
+ * stylesheet based on different states
+ */
 class DownloadProgressBar : public QProgressBar
 {
 public:
+  /**
+   * @brief class constructor
+   * @param parent - pointer to parent widget
+   * @param max - maximum value for the progress bar (defaults to longest surah
+   * in the Quran)
+   */
   DownloadProgressBar(QWidget* parent = nullptr, int max = 286);
+  /**
+   * @brief The State enum represents the different states of the progressbar UI
+   * component
+   */
   enum State
   {
     downloading,

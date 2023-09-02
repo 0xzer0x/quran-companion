@@ -1,3 +1,8 @@
+/**
+ * @file downloadmanager.cpp
+ * @brief Implementation file for DownloadManager
+ */
+
 #include "downloadmanager.h"
 
 DownloadManager::DownloadManager(QObject* parent, DBManager* dbptr)
@@ -86,7 +91,7 @@ DownloadManager::processQueueHead()
   qInfo() << "current download task - " << m_currentTask.link;
   m_currSurahCount = m_dbMgr->getSurahVerseCount(m_currentTask.surah);
 
-  m_downloadPath = g_recitationsDir;
+  m_downloadPath = Globals::recitationsDir;
   m_downloadPath.cd(m_recitersList.at(m_currentTask.reciterIdx).baseDirName);
 
   while (m_downloadPath.exists(m_currentTask.filename)) {
@@ -105,7 +110,7 @@ DownloadManager::processQueueHead()
 
   m_isDownloading = true;
   QNetworkRequest req(m_currentTask.link);
-  req.setTransferTimeout(1500);
+  req.setTransferTimeout(3000);
   m_currentTask.networkReply = m_netMan->get(req);
   m_currentTask.networkReply->ignoreSslErrors();
   m_downloadStart = QTime::currentTime();

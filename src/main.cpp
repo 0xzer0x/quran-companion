@@ -1,3 +1,8 @@
+/**
+ * @file main.cpp
+ * @brief Application entry point.
+ */
+
 #include "core/mainwindow.h"
 #include "globals.h"
 #include "utils/logger.h"
@@ -8,20 +13,78 @@
 #include <QSplashScreen>
 #include <QStyleFactory>
 #include <QTranslator>
+using namespace Globals;
 
+/*!
+ * @brief sets the theme for the application.
+ * @details Application theme consists of a QPalette for the application and a
+ * custom stylesheet for different UI components. works through passing the
+ * theme index (0 = light, 1 = dark).
+ *
+ * @param themeIdx - index for theme as it appears in the application settings.
+ */
 void
 setTheme(int themeIdx);
+/**
+ * @brief loads the QCF fonts for Quran pages before starting the
+ * GUI.
+ * @details The application depends mainly on QCF fonts to display Quranic
+ * verses and pages, the QCF fonts are a set of fonts designed specifically for
+ * Madani Mushaf printing. As each page font includes unicode glyphs for each
+ * word in that page. The fonts are loaded at application startup by loading 604
+ * truetype files (ttf). The available QCF versions are 1 and 2.
+ *
+ * @param qcfVersion - font version to use.
+ */
 void
 addFonts(int qcfVersion);
+/**
+ * @brief loads UI translation.
+ * @details Application UI translation is done through compiled Qt translation
+ * files (.qm). addTranslation() loads the correct qm files for the language
+ * given. The loaded translation files consist of a Qt base translation and a
+ * custom application translation file.
+ *
+ * @param localeCode - instance from QLocale::Language that defines a
+ * specific language
+ */
 void
 addTranslation(QLocale::Language localeCode);
+/**
+ * @brief checks the default settings keys exist and sets them with default
+ * values if not found.
+ * @details application settings are stored as ini-formatted files in order to
+ * provide the same functionality on different platforms. The configuration file
+ * is stored in the user's home directory under the application config
+ * directory.
+ *
+ * @param settings pointer to QSettings instance to access app settings
+ */
 void
 checkSettings(QSettings* settings);
+/**
+ * @brief fills the global reciters list and creates their corresponding
+ * directories.
+ * @details Fills the QList that contains #Reciter instances
+ * that represent the reciters supported by the application. The reciters list
+ * is used in many parts of the application by creating a constant reference to
+ * the global QList. It also creates the reciters directories in the application
+ * recitations directory as needed.
+ */
 void
 fillRecitersList();
+/**
+ * @brief set application-wide variables.
+ */
 void
 setGlobals();
 
+/**
+ * @brief application entry point
+ * @param argc - the number of arguments passed to the application
+ * @param argv - command line arguments passed to the application
+ * @return application exit code.
+ */
 int
 main(int argc, char* argv[])
 {
@@ -37,16 +100,16 @@ main(int argc, char* argv[])
   Logger::startLogger(QDir::currentPath());
   Logger::attach();
 
-  g_settings = new QSettings(
-    g_configDir.filePath("qurancompanion.conf"), QSettings::IniFormat, &a);
-  checkSettings(g_settings);
+  settings = new QSettings(
+    configDir.filePath("qurancompanion.conf"), QSettings::IniFormat, &a);
+  checkSettings(settings);
 
-  g_themeId = g_settings->value("Theme").toInt();
-  g_qcfVersion = g_settings->value("Reader/QCF").toInt();
-  g_language = qvariant_cast<QLocale::Language>(g_settings->value("Language"));
-  setTheme(g_themeId);
-  addFonts(g_qcfVersion);
-  addTranslation(g_language);
+  themeId = settings->value("Theme").toInt();
+  qcfVersion = settings->value("Reader/QCF").toInt();
+  language = qvariant_cast<QLocale::Language>(settings->value("Language"));
+  setTheme(themeId);
+  addFonts(qcfVersion);
+  addTranslation(language);
   fillRecitersList();
 
   MainWindow w(nullptr);
@@ -121,22 +184,22 @@ addFonts(int qcfVersion)
   switch (qcfVersion) {
     case 1:
       fontsDir.cd("QCFV1");
-      g_qcfFontPrefix = "QCF_P";
-      g_qcfBSMLFont = "QCF_BSML";
+      qcfFontPrefix = "QCF_P";
+      qcfBSMLFont = "QCF_BSML";
       QFontDatabase::addApplicationFont(fontsDir.filePath("QCF_BSML.ttf"));
       break;
 
     case 2:
       fontsDir.cd("QCFV2");
-      g_qcfFontPrefix = "QCF2";
-      g_qcfBSMLFont = "QCF2BSML";
+      qcfFontPrefix = "QCF2";
+      qcfBSMLFont = "QCF2BSML";
       QFontDatabase::addApplicationFont(fontsDir.filePath("QCF2BSML.ttf"));
       break;
   }
 
   // add required fonts
   for (int i = 1; i < 605; i++) {
-    QString fontName = g_qcfFontPrefix;
+    QString fontName = qcfFontPrefix;
     fontName.append(QString::number(i).rightJustified(3, '0'));
     fontName.append(".ttf");
 
@@ -160,8 +223,8 @@ setTheme(int themeIdx)
   switch (themeIdx) {
     case 0:
       // set global theme icons & styles path
-      g_themeResources.setPath(":/resources/light/");
-      g_darkMode = false;
+      themeResources.setPath(":/resources/light/");
+      darkMode = false;
       // light palette
       themeColors.setColor(QPalette::Window, QColor(240, 240, 240));
       themeColors.setColor(QPalette::WindowText, Qt::black);
@@ -193,8 +256,8 @@ setTheme(int themeIdx)
 
     case 1:
       // set global theme icons & styles path
-      g_themeResources.setPath(":/resources/dark/");
-      g_darkMode = true;
+      themeResources.setPath(":/resources/dark/");
+      darkMode = true;
       // dark palette
       themeColors.setColor(QPalette::Window, QColor(53, 53, 53));
       themeColors.setColor(QPalette::WindowText, Qt::white);
@@ -226,7 +289,7 @@ setTheme(int themeIdx)
   }
 
   // load stylesheet
-  styles.setFileName(g_themeResources.filePath("styles.qss"));
+  styles.setFileName(themeResources.filePath("styles.qss"));
   if (styles.open(QIODevice::ReadOnly)) {
     qApp->setStyleSheet(styles.readAll());
     styles.close();
@@ -261,7 +324,7 @@ fillRecitersList()
 {
   Reciter husary{ "Al-Husary",
                   qApp->translate("MainWindow", "Al-Husary"),
-                  g_bismillahDir.absoluteFilePath("husary.mp3"),
+                  bismillahDir.absoluteFilePath("husary.mp3"),
                   "https://cdn.islamic.network/quran/audio/64/ar.husary/",
                   true };
 
@@ -283,7 +346,7 @@ fillRecitersList()
   Reciter abdulbasit{
     "Abdul-Basit",
     qApp->translate("MainWindow", "Abdul-Basit"),
-    g_bismillahDir.filePath("abdul-basit.mp3"),
+    bismillahDir.filePath("abdul-basit.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.abdulbasitmurattal/",
     true
   };
@@ -298,7 +361,7 @@ fillRecitersList()
 
   Reciter menshawi{ "Menshawi",
                     qApp->translate("MainWindow", "Menshawi"),
-                    g_bismillahDir.absoluteFilePath("menshawi.mp3"),
+                    bismillahDir.absoluteFilePath("menshawi.mp3"),
                     "https://cdn.islamic.network/quran/audio/128/ar.minshawi/",
                     true };
 
@@ -312,89 +375,89 @@ fillRecitersList()
 
   Reciter alafasy{ "Mishary_Alafasy",
                    qApp->translate("MainWindow", "Mishary Alafasy"),
-                   g_bismillahDir.absoluteFilePath("alafasy.mp3"),
+                   bismillahDir.absoluteFilePath("alafasy.mp3"),
                    "https://cdn.islamic.network/quran/audio/64/ar.alafasy/",
                    true };
 
   Reciter tunaiji{ "Khalefa_Al-Tunaiji",
                    qApp->translate("MainWindow", "Khalefa Al-Tunaiji"),
-                   g_bismillahDir.absoluteFilePath("tunaiji.mp3"),
+                   bismillahDir.absoluteFilePath("tunaiji.mp3"),
                    "https://everyayah.com/data/khalefa_al_tunaiji_64kbps/" };
 
   Reciter dussary{ "Yasser_Ad-Dussary",
                    qApp->translate("MainWindow", "Yasser Ad-Dussary"),
-                   g_bismillahDir.absoluteFilePath("ad-dussary.mp3"),
+                   bismillahDir.absoluteFilePath("ad-dussary.mp3"),
                    "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/" };
 
   Reciter banna{ "Mahmoud_Al-Banna",
                  qApp->translate("MainWindow", "Mahmoud Al-Banna"),
-                 g_bismillahDir.absoluteFilePath("al-banna.mp3"),
+                 bismillahDir.absoluteFilePath("al-banna.mp3"),
                  "https://everyayah.com/data/mahmoud_ali_al_banna_32kbps/" };
 
   Reciter basfar{
     "Abdullah_Basfar",
     qApp->translate("MainWindow", "Abdullah Basfar"),
-    g_bismillahDir.absoluteFilePath("basfar.mp3"),
+    bismillahDir.absoluteFilePath("basfar.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.abdullahbasfar/",
     true
   };
 
   Reciter shatree{ "Ash-Shaatree",
                    qApp->translate("MainWindow", "Abu Bakr Ash-Shaatree"),
-                   g_bismillahDir.absoluteFilePath("shatree.mp3"),
+                   bismillahDir.absoluteFilePath("shatree.mp3"),
                    "https://cdn.islamic.network/quran/audio/64/ar.shaatree/",
                    true };
 
   Reciter ajamy{ "Al-Ajamy",
                  qApp->translate("MainWindow", "Ahmed Al-Ajamy"),
-                 g_bismillahDir.absoluteFilePath("ajamy.mp3"),
+                 bismillahDir.absoluteFilePath("ajamy.mp3"),
                  "https://cdn.islamic.network/quran/audio/64/ar.ahmedajamy/",
                  true };
 
   Reciter aliJaber{ "Ali_Jaber",
                     qApp->translate("MainWindow", "Ali Jaber"),
-                    g_bismillahDir.absoluteFilePath("ajaber.mp3"),
+                    bismillahDir.absoluteFilePath("ajaber.mp3"),
                     "https://everyayah.com/data/Ali_Jaber_64kbps/" };
 
   Reciter fAbbad{ "Fares_Abbad",
                   qApp->translate("MainWindow", "Fares Abbad"),
-                  g_bismillahDir.absoluteFilePath("fabbad.mp3"),
+                  bismillahDir.absoluteFilePath("fabbad.mp3"),
                   "https://everyayah.com/data/Fares_Abbad_64kbps/" };
 
   Reciter ghamadi{ "Ghamadi",
                    qApp->translate("MainWindow", "Saad Al-Ghamadi"),
-                   g_bismillahDir.absoluteFilePath("ghamadi.mp3"),
+                   bismillahDir.absoluteFilePath("ghamadi.mp3"),
                    "https://everyayah.com/data/Ghamadi_40kbps/" };
 
   Reciter hRifai{ "Hani_Rifai",
                   qApp->translate("MainWindow", "Hani Rifai"),
-                  g_bismillahDir.absoluteFilePath("rifai.mp3"),
+                  bismillahDir.absoluteFilePath("rifai.mp3"),
                   "https://cdn.islamic.network/quran/audio/64/ar.hanirifai/",
                   true };
 
   Reciter hudhaify{ "Hudhaify",
                     qApp->translate("MainWindow", "Hudhaify"),
-                    g_bismillahDir.absoluteFilePath("hudhaify.mp3"),
+                    bismillahDir.absoluteFilePath("hudhaify.mp3"),
                     "https://cdn.islamic.network/quran/audio/64/ar.hudhaify/",
                     true };
 
   Reciter shuraym{
     "Saood_Ash-Shuraym",
     qApp->translate("MainWindow", "Saood Ash-Shuraym"),
-    g_bismillahDir.absoluteFilePath("shuraym.mp3"),
+    bismillahDir.absoluteFilePath("shuraym.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.saoodshuraym/",
     true
   };
 
   Reciter alqatami{ "Nasser_Alqatami",
                     qApp->translate("MainWindow", "Nasser Alqatami"),
-                    g_bismillahDir.absoluteFilePath("qatami.mp3"),
+                    bismillahDir.absoluteFilePath("qatami.mp3"),
                     "https://everyayah.com/data/Nasser_Alqatami_128kbps/" };
 
   Reciter muaiqly{
     "Maher_AlMuaiqly",
     qApp->translate("MainWindow", "Maher Al-Muaiqly"),
-    g_bismillahDir.absoluteFilePath("muaiqly.mp3"),
+    bismillahDir.absoluteFilePath("muaiqly.mp3"),
     "https://cdn.islamic.network/quran/audio/64/ar.mahermuaiqly/",
     true
   };
@@ -402,51 +465,51 @@ fillRecitersList()
   Reciter mIsmail{
     "Mostafa_Ismail",
     qApp->translate("MainWindow", "Mostafa Ismail"),
-    g_bismillahDir.absoluteFilePath("mismail.mp3"),
+    bismillahDir.absoluteFilePath("mismail.mp3"),
     "https://quran.ksu.edu.sa/ayat/mp3/Mostafa_Ismail_128kbps/"
   };
 
   Reciter mJibreel{
     "Muhammad_Jibreel",
     qApp->translate("MainWindow", "Muhammad Jibreel"),
-    g_bismillahDir.absoluteFilePath("mjibreel.mp3"),
+    bismillahDir.absoluteFilePath("mjibreel.mp3"),
     "https://quran.ksu.edu.sa/ayat/mp3/Muhammad_Jibreel_64kbps/"
   };
 
-  g_recitersList.append(husary);
-  g_recitersList.append(husaryQasr);
-  g_recitersList.append(husaryMujawwad);
-  g_recitersList.append(abdulbasit);
-  g_recitersList.append(abdulbaitMujawwad);
-  g_recitersList.append(menshawi);
-  g_recitersList.append(menshawiMujawwad);
-  g_recitersList.append(alafasy);
-  g_recitersList.append(tunaiji);
-  g_recitersList.append(dussary);
-  g_recitersList.append(banna);
-  g_recitersList.append(basfar);
-  g_recitersList.append(shatree);
-  g_recitersList.append(ajamy);
-  g_recitersList.append(aliJaber);
-  g_recitersList.append(fAbbad);
-  g_recitersList.append(ghamadi);
-  g_recitersList.append(hRifai);
-  g_recitersList.append(hudhaify);
-  g_recitersList.append(shuraym);
-  g_recitersList.append(alqatami);
-  g_recitersList.append(muaiqly);
-  g_recitersList.append(mIsmail);
-  g_recitersList.append(mJibreel);
+  recitersList.append(husary);
+  recitersList.append(husaryQasr);
+  recitersList.append(husaryMujawwad);
+  recitersList.append(abdulbasit);
+  recitersList.append(abdulbaitMujawwad);
+  recitersList.append(menshawi);
+  recitersList.append(menshawiMujawwad);
+  recitersList.append(alafasy);
+  recitersList.append(tunaiji);
+  recitersList.append(dussary);
+  recitersList.append(banna);
+  recitersList.append(basfar);
+  recitersList.append(shatree);
+  recitersList.append(ajamy);
+  recitersList.append(aliJaber);
+  recitersList.append(fAbbad);
+  recitersList.append(ghamadi);
+  recitersList.append(hRifai);
+  recitersList.append(hudhaify);
+  recitersList.append(shuraym);
+  recitersList.append(alqatami);
+  recitersList.append(muaiqly);
+  recitersList.append(mIsmail);
+  recitersList.append(mJibreel);
 
   // create reciters directories
-  g_recitationsDir.setPath(QDir::currentPath());
-  if (!g_recitationsDir.exists("recitations"))
-    g_recitationsDir.mkdir("recitations");
+  recitationsDir.setPath(configDir.absolutePath());
+  if (!recitationsDir.exists("recitations"))
+    recitationsDir.mkdir("recitations");
 
-  g_recitationsDir.cd("recitations");
-  foreach (const Reciter& r, g_recitersList) {
-    if (!g_recitationsDir.exists(r.baseDirName)) {
-      g_recitationsDir.mkdir(r.baseDirName);
+  recitationsDir.cd("recitations");
+  foreach (const Reciter& r, recitersList) {
+    if (!recitationsDir.exists(r.baseDirName)) {
+      recitationsDir.mkdir(r.baseDirName);
     }
   }
 }
@@ -455,19 +518,18 @@ void
 setGlobals()
 {
   // data
-  g_assetsDir =
-    QApplication::applicationDirPath() + QDir::separator() + "assets";
-  g_bismillahDir =
+  assetsDir = QApplication::applicationDirPath() + QDir::separator() + "assets";
+  bismillahDir =
     QApplication::applicationDirPath() + QDir::separator() + "bismillah";
 
   // config
-  g_configDir.mkpath(".qurancompanion");
-  g_configDir.cd(".qurancompanion");
-  QDir::setCurrent(g_configDir.absolutePath());
+  configDir.mkpath(".qurancompanion");
+  configDir.cd(".qurancompanion");
+  QDir::setCurrent(configDir.absolutePath());
 
-  g_updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
-                     "QCMaintenanceTool";
+  updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
+                   "QCMaintenanceTool";
 #ifdef Q_OS_WIN
-  g_updateToolPath.append(".exe");
+  updateToolPath.append(".exe");
 #endif
 }

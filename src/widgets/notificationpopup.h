@@ -1,3 +1,8 @@
+/**
+ * @file notificationpopup.h
+ * @brief Header file for NotificationPopup
+ */
+
 #ifndef NOTIFICATIONPOPUP_H
 #define NOTIFICATIONPOPUP_H
 
@@ -13,43 +18,106 @@
 #include <QTimer>
 #include <QWidget>
 
+/**
+ * @brief NotificationPopup class represents an in-app popup for notifying the
+ * user after different actions
+ */
 class NotificationPopup : public QFrame
 {
   Q_OBJECT
 public:
+  /**
+   * @brief The Action enum represents all possible action to notify the user of
+   */
   enum Action
   {
-    info,
-    success,
-    fail,
-    bookmarkAdd,
-    bookmarkRemove,
-    copiedText,
-    updateInfo
+    info,           ///< general information
+    success,        ///< successful operation
+    fail,           ///< failed operation
+    bookmarkAdd,    ///< bookmark addition
+    bookmarkRemove, ///< bookmark removal
+    copiedText,     ///< verse text copied
+    updateInfo      ///< version information
   };
+
+  /**
+   * @brief class constructor
+   * @param parent - pointer to parent widget
+   * @param dbMgr - pointer to DBManager instance
+   */
   explicit NotificationPopup(QWidget* parent = nullptr,
                              DBManager* dbMgr = nullptr);
+  /**
+   * @brief show popup with the given message and action icon
+   * @param message - QString of message to show
+   * @param icon - NotificationPopup::Action entry
+   */
   void notify(QString message, Action icon);
 
+  /**
+   * @brief adjust the popup position based on the position of the side dock
+   * position in the main window
+   * @details sets the popup position to be on the opposite side of the side
+   * dock
+   */
   void adjustLocation();
+  /**
+   * @brief getter for m_notificationPos
+   * @return QPoint representing the (0,0) coordinate for the widget
+   */
   QPoint notificationPos() const;
 
 public slots:
+  /**
+   * @brief slot to update m_dockArea variable on dock position change
+   * @param dockPos - new dock position relative to the main window
+   */
   void dockLocationChanged(Qt::DockWidgetArea dockPos);
+  /**
+   * @brief slot to show a notification on download completion
+   * @param reciterIdx - ::Globals::recitersList index for the reciter
+   * @param surah - the surah that was downloaded
+   */
   void completedDownload(int reciterIdx, int surah);
+  /**
+   * @brief slot to show a notification on download error
+   * @param reciterIdx - ::Globals::recitersList index for the reciter
+   * @param surah - the surah that was downloaded
+   */
   void downloadError(int reciterIdx, int surah);
+  /**
+   * @brief slot to show a notification on bookmark addition
+   */
   void bookmarkAdded();
+  /**
+   * @brief slot to show a notification on bookmark removal
+   */
   void bookmarkRemoved();
+  /**
+   * @brief slot to show a notification after verse text is copied to clipboard
+   */
   void copiedToClipboard();
+  /**
+   * @brief slot to check the passed version against the application version and
+   * show notification accordingly
+   * @param appVer - the fetched application version
+   */
   void checkUpdate(QString appVer);
 
 private:
-  const QDir& m_resources = g_themeResources;
-  const QList<Reciter>& m_recitersList = g_recitersList;
+  const QDir& m_resources = Globals::themeResources;
+  const QList<Reciter>& m_recitersList = Globals::recitersList;
+  /**
+   * @brief connects signals and slots for different UI
+   * components and shortcuts.
+   */
   void setupConnections();
+  /**
+   * @brief set the popup icon according to the given Action
+   * @param icon - NotificationPopup::Action entry
+   */
   void setNotificationIcon(Action icon);
   DBManager* m_dbMgr;
-  QDockWidget* m_dockPtr;
   QLabel* m_iconWidget;
   QLabel* m_textWidget;
   QPropertyAnimation* m_fadeoutAnim;

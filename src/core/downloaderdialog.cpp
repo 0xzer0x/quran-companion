@@ -1,14 +1,11 @@
+/**
+ * @file downloaderdialog.cpp
+ * @brief Implementation file for DownloaderDialog
+ */
+
 #include "downloaderdialog.h"
 #include "ui_downloaderdialog.h"
 
-/*!
- * \brief DownloaderDialog::DownloaderDialog class constructor
- * @param parent pointer to parent widget
- * @param settingsptr pointer to settings instance to access app settings
- * @param downloader pointer to backend downloader object
- * @param dbMan pointer to database management/interaction object
- * @param iconsPath path to current theme icons
- */
 DownloaderDialog::DownloaderDialog(QWidget* parent,
                                    DownloadManager* downloader,
                                    DBManager* dbMan)
@@ -83,10 +80,6 @@ DownloaderDialog::setupConnections()
           &DownloaderDialog::updateDownloadSpeed);
 }
 
-/*!
- * \brief DownloaderDialog::fillTreeView fill the treeView model with the
- * reciters info
- */
 void
 DownloaderDialog::fillTreeView()
 {
@@ -128,10 +121,6 @@ DownloaderDialog::removeFromDownloading(int reciter, int surah)
     m_downloadingTasks.insert(reciter, downloading);
 }
 
-/*!
- * \brief DownloaderDialog::addToQueue adds selected surahs to the download
- * queue
- */
 void
 DownloaderDialog::addToQueue()
 {
@@ -158,14 +147,6 @@ DownloaderDialog::addToQueue()
   m_downloaderPtr->startQueue();
 }
 
-/*!
- * \brief DownloaderDialog::addTaskProgress adds a download progress bar to the
- * downloader dialog to indicate download state
- *
- * @param reciterIdx index for the chosen reciter as in the treeView & in the
- * Reciters list
- * @param surah integer value represents the surah number to download (1-114)
- */
 void
 DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
 {
@@ -203,10 +184,6 @@ DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
   ui->lytFrameView->addWidget(prgFrm);
 }
 
-/*!
- * \brief DownloaderDialog::setCurrentBar sets the currently active download
- * task progress bar in order to update displayed info
- */
 void
 DownloaderDialog::setCurrentBar()
 {
@@ -262,10 +239,6 @@ DownloaderDialog::btnStopClicked()
   m_downloaderPtr->stopQueue();
 }
 
-/*!
- * \brief DownloaderDialog::surahDownloaded slot to delete the finished progress
- * bar on download completion
- */
 void
 DownloaderDialog::surahDownloaded(int reciter, int surah)
 {
@@ -283,10 +256,6 @@ DownloaderDialog::surahDownloaded(int reciter, int surah)
   setCurrentBar();
 }
 
-/*!
- * \brief DownloaderDialog::downloadAborted slot to delete all download tasks /
- * progress bars from dialog
- */
 void
 DownloaderDialog::downloadAborted()
 {
@@ -297,10 +266,6 @@ DownloaderDialog::downloadAborted()
   }
 }
 
-/*!
- * \brief DownloaderDialog::topTaskDownloadError slot to update the current task
- * in case of download error
- */
 void
 DownloaderDialog::topTaskDownloadError(int reciter, int surah)
 {
