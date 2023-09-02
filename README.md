@@ -247,6 +247,16 @@ See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a f
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 
+### Documetation 📚
+
+- [Doxygen](https://www.doxygen.nl/) documentation is provided for the project, to generate the documentation preform the following steps
+
+  - `git clone https://github.com/0xzer0x/quran-companion.git`
+  - `cd quran-companion/docs`
+  - `doxygen`
+
+- default documentaion format is html, if you want to generate any other format modify `Doxyfile` accordingly
+
 ### Translation 🌐
 
 To contribute in translating the application, start by:
