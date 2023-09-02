@@ -321,5 +321,5 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [latest-release]: https://github.com/0xzer0x/quran-companion/releases/latest
-[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.5/qc_online_installer_x64_win.exe
-[linux-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.5/qc_online_installer_x64_linux.run
+[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.7/qc_online_installer_x64_win.exe
+[linux-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.7/qc_online_installer_x64_linux.run
