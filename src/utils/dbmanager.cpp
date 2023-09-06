@@ -10,8 +10,7 @@ DBManager::DBManager(QObject* parent)
 {
   m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
   m_glyphsDbPath.setFile(m_dbDir.filePath("glyphs.db"));
-  m_bookmarksDbPath.setFile(QDir::currentPath() + QDir::separator() +
-                            "bookmarks.db");
+  m_bookmarksDbPath.setFile(m_bookmarksFilepath);
 
   // set database driver, set the path & open a connection with the db
   QSqlDatabase::addDatabase("QSQLITE", "QuranCon");
@@ -798,7 +797,7 @@ DBManager::getTranslation(const int sIdx, const int vIdx)
   return dbQuery.value(0).toString();
 }
 
-DBManager::Tafsir
+Tafsir
 DBManager::currTafsir() const
 {
   return m_currTafsir;

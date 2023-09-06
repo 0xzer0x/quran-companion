@@ -120,6 +120,7 @@ private:
    * text to be displayed in the messagebox
    */
   void setVotdMsg();
+  QFile m_timestampFile = Globals::configDir.absoluteFilePath("votd.log");
   /**
    * @brief boolean to indicate whether the verse of the day have been shown
    * before

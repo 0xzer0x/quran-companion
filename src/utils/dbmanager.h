@@ -40,62 +40,6 @@ public:
     tafsir,     ///< currently selected tafsir database file
     translation ///< currently selected translation database file
   };
-  /**
-   * @brief Tafsir enum values representing available tafasir.
-   */
-  enum Tafsir
-  {
-    adwa,       ///< Adwa' ul-Bayan - Sheikh Shinqiti
-    aysar,      ///< Aysar ul-Tafasir - Sheikh Abu-bakr al-Jazaeri
-    baghawy,    ///< Tafsir ul-baghawy
-    qortoby,    ///< Tafsir ul-Qortoby
-    sa3dy,      ///< Tafsir ul-Sa'ady
-    tabary,     ///< Tafsir ul-Tabary
-    waseet,     ///< At-Tafsir ul-Waseet
-    e3rab,      ///< Ea'rab of Quran verses
-    tanweer,    ///< At-Tahreer wa At-Tanweer - Sheikh Ibn A'ashoor
-    juzayy,     ///< Tafsir Ibn-Juzayy
-    katheer,    ///< Tafsir Ibn-Katheer
-    indonesian, ///< (Indonesian) Tafsir ul-Jalalyn
-    russian,    ///< (Russian) Tafsir ul-Sa'ady
-    tafheem     ///< (English) Tafheem ul-Quran - Sheikh Abul-Aa'la al-Maududy
-  };
-  /**
-   * @brief Translation enum holds different values representing available Quran
-   * translations
-   */
-  enum Translation
-  {
-    muyassar,       ///< (Arabic) Tafsir muyassar
-    ar_ma3any,      ///< (Arabic) Word Meanings
-    bn_bengali,     ///< (Bengali) Muhiuddin Khan
-    bs_korkut,      ///< (Bosanski) Korkut
-    de_bubenheim,   ///< (Deutsch) Bubenheim & Elyas
-    en_khattab,     ///< (English) Clear Quran
-    en_sahih,       ///< (English) Sahih International
-    es_navio,       ///< (Español) Abdel Ghani Navio
-    fr_hamidullah,  ///< (Français) Hamidullah
-    ha_gumi,        ///< (Hausa) Gumi
-    id_indonesian,  ///< (Indonesian) Bahasa Indonesia
-    it_piccardo,    ///< (Italiano) Piccardo
-    ku_asan,        ///< (كوردى) برهان محمد أمين
-    ml_abdulhameed, ///< (Malayalam) Abdul Hameed and Kunhi
-    ms_basmeih,     ///< (Melayu) Basmeih
-    nl_siregar,     ///< (Dutch) Sofian Siregar
-    pr_tagi,        ///< (فارسى) حسین تاجی گله داری
-    pt_elhayek,     ///< (Português) El Hayek
-    ru_kuliev,      ///< (Русский) Кулиев (Russian - Elmir Kuliev)
-    so_abduh,       ///< (Somali) Abduh
-    sq_nahi,        ///< (Shqiptar) Efendi Nahi
-    sv_bernstrom,   ///< (Swedish) Bernström
-    sw_barwani,     ///< (Swahili) Al-Barwani
-    ta_tamil, ///< (தமிழ்) ஜான் டிரஸ்ட் (Tamil - Jan Turst Foundation)
-    th_thai,  ///< (ภาษาไทย) ภาษาไทย (Thai)
-    tr_diyanet,   ///< (Türkçe) Diyanet Isleri
-    ur_jalandhry, ///< (اردو) جالندربرى
-    uz_sodik,     ///< (Uzbek) Мухаммад Содик
-    zh_jian       ///< (中国语文) Ma Jian (Chinese)
-  };
 
   /**
    * @brief Class constructor
@@ -312,6 +256,8 @@ private:
   const QSettings* m_settings = Globals::settings;
   const QLocale::Language m_languageCode = Globals::language;
   const int m_qcfVer = Globals::qcfVersion;
+  const QString m_bookmarksFilepath =
+    Globals::configDir.absoluteFilePath("bookmarks.db");
   /**
    * @brief the currently active database type
    */

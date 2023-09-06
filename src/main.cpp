@@ -97,7 +97,7 @@ main(int argc, char* argv[])
   splash.show();
 
   setGlobals();
-  Logger::startLogger(QDir::currentPath());
+  Logger::startLogger(configDir.absolutePath());
   Logger::attach();
 
   settings = new QSettings(
@@ -107,6 +107,7 @@ main(int argc, char* argv[])
   themeId = settings->value("Theme").toInt();
   qcfVersion = settings->value("Reader/QCF").toInt();
   language = qvariant_cast<QLocale::Language>(settings->value("Language"));
+  readerMode = qvariant_cast<ReaderMode>(settings->value("Reader/Mode"));
   setTheme(themeId);
   addFonts(qcfVersion);
   addTranslation(language);
@@ -128,6 +129,7 @@ checkSettings(QSettings* settings)
   defaultKeys << "Language"
               << "MissingFileWarning"
               << "Reader/AdaptiveFont"
+              << "Reader/Mode"
               << "Reader/Page"
               << "Reader/QCF"
               << "Reader/QCF1Size"
@@ -152,6 +154,7 @@ checkSettings(QSettings* settings)
 
     settings->beginGroup("Reader");
     // all keys now have "Reader" prefix
+    settings->setValue("Mode", settings->value("Mode", 0));
     settings->setValue("Page", settings->value("Page", 1));
     settings->setValue("Surah", settings->value("Surah", 1));
     settings->setValue("Verse", settings->value("Verse", 1));
@@ -523,9 +526,13 @@ setGlobals()
     QApplication::applicationDirPath() + QDir::separator() + "bismillah";
 
   // config
-  configDir.mkpath(".qurancompanion");
-  configDir.cd(".qurancompanion");
-  QDir::setCurrent(configDir.absolutePath());
+  if (!configDir.exists("QuranCompanion"))
+    configDir.mkpath("QuranCompanion");
+  if (!recitationsDir.exists("QuranCompanion/recitations"))
+    recitationsDir.mkpath("QuranCompanion/recitations");
+
+  configDir.cd("QuranCompanion");
+  recitationsDir.cd("QuranCompanion/recitations");
 
   updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
                    "QCMaintenanceTool";

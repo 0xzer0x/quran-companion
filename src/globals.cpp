@@ -4,25 +4,32 @@
  */
 
 #include "globals.h"
+#include <QStandardPaths>
 
+namespace Globals {
 // app settings
-int Globals::themeId = 0;
-bool Globals::darkMode = false;
-QSettings* Globals::settings = nullptr;
-QLocale::Language Globals::language;
+int themeId = 0;
+ReaderMode readerMode = ReaderMode::singlePage;
+bool darkMode = false;
+QSettings* settings = nullptr;
+QLocale::Language language;
 
 // qcf fonts
-int Globals::qcfVersion = 1;
-QString Globals::qcfFontPrefix;
-QString Globals::qcfBSMLFont;
+int qcfVersion = 1;
+QString qcfFontPrefix;
+QString qcfBSMLFont;
 
 // app directories
-QDir Globals::themeResources;
-QDir Globals::configDir = QDir::homePath();
-QDir Globals::assetsDir;
-QDir Globals::bismillahDir;
-QDir Globals::recitationsDir;
+QDir themeResources;
+QDir assetsDir;
+QDir bismillahDir;
+QDir recitationsDir =
+  QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+QDir configDir =
+  QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
 
 // application specific
-QList<Reciter> Globals::recitersList;
-QString Globals::updateToolPath;
+QList<Reciter> recitersList;
+QString updateToolPath;
+
+};
