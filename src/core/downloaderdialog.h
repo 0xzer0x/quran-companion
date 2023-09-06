@@ -11,6 +11,7 @@
 #include "../utils/downloadmanager.h"
 #include "../widgets/downloadprogressbar.h"
 #include <QCloseEvent>
+#include <QDesktopServices>
 #include <QDialog>
 #include <QLabel>
 #include <QProgressBar>
@@ -119,6 +120,7 @@ private slots:
    * @brief Stops all downloading tasks.
    */
   void btnStopClicked();
+  void openDownloadsDir();
 
 protected:
   /**

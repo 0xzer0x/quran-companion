@@ -11,7 +11,6 @@
 #include <QDialog>
 #include <QSettings>
 #include <QShortcut>
-using Tafsir = DBManager::Tafsir;
 
 namespace Ui {
 class TafsirDialog;

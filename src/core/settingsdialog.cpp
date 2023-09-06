@@ -66,6 +66,7 @@ SettingsDialog::setCurrentSettingsAsRef()
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
   ui->cmbLang->setCurrentIndex(ui->cmbLang->findData(m_languageCode));
   ui->cmbTheme->setCurrentIndex(m_themeIdx);
+  ui->cmbReaderMode->setCurrentIndex(m_readerMode);
   ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
   ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
   ui->fntCmbSide->setCurrentFont(m_sideFont);
@@ -134,6 +135,19 @@ SettingsDialog::updateTranslation(int idx)
   emit translationChanged();
 
   m_renderSideContent = true;
+}
+
+void
+SettingsDialog::updateReaderMode(int idx)
+{
+  m_settings->setValue("Reader/Mode", idx);
+  if (m_restartReq)
+    return;
+
+  QMessageBox::StandardButton btn = QMessageBox::question(
+    this, tr("Restart required"), tr("Reading mode was changed, restart now?"));
+
+  m_restartReq = btn == QMessageBox::Yes;
 }
 
 void
@@ -214,6 +228,9 @@ SettingsDialog::applyAllChanges()
 
   if (ui->chkAdaptive->isChecked() != m_adaptive)
     updateAdaptiveFont(ui->chkAdaptive->isChecked());
+
+  if (ui->cmbReaderMode->currentIndex() != m_readerMode)
+    updateReaderMode(ui->cmbReaderMode->currentIndex());
 
   bool forceManualFont = false;
   if (ui->cmbQuranFontSz->currentText() != QString::number(m_quranFontSize))

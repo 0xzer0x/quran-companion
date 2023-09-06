@@ -4,6 +4,7 @@
  */
 
 #include "quranpagebrowser.h"
+#include <QRegularExpression>
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent,
                                    DBManager* dbMgr,
@@ -50,6 +51,7 @@ QuranPageBrowser::updateFontSize()
   m_fontSize =
     m_settings->value("Reader/QCF" + QString::number(m_qcfVer) + "Size", 22)
       .toInt();
+  highlightVerse(m_highlightedIdx);
 }
 
 QString
@@ -246,12 +248,9 @@ QuranPageBrowser::highlightVerse(int verseIdxInPage)
     return;
   }
 
+  resetHighlight();
+
   QTextCharFormat tcf;
-  tcf.setForeground(m_darkMode ? Qt::white : Qt::black);
-
-  if (m_highlighter->hasSelection())
-    m_highlighter->mergeCharFormat(tcf); // de-highlight any previous highlights
-
   tcf.setForeground(m_highlightColor);
 
   const int* const bounds = m_pageVerseCoords.at(verseIdxInPage);
@@ -263,6 +262,17 @@ QuranPageBrowser::highlightVerse(int verseIdxInPage)
   qInfo() << "Selected verse #" + QString::number(verseIdxInPage) + " in page";
 
   m_highlightedIdx = verseIdxInPage;
+}
+
+void
+QuranPageBrowser::resetHighlight()
+{
+  QTextCharFormat tcf;
+  tcf.setForeground(m_darkMode ? Qt::white : Qt::black);
+  if (m_highlighter->hasSelection())
+    m_highlighter->mergeCharFormat(tcf); // de-highlight any previous highlights
+
+  m_highlightedIdx = -1;
 }
 
 QuranPageBrowser::Action
@@ -309,9 +319,11 @@ QuranPageBrowser::bestFitFontSize()
     QFont pf(m_pageFont, sz);
     QFontMetrics fm(pf);
     QFontMetrics headerMetrics(QFont("PakType Naskh Basic", sz - 6));
+    QString completePage = m_currPageLines.join('\n');
+    completePage.remove("bsml").remove(QRegularExpression("frame.*"));
 
     QSize textSz = headerMetrics.size(Qt::TextSingleLine, m_currPageHeader) +
-                   fm.size(0, m_currPageLines.join('\n'));
+                   fm.size(0, completePage);
     if (textSz.height() + margin <= parentWidget()->height()) {
       break;
     }

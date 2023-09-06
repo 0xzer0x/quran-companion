@@ -100,6 +100,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/downloaderdialog.ui" line="136"/>
+        <source>Downloads Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/downloaderdialog.ui" line="152"/>
         <source>clear</source>
         <translation type="unfinished"></translation>
@@ -975,6 +980,21 @@
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="150"/>
+        <source>Reader mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="158"/>
+        <source>Single page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="163"/>
+        <source>Double page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="150"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1347,6 +1367,11 @@
     <message>
         <location filename="../core/settingsdialog.cpp" line="89"/>
         <source>Application language was changed, restart now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="148"/>
+        <source>Reading mode was changed, restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

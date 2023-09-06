@@ -44,6 +44,12 @@ DownloaderDialog::setupConnections()
           &DownloaderDialog::addToQueue,
           Qt::UniqueConnection);
 
+  connect(ui->btnDownloads,
+          &QPushButton::clicked,
+          this,
+          &DownloaderDialog::openDownloadsDir,
+          Qt::UniqueConnection);
+
   connect(ui->btnStopQueue,
           &QPushButton::clicked,
           this,
@@ -237,6 +243,13 @@ DownloaderDialog::btnStopClicked()
 {
   m_downloadingTasks.clear();
   m_downloaderPtr->stopQueue();
+}
+
+void
+DownloaderDialog::openDownloadsDir()
+{
+  QUrl url = QUrl::fromLocalFile(Globals::recitationsDir.absolutePath());
+  QDesktopServices::openUrl(url);
 }
 
 void

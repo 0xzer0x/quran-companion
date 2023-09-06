@@ -31,7 +31,7 @@ dialog-ok-icon: off;
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -142,6 +142,31 @@ dialog-ok-icon: off;
           <string>Quran page</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <item>
+             <widget class="QLabel" name="lbReaderMode">
+              <property name="text">
+               <string>Reader mode</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cmbReaderMode">
+              <item>
+               <property name="text">
+                <string>Single page</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Double page</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>

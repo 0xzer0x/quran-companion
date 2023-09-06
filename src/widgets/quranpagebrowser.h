@@ -93,6 +93,7 @@ public:
    * the page
    */
   void highlightVerse(int verseIdxInPage);
+  void resetHighlight();
   /**
    * @brief show the main verse interaction menu and return number related to
    * the chosen action

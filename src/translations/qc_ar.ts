@@ -100,6 +100,11 @@
         <translation>إضافة تحميل &gt;&gt;</translation>
     </message>
     <message>
+        <location filename="../core/downloaderdialog.ui" line="136"/>
+        <source>Downloads Folder</source>
+        <translation>مجلد التحميلات</translation>
+    </message>
+    <message>
         <location filename="../core/downloaderdialog.ui" line="152"/>
         <source>clear</source>
         <translation>محو</translation>
@@ -975,6 +980,21 @@
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="150"/>
+        <source>Reader mode</source>
+        <translation>وضع القراءة</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="158"/>
+        <source>Single page</source>
+        <translation>صفحة</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="163"/>
+        <source>Double page</source>
+        <translation>صفحتين</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="150"/>
         <source>Font</source>
         <translation>الخط</translation>
     </message>
@@ -1350,6 +1370,11 @@
         <location filename="../core/settingsdialog.cpp" line="89"/>
         <source>Application language was changed, restart now?</source>
         <translation>تم تغيير لغة البرنامج، هل تريد إعادة تشغيل البرنامج؟</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="148"/>
+        <source>Reading mode was changed, restart now?</source>
+        <translation>تم تغيير وضع القراءة، هل تريد إعادة تشغيل البرنامج؟</translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.cpp" line="145"/>

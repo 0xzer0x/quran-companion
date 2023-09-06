@@ -79,6 +79,7 @@ public slots:
    * @param idx - index of the translation value in DBManager::Translation enum
    */
   void updateTranslation(int idx);
+  void updateReaderMode(int idx);
   /**
    * @brief Update the QCF font used
    * @param qcfV - qcf version to change to
@@ -174,6 +175,7 @@ protected:
 private:
   const int m_qcfVer = Globals::qcfVersion;
   const int m_themeIdx = Globals::themeId;
+  const ReaderMode m_readerMode = Globals::readerMode;
   const QLocale::Language m_languageCode = Globals::language;
   QSettings* const m_settings = Globals::settings;
   const QDir& m_resources = Globals::themeResources;
