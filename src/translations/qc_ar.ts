@@ -1188,6 +1188,18 @@
         <translation>تفسير ابن كثير</translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.ui" line="493"/>
+        <source>Tafheem-ul-Quran</source>
+        <oldsource>Tafheem</oldsource>
+        <translatorcomment>Tafheem-ul-Quran by Syed Abu-al-A&apos;la Maududi</translatorcomment>
+        <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="508"/>
+        <source>English - Ibn-Katheer</source>
+        <translation>تفسير ابن كثير - إنجليزي</translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.ui" line="483"/>
         <source>Indonesian - Tafsir Jalalayn</source>
         <translation>تفسير الجلالين - إندونيسي</translation>
@@ -1198,11 +1210,9 @@
         <translation>تفسير السعدي - روسي</translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="493"/>
-        <source>Tafheem-ul-Quran</source>
-        <oldsource>Tafheem</oldsource>
-        <translatorcomment>Tafheem-ul-Quran by Syed Abu-al-A&apos;la Maududi</translatorcomment>
-        <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
+        <location filename="../core/settingsdialog.ui" line="523"/>
+        <source>English - Tafheem-ul-Quran</source>
+        <translation>تفهيم القرآن - إنجليزي</translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="505"/>
@@ -1242,6 +1252,11 @@
     <message>
         <location filename="../core/settingsdialog.ui" line="549"/>
         <source>English - Sahih International</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="584"/>
+        <source>English - Abdullah Yusuf Ali</source>
         <translation></translation>
     </message>
     <message>
@@ -1471,6 +1486,11 @@
         <translation>تفسير ابن كثير</translation>
     </message>
     <message>
+        <location filename="../core/tafsirdialog.cpp" line="109"/>
+        <source>English - Ibn-Katheer</source>
+        <translation>تفسير ابن كثير - إنجليزي</translation>
+    </message>
+    <message>
         <location filename="../core/tafsirdialog.cpp" line="111"/>
         <source>Al-Qortoby</source>
         <translation>تفسير القرطبي</translation>
@@ -1494,6 +1514,11 @@
         <location filename="../core/tafsirdialog.cpp" line="123"/>
         <source>Tafheem-ul-Quran</source>
         <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="124"/>
+        <source>English - Tafheem-ul-Quran</source>
+        <translation>تفهيم القرآن - إنجليزي</translation>
     </message>
     <message>
         <location filename="../core/tafsirdialog.cpp" line="126"/>

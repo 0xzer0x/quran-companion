@@ -1188,6 +1188,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.ui" line="493"/>
+        <source>Tafheem-ul-Quran</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="508"/>
+        <source>English - Ibn-Katheer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.ui" line="483"/>
         <source>Indonesian - Tafsir Jalalayn</source>
         <translation type="unfinished"></translation>
@@ -1198,8 +1208,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="493"/>
-        <source>Tafheem-ul-Quran</source>
+        <location filename="../core/settingsdialog.ui" line="523"/>
+        <source>English - Tafheem-ul-Quran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1240,6 +1250,11 @@
     <message>
         <location filename="../core/settingsdialog.ui" line="549"/>
         <source>English - Sahih International</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="584"/>
+        <source>English - Abdullah Yusuf Ali</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1469,6 +1484,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/tafsirdialog.cpp" line="109"/>
+        <source>English - Ibn-Katheer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/tafsirdialog.cpp" line="111"/>
         <source>Al-Qortoby</source>
         <translation type="unfinished"></translation>
@@ -1491,6 +1511,11 @@
     <message>
         <location filename="../core/tafsirdialog.cpp" line="123"/>
         <source>Tafheem-ul-Quran</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="124"/>
+        <source>English - Tafheem-ul-Quran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

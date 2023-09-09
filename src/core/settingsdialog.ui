@@ -505,6 +505,11 @@ dialog-ok-icon: off;
               </item>
               <item>
                <property name="text">
+                <string>English - Ibn-Katheer</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
                 <string>Indonesian - Tafsir Jalalayn</string>
                </property>
               </item>
@@ -515,7 +520,7 @@ dialog-ok-icon: off;
               </item>
               <item>
                <property name="text">
-                <string>Tafheem-ul-Quran</string>
+                <string>English - Tafheem-ul-Quran</string>
                </property>
               </item>
              </widget>
@@ -572,6 +577,11 @@ dialog-ok-icon: off;
               <item>
                <property name="text">
                 <string>English - Sahih International</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>English - Abdullah Yusuf Ali</string>
                </property>
               </item>
               <item>

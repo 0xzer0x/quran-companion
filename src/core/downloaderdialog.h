@@ -88,7 +88,7 @@ public slots:
    */
   void downloadAborted();
   /**
-   * @brief  slot to update the current task
+   * @brief slot to update the current task
    * in case of download error
    * @param reciter - ::Globals::recitersList index for the reciter
    * @param surah - surah number
@@ -120,6 +120,10 @@ private slots:
    * @brief Stops all downloading tasks.
    */
   void btnStopClicked();
+  /**
+   * @brief open Globals::recitationsDir in the default file url handler
+   * (file manager)
+   */
   void openDownloadsDir();
 
 protected:

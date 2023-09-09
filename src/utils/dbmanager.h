@@ -68,7 +68,6 @@ public:
    * @param filePath - path to the database file
    */
   void setOpenDatabase(Database db, QString filePath);
-
   /**
    * @brief gets the surah number and juz number of the first verse in the page,
    * used to display page header information
@@ -88,7 +87,6 @@ public:
    * @return QList of ::Verse instances
    */
   QList<Verse> getVerseInfoList(const int page);
-
   /**
    * @brief gets the surah name glyph for the QCF_BSML font, used to render
    * surah frame in Quran page
@@ -116,7 +114,6 @@ public:
    * @return QString of the verse text
    */
   QString getVerseText(const int sIdx, const int vIdx);
-
   /**
    * @brief gets the number of the last verse in the surah passed
    * @param surahIdx - surah number (1-114)
@@ -169,7 +166,6 @@ public:
    * @return juz number
    */
   int getJuzOfPage(const int page);
-
   /**
    * @brief searches the database for surahs matching the given text pattern,
    * the pattern can be either in English or Arabic
@@ -197,7 +193,6 @@ public:
   QList<Verse> searchVerses(QString searchText,
                             const int range[2] = new int[2]{ 1, 604 },
                             const bool whole = false);
-
   /**
    * @brief gets the tafsir content for the given verse using the active
    * DBManager::Tafsir
@@ -244,7 +239,6 @@ public:
    * @return boolean indicating successful removal
    */
   bool removeBookmark(Verse v);
-
   /**
    * @brief getter for m_currTafsir
    * @return the currently set DBManager::Tafsir

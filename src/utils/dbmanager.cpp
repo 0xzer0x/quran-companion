@@ -113,6 +113,10 @@ DBManager::setCurrentTafsir(Tafsir tafsirName)
       m_tafsirDbFilename = "katheer.db";
       break;
 
+    case Tafsir::katheer_en:
+      m_tafsirDbFilename = "katheer_en.db";
+      break;
+
     case Tafsir::indonesian:
       m_tafsirDbFilename = "indonesian.db";
       break;
@@ -161,6 +165,9 @@ DBManager::setCurrentTranslation(Translation translationName)
       break;
     case en_sahih:
       m_transDbFilename = "en_sahih.db";
+      break;
+    case en_yusuf:
+      m_transDbFilename = "en_yusuf.db";
       break;
     case es_navio:
       m_transDbFilename = "es_navio.db";

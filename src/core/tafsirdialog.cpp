@@ -105,6 +105,9 @@ TafsirDialog::setTafsirAsTitle()
     case Tafsir::katheer:
       title.append(tr("Ibn-Katheer"));
       break;
+    case Tafsir::katheer_en:
+      title.append(tr("English - Ibn-Katheer"));
+      break;
     case Tafsir::qortoby:
       title.append(tr("Al-Qortoby"));
       break;
@@ -118,7 +121,7 @@ TafsirDialog::setTafsirAsTitle()
       title.append(tr("Al-Sa'ady"));
       break;
     case Tafsir::tafheem:
-      title.append(tr("Tafheem-ul-Quran"));
+      title.append(tr("English - Tafheem-ul-Quran"));
       break;
     case Tafsir::tanweer:
       title.append(tr("Ibn-Ashoor"));

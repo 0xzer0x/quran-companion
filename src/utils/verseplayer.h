@@ -118,7 +118,7 @@ public slots:
    */
   bool changeReciter(int reciterIdx);
   /*!
-   * @brief  slot to call the nextVerse() method on verse audio end
+   * @brief slot to call the nextVerse() method on verse audio end
    * @param status - status of the media file, refer to QMediaPlayer
    * docs for enum.
    */

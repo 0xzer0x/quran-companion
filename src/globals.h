@@ -78,6 +78,7 @@ enum Tafsir
   tanweer,    ///< At-Tahreer wa At-Tanweer - Sheikh Ibn A'ashoor
   juzayy,     ///< Tafsir Ibn-Juzayy
   katheer,    ///< Tafsir Ibn-Katheer
+  katheer_en, ///< (English) Tafsir Ibn-Katheer
   indonesian, ///< (Indonesian) Tafsir ul-Jalalyn
   russian,    ///< (Russian) Tafsir ul-Sa'ady
   tafheem     ///< (English) Tafheem ul-Quran - Sheikh Abul-Aa'la al-Maududy
@@ -95,6 +96,7 @@ enum Translation
   de_bubenheim,   ///< (Deutsch) Bubenheim & Elyas
   en_khattab,     ///< (English) Clear Quran
   en_sahih,       ///< (English) Sahih International
+  en_yusuf,       ///< (English) Abdullah Yusuf Ali
   es_navio,       ///< (Español) Abdel Ghani Navio
   fr_hamidullah,  ///< (Français) Hamidullah
   ha_gumi,        ///< (Hausa) Gumi

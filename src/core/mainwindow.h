@@ -173,7 +173,6 @@ private slots:
    * @param newJuzIdx - juz idx in the combobox (0 - 29)
    */
   void cmbJuzChanged(int newJuzIdx);
-
   /**
    * @brief sync the main window with the verse player as active verse changes,
    * set the endOfPage flag or flip page if the flag is set
@@ -196,7 +195,6 @@ private slots:
    * @param state - playback state of the current audio file
    */
   void mediaStateChanged(QMediaPlayer::PlaybackState state);
-
   /**
    * @brief adds the current ::Verse to the bookmarks
    */
@@ -237,7 +235,6 @@ private slots:
    * @brief open the about messagebox for Qt
    */
   void on_actionAbout_Qt_triggered();
-
   /**
    * @brief slot to navigate to the clicked verse in the side panel and update
    * UI elements
@@ -288,7 +285,6 @@ private slots:
    * @param newState - playback state of the current verse
    */
   void updateTrayTooltip(QMediaPlayer::PlaybackState newState);
-
   /**
    * @brief set tafsir to the one in the settings, update the selected db
    */
@@ -301,7 +297,6 @@ private slots:
    * @brief set side content font to the one in the settings
    */
   void updateSideFont();
-
   /**
    * @brief search for the surahs with the given argument when the text in the
    * side dock search box is changed
@@ -461,7 +456,6 @@ private:
    * @brief Pointer to access ui elements generated from .ui files.
    */
   Ui::MainWindow* ui;
-
   /**
    * @brief QScrollArea used in single page mode to display verses & translation
    */
