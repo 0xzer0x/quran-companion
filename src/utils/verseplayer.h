@@ -32,7 +32,6 @@ public:
    * @param reciterIdx - chosen reciter to load recitation of
    */
   explicit VersePlayer(QObject* parent = nullptr,
-                       DBManager* dbPtr = nullptr,
                        Verse initVerse = Verse{},
                        int reciterIdx = 0);
 
@@ -142,6 +141,7 @@ signals:
 private:
   QDir m_reciterDir = Globals::recitationsDir;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -167,10 +167,6 @@ private:
    * @brief QAudioOutput used for playback
    */
   QAudioOutput* m_output;
-  /**
-   * @brief pointer to DBManager instance
-   */
-  DBManager* m_dbMgr;
 };
 
 #endif // VERSEPLAYER_H

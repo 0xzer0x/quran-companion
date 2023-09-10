@@ -12,10 +12,14 @@
 #include <QColorDialog>
 #include <QDialog>
 #include <QIntValidator>
+#include <QKeySequence>
+#include <QKeySequenceEdit>
 #include <QMediaDevices>
 #include <QMessageBox>
 #include <QProcess>
 #include <QSettings>
+#include <QShortcut>
+#include <QStandardItemModel>
 #include <QValidator>
 
 namespace Ui {
@@ -79,6 +83,10 @@ public slots:
    * @param idx - index of the translation value in DBManager::Translation enum
    */
   void updateTranslation(int idx);
+  /**
+   * @brief update the ::ReaderMode used
+   * @param idx - index of the new ::ReaderMode
+   */
   void updateReaderMode(int idx);
   /**
    * @brief Update the QCF font used
@@ -106,6 +114,9 @@ public slots:
    * @param size - QString representing the new font size
    */
   void updateSideFontSize(QString size);
+
+  void updateShortcut(QString key, QString keySequence);
+
   /**
    * @brief check for changes in all settings and apply new settings if changes
    * are found.
@@ -159,6 +170,9 @@ signals:
    * @param dev - QAudioDevice instance for the selected device
    */
   void usedAudioDeviceChanged(QAudioDevice dev);
+
+  void shortcutChanged(QString key);
+
   /**
    * @fn restartApp()
    * @brief signal emitted for changes that require restart to take place.
@@ -172,6 +186,10 @@ protected:
    */
   void closeEvent(QCloseEvent* event);
 
+private slots:
+  void editShortcut(const QModelIndex& index);
+  void setShortcut();
+
 private:
   const int m_qcfVer = Globals::qcfVersion;
   const int m_themeIdx = Globals::themeId;
@@ -179,11 +197,16 @@ private:
   const QLocale::Language m_languageCode = Globals::language;
   QSettings* const m_settings = Globals::settings;
   const QDir& m_resources = Globals::themeResources;
+  const QMap<QString, QString>& m_shortcutDescription =
+    Globals::shortcutDescription;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
    */
   void setupConnections();
+  /////
+  /////
+  void populateShortcutsModel();
   /**
    * @brief adds all supported language entries in the langauge combobox.
    */
@@ -193,6 +216,9 @@ private:
    * corresponding variables and updates UI components to match them.
    */
   void setCurrentSettingsAsRef();
+  bool shortcutAvailable(QString key, QString keySequence);
+  void checkShortcuts();
+
   /**
    * @brief QCF font size used in constructing Quran page.
    */
@@ -232,6 +258,7 @@ private:
    * notify the MainWindow to reload the side content.
    */
   bool m_renderSideContent = false;
+
   /**
    * @brief boolean flag set when QCF font size is changed in order to
    * notify the MainWindow to reload the Quran page.
@@ -258,6 +285,10 @@ private:
    * @brief font used for displaying translation/tafsir in the application.
    */
   QFont m_sideFont;
+
+  QKeySequenceEdit* m_keySeqEdit = nullptr;
+
+  QStandardItemModel m_shortcutsModel;
 };
 
 #endif // SETTINGSDIALOG_H

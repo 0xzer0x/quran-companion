@@ -5,14 +5,10 @@
 
 #include "verseplayer.h"
 
-VersePlayer::VersePlayer(QObject* parent,
-                         DBManager* dbPtr,
-                         Verse initVerse,
-                         int reciterIdx)
+VersePlayer::VersePlayer(QObject* parent, Verse initVerse, int reciterIdx)
   : QMediaPlayer(parent)
   , m_activeVerse{ initVerse }
   , m_reciter{ reciterIdx }
-  , m_dbMgr{ dbPtr }
   , m_output{ new QAudioOutput(this) }
 {
   updateSurahVerseCount();

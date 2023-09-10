@@ -6,10 +6,9 @@
 #include "tafsirdialog.h"
 #include "ui_tafsirdialog.h"
 
-TafsirDialog::TafsirDialog(QWidget* parent, DBManager* dbPtr)
+TafsirDialog::TafsirDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::TafsirDialog)
-  , m_dbMgr{ dbPtr }
 {
   setWindowIcon(QIcon(m_resources.filePath("icons/tafsir.png")));
   ui->setupUi(this);
@@ -64,8 +63,6 @@ TafsirDialog::btnPrevClicked()
 void
 TafsirDialog::setupConnections()
 {
-  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
-  connect(ctrlQ, &QShortcut::activated, this, &TafsirDialog::close);
   connect(ui->btnNext,
           &QPushButton::clicked,
           this,

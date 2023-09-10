@@ -37,7 +37,7 @@ public:
    * @param parent - pointer to parent widget
    * @param dbPtr - pointer to DBManager instance
    */
-  explicit SearchDialog(QWidget* parent = nullptr, DBManager* dbPtr = nullptr);
+  explicit SearchDialog(QWidget* parent = nullptr);
   ~SearchDialog();
 
 public slots:
@@ -98,6 +98,7 @@ private slots:
 private:
   const QDir& m_resources = Globals::themeResources;
   const QString& m_fontPrefix = Globals::qcfFontPrefix;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -117,10 +118,6 @@ private:
    * @brief Pointer to access ui elements generated from .ui files.
    */
   Ui::SearchDialog* ui;
-  /**
-   * @brief pointer to DBManager instance.
-   */
-  DBManager* m_dbMgr;
   /**
    * @brief QList for all visible HighlightFrame widgets containing search
    * results.

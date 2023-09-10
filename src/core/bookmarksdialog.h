@@ -38,8 +38,7 @@ public:
    * @param dbMgr - pointer to a DBManager instance for accessing database
    * functionality
    */
-  explicit BookmarksDialog(QWidget* parent = nullptr,
-                           DBManager* dbMgr = nullptr);
+  explicit BookmarksDialog(QWidget* parent = nullptr);
   ~BookmarksDialog();
 
   /**
@@ -120,6 +119,7 @@ private:
   const QDir& m_resources = Globals::themeResources;
   const QString& m_fontPrefix = Globals::qcfFontPrefix;
   const int m_qcfVer = Globals::qcfVersion;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -144,10 +144,6 @@ private:
    * @brief pointer to access ui elements generated from .ui files.
    */
   Ui::BookmarksDialog* ui;
-  /**
-   * @brief pointer to DBManager instance.
-   */
-  DBManager* m_dbMgr = nullptr;
   /**
    * @brief ::Verse QList for all bookmarked verses.
    */

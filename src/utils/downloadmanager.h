@@ -56,8 +56,7 @@ public:
    * @param parent - pointer to parent widget
    * @param dbptr - pointer to DBManager instance
    */
-  explicit DownloadManager(QObject* parent = nullptr,
-                           DBManager* dbptr = nullptr);
+  explicit DownloadManager(QObject* parent = nullptr);
 
   /**
    * @brief gets the latest release of the application from the github repo
@@ -161,7 +160,7 @@ signals:
 
 private:
   const QList<Reciter>& m_recitersList = Globals::recitersList;
-
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief generate download url for specified verse using the reciter download
    * url
@@ -199,10 +198,6 @@ private:
    * requests
    */
   QNetworkAccessManager* m_netMan;
-  /**
-   * @brief DBManager instance
-   */
-  DBManager* m_dbMgr;
   /**
    * @brief the currently active DownloadTask
    */

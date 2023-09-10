@@ -12,6 +12,7 @@ int themeId = 0;
 ReaderMode readerMode = ReaderMode::singlePage;
 bool darkMode = false;
 QSettings* settings = nullptr;
+QObject* databaseManager = nullptr;
 QLocale::Language language;
 
 // qcf fonts
@@ -31,5 +32,6 @@ QDir configDir =
 // application specific
 QList<Reciter> recitersList;
 QString updateToolPath;
+QMap<QString, QString> shortcutDescription;
 
 };

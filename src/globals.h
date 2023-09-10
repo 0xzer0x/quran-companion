@@ -9,6 +9,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QLocale>
+#include <QMap>
 #include <QSettings>
 #include <QString>
 
@@ -23,13 +24,27 @@ struct Verse
   int page{ -1 };   ///< verse page
   int surah{ -1 };  ///< verse surah number
   int number{ -1 }; ///< verse number in surah
-  bool operator==(const Verse& v2)
+  bool operator==(const Verse& v2) const
   {
     return (this->number == v2.number && this->surah == v2.surah);
   }
-  bool operator!=(const Verse& v2)
+  bool operator!=(const Verse& v2) const
   {
     return (this->number != v2.number || this->surah != v2.surah);
+  }
+  bool operator<(const Verse& v2) const
+  {
+    if (this->surah == v2.surah)
+      return this->number < v2.number;
+
+    return this->surah < v2.surah;
+  }
+  bool operator>(const Verse& v2) const
+  {
+    if (this->surah == v2.surah)
+      return this->number > v2.number;
+
+    return this->surah > v2.surah;
   }
 };
 /**
@@ -163,6 +178,10 @@ extern QDir recitationsDir; ///< global QDir representing the top-level path
 
 extern QList<Reciter> recitersList; ///< global QList containing reciters
                                     ///< supported by the application.
+
+extern QMap<QString, QString> shortcutDescription;
+
+extern QObject* databaseManager;
 
 };
 

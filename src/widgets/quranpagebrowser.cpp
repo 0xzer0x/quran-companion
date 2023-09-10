@@ -6,11 +6,8 @@
 #include "quranpagebrowser.h"
 #include <QRegularExpression>
 
-QuranPageBrowser::QuranPageBrowser(QWidget* parent,
-                                   DBManager* dbMgr,
-                                   int initPage)
+QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   : QTextBrowser(parent)
-  , m_dbMgr{ dbMgr }
   , m_highlighter{ new QTextCursor(document()) }
   , m_highlightColor{ QBrush(QColor(0, 161, 185)) }
 {
@@ -258,8 +255,6 @@ QuranPageBrowser::highlightVerse(int verseIdxInPage)
   m_highlighter->setPosition(bounds[0]);
   m_highlighter->setPosition(bounds[1], QTextCursor::KeepAnchor);
   m_highlighter->mergeCharFormat(tcf);
-
-  qInfo() << "Selected verse #" + QString::number(verseIdxInPage) + " in page";
 
   m_highlightedIdx = verseIdxInPage;
 }

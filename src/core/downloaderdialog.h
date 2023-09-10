@@ -42,8 +42,7 @@ public:
    * @param dbMan - pointer to DBManager instance
    */
   explicit DownloaderDialog(QWidget* parent = nullptr,
-                            DownloadManager* downloader = nullptr,
-                            DBManager* dbMan = nullptr);
+                            DownloadManager* downloader = nullptr);
   ~DownloaderDialog();
 
   /**
@@ -138,6 +137,7 @@ private:
   const int m_languageCode = Globals::language;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   const QDir& m_resources = Globals::themeResources;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -172,10 +172,6 @@ private:
    * @brief Pointer to DownloadManager instance.
    */
   DownloadManager* m_downloaderPtr;
-  /**
-   * @brief Pointer to DBManager instance.
-   */
-  DBManager* m_dbMgr;
   /**
    * @brief Pointer to QLabel which contains the state and information for the
    * currently active download.

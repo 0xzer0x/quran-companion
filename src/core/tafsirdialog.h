@@ -33,7 +33,7 @@ public:
    * @param parent - pointer to parent widget
    * @param dbPtr - pointer to DBManager instance
    */
-  explicit TafsirDialog(QWidget* parent = nullptr, DBManager* dbPtr = nullptr);
+  explicit TafsirDialog(QWidget* parent = nullptr);
   ~TafsirDialog();
 
   /**
@@ -76,6 +76,7 @@ private:
   const QDir& m_resources = Globals::themeResources;
   const QString& m_fontPrefix = Globals::qcfFontPrefix;
   const QSettings* m_settings = Globals::settings;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -93,10 +94,6 @@ private:
    * @brief fixed font size for the verse text displayed above the tafsir.
    */
   int m_fontSZ;
-  /**
-   * @brief pointer to DBManager instance.
-   */
-  DBManager* m_dbMgr;
   /**
    * @brief ::Verse instance representing the shown verse.
    */

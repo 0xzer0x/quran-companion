@@ -9,13 +9,17 @@
 SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   : QDialog(parent)
   , ui(new Ui::SettingsDialog)
-  , m_vPlayerPtr{ vPlayerPtr }
+  , m_vPlayerPtr(vPlayerPtr)
 {
   ui->setupUi(this);
   ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 100));
   ui->cmbSideFontSz->setValidator(new QIntValidator(10, 100));
   setWindowIcon(QIcon(m_resources.filePath("icons/prefs.png")));
   fillLanguageCombobox();
+  ui->tableViewShortcuts->setModel(&m_shortcutsModel);
+  ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
+  m_keySeqEdit = new QKeySequenceEdit(this);
+  m_keySeqEdit->hide();
 
   setCurrentSettingsAsRef();
   // connectors
@@ -29,6 +33,39 @@ SettingsDialog::setupConnections()
           &QDialogButtonBox::clicked,
           this,
           &SettingsDialog::btnBoxAction);
+  connect(ui->tableViewShortcuts,
+          &QTableView::doubleClicked,
+          this,
+          &SettingsDialog::editShortcut,
+          Qt::UniqueConnection);
+  connect(m_keySeqEdit,
+          &QKeySequenceEdit::editingFinished,
+          this,
+          &SettingsDialog::setShortcut,
+          Qt::UniqueConnection);
+}
+
+void
+SettingsDialog::populateShortcutsModel()
+{
+  QStringList headers;
+  headers << tr("Description") << tr("Key");
+  m_shortcutsModel.clear();
+  m_shortcutsModel.setHorizontalHeaderLabels(headers);
+
+  m_settings->beginGroup("Shortcuts");
+  foreach (const QString& key, m_settings->childKeys()) {
+    QStandardItem *desc = new QStandardItem(), *keySeq = new QStandardItem();
+    desc->setData(key, Qt::UserRole);
+    desc->setText(tr(m_shortcutDescription.value(key).toStdString().c_str()));
+    keySeq->setText(m_settings->value(key).toString());
+
+    QList<QStandardItem*> row;
+    row.append(desc);
+    row.append(keySeq);
+    m_shortcutsModel.appendRow(row);
+  }
+  m_settings->endGroup();
 }
 
 void
@@ -77,6 +114,36 @@ SettingsDialog::setCurrentSettingsAsRef()
   ui->chkDailyVerse->setChecked(m_votd);
   ui->chkAdaptive->setChecked(m_adaptive);
   ui->chkMissingWarning->setChecked(m_missingFileWarning);
+
+  // shortcuts tab
+  populateShortcutsModel();
+  ui->tableViewShortcuts->resizeColumnsToContents();
+}
+
+bool
+SettingsDialog::shortcutAvailable(QString key, QString keySequence)
+{
+  m_settings->beginGroup("Shortcuts");
+  foreach (const QString& childKey, m_settings->childKeys()) {
+    if (key == childKey)
+      continue;
+    if (m_settings->value(childKey).toString() == keySequence)
+      return false;
+  }
+  m_settings->endGroup();
+
+  return true;
+}
+
+void
+SettingsDialog::checkShortcuts()
+{
+  int row = 0;
+  foreach (const QString& key, m_shortcutDescription.keys()) {
+    const QString& keySequence = m_shortcutsModel.item(row++, 1)->text();
+    if (m_settings->value(key).toString() != keySequence)
+      updateShortcut(key, keySequence);
+  }
 }
 
 void
@@ -200,6 +267,13 @@ SettingsDialog::updateSideFontSize(QString size)
 }
 
 void
+SettingsDialog::updateShortcut(QString key, QString keySequence)
+{
+  m_settings->setValue("Shortcuts/" + key, keySequence);
+  emit shortcutChanged(key);
+}
+
+void
 SettingsDialog::applyAllChanges()
 {
   QLocale::Language chosenLang =
@@ -251,6 +325,8 @@ SettingsDialog::applyAllChanges()
     emit usedAudioDeviceChanged(m_audioDevices.at(m_audioOutIdx));
   }
 
+  checkShortcuts();
+
   // restart after applying all changes if required
   if (m_restartReq) {
     emit restartApp();
@@ -264,8 +340,7 @@ SettingsDialog::applyAllChanges()
   if (m_renderSideContent)
     emit redrawSideContent();
 
-  m_renderQuranPage = false;
-  m_renderSideContent = false;
+  m_renderQuranPage = m_renderSideContent = false;
   setCurrentSettingsAsRef();
 }
 
@@ -287,12 +362,40 @@ SettingsDialog::showWindow()
 {
   setCurrentSettingsAsRef();
   this->show();
+  m_keySeqEdit->hide();
 }
 
 void
 SettingsDialog::closeEvent(QCloseEvent* event)
 {
   this->hide();
+}
+
+void
+SettingsDialog::editShortcut(const QModelIndex& index)
+{
+  QString key =
+    m_shortcutsModel.index(index.row(), 0).data(Qt::UserRole).toString();
+
+  m_keySeqEdit->setObjectName(key + "-" + QString::number(index.row()));
+  m_keySeqEdit->resize(m_keySeqEdit->width() + 20, m_keySeqEdit->height() + 20);
+  m_keySeqEdit->move((width() - m_keySeqEdit->width()) / 2,
+                     (height() - m_keySeqEdit->height()) / 2);
+
+  m_keySeqEdit->setKeySequence(m_shortcutsModel.item(index.row(), 1)->text());
+  m_keySeqEdit->show();
+  m_keySeqEdit->setFocus();
+}
+
+void
+SettingsDialog::setShortcut()
+{
+  QStringList key = m_keySeqEdit->objectName().split('-');
+  QString value = m_keySeqEdit->keySequence().toString();
+
+  qInfo() << "set shortcut triggered for " + key.at(0) + ": " + value;
+  m_keySeqEdit->hide();
+  m_shortcutsModel.item(key.at(1).toInt(), 1)->setText(value);
 }
 
 SettingsDialog::~SettingsDialog()

@@ -420,9 +420,6 @@ dialog-no-icon: off;
          <property name="text">
           <string>🡸</string>
          </property>
-         <property name="shortcut">
-          <string>Left</string>
-         </property>
          <property name="flat">
           <bool>false</bool>
          </property>
@@ -549,9 +546,6 @@ dialog-no-icon: off;
          </property>
          <property name="text">
           <string>🡺</string>
-         </property>
-         <property name="shortcut">
-          <string>Right</string>
          </property>
         </widget>
        </item>
@@ -898,9 +892,6 @@ placeholder-text-color: #c0c0c0;
    <property name="text">
     <string>Preferences</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+P</string>
-   </property>
   </action>
   <action name="actionDownload_manager">
    <property name="icon">
@@ -909,9 +900,6 @@ placeholder-text-color: #c0c0c0;
    </property>
    <property name="text">
     <string>Download manager</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="actionExit">
@@ -923,9 +911,6 @@ placeholder-text-color: #c0c0c0;
    <property name="text">
     <string>Exit</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+Q</string>
-   </property>
   </action>
   <action name="actionFind">
    <property name="icon">
@@ -934,9 +919,6 @@ placeholder-text-color: #c0c0c0;
    </property>
    <property name="text">
     <string>Find</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+F</string>
    </property>
   </action>
   <action name="actionCheck_for_updates">
@@ -947,9 +929,6 @@ placeholder-text-color: #c0c0c0;
   <action name="actionBookmarks">
    <property name="text">
     <string>Bookmarks</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+B</string>
    </property>
   </action>
   <action name="actionAbout_Quran_Companion">
@@ -971,9 +950,6 @@ placeholder-text-color: #c0c0c0;
   <action name="actionTafsir">
    <property name="text">
     <string>Tafsir</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+T</string>
    </property>
   </action>
   <action name="actionVerse_of_the_day">

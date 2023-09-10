@@ -5,9 +5,8 @@
 
 #include "notificationmanager.h"
 
-NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)
+NotificationManager::NotificationManager(QObject* parent)
   : QObject{ parent }
-  , m_dbMgr{ dbPtr }
   , m_dtNow{ QDateTime::currentDateTime() }
   , m_sysTray{ new QSystemTrayIcon(this) }
   , m_trayMenu{ new QMenu() }

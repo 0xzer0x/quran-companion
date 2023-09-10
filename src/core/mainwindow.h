@@ -134,7 +134,7 @@ private slots:
    * and starts playback of the surah.
    * @param surahIdx - surah number (1-114)
    */
-  void gotoSurah(int surahIdx);
+  void gotoSurah(int surahIdx, bool playBasmalah = true);
   /**
    * @brief sets the verse combobox values according to the current surah verse
    * count, sets the current verse as the visible index
@@ -202,7 +202,7 @@ private slots:
   /**
    * @brief toggle play/pause of the current verse
    */
-  void spaceKeyPressed();
+  void togglePlayback();
   /**
    * @brief open the SettingsDialog and connect settings change slots
    */
@@ -315,6 +315,20 @@ private slots:
    */
   void volumeSliderValueChanged(int position);
 
+  void shortcutChanged(QString key);
+
+  void incrementVerse();
+  void decrementVerse();
+
+  void nextJuz();
+  void prevJuz();
+
+  void nextSurah();
+  void prevSurah();
+
+  void incrementVolume();
+  void decrementVolume();
+
 private:
   QSettings* const m_settings = Globals::settings;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
@@ -322,6 +336,9 @@ private:
   const QString& m_updateToolPath = Globals::updateToolPath;
   const bool m_darkMode = Globals::darkMode;
   const ReaderMode& m_readerMode = Globals::readerMode;
+  const QMap<QString, QString>& m_shortcutsDescription =
+    Globals::shortcutDescription;
+  DBManager* m_dbMgr = nullptr;
   /**
    * @brief initalizes different parts used by the app
    */
@@ -372,6 +389,8 @@ private:
    * page
    */
   void selectVerse(int browserIdx, int IdxInPage);
+
+  void setupShortcuts();
   /**
    * @brief connects signals and slots for different UI components and
    * shortcuts.
@@ -479,10 +498,6 @@ private:
    */
   NotificationPopup* m_popup = nullptr;
   /**
-   * @brief pointer to DBManager instance
-   */
-  DBManager* m_dbMgr = nullptr;
-  /**
    * @brief pointer to VersePlayer instance
    */
   VersePlayer* m_player = nullptr;
@@ -555,5 +570,7 @@ private:
    * @brief QFont used in the side panel translation
    */
   QFont m_sideFont;
+
+  QMap<QString, QShortcut*> m_shortcutMap;
 };
 #endif // MAINWINDOW_H

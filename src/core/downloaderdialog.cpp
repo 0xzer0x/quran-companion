@@ -6,13 +6,10 @@
 #include "downloaderdialog.h"
 #include "ui_downloaderdialog.h"
 
-DownloaderDialog::DownloaderDialog(QWidget* parent,
-                                   DownloadManager* downloader,
-                                   DBManager* dbMan)
+DownloaderDialog::DownloaderDialog(QWidget* parent, DownloadManager* downloader)
   : QDialog(parent)
   , ui(new Ui::DownloaderDialog)
   , m_downloaderPtr{ downloader }
-  , m_dbMgr{ dbMan }
   , m_surahDisplayNames{ m_dbMgr->surahNameList() }
 
 {
@@ -25,8 +22,6 @@ DownloaderDialog::DownloaderDialog(QWidget* parent,
   headers.append(tr("Name"));
   m_treeModel.setHorizontalHeaderLabels(headers);
   ui->treeView->setModel(&m_treeModel);
-  ui->treeView->setSelectionMode(
-    QAbstractItemView::SelectionMode::ExtendedSelection);
   fillTreeView();
 
   // connectors
@@ -36,8 +31,6 @@ DownloaderDialog::DownloaderDialog(QWidget* parent,
 void
 DownloaderDialog::setupConnections()
 {
-  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
-  connect(ctrlQ, &QShortcut::activated, this, &DownloaderDialog::close);
   connect(ui->btnAddToQueue,
           &QPushButton::clicked,
           this,

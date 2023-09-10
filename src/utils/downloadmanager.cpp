@@ -5,10 +5,9 @@
 
 #include "downloadmanager.h"
 
-DownloadManager::DownloadManager(QObject* parent, DBManager* dbptr)
+DownloadManager::DownloadManager(QObject* parent)
   : QObject(parent)
   , m_netMan{ new QNetworkAccessManager(this) }
-  , m_dbMgr{ dbptr }
 {
   m_netMan->setTransferTimeout(3000);
   connect(m_netMan,
