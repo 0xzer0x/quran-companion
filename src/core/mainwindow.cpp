@@ -11,10 +11,8 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
   , m_process(new QProcess(this))
-  , m_dbMgr(new DBManager(this))
 {
   ui->setupUi(this);
-  Globals::databaseManager = m_dbMgr;
   ui->menuView->addAction(ui->sideDock->toggleViewAction());
   ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
   loadIcons();
@@ -415,6 +413,11 @@ MainWindow::setupConnections()
           Qt::UniqueConnection);
 
   // ########## player control ########## //
+  connect(m_player,
+          &QMediaPlayer::mediaStatusChanged,
+          this,
+          &MainWindow::mediaStatusChanged,
+          Qt::UniqueConnection);
   connect(ui->btnPlay,
           &QPushButton::clicked,
           this,
@@ -1440,6 +1443,13 @@ MainWindow::decrementVolume()
 }
 
 void
+MainWindow::mediaStatusChanged(QMediaPlayer::MediaStatus status)
+{
+  if (status == QMediaPlayer::EndOfMedia)
+    incrementVerse();
+}
+
+void
 MainWindow::redrawQuranPage(bool manualSz)
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
@@ -1654,5 +1664,4 @@ MainWindow::~MainWindow()
 {
   saveReaderState();
   delete ui;
-  delete m_dbMgr;
 }

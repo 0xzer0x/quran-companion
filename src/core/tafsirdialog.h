@@ -31,7 +31,6 @@ public:
   /**
    * @brief Class constructor
    * @param parent - pointer to parent widget
-   * @param dbPtr - pointer to DBManager instance
    */
   explicit TafsirDialog(QWidget* parent = nullptr);
   ~TafsirDialog();

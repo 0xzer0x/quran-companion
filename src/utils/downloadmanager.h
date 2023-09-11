@@ -54,7 +54,6 @@ public:
   /**
    * @brief Class constructor
    * @param parent - pointer to parent widget
-   * @param dbptr - pointer to DBManager instance
    */
   explicit DownloadManager(QObject* parent = nullptr);
 

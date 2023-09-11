@@ -267,7 +267,6 @@ private slots:
    * @param IdxInPage - verse index relative to the start of the page
    */
   void copyVerseText(const Verse v);
-
   /**
    * @brief redraw the current Quran page
    * @param manualSz - boolean flag to force the use of the manually set
@@ -314,9 +313,14 @@ private slots:
    * @param position - position in the slider (0 - 100)
    */
   void volumeSliderValueChanged(int position);
-
+  /**
+   * @brief slot to reload the key sequence for the shortcut with the given key
+   * @param key - QString of the shortcut key in the settings file
+   */
   void shortcutChanged(QString key);
-
+  /**
+   * @brief utility to move to the next verse
+   */
   void incrementVerse();
   void decrementVerse();
 
@@ -329,6 +333,8 @@ private slots:
   void incrementVolume();
   void decrementVolume();
 
+  void mediaStatusChanged(QMediaPlayer::MediaStatus status);
+
 private:
   QSettings* const m_settings = Globals::settings;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
@@ -338,7 +344,7 @@ private:
   const ReaderMode& m_readerMode = Globals::readerMode;
   const QMap<QString, QString>& m_shortcutsDescription =
     Globals::shortcutDescription;
-  DBManager* m_dbMgr = nullptr;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief initalizes different parts used by the app
    */

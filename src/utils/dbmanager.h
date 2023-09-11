@@ -18,7 +18,7 @@
 #include <QSqlQuery>
 
 /**
- * @brief DBManager acts as an interface for preforming queries to
+ * @brief DBManager is as an interface for preforming queries to
  * different database files holding application data.
  */
 class DBManager : public QObject

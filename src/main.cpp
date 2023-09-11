@@ -73,19 +73,26 @@ checkSettingsGroup(QSettings* settings, int group);
 /**
  * @brief fills the global reciters list and creates their corresponding
  * directories.
- * @details Fills the QList that contains #Reciter instances
+ * @details Fills the QList that contains ::Reciter instances
  * that represent the reciters supported by the application. The reciters list
  * is used in many parts of the application by creating a constant reference to
  * the global QList. It also creates the reciters directories in the application
  * recitations directory as needed.
  */
 void
-fillRecitersList();
+populateRecitersList();
 /**
- * @brief set application-wide variables.
+ * @brief populates the Globals::shortcutDescription QMap with key-value pairs
+ * of (name - description), any new shortcuts should be added here along with
+ * the default keybinding for it in the shortcuts settings group.
  */
 void
-setGlobals();
+populateShortcutsMap();
+/**
+ * @brief set application-wide variables that represents used paths.
+ */
+void
+setGlobalPaths();
 
 /**
  * @brief application entry point
@@ -104,7 +111,7 @@ main(int argc, char* argv[])
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
 
-  setGlobals();
+  setGlobalPaths();
   Logger::startLogger(configDir.absolutePath());
   Logger::attach();
 
@@ -119,8 +126,10 @@ main(int argc, char* argv[])
   setTheme(themeId);
   addFonts(qcfVersion);
   addTranslation(language);
-  fillRecitersList();
+  populateRecitersList();
+  populateShortcutsMap();
 
+  databaseManager = new DBManager(&a);
   MainWindow w(nullptr);
   splash.finish(&w);
   w.show();
@@ -128,6 +137,30 @@ main(int argc, char* argv[])
   int exitcode = a.exec();
   Logger::stopLogger();
   return exitcode;
+}
+
+void
+setGlobalPaths()
+{
+  // data
+  assetsDir = QApplication::applicationDirPath() + QDir::separator() + "assets";
+  bismillahDir =
+    QApplication::applicationDirPath() + QDir::separator() + "bismillah";
+
+  // config & downloads
+  if (!configDir.exists("QuranCompanion"))
+    configDir.mkpath("QuranCompanion");
+  if (!recitationsDir.exists("QuranCompanion/recitations"))
+    recitationsDir.mkpath("QuranCompanion/recitations");
+
+  configDir.cd("QuranCompanion");
+  recitationsDir.cd("QuranCompanion/recitations");
+
+  updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
+                   "QCMaintenanceTool";
+#ifdef Q_OS_WIN
+  updateToolPath.append(".exe");
+#endif
 }
 
 void
@@ -359,7 +392,7 @@ addTranslation(QLocale::Language localeCode)
 }
 
 void
-fillRecitersList()
+populateRecitersList()
 {
   Reciter husary{ "Al-Husary",
                   qApp->translate("MainWindow", "Al-Husary"),
@@ -554,7 +587,7 @@ fillRecitersList()
 }
 
 void
-setGlobals()
+populateShortcutsMap()
 {
   // shortcut descriptions
   shortcutDescription.insert(
@@ -566,27 +599,33 @@ setGlobals()
   shortcutDescription.insert(
     "VolumeDown",
     qApp->translate("SettingsDialog", "Decrease the playback volume"));
+
   shortcutDescription.insert(
     "NextPage", qApp->translate("SettingsDialog", "Move to the next page"));
   shortcutDescription.insert(
     "PrevPage", qApp->translate("SettingsDialog", "Move to the previous page"));
+
   shortcutDescription.insert(
     "NextVerse", qApp->translate("SettingsDialog", "Move to the next verse"));
   shortcutDescription.insert(
     "PrevVerse",
     qApp->translate("SettingsDialog", "Move to the previous verse"));
+
   shortcutDescription.insert(
     "NextSurah", qApp->translate("SettingsDialog", "Move to the next surah"));
   shortcutDescription.insert(
     "PrevSurah",
     qApp->translate("SettingsDialog", "Move to the previous surah"));
+
   shortcutDescription.insert(
     "NextJuz", qApp->translate("SettingsDialog", "Move to the next juz"));
   shortcutDescription.insert(
     "PrevJuz", qApp->translate("SettingsDialog", "Move to the previous juz"));
+
   shortcutDescription.insert(
     "BookmarkCurrent",
     qApp->translate("SettingsDialog", "Bookmark the current active verse"));
+
   shortcutDescription.insert(
     "BookmarksDialog",
     qApp->translate("SettingsDialog", "Open the bookmarks dialog"));
@@ -603,25 +642,6 @@ setGlobals()
   shortcutDescription.insert(
     "DownloaderDialog",
     qApp->translate("SettingsDialog", "Open the recitations download dialog"));
+
   shortcutDescription.insert("Quit", qApp->translate("SettingsDialog", "Quit"));
-
-  // data
-  assetsDir = QApplication::applicationDirPath() + QDir::separator() + "assets";
-  bismillahDir =
-    QApplication::applicationDirPath() + QDir::separator() + "bismillah";
-
-  // config & downloads
-  if (!configDir.exists("QuranCompanion"))
-    configDir.mkpath("QuranCompanion");
-  if (!recitationsDir.exists("QuranCompanion/recitations"))
-    recitationsDir.mkpath("QuranCompanion/recitations");
-
-  configDir.cd("QuranCompanion");
-  recitationsDir.cd("QuranCompanion/recitations");
-
-  updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
-                   "QCMaintenanceTool";
-#ifdef Q_OS_WIN
-  updateToolPath.append(".exe");
-#endif
 }

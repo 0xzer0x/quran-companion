@@ -17,7 +17,7 @@
  * @struct Verse
  * @brief Verse struct represents a single quran verse
  * @details Quran verses consist of 3 attributes. page (1-604). surah (1-114).
- * number represents the number of the verse in the surah.
+ * number represents the number of the verse in the surah (1-surah verse count).
  */
 struct Verse
 {
@@ -179,9 +179,13 @@ extern QDir recitationsDir; ///< global QDir representing the top-level path
 extern QList<Reciter> recitersList; ///< global QList containing reciters
                                     ///< supported by the application.
 
-extern QMap<QString, QString> shortcutDescription;
+extern QMap<QString, QString>
+  shortcutDescription; ///< global QMap containing all available application
+                       ///< shortcuts as keys and their descriptions as values.
 
-extern QObject* databaseManager;
+extern QObject* databaseManager; ///< global pointer to the application-wide
+                                 ///< DBManager instance for interacting with
+                                 ///< different database files.
 
 };
 

@@ -18,6 +18,10 @@ DBManager::DBManager(QObject* parent)
   QSqlDatabase::addDatabase("QSQLITE", "BookmarksCon");
   QSqlDatabase::addDatabase("QSQLITE", "TafsirCon");
   QSqlDatabase::addDatabase("QSQLITE", "TranslationCon");
+
+  for (int i = 1; i <= 114; i++) {
+    m_surahNames.append(getSurahName(i));
+  }
 }
 
 /* ---------------- Database handling ---------------- */
@@ -27,11 +31,9 @@ DBManager::setOpenDatabase(Database db, QString filePath)
 {
   if (m_currentDb == db)
     return;
-  else
-    m_currentDb = db;
 
+  m_currentDb = db;
   m_openDBCon.close();
-
   switch (db) {
     case quran:
       m_openDBCon = QSqlDatabase::database("QuranCon");
@@ -498,11 +500,6 @@ DBManager::getSurahStartPage(int surahIdx)
 QList<QString>
 DBManager::surahNameList()
 {
-  if (m_surahNames.isEmpty()) {
-    for (int i = 1; i <= 114; i++) {
-      m_surahNames.append(getSurahName(i));
-    }
-  }
 
   return m_surahNames;
 }

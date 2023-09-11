@@ -4,6 +4,8 @@
 CMakeLists.txt.*
 dist/windows/*
 dist/linux/*
+docs/*
+!docs/Doxyfile
 !dist/windows/online-installer/
 !dist/linux/online-installer/
 TODO

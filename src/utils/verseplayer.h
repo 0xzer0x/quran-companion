@@ -27,7 +27,6 @@ public:
   /**
    * @brief Class constructor
    * @param parent - pointer to parent widget
-   * @param dbPtr - pointer to DBManager instance
    * @param initVerse - inital ::Verse to load recitation for
    * @param reciterIdx - chosen reciter to load recitation of
    */
