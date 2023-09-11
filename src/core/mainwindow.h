@@ -89,6 +89,9 @@ public slots:
    */
   void restartApp();
 
+signals:
+  void verseChanged(Verse v);
+
 protected:
   /**
    * @brief re-implementation of QWidget::resizeEvent(QResizeEvent*) to resize
@@ -177,7 +180,7 @@ private slots:
    * @brief sync the main window with the verse player as active verse changes,
    * set the endOfPage flag or flip page if the flag is set
    */
-  void activeVerseChanged();
+  void activeVerseChanged(Verse v);
   /**
    * @brief display warning message box in case that recitation files are
    * missing
@@ -283,7 +286,7 @@ private slots:
    * recitation
    * @param newState - playback state of the current verse
    */
-  void updateTrayTooltip(QMediaPlayer::PlaybackState newState);
+  void updateTrayTooltip(QMediaPlayer::PlaybackState state);
   /**
    * @brief set tafsir to the one in the settings, update the selected db
    */
@@ -319,7 +322,8 @@ private slots:
    */
   void shortcutChanged(QString key);
   /**
-   * @brief utility to move to the next verse
+   * @brief increment the verse & surah variables appropriately according to the
+   * surah, emits a signal on verse change & on changing from surah to another
    */
   void incrementVerse();
   void decrementVerse();
@@ -425,6 +429,11 @@ private:
    */
   void updateSurah();
   /**
+   * @brief updates m_surahCount to match the verse count of the currently
+   * active verse
+   */
+  void updateSurahVerseCount();
+  /**
    * @brief updates the list that contains::Verse instances for verses in the
    * current page
    */
@@ -473,6 +482,7 @@ private:
    * change of juz combobox index
    */
   bool m_internalJuzChange = false;
+  int m_surahCount = 0;
   /**
    * @brief float value of the current playback volume (0 - 1.0)
    */

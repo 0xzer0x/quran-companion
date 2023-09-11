@@ -117,6 +117,8 @@ public:
    */
   QString pageFont() const;
 
+  int page() const;
+
 signals:
   void copyVerse(int IdxInPage);
 

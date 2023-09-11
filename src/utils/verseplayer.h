@@ -41,11 +41,6 @@ public:
    * @return QString of the filename
    */
   QString constructVerseFilename(Verse v);
-  /**
-   * @brief updates m_surahCount to match the verse count of the currently
-   * active verse
-   */
-  void updateSurahVerseCount();
 
   /**
    * @brief setter for the m_activeVerse member
@@ -92,18 +87,12 @@ public:
    */
   QAudioOutput* getOutput() const;
 
+  bool isOn() const;
+  void setOn(bool newIsOn);
+
 public slots:
-  /**
-   * @brief set the active ::Verse number according to the surah and set
-   * the current source as the bismillah file for the chosen reciter and start
-   * playback
-   */
-  void playBasmalah();
-  /**
-   * @brief increment the verse & surah variables appropriately according to the
-   * surah, emits a signal on verse change & on changing from surah to another
-   */
-  void nextVerse();
+  void play();
+  void stop();
   /**
    * @brief plays the mp3 file corresponding to m_activeVerse
    */
@@ -115,12 +104,6 @@ public slots:
    * new reciter's directory
    */
   bool changeReciter(int reciterIdx);
-  /*!
-   * @brief slot to call the nextVerse() method on verse audio end
-   * @param status - status of the media file, refer to QMediaPlayer
-   * docs for enum.
-   */
-  void verseStateChanged(QMediaPlayer::MediaStatus status);
   /**
    * @brief change the QAudioDevice used for playback
    * @param dev - QAudioDevice to use for playback
@@ -133,8 +116,6 @@ public slots:
   void setPlayerVolume(qreal volume);
 
 signals:
-  void surahChanged();
-  void verseNoChanged();
   void missingVerseFile(int reciterIdx, int surah);
 
 private:
@@ -146,14 +127,11 @@ private:
    * components and shortcuts.
    */
   void setupConnections();
+  bool m_isOn = false;
   /**
    * @brief ::Globals::recitersList index for the reciter
    */
   int m_reciter = 0;
-  /**
-   * @brief verse count for the current surah being played
-   */
-  int m_surahCount = 0;
   /**
    * @brief ::Verse instance representing the current verse being played
    */

@@ -117,6 +117,11 @@ QuranPageBrowser::surahFrame(int surah)
   return baseImage;
 }
 
+int QuranPageBrowser::page() const
+{
+  return m_page;
+}
+
 QString
 QuranPageBrowser::pageHeader(int page)
 {
