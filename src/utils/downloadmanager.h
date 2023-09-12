@@ -28,7 +28,7 @@ class DownloadManager : public QObject
   Q_OBJECT
 public:
   /**
-   * @brief DownloadTask represents a single verse file download task
+   * @brief DownloadTask struct represents a single verse file download task
    * @details Quran surahs are downloaded as separate verse mp3 files which are
    * represented as DownloadTask instances
    */
@@ -158,6 +158,7 @@ signals:
   void downloadError(int reciterIdx, int surah);
 
 private:
+  const QDir& m_toplevelDownloadPath = Globals::recitationsDir;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**

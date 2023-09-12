@@ -216,12 +216,12 @@ MainWindow::setupShortcuts()
   connect(m_shortcutMap.value("NextVerse"),
           &QShortcut::activated,
           this,
-          &MainWindow::incrementVerse,
+          &MainWindow::nextVerse,
           Qt::UniqueConnection);
   connect(m_shortcutMap.value("PrevVerse"),
           &QShortcut::activated,
           this,
-          &MainWindow::decrementVerse,
+          &MainWindow::prevVerse,
           Qt::UniqueConnection);
   connect(m_shortcutMap.value("NextJuz"),
           &QShortcut::activated,
@@ -361,11 +361,6 @@ MainWindow::setupConnections()
           &QComboBox::currentIndexChanged,
           this,
           &MainWindow::cmbJuzChanged,
-          Qt::UniqueConnection);
-  connect(this,
-          &MainWindow::verseChanged,
-          this,
-          &MainWindow::activeVerseChanged,
           Qt::UniqueConnection);
   connect(m_player,
           &VersePlayer::missingVerseFile,
@@ -640,15 +635,6 @@ MainWindow::selectVerse(int browserIdx, int IdxInPage)
 
   setCmbPageIdx(v.page - 1);
   setCmbJuzIdx(m_dbMgr->getJuzOfPage(v.page) - 1);
-  m_endOfPage = false;
-}
-
-void
-MainWindow::updateSurah()
-{
-  QModelIndex selectedIndex = syncSelectedSurah();
-  if (m_player->activeVerse().surah != m_currVerse.surah)
-    navigateToSurah(selectedIndex);
 }
 
 void
@@ -711,8 +697,10 @@ MainWindow::setCmbPageIdx(int idx)
 void
 MainWindow::setCmbVerseIdx(int idx)
 {
+  // idx == -1 if playing basmallah, therefore highlight 1st verse
   if (idx < 0)
     idx = 0;
+
   m_internalVerseChange = true;
   ui->cmbVerse->setCurrentIndex(idx);
   m_internalVerseChange = false;
@@ -765,7 +753,6 @@ MainWindow::gotoPage(int page, bool updateElements, bool automaticFlip)
       gotoDoublePage(page);
   }
 
-  m_endOfPage = false;
   if (updateElements) {
     setVerseToStartOfPage();
     syncSelectedSurah();
@@ -841,7 +828,7 @@ MainWindow::prevPage(int step)
 }
 
 void
-MainWindow::gotoSurah(int surahIdx, bool playBasmalah)
+MainWindow::gotoSurah(int surahIdx)
 {
   // getting surah index
   int page = m_dbMgr->getSurahStartPage(surahIdx);
@@ -860,8 +847,6 @@ MainWindow::gotoSurah(int surahIdx, bool playBasmalah)
   setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
   setVerseComboBoxRange();
   syncSelectedSurah();
-
-  m_endOfPage = false;
 }
 
 void
@@ -925,8 +910,6 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   // open newly set verse recitation file
   m_player->setVerse(m_currVerse);
   m_player->loadActiveVerse();
-
-  m_endOfPage = false;
 }
 
 void
@@ -959,12 +942,6 @@ MainWindow::btnPauseClicked()
 void
 MainWindow::btnPlayClicked()
 {
-  // If now playing the last verse in the page, set the flag to flip the page
-  if (m_currVerse == m_activeVList->last() &&
-      m_currVerse.number != m_surahCount) {
-    m_endOfPage = true;
-  }
-
   highlightCurrentVerse();
   m_player->play();
 }
@@ -974,17 +951,15 @@ MainWindow::btnStopClicked()
 {
   m_player->stop();
   setVerseToStartOfPage();
-  updateSurah();
+  syncSelectedSurah();
   setVerseComboBoxRange();
-
-  m_endOfPage = false;
 }
 
 void
 MainWindow::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
   if (status == QMediaPlayer::EndOfMedia) {
-    incrementVerse();
+    nextVerse();
   }
 }
 
@@ -1059,15 +1034,6 @@ MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 }
 
 void
-MainWindow::activeVerseChanged(Verse v)
-{
-  bool keepPlaying = m_player->isOn();
-  navigateToVerse(v);
-  if (keepPlaying)
-    m_player->play();
-}
-
-void
 MainWindow::verseClicked()
 {
   // object = clickable label, parent = verse frame, verse frame name scheme =
@@ -1087,7 +1053,6 @@ MainWindow::verseClicked()
   }
 
   setCmbVerseIdx(verse - 1);
-  m_endOfPage = false;
   m_player->loadActiveVerse();
   btnPlayClicked();
 }
@@ -1300,7 +1265,6 @@ MainWindow::navigateToVerse(Verse v)
 
   m_player->setVerse(m_currVerse);
   m_player->loadActiveVerse();
-  m_endOfPage = false;
 }
 
 void
@@ -1341,12 +1305,9 @@ MainWindow::shortcutChanged(QString key)
     qvariant_cast<QKeySequence>(m_settings->value("Shortcuts/" + key)));
 }
 
-void
+Verse
 MainWindow::incrementVerse()
 {
-  if (m_currVerse.surah == 114 && m_currVerse.number == 6)
-    return;
-
   Verse v = m_currVerse;
   if (v == m_activeVList->last()) {
     v.page++;
@@ -1359,16 +1320,16 @@ MainWindow::incrementVerse()
     v.number = v.surah == 9 || v.surah == 1 ? 1 : 0;
   }
 
-  emit verseChanged(v);
+  return v;
 }
 
-void
+Verse
 MainWindow::decrementVerse()
 {
-  if (m_currVerse.surah == 1 && m_currVerse.number == 1)
-    return;
-
   Verse v = m_currVerse;
+  if (v.number == 0)
+    v.number = 1;
+
   if (v == m_activeVList->at(0)) {
     v.page--;
   }
@@ -1380,7 +1341,31 @@ MainWindow::decrementVerse()
     v.number = m_dbMgr->getSurahVerseCount(v.surah);
   }
 
-  emit verseChanged(v);
+  return v;
+}
+
+void
+MainWindow::nextVerse()
+{
+  if (m_currVerse.surah == 114 && m_currVerse.number == 6)
+    return;
+
+  bool keepPlaying = m_player->isOn();
+  navigateToVerse(incrementVerse());
+  if (keepPlaying)
+    m_player->play();
+}
+
+void
+MainWindow::prevVerse()
+{
+  if (m_currVerse.surah == 1 && m_currVerse.number == 1)
+    return;
+
+  bool keepPlaying = m_player->isOn();
+  navigateToVerse(decrementVerse());
+  if (keepPlaying)
+    m_player->play();
 }
 
 void
@@ -1393,7 +1378,7 @@ MainWindow::nextJuz()
 void
 MainWindow::prevJuz()
 {
-  if (ui->cmbJuz->currentIndex() != 1)
+  if (ui->cmbJuz->currentIndex() != 0)
     ui->cmbJuz->setCurrentIndex(ui->cmbJuz->currentIndex() - 1);
 }
 
@@ -1401,14 +1386,14 @@ void
 MainWindow::nextSurah()
 {
   if (m_currVerse.surah < 114)
-    gotoSurah(m_currVerse.surah + 1, false);
+    gotoSurah(m_currVerse.surah + 1);
 }
 
 void
 MainWindow::prevSurah()
 {
   if (m_currVerse.surah > 1)
-    gotoSurah(m_currVerse.surah - 1, false);
+    gotoSurah(m_currVerse.surah - 1);
 }
 
 void
@@ -1446,15 +1431,12 @@ MainWindow::highlightCurrentVerse()
   if (m_currVerse.number == 0)
     return;
 
+  // idx may be -1 if verse number is 0 (basmallah)
   int idx = m_activeVList->indexOf(m_currVerse);
   if (idx < 0)
     idx = 0;
-  m_activeQuranBrowser->highlightVerse(idx);
 
-  // debugging output
-  int pageIdx = (m_activeQuranBrowser == m_quranBrowsers[1]);
-  qInfo() << "Selected verse #" + QString::number(idx) + " in page #" +
-               QString::number(pageIdx);
+  m_activeQuranBrowser->highlightVerse(idx);
 
   if (m_readerMode == ReaderMode::singlePage)
     setHighlightedFrame();
@@ -1617,7 +1599,8 @@ MainWindow::saveReaderState()
   m_settings->beginGroup("Reader");
   m_settings->setValue("Page", m_currVerse.page);
   m_settings->setValue("Surah", m_currVerse.surah);
-  m_settings->setValue("Verse", m_currVerse.number);
+  m_settings->setValue("Verse",
+                       m_currVerse.number == 0 ? 1 : m_currVerse.number);
   m_settings->endGroup();
 
   m_settings->sync();

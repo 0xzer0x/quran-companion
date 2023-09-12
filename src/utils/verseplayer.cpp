@@ -12,15 +12,9 @@ VersePlayer::VersePlayer(QObject* parent, Verse initVerse, int reciterIdx)
   , m_output{ new QAudioOutput(this) }
 {
   setAudioOutput(m_output);
-  setupConnections();
 
   m_reciterDir.cd(m_recitersList.at(m_reciter).baseDirName);
   loadActiveVerse();
-}
-
-void
-VersePlayer::setupConnections()
-{
 }
 
 bool
@@ -37,16 +31,17 @@ VersePlayer::play()
 }
 
 void
+VersePlayer::pause()
+{
+  m_isOn = false;
+  QMediaPlayer::pause();
+}
+
+void
 VersePlayer::stop()
 {
   m_isOn = false;
   QMediaPlayer::stop();
-}
-
-void
-VersePlayer::setOn(bool newIsOn)
-{
-  m_isOn = newIsOn;
 }
 
 void

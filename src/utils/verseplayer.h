@@ -28,7 +28,7 @@ public:
    * @brief Class constructor
    * @param parent - pointer to parent widget
    * @param initVerse - inital ::Verse to load recitation for
-   * @param reciterIdx - chosen reciter to load recitation of
+   * @param reciterIdx - ::Globals::recitersList index for the reciter
    */
   explicit VersePlayer(QObject* parent = nullptr,
                        Verse initVerse = Verse{},
@@ -41,9 +41,8 @@ public:
    * @return QString of the filename
    */
   QString constructVerseFilename(Verse v);
-
   /**
-   * @brief setter for the m_activeVerse member
+   * @brief setter for the m_activeVerse attribute
    * @param newVerse - ::Verse instance
    */
   void setVerse(Verse& newVerse);
@@ -60,7 +59,6 @@ public:
    * @return boolean indicating successful load
    */
   bool loadActiveVerse();
-
   /**
    * @brief getter for the currently set reciter name
    * @return QString containing the reciter's display name
@@ -72,11 +70,6 @@ public:
    */
   QString verseFilename() const;
   /**
-   * @brief getter for m_surahCount
-   * @return number of verses in the current surah
-   */
-  int surahCount() const;
-  /**
    * @brief getter for m_activeVerse
    * @return ::Verse instance
    */
@@ -86,12 +79,27 @@ public:
    * @return pointer to the used QAudioOutput object
    */
   QAudioOutput* getOutput() const;
-
+  /**
+   * @brief getter for the player m_isOn attribute
+   * @return boolean indicating whether the player is on
+   */
   bool isOn() const;
-  void setOn(bool newIsOn);
 
 public slots:
+  /**
+   * @brief re-implementation of QMediaPlayer::play() in order to set the m_isOn
+   * variable when manually calling play()
+   */
   void play();
+  /**
+   * @brief re-implementation of QMediaPlayer::pause() in order to set the
+   * m_isOn variable when manually calling pause()
+   */
+  void pause();
+  /**
+   * @brief re-implementation of QMediaPlayer::stop() in order to set the m_isOn
+   * variable when manually calling stop()
+   */
   void stop();
   /**
    * @brief plays the mp3 file corresponding to m_activeVerse
@@ -111,7 +119,7 @@ public slots:
   void changeUsedAudioDevice(QAudioDevice dev);
   /**
    * @brief sets the current playback volume
-   * @param volume - float value for volume (0-1)
+   * @param volume - float value for volume (0-1.0)
    */
   void setPlayerVolume(qreal volume);
 
@@ -123,10 +131,9 @@ private:
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
-   * @brief connects signals and slots for different UI
-   * components and shortcuts.
+   * @brief boolean indicating whether the player is on or off, 'on' implies
+   * that playback should continue in case of verse change
    */
-  void setupConnections();
   bool m_isOn = false;
   /**
    * @brief ::Globals::recitersList index for the reciter

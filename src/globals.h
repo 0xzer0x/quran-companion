@@ -17,7 +17,8 @@
  * @struct Verse
  * @brief Verse struct represents a single quran verse
  * @details Quran verses consist of 3 attributes. page (1-604). surah (1-114).
- * number represents the number of the verse in the surah (1-surah verse count).
+ * number represents the number of the verse in the surah (0-surah verse count).
+ * Basmallah before the 1st verse is represented as verse number 0.
  */
 struct Verse
 {
