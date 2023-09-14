@@ -211,6 +211,10 @@ checkSettingsGroup(QSettings* settings, int group)
       break;
     case 2:
       settings->beginGroup("Shortcuts");
+      settings->setValue("ToggleMenubar",
+                         settings->value("ToggleMenubar", "Ctrl+M"));
+      settings->setValue("ToggleNavDock",
+                         settings->value("ToggleNavDock", "Ctrl+N"));
       settings->setValue("TogglePlayback",
                          settings->value("TogglePlayback", "Space"));
       settings->setValue("VolumeUp", settings->value("VolumeUp", "+"));
@@ -590,6 +594,13 @@ void
 populateShortcutsMap()
 {
   // shortcut descriptions
+  shortcutDescription.insert(
+    "ToggleMenubar",
+    qApp->translate("SettingsDialog", "Toggle visibility of the menubar"));
+  shortcutDescription.insert(
+    "ToggleNavDock",
+    qApp->translate("SettingsDialog",
+                    "Toggle visibility of the navigation dock"));
   shortcutDescription.insert(
     "TogglePlayback",
     qApp->translate("SettingsDialog", "Toggle playback state of recitation"));

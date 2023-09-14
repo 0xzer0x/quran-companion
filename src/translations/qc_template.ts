@@ -230,11 +230,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="597"/>
-        <source>Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="714"/>
         <source>2</source>
         <translation type="unfinished"></translation>
@@ -242,6 +237,11 @@
     <message>
         <location filename="../core/mainwindow.ui" line="719"/>
         <source>3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="597"/>
+        <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1467,6 +1467,26 @@
     <message>
         <location filename="../core/settingsdialog.cpp" line="354"/>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="398"/>
+        <source>Shortcut conflicts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="399"/>
+        <source>This key combination is used by another shortcut, please use a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="599"/>
+        <source>Toggle visibility of the menubar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="602"/>
+        <source>Toggle visibility of the navigation dock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
   , m_process(new QProcess(this))
+  , m_shortcutHandler(new ShortcutHandler(this))
 {
   ui->setupUi(this);
   ui->menuView->addAction(ui->sideDock->toggleViewAction());
@@ -171,100 +172,98 @@ MainWindow::updateProcessCallback()
 void
 MainWindow::setupShortcuts()
 {
-  foreach (const QString& key, m_shortcutsDescription.keys()) {
-    QKeySequence seq =
-      qvariant_cast<QKeySequence>(m_settings->value("Shortcuts/" + key));
-    m_shortcutMap.insert(key, new QShortcut(seq, this));
-  }
-  m_shortcutMap.value("TogglePlayback")->setContext(Qt::ApplicationShortcut);
-  m_shortcutMap.value("BookmarkCurrent")->setContext(Qt::ApplicationShortcut);
-
-  // ########## Shortcuts ########## //
-  connect(m_shortcutMap.value("Quit"), &QShortcut::activated, this, []() {
-    emit QApplication::exit();
-  });
-  connect(m_shortcutMap.value("TogglePlayback"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::toggleMenubar,
+          this,
+          &MainWindow::toggleMenubar,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::toggleNavDock,
+          this,
+          &MainWindow::toggleNavDock,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::togglePlayback,
           this,
           &MainWindow::togglePlayback,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("VolumeUp"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::incrementVolume,
           this,
           &MainWindow::incrementVolume,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("VolumeDown"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::decrementVolume,
           this,
           &MainWindow::decrementVolume,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("BookmarkCurrent"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::bookmarkCurrent,
           this,
           &MainWindow::addCurrentToBookmarks,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("NextPage"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::nextPage,
           this,
           &MainWindow::btnNextClicked,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("PrevPage"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::prevPage,
           this,
           &MainWindow::btnPrevClicked,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("NextVerse"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::nextVerse,
           this,
           &MainWindow::nextVerse,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("PrevVerse"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::prevVerse,
           this,
           &MainWindow::prevVerse,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("NextJuz"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::nextJuz,
           this,
           &MainWindow::nextJuz,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("PrevJuz"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::prevJuz,
           this,
           &MainWindow::prevJuz,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("NextSurah"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::nextSurah,
           this,
           &MainWindow::nextSurah,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("PrevSurah"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::prevSurah,
           this,
           &MainWindow::prevSurah,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("DownloaderDialog"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openDownloads,
           this,
           &MainWindow::actionDMTriggered,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("BookmarksDialog"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openBookmarks,
           this,
           &MainWindow::actionBookmarksTriggered,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("SearchDialog"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openSearch,
           this,
           &MainWindow::actionSearchTriggered,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("SettingsDialog"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openSettings,
           this,
           &MainWindow::actionPrefTriggered,
           Qt::UniqueConnection);
-  connect(m_shortcutMap.value("TafsirDialog"),
-          &QShortcut::activated,
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openTafsir,
           this,
           &MainWindow::actionTafsirTriggered,
           Qt::UniqueConnection);
@@ -1163,8 +1162,8 @@ MainWindow::actionPrefTriggered()
     // shortcut change
     connect(m_settingsDlg,
             &SettingsDialog::shortcutChanged,
-            this,
-            &MainWindow::shortcutChanged,
+            m_shortcutHandler,
+            &ShortcutHandler::shortcutChanged,
             Qt::UniqueConnection);
   }
 
@@ -1298,13 +1297,6 @@ MainWindow::updateSideFont()
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
 }
 
-void
-MainWindow::shortcutChanged(QString key)
-{
-  m_shortcutMap.value(key)->setKey(
-    qvariant_cast<QKeySequence>(m_settings->value("Shortcuts/" + key)));
-}
-
 Verse
 MainWindow::incrementVerse()
 {
@@ -1408,6 +1400,21 @@ MainWindow::decrementVolume()
 {
   int val = ui->sldrVolume->value() - 5;
   ui->sldrVolume->setValue(val < 0 ? 0 : val);
+}
+
+void
+MainWindow::toggleMenubar()
+{
+  if (ui->menubar->isVisible())
+    ui->menubar->hide();
+  else
+    ui->menubar->show();
+}
+
+void
+MainWindow::toggleNavDock()
+{
+  ui->sideDock->toggleViewAction()->toggle();
 }
 
 void

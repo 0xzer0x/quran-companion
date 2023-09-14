@@ -84,6 +84,7 @@ DownloaderDialog::fillTreeView()
 {
   for (const Reciter& reciter : m_recitersList) {
     QStandardItem* item = new QStandardItem(reciter.displayName);
+    item->setToolTip(reciter.displayName);
 
     m_treeModel.invisibleRootItem()->appendRow(item);
 

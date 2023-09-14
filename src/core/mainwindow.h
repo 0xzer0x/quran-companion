@@ -9,6 +9,7 @@
 #include "../globals.h"
 #include "../utils/dbmanager.h"
 #include "../utils/notificationmanager.h"
+#include "../utils/shortcuthandler.h"
 #include "../utils/verseplayer.h"
 #include "../widgets/notificationpopup.h"
 #include "../widgets/quranpagebrowser.h"
@@ -316,11 +317,6 @@ private slots:
    */
   void listSurahNameClicked(const QModelIndex& index);
   /**
-   * @brief slot to reload the key sequence for the shortcut with the given key
-   * @param key - QString of the shortcut key in the settings file
-   */
-  void shortcutChanged(QString key);
-  /**
    * @brief increment the current active ::Verse appropriately
    * @return the new incremented ::Verse
    */
@@ -362,6 +358,8 @@ private slots:
    * @brief utility to decrement the VersePlayer playback volume by steps of 5
    */
   void decrementVolume();
+  void toggleMenubar();
+  void toggleNavDock();
 
 private:
   QSettings* const m_settings = Globals::settings;
@@ -370,8 +368,6 @@ private:
   const QString& m_updateToolPath = Globals::updateToolPath;
   const bool m_darkMode = Globals::darkMode;
   const ReaderMode& m_readerMode = Globals::readerMode;
-  const QMap<QString, QString>& m_shortcutsDescription =
-    Globals::shortcutDescription;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief initalizes different parts used by the app
@@ -424,8 +420,7 @@ private:
    */
   void selectVerse(int browserIdx, int IdxInPage);
   /**
-   * @brief populate the m_shortcutMap QMap with QShortcut pointers & connect
-   * each QShortcut to its corresponding slot
+   * @brief connect ShortcutHandler signals to their corresponding slots
    */
   void setupShortcuts();
   /**
@@ -511,12 +506,12 @@ private:
    */
   Ui::MainWindow* ui;
   /**
-   * @brief QMap of application shortcuts accessible through their settings
-   * name
+   * @brief ShortcutHandler instance for handling shortcuts
    */
-  QMap<QString, QShortcut*> m_shortcutMap;
+  ShortcutHandler* m_shortcutHandler = nullptr;
   /**
-   * @brief QScrollArea used in single page mode to display verses & translation
+   * @brief QScrollArea used in single page mode to display verses &
+   * translation
    */
   QScrollArea* m_scrlVerseByVerse = nullptr;
   /**

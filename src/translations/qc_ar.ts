@@ -230,11 +230,6 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="597"/>
-        <source>Right</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="714"/>
         <source>2</source>
         <translation></translation>
@@ -242,6 +237,11 @@
     <message>
         <location filename="../core/mainwindow.ui" line="719"/>
         <source>3</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="597"/>
+        <source>Right</source>
         <translation></translation>
     </message>
     <message>
@@ -1470,6 +1470,26 @@
         <location filename="../core/settingsdialog.cpp" line="354"/>
         <source>Cancel</source>
         <translation>ألغِ</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="398"/>
+        <source>Shortcut conflicts</source>
+        <translation>تضارب إختصارات</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="399"/>
+        <source>This key combination is used by another shortcut, please use a different one.</source>
+        <translation>تركيبة المفاتيح التي تم إختيارها مستخدمة من قبل إختصار آخر، الرجاء إستخدام تركيبة مفاتيح أُخرى.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="599"/>
+        <source>Toggle visibility of the menubar</source>
+        <translation>إظهار/إخفاء شريط القوائم</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="602"/>
+        <source>Toggle visibility of the navigation dock</source>
+        <translation>إظهار/إخفاء وحدة التصفح</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="547"/>

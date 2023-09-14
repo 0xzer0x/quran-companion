@@ -53,19 +53,17 @@ SettingsDialog::populateShortcutsModel()
   m_shortcutsModel.clear();
   m_shortcutsModel.setHorizontalHeaderLabels(headers);
 
-  m_settings->beginGroup("Shortcuts");
-  foreach (const QString& key, m_settings->childKeys()) {
+  foreach (const QString& key, m_shortcutDescription.keys()) {
     QStandardItem *desc = new QStandardItem(), *keySeq = new QStandardItem();
     desc->setData(key, Qt::UserRole);
     desc->setText(tr(m_shortcutDescription.value(key).toStdString().c_str()));
-    keySeq->setText(m_settings->value(key).toString());
+    keySeq->setText(m_settings->value("Shortcuts/" + key).toString());
 
     QList<QStandardItem*> row;
     row.append(desc);
     row.append(keySeq);
     m_shortcutsModel.appendRow(row);
   }
-  m_settings->endGroup();
 }
 
 void
@@ -81,15 +79,14 @@ SettingsDialog::setCurrentSettingsAsRef()
   m_votd = m_settings->value("VOTD").toBool();
   m_missingFileWarning = m_settings->value("MissingFileWarning").toBool();
 
-  m_settings->beginGroup("Reader");
-  // all keys have prefix "Reader"
-  m_adaptive = m_settings->value("AdaptiveFont").toBool();
+  m_adaptive = m_settings->value("Reader/AdaptiveFont").toBool();
   m_quranFontSize =
-    m_settings->value("QCF" + QString::number(m_qcfVer) + "Size").toInt();
-  m_sideFont = qvariant_cast<QFont>(m_settings->value("SideContentFont"));
-  m_tafsir = m_settings->value("Tafsir").toInt();
-  m_trans = m_settings->value("Translation").toInt();
-  m_settings->endGroup();
+    m_settings->value("Reader/QCF" + QString::number(m_qcfVer) + "Size")
+      .toInt();
+  m_sideFont =
+    qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
+  m_tafsir = m_settings->value("Reader/Tafsir").toInt();
+  m_trans = m_settings->value("Reader/Translation").toInt();
 
   m_audioDevices = QMediaDevices::audioOutputs();
   ui->cmbAudioDevices->clear();
@@ -121,18 +118,12 @@ SettingsDialog::setCurrentSettingsAsRef()
 }
 
 bool
-SettingsDialog::shortcutAvailable(QString key, QString keySequence)
+SettingsDialog::shortcutAvailable(QString keySequence)
 {
-  m_settings->beginGroup("Shortcuts");
-  foreach (const QString& childKey, m_settings->childKeys()) {
-    if (key == childKey)
-      continue;
-    if (m_settings->value(childKey).toString() == keySequence)
-      return false;
-  }
-  m_settings->endGroup();
+  bool available =
+    m_shortcutsModel.findItems(keySequence, Qt::MatchExactly, 1).empty();
 
-  return true;
+  return available;
 }
 
 void
@@ -390,12 +381,26 @@ SettingsDialog::editShortcut(const QModelIndex& index)
 void
 SettingsDialog::setShortcut()
 {
+  if (m_checkingShortcut)
+    return;
+
+  m_checkingShortcut = true;
   QStringList key = m_keySeqEdit->objectName().split('-');
   QString value = m_keySeqEdit->keySequence().toString();
 
-  qInfo() << "set shortcut triggered for " + key.at(0) + ": " + value;
   m_keySeqEdit->hide();
-  m_shortcutsModel.item(key.at(1).toInt(), 1)->setText(value);
+  qInfo() << "set shortcut triggered for " + key.at(0) + ": " + value;
+
+  if (shortcutAvailable(value))
+    m_shortcutsModel.item(key.at(1).toInt(), 1)->setText(value);
+  else {
+    QMessageBox::warning(this,
+                         tr("Shortcut conflicts"),
+                         tr("This key combination is used by another "
+                            "shortcut, please use a different one."));
+  }
+
+  m_checkingShortcut = false;
 }
 
 SettingsDialog::~SettingsDialog()

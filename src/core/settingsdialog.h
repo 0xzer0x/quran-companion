@@ -199,6 +199,7 @@ private:
   const QDir& m_resources = Globals::themeResources;
   const QMap<QString, QString>& m_shortcutDescription =
     Globals::shortcutDescription;
+  bool m_checkingShortcut = false;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -216,9 +217,8 @@ private:
    * corresponding variables and updates UI components to match them.
    */
   void setCurrentSettingsAsRef();
-  bool shortcutAvailable(QString key, QString keySequence);
+  bool shortcutAvailable(QString keySequence);
   void checkShortcuts();
-
   /**
    * @brief QCF font size used in constructing Quran page.
    */
