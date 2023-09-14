@@ -983,6 +983,17 @@ MainWindow::mediaStateChanged(QMediaPlayer::PlaybackState state)
 }
 
 void
+MainWindow::updateTrayTooltip(QMediaPlayer::PlaybackState state)
+{
+  if (state == QMediaPlayer::PlayingState) {
+    m_notifyMgr->setTooltip(tr("Now playing: ") + m_player->reciterName() +
+                            " - " + tr("Surah ") +
+                            m_dbMgr->getSurahName(m_currVerse.surah));
+  } else
+    m_notifyMgr->setTooltip(tr("Quran Companion"));
+}
+
+void
 MainWindow::addCurrentToBookmarks()
 {
   if (!m_dbMgr->isBookmarked(m_currVerse)) {
@@ -1531,17 +1542,6 @@ MainWindow::addSideContent()
 }
 
 void
-MainWindow::updateTrayTooltip(QMediaPlayer::PlaybackState state)
-{
-  if (state == QMediaPlayer::PlayingState) {
-    m_notifyMgr->setTooltip(tr("Now playing: ") + m_player->reciterName() +
-                            " - " + tr("Surah ") +
-                            m_dbMgr->getSurahName(m_currVerse.surah));
-  } else
-    m_notifyMgr->setTooltip(tr("Quran Companion"));
-}
-
-void
 MainWindow::showVerseTafsir(Verse v)
 {
   if (m_tafsirDlg == nullptr) {
@@ -1598,6 +1598,16 @@ MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
 }
 
 void
+MainWindow::resizeEvent(QResizeEvent* event)
+{
+  QMainWindow::resizeEvent(event);
+  if (m_popup) {
+    m_popup->adjustLocation();
+    m_popup->move(m_popup->notificationPos());
+  }
+}
+
+void
 MainWindow::saveReaderState()
 {
   m_settings->setValue("WindowState", saveState());
@@ -1619,16 +1629,6 @@ MainWindow::restartApp()
   saveReaderState();
   QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
   emit QApplication::exit();
-}
-
-void
-MainWindow::resizeEvent(QResizeEvent* event)
-{
-  QMainWindow::resizeEvent(event);
-  if (m_popup) {
-    m_popup->adjustLocation();
-    m_popup->move(m_popup->notificationPos());
-  }
 }
 
 MainWindow::~MainWindow()

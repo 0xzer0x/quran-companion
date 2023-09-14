@@ -1,3 +1,8 @@
+/**
+ * @file shortcuthandler.h
+ * @brief Header file for ShortcutHandler
+ */
+
 #ifndef SHORTCUTHANDLER_H
 #define SHORTCUTHANDLER_H
 
@@ -8,10 +13,20 @@
 #include <QShortcut>
 #include <QString>
 
+/**
+ * @brief ShortcutHandler class is responsible for setting up different
+ * application shortcuts, handling shortcut changes, and emitting appropriate
+ * signal according to the activated shortcut
+ */
 class ShortcutHandler : public QObject
 {
   Q_OBJECT
 public:
+  /**
+   * @brief class constructor
+   * @param parent - pointer to parent widget that will recieve the shortcut
+   * events
+   */
   explicit ShortcutHandler(QObject* parent = nullptr);
 
 public slots:
@@ -43,11 +58,11 @@ signals:
   void openTafsir();
 
 private:
-  QSettings* const m_settings = Globals::settings;
+  const QSettings* m_settings = Globals::settings;
   const QMap<QString, QString>& m_shortcutsDescription =
     Globals::shortcutDescription;
   /**
-   * @brief connect different QShortcut activated() signals to their
+   * @brief connect different QShortcut signals to their
    * corresponding signal in ShortcutHandler
    */
   void setupConnections();

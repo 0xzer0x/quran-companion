@@ -1,3 +1,8 @@
+/**
+ * @file shortcuthandler.cpp
+ * @brief Implementation file for ShortcutHandler
+ */
+
 #include "shortcuthandler.h"
 
 ShortcutHandler::ShortcutHandler(QObject* parent)
@@ -12,13 +17,6 @@ ShortcutHandler::ShortcutHandler(QObject* parent)
   m_shortcuts.value("BookmarkCurrent")->setContext(Qt::ApplicationShortcut);
 
   setupConnections();
-}
-
-void
-ShortcutHandler::shortcutChanged(QString key)
-{
-  m_shortcuts.value(key)->setKey(
-    qvariant_cast<QKeySequence>(m_settings->value("Shortcuts/" + key)));
 }
 
 void
@@ -122,4 +120,11 @@ ShortcutHandler::setupConnections()
           this,
           &ShortcutHandler::openTafsir,
           Qt::UniqueConnection);
+}
+
+void
+ShortcutHandler::shortcutChanged(QString key)
+{
+  m_shortcuts.value(key)->setKey(
+    qvariant_cast<QKeySequence>(m_settings->value("Shortcuts/" + key)));
 }

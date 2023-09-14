@@ -240,13 +240,6 @@ DownloaderDialog::btnStopClicked()
 }
 
 void
-DownloaderDialog::openDownloadsDir()
-{
-  QUrl url = QUrl::fromLocalFile(Globals::recitationsDir.absolutePath());
-  QDesktopServices::openUrl(url);
-}
-
-void
 DownloaderDialog::surahDownloaded(int reciter, int surah)
 {
   m_currentBar->setStyling(DownloadProgressBar::completed);
@@ -288,6 +281,13 @@ DownloaderDialog::topTaskDownloadError(int reciter, int surah)
   m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
   setCurrentBar();
+}
+
+void
+DownloaderDialog::openDownloadsDir()
+{
+  QUrl url = QUrl::fromLocalFile(Globals::recitationsDir.absolutePath());
+  QDesktopServices::openUrl(url);
 }
 
 void

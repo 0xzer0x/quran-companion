@@ -86,7 +86,7 @@ SettingsDialog::setCurrentSettingsAsRef()
   m_sideFont =
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
   m_tafsir = m_settings->value("Reader/Tafsir").toInt();
-  m_trans = m_settings->value("Reader/Translation").toInt();
+  m_translation = m_settings->value("Reader/Translation").toInt();
 
   m_audioDevices = QMediaDevices::audioOutputs();
   ui->cmbAudioDevices->clear();
@@ -106,7 +106,7 @@ SettingsDialog::setCurrentSettingsAsRef()
   ui->fntCmbSide->setCurrentFont(m_sideFont);
   ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
   ui->cmbTafsir->setCurrentIndex(m_tafsir);
-  ui->cmbTranslation->setCurrentIndex(m_trans);
+  ui->cmbTranslation->setCurrentIndex(m_translation);
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
   ui->chkDailyVerse->setChecked(m_votd);
   ui->chkAdaptive->setChecked(m_adaptive);
@@ -120,6 +120,7 @@ SettingsDialog::setCurrentSettingsAsRef()
 bool
 SettingsDialog::shortcutAvailable(QString keySequence)
 {
+  // check if any item in the shortcut model contains the same key sequence
   bool available =
     m_shortcutsModel.findItems(keySequence, Qt::MatchExactly, 1).empty();
 
@@ -129,10 +130,11 @@ SettingsDialog::shortcutAvailable(QString keySequence)
 void
 SettingsDialog::checkShortcuts()
 {
-  int row = 0;
-  foreach (const QString& key, m_shortcutDescription.keys()) {
-    const QString& keySequence = m_shortcutsModel.item(row++, 1)->text();
-    if (m_settings->value(key).toString() != keySequence)
+  for (int row = 0; row < m_shortcutsModel.rowCount(); row++) {
+    const QString& key =
+      m_shortcutsModel.item(row, 0)->data(Qt::UserRole).toString();
+    const QString& keySequence = m_shortcutsModel.item(row, 1)->text();
+    if (m_settings->value("Shortcuts/" + key).toString() != keySequence)
       updateShortcut(key, keySequence);
   }
 }
@@ -285,7 +287,7 @@ SettingsDialog::applyAllChanges()
   if (ui->cmbTafsir->currentIndex() != m_tafsir)
     updateTafsir(ui->cmbTafsir->currentIndex());
 
-  if (ui->cmbTranslation->currentIndex() != m_trans)
+  if (ui->cmbTranslation->currentIndex() != m_translation)
     updateTranslation(ui->cmbTranslation->currentIndex());
 
   if (ui->cmbQCF->currentIndex() + 1 != m_qcfVer)
@@ -336,33 +338,6 @@ SettingsDialog::applyAllChanges()
 }
 
 void
-SettingsDialog::btnBoxAction(QAbstractButton* btn)
-{
-  if (btn->text().contains(tr("Apply"))) {
-    applyAllChanges();
-  } else if (btn->text().contains(tr("Cancel"))) {
-    this->reject();
-  } else {
-    applyAllChanges();
-    this->accept();
-  }
-}
-
-void
-SettingsDialog::showWindow()
-{
-  setCurrentSettingsAsRef();
-  this->show();
-  m_keySeqEdit->hide();
-}
-
-void
-SettingsDialog::closeEvent(QCloseEvent* event)
-{
-  this->hide();
-}
-
-void
 SettingsDialog::editShortcut(const QModelIndex& index)
 {
   QString key =
@@ -401,6 +376,33 @@ SettingsDialog::setShortcut()
   }
 
   m_checkingShortcut = false;
+}
+
+void
+SettingsDialog::btnBoxAction(QAbstractButton* btn)
+{
+  if (btn->text().contains(tr("Apply"))) {
+    applyAllChanges();
+  } else if (btn->text().contains(tr("Cancel"))) {
+    this->reject();
+  } else {
+    applyAllChanges();
+    this->accept();
+  }
+}
+
+void
+SettingsDialog::showWindow()
+{
+  setCurrentSettingsAsRef();
+  this->show();
+  m_keySeqEdit->hide();
+}
+
+void
+SettingsDialog::closeEvent(QCloseEvent* event)
+{
+  this->hide();
 }
 
 SettingsDialog::~SettingsDialog()
