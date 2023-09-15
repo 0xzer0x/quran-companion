@@ -51,33 +51,48 @@ addFonts(int qcfVersion);
 void
 addTranslation(QLocale::Language localeCode);
 /**
- * @brief checks the default settings keys exist and sets them with default
+ * @brief checks the default settings groups and sets them with default
  * values if not found.
  * @details application settings are stored as ini-formatted files in order to
  * provide the same functionality on different platforms. The configuration file
- * is stored in the user's home directory under the application config
+ * is stored in Globals::configDir
  * directory.
  *
- * @param settings pointer to QSettings instance to access app settings
+ * @param settings - pointer to QSettings instance to access app settings
  */
 void
 checkSettings(QSettings* settings);
 /**
+ * @brief set the default values for non-existing keys in a certain settings
+ * group (0 - general, 1 - Reader, 2 - Shortcuts).
+ * @param settings - pointer to QSettings instance to access app settings
+ * @param group - integer refering to group to check
+ */
+void
+checkSettingsGroup(QSettings* settings, int group);
+/**
  * @brief fills the global reciters list and creates their corresponding
  * directories.
- * @details Fills the QList that contains #Reciter instances
+ * @details Fills the QList that contains ::Reciter instances
  * that represent the reciters supported by the application. The reciters list
  * is used in many parts of the application by creating a constant reference to
  * the global QList. It also creates the reciters directories in the application
  * recitations directory as needed.
  */
 void
-fillRecitersList();
+populateRecitersList();
 /**
- * @brief set application-wide variables.
+ * @brief populates the Globals::shortcutDescription QMap with key-value pairs
+ * of (name - description), any new shortcuts should be added here along with
+ * the default keybinding for it in the shortcuts settings group.
  */
 void
-setGlobals();
+populateShortcutsMap();
+/**
+ * @brief set application-wide variables that represents used paths.
+ */
+void
+setGlobalPaths();
 
 /**
  * @brief application entry point
@@ -91,13 +106,13 @@ main(int argc, char* argv[])
   QApplication a(argc, argv);
   QApplication::setApplicationName("Quran Companion");
   QApplication::setOrganizationName("0xzer0x");
-  QApplication::setApplicationVersion("1.1.7");
+  QApplication::setApplicationVersion("1.1.8");
 
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
 
-  setGlobals();
-  Logger::startLogger(QDir::currentPath());
+  setGlobalPaths();
+  Logger::startLogger(configDir.absolutePath());
   Logger::attach();
 
   settings = new QSettings(
@@ -107,11 +122,14 @@ main(int argc, char* argv[])
   themeId = settings->value("Theme").toInt();
   qcfVersion = settings->value("Reader/QCF").toInt();
   language = qvariant_cast<QLocale::Language>(settings->value("Language"));
+  readerMode = qvariant_cast<ReaderMode>(settings->value("Reader/Mode"));
   setTheme(themeId);
   addFonts(qcfVersion);
   addTranslation(language);
-  fillRecitersList();
+  populateRecitersList();
+  populateShortcutsMap();
 
+  databaseManager = new DBManager(&a);
   MainWindow w(nullptr);
   splash.finish(&w);
   w.show();
@@ -122,50 +140,108 @@ main(int argc, char* argv[])
 }
 
 void
+setGlobalPaths()
+{
+  // data
+  assetsDir = QApplication::applicationDirPath() + QDir::separator() + "assets";
+  bismillahDir =
+    QApplication::applicationDirPath() + QDir::separator() + "bismillah";
+
+  // config & downloads
+  if (!configDir.exists("QuranCompanion"))
+    configDir.mkpath("QuranCompanion");
+  if (!recitationsDir.exists("QuranCompanion/recitations"))
+    recitationsDir.mkpath("QuranCompanion/recitations");
+
+  configDir.cd("QuranCompanion");
+  recitationsDir.cd("QuranCompanion/recitations");
+
+  updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
+                   "QCMaintenanceTool";
+#ifdef Q_OS_WIN
+  updateToolPath.append(".exe");
+#endif
+}
+
+void
 checkSettings(QSettings* settings)
 {
-  QStringList defaultKeys;
-  defaultKeys << "Language"
-              << "MissingFileWarning"
-              << "Reader/AdaptiveFont"
-              << "Reader/Page"
-              << "Reader/QCF"
-              << "Reader/QCF1Size"
-              << "Reader/QCF2Size"
-              << "Reader/SideContentFont"
-              << "Reader/Surah"
-              << "Reader/Tafsir"
-              << "Reader/Translation"
-              << "Reader/Verse"
-              << "Reciter"
-              << "Theme"
-              << "VOTD"
-              << "WindowState";
+  QStringList groups;
+  groups << "Reader"
+         << "Shortcuts";
 
-  if (settings->allKeys() != defaultKeys) {
-    settings->setValue("Language",
-                       settings->value("Language", (int)QLocale::English));
-    settings->setValue("Theme", settings->value("Theme", 0));
-    settings->setValue("VOTD", settings->value("VOTD", true));
-    settings->setValue("MissingFileWarning",
-                       settings->value("MissingFileWarning", true));
+  checkSettingsGroup(settings, 0);
+  if (settings->childGroups() != groups) {
+    for (int i = 0; i < groups.size(); i++) {
+      if (i >= settings->childGroups().size() ||
+          settings->childGroups().at(i) != groups.at(i))
+        checkSettingsGroup(settings, i + 1);
+    }
+  }
+}
 
-    settings->beginGroup("Reader");
-    // all keys now have "Reader" prefix
-    settings->setValue("Page", settings->value("Page", 1));
-    settings->setValue("Surah", settings->value("Surah", 1));
-    settings->setValue("Verse", settings->value("Verse", 1));
-    settings->setValue("AdaptiveFont", settings->value("AdaptiveFont", true));
-    settings->setValue("QCF1Size", settings->value("QCF1Size", 22));
-    settings->setValue("QCF2Size", settings->value("QCF2Size", 20));
-    settings->setValue("QCF", settings->value("QCF", 1));
-    settings->setValue("Tafsir", settings->value("Tafsir", 1));
-    settings->setValue("Translation", settings->value("Translation", 5));
-    settings->setValue(
-      "SideContentFont",
-      settings->value("SideContentFont", QFont("Expo Arabic", 14)));
-
-    settings->endGroup();
+void
+checkSettingsGroup(QSettings* settings, int group)
+{
+  switch (group) {
+    case 0:
+      settings->setValue("Language",
+                         settings->value("Language", (int)QLocale::English));
+      settings->setValue("Theme", settings->value("Theme", 0));
+      settings->setValue("VOTD", settings->value("VOTD", true));
+      settings->setValue("MissingFileWarning",
+                         settings->value("MissingFileWarning", true));
+      break;
+    case 1:
+      settings->beginGroup("Reader");
+      settings->setValue("Mode", settings->value("Mode", 0));
+      settings->setValue("Page", settings->value("Page", 1));
+      settings->setValue("Surah", settings->value("Surah", 1));
+      settings->setValue("Verse", settings->value("Verse", 1));
+      settings->setValue("AdaptiveFont", settings->value("AdaptiveFont", true));
+      settings->setValue("QCF1Size", settings->value("QCF1Size", 22));
+      settings->setValue("QCF2Size", settings->value("QCF2Size", 20));
+      settings->setValue("QCF", settings->value("QCF", 1));
+      settings->setValue("Tafsir", settings->value("Tafsir", 1));
+      settings->setValue("Translation", settings->value("Translation", 5));
+      settings->setValue(
+        "SideContentFont",
+        settings->value("SideContentFont", QFont("Expo Arabic", 14)));
+      settings->endGroup();
+      break;
+    case 2:
+      settings->beginGroup("Shortcuts");
+      settings->setValue("ToggleMenubar",
+                         settings->value("ToggleMenubar", "Ctrl+M"));
+      settings->setValue("ToggleNavDock",
+                         settings->value("ToggleNavDock", "Ctrl+N"));
+      settings->setValue("TogglePlayback",
+                         settings->value("TogglePlayback", "Space"));
+      settings->setValue("VolumeUp", settings->value("VolumeUp", "+"));
+      settings->setValue("VolumeDown", settings->value("VolumeDown", "-"));
+      settings->setValue("NextPage", settings->value("NextPage", "Left"));
+      settings->setValue("PrevPage", settings->value("PrevPage", "Right"));
+      settings->setValue("NextVerse", settings->value("NextVerse", "V"));
+      settings->setValue("PrevVerse", settings->value("PrevVerse", "Shift+V"));
+      settings->setValue("NextSurah", settings->value("NextSurah", "S"));
+      settings->setValue("PrevSurah", settings->value("PrevSurah", "Shift+S"));
+      settings->setValue("NextJuz", settings->value("NextJuz", "J"));
+      settings->setValue("PrevJuz", settings->value("PrevJuz", "Shift+J"));
+      settings->setValue("BookmarkCurrent",
+                         settings->value("BookmarkCurrent", "Ctrl+Shift+B"));
+      settings->setValue("BookmarksDialog",
+                         settings->value("BookmarksDialog", "Ctrl+B"));
+      settings->setValue("SearchDialog",
+                         settings->value("SearchDialog", "Ctrl+F"));
+      settings->setValue("SettingsDialog",
+                         settings->value("SettingsDialog", "Ctrl+P"));
+      settings->setValue("TafsirDialog",
+                         settings->value("TafsirDialog", "Ctrl+T"));
+      settings->setValue("DownloaderDialog",
+                         settings->value("DownloaderDialog", "Ctrl+D"));
+      settings->setValue("Quit", settings->value("Quit", "Ctrl+Q"));
+      settings->endGroup();
+      break;
   }
 }
 
@@ -232,7 +308,7 @@ setTheme(int themeIdx)
         QPalette::Disabled, QPalette::WindowText, QColor(120, 120, 120));
       themeColors.setColor(QPalette::Base, QColor(255, 255, 255));
       themeColors.setColor(QPalette::AlternateBase, QColor(233, 231, 227));
-      themeColors.setColor(QPalette::ToolTipBase, Qt::black);
+      themeColors.setColor(QPalette::ToolTipBase, Qt::white);
       themeColors.setColor(QPalette::ToolTipText, Qt::black);
       themeColors.setColor(QPalette::Text, Qt::black);
       themeColors.setColor(
@@ -265,7 +341,7 @@ setTheme(int themeIdx)
         QPalette::Disabled, QPalette::WindowText, QColor(127, 127, 127));
       themeColors.setColor(QPalette::Base, QColor(42, 42, 42));
       themeColors.setColor(QPalette::AlternateBase, QColor(66, 66, 66));
-      themeColors.setColor(QPalette::ToolTipBase, Qt::white);
+      themeColors.setColor(QPalette::ToolTipBase, QColor(22, 22, 22));
       themeColors.setColor(QPalette::ToolTipText, Qt::white);
       themeColors.setColor(QPalette::Text, Qt::white);
       themeColors.setColor(
@@ -320,7 +396,7 @@ addTranslation(QLocale::Language localeCode)
 }
 
 void
-fillRecitersList()
+populateRecitersList()
 {
   Reciter husary{ "Al-Husary",
                   qApp->translate("MainWindow", "Al-Husary"),
@@ -515,21 +591,68 @@ fillRecitersList()
 }
 
 void
-setGlobals()
+populateShortcutsMap()
 {
-  // data
-  assetsDir = QApplication::applicationDirPath() + QDir::separator() + "assets";
-  bismillahDir =
-    QApplication::applicationDirPath() + QDir::separator() + "bismillah";
+  // shortcut descriptions
+  shortcutDescription.insert(
+    "ToggleMenubar",
+    qApp->translate("SettingsDialog", "Toggle visibility of the menubar"));
+  shortcutDescription.insert(
+    "ToggleNavDock",
+    qApp->translate("SettingsDialog",
+                    "Toggle visibility of the navigation dock"));
+  shortcutDescription.insert(
+    "TogglePlayback",
+    qApp->translate("SettingsDialog", "Toggle playback state of recitation"));
+  shortcutDescription.insert(
+    "VolumeUp",
+    qApp->translate("SettingsDialog", "Increase the playback volume"));
+  shortcutDescription.insert(
+    "VolumeDown",
+    qApp->translate("SettingsDialog", "Decrease the playback volume"));
 
-  // config
-  configDir.mkpath(".qurancompanion");
-  configDir.cd(".qurancompanion");
-  QDir::setCurrent(configDir.absolutePath());
+  shortcutDescription.insert(
+    "NextPage", qApp->translate("SettingsDialog", "Move to the next page"));
+  shortcutDescription.insert(
+    "PrevPage", qApp->translate("SettingsDialog", "Move to the previous page"));
 
-  updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
-                   "QCMaintenanceTool";
-#ifdef Q_OS_WIN
-  updateToolPath.append(".exe");
-#endif
+  shortcutDescription.insert(
+    "NextVerse", qApp->translate("SettingsDialog", "Move to the next verse"));
+  shortcutDescription.insert(
+    "PrevVerse",
+    qApp->translate("SettingsDialog", "Move to the previous verse"));
+
+  shortcutDescription.insert(
+    "NextSurah", qApp->translate("SettingsDialog", "Move to the next surah"));
+  shortcutDescription.insert(
+    "PrevSurah",
+    qApp->translate("SettingsDialog", "Move to the previous surah"));
+
+  shortcutDescription.insert(
+    "NextJuz", qApp->translate("SettingsDialog", "Move to the next juz"));
+  shortcutDescription.insert(
+    "PrevJuz", qApp->translate("SettingsDialog", "Move to the previous juz"));
+
+  shortcutDescription.insert(
+    "BookmarkCurrent",
+    qApp->translate("SettingsDialog", "Bookmark the current active verse"));
+
+  shortcutDescription.insert(
+    "BookmarksDialog",
+    qApp->translate("SettingsDialog", "Open the bookmarks dialog"));
+  shortcutDescription.insert(
+    "SearchDialog",
+    qApp->translate("SettingsDialog", "Open the search dialog"));
+  shortcutDescription.insert(
+    "SettingsDialog",
+    qApp->translate("SettingsDialog", "Open the preferences dialog"));
+  shortcutDescription.insert(
+    "TafsirDialog",
+    qApp->translate("SettingsDialog",
+                    "Open the tafsir for the current active verse"));
+  shortcutDescription.insert(
+    "DownloaderDialog",
+    qApp->translate("SettingsDialog", "Open the recitations download dialog"));
+
+  shortcutDescription.insert("Quit", qApp->translate("SettingsDialog", "Quit"));
 }

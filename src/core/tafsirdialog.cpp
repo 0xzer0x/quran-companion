@@ -6,10 +6,9 @@
 #include "tafsirdialog.h"
 #include "ui_tafsirdialog.h"
 
-TafsirDialog::TafsirDialog(QWidget* parent, DBManager* dbPtr)
+TafsirDialog::TafsirDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::TafsirDialog)
-  , m_dbMgr{ dbPtr }
 {
   setWindowIcon(QIcon(m_resources.filePath("icons/tafsir.png")));
   ui->setupUi(this);
@@ -64,8 +63,6 @@ TafsirDialog::btnPrevClicked()
 void
 TafsirDialog::setupConnections()
 {
-  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
-  connect(ctrlQ, &QShortcut::activated, this, &TafsirDialog::close);
   connect(ui->btnNext,
           &QPushButton::clicked,
           this,
@@ -84,46 +81,49 @@ TafsirDialog::setTafsirAsTitle()
   QString title;
   Tafsir id = m_dbMgr->currTafsir();
   switch (id) {
-    case DBManager::adwa:
+    case Tafsir::adwa:
       title.append(tr("Adwa' ul-Bayan"));
       break;
-    case DBManager::aysar:
+    case Tafsir::aysar:
       title.append(tr("Aysar Al-Tafasir"));
       break;
-    case DBManager::baghawy:
+    case Tafsir::baghawy:
       title.append(tr("Al-Baghawy"));
       break;
-    case DBManager::e3rab:
+    case Tafsir::e3rab:
       title.append(tr("Earab"));
       break;
-    case DBManager::indonesian:
+    case Tafsir::indonesian:
       title.append(tr("Indonesian - Tafsir Jalalayn"));
       break;
-    case DBManager::juzayy:
+    case Tafsir::juzayy:
       title.append(tr("Ibn-Juzayy"));
       break;
-    case DBManager::katheer:
+    case Tafsir::katheer:
       title.append(tr("Ibn-Katheer"));
       break;
-    case DBManager::qortoby:
+    case Tafsir::katheer_en:
+      title.append(tr("English - Ibn-Katheer"));
+      break;
+    case Tafsir::qortoby:
       title.append(tr("Al-Qortoby"));
       break;
-    case DBManager::russian:
+    case Tafsir::russian:
       title.append(tr("Russian - Kuliev & Al-Sa'ady"));
       break;
-    case DBManager::tabary:
+    case Tafsir::tabary:
       title.append(tr("Al-Tabary"));
       break;
-    case DBManager::sa3dy:
+    case Tafsir::sa3dy:
       title.append(tr("Al-Sa'ady"));
       break;
-    case DBManager::tafheem:
-      title.append(tr("Tafheem-ul-Quran"));
+    case Tafsir::tafheem:
+      title.append(tr("English - Tafheem-ul-Quran"));
       break;
-    case DBManager::tanweer:
+    case Tafsir::tanweer:
       title.append(tr("Ibn-Ashoor"));
       break;
-    case DBManager::waseet:
+    case Tafsir::waseet:
       title.append(tr("Al-Tafsir Al-Waseet"));
       break;
     default:

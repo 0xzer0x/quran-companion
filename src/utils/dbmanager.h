@@ -18,7 +18,7 @@
 #include <QSqlQuery>
 
 /**
- * @brief DBManager acts as an interface for preforming queries to
+ * @brief DBManager is as an interface for preforming queries to
  * different database files holding application data.
  */
 class DBManager : public QObject
@@ -39,62 +39,6 @@ public:
     bookmarks,  ///< (bookmarks.db) bookmarked verses database
     tafsir,     ///< currently selected tafsir database file
     translation ///< currently selected translation database file
-  };
-  /**
-   * @brief Tafsir enum values representing available tafasir.
-   */
-  enum Tafsir
-  {
-    adwa,       ///< Adwa' ul-Bayan - Sheikh Shinqiti
-    aysar,      ///< Aysar ul-Tafasir - Sheikh Abu-bakr al-Jazaeri
-    baghawy,    ///< Tafsir ul-baghawy
-    qortoby,    ///< Tafsir ul-Qortoby
-    sa3dy,      ///< Tafsir ul-Sa'ady
-    tabary,     ///< Tafsir ul-Tabary
-    waseet,     ///< At-Tafsir ul-Waseet
-    e3rab,      ///< Ea'rab of Quran verses
-    tanweer,    ///< At-Tahreer wa At-Tanweer - Sheikh Ibn A'ashoor
-    juzayy,     ///< Tafsir Ibn-Juzayy
-    katheer,    ///< Tafsir Ibn-Katheer
-    indonesian, ///< (Indonesian) Tafsir ul-Jalalyn
-    russian,    ///< (Russian) Tafsir ul-Sa'ady
-    tafheem     ///< (English) Tafheem ul-Quran - Sheikh Abul-Aa'la al-Maududy
-  };
-  /**
-   * @brief Translation enum holds different values representing available Quran
-   * translations
-   */
-  enum Translation
-  {
-    muyassar,       ///< (Arabic) Tafsir muyassar
-    ar_ma3any,      ///< (Arabic) Word Meanings
-    bn_bengali,     ///< (Bengali) Muhiuddin Khan
-    bs_korkut,      ///< (Bosanski) Korkut
-    de_bubenheim,   ///< (Deutsch) Bubenheim & Elyas
-    en_khattab,     ///< (English) Clear Quran
-    en_sahih,       ///< (English) Sahih International
-    es_navio,       ///< (Español) Abdel Ghani Navio
-    fr_hamidullah,  ///< (Français) Hamidullah
-    ha_gumi,        ///< (Hausa) Gumi
-    id_indonesian,  ///< (Indonesian) Bahasa Indonesia
-    it_piccardo,    ///< (Italiano) Piccardo
-    ku_asan,        ///< (كوردى) برهان محمد أمين
-    ml_abdulhameed, ///< (Malayalam) Abdul Hameed and Kunhi
-    ms_basmeih,     ///< (Melayu) Basmeih
-    nl_siregar,     ///< (Dutch) Sofian Siregar
-    pr_tagi,        ///< (فارسى) حسین تاجی گله داری
-    pt_elhayek,     ///< (Português) El Hayek
-    ru_kuliev,      ///< (Русский) Кулиев (Russian - Elmir Kuliev)
-    so_abduh,       ///< (Somali) Abduh
-    sq_nahi,        ///< (Shqiptar) Efendi Nahi
-    sv_bernstrom,   ///< (Swedish) Bernström
-    sw_barwani,     ///< (Swahili) Al-Barwani
-    ta_tamil, ///< (தமிழ்) ஜான் டிரஸ்ட் (Tamil - Jan Turst Foundation)
-    th_thai,  ///< (ภาษาไทย) ภาษาไทย (Thai)
-    tr_diyanet,   ///< (Türkçe) Diyanet Isleri
-    ur_jalandhry, ///< (اردو) جالندربرى
-    uz_sodik,     ///< (Uzbek) Мухаммад Содик
-    zh_jian       ///< (中国语文) Ma Jian (Chinese)
   };
 
   /**
@@ -124,7 +68,6 @@ public:
    * @param filePath - path to the database file
    */
   void setOpenDatabase(Database db, QString filePath);
-
   /**
    * @brief gets the surah number and juz number of the first verse in the page,
    * used to display page header information
@@ -144,7 +87,6 @@ public:
    * @return QList of ::Verse instances
    */
   QList<Verse> getVerseInfoList(const int page);
-
   /**
    * @brief gets the surah name glyph for the QCF_BSML font, used to render
    * surah frame in Quran page
@@ -172,7 +114,6 @@ public:
    * @return QString of the verse text
    */
   QString getVerseText(const int sIdx, const int vIdx);
-
   /**
    * @brief gets the number of the last verse in the surah passed
    * @param surahIdx - surah number (1-114)
@@ -225,7 +166,6 @@ public:
    * @return juz number
    */
   int getJuzOfPage(const int page);
-
   /**
    * @brief searches the database for surahs matching the given text pattern,
    * the pattern can be either in English or Arabic
@@ -253,7 +193,6 @@ public:
   QList<Verse> searchVerses(QString searchText,
                             const int range[2] = new int[2]{ 1, 604 },
                             const bool whole = false);
-
   /**
    * @brief gets the tafsir content for the given verse using the active
    * DBManager::Tafsir
@@ -300,7 +239,6 @@ public:
    * @return boolean indicating successful removal
    */
   bool removeBookmark(Verse v);
-
   /**
    * @brief getter for m_currTafsir
    * @return the currently set DBManager::Tafsir
@@ -312,6 +250,8 @@ private:
   const QSettings* m_settings = Globals::settings;
   const QLocale::Language m_languageCode = Globals::language;
   const int m_qcfVer = Globals::qcfVersion;
+  const QString m_bookmarksFilepath =
+    Globals::configDir.absoluteFilePath("bookmarks.db");
   /**
    * @brief the currently active database type
    */

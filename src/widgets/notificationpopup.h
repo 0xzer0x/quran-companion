@@ -45,8 +45,7 @@ public:
    * @param parent - pointer to parent widget
    * @param dbMgr - pointer to DBManager instance
    */
-  explicit NotificationPopup(QWidget* parent = nullptr,
-                             DBManager* dbMgr = nullptr);
+  explicit NotificationPopup(QWidget* parent = nullptr);
   /**
    * @brief show popup with the given message and action icon
    * @param message - QString of message to show
@@ -107,6 +106,7 @@ public slots:
 private:
   const QDir& m_resources = Globals::themeResources;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -117,7 +117,6 @@ private:
    * @param icon - NotificationPopup::Action entry
    */
   void setNotificationIcon(Action icon);
-  DBManager* m_dbMgr;
   QLabel* m_iconWidget;
   QLabel* m_textWidget;
   QPropertyAnimation* m_fadeoutAnim;

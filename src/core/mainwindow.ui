@@ -381,22 +381,7 @@ dialog-no-icon: off;
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QPushButton" name="btnNext">
          <property name="sizePolicy">
@@ -435,9 +420,6 @@ dialog-no-icon: off;
          <property name="text">
           <string>🡸</string>
          </property>
-         <property name="shortcut">
-          <string>Left</string>
-         </property>
          <property name="flat">
           <bool>false</bool>
          </property>
@@ -445,68 +427,40 @@ dialog-no-icon: off;
        </item>
        <item>
         <widget class="QSplitter" name="centeralSplitter">
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <property name="lineWidth">
-          <number>1</number>
-         </property>
-         <property name="midLineWidth">
-          <number>0</number>
-         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="handleWidth">
-          <number>4</number>
-         </property>
-         <widget class="QScrollArea" name="scrlVerseByVerse">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
+         <widget class="QFrame" name="frmSidePanel">
           <property name="styleSheet">
-           <string notr="true">*{
-background-color: transparent;
-} 
+           <string notr="true">QFrame#frmSidePanel
+{
+	background: transparent;
+}
 </string>
           </property>
           <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
+           <enum>QFrame::StyledPanel</enum>
           </property>
-          <property name="midLineWidth">
-           <number>0</number>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
           </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <widget class="QWidget" name="scrlVerseCont">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>445</width>
-             <height>869</height>
-            </rect>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>0</number>
            </property>
-           <property name="styleSheet">
-            <string notr="true"/>
+           <property name="leftMargin">
+            <number>0</number>
            </property>
-          </widget>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+          </layout>
          </widget>
          <widget class="QFrame" name="frmPageContent">
           <property name="sizePolicy">
@@ -593,9 +547,6 @@ background-color: transparent;
          <property name="text">
           <string>🡺</string>
          </property>
-         <property name="shortcut">
-          <string>Right</string>
-         </property>
         </widget>
        </item>
       </layout>
@@ -609,7 +560,7 @@ background-color: transparent;
      <x>0</x>
      <y>0</y>
      <width>1392</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuView">
@@ -658,7 +609,7 @@ background-color: transparent;
    <property name="minimumSize">
     <size>
      <width>240</width>
-     <height>203</height>
+     <height>204</height>
     </size>
    </property>
    <property name="maximumSize">
@@ -941,9 +892,6 @@ placeholder-text-color: #c0c0c0;
    <property name="text">
     <string>Preferences</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+P</string>
-   </property>
   </action>
   <action name="actionDownload_manager">
    <property name="icon">
@@ -952,9 +900,6 @@ placeholder-text-color: #c0c0c0;
    </property>
    <property name="text">
     <string>Download manager</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="actionExit">
@@ -966,9 +911,6 @@ placeholder-text-color: #c0c0c0;
    <property name="text">
     <string>Exit</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+Q</string>
-   </property>
   </action>
   <action name="actionFind">
    <property name="icon">
@@ -977,9 +919,6 @@ placeholder-text-color: #c0c0c0;
    </property>
    <property name="text">
     <string>Find</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+F</string>
    </property>
   </action>
   <action name="actionCheck_for_updates">
@@ -990,9 +929,6 @@ placeholder-text-color: #c0c0c0;
   <action name="actionBookmarks">
    <property name="text">
     <string>Bookmarks</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+B</string>
    </property>
   </action>
   <action name="actionAbout_Quran_Companion">
@@ -1014,9 +950,6 @@ placeholder-text-color: #c0c0c0;
   <action name="actionTafsir">
    <property name="text">
     <string>Tafsir</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+T</string>
    </property>
   </action>
   <action name="actionVerse_of_the_day">

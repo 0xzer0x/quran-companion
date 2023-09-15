@@ -12,10 +12,14 @@
 #include <QColorDialog>
 #include <QDialog>
 #include <QIntValidator>
+#include <QKeySequence>
+#include <QKeySequenceEdit>
 #include <QMediaDevices>
 #include <QMessageBox>
 #include <QProcess>
 #include <QSettings>
+#include <QShortcut>
+#include <QStandardItemModel>
 #include <QValidator>
 
 namespace Ui {
@@ -80,6 +84,11 @@ public slots:
    */
   void updateTranslation(int idx);
   /**
+   * @brief update the ::ReaderMode used
+   * @param idx - index of the new ::ReaderMode
+   */
+  void updateReaderMode(int idx);
+  /**
    * @brief Update the QCF font used
    * @param qcfV - qcf version to change to
    */
@@ -105,6 +114,12 @@ public slots:
    * @param size - QString representing the new font size
    */
   void updateSideFontSize(QString size);
+  /**
+   * @brief update the key sequence that trigger the shortcut with the given key
+   * @param key - QString of the shortcut name in the settings file
+   * @param keySequence - QString representation of the key sequence
+   */
+  void updateShortcut(QString key, QString keySequence);
   /**
    * @brief check for changes in all settings and apply new settings if changes
    * are found.
@@ -159,6 +174,13 @@ signals:
    */
   void usedAudioDeviceChanged(QAudioDevice dev);
   /**
+   * @fn shortcutChanged()
+   * @brief signal emitted in order to notify a change in the key sequence of
+   * shortcut
+   * @param key - the key of the changed shortcut
+   */
+  void shortcutChanged(QString key);
+  /**
    * @fn restartApp()
    * @brief signal emitted for changes that require restart to take place.
    */
@@ -171,17 +193,28 @@ protected:
    */
   void closeEvent(QCloseEvent* event);
 
+private slots:
+  void editShortcut(const QModelIndex& index);
+  void setShortcut();
+
 private:
   const int m_qcfVer = Globals::qcfVersion;
   const int m_themeIdx = Globals::themeId;
+  const ReaderMode m_readerMode = Globals::readerMode;
   const QLocale::Language m_languageCode = Globals::language;
   QSettings* const m_settings = Globals::settings;
   const QDir& m_resources = Globals::themeResources;
+  const QMap<QString, QString>& m_shortcutDescription =
+    Globals::shortcutDescription;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
    */
   void setupConnections();
+  /**
+   * @brief generate m_shortcutsModel from the settings group
+   */
+  void populateShortcutsModel();
   /**
    * @brief adds all supported language entries in the langauge combobox.
    */
@@ -191,6 +224,16 @@ private:
    * corresponding variables and updates UI components to match them.
    */
   void setCurrentSettingsAsRef();
+  /**
+   * @brief utility to check whether the given key sequence is available for use
+   * @param keySequence - the key sequence to check
+   * @return
+   */
+  bool shortcutAvailable(QString keySequence);
+  /**
+   * @brief check if any shortcut was changed and updated it
+   */
+  void checkShortcuts();
   /**
    * @brief QCF font size used in constructing Quran page.
    */
@@ -209,7 +252,7 @@ private:
    * @brief DBManager::Translation enum value mapped to the translation index in
    * the combobox.
    */
-  int m_trans;
+  int m_translation;
   /**
    * @brief boolean flag representing the verse of the day option checkbox
    * state.
@@ -230,6 +273,7 @@ private:
    * notify the MainWindow to reload the side content.
    */
   bool m_renderSideContent = false;
+
   /**
    * @brief boolean flag set when QCF font size is changed in order to
    * notify the MainWindow to reload the Quran page.
@@ -241,13 +285,26 @@ private:
    */
   bool m_restartReq = false;
   /**
+   * @brief boolean flag to indicate shortcut conflict checking
+   */
+  bool m_checkingShortcut = false;
+  /**
    * @brief Pointer to access ui elements generated from .ui files.
    */
   Ui::SettingsDialog* ui;
   /**
    * @brief pointer to VersePlayer instance.
    */
-  VersePlayer* m_vPlayerPtr;
+  VersePlayer* m_vPlayerPtr = nullptr;
+  /**
+   * @brief pointer to widget used for grabbing key combination entered to set
+   * as shortcut
+   */
+  QKeySequenceEdit* m_keySeqEdit = nullptr;
+  /**
+   * @brief model used by the shortcuts QTableView
+   */
+  QStandardItemModel m_shortcutsModel;
   /**
    * @brief QList for all available audio output devices on the system.
    */

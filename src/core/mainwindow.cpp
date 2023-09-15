@@ -10,7 +10,8 @@
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
-  , m_process{ new QProcess(this) }
+  , m_process(new QProcess(this))
+  , m_shortcutHandler(new ShortcutHandler(this))
 {
   ui->setupUi(this);
   ui->menuView->addAction(ui->sideDock->toggleViewAction());
@@ -25,12 +26,13 @@ MainWindow::MainWindow(QWidget* parent)
     restoreState(m_settings->value("WindowState").toByteArray());
 
   // connectors
+  setupShortcuts();
   setupConnections();
   setupSurahsDock();
   setupMenubarToggle();
   this->show();
 
-  m_notifyMgr->setTooltip("Quran Companion");
+  m_notifyMgr->setTooltip(tr("Quran Companion"));
   if (m_settings->value("VOTD").toBool())
     m_notifyMgr->checkDailyVerse();
 
@@ -69,21 +71,436 @@ MainWindow::loadSettings()
 }
 
 void
+MainWindow::loadReader()
+{
+  if (m_readerMode == ReaderMode::singlePage) {
+    m_activeQuranBrowser = m_quranBrowsers[0] =
+      new QuranPageBrowser(ui->frmPageContent, m_currVerse.page);
+
+    QWidget* scrollWidget = new QWidget();
+    QVBoxLayout* vbl = new QVBoxLayout();
+    vbl->setDirection(QBoxLayout::BottomToTop);
+    scrollWidget->setLayout(vbl);
+
+    m_scrlVerseByVerse = new QScrollArea;
+    m_scrlVerseByVerse->setWidget(scrollWidget);
+    m_scrlVerseByVerse->setWidgetResizable(true);
+    m_scrlVerseByVerse->setStyleSheet("* { background: transparent }");
+
+    ui->frmSidePanel->layout()->addWidget(m_scrlVerseByVerse);
+    ui->centeralSplitter->setStretchFactor(0, 1);
+    ui->centeralSplitter->setStretchFactor(1, 0);
+  }
+
+  else {
+    // even Quran pages are always on the left side
+    if (m_currVerse.page % 2 == 0) {
+      m_quranBrowsers[0] =
+        new QuranPageBrowser(ui->frmPageContent, m_currVerse.page - 1);
+      m_activeQuranBrowser = m_quranBrowsers[1] =
+        new QuranPageBrowser(ui->frmSidePanel, m_currVerse.page);
+
+    } else {
+      m_activeQuranBrowser = m_quranBrowsers[0] =
+        new QuranPageBrowser(ui->frmPageContent, m_currVerse.page);
+      m_quranBrowsers[1] =
+        new QuranPageBrowser(ui->frmSidePanel, m_currVerse.page + 1);
+    }
+
+    ui->frmSidePanel->layout()->addWidget(m_quranBrowsers[1]);
+    ui->centeralSplitter->insertWidget(0, new QWidget);
+    ui->centeralSplitter->addWidget(new QWidget);
+
+    ui->centeralSplitter->setStretchFactor(0, 5);
+    ui->centeralSplitter->setStretchFactor(1, 0);
+    ui->centeralSplitter->setStretchFactor(2, 0);
+    ui->centeralSplitter->setStretchFactor(3, 5);
+
+    ui->centeralSplitter->setHandleWidth(0);
+    for (int i = 0; i < 4; i++)
+      ui->centeralSplitter->handle(i)->setEnabled(false);
+  }
+
+  ui->frmPageContent->layout()->addWidget(m_quranBrowsers[0]);
+}
+
+void
+MainWindow::checkForUpdates()
+{
+  QFileInfo tool(m_updateToolPath);
+  if (tool.exists()) {
+    m_process->setWorkingDirectory(QApplication::applicationDirPath());
+    m_process->start(m_updateToolPath, QStringList("ch"));
+  } else {
+    m_downManPtr->getLatestVersion();
+  }
+}
+
+void
+MainWindow::updateProcessCallback()
+{
+  QString output = m_process->readAll();
+  QString displayText;
+
+  if (output.contains("There are currently no updates available.")) {
+    displayText = tr("There are currently no updates available.");
+
+    if (this->isVisible())
+      QMessageBox::information(this, tr("Update info"), displayText);
+    else
+      m_notifyMgr->notify(tr("Update info"), displayText);
+  }
+
+  else {
+    displayText = tr("Updates available, do you want to open the update tool?");
+    if (this->isVisible()) {
+      QMessageBox::StandardButton btn =
+        QMessageBox::question(this, tr("Updates info"), displayText);
+      if (btn == QMessageBox::Yes)
+        m_process->startDetached(m_updateToolPath);
+    }
+
+    else {
+      m_notifyMgr->notify(
+        tr("Update info"),
+        tr("Updates are available, use the maintainance tool to install "
+           "the latest updates."));
+    }
+  }
+}
+
+void
+MainWindow::setupShortcuts()
+{
+  connect(m_shortcutHandler,
+          &ShortcutHandler::toggleMenubar,
+          this,
+          &MainWindow::toggleMenubar,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::toggleNavDock,
+          this,
+          &MainWindow::toggleNavDock,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::togglePlayback,
+          this,
+          &MainWindow::togglePlayback,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::incrementVolume,
+          this,
+          &MainWindow::incrementVolume,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::decrementVolume,
+          this,
+          &MainWindow::decrementVolume,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::bookmarkCurrent,
+          this,
+          &MainWindow::addCurrentToBookmarks,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::nextPage,
+          this,
+          &MainWindow::btnNextClicked,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::prevPage,
+          this,
+          &MainWindow::btnPrevClicked,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::nextVerse,
+          this,
+          &MainWindow::nextVerse,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::prevVerse,
+          this,
+          &MainWindow::prevVerse,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::nextJuz,
+          this,
+          &MainWindow::nextJuz,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::prevJuz,
+          this,
+          &MainWindow::prevJuz,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::nextSurah,
+          this,
+          &MainWindow::nextSurah,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::prevSurah,
+          this,
+          &MainWindow::prevSurah,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openDownloads,
+          this,
+          &MainWindow::actionDMTriggered,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openBookmarks,
+          this,
+          &MainWindow::actionBookmarksTriggered,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openSearch,
+          this,
+          &MainWindow::actionSearchTriggered,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openSettings,
+          this,
+          &MainWindow::actionPrefTriggered,
+          Qt::UniqueConnection);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openTafsir,
+          this,
+          &MainWindow::actionTafsirTriggered,
+          Qt::UniqueConnection);
+}
+
+void
+MainWindow::setupConnections()
+{
+
+  /* ------------------ UI connectors ------------------ */
+
+  // ########## Menubar ########## //
+  connect(ui->actionExit, &QAction::triggered, this, &QApplication::exit);
+  connect(ui->actionPereferences,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionPrefTriggered,
+          Qt::UniqueConnection);
+  connect(ui->actionDownload_manager,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionDMTriggered,
+          Qt::UniqueConnection);
+  connect(ui->actionFind,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionSearchTriggered,
+          Qt::UniqueConnection);
+  connect(ui->actionTafsir,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionTafsirTriggered,
+          Qt::UniqueConnection);
+  connect(ui->actionVerse_of_the_day,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionVotdTriggered,
+          Qt::UniqueConnection);
+  connect(ui->actionCheck_for_updates,
+          &QAction::triggered,
+          this,
+          &MainWindow::checkForUpdates,
+          Qt::UniqueConnection);
+  connect(m_process,
+          &QProcess::finished,
+          this,
+          &MainWindow::updateProcessCallback,
+          Qt::UniqueConnection);
+  connect(ui->actionBookmarks,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionBookmarksTriggered,
+          Qt::UniqueConnection);
+  connect(ui->actionAbout_Quran_Companion,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionAboutTriggered,
+          Qt::UniqueConnection);
+
+  // ########## Quran page ########## //
+  connect(m_quranBrowsers[0],
+          &QTextBrowser::anchorClicked,
+          this,
+          &MainWindow::verseAnchorClicked);
+  if (m_quranBrowsers[1]) {
+    connect(m_quranBrowsers[1],
+            &QTextBrowser::anchorClicked,
+            this,
+            &MainWindow::verseAnchorClicked);
+  }
+
+  // ########## page controls ########## //
+  connect(ui->btnNext,
+          &QPushButton::clicked,
+          this,
+          &MainWindow::btnNextClicked,
+          Qt::UniqueConnection);
+  connect(ui->btnPrev,
+          &QPushButton::clicked,
+          this,
+          &MainWindow::btnPrevClicked,
+          Qt::UniqueConnection);
+  connect(ui->cmbPage,
+          &QComboBox::currentIndexChanged,
+          this,
+          &MainWindow::cmbPageChanged,
+          Qt::UniqueConnection);
+  connect(ui->cmbVerse,
+          &QComboBox::currentIndexChanged,
+          this,
+          &MainWindow::cmbVerseChanged,
+          Qt::UniqueConnection);
+  connect(ui->cmbJuz,
+          &QComboBox::currentIndexChanged,
+          this,
+          &MainWindow::cmbJuzChanged,
+          Qt::UniqueConnection);
+  connect(m_player,
+          &VersePlayer::missingVerseFile,
+          this,
+          &MainWindow::missingRecitationFileWarn,
+          Qt::UniqueConnection);
+
+  // ########## navigation dock ########## //
+  connect(ui->lineEditSearchSurah,
+          &QLineEdit::textChanged,
+          this,
+          &MainWindow::searchSurahTextChanged,
+          Qt::UniqueConnection);
+  connect(ui->listViewSurahs,
+          &QListView::clicked,
+          this,
+          &MainWindow::listSurahNameClicked,
+          Qt::UniqueConnection);
+
+  // ########## audio slider ########## //
+  connect(m_player,
+          &QMediaPlayer::positionChanged,
+          this,
+          &MainWindow::mediaPosChanged,
+          Qt::UniqueConnection);
+  connect(m_player,
+          &QMediaPlayer::playbackStateChanged,
+          this,
+          &MainWindow::mediaStateChanged,
+          Qt::UniqueConnection);
+  connect(ui->sldrAudioPlayer,
+          &QSlider::sliderMoved,
+          m_player,
+          &QMediaPlayer::setPosition,
+          Qt::UniqueConnection);
+  connect(ui->sldrVolume,
+          &QSlider::valueChanged,
+          this,
+          &MainWindow::volumeSliderValueChanged,
+          Qt::UniqueConnection);
+
+  // ########## player control ########## //
+  connect(m_player,
+          &QMediaPlayer::mediaStatusChanged,
+          this,
+          &MainWindow::mediaStatusChanged,
+          Qt::UniqueConnection);
+  connect(ui->btnPlay,
+          &QPushButton::clicked,
+          this,
+          &MainWindow::btnPlayClicked,
+          Qt::UniqueConnection);
+  connect(ui->btnPause,
+          &QPushButton::clicked,
+          this,
+          &MainWindow::btnPauseClicked,
+          Qt::UniqueConnection);
+  connect(ui->btnStop,
+          &QPushButton::clicked,
+          this,
+          &MainWindow::btnStopClicked,
+          Qt::UniqueConnection);
+  connect(ui->cmbReciter,
+          &QComboBox::currentIndexChanged,
+          m_player,
+          &VersePlayer::changeReciter,
+          Qt::UniqueConnection);
+
+  // ########## system tray ########## //
+  connect(m_notifyMgr, &NotificationManager::exit, this, &QApplication::exit);
+  connect(m_notifyMgr,
+          &NotificationManager::togglePlayback,
+          this,
+          &MainWindow::togglePlayback,
+          Qt::UniqueConnection);
+  connect(m_notifyMgr,
+          &NotificationManager::showWindow,
+          this,
+          &MainWindow::show,
+          Qt::UniqueConnection);
+  connect(m_notifyMgr,
+          &NotificationManager::hideWindow,
+          this,
+          &MainWindow::hide,
+          Qt::UniqueConnection);
+  connect(m_notifyMgr,
+          &NotificationManager::checkForUpdates,
+          this,
+          &MainWindow::checkForUpdates,
+          Qt::UniqueConnection);
+  connect(m_notifyMgr,
+          &NotificationManager::openAbout,
+          this,
+          &MainWindow::actionAboutTriggered,
+          Qt::UniqueConnection);
+  connect(m_notifyMgr,
+          &NotificationManager::showVOTDmessagebox,
+          this,
+          &MainWindow::showVOTDmessage,
+          Qt::UniqueConnection);
+  connect(m_notifyMgr,
+          &NotificationManager::openPrefs,
+          this,
+          &MainWindow::actionPrefTriggered,
+          Qt::UniqueConnection);
+
+  // ########## Notification Popup ########## //
+  connect(ui->sideDock,
+          &QDockWidget::dockLocationChanged,
+          m_popup,
+          &NotificationPopup::dockLocationChanged,
+          Qt::UniqueConnection);
+  connect(m_downManPtr,
+          &DownloadManager::downloadComplete,
+          m_popup,
+          &NotificationPopup::completedDownload,
+          Qt::UniqueConnection);
+  connect(m_downManPtr,
+          &DownloadManager::downloadError,
+          m_popup,
+          &NotificationPopup::downloadError,
+          Qt::UniqueConnection);
+  connect(m_downManPtr,
+          &DownloadManager::latestVersionFound,
+          m_popup,
+          &NotificationPopup::checkUpdate,
+          Qt::UniqueConnection);
+}
+
+void
 MainWindow::init()
 {
-  // initalization
-  m_dbMgr = new DBManager(this);
-  m_quranBrowser =
-    new QuranPageBrowser(ui->frmPageContent, m_dbMgr, m_currVerse.page);
-  m_player = new VersePlayer(
-    this, m_dbMgr, m_currVerse, m_settings->value("Reciter", 0).toInt());
-  m_popup = new NotificationPopup(this, m_dbMgr);
-  m_downManPtr = new DownloadManager(this, m_dbMgr);
+  m_player =
+    new VersePlayer(this, m_currVerse, m_settings->value("Reciter", 0).toInt());
+  m_popup = new NotificationPopup(this);
+  m_downManPtr = new DownloadManager(this);
 
-  ui->frmPageContent->layout()->addWidget(m_quranBrowser);
+  loadReader();
 
   ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
-  m_notifyMgr = new NotificationManager(this, m_dbMgr);
+  m_notifyMgr = new NotificationManager(this);
 
   updateLoadedTafsir();
   updateLoadedTranslation();
@@ -92,16 +509,14 @@ MainWindow::init()
   redrawQuranPage(true);
   setVerseComboBoxRange(true);
 
-  QVBoxLayout* vbl = new QVBoxLayout();
-  vbl->setDirection(QBoxLayout::BottomToTop);
-  ui->scrlVerseCont->setLayout(vbl);
-  addSideContent();
+  if (m_readerMode == ReaderMode::singlePage)
+    addSideContent();
 
   for (int i = 1; i < 605; i++) {
     ui->cmbPage->addItem(QString::number(i));
   }
 
-  foreach (Reciter r, m_recitersList) {
+  foreach (const Reciter& r, m_recitersList) {
     ui->cmbReciter->addItem(r.displayName);
   }
 
@@ -161,327 +576,113 @@ MainWindow::setupMenubarToggle()
           });
 }
 
-void
-MainWindow::setupConnections()
+bool
+MainWindow::areNeighbors(int page1, int page2)
 {
-  QShortcut* spaceKey = new QShortcut(Qt::Key_Space, this);
-  QShortcut* ctrlShiftB = new QShortcut(QKeySequence("Ctrl+Shift+B"), this);
-  spaceKey->setContext(Qt::ApplicationShortcut);
-  ctrlShiftB->setContext(Qt::ApplicationShortcut);
-
-  /* ------------------ UI connectors ------------------ */
-
-  // ########## Shortcuts ########## //
-  connect(spaceKey,
-          &QShortcut::activated,
-          this,
-          &MainWindow::spaceKeyPressed,
-          Qt::UniqueConnection);
-  connect(ctrlShiftB,
-          &QShortcut::activated,
-          this,
-          &MainWindow::addCurrentToBookmarks,
-          Qt::UniqueConnection);
-
-  // ########## Menubar ########## //
-  connect(ui->actionExit, &QAction::triggered, this, &QApplication::exit);
-  connect(ui->actionPereferences,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionPrefTriggered,
-          Qt::UniqueConnection);
-  connect(ui->actionDownload_manager,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionDMTriggered,
-          Qt::UniqueConnection);
-  connect(ui->actionFind,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionSearchTriggered,
-          Qt::UniqueConnection);
-  connect(ui->actionTafsir,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionTafsirTriggered,
-          Qt::UniqueConnection);
-  connect(ui->actionVerse_of_the_day,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionVotdTriggered,
-          Qt::UniqueConnection);
-  connect(ui->actionCheck_for_updates,
-          &QAction::triggered,
-          this,
-          &MainWindow::checkForUpdates,
-          Qt::UniqueConnection);
-  connect(m_process,
-          &QProcess::finished,
-          this,
-          &MainWindow::updateProcessCallback,
-          Qt::UniqueConnection);
-  connect(ui->actionBookmarks,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionBookmarksTriggered,
-          Qt::UniqueConnection);
-  connect(ui->actionAbout_Quran_Companion,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionAboutTriggered,
-          Qt::UniqueConnection);
-
-  // ########## Quran page ########## //
-  connect(m_quranBrowser,
-          &QTextBrowser::anchorClicked,
-          this,
-          &MainWindow::verseAnchorClicked);
-  connect(m_quranBrowser,
-          &QuranPageBrowser::copyVerse,
-          this,
-          &MainWindow::copyVerseText);
-
-  // ########## page controls ########## //
-  connect(ui->btnNext,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::nextPage,
-          Qt::UniqueConnection);
-  connect(ui->btnPrev,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::prevPage,
-          Qt::UniqueConnection);
-  connect(ui->cmbPage,
-          &QComboBox::currentIndexChanged,
-          this,
-          &MainWindow::cmbPageChanged,
-          Qt::UniqueConnection);
-  connect(ui->cmbVerse,
-          &QComboBox::currentIndexChanged,
-          this,
-          &MainWindow::cmbVerseChanged,
-          Qt::UniqueConnection);
-  connect(ui->cmbJuz,
-          &QComboBox::currentIndexChanged,
-          this,
-          &MainWindow::cmbJuzChanged,
-          Qt::UniqueConnection);
-  connect(m_player,
-          &VersePlayer::surahChanged,
-          this,
-          &MainWindow::updateSurah,
-          Qt::UniqueConnection);
-  connect(m_player,
-          &VersePlayer::verseNoChanged,
-          this,
-          &MainWindow::activeVerseChanged,
-          Qt::UniqueConnection);
-  connect(m_player,
-          &VersePlayer::missingVerseFile,
-          this,
-          &MainWindow::missingRecitationFileWarn,
-          Qt::UniqueConnection);
-
-  // ########## navigation dock ########## //
-  connect(ui->lineEditSearchSurah,
-          &QLineEdit::textChanged,
-          this,
-          &MainWindow::searchSurahTextChanged,
-          Qt::UniqueConnection);
-  connect(ui->listViewSurahs,
-          &QListView::clicked,
-          this,
-          &MainWindow::listSurahNameClicked,
-          Qt::UniqueConnection);
-
-  // ########## audio slider ########## //
-  connect(m_player,
-          &QMediaPlayer::positionChanged,
-          this,
-          &MainWindow::mediaPosChanged,
-          Qt::UniqueConnection);
-  connect(m_player,
-          &QMediaPlayer::playbackStateChanged,
-          this,
-          &MainWindow::mediaStateChanged,
-          Qt::UniqueConnection);
-  connect(ui->sldrAudioPlayer,
-          &QSlider::sliderMoved,
-          m_player,
-          &QMediaPlayer::setPosition,
-          Qt::UniqueConnection);
-  connect(ui->sldrVolume,
-          &QSlider::valueChanged,
-          this,
-          &MainWindow::volumeSliderValueChanged,
-          Qt::UniqueConnection);
-
-  // ########## player control ########## //
-  connect(ui->btnPlay,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::btnPlayClicked,
-          Qt::UniqueConnection);
-  connect(ui->btnPause,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::btnPauseClicked,
-          Qt::UniqueConnection);
-  connect(ui->btnStop,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::btnStopClicked,
-          Qt::UniqueConnection);
-  connect(ui->cmbReciter,
-          &QComboBox::currentIndexChanged,
-          m_player,
-          &VersePlayer::changeReciter,
-          Qt::UniqueConnection);
-
-  // ########## system tray ########## //
-  connect(m_player,
-          &QMediaPlayer::playbackStateChanged,
-          this,
-          &MainWindow::updateTrayTooltip,
-          Qt::UniqueConnection);
-  connect(m_notifyMgr, &NotificationManager::exit, this, &QApplication::exit);
-  connect(m_notifyMgr,
-          &NotificationManager::togglePlayback,
-          this,
-          &MainWindow::spaceKeyPressed,
-          Qt::UniqueConnection);
-  connect(m_notifyMgr,
-          &NotificationManager::showWindow,
-          this,
-          &MainWindow::show,
-          Qt::UniqueConnection);
-  connect(m_notifyMgr,
-          &NotificationManager::hideWindow,
-          this,
-          &MainWindow::hide,
-          Qt::UniqueConnection);
-  connect(m_notifyMgr,
-          &NotificationManager::checkForUpdates,
-          this,
-          &MainWindow::checkForUpdates,
-          Qt::UniqueConnection);
-  connect(m_notifyMgr,
-          &NotificationManager::openAbout,
-          this,
-          &MainWindow::actionAboutTriggered,
-          Qt::UniqueConnection);
-  connect(m_notifyMgr,
-          &NotificationManager::showVOTDmessagebox,
-          this,
-          &MainWindow::showVOTDmessage,
-          Qt::UniqueConnection);
-  connect(m_notifyMgr,
-          &NotificationManager::openPrefs,
-          this,
-          &MainWindow::actionPrefTriggered,
-          Qt::UniqueConnection);
-
-  // ########## Notification Popup ########## //
-  connect(ui->sideDock,
-          &QDockWidget::dockLocationChanged,
-          m_popup,
-          &NotificationPopup::dockLocationChanged,
-          Qt::UniqueConnection);
-  connect(m_downManPtr,
-          &DownloadManager::downloadComplete,
-          m_popup,
-          &NotificationPopup::completedDownload,
-          Qt::UniqueConnection);
-  connect(m_downManPtr,
-          &DownloadManager::downloadError,
-          m_popup,
-          &NotificationPopup::downloadError,
-          Qt::UniqueConnection);
-  connect(m_downManPtr,
-          &DownloadManager::latestVersionFound,
-          m_popup,
-          &NotificationPopup::checkUpdate,
-          Qt::UniqueConnection);
+  return page1 % 2 != 0 && page2 % 2 == 0 && page2 == page1 + 1;
 }
 
 void
-MainWindow::checkForUpdates()
+MainWindow::switchActivePage()
 {
-  QFileInfo tool(m_updateToolPath);
-  if (tool.exists()) {
-    m_process->setWorkingDirectory(QApplication::applicationDirPath());
-    m_process->start(m_updateToolPath, QStringList("ch"));
+  if (!m_quranBrowsers[1])
+    return;
+
+  m_activeQuranBrowser->resetHighlight();
+  if (m_activeQuranBrowser == m_quranBrowsers[0]) {
+    m_activeQuranBrowser = m_quranBrowsers[1];
+    m_activeVList = &m_vLists[1];
   } else {
-    m_downManPtr->getLatestVersion();
+    m_activeQuranBrowser = m_quranBrowsers[0];
+    m_activeVList = &m_vLists[0];
   }
 }
 
 void
-MainWindow::updateProcessCallback()
+MainWindow::btnNextClicked()
 {
-  QString output = m_process->readAll();
-  QString displayText;
-
-  if (output.contains("There are currently no updates available.")) {
-    displayText = tr("There are currently no updates available.");
-
-    if (this->isVisible())
-      QMessageBox::information(this, tr("Update info"), displayText);
-    else
-      m_notifyMgr->notify(tr("Update info"), displayText);
-  }
-
-  else {
-    displayText = tr("Updates available, do you want to open the update tool?");
-    if (this->isVisible()) {
-      QMessageBox::StandardButton btn =
-        QMessageBox::question(this, tr("Updates info"), displayText);
-      if (btn == QMessageBox::Yes)
-        m_process->startDetached(m_updateToolPath);
-    }
-
-    else {
-      m_notifyMgr->notify(
-        tr("Update info"),
-        tr("Updates are available, use the maintainance tool to install "
-           "the latest updates."));
-    }
-  }
+  if (m_readerMode == ReaderMode::singlePage || m_currVerse.page % 2 == 0)
+    nextPage(1);
+  else
+    nextPage(2);
 }
 
 void
-MainWindow::updateSurah()
+MainWindow::btnPrevClicked()
+{
+  if (m_readerMode == ReaderMode::singlePage || m_currVerse.page % 2 != 0)
+    prevPage(1);
+  else
+    prevPage(2);
+}
+
+void
+MainWindow::selectVerse(int browserIdx, int IdxInPage)
+{
+  if (m_activeQuranBrowser != m_quranBrowsers[browserIdx])
+    switchActivePage();
+
+  const Verse& v = m_vLists[browserIdx].at(IdxInPage);
+  int currSurah = m_currVerse.surah;
+  m_currVerse = v;
+  m_player->setVerse(m_currVerse);
+  if (currSurah != v.surah) {
+    setVerseComboBoxRange();
+    syncSelectedSurah();
+  } else
+    setCmbVerseIdx(v.number - 1);
+
+  setCmbPageIdx(v.page - 1);
+  setCmbJuzIdx(m_dbMgr->getJuzOfPage(v.page) - 1);
+}
+
+void
+MainWindow::updateSurahVerseCount()
+{
+
+  m_surahCount = m_dbMgr->getSurahVerseCount(m_currVerse.surah);
+}
+
+QModelIndex
+MainWindow::syncSelectedSurah()
 {
   QItemSelectionModel* select = ui->listViewSurahs->selectionModel();
   select->clearSelection();
-  QModelIndex surah = m_surahListModel.index(m_player->activeVerse().surah - 1);
+  QModelIndex surah = m_surahListModel.index(m_currVerse.surah - 1);
   select->select(surah,
                  QItemSelectionModel::Rows | QItemSelectionModel::Select);
   ui->listViewSurahs->scrollTo(surah, QAbstractItemView::PositionAtCenter);
-  if (m_player->activeVerse().surah != m_currVerse.surah) {
-    navigateToSurah(surah);
-  }
+
+  return surah;
 }
 
 void
 MainWindow::updatePageVerseInfoList()
 {
-  m_vInfoList = m_dbMgr->getVerseInfoList(m_currVerse.page);
+  if (m_activeQuranBrowser == m_quranBrowsers[0]) {
+    m_vLists[0] = m_dbMgr->getVerseInfoList(m_currVerse.page);
+    if (m_readerMode == doublePage)
+      m_vLists[1] = m_dbMgr->getVerseInfoList(m_currVerse.page + 1);
+
+    m_activeVList = &m_vLists[0];
+
+  } else {
+    m_vLists[0] = m_dbMgr->getVerseInfoList(m_currVerse.page - 1);
+    m_vLists[1] = m_dbMgr->getVerseInfoList(m_currVerse.page);
+
+    m_activeVList = &m_vLists[1];
+  }
 }
 
 void
 MainWindow::setVerseToStartOfPage()
 {
   // set the current verse to the verse at the top of the page
-  m_currVerse = m_vInfoList.at(0);
-
-  if (m_player->activeVerse() != m_currVerse) {
-    // update the player active verse
-    m_player->setVerse(m_currVerse);
-    // open newly set verse recitation file
-    m_player->loadActiveVerse();
-  }
+  m_currVerse = m_activeVList->at(0);
+  // update the player active verse
+  m_player->setVerse(m_currVerse);
+  // open newly set verse recitation file
+  m_player->loadActiveVerse();
 }
 
 void
@@ -495,6 +696,10 @@ MainWindow::setCmbPageIdx(int idx)
 void
 MainWindow::setCmbVerseIdx(int idx)
 {
+  // idx == -1 if playing basmallah, therefore highlight 1st verse
+  if (idx < 0)
+    idx = 0;
+
   m_internalVerseChange = true;
   ui->cmbVerse->setCurrentIndex(idx);
   m_internalVerseChange = false;
@@ -511,19 +716,18 @@ MainWindow::setCmbJuzIdx(int idx)
 void
 MainWindow::setVerseComboBoxRange(bool forceUpdate)
 {
-  int oldCount = m_player->surahCount();
-  m_player->updateSurahVerseCount();
-  int updatedCount = m_player->surahCount();
+  int oldCount = m_surahCount;
+  updateSurahVerseCount();
 
-  if (updatedCount != oldCount || forceUpdate) {
+  if (m_surahCount != oldCount || forceUpdate) {
     if (m_verseValidator != nullptr)
       delete m_verseValidator;
-    m_verseValidator = new QIntValidator(1, updatedCount, ui->cmbVerse);
+    m_verseValidator = new QIntValidator(1, m_surahCount, ui->cmbVerse);
 
     // updates values in the combobox with the current surah verses
     ui->cmbVerse->clear();
     m_internalVerseChange = true;
-    for (int i = 1; i <= updatedCount; i++)
+    for (int i = 1; i <= m_surahCount; i++)
       ui->cmbVerse->addItem(QString::number(i), i);
     m_internalVerseChange = false;
 
@@ -534,33 +738,67 @@ MainWindow::setVerseComboBoxRange(bool forceUpdate)
 }
 
 void
-MainWindow::gotoPage(int page, bool automaticFlip)
+MainWindow::gotoPage(int page, bool updateElements, bool automaticFlip)
+{
+  m_activeQuranBrowser->resetHighlight();
+
+  if (!automaticFlip)
+    m_player->stop();
+
+  if (m_activeQuranBrowser->page() != page) {
+    if (m_readerMode == ReaderMode::singlePage)
+      gotoSinglePage(page);
+    else
+      gotoDoublePage(page);
+  }
+
+  if (updateElements) {
+    setVerseToStartOfPage();
+    syncSelectedSurah();
+    setVerseComboBoxRange();
+    setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
+    setCmbPageIdx(m_currVerse.page - 1);
+  }
+}
+
+void
+MainWindow::gotoSinglePage(int page)
 {
   m_currVerse.page = page;
   redrawQuranPage();
 
-  if (!automaticFlip)
-    btnStopClicked();
-  else {
-    m_endOfPage = false;
-    setVerseToStartOfPage();
-    updateSurah();
-    setVerseComboBoxRange();
-  }
-
-  setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
+  m_currVerse = m_activeVList->at(0);
   addSideContent();
 }
 
 void
-MainWindow::nextPage()
+MainWindow::gotoDoublePage(int page)
+{
+  int currPage = m_currVerse.page;
+  m_currVerse.page = page;
+
+  int pageBrowerIdx = page % 2 == 0;
+
+  if (areNeighbors(currPage, page) || areNeighbors(page, currPage))
+    switchActivePage();
+  else {
+    m_activeQuranBrowser = m_quranBrowsers[pageBrowerIdx];
+    redrawQuranPage();
+  }
+}
+
+void
+MainWindow::nextPage(int step)
 {
   bool keepPlaying = m_player->playbackState() == QMediaPlayer::PlayingState;
-  if (m_currVerse.page < 604) {
-    setCmbPageIdx(m_currVerse.page);
-    gotoPage(m_currVerse.page + 1, true);
+  if (m_currVerse.page + step <= 604) {
+    setCmbPageIdx(m_currVerse.page + step - 1);
 
-    ui->scrlVerseByVerse->verticalScrollBar()->setValue(0);
+    gotoPage(m_currVerse.page + step, true, true);
+
+    if (m_readerMode == ReaderMode::singlePage)
+      m_scrlVerseByVerse->verticalScrollBar()->setValue(0);
+
     // if the page is flipped automatically, resume playback
     if (keepPlaying) {
       m_player->play();
@@ -570,14 +808,17 @@ MainWindow::nextPage()
 }
 
 void
-MainWindow::prevPage()
+MainWindow::prevPage(int step)
 {
   bool keepPlaying = m_player->playbackState() == QMediaPlayer::PlayingState;
-  if (m_currVerse.page > 1) {
-    setCmbPageIdx(m_currVerse.page - 2);
-    gotoPage(m_currVerse.page - 1, true);
+  if (m_currVerse.page - step >= 1) {
+    setCmbPageIdx(m_currVerse.page - step - 1);
 
-    ui->scrlVerseByVerse->verticalScrollBar()->setValue(0);
+    gotoPage(m_currVerse.page - step, true, true);
+
+    if (m_readerMode == ReaderMode::singlePage)
+      m_scrlVerseByVerse->verticalScrollBar()->setValue(0);
+
     if (keepPlaying) {
       m_player->play();
       highlightCurrentVerse();
@@ -589,24 +830,22 @@ void
 MainWindow::gotoSurah(int surahIdx)
 {
   // getting surah index
-  m_currVerse.page = m_dbMgr->getSurahStartPage(surahIdx);
-  m_currVerse.surah = surahIdx;
-  m_currVerse.number = 1;
+  int page = m_dbMgr->getSurahStartPage(surahIdx);
+  gotoPage(page, false);
 
-  // setting up the page of verse 1
-  redrawQuranPage();
-  addSideContent();
+  m_currVerse.page = page;
+  m_currVerse.surah = surahIdx;
+  m_currVerse.number = surahIdx == 9 || surahIdx == 1 ? 1 : 0;
 
   // syncing the player & playing basmalah
   m_player->setVerse(m_currVerse);
-  m_player->playBasmalah();
-  highlightCurrentVerse();
+  m_player->playCurrentVerse();
 
+  highlightCurrentVerse();
   setCmbPageIdx(m_currVerse.page - 1);
   setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
   setVerseComboBoxRange();
-
-  m_endOfPage = false;
+  syncSelectedSurah();
 }
 
 void
@@ -614,7 +853,7 @@ MainWindow::searchSurahTextChanged(const QString& arg1)
 {
   if (arg1.isEmpty()) {
     m_surahListModel.setStringList(m_surahList);
-    updateSurah();
+    syncSelectedSurah();
   } else {
     QList<int> suggestions = m_dbMgr->searchSurahNames(arg1);
     QStringList res;
@@ -628,13 +867,7 @@ MainWindow::searchSurahTextChanged(const QString& arg1)
 void
 MainWindow::listSurahNameClicked(const QModelIndex& index)
 {
-  int s = 0;
-  for (int i = 0; i < 114; i++) {
-    if (m_surahList.at(i) == index.data().toString()) {
-      s = i + 1;
-      break;
-    }
-  }
+  int s = m_surahList.indexOf(index.data().toString()) + 1;
   gotoSurah(s);
 }
 
@@ -661,21 +894,21 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   }
 
   int verse = newVerseIdx + 1;
-  m_currVerse.page = m_dbMgr->getVersePage(m_currVerse.surah, verse);
+  int page = m_dbMgr->getVersePage(m_currVerse.surah, verse);
+
+  if (page != m_currVerse.page)
+    gotoPage(page, false);
+
+  m_currVerse.page = page;
   m_currVerse.number = verse;
+  highlightCurrentVerse();
 
-  redrawQuranPage();
+  setCmbPageIdx(page - 1);
+  setCmbJuzIdx(m_dbMgr->getJuzOfPage(page) - 1);
 
-  // update the player surah & verse
-  m_player->setVerse(m_currVerse);
   // open newly set verse recitation file
+  m_player->setVerse(m_currVerse);
   m_player->loadActiveVerse();
-
-  setCmbPageIdx(m_currVerse.page - 1);
-  setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
-
-  addSideContent();
-  m_endOfPage = false;
 }
 
 void
@@ -685,12 +918,12 @@ MainWindow::cmbJuzChanged(int newJuzIdx)
     qDebug() << "Internal jozz change";
     return;
   }
-
-  gotoPage(m_dbMgr->getJuzStartPage(newJuzIdx + 1));
+  int page = m_dbMgr->getJuzStartPage(newJuzIdx + 1);
+  gotoPage(page);
 }
 
 void
-MainWindow::spaceKeyPressed()
+MainWindow::togglePlayback()
 {
   if (m_player->playbackState() == QMediaPlayer::PlayingState) {
     btnPauseClicked();
@@ -708,12 +941,6 @@ MainWindow::btnPauseClicked()
 void
 MainWindow::btnPlayClicked()
 {
-  // If now playing the last verse in the page, set the flag to flip the page
-  if (m_currVerse == m_vInfoList.last() &&
-      m_currVerse.number != m_player->surahCount()) {
-    m_endOfPage = true;
-  }
-
   highlightCurrentVerse();
   m_player->play();
 }
@@ -723,13 +950,16 @@ MainWindow::btnStopClicked()
 {
   m_player->stop();
   setVerseToStartOfPage();
-
-  m_internalSurahChange = true;
-  updateSurah();
+  syncSelectedSurah();
   setVerseComboBoxRange();
-  m_internalSurahChange = false;
+}
 
-  m_endOfPage = false;
+void
+MainWindow::mediaStatusChanged(QMediaPlayer::MediaStatus status)
+{
+  if (status == QMediaPlayer::EndOfMedia) {
+    nextVerse();
+  }
 }
 
 void
@@ -748,6 +978,19 @@ MainWindow::mediaStateChanged(QMediaPlayer::PlaybackState state)
     ui->btnPause->setEnabled(false);
     ui->btnStop->setEnabled(false);
   }
+
+  updateTrayTooltip(state);
+}
+
+void
+MainWindow::updateTrayTooltip(QMediaPlayer::PlaybackState state)
+{
+  if (state == QMediaPlayer::PlayingState) {
+    m_notifyMgr->setTooltip(tr("Now playing: ") + m_player->reciterName() +
+                            " - " + tr("Surah ") +
+                            m_dbMgr->getSurahName(m_currVerse.surah));
+  } else
+    m_notifyMgr->setTooltip(tr("Quran Companion"));
 }
 
 void
@@ -801,30 +1044,6 @@ MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 }
 
 void
-MainWindow::activeVerseChanged()
-{
-  m_currVerse = { m_currVerse.page,
-                  m_player->activeVerse().surah,
-                  m_player->activeVerse().number };
-
-  if (m_currVerse.number == 0)
-    m_currVerse.number = 1;
-
-  setCmbVerseIdx(m_currVerse.number - 1);
-  if (m_endOfPage) {
-    m_endOfPage = false;
-    nextPage();
-  }
-  // If now playing the last verse in the page, set the flag to flip the page
-  if (m_currVerse == m_vInfoList.last() &&
-      m_currVerse.number != m_player->surahCount()) {
-    m_endOfPage = true;
-  }
-
-  highlightCurrentVerse();
-}
-
-void
 MainWindow::verseClicked()
 {
   // object = clickable label, parent = verse frame, verse frame name scheme =
@@ -840,11 +1059,10 @@ MainWindow::verseClicked()
     m_currVerse.surah = surah;
     m_player->setVerse(m_currVerse);
     setVerseComboBoxRange();
-    updateSurah();
+    syncSelectedSurah();
   }
 
   setCmbVerseIdx(verse - 1);
-  m_endOfPage = false;
   m_player->loadActiveVerse();
   btnPlayClicked();
 }
@@ -852,48 +1070,22 @@ MainWindow::verseClicked()
 void
 MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
 {
+  QuranPageBrowser* senderBrowser = qobject_cast<QuranPageBrowser*>(sender());
+  int browerIdx = senderBrowser == m_quranBrowsers[1];
   int idx = hrefUrl.toString().remove('#').toInt();
-  Verse v = m_vInfoList.at(idx);
+  Verse v = m_vLists[browerIdx].at(idx);
 
   QuranPageBrowser::Action chosenAction =
-    m_quranBrowser->lmbVerseMenu(m_dbMgr->isBookmarked(v));
+    senderBrowser->lmbVerseMenu(m_dbMgr->isBookmarked(v));
 
   switch (chosenAction) {
     case QuranPageBrowser::play:
-      m_currVerse.number = v.number;
-      if (m_currVerse.surah != v.surah) {
-        m_currVerse.surah = v.surah;
-        m_player->setVerse(m_currVerse);
-        setVerseComboBoxRange();
-        updateSurah();
-
-      } else {
-        // same surah & page, different number
-        m_player->setVerse(m_currVerse);
-        setCmbVerseIdx(v.number - 1);
-      }
-
-      m_endOfPage = false;
-
+      selectVerse(browerIdx, idx);
       m_player->loadActiveVerse();
       btnPlayClicked();
       break;
     case QuranPageBrowser::select:
-      m_currVerse.number = v.number;
-      if (m_currVerse.surah != v.surah) {
-        m_currVerse.surah = v.surah;
-        m_player->setVerse(m_currVerse);
-        setVerseComboBoxRange();
-        updateSurah();
-
-      } else {
-        // same surah & page, different number
-        m_player->setVerse(m_currVerse);
-        setCmbVerseIdx(v.number - 1);
-      }
-
-      m_endOfPage = false;
-
+      selectVerse(browerIdx, idx);
       m_player->setSource(QUrl());
       highlightCurrentVerse();
       break;
@@ -902,7 +1094,7 @@ MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
       showVerseTafsir(v);
       break;
     case QuranPageBrowser::copy:
-      copyVerseText(idx);
+      copyVerseText(v);
       m_popup->copiedToClipboard();
       break;
     case QuranPageBrowser::addBookmark:
@@ -939,9 +1131,15 @@ MainWindow::actionPrefTriggered()
             Qt::UniqueConnection);
     connect(m_settingsDlg,
             &SettingsDialog::quranFontChanged,
-            m_quranBrowser,
+            m_quranBrowsers[0],
             &QuranPageBrowser::updateFontSize,
             Qt::UniqueConnection);
+    if (m_quranBrowsers[1])
+      connect(m_settingsDlg,
+              &SettingsDialog::quranFontChanged,
+              m_quranBrowsers[1],
+              &QuranPageBrowser::updateFontSize,
+              Qt::UniqueConnection);
 
     // Side panel signals
     connect(m_settingsDlg,
@@ -971,6 +1169,13 @@ MainWindow::actionPrefTriggered()
             m_player,
             &VersePlayer::changeUsedAudioDevice,
             Qt::UniqueConnection);
+
+    // shortcut change
+    connect(m_settingsDlg,
+            &SettingsDialog::shortcutChanged,
+            m_shortcutHandler,
+            &ShortcutHandler::shortcutChanged,
+            Qt::UniqueConnection);
   }
 
   m_settingsDlg->showWindow();
@@ -980,7 +1185,7 @@ void
 MainWindow::actionDMTriggered()
 {
   if (m_downloaderDlg == nullptr)
-    m_downloaderDlg = new DownloaderDialog(this, m_downManPtr, m_dbMgr);
+    m_downloaderDlg = new DownloaderDialog(this, m_downManPtr);
 
   m_downloaderDlg->show();
 }
@@ -989,7 +1194,7 @@ void
 MainWindow::actionBookmarksTriggered()
 {
   if (m_bookmarksDlg == nullptr) {
-    m_bookmarksDlg = new BookmarksDialog(this, m_dbMgr);
+    m_bookmarksDlg = new BookmarksDialog(this);
     connect(m_bookmarksDlg,
             &BookmarksDialog::navigateToVerse,
             this,
@@ -1043,7 +1248,7 @@ void
 MainWindow::actionSearchTriggered()
 {
   if (m_searchDlg == nullptr) {
-    m_searchDlg = new SearchDialog(this, m_dbMgr);
+    m_searchDlg = new SearchDialog(this);
     connect(m_searchDlg,
             &SearchDialog::navigateToVerse,
             this,
@@ -1056,23 +1261,20 @@ MainWindow::actionSearchTriggered()
 void
 MainWindow::navigateToVerse(Verse v)
 {
+  gotoPage(v.page, false);
+
   m_currVerse = v;
-
-  redrawQuranPage();
-  addSideContent();
-
-  m_player->setVerse(m_currVerse);
   setVerseComboBoxRange();
 
   setCmbPageIdx(m_currVerse.page - 1);
   setCmbVerseIdx(m_currVerse.number - 1);
   setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse.page) - 1);
 
-  updateSurah();
+  syncSelectedSurah();
   highlightCurrentVerse();
 
+  m_player->setVerse(m_currVerse);
   m_player->loadActiveVerse();
-  m_endOfPage = false;
 }
 
 void
@@ -1085,8 +1287,7 @@ MainWindow::navigateToSurah(QModelIndex& index)
 void
 MainWindow::updateLoadedTafsir()
 {
-  DBManager::Tafsir currTafsir =
-    qvariant_cast<DBManager::Tafsir>(m_settings->value("Reader/Tafsir"));
+  Tafsir currTafsir = qvariant_cast<Tafsir>(m_settings->value("Reader/Tafsir"));
 
   m_dbMgr->setCurrentTafsir(currTafsir);
 }
@@ -1094,8 +1295,8 @@ MainWindow::updateLoadedTafsir()
 void
 MainWindow::updateLoadedTranslation()
 {
-  DBManager::Translation currTrans = qvariant_cast<DBManager::Translation>(
-    m_settings->value("Reader/Translation"));
+  Translation currTrans =
+    qvariant_cast<Translation>(m_settings->value("Reader/Translation"));
 
   m_dbMgr->setCurrentTranslation(currTrans);
 }
@@ -1107,42 +1308,180 @@ MainWindow::updateSideFont()
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
 }
 
+Verse
+MainWindow::incrementVerse()
+{
+  Verse v = m_currVerse;
+  if (v == m_activeVList->last()) {
+    v.page++;
+  }
+
+  if (v.number < m_surahCount) {
+    v.number++;
+  } else if (v.number == m_surahCount) {
+    v.surah++;
+    v.number = v.surah == 9 || v.surah == 1 ? 1 : 0;
+  }
+
+  return v;
+}
+
+Verse
+MainWindow::decrementVerse()
+{
+  Verse v = m_currVerse;
+  if (v.number == 0)
+    v.number = 1;
+
+  if (v == m_activeVList->at(0)) {
+    v.page--;
+  }
+
+  if (v.number > 1) {
+    v.number--;
+  } else if (v.number <= 1) {
+    v.surah--;
+    v.number = m_dbMgr->getSurahVerseCount(v.surah);
+  }
+
+  return v;
+}
+
+void
+MainWindow::nextVerse()
+{
+  if (m_currVerse.surah == 114 && m_currVerse.number == 6)
+    return;
+
+  bool keepPlaying = m_player->isOn();
+  navigateToVerse(incrementVerse());
+  if (keepPlaying)
+    m_player->play();
+}
+
+void
+MainWindow::prevVerse()
+{
+  if (m_currVerse.surah == 1 && m_currVerse.number == 1)
+    return;
+
+  bool keepPlaying = m_player->isOn();
+  navigateToVerse(decrementVerse());
+  if (keepPlaying)
+    m_player->play();
+}
+
+void
+MainWindow::nextJuz()
+{
+  if (ui->cmbJuz->currentIndex() != 29)
+    ui->cmbJuz->setCurrentIndex(ui->cmbJuz->currentIndex() + 1);
+}
+
+void
+MainWindow::prevJuz()
+{
+  if (ui->cmbJuz->currentIndex() != 0)
+    ui->cmbJuz->setCurrentIndex(ui->cmbJuz->currentIndex() - 1);
+}
+
+void
+MainWindow::nextSurah()
+{
+  if (m_currVerse.surah < 114)
+    gotoSurah(m_currVerse.surah + 1);
+}
+
+void
+MainWindow::prevSurah()
+{
+  if (m_currVerse.surah > 1)
+    gotoSurah(m_currVerse.surah - 1);
+}
+
+void
+MainWindow::incrementVolume()
+{
+  int val = ui->sldrVolume->value() + 5;
+  ui->sldrVolume->setValue(val > 100 ? 100 : val);
+}
+
+void
+MainWindow::decrementVolume()
+{
+  int val = ui->sldrVolume->value() - 5;
+  ui->sldrVolume->setValue(val < 0 ? 0 : val);
+}
+
+void
+MainWindow::toggleMenubar()
+{
+  if (ui->menubar->isVisible())
+    ui->menubar->hide();
+  else
+    ui->menubar->show();
+}
+
+void
+MainWindow::toggleNavDock()
+{
+  ui->sideDock->toggleViewAction()->toggle();
+}
+
 void
 MainWindow::redrawQuranPage(bool manualSz)
 {
-  m_quranBrowser->constructPage(m_currVerse.page, manualSz);
+  if (m_activeQuranBrowser == m_quranBrowsers[0]) {
+    m_quranBrowsers[0]->constructPage(m_currVerse.page, manualSz);
+    if (m_readerMode == doublePage && m_quranBrowsers[1])
+      m_quranBrowsers[1]->constructPage(m_currVerse.page + 1, manualSz);
+  } else {
+    m_quranBrowsers[0]->constructPage(m_currVerse.page - 1, manualSz);
+    m_quranBrowsers[1]->constructPage(m_currVerse.page, manualSz);
+  }
+
   updatePageVerseInfoList();
 }
 
 void
 MainWindow::highlightCurrentVerse()
 {
-  int idx;
-  for (idx = 0; idx < m_vInfoList.size(); idx++) {
-    Verse v = m_vInfoList.at(idx);
-    if (m_currVerse == v)
-      break;
-  }
-  m_quranBrowser->highlightVerse(idx);
+  if (m_currVerse.number == 0)
+    return;
 
+  // idx may be -1 if verse number is 0 (basmallah)
+  int idx = m_activeVList->indexOf(m_currVerse);
+  if (idx < 0)
+    idx = 0;
+
+  m_activeQuranBrowser->highlightVerse(idx);
+
+  if (m_readerMode == ReaderMode::singlePage)
+    setHighlightedFrame();
+}
+
+void
+MainWindow::setHighlightedFrame()
+{
   if (m_highlightedFrm != nullptr)
     m_highlightedFrm->setSelected(false);
 
   VerseFrame* verseFrame =
-    ui->scrlVerseCont->findChild<VerseFrame*>(QString("%0_%1").arg(
+    m_scrlVerseByVerse->widget()->findChild<VerseFrame*>(QString("%0_%1").arg(
       QString::number(m_currVerse.surah), QString::number(m_currVerse.number)));
 
   verseFrame->setSelected(true);
 
-  if (m_highlightedFrm != nullptr)
-    ui->scrlVerseByVerse->ensureWidgetVisible(verseFrame);
-
+  m_scrlVerseByVerse->ensureWidgetVisible(verseFrame);
   m_highlightedFrm = verseFrame;
 }
 
 void
 MainWindow::addSideContent()
 {
+  if (m_readerMode != ReaderMode::singlePage)
+    return;
+
   if (!m_verseFrameList.isEmpty()) {
     qDeleteAll(m_verseFrameList);
     m_verseFrameList.clear();
@@ -1153,18 +1492,18 @@ MainWindow::addSideContent()
   QLabel* contentLb;
   VerseFrame* verseContFrame;
   QString prevLbContent, currLbContent;
-  for (int i = m_vInfoList.size() - 1; i >= 0; i--) {
-    Verse vInfo = m_vInfoList.at(i);
+  for (int i = m_activeVList->size() - 1; i >= 0; i--) {
+    Verse vInfo = m_activeVList->at(i);
 
-    verseContFrame = new VerseFrame(ui->scrlVerseCont);
+    verseContFrame = new VerseFrame(m_scrlVerseByVerse->widget());
     verselb = new ClickableLabel(verseContFrame);
     contentLb = new QLabel(verseContFrame);
 
     verseContFrame->setObjectName(
       QString("%0_%1").arg(vInfo.surah).arg(vInfo.number));
 
-    verselb->setFont(
-      QFont(m_quranBrowser->pageFont(), m_quranBrowser->fontSize() - 2));
+    verselb->setFont(QFont(m_activeQuranBrowser->pageFont(),
+                           m_activeQuranBrowser->fontSize() - 2));
     verselb->setText(m_dbMgr->getVerseGlyphs(vInfo.surah, vInfo.number));
     verselb->setAlignment(Qt::AlignCenter);
     verselb->setWordWrap(true);
@@ -1186,7 +1525,7 @@ MainWindow::addSideContent()
 
     verseContFrame->layout()->addWidget(verselb);
     verseContFrame->layout()->addWidget(contentLb);
-    ui->scrlVerseCont->layout()->addWidget(verseContFrame);
+    m_scrlVerseByVerse->widget()->layout()->addWidget(verseContFrame);
     m_verseFrameList.insert(0, verseContFrame);
 
     // connect clicked signal for each label
@@ -1198,26 +1537,15 @@ MainWindow::addSideContent()
   }
 
   if (m_player->playbackState() == QMediaPlayer::PlayingState) {
-    highlightCurrentVerse();
+    setHighlightedFrame();
   }
-}
-
-void
-MainWindow::updateTrayTooltip(QMediaPlayer::PlaybackState newState)
-{
-  if (newState == QMediaPlayer::PlayingState) {
-    m_notifyMgr->setTooltip(tr("Now playing: ") + m_player->reciterName() +
-                            " - " + tr("Surah ") +
-                            m_dbMgr->getSurahName(m_currVerse.surah));
-  } else
-    m_notifyMgr->setTooltip("Quran Companion");
 }
 
 void
 MainWindow::showVerseTafsir(Verse v)
 {
   if (m_tafsirDlg == nullptr) {
-    m_tafsirDlg = new TafsirDialog(this, m_dbMgr);
+    m_tafsirDlg = new TafsirDialog(this);
   }
 
   m_tafsirDlg->setShownVerse(v);
@@ -1226,9 +1554,8 @@ MainWindow::showVerseTafsir(Verse v)
 }
 
 void
-MainWindow::copyVerseText(int IdxInPage)
+MainWindow::copyVerseText(const Verse v)
 {
-  const Verse& v = m_vInfoList.at(IdxInPage);
   QClipboard* clip = QApplication::clipboard();
   QString text = m_dbMgr->getVerseText(v.surah, v.number);
   QString vNum = QString::number(v.number);
@@ -1271,6 +1598,16 @@ MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
 }
 
 void
+MainWindow::resizeEvent(QResizeEvent* event)
+{
+  QMainWindow::resizeEvent(event);
+  if (m_popup) {
+    m_popup->adjustLocation();
+    m_popup->move(m_popup->notificationPos());
+  }
+}
+
+void
 MainWindow::saveReaderState()
 {
   m_settings->setValue("WindowState", saveState());
@@ -1279,7 +1616,8 @@ MainWindow::saveReaderState()
   m_settings->beginGroup("Reader");
   m_settings->setValue("Page", m_currVerse.page);
   m_settings->setValue("Surah", m_currVerse.surah);
-  m_settings->setValue("Verse", m_currVerse.number);
+  m_settings->setValue("Verse",
+                       m_currVerse.number == 0 ? 1 : m_currVerse.number);
   m_settings->endGroup();
 
   m_settings->sync();
@@ -1289,18 +1627,8 @@ void
 MainWindow::restartApp()
 {
   saveReaderState();
-  emit QApplication::exit();
   QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-}
-
-void
-MainWindow::resizeEvent(QResizeEvent* event)
-{
-  QMainWindow::resizeEvent(event);
-  if (m_popup) {
-    m_popup->adjustLocation();
-    m_popup->move(m_popup->notificationPos());
-  }
+  emit QApplication::exit();
 }
 
 MainWindow::~MainWindow()

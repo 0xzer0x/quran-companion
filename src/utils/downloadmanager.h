@@ -28,7 +28,7 @@ class DownloadManager : public QObject
   Q_OBJECT
 public:
   /**
-   * @brief DownloadTask represents a single verse file download task
+   * @brief DownloadTask struct represents a single verse file download task
    * @details Quran surahs are downloaded as separate verse mp3 files which are
    * represented as DownloadTask instances
    */
@@ -54,10 +54,8 @@ public:
   /**
    * @brief Class constructor
    * @param parent - pointer to parent widget
-   * @param dbptr - pointer to DBManager instance
    */
-  explicit DownloadManager(QObject* parent = nullptr,
-                           DBManager* dbptr = nullptr);
+  explicit DownloadManager(QObject* parent = nullptr);
 
   /**
    * @brief gets the latest release of the application from the github repo
@@ -160,8 +158,9 @@ signals:
   void downloadError(int reciterIdx, int surah);
 
 private:
+  const QDir& m_toplevelDownloadPath = Globals::recitationsDir;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
-
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief generate download url for specified verse using the reciter download
    * url
@@ -199,10 +198,6 @@ private:
    * requests
    */
   QNetworkAccessManager* m_netMan;
-  /**
-   * @brief DBManager instance
-   */
-  DBManager* m_dbMgr;
   /**
    * @brief the currently active DownloadTask
    */

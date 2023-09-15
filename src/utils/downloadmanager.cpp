@@ -5,10 +5,9 @@
 
 #include "downloadmanager.h"
 
-DownloadManager::DownloadManager(QObject* parent, DBManager* dbptr)
+DownloadManager::DownloadManager(QObject* parent)
   : QObject(parent)
   , m_netMan{ new QNetworkAccessManager(this) }
-  , m_dbMgr{ dbptr }
 {
   m_netMan->setTransferTimeout(3000);
   connect(m_netMan,
@@ -91,7 +90,7 @@ DownloadManager::processQueueHead()
   qInfo() << "current download task - " << m_currentTask.link;
   m_currSurahCount = m_dbMgr->getSurahVerseCount(m_currentTask.surah);
 
-  m_downloadPath = Globals::recitationsDir;
+  m_downloadPath = m_toplevelDownloadPath;
   m_downloadPath.cd(m_recitersList.at(m_currentTask.reciterIdx).baseDirName);
 
   while (m_downloadPath.exists(m_currentTask.filename)) {

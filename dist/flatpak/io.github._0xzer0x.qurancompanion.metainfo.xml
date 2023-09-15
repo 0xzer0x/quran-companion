@@ -25,10 +25,26 @@
     <screenshot>
       <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_light.png</image>
     </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_dark.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_two-page.png</image>
+    </screenshot>
   </screenshots>
   <url type="homepage">https://github.com/0xzer0x/quran-companion</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.1.8" date="2023-09-15">
+      <description>
+          <ul>
+            <li>Two-page mode added</li>
+            <li>Customizable shortcuts feature</li>
+            <li>English Tafsir Ibn-Katheer added</li>
+            <li>Abdullah Yusuf Ali English Translation added</li>
+          </ul>
+      </description>
+    </release>
     <release version="1.1.7" date="2023-07-16">
       <description>
           <ul>

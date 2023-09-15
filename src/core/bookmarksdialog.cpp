@@ -6,10 +6,9 @@
 #include "bookmarksdialog.h"
 #include "ui_bookmarksdialog.h"
 
-BookmarksDialog::BookmarksDialog(QWidget* parent, DBManager* dbMgr)
+BookmarksDialog::BookmarksDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::BookmarksDialog)
-  , m_dbMgr{ dbMgr }
 {
   ui->setupUi(this);
   ui->scrollArea->setLayoutDirection(Qt::LeftToRight);
@@ -24,8 +23,6 @@ BookmarksDialog::BookmarksDialog(QWidget* parent, DBManager* dbMgr)
 void
 BookmarksDialog::setupConnections()
 {
-  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
-  connect(ctrlQ, &QShortcut::activated, this, &BookmarksDialog::close);
   connect(ui->listViewBookmarkedSurahs,
           &QListView::clicked,
           this,

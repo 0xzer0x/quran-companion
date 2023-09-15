@@ -7,10 +7,9 @@
 #include "../widgets/clickablelabel.h"
 #include "ui_searchdialog.h"
 
-SearchDialog::SearchDialog(QWidget* parent, DBManager* dbPtr)
+SearchDialog::SearchDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::SearchDialog)
-  , m_dbMgr{ dbPtr }
   , m_surahNames{ m_dbMgr->surahNameList() }
 {
   setWindowIcon(QIcon(m_resources.filePath("icons/search.png")));
@@ -30,8 +29,6 @@ SearchDialog::SearchDialog(QWidget* parent, DBManager* dbPtr)
 void
 SearchDialog::setupConnections()
 {
-  QShortcut* ctrlQ = new QShortcut(QKeySequence("Ctrl+Q"), this);
-  connect(ctrlQ, &QShortcut::activated, this, &SearchDialog::close);
   connect(ui->btnSrch,
           &QPushButton::clicked,
           this,

@@ -100,6 +100,11 @@
         <translation>إضافة تحميل &gt;&gt;</translation>
     </message>
     <message>
+        <location filename="../core/downloaderdialog.ui" line="136"/>
+        <source>Downloads Folder</source>
+        <translation>مجلد التحميلات</translation>
+    </message>
+    <message>
         <location filename="../core/downloaderdialog.ui" line="152"/>
         <source>clear</source>
         <translation>محو</translation>
@@ -189,11 +194,6 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="597"/>
-        <source>Right</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="617"/>
         <source>View</source>
         <translation>عرض</translation>
@@ -237,6 +237,11 @@
     <message>
         <location filename="../core/mainwindow.ui" line="719"/>
         <source>3</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="597"/>
+        <source>Right</source>
         <translation></translation>
     </message>
     <message>
@@ -457,29 +462,19 @@
         <translation>عن كيوت</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1016"/>
-        <source>Tafsir</source>
-        <translation>التفسير</translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="1019"/>
         <source>Ctrl+T</source>
         <translation></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.ui" line="1016"/>
+        <source>Tafsir</source>
+        <translation>التفسير</translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.ui" line="1024"/>
         <source>Verse of the day</source>
         <translation>آية اليوم</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
-        <source>Error</source>
-        <translation>خطأ</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
-        <source>Update tool is unavailable.</source>
-        <translation>أداة التحديث غير موجودة.</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.cpp" line="420"/>
@@ -507,6 +502,16 @@
         <location filename="../core/mainwindow.cpp" line="440"/>
         <source>Updates are available, use the maintainance tool to install the latest updates.</source>
         <translation>هناك تحديثات متاحة، يمكنك إستخدام اداة التحديث للحصول على اخر التحديثات.</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Error</source>
+        <translation>خطأ</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Update tool is unavailable.</source>
+        <translation>أداة التحديث غير موجودة.</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.cpp" line="853"/>
@@ -682,6 +687,56 @@
         <location filename="../main.cpp" line="410"/>
         <source>Muhammad Jibreel</source>
         <translation>محمد جبريل</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="547"/>
+        <source>Toggle playback state of recitation</source>
+        <translation>تشغيل/إيقاف التلاوة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="549"/>
+        <source>Move to the next page</source>
+        <translation>الإنتقال إلى الصفحة التالية</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="551"/>
+        <source>Move to the previous page</source>
+        <translation>الإنتقال إلى الصفحة السابقة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="554"/>
+        <source>Bookmark the current active verse</source>
+        <translation>إضافة علامة عند الآية النشطة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="557"/>
+        <source>Open the bookmarks dialog</source>
+        <translation>فتح نافذة العلامات</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="559"/>
+        <source>Open the search dialog</source>
+        <translation>فتح نافذة البحث</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="562"/>
+        <source>Open the preferences dialog</source>
+        <translation>فتح نافذة الإعدادات</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="565"/>
+        <source>Open the tafsir for the current active verse</source>
+        <translation>فتح نافذة التفسير للآية النشطة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="569"/>
+        <source>Open the recitations download dialog</source>
+        <translation>فتح نافذة تحميل التلاوات</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="572"/>
+        <source>Close the currently focused window</source>
+        <translation>إغلاق النافذة الحالية</translation>
     </message>
 </context>
 <context>
@@ -975,6 +1030,21 @@
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="150"/>
+        <source>Reader mode</source>
+        <translation>وضع القراءة</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="158"/>
+        <source>Single page</source>
+        <translation>صفحة</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="163"/>
+        <source>Double page</source>
+        <translation>صفحتين</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="150"/>
         <source>Font</source>
         <translation>الخط</translation>
     </message>
@@ -1168,6 +1238,18 @@
         <translation>تفسير ابن كثير</translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.ui" line="493"/>
+        <source>Tafheem-ul-Quran</source>
+        <oldsource>Tafheem</oldsource>
+        <translatorcomment>Tafheem-ul-Quran by Syed Abu-al-A&apos;la Maududi</translatorcomment>
+        <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="508"/>
+        <source>English - Ibn-Katheer</source>
+        <translation>تفسير ابن كثير - إنجليزي</translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.ui" line="483"/>
         <source>Indonesian - Tafsir Jalalayn</source>
         <translation>تفسير الجلالين - إندونيسي</translation>
@@ -1178,11 +1260,9 @@
         <translation>تفسير السعدي - روسي</translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="493"/>
-        <source>Tafheem-ul-Quran</source>
-        <oldsource>Tafheem</oldsource>
-        <translatorcomment>Tafheem-ul-Quran by Syed Abu-al-A&apos;la Maududi</translatorcomment>
-        <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
+        <location filename="../core/settingsdialog.ui" line="523"/>
+        <source>English - Tafheem-ul-Quran</source>
+        <translation>تفهيم القرآن - إنجليزي</translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="505"/>
@@ -1222,6 +1302,11 @@
     <message>
         <location filename="../core/settingsdialog.ui" line="549"/>
         <source>English - Sahih International</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="584"/>
+        <source>English - Abdullah Yusuf Ali</source>
         <translation></translation>
     </message>
     <message>
@@ -1335,6 +1420,21 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.ui" line="708"/>
+        <source>Shortcuts</source>
+        <translation>الإختصارات</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="64"/>
+        <source>Description</source>
+        <translation>الوصف</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="64"/>
+        <source>Key</source>
+        <translation>الزر</translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.cpp" line="66"/>
         <location filename="../core/settingsdialog.cpp" line="88"/>
         <location filename="../core/settingsdialog.cpp" line="144"/>
@@ -1352,6 +1452,11 @@
         <translation>تم تغيير لغة البرنامج، هل تريد إعادة تشغيل البرنامج؟</translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.cpp" line="148"/>
+        <source>Reading mode was changed, restart now?</source>
+        <translation>تم تغيير وضع القراءة، هل تريد إعادة تشغيل البرنامج؟</translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.cpp" line="145"/>
         <source>Restart is required to load new quran font, restart now?</source>
         <translation>تم تغيير خط المصحف، هل تريد إعادة تشغيل البرنامج؟</translation>
@@ -1365,6 +1470,121 @@
         <location filename="../core/settingsdialog.cpp" line="354"/>
         <source>Cancel</source>
         <translation>ألغِ</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="398"/>
+        <source>Shortcut conflicts</source>
+        <translation>تضارب إختصارات</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="399"/>
+        <source>This key combination is used by another shortcut, please use a different one.</source>
+        <translation>تركيبة المفاتيح التي تم إختيارها مستخدمة من قبل إختصار آخر، الرجاء إستخدام تركيبة مفاتيح أُخرى.</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="599"/>
+        <source>Toggle visibility of the menubar</source>
+        <translation>إظهار/إخفاء شريط القوائم</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="602"/>
+        <source>Toggle visibility of the navigation dock</source>
+        <translation>إظهار/إخفاء وحدة التصفح</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="547"/>
+        <source>Toggle playback state of recitation</source>
+        <translation>تشغيل/إيقاف التلاوة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="565"/>
+        <source>Increase the playback volume</source>
+        <translation>زيادة مستوى صوت القراءة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="568"/>
+        <source>Decrease the playback volume</source>
+        <translation>خفض مستوى صوت القراءة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="549"/>
+        <source>Move to the next page</source>
+        <translation>الإنتقال إلى الصفحة التالية</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="551"/>
+        <source>Move to the previous page</source>
+        <translation>الإنتقال إلى الصفحة السابقة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="573"/>
+        <source>Close the currently focused window</source>
+        <translation>إغلاق النافذة الحالية</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="574"/>
+        <source>Move to the next verse</source>
+        <translation>الإنتقال إلي الآية التالية</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="577"/>
+        <source>Move to the previous verse</source>
+        <translation>الإنتقال إلي الآية السابقة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="579"/>
+        <source>Move to the next surah</source>
+        <translation>الإنتقال إلي السورة التالية</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="582"/>
+        <source>Move to the previous surah</source>
+        <translation>الإنتقال إلي السورة السابقة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="584"/>
+        <source>Move to the next juz</source>
+        <translation>الإنتقال إلى الجزء التالي</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="586"/>
+        <source>Move to the previous juz</source>
+        <translation>الإنتقال إلى الجزء السابق</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="554"/>
+        <source>Bookmark the current active verse</source>
+        <translation>إضافة علامة عند الآية النشطة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="557"/>
+        <source>Open the bookmarks dialog</source>
+        <translation>فتح نافذة العلامات</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="560"/>
+        <source>Open the search dialog</source>
+        <translation>فتح نافذة البحث</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="563"/>
+        <source>Open the preferences dialog</source>
+        <translation>فتح نافذة الإعدادات</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="566"/>
+        <source>Open the tafsir for the current active verse</source>
+        <translation>فتح نافذة التفسير للآية النشطة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="570"/>
+        <source>Open the recitations download dialog</source>
+        <translation>فتح نافذة تحميل التلاوات</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="571"/>
+        <source>Quit</source>
+        <translation>خروج</translation>
     </message>
 </context>
 <context>
@@ -1446,6 +1666,11 @@
         <translation>تفسير ابن كثير</translation>
     </message>
     <message>
+        <location filename="../core/tafsirdialog.cpp" line="109"/>
+        <source>English - Ibn-Katheer</source>
+        <translation>تفسير ابن كثير - إنجليزي</translation>
+    </message>
+    <message>
         <location filename="../core/tafsirdialog.cpp" line="111"/>
         <source>Al-Qortoby</source>
         <translation>تفسير القرطبي</translation>
@@ -1469,6 +1694,11 @@
         <location filename="../core/tafsirdialog.cpp" line="123"/>
         <source>Tafheem-ul-Quran</source>
         <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="124"/>
+        <source>English - Tafheem-ul-Quran</source>
+        <translation>تفهيم القرآن - إنجليزي</translation>
     </message>
     <message>
         <location filename="../core/tafsirdialog.cpp" line="126"/>

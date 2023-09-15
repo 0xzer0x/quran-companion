@@ -47,9 +47,7 @@ public:
    * @param dbMgr - pointer to DBManager instance
    * @param initPage - inital page to load
    */
-  QuranPageBrowser(QWidget* parent = nullptr,
-                   DBManager* dbMgr = nullptr,
-                   int initPage = 1);
+  QuranPageBrowser(QWidget* parent = nullptr, int initPage = 1);
 
   /**
    * @brief sets m_fontSize to the fontsize in the settings file
@@ -93,6 +91,7 @@ public:
    * the page
    */
   void highlightVerse(int verseIdxInPage);
+  void resetHighlight();
   /**
    * @brief show the main verse interaction menu and return number related to
    * the chosen action
@@ -117,6 +116,8 @@ public:
    * @return QString of the page QCF font name
    */
   QString pageFont() const;
+
+  int page() const;
 
 signals:
   void copyVerse(int IdxInPage);
@@ -143,6 +144,7 @@ private:
   const QString& m_fontnamePrefix = Globals::qcfFontPrefix;
   const int m_qcfVer = Globals::qcfVersion;
   const bool m_darkMode = Globals::darkMode;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief utility for creating menu actions for interacting with the widget
    */
@@ -264,10 +266,6 @@ private:
    * @brief QMap used for converting page number to arabic numbers
    */
   QMap<QString, QString> m_easternNumsMap;
-  /**
-   * @brief pointer to DBManager instance
-   */
-  DBManager* m_dbMgr;
 };
 
 #endif // QURANPAGEBROWSER_H

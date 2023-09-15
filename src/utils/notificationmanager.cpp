@@ -5,9 +5,8 @@
 
 #include "notificationmanager.h"
 
-NotificationManager::NotificationManager(QObject* parent, DBManager* dbPtr)
+NotificationManager::NotificationManager(QObject* parent)
   : QObject{ parent }
-  , m_dbMgr{ dbPtr }
   , m_dtNow{ QDateTime::currentDateTime() }
   , m_sysTray{ new QSystemTrayIcon(this) }
   , m_trayMenu{ new QMenu() }
@@ -34,40 +33,41 @@ void
 NotificationManager::checkDailyVerse()
 {
   QDateTime lastTimestamp;
-  QFile timestamp = QDir::currentPath() + QDir::separator() + "votd.log";
-  if (!timestamp.exists()) {
-    if (!timestamp.open(QIODevice::WriteOnly)) {
-      qWarning() << "Couldn't open timestamp file for daily notification check";
+  if (!m_timestampFile.exists()) {
+    if (!m_timestampFile.open(QIODevice::WriteOnly)) {
+      qWarning()
+        << "Couldn't open m_timestampFile file for daily notification check";
       return;
     }
     showVerseOfTheDay();
-    timestamp.write(m_dtNow.toString(Qt::DateFormat::ISODate).toLatin1());
-    timestamp.write("\n");
-    timestamp.write(votdStringEntry().toLatin1());
-    timestamp.close();
+    m_timestampFile.write(m_dtNow.toString(Qt::DateFormat::ISODate).toLatin1());
+    m_timestampFile.write("\n");
+    m_timestampFile.write(votdStringEntry().toLatin1());
+    m_timestampFile.close();
   } else {
-    if (!timestamp.open(QIODevice::ReadWrite)) {
-      qWarning() << "Couldn't open timestamp file for daily notification check";
+    if (!m_timestampFile.open(QIODevice::ReadWrite)) {
+      qWarning()
+        << "Couldn't open m_timestampFile file for daily notification check";
       return;
     }
-    lastTimestamp = QDateTime::fromString(timestamp.readLine().trimmed(),
+    lastTimestamp = QDateTime::fromString(m_timestampFile.readLine().trimmed(),
                                           Qt::DateFormat::ISODate);
     if (lastTimestamp.daysTo(m_dtNow) > 0) {
       showVerseOfTheDay();
-      timestamp.seek(0);
-      timestamp.write(m_dtNow.toString(Qt::ISODate).toLatin1());
-      timestamp.write("\n");
-      timestamp.write(votdStringEntry().toLatin1());
+      m_timestampFile.seek(0);
+      m_timestampFile.write(m_dtNow.toString(Qt::ISODate).toLatin1());
+      m_timestampFile.write("\n");
+      m_timestampFile.write(votdStringEntry().toLatin1());
     } else {
       m_votdShown = true;
-      QList<QByteArray> data = timestamp.readLine(15).split(':');
+      QList<QByteArray> data = m_timestampFile.readLine(15).split(':');
       m_votd.first =
         Verse{ data.at(0).toInt(), data.at(1).toInt(), data.at(2).toInt() };
       m_votd.second =
         m_dbMgr->getVerseText(m_votd.first.surah, m_votd.first.number);
       setVotdMsg();
     }
-    timestamp.close();
+    m_timestampFile.close();
   }
 }
 

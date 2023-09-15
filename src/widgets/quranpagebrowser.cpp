@@ -4,12 +4,10 @@
  */
 
 #include "quranpagebrowser.h"
+#include <QRegularExpression>
 
-QuranPageBrowser::QuranPageBrowser(QWidget* parent,
-                                   DBManager* dbMgr,
-                                   int initPage)
+QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   : QTextBrowser(parent)
-  , m_dbMgr{ dbMgr }
   , m_highlighter{ new QTextCursor(document()) }
   , m_highlightColor{ QBrush(QColor(0, 161, 185)) }
 {
@@ -50,6 +48,7 @@ QuranPageBrowser::updateFontSize()
   m_fontSize =
     m_settings->value("Reader/QCF" + QString::number(m_qcfVer) + "Size", 22)
       .toInt();
+  highlightVerse(m_highlightedIdx);
 }
 
 QString
@@ -116,6 +115,11 @@ QuranPageBrowser::surahFrame(int surah)
     baseImage.invertPixels();
 
   return baseImage;
+}
+
+int QuranPageBrowser::page() const
+{
+  return m_page;
 }
 
 QString
@@ -246,12 +250,9 @@ QuranPageBrowser::highlightVerse(int verseIdxInPage)
     return;
   }
 
+  resetHighlight();
+
   QTextCharFormat tcf;
-  tcf.setForeground(m_darkMode ? Qt::white : Qt::black);
-
-  if (m_highlighter->hasSelection())
-    m_highlighter->mergeCharFormat(tcf); // de-highlight any previous highlights
-
   tcf.setForeground(m_highlightColor);
 
   const int* const bounds = m_pageVerseCoords.at(verseIdxInPage);
@@ -260,9 +261,18 @@ QuranPageBrowser::highlightVerse(int verseIdxInPage)
   m_highlighter->setPosition(bounds[1], QTextCursor::KeepAnchor);
   m_highlighter->mergeCharFormat(tcf);
 
-  qInfo() << "Selected verse #" + QString::number(verseIdxInPage) + " in page";
-
   m_highlightedIdx = verseIdxInPage;
+}
+
+void
+QuranPageBrowser::resetHighlight()
+{
+  QTextCharFormat tcf;
+  tcf.setForeground(m_darkMode ? Qt::white : Qt::black);
+  if (m_highlighter->hasSelection())
+    m_highlighter->mergeCharFormat(tcf); // de-highlight any previous highlights
+
+  m_highlightedIdx = -1;
 }
 
 QuranPageBrowser::Action
@@ -309,9 +319,11 @@ QuranPageBrowser::bestFitFontSize()
     QFont pf(m_pageFont, sz);
     QFontMetrics fm(pf);
     QFontMetrics headerMetrics(QFont("PakType Naskh Basic", sz - 6));
+    QString completePage = m_currPageLines.join('\n');
+    completePage.remove("bsml").remove(QRegularExpression("frame.*"));
 
     QSize textSz = headerMetrics.size(Qt::TextSingleLine, m_currPageHeader) +
-                   fm.size(0, m_currPageLines.join('\n'));
+                   fm.size(0, completePage);
     if (textSz.height() + margin <= parentWidget()->height()) {
       break;
     }

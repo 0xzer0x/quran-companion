@@ -5,69 +5,49 @@
 
 #include "verseplayer.h"
 
-VersePlayer::VersePlayer(QObject* parent,
-                         DBManager* dbPtr,
-                         Verse initVerse,
-                         int reciterIdx)
+VersePlayer::VersePlayer(QObject* parent, Verse initVerse, int reciterIdx)
   : QMediaPlayer(parent)
   , m_activeVerse{ initVerse }
   , m_reciter{ reciterIdx }
-  , m_dbMgr{ dbPtr }
   , m_output{ new QAudioOutput(this) }
 {
-  updateSurahVerseCount();
   setAudioOutput(m_output);
-  setupConnections();
 
   m_reciterDir.cd(m_recitersList.at(m_reciter).baseDirName);
   loadActiveVerse();
 }
 
-void
-VersePlayer::setupConnections()
+bool
+VersePlayer::isOn() const
 {
-  // Connectors
-  connect(this,
-          &QMediaPlayer::mediaStatusChanged,
-          this,
-          &VersePlayer::verseStateChanged,
-          Qt::UniqueConnection);
+  return m_isOn;
+}
 
-  connect(this,
-          &VersePlayer::verseNoChanged,
-          this,
-          &VersePlayer::playCurrentVerse,
-          Qt::UniqueConnection);
+void
+VersePlayer::play()
+{
+  m_isOn = true;
+  QMediaPlayer::play();
+}
+
+void
+VersePlayer::pause()
+{
+  m_isOn = false;
+  QMediaPlayer::pause();
+}
+
+void
+VersePlayer::stop()
+{
+  m_isOn = false;
+  QMediaPlayer::stop();
 }
 
 void
 VersePlayer::setVerse(Verse& newVerse)
 {
   m_activeVerse = newVerse;
-}
-
-void
-VersePlayer::nextVerse()
-{
-  // if last verse in surah, play basmalah before playing first verse
-  if (m_activeVerse.number == m_surahCount) {
-    // if last verse in surah an-nas (114), do nothing (i.e stop playback)
-    if (m_activeVerse.surah < 114) {
-      m_activeVerse.surah++;
-      emit surahChanged(); // signals surah change
-    }
-
-  } else {
-    m_activeVerse.number++;
-    emit verseNoChanged(); // signals active verse change
-  }
-}
-
-void
-VersePlayer::verseStateChanged(QMediaPlayer::MediaStatus status)
-{
-  if (status == QMediaPlayer::EndOfMedia)
-    nextVerse();
 }
 
 void
@@ -100,23 +80,6 @@ VersePlayer::playCurrentVerse()
 {
   if (loadActiveVerse())
     play(); // start playback of audio
-}
-
-void
-VersePlayer::playBasmalah()
-{
-  m_activeVerse.number = 0;
-
-  // no basmalah with surah al-tawbah (9)
-  if (m_activeVerse.surah == 9) {
-    nextVerse();
-  } else {
-    if (m_activeVerse.surah == 1)
-      m_activeVerse.number = 1;
-
-    setSource(QUrl::fromLocalFile(m_recitersList.at(m_reciter).basmallahPath));
-    play();
-  }
 }
 
 bool
@@ -154,13 +117,12 @@ VersePlayer::setVerseFile(const QString& newVerseFilename)
 bool
 VersePlayer::loadActiveVerse()
 {
-  return setVerseFile(constructVerseFilename(m_activeVerse));
-}
+  if (m_activeVerse.number == 0) {
+    setSource(QUrl::fromLocalFile(m_recitersList.at(m_reciter).basmallahPath));
+    return true;
+  }
 
-void
-VersePlayer::updateSurahVerseCount()
-{
-  m_surahCount = m_dbMgr->getSurahVerseCount(m_activeVerse.surah);
+  return setVerseFile(constructVerseFilename(m_activeVerse));
 }
 
 /* -------------------- Getters ----------------------- */
@@ -181,12 +143,6 @@ QString
 VersePlayer::verseFilename() const
 {
   return m_verseFile;
-}
-
-int
-VersePlayer::surahCount() const
-{
-  return m_surahCount;
 }
 
 Verse

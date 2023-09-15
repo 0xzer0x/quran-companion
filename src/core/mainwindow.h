@@ -9,6 +9,7 @@
 #include "../globals.h"
 #include "../utils/dbmanager.h"
 #include "../utils/notificationmanager.h"
+#include "../utils/shortcuthandler.h"
 #include "../utils/verseplayer.h"
 #include "../widgets/notificationpopup.h"
 #include "../widgets/quranpagebrowser.h"
@@ -24,6 +25,7 @@
 #include <QIntValidator>
 #include <QMainWindow>
 #include <QPropertyAnimation>
+#include <QScrollArea>
 #include <QScrollBar>
 #include <QSettings>
 #include <QShortcut>
@@ -54,13 +56,17 @@ public:
 
   /**
    * @brief highlight the currently active ::Verse m_currVerse in the
-   * QuranPageBrowser and the side panel
+   * active QuranPageBrowser and the side panel depending on the ::ReaderMode
    */
   void highlightCurrentVerse();
+  /**
+   * @brief highlight the currently active VerseFrame
+   */
+  void setHighlightedFrame();
 
 public slots:
   /**
-   * @brief showVOTDmessage - show the verse of the day dialog
+   * @brief show the verse of the day dialog
    * @param votd - QPair of the ::Verse of the day and the verse text
    */
   void showVOTDmessage(QPair<Verse, QString> votd);
@@ -96,35 +102,49 @@ private slots:
   /**
    * @brief navigates to the next page relative to the current page
    */
-  void nextPage();
+  void nextPage(int step = 1);
   /**
    * @brief navigates to the previous page relative to the current page
    */
-  void prevPage();
+  void prevPage(int step = 1);
   /**
-   * @brief displays the given page and sets the current verse to the
-   * 1st verse in the page
+   * @brief ensure the page given is visible and update other members to match
+   * the properties of the first verse in the page, calls the appropriate
+   * navigation function according to the ::ReaderMode
    * @param page - page to navigate to
+   * @param updateElements - boolean flag to indicate whether to update other
+   * elements or not
    * @param automaticFlip - boolean indicating whether the function was called
    * by internal signal to automatically flip the page
    */
-  void gotoPage(int page, bool automaticFlip = false);
+  void gotoPage(int page,
+                bool updateElements = true,
+                bool automaticFlip = false);
+  /**
+   * @brief single page mode navigation
+   * @param page - page to navigate to
+   */
+  void gotoSinglePage(int page);
+  /**
+   * @brief double page mode navigation
+   * @param page - page to navigate to
+   */
+  void gotoDoublePage(int page);
   /**
    * @brief gets the page of the 1st verse in this surah, moves to that page,
-   * and starts playback of the surah.
+   * and starts playback of the surah
    * @param surahIdx - surah number (1-114)
    */
   void gotoSurah(int surahIdx);
   /**
    * @brief sets the verse combobox values according to the current surah verse
-   * count, sets the current verse as the visible index
+   * count (m_surahCount), sets the current verse as the visible index
    * @param forceUpdate - boolean flag forces the combobox to update it's surah
    * verse count
    */
   void setVerseComboBoxRange(bool forceUpdate = false);
-
   /**
-   * @brief  continues playback of the current verse
+   * @brief continues playback of the current verse
    */
   void btnPlayClicked();
   /**
@@ -136,49 +156,59 @@ private slots:
    * update verses combobox & selected surah
    */
   void btnStopClicked();
-
   /**
    * @brief slot for updating the reader page as the user selects a different
-   * page from the combobox.
+   * page from the combobox
    * @param newPageIdx - the selected idx in the combobox (0 - 603)
    */
   void cmbPageChanged(int newPageIdx);
   /**
    * @brief slot for updating the reader page as the user selects a different
-   * verse in the same surah.
-   * @param newVerseIdx verse idx in the combobox (0 to (surahVerseCount-1))
+   * verse in the same surah
+   * @param newVerseIdx - verse idx in the combobox (0 - (m_surahCount-1))
    */
   void cmbVerseChanged(int newVerseIdx);
   /**
    * @brief slot for updating the reader page as the user selects a different
-   * juz in the same surah.
+   * juz in the same surah
    * @param newJuzIdx - juz idx in the combobox (0 - 29)
    */
   void cmbJuzChanged(int newJuzIdx);
-
-  /**
-   * @brief sync the main window with the verse player as active verse changes,
-   * set the endOfPage flag or flip page if the flag is set
-   */
-  void activeVerseChanged();
   /**
    * @brief display warning message box in case that recitation files are
    * missing
+   * @param reciterIdx - ::Globals::recitersList index for the reciter
+   * @param surah
    */
   void missingRecitationFileWarn(int reciterIdx, int surah);
   /**
    * @brief sets the current position in the audio file as the position of the
-   * slider.
+   * slider
    * @param position - position in audio file in milliseconds
    */
   void mediaPosChanged(qint64 position);
   /**
-   * @brief disables/enables control buttons according to the media player
-   * state.
+   * @brief disables/enables control buttons according to the media player state
+   * and update the systray tooltip
    * @param state - playback state of the current audio file
    */
   void mediaStateChanged(QMediaPlayer::PlaybackState state);
-
+  /**
+   * @brief move to the next verse as the playback of the current verse ends
+   * @param status - the status of the current verse recitation media
+   */
+  void mediaStatusChanged(QMediaPlayer::MediaStatus status);
+  /**
+   * @brief set the systray icon tooltip text according to the currently playing
+   * recitation
+   * @param state - playback state of the current verse
+   */
+  void updateTrayTooltip(QMediaPlayer::PlaybackState state);
+  /**
+   * @brief change the player volume level as the volume slider changes
+   * @param position - position in the slider (0 - 100)
+   */
+  void volumeSliderValueChanged(int position);
   /**
    * @brief adds the current ::Verse to the bookmarks
    */
@@ -186,7 +216,7 @@ private slots:
   /**
    * @brief toggle play/pause of the current verse
    */
-  void spaceKeyPressed();
+  void togglePlayback();
   /**
    * @brief open the SettingsDialog and connect settings change slots
    */
@@ -219,7 +249,6 @@ private slots:
    * @brief open the about messagebox for Qt
    */
   void on_actionAbout_Qt_triggered();
-
   /**
    * @brief slot to navigate to the clicked verse in the side panel and update
    * UI elements
@@ -242,17 +271,16 @@ private slots:
   void navigateToVerse(Verse v);
   /**
    * @brief callback function for clicking verses in the QuranPageBrowser that
-   * takes actions based on the chosen option in the menu.
+   * takes actions based on the chosen option in the menu
    * @param hrefUrl - "#idx" where idx is the verse index relative to the start
-   * of the page
+   * of the page (=index in the page ::Verse QList)
    */
   void verseAnchorClicked(const QUrl& hrefUrl);
   /**
    * @brief copy to clipboard the text of the verse with the given index
    * @param IdxInPage - verse index relative to the start of the page
    */
-  void copyVerseText(int IdxInPage);
-
+  void copyVerseText(const Verse v);
   /**
    * @brief redraw the current Quran page
    * @param manualSz - boolean flag to force the use of the manually set
@@ -265,13 +293,6 @@ private slots:
    */
   void addSideContent();
   /**
-   * @brief set the systray icon tooltip text according to the currently playing
-   * recitation
-   * @param newState - playback state of the current verse
-   */
-  void updateTrayTooltip(QMediaPlayer::PlaybackState newState);
-
-  /**
    * @brief set tafsir to the one in the settings, update the selected db
    */
   void updateLoadedTafsir();
@@ -283,7 +304,6 @@ private slots:
    * @brief set side content font to the one in the settings
    */
   void updateSideFont();
-
   /**
    * @brief search for the surahs with the given argument when the text in the
    * side dock search box is changed
@@ -297,10 +317,49 @@ private slots:
    */
   void listSurahNameClicked(const QModelIndex& index);
   /**
-   * @brief change the player volume level as the volume slider changes
-   * @param position - position in the slider (0 - 100)
+   * @brief increment the current active ::Verse appropriately
+   * @return the new incremented ::Verse
    */
-  void volumeSliderValueChanged(int position);
+  Verse incrementVerse();
+  /**
+   * @brief decrement the current active ::Verse appropriately
+   * @return the new decremented ::Verse
+   */
+  Verse decrementVerse();
+  /**
+   * @brief move to the next ::Verse relative to m_currVerse
+   */
+  void nextVerse();
+  /**
+   * @brief move to the previous ::Verse relative to m_currVerse
+   */
+  void prevVerse();
+  /**
+   * @brief move to the next Juz
+   */
+  void nextJuz();
+  /**
+   * @brief move to the previous Juz
+   */
+  void prevJuz();
+  /**
+   * @brief move to the next surah
+   */
+  void nextSurah();
+  /**
+   * @brief move to the previous surah
+   */
+  void prevSurah();
+  /**
+   * @brief utility to increment the VersePlayer playback volume by steps of 5
+   */
+  void incrementVolume();
+  /**
+   * @brief utility to decrement the VersePlayer playback volume by steps of 5
+   */
+  void decrementVolume();
+  void toggleMenubar();
+  void toggleNavDock();
 
 private:
   QSettings* const m_settings = Globals::settings;
@@ -308,6 +367,8 @@ private:
   const QDir m_resources = Globals::themeResources;
   const QString& m_updateToolPath = Globals::updateToolPath;
   const bool m_darkMode = Globals::darkMode;
+  const ReaderMode& m_readerMode = Globals::readerMode;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief initalizes different parts used by the app
    */
@@ -321,8 +382,50 @@ private:
    */
   void loadSettings();
   /**
+   * @brief setup the reader layout and create widgets according to the current
+   * ::ReaderMode
+   */
+  void loadReader();
+  /**
+   * @brief utility function to check whether 2 pages are beside each other in
+   * 2-page mode
+   * @details 2 pages are considered neighbors if the right page is odd and the
+   * left page is directly after the right page
+   * @param page1 - the right side page
+   * @param page2 - the left side page
+   * @return boolean value indicating whether the given pages are neighbors
+   */
+  bool areNeighbors(int page1, int page2);
+  /**
+   * @brief 2-page mode utility to switch the active page & verse info list to
+   * the opposite side of the current
+   * @details the currently active page is recogonized through
+   * m_activeQuranBrowser and m_activeVList pointers
+   */
+  void switchActivePage();
+  /**
+   * @brief flip the current page/2-pages to the next page/2-pages
+   */
+  void btnNextClicked();
+  /**
+   * @brief flip the current page/2-pages to the previous page/2-pages
+   */
+  void btnPrevClicked();
+  /**
+   * @brief selects one of the verses in the currently displayed page(s)
+   * @param browserIdx - index of the QuranPageBrowser which contains the target
+   * verse
+   * @param IdxInPage - index of the verse relative to the start of the
+   * page
+   */
+  void selectVerse(int browserIdx, int IdxInPage);
+  /**
+   * @brief connect ShortcutHandler signals to their corresponding slots
+   */
+  void setupShortcuts();
+  /**
    * @brief connects signals and slots for different UI components and
-   * shortcuts.
+   * shortcuts
    */
   void setupConnections();
   /**
@@ -336,11 +439,16 @@ private:
    */
   void setupMenubarToggle();
   /**
-   * @brief updates the selected surah in the navigation dock to match the
-   * active verse in the VersePlayer and navigate to it if different than the
-   * currently selected surah
+   * @brief sync the surahs QListView in the navigation dock to match the
+   * currently active ::Verse in the VersePlayer
+   * @return QModelIndex of the currently selected surah
    */
-  void updateSurah();
+  QModelIndex syncSelectedSurah();
+  /**
+   * @brief updates m_surahCount to match the verse count of the currently
+   * active verse
+   */
+  void updateSurahVerseCount();
   /**
    * @brief updates the list that contains::Verse instances for verses in the
    * current page
@@ -366,11 +474,6 @@ private:
    */
   void setCmbJuzIdx(int idx);
   /**
-   * @brief boolean indicating if the current verse is the last in the current
-   * page or not (not the last verse in the surah)
-   */
-  bool m_endOfPage = false;
-  /**
    * @brief flag for navigation slots to ignore signals emitted due to internal
    * change of page combobox index
    */
@@ -391,17 +494,36 @@ private:
    */
   bool m_internalJuzChange = false;
   /**
+   * @brief verse count for the surah of the current active ::Verse
+   */
+  int m_surahCount = 0;
+  /**
    * @brief float value of the current playback volume (0 - 1.0)
    */
   qreal m_volume = 1;
   /**
-   * @brief Pointer to access ui elements generated from .ui files.
+   * @brief Pointer to access ui elements generated from .ui files
    */
   Ui::MainWindow* ui;
   /**
-   * @brief pointer to QuranPageBrowser instance
+   * @brief ShortcutHandler instance for handling shortcuts
    */
-  QuranPageBrowser* m_quranBrowser = nullptr;
+  ShortcutHandler* m_shortcutHandler = nullptr;
+  /**
+   * @brief QScrollArea used in single page mode to display verses &
+   * translation
+   */
+  QScrollArea* m_scrlVerseByVerse = nullptr;
+  /**
+   * @brief pointer to currently active QuranPageBrowser instance, must be one
+   * of the values in m_quranBrowsers array
+   */
+  QuranPageBrowser* m_activeQuranBrowser = nullptr;
+  /**
+   * @brief array of QuranPageBrowser instances used in different modes, index 0
+   * is used in both modes
+   */
+  QuranPageBrowser* m_quranBrowsers[2]{};
   /**
    * @brief pointer to NotificationManager instance
    */
@@ -410,10 +532,6 @@ private:
    * @brief pointer to NotificationPopup instance
    */
   NotificationPopup* m_popup = nullptr;
-  /**
-   * @brief pointer to DBManager instance
-   */
-  DBManager* m_dbMgr = nullptr;
   /**
    * @brief pointer to VersePlayer instance
    */
@@ -451,13 +569,19 @@ private:
    */
   Verse m_currVerse{ 1, 1, 1 };
   /**
-   * @brief QList of QFrame pointers to VerseFrame elements in the side panel
+   * @brief QList of QFrame pointers to VerseFrame elements in the single page
+   * mode side panel
    */
   QList<QFrame*> m_verseFrameList;
   /**
-   * @brief QList of ::Verse instances for the verses in the current page
+   * @brief pointer to the currently active page ::Verse list
    */
-  QList<Verse> m_vInfoList;
+  const QList<Verse>* m_activeVList;
+  /**
+   * @brief array of 2 QLists of ::Verse instances for the verses in the
+   * displayed page(s), index 0 is used in both reader modes
+   */
+  QList<Verse> m_vLists[2];
   /**
    * @brief pointer to the QProcess instance of the maintainence tool that
    * checks for updates

@@ -10,8 +10,7 @@ DBManager::DBManager(QObject* parent)
 {
   m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
   m_glyphsDbPath.setFile(m_dbDir.filePath("glyphs.db"));
-  m_bookmarksDbPath.setFile(QDir::currentPath() + QDir::separator() +
-                            "bookmarks.db");
+  m_bookmarksDbPath.setFile(m_bookmarksFilepath);
 
   // set database driver, set the path & open a connection with the db
   QSqlDatabase::addDatabase("QSQLITE", "QuranCon");
@@ -19,6 +18,10 @@ DBManager::DBManager(QObject* parent)
   QSqlDatabase::addDatabase("QSQLITE", "BookmarksCon");
   QSqlDatabase::addDatabase("QSQLITE", "TafsirCon");
   QSqlDatabase::addDatabase("QSQLITE", "TranslationCon");
+
+  for (int i = 1; i <= 114; i++) {
+    m_surahNames.append(getSurahName(i));
+  }
 }
 
 /* ---------------- Database handling ---------------- */
@@ -28,11 +31,9 @@ DBManager::setOpenDatabase(Database db, QString filePath)
 {
   if (m_currentDb == db)
     return;
-  else
-    m_currentDb = db;
 
+  m_currentDb = db;
   m_openDBCon.close();
-
   switch (db) {
     case quran:
       m_openDBCon = QSqlDatabase::database("QuranCon");
@@ -114,6 +115,10 @@ DBManager::setCurrentTafsir(Tafsir tafsirName)
       m_tafsirDbFilename = "katheer.db";
       break;
 
+    case Tafsir::katheer_en:
+      m_tafsirDbFilename = "katheer_en.db";
+      break;
+
     case Tafsir::indonesian:
       m_tafsirDbFilename = "indonesian.db";
       break;
@@ -162,6 +167,9 @@ DBManager::setCurrentTranslation(Translation translationName)
       break;
     case en_sahih:
       m_transDbFilename = "en_sahih.db";
+      break;
+    case en_yusuf:
+      m_transDbFilename = "en_yusuf.db";
       break;
     case es_navio:
       m_transDbFilename = "es_navio.db";
@@ -492,11 +500,6 @@ DBManager::getSurahStartPage(int surahIdx)
 QList<QString>
 DBManager::surahNameList()
 {
-  if (m_surahNames.isEmpty()) {
-    for (int i = 1; i <= 114; i++) {
-      m_surahNames.append(getSurahName(i));
-    }
-  }
 
   return m_surahNames;
 }
@@ -798,7 +801,7 @@ DBManager::getTranslation(const int sIdx, const int vIdx)
   return dbQuery.value(0).toString();
 }
 
-DBManager::Tafsir
+Tafsir
 DBManager::currTafsir() const
 {
   return m_currTafsir;

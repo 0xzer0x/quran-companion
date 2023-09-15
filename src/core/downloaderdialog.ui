@@ -65,6 +65,9 @@
          <property name="showDropIndicator" stdset="0">
           <bool>false</bool>
          </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::ExtendedSelection</enum>
+         </property>
         </widget>
        </item>
        <item>
@@ -104,7 +107,7 @@
             <x>0</x>
             <y>0</y>
             <width>482</width>
-            <height>517</height>
+            <height>515</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -130,6 +133,13 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="btnDownloads">
+           <property name="text">
+            <string>Downloads Folder</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">

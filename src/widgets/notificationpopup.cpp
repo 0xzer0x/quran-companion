@@ -5,9 +5,8 @@
 
 #include "notificationpopup.h"
 
-NotificationPopup::NotificationPopup(QWidget* parent, DBManager* dbMgr)
+NotificationPopup::NotificationPopup(QWidget* parent)
   : QFrame{ parent }
-  , m_dbMgr{ dbMgr }
   , m_iconWidget{ new QLabel(this) }
   , m_textWidget{ new QLabel(this) }
   , m_opacityEffect{ new QGraphicsOpacityEffect(this) }

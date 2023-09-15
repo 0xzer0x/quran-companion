@@ -143,6 +143,31 @@ dialog-ok-icon: off;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <item>
+             <widget class="QLabel" name="lbReaderMode">
+              <property name="text">
+               <string>Reader mode</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cmbReaderMode">
+              <item>
+               <property name="text">
+                <string>Single page</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Double page</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QLabel" name="label">
@@ -480,6 +505,11 @@ dialog-ok-icon: off;
               </item>
               <item>
                <property name="text">
+                <string>English - Ibn-Katheer</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
                 <string>Indonesian - Tafsir Jalalayn</string>
                </property>
               </item>
@@ -490,7 +520,7 @@ dialog-ok-icon: off;
               </item>
               <item>
                <property name="text">
-                <string>Tafheem-ul-Quran</string>
+                <string>English - Tafheem-ul-Quran</string>
                </property>
               </item>
              </widget>
@@ -547,6 +577,11 @@ dialog-ok-icon: off;
               <item>
                <property name="text">
                 <string>English - Sahih International</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>English - Abdullah Yusuf Ali</string>
                </property>
               </item>
               <item>
@@ -664,6 +699,50 @@ dialog-ok-icon: off;
            </layout>
           </item>
          </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="shortcutsTab">
+      <attribute name="title">
+       <string>Shortcuts</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QTableView" name="tableViewShortcuts">
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="dragDropOverwriteMode">
+          <bool>false</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="sortingEnabled">
+          <bool>false</bool>
+         </property>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
         </widget>
        </item>
       </layout>

@@ -29,10 +29,8 @@ public:
   /**
    * @brief Class constructor
    * @param parent - pointer to parent widget
-   * @param dbPtr - pointer to DBManager instance
    */
-  explicit NotificationManager(QObject* parent = nullptr,
-                               DBManager* dbPtr = nullptr);
+  explicit NotificationManager(QObject* parent = nullptr);
   ~NotificationManager();
 
   /**
@@ -111,6 +109,7 @@ signals:
   void showVOTDmessagebox(QPair<Verse, QString> votd);
 
 private:
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief adds system tray actions and set their connections
    */
@@ -120,6 +119,7 @@ private:
    * text to be displayed in the messagebox
    */
   void setVotdMsg();
+  QFile m_timestampFile = Globals::configDir.absoluteFilePath("votd.log");
   /**
    * @brief boolean to indicate whether the verse of the day have been shown
    * before
@@ -129,10 +129,6 @@ private:
    * @brief date and time at application launch
    */
   QDateTime m_dtNow;
-  /**
-   * @brief DBManager instance
-   */
-  DBManager* m_dbMgr;
   /**
    * @brief system tray context menu
    */

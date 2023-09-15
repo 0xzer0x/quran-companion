@@ -100,6 +100,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/downloaderdialog.ui" line="136"/>
+        <source>Downloads Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/downloaderdialog.ui" line="152"/>
         <source>clear</source>
         <translation type="unfinished"></translation>
@@ -189,11 +194,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="597"/>
-        <source>Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="617"/>
         <source>View</source>
         <translation type="unfinished"></translation>
@@ -237,6 +237,11 @@
     <message>
         <location filename="../core/mainwindow.ui" line="719"/>
         <source>3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="597"/>
+        <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -457,28 +462,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="1016"/>
-        <source>Tafsir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="1019"/>
         <source>Ctrl+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.ui" line="1016"/>
+        <source>Tafsir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.ui" line="1024"/>
         <source>Verse of the day</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
-        <source>Update tool is unavailable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -506,6 +501,16 @@
     <message>
         <location filename="../core/mainwindow.cpp" line="440"/>
         <source>Updates are available, use the maintainance tool to install the latest updates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Update tool is unavailable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -681,6 +686,56 @@
     <message>
         <location filename="../main.cpp" line="422"/>
         <source>Muhammad Jibreel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="547"/>
+        <source>Toggle playback state of recitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="549"/>
+        <source>Move to the next page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="551"/>
+        <source>Move to the previous page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="554"/>
+        <source>Bookmark the current active verse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="557"/>
+        <source>Open the bookmarks dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="559"/>
+        <source>Open the search dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="562"/>
+        <source>Open the preferences dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="565"/>
+        <source>Open the tafsir for the current active verse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="569"/>
+        <source>Open the recitations download dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="572"/>
+        <source>Close the currently focused window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -975,6 +1030,21 @@
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="150"/>
+        <source>Reader mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="158"/>
+        <source>Single page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="163"/>
+        <source>Double page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="150"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1168,6 +1238,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.ui" line="493"/>
+        <source>Tafheem-ul-Quran</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="508"/>
+        <source>English - Ibn-Katheer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.ui" line="483"/>
         <source>Indonesian - Tafsir Jalalayn</source>
         <translation type="unfinished"></translation>
@@ -1178,8 +1258,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="493"/>
-        <source>Tafheem-ul-Quran</source>
+        <location filename="../core/settingsdialog.ui" line="523"/>
+        <source>English - Tafheem-ul-Quran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1220,6 +1300,11 @@
     <message>
         <location filename="../core/settingsdialog.ui" line="549"/>
         <source>English - Sahih International</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="584"/>
+        <source>English - Abdullah Yusuf Ali</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1333,6 +1418,21 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.ui" line="708"/>
+        <source>Shortcuts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="64"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="64"/>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.cpp" line="66"/>
         <location filename="../core/settingsdialog.cpp" line="88"/>
         <location filename="../core/settingsdialog.cpp" line="144"/>
@@ -1350,6 +1450,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.cpp" line="148"/>
+        <source>Reading mode was changed, restart now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.cpp" line="145"/>
         <source>Restart is required to load new quran font, restart now?</source>
         <translation type="unfinished"></translation>
@@ -1362,6 +1467,121 @@
     <message>
         <location filename="../core/settingsdialog.cpp" line="354"/>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="398"/>
+        <source>Shortcut conflicts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="399"/>
+        <source>This key combination is used by another shortcut, please use a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="599"/>
+        <source>Toggle visibility of the menubar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="602"/>
+        <source>Toggle visibility of the navigation dock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="547"/>
+        <source>Toggle playback state of recitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="565"/>
+        <source>Increase the playback volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="568"/>
+        <source>Decrease the playback volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="549"/>
+        <source>Move to the next page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="551"/>
+        <source>Move to the previous page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="573"/>
+        <source>Close the currently focused window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="574"/>
+        <source>Move to the next verse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="577"/>
+        <source>Move to the previous verse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="579"/>
+        <source>Move to the next surah</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="582"/>
+        <source>Move to the previous surah</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="584"/>
+        <source>Move to the next juz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="586"/>
+        <source>Move to the previous juz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="554"/>
+        <source>Bookmark the current active verse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="557"/>
+        <source>Open the bookmarks dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="560"/>
+        <source>Open the search dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="563"/>
+        <source>Open the preferences dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="566"/>
+        <source>Open the tafsir for the current active verse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="570"/>
+        <source>Open the recitations download dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="571"/>
+        <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1444,6 +1664,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/tafsirdialog.cpp" line="109"/>
+        <source>English - Ibn-Katheer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/tafsirdialog.cpp" line="111"/>
         <source>Al-Qortoby</source>
         <translation type="unfinished"></translation>
@@ -1466,6 +1691,11 @@
     <message>
         <location filename="../core/tafsirdialog.cpp" line="123"/>
         <source>Tafheem-ul-Quran</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="124"/>
+        <source>English - Tafheem-ul-Quran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

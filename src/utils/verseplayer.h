@@ -27,12 +27,10 @@ public:
   /**
    * @brief Class constructor
    * @param parent - pointer to parent widget
-   * @param dbPtr - pointer to DBManager instance
    * @param initVerse - inital ::Verse to load recitation for
-   * @param reciterIdx - chosen reciter to load recitation of
+   * @param reciterIdx - ::Globals::recitersList index for the reciter
    */
   explicit VersePlayer(QObject* parent = nullptr,
-                       DBManager* dbPtr = nullptr,
                        Verse initVerse = Verse{},
                        int reciterIdx = 0);
 
@@ -44,13 +42,7 @@ public:
    */
   QString constructVerseFilename(Verse v);
   /**
-   * @brief updates m_surahCount to match the verse count of the currently
-   * active verse
-   */
-  void updateSurahVerseCount();
-
-  /**
-   * @brief setter for the m_activeVerse member
+   * @brief setter for the m_activeVerse attribute
    * @param newVerse - ::Verse instance
    */
   void setVerse(Verse& newVerse);
@@ -67,7 +59,6 @@ public:
    * @return boolean indicating successful load
    */
   bool loadActiveVerse();
-
   /**
    * @brief getter for the currently set reciter name
    * @return QString containing the reciter's display name
@@ -79,11 +70,6 @@ public:
    */
   QString verseFilename() const;
   /**
-   * @brief getter for m_surahCount
-   * @return number of verses in the current surah
-   */
-  int surahCount() const;
-  /**
    * @brief getter for m_activeVerse
    * @return ::Verse instance
    */
@@ -93,19 +79,28 @@ public:
    * @return pointer to the used QAudioOutput object
    */
   QAudioOutput* getOutput() const;
+  /**
+   * @brief getter for the player m_isOn attribute
+   * @return boolean indicating whether the player is on
+   */
+  bool isOn() const;
 
 public slots:
   /**
-   * @brief set the active ::Verse number according to the surah and set
-   * the current source as the bismillah file for the chosen reciter and start
-   * playback
+   * @brief re-implementation of QMediaPlayer::play() in order to set the m_isOn
+   * variable when manually calling play()
    */
-  void playBasmalah();
+  void play();
   /**
-   * @brief increment the verse & surah variables appropriately according to the
-   * surah, emits a signal on verse change & on changing from surah to another
+   * @brief re-implementation of QMediaPlayer::pause() in order to set the
+   * m_isOn variable when manually calling pause()
    */
-  void nextVerse();
+  void pause();
+  /**
+   * @brief re-implementation of QMediaPlayer::stop() in order to set the m_isOn
+   * variable when manually calling stop()
+   */
+  void stop();
   /**
    * @brief plays the mp3 file corresponding to m_activeVerse
    */
@@ -117,12 +112,6 @@ public slots:
    * new reciter's directory
    */
   bool changeReciter(int reciterIdx);
-  /*!
-   * @brief  slot to call the nextVerse() method on verse audio end
-   * @param status - status of the media file, refer to QMediaPlayer
-   * docs for enum.
-   */
-  void verseStateChanged(QMediaPlayer::MediaStatus status);
   /**
    * @brief change the QAudioDevice used for playback
    * @param dev - QAudioDevice to use for playback
@@ -130,31 +119,26 @@ public slots:
   void changeUsedAudioDevice(QAudioDevice dev);
   /**
    * @brief sets the current playback volume
-   * @param volume - float value for volume (0-1)
+   * @param volume - float value for volume (0-1.0)
    */
   void setPlayerVolume(qreal volume);
 
 signals:
-  void surahChanged();
-  void verseNoChanged();
   void missingVerseFile(int reciterIdx, int surah);
 
 private:
   QDir m_reciterDir = Globals::recitationsDir;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
-   * @brief connects signals and slots for different UI
-   * components and shortcuts.
+   * @brief boolean indicating whether the player is on or off, 'on' implies
+   * that playback should continue in case of verse change
    */
-  void setupConnections();
+  bool m_isOn = false;
   /**
    * @brief ::Globals::recitersList index for the reciter
    */
   int m_reciter = 0;
-  /**
-   * @brief verse count for the current surah being played
-   */
-  int m_surahCount = 0;
   /**
    * @brief ::Verse instance representing the current verse being played
    */
@@ -167,10 +151,6 @@ private:
    * @brief QAudioOutput used for playback
    */
   QAudioOutput* m_output;
-  /**
-   * @brief pointer to DBManager instance
-   */
-  DBManager* m_dbMgr;
 };
 
 #endif // VERSEPLAYER_H

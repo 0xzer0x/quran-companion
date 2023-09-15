@@ -11,6 +11,7 @@
 #include "../utils/downloadmanager.h"
 #include "../widgets/downloadprogressbar.h"
 #include <QCloseEvent>
+#include <QDesktopServices>
 #include <QDialog>
 #include <QLabel>
 #include <QProgressBar>
@@ -41,8 +42,7 @@ public:
    * @param dbMan - pointer to DBManager instance
    */
   explicit DownloaderDialog(QWidget* parent = nullptr,
-                            DownloadManager* downloader = nullptr,
-                            DBManager* dbMan = nullptr);
+                            DownloadManager* downloader = nullptr);
   ~DownloaderDialog();
 
   /**
@@ -87,7 +87,7 @@ public slots:
    */
   void downloadAborted();
   /**
-   * @brief  slot to update the current task
+   * @brief slot to update the current task
    * in case of download error
    * @param reciter - ::Globals::recitersList index for the reciter
    * @param surah - surah number
@@ -119,6 +119,11 @@ private slots:
    * @brief Stops all downloading tasks.
    */
   void btnStopClicked();
+  /**
+   * @brief open Globals::recitationsDir in the default file url handler
+   * (file manager)
+   */
+  void openDownloadsDir();
 
 protected:
   /**
@@ -132,6 +137,7 @@ private:
   const int m_languageCode = Globals::language;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   const QDir& m_resources = Globals::themeResources;
+  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -166,10 +172,6 @@ private:
    * @brief Pointer to DownloadManager instance.
    */
   DownloadManager* m_downloaderPtr;
-  /**
-   * @brief Pointer to DBManager instance.
-   */
-  DBManager* m_dbMgr;
   /**
    * @brief Pointer to QLabel which contains the state and information for the
    * currently active download.
