@@ -100,7 +100,11 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 
 #### Arabic UI
 
-![ar_dark.png](screenshots/ar_light.png)
+![ar_light.png](screenshots/ar_light.png)
+
+![ar_dark.png](screenshots/ar_dark.png)
+
+![ar_two-page.png](screenshots/ar_two-page.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -119,24 +123,35 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
     <img width='240' alt='Download Flatpak' src='https://flathub.org/assets/badges/flathub-badge-i-en.svg'/>
  </a>
- <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.1.7/Quran_Companion-1.1.7-x86_64.AppImage'>
-    <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 13px'/>
+ <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.1.8/Quran_Companion-1.1.8-x86_64.AppImage'>
+    <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 10px'/>
  </a>
 </p>
 
-### Keyboard Shortcuts
+### Keyboard Shortcuts (Customizable)
 
-| Key                                               | Description                     |
-| ------------------------------------------------- | ------------------------------- |
-| <kbd>&#8592;</kbd>                                | Next page                       |
-| <kbd>&#8594;</kbd>                                | Previous page                   |
-| <kbd>Space</kbd>                                  | start/pause recitation playback |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Bookmark current verse          |
-| <kbd>Ctrl</kbd> + <kbd>B</kbd>                    | Open Bookmarks dialog           |
-| <kbd>Ctrl</kbd> + <kbd>F</kbd>                    | Open Search dialog              |
-| <kbd>Ctrl</kbd> + <kbd>P</kbd>                    | Open Preferences dialog         |
-| <kbd>Ctrl</kbd> + <kbd>D</kbd>                    | Open the download manager       |
-| <kbd>Ctrl</kbd> + <kbd>Q</kbd>                    | Exit                            |
+| Key                                               | Description                              |
+| ------------------------------------------------- | ---------------------------------------- |
+| <kbd>Ctrl</kbd> + <kbd>M</kbd>                    | Toggle menubar visibility                |
+| <kbd>Ctrl</kbd> + <kbd>N</kbd>                    | Toggle navigation dock visibility        |
+| <kbd>Space</kbd>                                  | Toggle recitation playback               |
+| <kbd>+</kbd>                                      | Increase volume                          |
+| <kbd>-</kbd>                                      | decrease volume                          |
+| <kbd>&#8592;</kbd>                                | Next page(s)                             |
+| <kbd>&#8594;</kbd>                                | Previous page(s)                         |
+| <kbd>V</kbd>                                      | Next verse                               |
+| <kbd>Shift</kbd> + <kbd>V</kbd>                   | Previous verse                           |
+| <kbd>S</kbd>                                      | Next surah                               |
+| <kbd>Shift</kbd> + <kbd>S</kbd>                   | Previous surah                           |
+| <kbd>J</kbd>                                      | Next juz                                 |
+| <kbd>Shift</kbd> + <kbd>J</kbd>                   | Previous juz                             |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Bookmark current verse                   |
+| <kbd>Ctrl</kbd> + <kbd>B</kbd>                    | Open Bookmarks dialog                    |
+| <kbd>Ctrl</kbd> + <kbd>F</kbd>                    | Open Search dialog                       |
+| <kbd>Ctrl</kbd> + <kbd>P</kbd>                    | Open Preferences dialog                  |
+| <kbd>Ctrl</kbd> + <kbd>D</kbd>                    | Open Downloader dialog                   |
+| <kbd>Ctrl</kbd> + <kbd>T</kbd>                    | Open Tafsir dialog for the current verse |
+| <kbd>Ctrl</kbd> + <kbd>Q</kbd>                    | Exit                                     |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -321,5 +336,5 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [latest-release]: https://github.com/0xzer0x/quran-companion/releases/latest
-[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.7/qc_online_installer_x64_win.exe
-[linux-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.7/qc_online_installer_x64_linux.run
+[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.8/qc_online_installer_x64_win.exe
+[linux-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.8/qc_online_installer_x64_linux.run
