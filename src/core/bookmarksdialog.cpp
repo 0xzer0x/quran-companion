@@ -116,12 +116,12 @@ BookmarksDialog::loadBookmarks(int surah)
     QLabel* verseLb = new QLabel(frame);
     QPushButton* goToVerse = new QPushButton(tr("Go to verse"), frame);
     QPushButton* removeFromFav = new QPushButton(tr("Remove"), frame);
-    goToVerse->setMinimumWidth(100);
-    goToVerse->setMaximumWidth(100);
+    goToVerse->setMinimumWidth(150);
+    goToVerse->setMaximumWidth(150);
     goToVerse->setCursor(Qt::PointingHandCursor);
     removeFromFav->setCursor(Qt::PointingHandCursor);
-    removeFromFav->setMinimumWidth(100);
-    removeFromFav->setMaximumWidth(100);
+    removeFromFav->setMinimumWidth(150);
+    removeFromFav->setMaximumWidth(150);
 
     connect(goToVerse,
             &QPushButton::clicked,
