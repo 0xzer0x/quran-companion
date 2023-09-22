@@ -35,7 +35,7 @@ apps:
 parts:
   quran-companion:
     plugin: cmake
-    source: ../
+    source: .
     source-type: git
     parse-info: [usr/share/metainfo/io.github._0xzer0x.qurancompanion.metainfo.xml]
     cmake-generator: Ninja
