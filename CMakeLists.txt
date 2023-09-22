@@ -57,9 +57,9 @@ set(PROJECT_SOURCES
     src/widgets/verseframe.cpp
     src/widgets/verseframe.h
     src/widgets/notificationpopup.h
+    src/widgets/notificationpopup.cpp
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
-    src/widgets/notificationpopup.cpp
     src/utils/dbmanager.h
     src/utils/dbmanager.cpp
     src/utils/verseplayer.h
