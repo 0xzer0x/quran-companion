@@ -11,7 +11,7 @@ description: |
 
 grade: stable
 confinement: strict
-icon: ../xdg/logo256.png
+icon: dist/xdg/logo256.png
 
 apps:
   quran-companion:
@@ -35,7 +35,8 @@ apps:
 parts:
   quran-companion:
     plugin: cmake
-    source: ../../
+    source: ../
+    source-type: git
     parse-info: [usr/share/metainfo/io.github._0xzer0x.qurancompanion.metainfo.xml]
     cmake-generator: Ninja
     cmake-parameters:
@@ -47,7 +48,7 @@ parts:
   
   metadata:
     plugin: dump
-    source: ../xdg
+    source: dist/xdg
     organize:
       '*.desktop' : usr/share/applications/
       '*.xml' : usr/share/metainfo/
