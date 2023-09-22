@@ -25,7 +25,6 @@ apps:
       - audio-playback
       - desktop
       - desktop-legacy
-      - desktop-launch
       - network
       - opengl
       - unity7
