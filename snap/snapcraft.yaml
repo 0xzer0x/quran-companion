@@ -11,7 +11,7 @@ description: |
 
 grade: stable
 confinement: strict
-icon: ../dist/xdg/logo256.png
+icon: dist/xdg/logo256.png
 
 apps:
   quran-companion:
