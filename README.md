@@ -3,6 +3,9 @@
 <p align="center">
 <span  dir="rtl">بسم الله الرحمن الرحيم</span>
 </p>
+<p align="center">
+	<a href='README-AR.md'>العربية</a>
+</p>
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -114,17 +117,21 @@ Quran Companion is a cross-platform Quran reader/listener with recitation downlo
 
 #### Windows
 
-- Online installer can be downloaded from [here][win-installer].
+Online installer can be downloaded from [here][win-installer].
 
 #### Linux
 
-- Online installer can be downloaded from [here][linux-installer].
+The application can be downloaded in any of the available packages (snap, flatpak, appimage).
+
 <p align="left">
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
     <img width='240' alt='Download Flatpak' src='https://flathub.org/assets/badges/flathub-badge-i-en.svg'/>
  </a>
  <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.1.8/Quran_Companion-1.1.8-x86_64.AppImage'>
     <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 10px'/>
+ </a>
+ <a href="https://snapcraft.io/quran-companion">
+  <img width='250' alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
  </a>
 </p>
 
@@ -169,11 +176,14 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 
 ### Dependencies
 
-- GCC
+- GCC / MSVC
+- CMake
 - Qt >= 6.4
-  - Qt Tools
-  - Qt Multimedia
-- CMake >= 3.22
+  - `qtbase`
+  - `qtimageformats`
+  - `qtsvg`
+  - `qtmultimedia`
+  - `qttools`
 
 ### Build
 

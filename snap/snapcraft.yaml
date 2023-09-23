@@ -7,11 +7,11 @@ source-code: https://github.com/0xzer0x/quran-companion
 contact: youssefessamasu@gmail.com
 summary: Quran offline reader and player
 description: |
-   Quran Companion is a cross-platform Quran reader & listener with recitation download capabilities, verse highlighting, re-sizable Quran font, and a variety of tafsir books & translations.
+   Quran Companion is a cross-platform Quran reader and listener with recitation download capabilities, verse highlighting, re-sizable Quran font, and a variety of tafsir books and translations.
 
 grade: stable
 confinement: strict
-icon: dist/xdg/logo256.png
+icon: ../dist/xdg/logo256.png
 
 apps:
   quran-companion:
@@ -21,6 +21,7 @@ apps:
     environment:
       LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/pulseaudio"
       PULSE_RUNTIME_PATH: "$XDG_RUNTIME_DIR/../pulse"
+      QT_QPA_PLATFORMTHEME: gtk3
     plugs:
       - audio-playback
       - desktop
@@ -28,8 +29,23 @@ apps:
       - network
       - opengl
       - unity7
+      - gsettings
       - wayland
       - x11
+
+plugs: # plugs for theming
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes:gtk-3-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes:icon-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes:sounds-themes
 
 parts:
   quran-companion:
@@ -41,6 +57,8 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
+    stage-packages:
+      - qt6-gtk-platformtheme
     after:
       - qt
       - metadata
