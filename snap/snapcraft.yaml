@@ -57,8 +57,6 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
-    stage-packages:
-      - qt6-gtk-platformtheme
     after:
       - qt
       - metadata
