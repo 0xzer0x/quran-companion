@@ -194,6 +194,11 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.ui" line="597"/>
+        <source>Right</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.ui" line="617"/>
         <source>View</source>
         <translation>عرض</translation>
@@ -237,11 +242,6 @@
     <message>
         <location filename="../core/mainwindow.ui" line="719"/>
         <source>3</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="597"/>
-        <source>Right</source>
         <translation></translation>
     </message>
     <message>
@@ -435,6 +435,16 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.ui" line="995"/>
+        <source>Ctrl+B</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="1019"/>
+        <source>Ctrl+T</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.ui" line="987"/>
         <source>Check for updates</source>
         <translation>التحقق من وجود تحديثات</translation>
@@ -443,11 +453,6 @@
         <location filename="../core/mainwindow.ui" line="992"/>
         <source>Bookmarks</source>
         <translation>العلامات</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="995"/>
-        <source>Ctrl+B</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="1000"/>
@@ -460,11 +465,6 @@
         <location filename="../core/mainwindow.cpp" line="1129"/>
         <source>About Qt</source>
         <translation>عن كيوت</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="1019"/>
-        <source>Ctrl+T</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="1016"/>
@@ -514,6 +514,16 @@
         <translation>أداة التحديث غير موجودة.</translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.cpp" line="1332"/>
+        <source>Now playing: </source>
+        <translation>يقرأ الآن: </translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="1333"/>
+        <source>Surah </source>
+        <translation>سورة </translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.cpp" line="853"/>
         <source>Recitation not found</source>
         <translation>التلاوة غير موجودة</translation>
@@ -552,16 +562,6 @@
         <location filename="../core/mainwindow.cpp" line="1121"/>
         <source>Tafsir/Translations</source>
         <translation>التفسير/الترجمة</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="1332"/>
-        <source>Now playing: </source>
-        <translation>يقرأ الآن: </translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="1333"/>
-        <source>Surah </source>
-        <translation>سورة </translation>
     </message>
     <message>
         <location filename="../core/mainwindow.cpp" line="1380"/>
@@ -986,12 +986,17 @@
     <message>
         <location filename="../core/settingsdialog.ui" line="54"/>
         <source>Light</source>
-        <translation>الفاتح</translation>
+        <translation>فاتح</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="59"/>
+        <source>Sepia</source>
+        <translation>بني</translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="59"/>
         <source>Dark</source>
-        <translation>الداكن</translation>
+        <translation>داكن</translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="71"/>
@@ -1462,16 +1467,6 @@
         <translation>تم تغيير خط المصحف، هل تريد إعادة تشغيل البرنامج؟</translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.cpp" line="352"/>
-        <source>Apply</source>
-        <translation>طبّق</translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.cpp" line="354"/>
-        <source>Cancel</source>
-        <translation>ألغِ</translation>
-    </message>
-    <message>
         <location filename="../core/settingsdialog.cpp" line="398"/>
         <source>Shortcut conflicts</source>
         <translation>تضارب إختصارات</translation>
@@ -1480,6 +1475,16 @@
         <location filename="../core/settingsdialog.cpp" line="399"/>
         <source>This key combination is used by another shortcut, please use a different one.</source>
         <translation>تركيبة المفاتيح التي تم إختيارها مستخدمة من قبل إختصار آخر، الرجاء إستخدام تركيبة مفاتيح أُخرى.</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="352"/>
+        <source>Apply</source>
+        <translation>طبّق</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="354"/>
+        <source>Cancel</source>
+        <translation>ألغِ</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="599"/>

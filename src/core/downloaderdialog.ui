@@ -51,7 +51,7 @@
           </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Panel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Plain</enum>

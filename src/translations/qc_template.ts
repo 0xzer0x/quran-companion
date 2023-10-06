@@ -194,6 +194,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.ui" line="597"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.ui" line="617"/>
         <source>View</source>
         <translation type="unfinished"></translation>
@@ -237,11 +242,6 @@
     <message>
         <location filename="../core/mainwindow.ui" line="719"/>
         <source>3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="597"/>
-        <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -435,6 +435,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.ui" line="995"/>
+        <source>Ctrl+B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="1019"/>
+        <source>Ctrl+T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.ui" line="987"/>
         <source>Check for updates</source>
         <translation type="unfinished"></translation>
@@ -442,11 +452,6 @@
     <message>
         <location filename="../core/mainwindow.ui" line="992"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="995"/>
-        <source>Ctrl+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -459,11 +464,6 @@
         <location filename="../core/mainwindow.ui" line="1008"/>
         <location filename="../core/mainwindow.cpp" line="1129"/>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="1019"/>
-        <source>Ctrl+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -514,6 +514,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.cpp" line="1332"/>
+        <source>Now playing: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="1333"/>
+        <source>Surah </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.cpp" line="853"/>
         <source>Recitation not found</source>
         <translation type="unfinished"></translation>
@@ -551,16 +561,6 @@
     <message>
         <location filename="../core/mainwindow.cpp" line="1121"/>
         <source>Tafsir/Translations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="1332"/>
-        <source>Now playing: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="1333"/>
-        <source>Surah </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -986,6 +986,11 @@
     <message>
         <location filename="../core/settingsdialog.ui" line="54"/>
         <source>Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="59"/>
+        <source>Sepia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1460,16 +1465,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.cpp" line="352"/>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.cpp" line="354"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/settingsdialog.cpp" line="398"/>
         <source>Shortcut conflicts</source>
         <translation type="unfinished"></translation>
@@ -1477,6 +1472,16 @@
     <message>
         <location filename="../core/settingsdialog.cpp" line="399"/>
         <source>This key combination is used by another shortcut, please use a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="352"/>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.cpp" line="354"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

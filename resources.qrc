@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>resources/about.html</file>
         <file>resources/basmalah.png</file>
+        <file>resources/dark/dark.qss</file>
+        <file>resources/dark/dark.xml</file>
         <file>resources/dark/icons/arrow-down.svg</file>
         <file>resources/dark/icons/bookmark-false.png</file>
         <file>resources/dark/icons/bookmark-true.png</file>
@@ -20,10 +22,11 @@
         <file>resources/dark/icons/tafsir.png</file>
         <file>resources/dark/icons/today.png</file>
         <file>resources/dark/icons/update.png</file>
+        <file>resources/dark/icons/volume-rtl.png</file>
+        <file>resources/dark/icons/volume.png</file>
         <file>resources/dark/icons/website.png</file>
         <file>resources/dark/icons/zoom-in.png</file>
         <file>resources/dark/icons/zoom-out.png</file>
-        <file>resources/dark/styles.qss</file>
         <file>resources/light/icons/arrow-down.svg</file>
         <file>resources/light/icons/bookmark-false.png</file>
         <file>resources/light/icons/bookmark-true.png</file>
@@ -42,10 +45,15 @@
         <file>resources/light/icons/tafsir.png</file>
         <file>resources/light/icons/today.png</file>
         <file>resources/light/icons/update.png</file>
+        <file>resources/light/icons/volume-rtl.png</file>
+        <file>resources/light/icons/volume.png</file>
         <file>resources/light/icons/website.png</file>
         <file>resources/light/icons/zoom-in.png</file>
         <file>resources/light/icons/zoom-out.png</file>
-        <file>resources/light/styles.qss</file>
+        <file>resources/light/light.qss</file>
+        <file>resources/light/light.xml</file>
+        <file>resources/light/sepia.qss</file>
+        <file>resources/light/sepia.xml</file>
         <file>resources/logo.ico</file>
         <file>resources/splash.png</file>
         <file>resources/sura_box.png</file>

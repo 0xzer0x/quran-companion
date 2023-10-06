@@ -58,6 +58,13 @@ MainWindow::loadIcons()
   ui->btnStop->setIcon(QIcon(m_resources.filePath("icons/stop.png")));
   ui->actionCheck_for_updates->setIcon(
     QIcon(m_resources.filePath("icons/update.png")));
+
+  QLocale l(m_language);
+  if (l.textDirection() == Qt::RightToLeft)
+    ui->lbSpeaker->setPixmap(
+      QPixmap(m_resources.filePath("icons/volume-rtl.png")));
+  else
+    ui->lbSpeaker->setPixmap(QPixmap(m_resources.filePath("icons/volume.png")));
 }
 
 void
@@ -1571,9 +1578,8 @@ void
 MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
 {
   QPointer<QDialog> mbox = new QDialog(this);
+  mbox->setObjectName("dlgVOTD");
   mbox->setLayout(new QVBoxLayout);
-  mbox->setStyleSheet(
-    "QDialog:hover{ background-color: rgba(0, 161, 185, 40); }");
   mbox->setWindowIcon(QIcon(m_resources.filePath("/icons/today.png")));
   mbox->setWindowTitle(tr("Verse Of The Day"));
   ClickableLabel* lb = new ClickableLabel(mbox);

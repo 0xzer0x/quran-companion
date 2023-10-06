@@ -141,17 +141,16 @@ NotificationPopup::checkUpdate(QString appVer)
 void
 NotificationPopup::adjustLocation()
 {
+  m_notificationPos.setY(
+    parentWidget()->findChild<QWidget*>("menubar")->height() + 5);
+
   switch (m_dockArea) {
     case Qt::LeftDockWidgetArea:
       m_notificationPos.setX(parentWidget()->width() - this->width() - 5);
-      m_notificationPos.setY(30);
       break;
-
     case Qt::RightDockWidgetArea:
       m_notificationPos.setX(5);
-      m_notificationPos.setY(30);
       break;
-
     default:
       break;
   }

@@ -13,6 +13,7 @@
 #include <QSplashScreen>
 #include <QStyleFactory>
 #include <QTranslator>
+#include <QXmlStreamReader>
 using namespace Globals;
 
 /*!
@@ -295,77 +296,63 @@ setTheme(int themeIdx)
   qApp->setStyle(QStyleFactory::create("Fusion"));
 
   QPalette themeColors;
-  QFile styles;
+  QFile styles, palette;
   switch (themeIdx) {
     case 0:
-      // set global theme icons & styles path
       themeResources.setPath(":/resources/light/");
+      styles.setFileName(themeResources.filePath("light.qss"));
+      palette.setFileName(themeResources.filePath("light.xml"));
       darkMode = false;
-      // light palette
-      themeColors.setColor(QPalette::Window, QColor(240, 240, 240));
-      themeColors.setColor(QPalette::WindowText, Qt::black);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::WindowText, QColor(120, 120, 120));
-      themeColors.setColor(QPalette::Base, QColor(255, 255, 255));
-      themeColors.setColor(QPalette::AlternateBase, QColor(233, 231, 227));
-      themeColors.setColor(QPalette::ToolTipBase, Qt::white);
-      themeColors.setColor(QPalette::ToolTipText, Qt::black);
-      themeColors.setColor(QPalette::Text, Qt::black);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::Text, QColor(120, 120, 120));
-      themeColors.setColor(QPalette::Dark, QColor(160, 160, 160));
-      themeColors.setColor(QPalette::Shadow, QColor(105, 105, 105));
-      themeColors.setColor(QPalette::Button, QColor(240, 240, 240));
-      themeColors.setColor(QPalette::ButtonText, Qt::black);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::ButtonText, QColor(120, 120, 120));
-      themeColors.setColor(QPalette::BrightText, Qt::red);
-      themeColors.setColor(QPalette::Link, QColor(0, 0, 255));
-      themeColors.setColor(QPalette::Highlight, QColor(0, 120, 215));
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::Highlight, QColor(0, 120, 215));
-      themeColors.setColor(QPalette::HighlightedText, Qt::black);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::HighlightedText, QColor(255, 255, 255));
-      qApp->setPalette(themeColors);
       break;
 
     case 1:
-      // set global theme icons & styles path
+      themeResources.setPath(":/resources/light/");
+      styles.setFileName(themeResources.filePath("sepia.qss"));
+      palette.setFileName(themeResources.filePath("sepia.xml"));
+      darkMode = false;
+      break;
+
+    case 2:
       themeResources.setPath(":/resources/dark/");
+      styles.setFileName(themeResources.filePath("dark.qss"));
+      palette.setFileName(themeResources.filePath("dark.xml"));
       darkMode = true;
-      // dark palette
-      themeColors.setColor(QPalette::Window, QColor(53, 53, 53));
-      themeColors.setColor(QPalette::WindowText, Qt::white);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::WindowText, QColor(127, 127, 127));
-      themeColors.setColor(QPalette::Base, QColor(42, 42, 42));
-      themeColors.setColor(QPalette::AlternateBase, QColor(66, 66, 66));
-      themeColors.setColor(QPalette::ToolTipBase, QColor(22, 22, 22));
-      themeColors.setColor(QPalette::ToolTipText, Qt::white);
-      themeColors.setColor(QPalette::Text, Qt::white);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::Text, QColor(127, 127, 127));
-      themeColors.setColor(QPalette::Dark, QColor(35, 35, 35));
-      themeColors.setColor(QPalette::Shadow, QColor(20, 20, 20));
-      themeColors.setColor(QPalette::Button, QColor(53, 53, 53));
-      themeColors.setColor(QPalette::ButtonText, Qt::white);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::ButtonText, QColor(127, 127, 127));
-      themeColors.setColor(QPalette::BrightText, Qt::red);
-      themeColors.setColor(QPalette::Link, QColor(42, 130, 218));
-      themeColors.setColor(QPalette::Highlight, QColor(42, 130, 218));
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::Highlight, QColor(80, 80, 80));
-      themeColors.setColor(QPalette::HighlightedText, Qt::white);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
-      qApp->setPalette(themeColors);
       break;
   }
 
+  if (!palette.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    qCritical() << "Couldn't Read Color palette xml";
+  }
+
+  QXmlStreamReader paletteReader(&palette);
+  QPalette::ColorGroup group = QPalette::All;
+  while (!paletteReader.atEnd() && !paletteReader.hasError()) {
+    QXmlStreamReader::TokenType token = paletteReader.readNext();
+    if (token == QXmlStreamReader::StartElement) {
+
+      if (paletteReader.name().toString() == "enabled")
+        group = QPalette::All;
+      else if (paletteReader.name().toString() == "disabled")
+        group = QPalette::Disabled;
+      // color element
+      else {
+        QPalette::ColorRole role;
+        int red, green, blue;
+        role = static_cast<QPalette::ColorRole>(
+          paletteReader.attributes().value("role").toInt());
+        red = paletteReader.attributes().value("red").toInt();
+        green = paletteReader.attributes().value("green").toInt();
+        blue = paletteReader.attributes().value("blue").toInt();
+
+        themeColors.setColor(group, role, QColor(red, green, blue));
+      }
+    }
+  }
+
+  palette.close();
+  qApp->setPalette(themeColors);
+
   // load stylesheet
-  styles.setFileName(themeResources.filePath("styles.qss"));
   if (styles.open(QIODevice::ReadOnly)) {
     qApp->setStyleSheet(styles.readAll());
     styles.close();

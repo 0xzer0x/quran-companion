@@ -12,8 +12,8 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   , m_vPlayerPtr(vPlayerPtr)
 {
   ui->setupUi(this);
-  ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 100));
-  ui->cmbSideFontSz->setValidator(new QIntValidator(10, 100));
+  ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 72));
+  ui->cmbSideFontSz->setValidator(new QIntValidator(10, 72));
   setWindowIcon(QIcon(m_resources.filePath("icons/prefs.png")));
   fillLanguageCombobox();
   ui->tableViewShortcuts->setModel(&m_shortcutsModel);

@@ -4,12 +4,13 @@
  */
 
 #include "quranpagebrowser.h"
+#include <QApplication>
 #include <QRegularExpression>
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   : QTextBrowser(parent)
   , m_highlighter{ new QTextCursor(document()) }
-  , m_highlightColor{ QBrush(QColor(0, 161, 185)) }
+  , m_highlightColor{ QBrush(qApp->palette().color(QPalette::Highlight)) }
 {
 
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -117,11 +118,6 @@ QuranPageBrowser::surahFrame(int surah)
   return baseImage;
 }
 
-int QuranPageBrowser::page() const
-{
-  return m_page;
-}
-
 QString
 QuranPageBrowser::pageHeader(int page)
 {
@@ -169,8 +165,15 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
 
   // insert header in pages 3-604
   if (pageNo > 2) {
-    m_headerTextFormat.setForeground(QBrush(Qt::gray));
-    m_headerTextFormat.setFontPointSize(m_fontSize - 6);
+    m_headerTextFormat.setForeground(
+      QBrush(qApp->palette().color(QPalette::ColorRole::PlaceholderText)));
+
+    // smaller header font size for long juz > 10
+    if (m_qcfVer == 1 && pageNo >= 202)
+      m_headerTextFormat.setFontPointSize(std::max(4, m_fontSize - 8));
+    else
+      m_headerTextFormat.setFontPointSize(m_fontSize - 6);
+
     textCursor.insertBlock(m_pageFormat, m_headerTextFormat);
     textCursor.insertText(this->justifyHeader(m_currPageHeader));
   }
@@ -402,4 +405,10 @@ QString
 QuranPageBrowser::pageFont() const
 {
   return m_pageFont;
+}
+
+int
+QuranPageBrowser::page() const
+{
+  return m_page;
 }
