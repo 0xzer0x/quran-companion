@@ -411,12 +411,6 @@ dialog-no-icon: off;
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="minimumSize">
-           <size>
-            <width>900</width>
-            <height>0</height>
-           </size>
-          </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
           </property>
@@ -619,7 +613,6 @@ dialog-no-icon: off;
     <addaction name="actionFind"/>
     <addaction name="actionTafsir"/>
     <addaction name="actionVerse_of_the_day"/>
-    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">

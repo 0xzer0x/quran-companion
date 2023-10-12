@@ -95,6 +95,16 @@ ShortcutHandler::setupConnections()
           this,
           &ShortcutHandler::prevSurah,
           Qt::UniqueConnection);
+  connect(m_shortcuts.value("ZoomIn"),
+          &QShortcut::activated,
+          this,
+          &ShortcutHandler::zoomIn,
+          Qt::UniqueConnection);
+  connect(m_shortcuts.value("ZoomOut"),
+          &QShortcut::activated,
+          this,
+          &ShortcutHandler::zoomOut,
+          Qt::UniqueConnection);
   connect(m_shortcuts.value("DownloaderDialog"),
           &QShortcut::activated,
           this,

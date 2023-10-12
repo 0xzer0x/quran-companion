@@ -103,6 +103,8 @@ public slots:
    * @param size - QString representing the new font size
    */
   void updateQuranFontSize(QString size);
+
+  void updateFgHighlight(bool on);
   /**
    * @brief Update the font used for displaying the translation in the side
    * panel
@@ -138,6 +140,8 @@ signals:
    * size.
    */
   void quranFontChanged();
+
+  void highlightLayerChanged();
   /**
    * @fn redrawSideContent()
    * @brief signal emitted to reload the verse-by-verse side panel to match the
@@ -288,6 +292,8 @@ private:
    * @brief boolean flag to indicate shortcut conflict checking
    */
   bool m_checkingShortcut = false;
+
+  bool m_fgHighlight = true;
   /**
    * @brief Pointer to access ui elements generated from .ui files.
    */

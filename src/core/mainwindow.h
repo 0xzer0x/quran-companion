@@ -360,6 +360,7 @@ private slots:
   void decrementVolume();
   void toggleMenubar();
   void toggleNavDock();
+  void updateHighlight();
 
 private:
   const bool m_darkMode = Globals::darkMode;

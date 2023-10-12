@@ -31,7 +31,7 @@ dialog-ok-icon: off;
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -199,6 +199,13 @@ dialog-ok-icon: off;
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QCheckBox" name="chkFgHighlight">
+              <property name="text">
+               <string>Foreground Highlight</string>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="QCheckBox" name="chkAdaptive">
               <property name="text">
@@ -606,7 +613,7 @@ dialog-ok-icon: off;
               </item>
               <item>
                <property name="text">
-                <string>فارسى - حسین تاجی گله داری</string>
+                <string>فارسى - حسين تاجى كله دارى</string>
                </property>
               </item>
               <item>

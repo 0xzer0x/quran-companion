@@ -48,6 +48,8 @@ signals:
   void prevJuz();
   void nextSurah();
   void prevSurah();
+  void zoomIn();
+  void zoomOut();
   void incrementVolume();
   void decrementVolume();
   void bookmarkCurrent();
@@ -67,10 +69,10 @@ private:
    */
   void setupConnections();
   /**
-   * @brief QMap of application shortcuts accessible through their settings
-   * name
+   * @brief Hash table of application shortcuts accessible through their
+   * settings name
    */
-  QMap<QString, QShortcut*> m_shortcuts;
+  QHash<QString, QShortcut*> m_shortcuts;
 };
 
 #endif // SHORTCUTHANDLER_H

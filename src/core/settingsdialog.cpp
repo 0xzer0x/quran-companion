@@ -77,6 +77,7 @@ void
 SettingsDialog::setCurrentSettingsAsRef()
 {
   m_votd = m_settings->value("VOTD").toBool();
+  m_fgHighlight = m_settings->value("Reader/FGHighlight").toBool();
   m_missingFileWarning = m_settings->value("MissingFileWarning").toBool();
 
   m_adaptive = m_settings->value("Reader/AdaptiveFont").toBool();
@@ -111,6 +112,7 @@ SettingsDialog::setCurrentSettingsAsRef()
   ui->chkDailyVerse->setChecked(m_votd);
   ui->chkAdaptive->setChecked(m_adaptive);
   ui->chkMissingWarning->setChecked(m_missingFileWarning);
+  ui->chkFgHighlight->setChecked(m_fgHighlight);
 
   // shortcuts tab
   populateShortcutsModel();
@@ -240,6 +242,13 @@ SettingsDialog::updateQuranFontSize(QString size)
 }
 
 void
+SettingsDialog::updateFgHighlight(bool on)
+{
+  m_settings->setValue("Reader/FGHighlight", on);
+  emit highlightLayerChanged();
+}
+
+void
 SettingsDialog::updateSideFont(QFont fnt)
 {
   fnt.setPointSize(m_sideFont.pointSize());
@@ -283,6 +292,9 @@ SettingsDialog::applyAllChanges()
 
   if (ui->chkMissingWarning->isChecked() != m_missingFileWarning)
     updateFileWarning(ui->chkMissingWarning->isChecked());
+
+  if (ui->chkFgHighlight->isChecked() != m_fgHighlight)
+    updateFgHighlight(ui->chkFgHighlight->isChecked());
 
   if (ui->cmbTafsir->currentIndex() != m_tafsir)
     updateTafsir(ui->cmbTafsir->currentIndex());

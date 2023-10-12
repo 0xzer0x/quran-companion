@@ -167,18 +167,8 @@ setGlobalPaths()
 void
 checkSettings(QSettings* settings)
 {
-  QStringList groups;
-  groups << "Reader"
-         << "Shortcuts";
-
-  checkSettingsGroup(settings, 0);
-  if (settings->childGroups() != groups) {
-    for (int i = 0; i < groups.size(); i++) {
-      if (i >= settings->childGroups().size() ||
-          settings->childGroups().at(i) != groups.at(i))
-        checkSettingsGroup(settings, i + 1);
-    }
-  }
+  for (int i = 0; i <= 2; i++)
+    checkSettingsGroup(settings, i);
 }
 
 void
@@ -196,6 +186,7 @@ checkSettingsGroup(QSettings* settings, int group)
     case 1:
       settings->beginGroup("Reader");
       settings->setValue("Mode", settings->value("Mode", 0));
+      settings->setValue("FGHighlight", settings->value("FGHighlight", 1));
       settings->setValue("Page", settings->value("Page", 1));
       settings->setValue("Surah", settings->value("Surah", 1));
       settings->setValue("Verse", settings->value("Verse", 1));
@@ -228,6 +219,8 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->setValue("PrevSurah", settings->value("PrevSurah", "Shift+S"));
       settings->setValue("NextJuz", settings->value("NextJuz", "J"));
       settings->setValue("PrevJuz", settings->value("PrevJuz", "Shift+J"));
+      settings->setValue("ZoomIn", settings->value("ZoomIn", "Ctrl+="));
+      settings->setValue("ZoomOut", settings->value("ZoomOut", "Ctrl+-"));
       settings->setValue("BookmarkCurrent",
                          settings->value("BookmarkCurrent", "Ctrl+Shift+B"));
       settings->setValue("BookmarksDialog",
@@ -619,6 +612,13 @@ populateShortcutsMap()
     "NextJuz", qApp->translate("SettingsDialog", "Move to the next juz"));
   shortcutDescription.insert(
     "PrevJuz", qApp->translate("SettingsDialog", "Move to the previous juz"));
+
+  shortcutDescription.insert(
+    "ZoomIn",
+    qApp->translate("SettingsDialog", "Increase the size of the quran page"));
+  shortcutDescription.insert(
+    "ZoomOut",
+    qApp->translate("SettingsDialog", "Decrease the size of the quran page"));
 
   shortcutDescription.insert(
     "BookmarkCurrent",

@@ -12,7 +12,6 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   , m_highlighter{ new QTextCursor(document()) }
   , m_highlightColor{ QBrush(qApp->palette().color(QPalette::Highlight)) }
 {
-
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   verticalScrollBar()->setVisible(false);
   setStyleSheet("QTextBrowser{background-color: transparent;}");
@@ -35,12 +34,6 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   m_easternNumsMap.insert("7", "٧");
   m_easternNumsMap.insert("8", "٨");
   m_easternNumsMap.insert("9", "٩");
-
-  QShortcut* zoomIn = new QShortcut(QKeySequence::StandardKey::ZoomIn, this);
-  QShortcut* zoomOut = new QShortcut(QKeySequence::StandardKey::ZoomOut, this);
-  connect(zoomIn, &QShortcut::activated, this, &QuranPageBrowser::actionZoomIn);
-  connect(
-    zoomOut, &QShortcut::activated, this, &QuranPageBrowser::actionZoomOut);
 }
 
 void
@@ -190,6 +183,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
       continue;
 
     if (l.contains("frame")) {
+      prevAnchor++;
       // generate frame for surah
       QImage surahFrame = this->surahFrame(l.split('_').at(1).toInt());
       // insert the surah image in the document
@@ -197,6 +191,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
       textCursor.insertImage(surahFrame.scaledToWidth(
         m_pageLineSize.width() + 5, Qt::SmoothTransformation));
     } else if (l.contains("bsml")) {
+      prevAnchor++;
       QImage bsml(":/resources/basmalah.png");
       if (m_darkMode)
         bsml.invertPixels();
@@ -256,7 +251,10 @@ QuranPageBrowser::highlightVerse(int verseIdxInPage)
   resetHighlight();
 
   QTextCharFormat tcf;
-  tcf.setForeground(m_highlightColor);
+  if (m_fgHighlight)
+    tcf.setForeground(m_highlightColor);
+  else
+    tcf.setBackground(m_highlightColor);
 
   const int* const bounds = m_pageVerseCoords.at(verseIdxInPage);
 
@@ -271,7 +269,11 @@ void
 QuranPageBrowser::resetHighlight()
 {
   QTextCharFormat tcf;
-  tcf.setForeground(m_darkMode ? Qt::white : Qt::black);
+  if (m_fgHighlight)
+    tcf.setForeground(m_darkMode ? Qt::white : Qt::black);
+  else
+    tcf.setBackground(Qt::transparent);
+
   if (m_highlighter->hasSelection())
     m_highlighter->mergeCharFormat(tcf); // de-highlight any previous highlights
 
@@ -393,6 +395,23 @@ QuranPageBrowser::actionZoomOut()
                        m_fontSize);
   constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
+}
+
+void
+QuranPageBrowser::updateHighlightLayer()
+{
+  int old = m_highlightedIdx;
+  resetHighlight();
+  m_fgHighlight = m_settings->value("Reader/FGHighlight").toBool();
+
+  QColor hc = m_highlightColor.color();
+  if (m_fgHighlight)
+    hc.setAlpha(255);
+  else
+    hc.setAlpha(100);
+
+  m_highlightColor.setColor(hc);
+  highlightVerse(old);
 }
 
 int
