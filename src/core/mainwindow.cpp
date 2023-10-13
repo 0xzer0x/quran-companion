@@ -14,7 +14,6 @@ MainWindow::MainWindow(QWidget* parent)
   , m_shortcutHandler(new ShortcutHandler(this))
 {
   ui->setupUi(this);
-  ui->menuView->addAction(ui->sideDock->toggleViewAction());
   ui->frmCenteralCont->setLayoutDirection(Qt::LeftToRight);
   loadIcons();
   loadSettings();
@@ -58,6 +57,13 @@ MainWindow::loadIcons()
   ui->btnStop->setIcon(QIcon(m_resources.filePath("icons/stop.png")));
   ui->actionCheck_for_updates->setIcon(
     QIcon(m_resources.filePath("icons/update.png")));
+
+  QLocale l(m_language);
+  if (l.textDirection() == Qt::RightToLeft)
+    ui->lbSpeaker->setPixmap(
+      QPixmap(m_resources.filePath("icons/volume-rtl.png")));
+  else
+    ui->lbSpeaker->setPixmap(QPixmap(m_resources.filePath("icons/volume.png")));
 }
 
 void
@@ -90,6 +96,7 @@ MainWindow::loadReader()
     ui->frmSidePanel->layout()->addWidget(m_scrlVerseByVerse);
     ui->centeralSplitter->setStretchFactor(0, 1);
     ui->centeralSplitter->setStretchFactor(1, 0);
+    ui->frmCenteralCont->setMinimumWidth(900);
   }
 
   else {
@@ -267,6 +274,21 @@ MainWindow::setupShortcuts()
           this,
           &MainWindow::actionTafsirTriggered,
           Qt::UniqueConnection);
+
+  for (int i = 0; i <= 1; i++) {
+    if (m_quranBrowsers[i]) {
+      connect(m_shortcutHandler,
+              &ShortcutHandler::zoomIn,
+              m_quranBrowsers[i],
+              &QuranPageBrowser::actionZoomIn,
+              Qt::UniqueConnection);
+      connect(m_shortcutHandler,
+              &ShortcutHandler::zoomOut,
+              m_quranBrowsers[i],
+              &QuranPageBrowser::actionZoomOut,
+              Qt::UniqueConnection);
+    }
+  }
 }
 
 void
@@ -487,6 +509,71 @@ MainWindow::setupConnections()
           m_popup,
           &NotificationPopup::checkUpdate,
           Qt::UniqueConnection);
+
+  // ########## Settings Dialog ########## //
+  // Restart signal
+  connect(m_settingsDlg,
+          &SettingsDialog::restartApp,
+          this,
+          &MainWindow::restartApp,
+          Qt::UniqueConnection);
+
+  // Quran page signals
+  connect(m_settingsDlg,
+          &SettingsDialog::redrawQuranPage,
+          this,
+          &MainWindow::redrawQuranPage,
+          Qt::UniqueConnection);
+  connect(m_settingsDlg,
+          &SettingsDialog::highlightLayerChanged,
+          this,
+          &MainWindow::updateHighlight,
+          Qt::UniqueConnection);
+  for (int i = 0; i <= 1; i++) {
+    if (m_quranBrowsers[i]) {
+      connect(m_settingsDlg,
+              &SettingsDialog::quranFontChanged,
+              m_quranBrowsers[i],
+              &QuranPageBrowser::updateFontSize,
+              Qt::UniqueConnection);
+    }
+  }
+
+  // Side panel signals
+  connect(m_settingsDlg,
+          &SettingsDialog::redrawSideContent,
+          this,
+          &MainWindow::addSideContent,
+          Qt::UniqueConnection);
+  connect(m_settingsDlg,
+          &SettingsDialog::tafsirChanged,
+          this,
+          &MainWindow::updateLoadedTafsir,
+          Qt::UniqueConnection);
+  connect(m_settingsDlg,
+          &SettingsDialog::translationChanged,
+          this,
+          &MainWindow::updateLoadedTranslation,
+          Qt::UniqueConnection);
+  connect(m_settingsDlg,
+          &SettingsDialog::sideFontChanged,
+          this,
+          &MainWindow::updateSideFont,
+          Qt::UniqueConnection);
+
+  // audio device signals
+  connect(m_settingsDlg,
+          &SettingsDialog::usedAudioDeviceChanged,
+          m_player,
+          &VersePlayer::changeUsedAudioDevice,
+          Qt::UniqueConnection);
+
+  // shortcut change
+  connect(m_settingsDlg,
+          &SettingsDialog::shortcutChanged,
+          m_shortcutHandler,
+          &ShortcutHandler::shortcutChanged,
+          Qt::UniqueConnection);
 }
 
 void
@@ -496,8 +583,10 @@ MainWindow::init()
     new VersePlayer(this, m_currVerse, m_settings->value("Reciter", 0).toInt());
   m_popup = new NotificationPopup(this);
   m_downManPtr = new DownloadManager(this);
+  m_settingsDlg = new SettingsDialog(this, m_player);
 
   loadReader();
+  updateHighlight();
 
   ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
   m_notifyMgr = new NotificationManager(this);
@@ -1113,71 +1202,6 @@ MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
 void
 MainWindow::actionPrefTriggered()
 {
-  if (m_settingsDlg == nullptr) {
-    m_settingsDlg = new SettingsDialog(this, m_player);
-
-    // Restart signal
-    connect(m_settingsDlg,
-            &SettingsDialog::restartApp,
-            this,
-            &MainWindow::restartApp,
-            Qt::UniqueConnection);
-
-    // Quran page signals
-    connect(m_settingsDlg,
-            &SettingsDialog::redrawQuranPage,
-            this,
-            &MainWindow::redrawQuranPage,
-            Qt::UniqueConnection);
-    connect(m_settingsDlg,
-            &SettingsDialog::quranFontChanged,
-            m_quranBrowsers[0],
-            &QuranPageBrowser::updateFontSize,
-            Qt::UniqueConnection);
-    if (m_quranBrowsers[1])
-      connect(m_settingsDlg,
-              &SettingsDialog::quranFontChanged,
-              m_quranBrowsers[1],
-              &QuranPageBrowser::updateFontSize,
-              Qt::UniqueConnection);
-
-    // Side panel signals
-    connect(m_settingsDlg,
-            &SettingsDialog::redrawSideContent,
-            this,
-            &MainWindow::addSideContent,
-            Qt::UniqueConnection);
-    connect(m_settingsDlg,
-            &SettingsDialog::tafsirChanged,
-            this,
-            &MainWindow::updateLoadedTafsir,
-            Qt::UniqueConnection);
-    connect(m_settingsDlg,
-            &SettingsDialog::translationChanged,
-            this,
-            &MainWindow::updateLoadedTranslation,
-            Qt::UniqueConnection);
-    connect(m_settingsDlg,
-            &SettingsDialog::sideFontChanged,
-            this,
-            &MainWindow::updateSideFont,
-            Qt::UniqueConnection);
-
-    // audio device signals
-    connect(m_settingsDlg,
-            &SettingsDialog::usedAudioDeviceChanged,
-            m_player,
-            &VersePlayer::changeUsedAudioDevice,
-            Qt::UniqueConnection);
-
-    // shortcut change
-    connect(m_settingsDlg,
-            &SettingsDialog::shortcutChanged,
-            m_shortcutHandler,
-            &ShortcutHandler::shortcutChanged,
-            Qt::UniqueConnection);
-  }
-
   m_settingsDlg->showWindow();
 }
 
@@ -1429,6 +1453,16 @@ MainWindow::toggleNavDock()
 }
 
 void
+MainWindow::updateHighlight()
+{
+  for (int i = 0; i <= 1; i++) {
+    if (m_quranBrowsers[i]) {
+      m_quranBrowsers[i]->updateHighlightLayer();
+    }
+  }
+}
+
+void
 MainWindow::redrawQuranPage(bool manualSz)
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
@@ -1571,9 +1605,8 @@ void
 MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
 {
   QPointer<QDialog> mbox = new QDialog(this);
+  mbox->setObjectName("dlgVOTD");
   mbox->setLayout(new QVBoxLayout);
-  mbox->setStyleSheet(
-    "QDialog:hover{ background-color: rgba(0, 161, 185, 40); }");
   mbox->setWindowIcon(QIcon(m_resources.filePath("/icons/today.png")));
   mbox->setWindowTitle(tr("Verse Of The Day"));
   ClickableLabel* lb = new ClickableLabel(mbox);

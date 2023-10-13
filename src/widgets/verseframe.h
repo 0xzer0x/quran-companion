@@ -6,7 +6,9 @@
 #ifndef VERSEFRAME_H
 #define VERSEFRAME_H
 
+#include <QApplication>
 #include <QFrame>
+#include <QPalette>
 #include <QVBoxLayout>
 
 /**
@@ -45,9 +47,9 @@ protected:
   void leaveEvent(QEvent* event);
 
 private:
-  int m_colorR = 0;
-  int m_colorG = 161;
-  int m_colorB = 185;
+  int m_colorR = qApp->palette().color(QPalette::Highlight).red();
+  int m_colorG = qApp->palette().color(QPalette::Highlight).green();
+  int m_colorB = qApp->palette().color(QPalette::Highlight).blue();
   /**
    * @brief boolean value representing Frame selection state.
    */

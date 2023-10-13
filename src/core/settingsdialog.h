@@ -104,6 +104,12 @@ public slots:
    */
   void updateQuranFontSize(QString size);
   /**
+   * @brief update the boolean indicating foreground highlighting
+   * @param on - boolean flag indicating whether to change the foreground color
+   * of the current verse
+   */
+  void updateFgHighlight(bool on);
+  /**
    * @brief Update the font used for displaying the translation in the side
    * panel
    * @param fnt - QFont representing the new font
@@ -138,6 +144,12 @@ signals:
    * size.
    */
   void quranFontChanged();
+  /**
+   * @fn highlightLayerChanged()
+   * @brief signal emitted in order to change the layer to which highlighting is
+   * applied.
+   */
+  void highlightLayerChanged();
   /**
    * @fn redrawSideContent()
    * @brief signal emitted to reload the verse-by-verse side panel to match the
@@ -273,7 +285,6 @@ private:
    * notify the MainWindow to reload the side content.
    */
   bool m_renderSideContent = false;
-
   /**
    * @brief boolean flag set when QCF font size is changed in order to
    * notify the MainWindow to reload the Quran page.
@@ -288,6 +299,10 @@ private:
    * @brief boolean flag to indicate shortcut conflict checking
    */
   bool m_checkingShortcut = false;
+  /**
+   * @brief boolean flag to indicate that foreground highlighting is active.
+   */
+  bool m_fgHighlight = true;
   /**
    * @brief Pointer to access ui elements generated from .ui files.
    */

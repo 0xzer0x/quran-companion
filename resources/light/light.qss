@@ -162,7 +162,7 @@ QListView#listViewSurahs::item:hover {
 
 QListView#listViewSurahs::item:selected,
 QListView#listViewSurahs::item:hover:selected {
-  border: 1px solid #008296;
+  border: 1px solid #008146;
   background-color: rgba(0, 161, 185, 90);
 }
 
@@ -185,7 +185,7 @@ QListView#listViewBookmarkedSurahs::item:hover {
 QListView#listViewBookmarkedSurahs::item:selected,
 QListView#listViewBookmarkedSurahs::item:hover:selected {
   text-align: center;
-  border-color: #008296;
+  border-color: #008146;
   outline: 0;
 }
 
@@ -203,13 +203,17 @@ QPushButton#btnToggleNav:!checked:hover {
 }
 
 QPushButton#btnToggleNav:checked {
-  border: 1px solid #008296;
+  border: 1px solid #008146;
   background-color: palette(highlight);
 }
 
 /* --------------- Notification Popup Styles --------------- */
 
 QFrame#Popup {
-  background: #008b8b;
+  background: palette(highlight);
   border-radius: 6px;
+}
+
+QDialog#dlgVOTD:hover {
+  background: rgba(0,161,185,40);
 }

@@ -1,6 +1,6 @@
 name: quran-companion
 base: core22
-version: '1.1.8'
+version: '1.1.9'
 title: Quran Companion
 website: https://github.com/0xzer0x/quran-companion
 source-code: https://github.com/0xzer0x/quran-companion
@@ -11,6 +11,7 @@ description: |
 
 grade: stable
 confinement: strict
+architectures: [amd64]
 icon: dist/xdg/logo256.png
 
 apps:
@@ -246,7 +247,7 @@ parts:
       - libxkbcommon-x11-0
       - zlib1g
     override-pull: |
-      QT=6.5.2
+      QT=6.5.3
       git clone -b v${QT} --depth=1 https://code.qt.io/qt/qt5.git .
       git submodule update --init --recursive --depth=1 qtbase qtdeclarative qtwayland qtimageformats qtsvg qtmultimedia qtshadertools qttools
     override-build: |

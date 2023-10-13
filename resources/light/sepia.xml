@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<palette>
+    <enabled>
+        <!-- Window -->
+        <color role="10" red="255" green="247" blue="234" />
+        <!-- WindowText -->
+        <color role="0" red="0" green="0" blue="0" />
+        <!-- Base -->
+        <color role="9" red="247" green="235" blue="213" />
+        <!-- AlternateBase -->
+        <color role="16" red="255" green="247" blue="234" />
+        <!-- ToolTipBase -->
+        <color role="18" red="38" green="31" blue="23" />
+        <!-- ToolTipText -->
+        <color role="19" red="247" green="235" blue="213" />
+        <!-- Text -->
+        <color role="6" red="0" green="0" blue="0" />
+        <!-- Dark -->
+        <color role="4" red="115" green="72" blue="29" />
+        <!-- Button -->
+        <color role="1" red="238" green="226" blue="204" />
+        <!-- ButtonText -->
+        <color role="8" red="0" green="0" blue="0" />
+        <!-- Link -->
+        <color role="14" red="114" green="97" blue="63" />
+        <!-- Highlight -->
+        <color role="12" red="118" green="99" blue="66" />
+        <!-- HighlightedText -->
+        <color role="13" red="0" green="0" blue="0" />
+        <!-- PlaceholderText -->
+        <color role="20" red="145" green="139" blue="126" />
+    </enabled>
+    <disabled>
+        <!-- WindowText -->
+        <color role="0" red="120" green="120" blue="120" />
+        <!-- Text -->
+        <color role="6" red="120" green="120" blue="120" />
+        <!-- ButtonText -->
+        <color role="8" red="120" green="120" blue="120" />
+        <!-- Highlight -->
+        <color role="12" red="80" green="80" blue="80" />
+        <!-- HighlightedText -->
+        <color role="13" red="255" green="255" blue="255" />
+    </disabled>
+</palette>

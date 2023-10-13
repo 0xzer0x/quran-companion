@@ -105,7 +105,6 @@ public:
    * @return suggested fontsize for the page
    */
   int bestFitFontSize();
-
   /**
    * @brief getter for m_fontSize
    * @return fontsize for the current page
@@ -119,15 +118,7 @@ public:
 
   int page() const;
 
-signals:
-  void copyVerse(int IdxInPage);
-
-protected:
-#ifndef QT_NO_CONTEXTMENU
-  void contextMenuEvent(QContextMenuEvent* event) override;
-#endif
-
-private slots:
+public slots:
   /**
    * @brief increment the fontsize by 1 and redraw the quran page
    */
@@ -136,6 +127,19 @@ private slots:
    * @brief decrement the fontsize by 1 and redraw the quran page
    */
   void actionZoomOut();
+  /**
+   * @brief update the boolean indicating foreground highlighting and
+   * re-highlight the current verse
+   */
+  void updateHighlightLayer();
+
+signals:
+  void copyVerse(int IdxInPage);
+
+protected:
+#ifndef QT_NO_CONTEXTMENU
+  void contextMenuEvent(QContextMenuEvent* event) override;
+#endif
 
 private:
   QSettings* const m_settings = Globals::settings;
@@ -168,6 +172,11 @@ private:
    * @return QImage of the surah frame
    */
   QImage surahFrame(int surah);
+  /**
+   * @brief boolean indicating whether to highlight the foreground of the active
+   * verse or not
+   */
+  bool m_fgHighlight;
   /**
    * @brief the currently loaded page
    */
@@ -263,9 +272,9 @@ private:
    */
   QList<int*> m_pageVerseCoords;
   /**
-   * @brief QMap used for converting page number to arabic numbers
+   * @brief Hash Table used for converting page number to arabic numbers
    */
-  QMap<QString, QString> m_easternNumsMap;
+  QHash<QString, QString> m_easternNumsMap;
 };
 
 #endif // QURANPAGEBROWSER_H

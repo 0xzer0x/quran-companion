@@ -358,15 +358,26 @@ private slots:
    * @brief utility to decrement the VersePlayer playback volume by steps of 5
    */
   void decrementVolume();
+  /**
+   * @brief toggles visiblity of menubar
+   */
   void toggleMenubar();
+  /**
+   * @brief toggles visiblity of the navigation dock
+   */
   void toggleNavDock();
+  /**
+   * @brief update the highlight layer (fg/bg) used by the Quran browser(s)
+   */
+  void updateHighlight();
 
 private:
+  const bool m_darkMode = Globals::darkMode;
+  const QLocale::Language& m_language = Globals::language;
   QSettings* const m_settings = Globals::settings;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   const QDir m_resources = Globals::themeResources;
   const QString& m_updateToolPath = Globals::updateToolPath;
-  const bool m_darkMode = Globals::darkMode;
   const ReaderMode& m_readerMode = Globals::readerMode;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**

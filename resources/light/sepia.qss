@@ -1,0 +1,215 @@
+QDialogButtonBox {
+  dialogbuttonbox-buttons-have-icons: 0;
+}
+
+/* --------- Player Styles --------- */
+
+QFrame#framePlayer {
+  background-color: #f7ebd5;
+  border-radius: 8px;
+  border: 2px solid #efe3cd;
+}
+
+QPushButton#btnPlay:enabled:hover,
+QPushButton#btnPause:enabled:hover,
+QPushButton#btnStop:hover,
+QPushButton#btnNext:hover,
+QPushButton#btnPrev:hover {
+  background-color: #fff1d7;
+}
+
+QPushButton#btnStop:pressed,
+QPushButton#btnNext:pressed,
+QPushButton#btnPrev:pressed {
+  background-color: #eee2cc;
+}
+
+QPushButton#btnPlay:disabled,
+QPushButton#btnPause:disabled {
+  background-color: #dfd2ba;
+}
+
+QPushButton#btnPlay,
+QPushButton#btnPause,
+QPushButton#btnStop,
+QPushButton#btnPrev,
+QPushButton#btnNext {
+  background-color: #f7ebd5;
+  border: 1px solid #383023;
+  border-radius: 4px;
+}
+
+QComboBox#cmbReciter {
+  border: 1px solid #383023;
+  border-radius: 3px;
+  padding: 1px 3px 1px 3px;
+  min-width: 6em;
+}
+
+QComboBox#cmbReciter::drop-down {
+  subcontrol-origin: padding;
+  subcontrol-position: top right;
+  width: 15px;
+  border-radius: 3px;
+}
+
+QComboBox#cmbReciter::down-arrow {
+  image: url(":/resources/light/icons/arrow-down.svg");
+}
+
+/* --------- Reader Styles --------- */
+
+QSplitter#centeralSplitter {
+  border: 2px solid #efe3cd;
+  border-radius: 7px;
+  background-color: #f7ebd5;
+}
+
+/* VERTICAL SCROLLBAR */
+QScrollBar:vertical {
+  border: none;
+  background: #f7ebd5;
+  width: 10px;
+  margin: 0;
+  border-radius: 3px;
+}
+
+/*  HANDLE BAR VERTICAL */
+QScrollBar::handle:vertical {
+  background-color: #aea698;
+  min-height: 10px;
+  border-radius: 4px;
+}
+QScrollBar::handle:vertical:hover {
+  background-color: #796c54;
+}
+QScrollBar::handle:vertical:pressed {
+  background-color: #796c54;
+}
+
+/* BTN TOP - SCROLLBAR */
+QScrollBar::sub-line:vertical {
+  border: none;
+  height: 0px;
+  subcontrol-position: top;
+  subcontrol-origin: margin;
+}
+/* BTN BOTTOM - SCROLLBAR */
+QScrollBar::add-line:vertical {
+  border: none;
+  height: 0px;
+  subcontrol-position: bottom;
+  subcontrol-origin: margin;
+}
+
+/* HORIZONTAL SCROLLBAR */
+QScrollBar:horizontal {
+  border: none;
+  border-radius: 4px;
+  background: #f7ebd5;
+  height: 10px;
+  margin: 0;
+}
+
+/*  HANDLE BAR HORIZONTAL */
+QScrollBar::handle:horizontal {
+  background-color: #aea698;
+  min-width: 2px;
+  border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal:hover {
+  background-color: #796c54;
+}
+
+/* BTN RIGHT - SCROLLBAR */
+QScrollBar::add-line:horizontal {
+  background: transparent;
+  width: 0;
+  subcontrol-position: right;
+  subcontrol-origin: margin;
+}
+
+/* BTN LEFT - SCROLLBAR */
+QScrollBar::sub-line:horizontal {
+  background: transparent;
+  width: 0;
+  subcontrol-position: left;
+  subcontrol-origin: margin;
+}
+
+/* ------------ ListView Styles ------------ */
+
+QListView#listViewSurahs {
+  font-size: 12pt;
+  spacing: 5px;
+  outline: none;
+}
+
+QListView#listViewSurahs::item {
+  border-radius: 3px;
+  padding: 5px;
+  outline: none;
+}
+
+QListView#listViewSurahs::item:hover {
+  background-color: rgba(115, 96, 64, 40);
+}
+
+QListView#listViewSurahs::item:selected,
+QListView#listViewSurahs::item:hover:selected {
+  border: 1px solid #736040;
+  background-color: rgba(115, 96, 64, 90);
+}
+
+QListView#listViewBookmarkedSurahs {
+  font-size: 10pt;
+  background-color: transparent;
+}
+
+QListView#listViewBookmarkedSurahs::item {
+  margin: 0px 5px 0px 0px;
+  background-color: #f7ebd5;
+  border: 1px solid #bfb7a5;
+  border-radius: 8px;
+}
+
+QListView#listViewBookmarkedSurahs::item:hover {
+  background-color: #eee2cc;
+}
+
+QListView#listViewBookmarkedSurahs::item:selected,
+QListView#listViewBookmarkedSurahs::item:hover:selected {
+  text-align: center;
+  border-color: #736040;
+  outline: 0;
+}
+
+/* ---------------- Toggle Styles ---------------- */
+
+QPushButton#btnToggleNav {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  image: url(":/resources/light/icons/navigation.png");
+}
+
+QPushButton#btnToggleNav:!checked:hover {
+  background-color: #d3d3d3;
+}
+
+QPushButton#btnToggleNav:checked {
+  border: 1px solid #736040;
+  background-color: palette(highlight);
+}
+
+/* --------------- Notification Popup Styles --------------- */
+
+QFrame#Popup {
+  background: palette(highlight);
+  border-radius: 6px;
+}
+
+QDialog#dlgVOTD:hover {
+  background: rgba(115,96,64,40);
+}

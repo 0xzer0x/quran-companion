@@ -13,6 +13,7 @@
 #include <QSplashScreen>
 #include <QStyleFactory>
 #include <QTranslator>
+#include <QXmlStreamReader>
 using namespace Globals;
 
 /*!
@@ -83,8 +84,8 @@ void
 populateRecitersList();
 /**
  * @brief populates the Globals::shortcutDescription QMap with key-value pairs
- * of (name - description), any new shortcuts should be added here along with
- * the default keybinding for it in the shortcuts settings group.
+ * of (name - description), any new shortcuts should be added to shortcuts.xml
+ * along with the default keybinding for it in the shortcuts settings group.
  */
 void
 populateShortcutsMap();
@@ -106,7 +107,7 @@ main(int argc, char* argv[])
   QApplication a(argc, argv);
   QApplication::setApplicationName("Quran Companion");
   QApplication::setOrganizationName("0xzer0x");
-  QApplication::setApplicationVersion("1.1.8");
+  QApplication::setApplicationVersion("1.1.9");
 
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
@@ -166,18 +167,8 @@ setGlobalPaths()
 void
 checkSettings(QSettings* settings)
 {
-  QStringList groups;
-  groups << "Reader"
-         << "Shortcuts";
-
-  checkSettingsGroup(settings, 0);
-  if (settings->childGroups() != groups) {
-    for (int i = 0; i < groups.size(); i++) {
-      if (i >= settings->childGroups().size() ||
-          settings->childGroups().at(i) != groups.at(i))
-        checkSettingsGroup(settings, i + 1);
-    }
-  }
+  for (int i = 0; i <= 2; i++)
+    checkSettingsGroup(settings, i);
 }
 
 void
@@ -195,6 +186,7 @@ checkSettingsGroup(QSettings* settings, int group)
     case 1:
       settings->beginGroup("Reader");
       settings->setValue("Mode", settings->value("Mode", 0));
+      settings->setValue("FGHighlight", settings->value("FGHighlight", 1));
       settings->setValue("Page", settings->value("Page", 1));
       settings->setValue("Surah", settings->value("Surah", 1));
       settings->setValue("Verse", settings->value("Verse", 1));
@@ -227,6 +219,8 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->setValue("PrevSurah", settings->value("PrevSurah", "Shift+S"));
       settings->setValue("NextJuz", settings->value("NextJuz", "J"));
       settings->setValue("PrevJuz", settings->value("PrevJuz", "Shift+J"));
+      settings->setValue("ZoomIn", settings->value("ZoomIn", "Ctrl+="));
+      settings->setValue("ZoomOut", settings->value("ZoomOut", "Ctrl+-"));
       settings->setValue("BookmarkCurrent",
                          settings->value("BookmarkCurrent", "Ctrl+Shift+B"));
       settings->setValue("BookmarksDialog",
@@ -295,77 +289,62 @@ setTheme(int themeIdx)
   qApp->setStyle(QStyleFactory::create("Fusion"));
 
   QPalette themeColors;
-  QFile styles;
+  QFile styles, palette;
   switch (themeIdx) {
     case 0:
-      // set global theme icons & styles path
       themeResources.setPath(":/resources/light/");
+      styles.setFileName(themeResources.filePath("light.qss"));
+      palette.setFileName(themeResources.filePath("light.xml"));
       darkMode = false;
-      // light palette
-      themeColors.setColor(QPalette::Window, QColor(240, 240, 240));
-      themeColors.setColor(QPalette::WindowText, Qt::black);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::WindowText, QColor(120, 120, 120));
-      themeColors.setColor(QPalette::Base, QColor(255, 255, 255));
-      themeColors.setColor(QPalette::AlternateBase, QColor(233, 231, 227));
-      themeColors.setColor(QPalette::ToolTipBase, Qt::white);
-      themeColors.setColor(QPalette::ToolTipText, Qt::black);
-      themeColors.setColor(QPalette::Text, Qt::black);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::Text, QColor(120, 120, 120));
-      themeColors.setColor(QPalette::Dark, QColor(160, 160, 160));
-      themeColors.setColor(QPalette::Shadow, QColor(105, 105, 105));
-      themeColors.setColor(QPalette::Button, QColor(240, 240, 240));
-      themeColors.setColor(QPalette::ButtonText, Qt::black);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::ButtonText, QColor(120, 120, 120));
-      themeColors.setColor(QPalette::BrightText, Qt::red);
-      themeColors.setColor(QPalette::Link, QColor(0, 0, 255));
-      themeColors.setColor(QPalette::Highlight, QColor(0, 120, 215));
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::Highlight, QColor(0, 120, 215));
-      themeColors.setColor(QPalette::HighlightedText, Qt::black);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::HighlightedText, QColor(255, 255, 255));
-      qApp->setPalette(themeColors);
       break;
 
     case 1:
-      // set global theme icons & styles path
+      themeResources.setPath(":/resources/light/");
+      styles.setFileName(themeResources.filePath("sepia.qss"));
+      palette.setFileName(themeResources.filePath("sepia.xml"));
+      darkMode = false;
+      break;
+
+    case 2:
       themeResources.setPath(":/resources/dark/");
+      styles.setFileName(themeResources.filePath("dark.qss"));
+      palette.setFileName(themeResources.filePath("dark.xml"));
       darkMode = true;
-      // dark palette
-      themeColors.setColor(QPalette::Window, QColor(53, 53, 53));
-      themeColors.setColor(QPalette::WindowText, Qt::white);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::WindowText, QColor(127, 127, 127));
-      themeColors.setColor(QPalette::Base, QColor(42, 42, 42));
-      themeColors.setColor(QPalette::AlternateBase, QColor(66, 66, 66));
-      themeColors.setColor(QPalette::ToolTipBase, QColor(22, 22, 22));
-      themeColors.setColor(QPalette::ToolTipText, Qt::white);
-      themeColors.setColor(QPalette::Text, Qt::white);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::Text, QColor(127, 127, 127));
-      themeColors.setColor(QPalette::Dark, QColor(35, 35, 35));
-      themeColors.setColor(QPalette::Shadow, QColor(20, 20, 20));
-      themeColors.setColor(QPalette::Button, QColor(53, 53, 53));
-      themeColors.setColor(QPalette::ButtonText, Qt::white);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::ButtonText, QColor(127, 127, 127));
-      themeColors.setColor(QPalette::BrightText, Qt::red);
-      themeColors.setColor(QPalette::Link, QColor(42, 130, 218));
-      themeColors.setColor(QPalette::Highlight, QColor(42, 130, 218));
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::Highlight, QColor(80, 80, 80));
-      themeColors.setColor(QPalette::HighlightedText, Qt::white);
-      themeColors.setColor(
-        QPalette::Disabled, QPalette::HighlightedText, QColor(127, 127, 127));
-      qApp->setPalette(themeColors);
       break;
   }
 
+  if (!palette.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    qCritical() << "Couldn't Read Color palette xml";
+  }
+
+  QXmlStreamReader paletteReader(&palette);
+  QPalette::ColorGroup group = QPalette::All;
+  while (!paletteReader.atEnd() && !paletteReader.hasError()) {
+    QXmlStreamReader::TokenType token = paletteReader.readNext();
+    if (token == QXmlStreamReader::StartElement) {
+      if (paletteReader.name().toString() == "enabled")
+        group = QPalette::All;
+      else if (paletteReader.name().toString() == "disabled")
+        group = QPalette::Disabled;
+      // color element
+      else {
+        QPalette::ColorRole role;
+        int red, green, blue;
+        role = static_cast<QPalette::ColorRole>(
+          paletteReader.attributes().value("role").toInt());
+        red = paletteReader.attributes().value("red").toInt();
+        green = paletteReader.attributes().value("green").toInt();
+        blue = paletteReader.attributes().value("blue").toInt();
+
+        themeColors.setColor(group, role, QColor(red, green, blue));
+      }
+    }
+  }
+
+  palette.close();
+  qApp->setPalette(themeColors);
+
   // load stylesheet
-  styles.setFileName(themeResources.filePath("styles.qss"));
   if (styles.open(QIODevice::ReadOnly)) {
     qApp->setStyleSheet(styles.readAll());
     styles.close();
@@ -398,184 +377,30 @@ addTranslation(QLocale::Language localeCode)
 void
 populateRecitersList()
 {
-  Reciter husary{ "Al-Husary",
-                  qApp->translate("MainWindow", "Al-Husary"),
-                  bismillahDir.absoluteFilePath("husary.mp3"),
-                  "https://cdn.islamic.network/quran/audio/64/ar.husary/",
-                  true };
+  QFile reciters(":/resources/reciters.xml");
+  if (!reciters.open(QIODevice::ReadOnly))
+    qFatal("Couldn't Open Reciters XML, Exiting");
 
-  Reciter husaryQasr{
-    "Al-Husary_(Qasr)",
-    qApp->translate("MainWindow", "Al-Husary (Qasr)"),
-    husary.basmallahPath,
-    "https://gitlab.com/0xzer0x/qc-audio/-/raw/main/husary_qasr_64kbps/"
-  };
+  QXmlStreamReader reader(&reciters);
+  while (!reader.atEnd() && !reader.hasError()) {
+    QXmlStreamReader::TokenType token = reader.readNext();
+    if (token == QXmlStreamReader::StartElement) {
+      if (reader.name().toString() == "reciter") {
+        Reciter reciter;
+        reciter.baseDirName = reader.attributes().value("dirname").toString();
+        reciter.displayName = qApp->translate(
+          "MainWindow", reader.attributes().value("display").toLatin1());
+        reciter.baseUrl = reader.attributes().value("url").toString();
+        reciter.basmallahPath = bismillahDir.absoluteFilePath(
+          reader.attributes().value("basmallah").toString());
+        reciter.useId = reader.attributes().value("useid").toInt();
 
-  Reciter husaryMujawwad{
-    "Al-Husary_(Mujawwad)",
-    qApp->translate("MainWindow", "Al-Husary (Mujawwad)"),
-    husary.basmallahPath,
-    "https://cdn.islamic.network/quran/audio/64/ar.husarymujawwad/",
-    true
-  };
+        recitersList.append(reciter);
+      }
+    }
+  }
 
-  Reciter abdulbasit{
-    "Abdul-Basit",
-    qApp->translate("MainWindow", "Abdul-Basit"),
-    bismillahDir.filePath("abdul-basit.mp3"),
-    "https://cdn.islamic.network/quran/audio/64/ar.abdulbasitmurattal/",
-    true
-  };
-
-  Reciter abdulbaitMujawwad{
-    "Abdul-Basit_(Mujawwad)",
-    qApp->translate("MainWindow", "Abdul-Basit (Mujawwad)"),
-    abdulbasit.basmallahPath,
-    "https://cdn.islamic.network/quran/audio/64/ar.abdulsamad/",
-    true
-  };
-
-  Reciter menshawi{ "Menshawi",
-                    qApp->translate("MainWindow", "Menshawi"),
-                    bismillahDir.absoluteFilePath("menshawi.mp3"),
-                    "https://cdn.islamic.network/quran/audio/128/ar.minshawi/",
-                    true };
-
-  Reciter menshawiMujawwad{
-    "Menshawi_(Mujawwad)",
-    qApp->translate("MainWindow", "Menshawi (Mujawwad)"),
-    menshawi.basmallahPath,
-    "https://cdn.islamic.network/quran/audio/64/ar.minshawimujawwad/",
-    true
-  };
-
-  Reciter alafasy{ "Mishary_Alafasy",
-                   qApp->translate("MainWindow", "Mishary Alafasy"),
-                   bismillahDir.absoluteFilePath("alafasy.mp3"),
-                   "https://cdn.islamic.network/quran/audio/64/ar.alafasy/",
-                   true };
-
-  Reciter tunaiji{ "Khalefa_Al-Tunaiji",
-                   qApp->translate("MainWindow", "Khalefa Al-Tunaiji"),
-                   bismillahDir.absoluteFilePath("tunaiji.mp3"),
-                   "https://everyayah.com/data/khalefa_al_tunaiji_64kbps/" };
-
-  Reciter dussary{ "Yasser_Ad-Dussary",
-                   qApp->translate("MainWindow", "Yasser Ad-Dussary"),
-                   bismillahDir.absoluteFilePath("ad-dussary.mp3"),
-                   "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/" };
-
-  Reciter banna{ "Mahmoud_Al-Banna",
-                 qApp->translate("MainWindow", "Mahmoud Al-Banna"),
-                 bismillahDir.absoluteFilePath("al-banna.mp3"),
-                 "https://everyayah.com/data/mahmoud_ali_al_banna_32kbps/" };
-
-  Reciter basfar{
-    "Abdullah_Basfar",
-    qApp->translate("MainWindow", "Abdullah Basfar"),
-    bismillahDir.absoluteFilePath("basfar.mp3"),
-    "https://cdn.islamic.network/quran/audio/64/ar.abdullahbasfar/",
-    true
-  };
-
-  Reciter shatree{ "Ash-Shaatree",
-                   qApp->translate("MainWindow", "Abu Bakr Ash-Shaatree"),
-                   bismillahDir.absoluteFilePath("shatree.mp3"),
-                   "https://cdn.islamic.network/quran/audio/64/ar.shaatree/",
-                   true };
-
-  Reciter ajamy{ "Al-Ajamy",
-                 qApp->translate("MainWindow", "Ahmed Al-Ajamy"),
-                 bismillahDir.absoluteFilePath("ajamy.mp3"),
-                 "https://cdn.islamic.network/quran/audio/64/ar.ahmedajamy/",
-                 true };
-
-  Reciter aliJaber{ "Ali_Jaber",
-                    qApp->translate("MainWindow", "Ali Jaber"),
-                    bismillahDir.absoluteFilePath("ajaber.mp3"),
-                    "https://everyayah.com/data/Ali_Jaber_64kbps/" };
-
-  Reciter fAbbad{ "Fares_Abbad",
-                  qApp->translate("MainWindow", "Fares Abbad"),
-                  bismillahDir.absoluteFilePath("fabbad.mp3"),
-                  "https://everyayah.com/data/Fares_Abbad_64kbps/" };
-
-  Reciter ghamadi{ "Ghamadi",
-                   qApp->translate("MainWindow", "Saad Al-Ghamadi"),
-                   bismillahDir.absoluteFilePath("ghamadi.mp3"),
-                   "https://everyayah.com/data/Ghamadi_40kbps/" };
-
-  Reciter hRifai{ "Hani_Rifai",
-                  qApp->translate("MainWindow", "Hani Rifai"),
-                  bismillahDir.absoluteFilePath("rifai.mp3"),
-                  "https://cdn.islamic.network/quran/audio/64/ar.hanirifai/",
-                  true };
-
-  Reciter hudhaify{ "Hudhaify",
-                    qApp->translate("MainWindow", "Hudhaify"),
-                    bismillahDir.absoluteFilePath("hudhaify.mp3"),
-                    "https://cdn.islamic.network/quran/audio/64/ar.hudhaify/",
-                    true };
-
-  Reciter shuraym{
-    "Saood_Ash-Shuraym",
-    qApp->translate("MainWindow", "Saood Ash-Shuraym"),
-    bismillahDir.absoluteFilePath("shuraym.mp3"),
-    "https://cdn.islamic.network/quran/audio/64/ar.saoodshuraym/",
-    true
-  };
-
-  Reciter alqatami{ "Nasser_Alqatami",
-                    qApp->translate("MainWindow", "Nasser Alqatami"),
-                    bismillahDir.absoluteFilePath("qatami.mp3"),
-                    "https://everyayah.com/data/Nasser_Alqatami_128kbps/" };
-
-  Reciter muaiqly{
-    "Maher_AlMuaiqly",
-    qApp->translate("MainWindow", "Maher Al-Muaiqly"),
-    bismillahDir.absoluteFilePath("muaiqly.mp3"),
-    "https://cdn.islamic.network/quran/audio/64/ar.mahermuaiqly/",
-    true
-  };
-
-  Reciter mIsmail{
-    "Mostafa_Ismail",
-    qApp->translate("MainWindow", "Mostafa Ismail"),
-    bismillahDir.absoluteFilePath("mismail.mp3"),
-    "https://quran.ksu.edu.sa/ayat/mp3/Mostafa_Ismail_128kbps/"
-  };
-
-  Reciter mJibreel{
-    "Muhammad_Jibreel",
-    qApp->translate("MainWindow", "Muhammad Jibreel"),
-    bismillahDir.absoluteFilePath("mjibreel.mp3"),
-    "https://quran.ksu.edu.sa/ayat/mp3/Muhammad_Jibreel_64kbps/"
-  };
-
-  recitersList.append(husary);
-  recitersList.append(husaryQasr);
-  recitersList.append(husaryMujawwad);
-  recitersList.append(abdulbasit);
-  recitersList.append(abdulbaitMujawwad);
-  recitersList.append(menshawi);
-  recitersList.append(menshawiMujawwad);
-  recitersList.append(alafasy);
-  recitersList.append(tunaiji);
-  recitersList.append(dussary);
-  recitersList.append(banna);
-  recitersList.append(basfar);
-  recitersList.append(shatree);
-  recitersList.append(ajamy);
-  recitersList.append(aliJaber);
-  recitersList.append(fAbbad);
-  recitersList.append(ghamadi);
-  recitersList.append(hRifai);
-  recitersList.append(hudhaify);
-  recitersList.append(shuraym);
-  recitersList.append(alqatami);
-  recitersList.append(muaiqly);
-  recitersList.append(mIsmail);
-  recitersList.append(mJibreel);
+  reciters.close();
 
   // create reciters directories
   recitationsDir.setPath(configDir.absolutePath());
@@ -593,66 +418,22 @@ populateRecitersList()
 void
 populateShortcutsMap()
 {
-  // shortcut descriptions
-  shortcutDescription.insert(
-    "ToggleMenubar",
-    qApp->translate("SettingsDialog", "Toggle visibility of the menubar"));
-  shortcutDescription.insert(
-    "ToggleNavDock",
-    qApp->translate("SettingsDialog",
-                    "Toggle visibility of the navigation dock"));
-  shortcutDescription.insert(
-    "TogglePlayback",
-    qApp->translate("SettingsDialog", "Toggle playback state of recitation"));
-  shortcutDescription.insert(
-    "VolumeUp",
-    qApp->translate("SettingsDialog", "Increase the playback volume"));
-  shortcutDescription.insert(
-    "VolumeDown",
-    qApp->translate("SettingsDialog", "Decrease the playback volume"));
+  QFile shortcuts(":/resources/shortcuts.xml");
+  if (!shortcuts.open(QIODevice::ReadOnly))
+    qCritical("Couldn't Open Shortcuts XML");
 
-  shortcutDescription.insert(
-    "NextPage", qApp->translate("SettingsDialog", "Move to the next page"));
-  shortcutDescription.insert(
-    "PrevPage", qApp->translate("SettingsDialog", "Move to the previous page"));
+  QXmlStreamReader reader(&shortcuts);
+  while (!reader.atEnd() && !reader.hasError()) {
+    QXmlStreamReader::TokenType token = reader.readNext();
+    if (token == QXmlStreamReader::StartElement) {
+      if (reader.name().toString() == "shortcut") {
+        shortcutDescription.insert(
+          reader.attributes().value("key").toString(),
+          qApp->translate("SettingsDialog",
+                          reader.attributes().value("description").toLatin1()));
+      }
+    }
+  }
 
-  shortcutDescription.insert(
-    "NextVerse", qApp->translate("SettingsDialog", "Move to the next verse"));
-  shortcutDescription.insert(
-    "PrevVerse",
-    qApp->translate("SettingsDialog", "Move to the previous verse"));
-
-  shortcutDescription.insert(
-    "NextSurah", qApp->translate("SettingsDialog", "Move to the next surah"));
-  shortcutDescription.insert(
-    "PrevSurah",
-    qApp->translate("SettingsDialog", "Move to the previous surah"));
-
-  shortcutDescription.insert(
-    "NextJuz", qApp->translate("SettingsDialog", "Move to the next juz"));
-  shortcutDescription.insert(
-    "PrevJuz", qApp->translate("SettingsDialog", "Move to the previous juz"));
-
-  shortcutDescription.insert(
-    "BookmarkCurrent",
-    qApp->translate("SettingsDialog", "Bookmark the current active verse"));
-
-  shortcutDescription.insert(
-    "BookmarksDialog",
-    qApp->translate("SettingsDialog", "Open the bookmarks dialog"));
-  shortcutDescription.insert(
-    "SearchDialog",
-    qApp->translate("SettingsDialog", "Open the search dialog"));
-  shortcutDescription.insert(
-    "SettingsDialog",
-    qApp->translate("SettingsDialog", "Open the preferences dialog"));
-  shortcutDescription.insert(
-    "TafsirDialog",
-    qApp->translate("SettingsDialog",
-                    "Open the tafsir for the current active verse"));
-  shortcutDescription.insert(
-    "DownloaderDialog",
-    qApp->translate("SettingsDialog", "Open the recitations download dialog"));
-
-  shortcutDescription.insert("Quit", qApp->translate("SettingsDialog", "Quit"));
+  shortcuts.close();
 }
