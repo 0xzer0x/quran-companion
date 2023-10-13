@@ -127,7 +127,10 @@ public slots:
    * @brief decrement the fontsize by 1 and redraw the quran page
    */
   void actionZoomOut();
-
+  /**
+   * @brief update the boolean indicating foreground highlighting and
+   * re-highlight the current verse
+   */
   void updateHighlightLayer();
 
 signals:
@@ -169,7 +172,10 @@ private:
    * @return QImage of the surah frame
    */
   QImage surahFrame(int surah);
-
+  /**
+   * @brief boolean indicating whether to highlight the foreground of the active
+   * verse or not
+   */
   bool m_fgHighlight;
   /**
    * @brief the currently loaded page

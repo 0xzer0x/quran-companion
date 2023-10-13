@@ -84,8 +84,8 @@ void
 populateRecitersList();
 /**
  * @brief populates the Globals::shortcutDescription QMap with key-value pairs
- * of (name - description), any new shortcuts should be added here along with
- * the default keybinding for it in the shortcuts settings group.
+ * of (name - description), any new shortcuts should be added to shortcuts.xml
+ * along with the default keybinding for it in the shortcuts settings group.
  */
 void
 populateShortcutsMap();
@@ -107,7 +107,7 @@ main(int argc, char* argv[])
   QApplication a(argc, argv);
   QApplication::setApplicationName("Quran Companion");
   QApplication::setOrganizationName("0xzer0x");
-  QApplication::setApplicationVersion("1.1.8");
+  QApplication::setApplicationVersion("1.1.9");
 
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
@@ -419,73 +419,22 @@ populateRecitersList()
 void
 populateShortcutsMap()
 {
-  // shortcut descriptions
-  shortcutDescription.insert(
-    "ToggleMenubar",
-    qApp->translate("SettingsDialog", "Toggle visibility of the menubar"));
-  shortcutDescription.insert(
-    "ToggleNavDock",
-    qApp->translate("SettingsDialog",
-                    "Toggle visibility of the navigation dock"));
-  shortcutDescription.insert(
-    "TogglePlayback",
-    qApp->translate("SettingsDialog", "Toggle playback state of recitation"));
-  shortcutDescription.insert(
-    "VolumeUp",
-    qApp->translate("SettingsDialog", "Increase the playback volume"));
-  shortcutDescription.insert(
-    "VolumeDown",
-    qApp->translate("SettingsDialog", "Decrease the playback volume"));
+  QFile shortcuts(":/resources/shortcuts.xml");
+  if (!shortcuts.open(QIODevice::ReadOnly))
+    qCritical("Couldn't Open Shortcuts XML");
 
-  shortcutDescription.insert(
-    "NextPage", qApp->translate("SettingsDialog", "Move to the next page"));
-  shortcutDescription.insert(
-    "PrevPage", qApp->translate("SettingsDialog", "Move to the previous page"));
+  QXmlStreamReader reader(&shortcuts);
+  while (!reader.atEnd() && !reader.hasError()) {
+    QXmlStreamReader::TokenType token = reader.readNext();
+    if (token == QXmlStreamReader::StartElement) {
+      if (reader.name().toString() == "shortcut") {
+        shortcutDescription.insert(
+          reader.attributes().value("key").toString(),
+          qApp->translate("SettingsDialog",
+                          reader.attributes().value("description").toLatin1()));
+      }
+    }
+  }
 
-  shortcutDescription.insert(
-    "NextVerse", qApp->translate("SettingsDialog", "Move to the next verse"));
-  shortcutDescription.insert(
-    "PrevVerse",
-    qApp->translate("SettingsDialog", "Move to the previous verse"));
-
-  shortcutDescription.insert(
-    "NextSurah", qApp->translate("SettingsDialog", "Move to the next surah"));
-  shortcutDescription.insert(
-    "PrevSurah",
-    qApp->translate("SettingsDialog", "Move to the previous surah"));
-
-  shortcutDescription.insert(
-    "NextJuz", qApp->translate("SettingsDialog", "Move to the next juz"));
-  shortcutDescription.insert(
-    "PrevJuz", qApp->translate("SettingsDialog", "Move to the previous juz"));
-
-  shortcutDescription.insert(
-    "ZoomIn",
-    qApp->translate("SettingsDialog", "Increase the size of the quran page"));
-  shortcutDescription.insert(
-    "ZoomOut",
-    qApp->translate("SettingsDialog", "Decrease the size of the quran page"));
-
-  shortcutDescription.insert(
-    "BookmarkCurrent",
-    qApp->translate("SettingsDialog", "Bookmark the current active verse"));
-
-  shortcutDescription.insert(
-    "BookmarksDialog",
-    qApp->translate("SettingsDialog", "Open the bookmarks dialog"));
-  shortcutDescription.insert(
-    "SearchDialog",
-    qApp->translate("SettingsDialog", "Open the search dialog"));
-  shortcutDescription.insert(
-    "SettingsDialog",
-    qApp->translate("SettingsDialog", "Open the preferences dialog"));
-  shortcutDescription.insert(
-    "TafsirDialog",
-    qApp->translate("SettingsDialog",
-                    "Open the tafsir for the current active verse"));
-  shortcutDescription.insert(
-    "DownloaderDialog",
-    qApp->translate("SettingsDialog", "Open the recitations download dialog"));
-
-  shortcutDescription.insert("Quit", qApp->translate("SettingsDialog", "Quit"));
+  shortcuts.close();
 }

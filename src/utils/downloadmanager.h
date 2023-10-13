@@ -38,7 +38,8 @@ public:
     int verse{ -1 };      ///< verse number
     int reciterIdx{ -1 }; ///<  ::Globals::recitersList index for the reciter
     QUrl link{};          ///< download link for the verse
-    QFileInfo downloadPath{}; ///< filename to save the downloaded file with
+    QFileInfo
+      downloadPath{}; ///< QFileInfo representing the path to save the file to
     QNetworkReply* networkReply = nullptr; ///< reply data of the web request
     /**
      * @brief resets the download task

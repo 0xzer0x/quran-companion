@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shortcuts>
+    <shortcut key="ToggleMenubar" description="Toggle visibility of the menubar" />
+    <shortcut key="ToggleNavDock" description="Toggle visibility of the navigation dock" />
+    <shortcut key="TogglePlayback" description="Toggle playback state of recitation" />
+    <shortcut key="VolumeUp" description="Increase the playback volume" />
+    <shortcut key="VolumeDown" description="Decrease the playback volume" />
+    <shortcut key="NextPage" description="Move to the next page" />
+    <shortcut key="PrevPage" description="Move to the previous page" />
+    <shortcut key="NextVerse" description="Move to the next verse" />
+    <shortcut key="PrevVerse" description="Move to the previous verse" />
+    <shortcut key="NextSurah" description="Move to the next surah" />
+    <shortcut key="PrevSurah" description="Move to the previous surah" />
+    <shortcut key="NextJuz" description="Move to the next juz" />
+    <shortcut key="PrevJuz" description="Move to the previous juz" />
+    <shortcut key="ZoomIn" description="Increase the size of the quran page" />
+    <shortcut key="ZoomOut" description="Decrease the size of the quran page" />
+    <shortcut key="BookmarkCurrent" description="Bookmark the current active verse" />
+    <shortcut key="BookmarksDialog" description="Open the bookmarks dialog" />
+    <shortcut key="SearchDialog" description="Open the search dialog" />
+    <shortcut key="SettingsDialog" description="Open the preferences dialog" />
+    <shortcut key="TafsirDialog" description="Open the tafsir for the current active verse" />
+    <shortcut key="DownloaderDialog" description="Open the recitations download dialog" />
+    <shortcut key="Quit" description="Quit" />
+</shortcuts>

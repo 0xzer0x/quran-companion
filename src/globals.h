@@ -181,8 +181,9 @@ extern QList<Reciter> recitersList; ///< global QList containing reciters
                                     ///< supported by the application.
 
 extern QMap<QString, QString>
-  shortcutDescription; ///< global QMap containing all available application
-                       ///< shortcuts as keys and their descriptions as values.
+  shortcutDescription; ///< global QMap containing all available
+                       ///< application shortcuts as keys and their descriptions
+                       ///< as values.
 
 extern QObject* databaseManager; ///< global pointer to the application-wide
                                  ///< DBManager instance for interacting with
