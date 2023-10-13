@@ -1202,9 +1202,6 @@ MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
 void
 MainWindow::actionPrefTriggered()
 {
-  if (m_settingsDlg == nullptr) {
-  }
-
   m_settingsDlg->showWindow();
 }
 

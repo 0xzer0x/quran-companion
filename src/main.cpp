@@ -322,7 +322,6 @@ setTheme(int themeIdx)
   while (!paletteReader.atEnd() && !paletteReader.hasError()) {
     QXmlStreamReader::TokenType token = paletteReader.readNext();
     if (token == QXmlStreamReader::StartElement) {
-
       if (paletteReader.name().toString() == "enabled")
         group = QPalette::All;
       else if (paletteReader.name().toString() == "disabled")
