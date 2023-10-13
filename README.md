@@ -23,7 +23,7 @@
 <p align="center">
     <a href="#key-features">Key Features</a> •
     <a href="#screenshots">Screenshots</a> •
-    <a href="https://github.com/0xzer0x/quran-companion/releases/latest">Download</a> •
+    <a href="#installation">Download</a> •
     <a href="#credits">Credits</a> •
     <a href="https://github.com/0xzer0x/quran-companion/issues">Report Bug</a> •
     <a href="#license">License</a> 
@@ -127,7 +127,7 @@ The application can be downloaded in any of the available packages (snap, flatpa
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
     <img width='240' alt='Download Flatpak' src='https://flathub.org/assets/badges/flathub-badge-i-en.svg'/>
  </a>
- <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.1.8/Quran_Companion-1.1.8-x86_64.AppImage'>
+ <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.1.9/Quran_Companion-1.1.9-x86_64.AppImage'>
     <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 10px'/>
  </a>
  <a href="https://snapcraft.io/quran-companion">
