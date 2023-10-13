@@ -72,8 +72,10 @@ DownloadManager::enqeueVerseTask(int reciterIdx, int surah, int verse)
   t.verse = verse;
   t.reciterIdx = reciterIdx;
   t.link = dl;
-  t.filename = QString::number(surah).rightJustified(3, '0') +
-               QString::number(verse).rightJustified(3, '0') + ".mp3";
+  t.downloadPath.setFile(m_toplevelDownloadPath.absoluteFilePath(
+    m_recitersList.at(reciterIdx).baseDirName + QDir::separator() +
+    QString::number(surah).rightJustified(3, '0') +
+    QString::number(verse).rightJustified(3, '0') + ".mp3"));
 
   m_downloadQueue.enqueue(t);
 }
@@ -90,10 +92,7 @@ DownloadManager::processQueueHead()
   qInfo() << "current download task - " << m_currentTask.link;
   m_currSurahCount = m_dbMgr->getSurahVerseCount(m_currentTask.surah);
 
-  m_downloadPath = m_toplevelDownloadPath;
-  m_downloadPath.cd(m_recitersList.at(m_currentTask.reciterIdx).baseDirName);
-
-  while (m_downloadPath.exists(m_currentTask.filename)) {
+  while (m_currentTask.downloadPath.exists()) {
     emit downloadProgressed(m_currentTask.verse, m_currSurahCount);
     if (m_currentTask.verse == m_currSurahCount)
       emit downloadComplete(m_currentTask.reciterIdx, m_currentTask.surah);
@@ -168,10 +167,10 @@ DownloadManager::finishupTask(QNetworkReply* replyData)
 bool
 DownloadManager::saveFile(QNetworkReply* data)
 {
-  QFile localFile(m_downloadPath.filePath(m_currentTask.filename));
+  QFile localFile(m_currentTask.downloadPath.absoluteFilePath());
 
   if (!localFile.open(QIODevice::WriteOnly)) {
-    qWarning() << "Couldn't open file:" << m_currentTask.filename;
+    qWarning() << "Couldn't open file:" << m_currentTask.downloadPath;
     return false;
   }
 

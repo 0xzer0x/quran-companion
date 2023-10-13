@@ -38,7 +38,7 @@ public:
     int verse{ -1 };      ///< verse number
     int reciterIdx{ -1 }; ///<  ::Globals::recitersList index for the reciter
     QUrl link{};          ///< download link for the verse
-    QString filename{};   ///< filename to save the downloaded file with
+    QFileInfo downloadPath{}; ///< filename to save the downloaded file with
     QNetworkReply* networkReply = nullptr; ///< reply data of the web request
     /**
      * @brief resets the download task
@@ -206,11 +206,6 @@ private:
    * @brief the download queue
    */
   QQueue<DownloadTask> m_downloadQueue;
-  /**
-   * @brief QDir representing path to a reciter directory where the recitation
-   * files will be downloaded
-   */
-  QDir m_downloadPath;
   /**
    * @brief QTime object to get the download start time, used in calculating
    * download speed

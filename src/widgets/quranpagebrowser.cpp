@@ -175,7 +175,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
   this->setMinimumWidth(m_pageLineSize.width() + 70);
 
   // page lines drawing
-  int counter = 0, prevAnchor = pageNo < 3 ? 3 : m_currPageHeader.size() + 2;
+  int counter = 0, prevAnchor = pageNo < 3 ? 1 : m_currPageHeader.size() + 2;
   m_bodyTextFormat.setFont(QFont(m_pageFont, m_fontSize));
   foreach (QString l, m_currPageLines) {
     l = l.trimmed();
@@ -183,15 +183,14 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
       continue;
 
     if (l.contains("frame")) {
-      prevAnchor++;
       // generate frame for surah
       QImage surahFrame = this->surahFrame(l.split('_').at(1).toInt());
       // insert the surah image in the document
       textCursor.insertBlock(m_pageFormat, m_bodyTextFormat);
       textCursor.insertImage(surahFrame.scaledToWidth(
         m_pageLineSize.width() + 5, Qt::SmoothTransformation));
-    } else if (l.contains("bsml")) {
       prevAnchor++;
+    } else if (l.contains("bsml")) {
       QImage bsml(":/resources/basmalah.png");
       if (m_darkMode)
         bsml.invertPixels();
@@ -199,6 +198,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
       textCursor.insertBlock(m_pageFormat, m_bodyTextFormat);
       textCursor.insertImage(
         bsml.scaledToWidth(m_pageLineSize.width(), Qt::SmoothTransformation));
+      prevAnchor += 3;
     } else {
       // pageline inertion operation
       textCursor.insertBlock(m_pageFormat, m_bodyTextFormat);
@@ -408,7 +408,7 @@ QuranPageBrowser::updateHighlightLayer()
   if (m_fgHighlight)
     hc.setAlpha(255);
   else
-    hc.setAlpha(100);
+    hc.setAlpha(80);
 
   m_highlightColor.setColor(hc);
   highlightVerse(old);

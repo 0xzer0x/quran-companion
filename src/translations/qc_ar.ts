@@ -400,18 +400,18 @@
         <translation>الإعدادات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="945"/>
-        <source>Ctrl+P</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="954"/>
         <source>Download manager</source>
         <translation>إدارة التحميلات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="957"/>
-        <source>Ctrl+D</source>
+        <location filename="../core/mainwindow.ui" line="1019"/>
+        <source>Ctrl+T</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="945"/>
+        <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
@@ -420,29 +420,14 @@
         <translation>خروج</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="970"/>
-        <source>Ctrl+Q</source>
+        <location filename="../core/mainwindow.ui" line="957"/>
+        <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="979"/>
         <source>Find</source>
         <translation>البحث</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="982"/>
-        <source>Ctrl+F</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="995"/>
-        <source>Ctrl+B</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="1019"/>
-        <source>Ctrl+T</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="987"/>
@@ -455,10 +440,20 @@
         <translation>العلامات</translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.ui" line="970"/>
+        <source>Ctrl+Q</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.ui" line="1000"/>
         <location filename="../core/mainwindow.cpp" line="1123"/>
         <source>About Quran Companion</source>
         <translation>عن البرنامج</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="982"/>
+        <source>Ctrl+F</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="1008"/>
@@ -472,9 +467,24 @@
         <translation>التفسير</translation>
     </message>
     <message>
+        <location filename="../core/mainwindow.ui" line="995"/>
+        <source>Ctrl+B</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.ui" line="1024"/>
         <source>Verse of the day</source>
         <translation>آية اليوم</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Error</source>
+        <translation>خطأ</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Update tool is unavailable.</source>
+        <translation>أداة التحديث غير موجودة.</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.cpp" line="420"/>
@@ -502,16 +512,6 @@
         <location filename="../core/mainwindow.cpp" line="440"/>
         <source>Updates are available, use the maintainance tool to install the latest updates.</source>
         <translation>هناك تحديثات متاحة، يمكنك إستخدام اداة التحديث للحصول على اخر التحديثات.</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
-        <source>Error</source>
-        <translation>خطأ</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
-        <source>Update tool is unavailable.</source>
-        <translation>أداة التحديث غير موجودة.</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.cpp" line="1332"/>
@@ -681,7 +681,7 @@
     <message>
         <location filename="../main.cpp" line="403"/>
         <source>Mostafa Ismail</source>
-        <translation>مصطفي إسماعيل</translation>
+        <translation>مصطفى إسماعيل</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="410"/>
@@ -1064,6 +1064,11 @@
         <translation>خط 2</translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.ui" line="205"/>
+        <source>Foreground Highlight</source>
+        <translation>تظليل النص</translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.ui" line="175"/>
         <source>Adaptive font size</source>
         <translation>حجم خط تلقائي</translation>
@@ -1243,16 +1248,16 @@
         <translation>تفسير ابن كثير</translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.ui" line="508"/>
+        <source>English - Ibn-Katheer</source>
+        <translation>تفسير ابن كثير - إنجليزي</translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.ui" line="493"/>
         <source>Tafheem-ul-Quran</source>
         <oldsource>Tafheem</oldsource>
         <translatorcomment>Tafheem-ul-Quran by Syed Abu-al-A&apos;la Maududi</translatorcomment>
         <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="508"/>
-        <source>English - Ibn-Katheer</source>
-        <translation>تفسير ابن كثير - إنجليزي</translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="483"/>
@@ -1362,6 +1367,11 @@
     <message>
         <location filename="../core/settingsdialog.ui" line="599"/>
         <source>فارسى - حسین تاجی گله داری</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="616"/>
+        <source>فارسى - حسين تاجى كله دارى</source>
         <translation></translation>
     </message>
     <message>
@@ -1522,11 +1532,6 @@
         <translation>الإنتقال إلى الصفحة السابقة</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="573"/>
-        <source>Close the currently focused window</source>
-        <translation>إغلاق النافذة الحالية</translation>
-    </message>
-    <message>
         <location filename="../main.cpp" line="574"/>
         <source>Move to the next verse</source>
         <translation>الإنتقال إلي الآية التالية</translation>
@@ -1555,6 +1560,16 @@
         <location filename="../main.cpp" line="586"/>
         <source>Move to the previous juz</source>
         <translation>الإنتقال إلى الجزء السابق</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="464"/>
+        <source>Increase the size of the quran page</source>
+        <translation>زيادة حجم الصفحة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="467"/>
+        <source>Decrease the size of the quran page</source>
+        <translation>تقليل حجم الصفحة</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="554"/>
@@ -1590,6 +1605,11 @@
         <location filename="../main.cpp" line="571"/>
         <source>Quit</source>
         <translation>خروج</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="573"/>
+        <source>Close the currently focused window</source>
+        <translation>إغلاق النافذة الحالية</translation>
     </message>
 </context>
 <context>
@@ -1696,14 +1716,14 @@
         <translation>تفسير السعدي</translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="123"/>
-        <source>Tafheem-ul-Quran</source>
-        <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
-    </message>
-    <message>
         <location filename="../core/tafsirdialog.cpp" line="124"/>
         <source>English - Tafheem-ul-Quran</source>
         <translation>تفهيم القرآن - إنجليزي</translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="123"/>
+        <source>Tafheem-ul-Quran</source>
+        <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
     </message>
     <message>
         <location filename="../core/tafsirdialog.cpp" line="126"/>

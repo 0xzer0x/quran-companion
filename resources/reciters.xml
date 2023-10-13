@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reciters>
+    <reciter id="0" dirname="Al-Husary" display="Al-Husary" basmallah="husary.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.husary/" useid="1" />
+
+    <reciter id="1" dirname="Al-Husary_(Qasr)" display="Al-Husary (Qasr)"
+        basmallah="husary.mp3"
+        url="https://gitlab.com/0xzer0x/qc-audio/-/raw/main/husary_qasr_64kbps/" useid="0" />
+
+    <reciter id="2" dirname="Al-Husary_(QMujawwad)" display="Al-Husary (Mujawwad)"
+        basmallah="husary.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.husarymujawwad/" useid="1" />
+
+    <reciter id="3" dirname="Abdul-Basit" display="Abdul-Basit"
+        basmallah="abdul-basit.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.abdulbasitmurattal/" useid="1" />
+
+    <reciter id="4" dirname="Abdul-Basit_(Mujawwad)" display="Abdul-Basit (Mujawwad)"
+        basmallah="abdul-basit.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.abdulsamad/" useid="1" />
+
+    <reciter id="5" dirname="Menshawi" display="Menshawi"
+        basmallah="menshawi.mp3"
+        url="https://cdn.islamic.network/quran/audio/128/ar.minshawi/" useid="1" />
+
+    <reciter id="6" dirname="Menshawi_(Mujawwad)" display="Menshawi (Mujawwad)"
+        basmallah="menshawi.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.minshawimujawwad/" useid="1" />
+
+    <reciter id="7" dirname="Mishary_Alafasy" display="Mishary Alafasy"
+        basmallah="alafasy.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.alafasy/" useid="1" />
+
+    <reciter id="8" dirname="Khalefa_Al-Tunaiji" display="Khalefa Al-Tunaiji"
+        basmallah="tunaiji.mp3"
+        url="https://everyayah.com/data/khalefa_al_tunaiji_64kbps/" useid="0" />
+
+    <reciter id="9" dirname="Yasser_Ad-Dussary" display="Yasser Ad-Dussary"
+        basmallah="ad-dussary.mp3"
+        url="https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/" useid="0" />
+
+    <reciter id="10" dirname="Mahmoud_Al-Banna" display="Mahmoud Al-Banna"
+        basmallah="al-banna.mp3"
+        url="https://everyayah.com/data/mahmoud_ali_al_banna_32kbps/" useid="0" />
+
+    <reciter id="11" dirname="Abdullah_Basfar" display="Abdullah Basfar"
+        basmallah="basfar.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.abdullahbasfar/" useid="1" />
+
+    <reciter id="12" dirname="Ash-Shaatree" display="Abu Bakr Ash-Shaatree"
+        basmallah="shatree.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.shaatree/" useid="1" />
+
+    <reciter id="13" dirname="Al-Ajamy" display="Ahmed Al-Ajamy"
+        basmallah="ajamy.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.ahmedajamy/" useid="1" />
+
+    <reciter id="14" dirname="Ali_Jaber" display="Ali Jaber"
+        basmallah="ajaber.mp3"
+        url="https://everyayah.com/data/Ali_Jaber_64kbps/" useid="0" />
+
+    <reciter id="15" dirname="Fares_Abbad" display="Fares Abbad"
+        basmallah="fabbad.mp3"
+        url="https://everyayah.com/data/Fares_Abbad_64kbps/" useid="0" />
+
+    <reciter id="16" dirname="Ghamadi" display="Saad Al-Ghamadi"
+        basmallah="ghamadi.mp3"
+        url="https://everyayah.com/data/Ghamadi_40kbps/" useid="0" />
+
+    <reciter id="17" dirname="Hani_Rifai" display="Hani Rifai"
+        basmallah="rifai.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.hanirifai/" useid="1" />
+
+    <reciter id="18" dirname="Hudhaify" display="Hudhaify"
+        basmallah="hudhaify.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.hudhaify/" useid="1" />
+
+    <reciter id="19" dirname="Saood_Ash-Shuraym" display="Saood Ash-Shuraym"
+        basmallah="shuraym.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.saoodshuraym/" useid="1" />
+
+    <reciter id="20" dirname="Nasser_Alqatami" display="Nasser Alqatami"
+        basmallah="qatami.mp3"
+        url="https://everyayah.com/data/Nasser_Alqatami_128kbps/" useid="0" />
+
+    <reciter id="21" dirname="Maher_AlMuaiqly" display="Maher Al-Muaiqly"
+        basmallah="muaiqly.mp3"
+        url="https://cdn.islamic.network/quran/audio/64/ar.mahermuaiqly/" useid="1" />
+
+    <reciter id="22" dirname="Mostafa_Ismail" display="Mostafa Ismail"
+        basmallah="mismail.mp3"
+        url="https://quran.ksu.edu.sa/ayat/mp3/Mostafa_Ismail_128kbps/" useid="0" />
+
+    <reciter id="23" dirname="Muhammad_Jibreel" display="Muhammad Jibreel"
+        basmallah="mjibreel.mp3"
+        url="https://quran.ksu.edu.sa/ayat/mp3/Muhammad_Jibreel_64kbps/" useid="0" />
+</reciters>
