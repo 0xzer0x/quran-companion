@@ -20,7 +20,7 @@ using namespace Globals;
  * @brief sets the theme for the application.
  * @details Application theme consists of a QPalette for the application and a
  * custom stylesheet for different UI components. works through passing the
- * theme index (0 = light, 1 = dark).
+ * theme index (0 = light, 1 = sepia , 2 = dark).
  *
  * @param themeIdx - index for theme as it appears in the application settings.
  */
