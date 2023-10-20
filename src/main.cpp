@@ -403,11 +403,6 @@ populateRecitersList()
   reciters.close();
 
   // create reciters directories
-  recitationsDir.setPath(configDir.absolutePath());
-  if (!recitationsDir.exists("recitations"))
-    recitationsDir.mkdir("recitations");
-
-  recitationsDir.cd("recitations");
   foreach (const Reciter& r, recitersList) {
     if (!recitationsDir.exists(r.baseDirName)) {
       recitationsDir.mkdir(r.baseDirName);
