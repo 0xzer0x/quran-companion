@@ -205,7 +205,7 @@ private:
    * checked against this QMap in order to determine whether its a duplicate or
    * not.
    */
-  QMap<int, QSet<int>> m_downloadingTasks;
+  QHash<int, QSet<int>> m_downloadingTasks;
 };
 
 #endif // DOWNLOADERDIALOG_H

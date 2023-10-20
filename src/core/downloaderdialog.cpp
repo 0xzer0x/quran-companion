@@ -62,6 +62,12 @@ DownloaderDialog::setupConnections()
           Qt::UniqueConnection);
 
   connect(m_downloaderPtr,
+          &DownloadManager::surahFound,
+          this,
+          &DownloaderDialog::surahDownloaded,
+          Qt::UniqueConnection);
+
+  connect(m_downloaderPtr,
           &DownloadManager::downloadCanceled,
           this,
           &DownloaderDialog::downloadAborted,
@@ -105,20 +111,17 @@ void
 DownloaderDialog::addToDownloading(int reciter, int surah)
 {
   // add surah to downloading tasks
-  QSet<int> downloading = m_downloadingTasks.value(reciter);
+  QSet<int>& downloading = m_downloadingTasks[reciter];
   downloading.insert(surah);
-  m_downloadingTasks.insert(reciter, downloading);
 }
 
 void
 DownloaderDialog::removeFromDownloading(int reciter, int surah)
 {
-  QSet<int> downloading = m_downloadingTasks.value(reciter);
+  QSet<int>& downloading = m_downloadingTasks[reciter];
   downloading.remove(surah);
   if (downloading.isEmpty())
     m_downloadingTasks.remove(reciter);
-  else
-    m_downloadingTasks.insert(reciter, downloading);
 }
 
 void
@@ -127,18 +130,26 @@ DownloaderDialog::addToQueue()
   QModelIndexList selected = ui->treeView->selectionModel()->selectedRows();
 
   int reciter = -1, surah = -1;
-  foreach (QModelIndex i, selected) {
+  foreach (const QModelIndex& i, selected) {
     reciter = i.parent().row();
     surah = i.row() + 1;
-    bool currentlyDownloading =
-      m_downloadingTasks.value(reciter).contains(surah);
-    if (reciter < 0 || currentlyDownloading)
-      continue;
+    if (reciter < 0 && !m_downloadingTasks.contains(i.row())) {
+      reciter = i.row();
+      for (surah = 1; surah <= 114; surah++) {
+        addToDownloading(reciter, surah);
+        addTaskProgress(reciter, surah);
+        m_downloaderPtr->addSurahToQueue(reciter, surah);
+      }
 
-    addToDownloading(reciter, surah);
-    addTaskProgress(reciter, surah);
-    for (int j = 1; j <= m_dbMgr->getSurahVerseCount(surah); j++) {
-      m_downloaderPtr->enqeueVerseTask(reciter, surah, j);
+    } else {
+      bool currentlyDownloading =
+        m_downloadingTasks.value(reciter).contains(surah);
+      if (currentlyDownloading)
+        continue;
+
+      addToDownloading(reciter, surah);
+      addTaskProgress(reciter, surah);
+      m_downloaderPtr->addSurahToQueue(reciter, surah);
     }
   }
 

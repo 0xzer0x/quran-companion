@@ -57,7 +57,6 @@ public:
    * @param parent - pointer to parent widget
    */
   explicit DownloadManager(QObject* parent = nullptr);
-
   /**
    * @brief gets the latest release of the application from the github repo
    */
@@ -92,17 +91,12 @@ public slots:
    */
   void cancelCurrentTask();
   /**
-   * @brief create a DownloadTask and add it to the download Queue
-   * @param reciterIdx - ::Globals::recitersList index for the reciter
-   * @param surah - surah number
-   * @param verse - verse number
-   */
-  void enqeueVerseTask(int reciterIdx, int surah, int verse);
-  /**
    * @brief process download queue front task. sets the networkReply for the
    * current task
    */
-  void processQueueHead();
+  void processDownloadQueue();
+  void processSurahQueue();
+  void addSurahToQueue(int reciter, int surah);
   /**
    * @brief calculate download speed and emit signal for UI component to update
    * its value
@@ -157,6 +151,7 @@ signals:
    * @fn void downloadError(int, int)
    */
   void downloadError(int reciterIdx, int surah);
+  void surahFound(int reciterIdx, int surah);
 
 private:
   const QDir& m_toplevelDownloadPath = Globals::recitationsDir;
@@ -173,6 +168,13 @@ private:
   QUrl downloadUrl(const int reciterIdx,
                    const int surah,
                    const int verse) const;
+  /**
+   * @brief create a DownloadTask and add it to the download Queue
+   * @param reciterIdx - ::Globals::recitersList index for the reciter
+   * @param surah - surah number
+   * @param verse - verse number
+   */
+  void enqeueVerseTask(int reciterIdx, int surah, int verse);
   /**
    * @brief emit signal according to the download error that occured
    * @param err - network error received
@@ -203,6 +205,8 @@ private:
    * @brief the currently active DownloadTask
    */
   DownloadTask m_currentTask;
+
+  QQueue<QPair<int, int>> m_surahQueue;
   /**
    * @brief the download queue
    */
