@@ -95,7 +95,16 @@ public slots:
    * current task
    */
   void processDownloadQueue();
+  /**
+   * @brief process the surah queue which contains surahs to be downloaded, add
+   * DownloadTask instance for each verse of the processed surah
+   */
   void processSurahQueue();
+  /**
+   * @brief add a QPair of reciter & surah to the surah download queue
+   * @param reciter - ::Globals::recitersList index for the reciter
+   * @param surah - surah number to download
+   */
   void addSurahToQueue(int reciter, int surah);
   /**
    * @brief calculate download speed and emit signal for UI component to update
@@ -151,6 +160,11 @@ signals:
    * @fn void downloadError(int, int)
    */
   void downloadError(int reciterIdx, int surah);
+  /**
+   * @fn void surahFound(int, int)
+   * @brief Emitted when the current surah verses are found in
+   * Globals::recitationsDir
+   */
   void surahFound(int reciterIdx, int surah);
 
 private:
@@ -205,10 +219,12 @@ private:
    * @brief the currently active DownloadTask
    */
   DownloadTask m_currentTask;
-
+  /**
+   * @brief surah download queue
+   */
   QQueue<QPair<int, int>> m_surahQueue;
   /**
-   * @brief the download queue
+   * @brief individual verses download queue
    */
   QQueue<DownloadTask> m_downloadQueue;
   /**

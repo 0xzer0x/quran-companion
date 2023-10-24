@@ -45,12 +45,6 @@ public:
                             DownloadManager* downloader = nullptr);
   ~DownloaderDialog();
 
-  /**
-   * @brief Populates the QTreeView through which the user selects the surahs to
-   * add to queue.
-   */
-  void fillTreeView();
-
 public slots:
   /**
    * @brief Adds the currently selected surahs in the QTreeView to the
@@ -60,14 +54,6 @@ public slots:
    * verse in the surah selected.
    */
   void addToQueue();
-  /**
-   * @brief Adds a download progress bar to the
-   * downloader dialog to indicate download state
-   * @param reciterIdx - ::Globals::recitersList index for the reciter whose
-   * recitations are being downloaded
-   * @param surah - number of surah being downloaded
-   */
-  void addTaskProgress(int reciterIdx, int surah);
   /**
    * @brief Sets the currently active download
    * task progress bar in order to update displayed info.
@@ -144,8 +130,28 @@ private:
    */
   void setupConnections();
   /**
+   * @brief Populates the QTreeView through which the user selects the surahs to
+   * add to queue.
+   */
+  void fillTreeView();
+  /**
+   * @brief Adds a download progress bar to the
+   * downloader dialog to indicate download state
+   * @param reciterIdx - ::Globals::recitersList index for the reciter whose
+   * recitations are being downloaded
+   * @param surah - number of surah being downloaded
+   */
+  void addTaskProgress(int reciterIdx, int surah);
+  /**
+   * @brief enqueue a surah to download
+   * @param reciter - ::Globals::recitersList index for the reciter whose
+   * recitations are being downloaded
+   * @param surah - number of surah to download
+   */
+  void enqueueSurah(int reciter, int surah);
+  /**
    * @brief Adds the combination of reciter & surah to the currently active
-   * downloads QMap.
+   * downloads QHash.
    * @param reciter - ::Globals::recitersList index for the reciter whose
    * recitations are being downloaded
    * @param surah - surah number
@@ -199,10 +205,10 @@ private:
    */
   QStringList m_surahDisplayNames;
   /**
-   * @brief QMap for the currently active & queued download tasks.
-   * @details Keys in the QMap represent the reciters indices. values are a set
+   * @brief QHash for the currently active & queued download tasks.
+   * @details Keys in the QHash represent the reciters indices. values are a set
    * of surah numbers. When adding downloads, the reciter - surah combination is
-   * checked against this QMap in order to determine whether its a duplicate or
+   * checked against this QHash in order to determine whether its a duplicate or
    * not.
    */
   QHash<int, QSet<int>> m_downloadingTasks;

@@ -133,28 +133,17 @@ DownloaderDialog::addToQueue()
   foreach (const QModelIndex& i, selected) {
     reciter = i.parent().row();
     surah = i.row() + 1;
-    if (reciter < 0 && !m_downloadingTasks.contains(i.row())) {
+
+    if (reciter < 0) {
       reciter = i.row();
-      for (surah = 1; surah <= 114; surah++) {
-        addToDownloading(reciter, surah);
-        addTaskProgress(reciter, surah);
-        m_downloaderPtr->addSurahToQueue(reciter, surah);
-      }
+      for (surah = 1; surah <= 114; surah++)
+        enqueueSurah(reciter, surah);
 
-    } else {
-      bool currentlyDownloading =
-        m_downloadingTasks.value(reciter).contains(surah);
-      if (currentlyDownloading)
-        continue;
-
-      addToDownloading(reciter, surah);
-      addTaskProgress(reciter, surah);
-      m_downloaderPtr->addSurahToQueue(reciter, surah);
-    }
+    } else
+      enqueueSurah(reciter, surah);
   }
 
   setCurrentBar();
-
   m_downloaderPtr->startQueue();
 }
 
@@ -193,6 +182,18 @@ DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
   m_frameLst.append(prgFrm);
 
   ui->lytFrameView->addWidget(prgFrm);
+}
+
+void
+DownloaderDialog::enqueueSurah(int reciter, int surah)
+{
+  bool currentlyDownloading = m_downloadingTasks.value(reciter).contains(surah);
+  if (currentlyDownloading)
+    return;
+
+  addToDownloading(reciter, surah);
+  addTaskProgress(reciter, surah);
+  m_downloaderPtr->addSurahToQueue(reciter, surah);
 }
 
 void
