@@ -208,18 +208,26 @@ dialog-no-icon: off;
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>40</width>
-                 <height>25</height>
+                 <width>37</width>
+                 <height>27</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>40</width>
-                 <height>25</height>
+                 <width>42</width>
+                 <height>27</height>
                 </size>
                </property>
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    min-width: 35px;
+    min-height: 25px;
+	max-width: 40px;
+    max-height: 25px;
+}</string>
                </property>
                <property name="text">
                 <string/>
@@ -244,14 +252,14 @@ dialog-no-icon: off;
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>40</width>
-                 <height>25</height>
+                 <width>37</width>
+                 <height>27</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>40</width>
-                 <height>25</height>
+                 <width>42</width>
+                 <height>27</height>
                 </size>
                </property>
                <property name="font">
@@ -261,6 +269,14 @@ dialog-no-icon: off;
                </property>
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    min-width: 35px;
+    min-height: 25px;
+	max-width: 40px;
+    max-height: 25px;
+}</string>
                </property>
                <property name="text">
                 <string/>
@@ -282,12 +298,26 @@ dialog-no-icon: off;
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>40</width>
-                 <height>25</height>
+                 <width>37</width>
+                 <height>27</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>27</height>
                 </size>
                </property>
                <property name="cursor">
                 <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    min-width: 35px;
+    min-height: 25px;
+	max-width: 40px;
+    max-height: 25px;
+}</string>
                </property>
                <property name="text">
                 <string/>

@@ -107,7 +107,7 @@
             <x>0</x>
             <y>0</y>
             <width>482</width>
-            <height>515</height>
+            <height>516</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -135,6 +135,11 @@
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QPushButton" name="btnDownloads">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    min-width: 85px;
+}</string>
+           </property>
            <property name="text">
             <string>Downloads Folder</string>
            </property>
@@ -158,6 +163,11 @@
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    min-width: 85px;
+}</string>
+           </property>
            <property name="text">
             <string>clear</string>
            </property>
@@ -167,6 +177,11 @@
           <widget class="QPushButton" name="btnStopQueue">
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    min-width: 85px;
+}</string>
            </property>
            <property name="text">
             <string>stop</string>

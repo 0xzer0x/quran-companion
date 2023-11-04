@@ -34,11 +34,6 @@
        <height>50</height>
       </size>
      </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
      <property name="cursor" stdset="0">
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
@@ -106,7 +101,7 @@ background-color: transparent;
         <x>0</x>
         <y>0</y>
         <width>770</width>
-        <height>576</height>
+        <height>570</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -146,13 +141,13 @@ background-color: transparent;
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <item>
        <widget class="QPushButton" name="btnNext">

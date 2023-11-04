@@ -106,7 +106,7 @@
             <x>0</x>
             <y>0</y>
             <width>634</width>
-            <height>497</height>
+            <height>485</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -120,13 +120,13 @@
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>3</number>
           </property>
           <item>
            <widget class="QPushButton" name="btnNext">
@@ -287,18 +287,6 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>5</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>50</width>
-              <height>40</height>
-             </size>
-            </property>
             <property name="sizeIncrement">
              <size>
               <width>0</width>
@@ -313,6 +301,15 @@
             </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+min-width: 30px;
+max-width: 40px;
+text-align: center;
+border: none;	
+background: transparent;
+}</string>
             </property>
             <property name="text">
              <string>⮀</string>

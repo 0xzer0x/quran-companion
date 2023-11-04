@@ -14,50 +14,40 @@ QFrame#framePlayer {
   border: 2px solid #e3e3e3;
 }
 
-QPushButton#btnPlay:enabled:hover,
-QPushButton#btnPause:enabled:hover,
-QPushButton#btnStop:hover,
-QPushButton#btnNext:hover,
-QPushButton#btnPrev:hover {
+QPushButton:hover {
   background-color: #eeeeee;
 }
 
-QPushButton#btnStop:pressed,
-QPushButton#btnNext:pressed,
-QPushButton#btnPrev:pressed {
+QPushButton:pressed {
   background-color: #e0e0e0;
 }
 
-QPushButton#btnPlay:disabled,
-QPushButton#btnPause:disabled {
+QPushButton:disabled {
   background-color: #e3e3e3;
 }
 
-QPushButton#btnPlay,
-QPushButton#btnPause,
-QPushButton#btnStop,
-QPushButton#btnPrev,
-QPushButton#btnNext {
+QPushButton {
   background-color: #fafafa;
   border: 1px solid gray;
   border-radius: 4px;
+  min-width: 72px;
+  min-height: 25px;
 }
 
-QComboBox#cmbReciter {
+QComboBox {
   border: 1px solid gray;
   border-radius: 3px;
   padding: 1px 3px 1px 3px;
-  min-width: 6em;
 }
 
-QComboBox#cmbReciter::drop-down {
+QComboBox::drop-down {
   subcontrol-origin: padding;
   subcontrol-position: top right;
   width: 15px;
   border-radius: 3px;
 }
 
-QComboBox#cmbReciter::down-arrow {
+QComboBox::down-arrow {
   image: url(":/resources/light/icons/arrow-down.svg");
 }
 
@@ -194,8 +184,11 @@ QListView#listViewBookmarkedSurahs::item:hover:selected {
 QPushButton#btnToggleNav {
   outline: none;
   border: none;
+  border-radius: 0px;
   background-color: transparent;
-  image: url(":/resources/light/icons/navigation.png");
+  image: url(":/resources/light/icons/navigation.svg");
+  min-height: 20px;
+  min-width: 35px;
 }
 
 QPushButton#btnToggleNav:!checked:hover {

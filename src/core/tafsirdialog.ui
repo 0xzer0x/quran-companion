@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>527</width>
-    <height>471</height>
+    <width>910</width>
+    <height>593</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,11 +16,6 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="lbVerseInfo">
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
      <property name="text">
       <string>s-v</string>
      </property>
@@ -30,6 +25,7 @@
     <widget class="QLabel" name="lbVerseText">
      <property name="font">
       <font>
+       <family>SF Pro Display</family>
        <pointsize>10</pointsize>
       </font>
      </property>
@@ -62,6 +58,12 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="topMargin">
+      <number>3</number>
+     </property>
+     <property name="bottomMargin">
+      <number>3</number>
+     </property>
      <item>
       <widget class="QPushButton" name="btnNext">
        <property name="minimumSize">
