@@ -23,6 +23,9 @@
       <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/dark.png</image>
     </screenshot>
     <screenshot>
+      <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/sepia.png</image>
+    </screenshot>
+    <screenshot>
       <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_light.png</image>
     </screenshot>
     <screenshot>
@@ -42,8 +45,9 @@
       <description>
         <ul>
           <li>Bugfix</li>
-          <li>Complete reciter mushaf download by selecting only the reciter name</li>
           <li>UI Changes</li>
+          <li>Complete reciter mushaf download by selecting only the reciter name</li>
+          <li>Added Tafsir ul-Jalalayn</li>
         </ul>
       </description>
     </release>
