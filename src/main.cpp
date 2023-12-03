@@ -107,7 +107,7 @@ main(int argc, char* argv[])
   QApplication a(argc, argv);
   QApplication::setApplicationName("Quran Companion");
   QApplication::setOrganizationName("0xzer0x");
-  QApplication::setApplicationVersion("1.1.10");
+  QApplication::setApplicationVersion("1.1.11");
 
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();

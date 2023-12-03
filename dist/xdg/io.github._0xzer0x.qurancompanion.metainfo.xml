@@ -38,6 +38,15 @@
   <url type="bugtracker">https://github.com/0xzer0x/quran-companion/issues</url>	
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.1.11" date="2023-12-03">
+      <description>
+        <ul>
+          <li>Bugfix</li>
+          <li>Complete reciter mushaf download by selecting only the reciter name</li>
+          <li>UI Changes</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.1.10" date="2023-10-15">
       <description>
           <ul>
