@@ -467,6 +467,11 @@ dialog-ok-icon: off;
               </item>
               <item>
                <property name="text">
+                <string>Al-Jalalayn</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
                 <string>Earab</string>
                </property>
               </item>

@@ -126,6 +126,9 @@ TafsirDialog::setTafsirAsTitle()
     case Tafsir::waseet:
       title.append(tr("Al-Tafsir Al-Waseet"));
       break;
+    case Tafsir::jalalayn:
+      title.append(tr("Al-Jalalayn"));
+      break;
     default:
       title.append(tr("Tafsir"));
       break;

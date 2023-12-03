@@ -1228,6 +1228,11 @@
         <translation>التفسير الوسيط</translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.ui" line="470"/>
+        <source>Al-Jalalayn</source>
+        <translation>تفسير الجلالين</translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.ui" line="463"/>
         <source>Earab</source>
         <translation>إعراب الكلمات</translation>
@@ -1253,16 +1258,16 @@
         <translation>تفسير ابن كثير - إنجليزي</translation>
     </message>
     <message>
+        <location filename="../core/settingsdialog.ui" line="483"/>
+        <source>Indonesian - Tafsir Jalalayn</source>
+        <translation>تفسير الجلالين - إندونيسي</translation>
+    </message>
+    <message>
         <location filename="../core/settingsdialog.ui" line="493"/>
         <source>Tafheem-ul-Quran</source>
         <oldsource>Tafheem</oldsource>
         <translatorcomment>Tafheem-ul-Quran by Syed Abu-al-A&apos;la Maududi</translatorcomment>
         <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="483"/>
-        <source>Indonesian - Tafsir Jalalayn</source>
-        <translation>تفسير الجلالين - إندونيسي</translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="488"/>
@@ -1497,29 +1502,19 @@
         <translation>ألغِ</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="599"/>
-        <source>Toggle visibility of the menubar</source>
-        <translation>إظهار/إخفاء شريط القوائم</translation>
+        <location filename="../main.cpp" line="464"/>
+        <source>Increase the size of the quran page</source>
+        <translation>زيادة حجم الصفحة</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="602"/>
-        <source>Toggle visibility of the navigation dock</source>
-        <translation>إظهار/إخفاء وحدة التصفح</translation>
+        <location filename="../main.cpp" line="467"/>
+        <source>Decrease the size of the quran page</source>
+        <translation>تقليل حجم الصفحة</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="547"/>
         <source>Toggle playback state of recitation</source>
         <translation>تشغيل/إيقاف التلاوة</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="565"/>
-        <source>Increase the playback volume</source>
-        <translation>زيادة مستوى صوت القراءة</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="568"/>
-        <source>Decrease the playback volume</source>
-        <translation>خفض مستوى صوت القراءة</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="549"/>
@@ -1530,6 +1525,56 @@
         <location filename="../main.cpp" line="551"/>
         <source>Move to the previous page</source>
         <translation>الإنتقال إلى الصفحة السابقة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="554"/>
+        <source>Bookmark the current active verse</source>
+        <translation>إضافة علامة عند الآية النشطة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="557"/>
+        <source>Open the bookmarks dialog</source>
+        <translation>فتح نافذة العلامات</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="560"/>
+        <source>Open the search dialog</source>
+        <translation>فتح نافذة البحث</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="563"/>
+        <source>Open the preferences dialog</source>
+        <translation>فتح نافذة الإعدادات</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="565"/>
+        <source>Increase the playback volume</source>
+        <translation>زيادة مستوى صوت القراءة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="566"/>
+        <source>Open the tafsir for the current active verse</source>
+        <translation>فتح نافذة التفسير للآية النشطة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="568"/>
+        <source>Decrease the playback volume</source>
+        <translation>خفض مستوى صوت القراءة</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="570"/>
+        <source>Open the recitations download dialog</source>
+        <translation>فتح نافذة تحميل التلاوات</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="571"/>
+        <source>Quit</source>
+        <translation>خروج</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="573"/>
+        <source>Close the currently focused window</source>
+        <translation>إغلاق النافذة الحالية</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="574"/>
@@ -1562,54 +1607,14 @@
         <translation>الإنتقال إلى الجزء السابق</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="464"/>
-        <source>Increase the size of the quran page</source>
-        <translation>زيادة حجم الصفحة</translation>
+        <location filename="../main.cpp" line="599"/>
+        <source>Toggle visibility of the menubar</source>
+        <translation>إظهار/إخفاء شريط القوائم</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="467"/>
-        <source>Decrease the size of the quran page</source>
-        <translation>تقليل حجم الصفحة</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="554"/>
-        <source>Bookmark the current active verse</source>
-        <translation>إضافة علامة عند الآية النشطة</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="557"/>
-        <source>Open the bookmarks dialog</source>
-        <translation>فتح نافذة العلامات</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="560"/>
-        <source>Open the search dialog</source>
-        <translation>فتح نافذة البحث</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="563"/>
-        <source>Open the preferences dialog</source>
-        <translation>فتح نافذة الإعدادات</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="566"/>
-        <source>Open the tafsir for the current active verse</source>
-        <translation>فتح نافذة التفسير للآية النشطة</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="570"/>
-        <source>Open the recitations download dialog</source>
-        <translation>فتح نافذة تحميل التلاوات</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="571"/>
-        <source>Quit</source>
-        <translation>خروج</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="573"/>
-        <source>Close the currently focused window</source>
-        <translation>إغلاق النافذة الحالية</translation>
+        <location filename="../main.cpp" line="602"/>
+        <source>Toggle visibility of the navigation dock</source>
+        <translation>إظهار/إخفاء وحدة التصفح</translation>
     </message>
 </context>
 <context>
@@ -1734,6 +1739,11 @@
         <location filename="../core/tafsirdialog.cpp" line="129"/>
         <source>Al-Tafsir Al-Waseet</source>
         <translation>التفسير الوسيط</translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="130"/>
+        <source>Al-Jalalayn</source>
+        <translation>تفسير الجلالين</translation>
     </message>
     <message>
         <location filename="../core/tafsirdialog.cpp" line="142"/>

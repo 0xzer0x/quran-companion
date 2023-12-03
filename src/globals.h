@@ -90,6 +90,7 @@ enum Tafsir
   sa3dy,      ///< Tafsir ul-Sa'ady
   tabary,     ///< Tafsir ul-Tabary
   waseet,     ///< At-Tafsir ul-Waseet
+    jalalayn,    ///< Tafsir ul-Jalalyn
   e3rab,      ///< Ea'rab of Quran verses
   tanweer,    ///< At-Tahreer wa At-Tanweer - Sheikh Ibn A'ashoor
   juzayy,     ///< Tafsir Ibn-Juzayy

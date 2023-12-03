@@ -34,10 +34,16 @@ DownloadManager::getLatestVersion()
 }
 
 void
+DownloadManager::addSurahToQueue(int reciter, int surah)
+{
+  m_surahQueue.enqueue(QPair<int, int>(reciter, surah));
+}
+
+void
 DownloadManager::startQueue()
 {
   if (!m_isDownloading) {
-    processQueueHead();
+    processDownloadQueue();
     emit downloadStarted();
   }
 }
@@ -48,6 +54,7 @@ DownloadManager::stopQueue()
   if (m_isDownloading) {
     cancelCurrentTask();
     m_isDownloading = false;
+    m_surahQueue.clear();
     m_downloadQueue.clear();
   }
 }
@@ -66,12 +73,11 @@ DownloadManager::cancelCurrentTask()
 void
 DownloadManager::enqeueVerseTask(int reciterIdx, int surah, int verse)
 {
-  QUrl dl = downloadUrl(reciterIdx, surah, verse);
   DownloadTask t;
   t.surah = surah;
   t.verse = verse;
   t.reciterIdx = reciterIdx;
-  t.link = dl;
+  t.link = downloadUrl(reciterIdx, surah, verse);
   t.downloadPath.setFile(m_toplevelDownloadPath.absoluteFilePath(
     m_recitersList.at(reciterIdx).baseDirName + QDir::separator() +
     QString::number(surah).rightJustified(3, '0') +
@@ -81,32 +87,45 @@ DownloadManager::enqeueVerseTask(int reciterIdx, int surah, int verse)
 }
 
 void
-DownloadManager::processQueueHead()
+DownloadManager::processSurahQueue()
 {
-  if (m_downloadQueue.empty()) {
+  if (m_surahQueue.empty()) {
     m_isDownloading = false;
     return;
   }
 
+  m_isDownloading = true;
+  QPair<int, int> current = m_surahQueue.dequeue();
+  m_currSurahCount = m_dbMgr->getSurahVerseCount(current.second);
+  for (int v = 1; v <= m_currSurahCount; v++)
+    enqeueVerseTask(current.first, current.second, v);
+}
+
+void
+DownloadManager::processDownloadQueue()
+{
+  if (m_downloadQueue.empty()) {
+    processSurahQueue();
+    if (!m_isDownloading)
+      return;
+  }
+
   m_currentTask = m_downloadQueue.dequeue();
-  qInfo() << "current download task - " << m_currentTask.link;
-  m_currSurahCount = m_dbMgr->getSurahVerseCount(m_currentTask.surah);
 
   while (m_currentTask.downloadPath.exists()) {
     emit downloadProgressed(m_currentTask.verse, m_currSurahCount);
     if (m_currentTask.verse == m_currSurahCount)
-      emit downloadComplete(m_currentTask.reciterIdx, m_currentTask.surah);
+      emit surahFound(m_currentTask.reciterIdx, m_currentTask.surah);
 
     if (m_downloadQueue.empty()) {
-      m_isDownloading = false;
-      return;
+      processSurahQueue();
+      if (!m_isDownloading)
+        return;
     }
 
     m_currentTask = m_downloadQueue.dequeue();
-    qInfo() << "current task - " << m_currentTask.link;
   }
 
-  m_isDownloading = true;
   QNetworkRequest req(m_currentTask.link);
   req.setTransferTimeout(3000);
   m_currentTask.networkReply = m_netMan->get(req);
@@ -161,7 +180,7 @@ DownloadManager::finishupTask(QNetworkReply* replyData)
              &DownloadManager::downloadProgress);
   m_currentTask.clear();
 
-  processQueueHead();
+  processDownloadQueue();
 }
 
 bool
@@ -188,7 +207,7 @@ DownloadManager::downloadUrl(const int reciterIdx,
                              const int surah,
                              const int verse) const
 {
-  Reciter r = m_recitersList.at(reciterIdx);
+  const Reciter& r = m_recitersList.at(reciterIdx);
   QString url = r.baseUrl;
   if (r.useId)
     url.append(QString::number(m_dbMgr->getVerseId(surah, verse)) + ".mp3");

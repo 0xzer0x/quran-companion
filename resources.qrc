@@ -11,7 +11,7 @@
         <file>resources/dark/icons/copy.png</file>
         <file>resources/dark/icons/download-manager.png</file>
         <file>resources/dark/icons/exit.png</file>
-        <file>resources/dark/icons/navigation.png</file>
+        <file>resources/dark/icons/navigation.svg</file>
         <file>resources/dark/icons/pause.png</file>
         <file>resources/dark/icons/play.png</file>
         <file>resources/dark/icons/prefs.png</file>
@@ -34,7 +34,7 @@
         <file>resources/light/icons/copy.png</file>
         <file>resources/light/icons/download-manager.png</file>
         <file>resources/light/icons/exit.png</file>
-        <file>resources/light/icons/navigation.png</file>
+        <file>resources/light/icons/navigation.svg</file>
         <file>resources/light/icons/pause.png</file>
         <file>resources/light/icons/play.png</file>
         <file>resources/light/icons/prefs.png</file>
