@@ -1,7 +1,11 @@
 *.exe
 *.run
 *.sh
+.cache
+.clangd
+.clang-format
 CMakeLists.txt.*
+compile_commands.json
 dist/windows/*
 dist/linux/*
 docs/*
