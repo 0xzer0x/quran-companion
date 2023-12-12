@@ -3,6 +3,7 @@
 *.sh
 .cache
 .clangd
+.vscode
 CMakeLists.txt.*
 compile_commands.json
 dist/windows/*
