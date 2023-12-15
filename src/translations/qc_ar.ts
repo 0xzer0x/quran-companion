@@ -101,8 +101,8 @@
     </message>
     <message>
         <location filename="../core/downloaderdialog.ui" line="136"/>
-        <source>Downloads Folder</source>
-        <translation>مجلد التحميلات</translation>
+        <source>Downloads</source>
+        <translation>التحميلات</translation>
     </message>
     <message>
         <location filename="../core/downloaderdialog.ui" line="152"/>

@@ -9,18 +9,17 @@ DownloadManager::DownloadManager(QObject* parent)
   : QObject(parent)
   , m_netMan{ new QNetworkAccessManager(this) }
 {
-  m_netMan->setTransferTimeout(3000);
+  m_netMan->setTransferTimeout(4000);
   connect(m_netMan,
           &QNetworkAccessManager::finished,
           this,
-          &DownloadManager::finishupTask,
-          Qt::UniqueConnection);
+          &DownloadManager::finishupTask);
 }
 
 void
 DownloadManager::getLatestVersion()
 {
-  QNetworkAccessManager* updater = new QNetworkAccessManager(this);
+  static QNetworkAccessManager* updater = new QNetworkAccessManager(this);
   QNetworkRequest req(QUrl::fromEncoded(
     "https://raw.githubusercontent.com/0xzer0x/quran-companion/main/VERSION"));
   req.setTransferTimeout(1500);
@@ -127,7 +126,6 @@ DownloadManager::processDownloadQueue()
   }
 
   QNetworkRequest req(m_currentTask.link);
-  req.setTransferTimeout(3000);
   m_currentTask.networkReply = m_netMan->get(req);
   m_currentTask.networkReply->ignoreSslErrors();
   m_downloadStart = QTime::currentTime();
@@ -237,7 +235,7 @@ DownloadManager::handleVersionReply()
 {
   int status =
     m_versionReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-  if (status != 404)
+  if (status == 200)
     emit latestVersionFound(m_versionReply->readAll().trimmed());
 }
 

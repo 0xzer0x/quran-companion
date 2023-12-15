@@ -141,7 +141,7 @@
 }</string>
            </property>
            <property name="text">
-            <string>Downloads Folder</string>
+            <string>Downloads</string>
            </property>
           </widget>
          </item>
