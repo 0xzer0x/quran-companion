@@ -48,6 +48,9 @@ set(PROJECT_SOURCES
     src/core/tafsirdialog.h
     src/core/tafsirdialog.cpp
     src/core/tafsirdialog.ui
+    src/core/khatmahdialog.h
+    src/core/khatmahdialog.cpp
+    src/core/khatmahdialog.ui
     src/widgets/quranpagebrowser.h
     src/widgets/quranpagebrowser.cpp
     src/widgets/clickablelabel.cpp
