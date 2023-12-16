@@ -4,13 +4,13 @@
  */
 
 #include "dbmanager.h"
+#include <qlogging.h>
 
 DBManager::DBManager(QObject* parent)
   : QObject(parent)
 {
   m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
   m_glyphsDbPath.setFile(m_dbDir.filePath("glyphs.db"));
-  m_bookmarksDbPath.setFile(m_bookmarksFilepath);
 
   // set database driver, set the path & open a connection with the db
   QSqlDatabase::addDatabase("QSQLITE", "QuranCon");
@@ -573,6 +573,113 @@ DBManager::searchSurahNames(QString text)
 
 /* ---------------- Verse-related methods ---------------- */
 
+void
+DBManager::setActiveKhatmah(const int id)
+{
+  m_activeKhatmah = id;
+}
+
+bool
+DBManager::getPosition(const int khatmahId, Verse& v)
+{
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  QSqlQuery dbQuery(m_openDBCon);
+
+  QString q = QString::asprintf(
+    "SELECT page,surah,number FROM khatmah WHERE id = %i", khatmahId);
+  if (!dbQuery.exec(q)) {
+    qCritical() << "Couldn't execute getPosition SQL query!";
+    return false;
+  }
+  if (!dbQuery.next())
+    return false;
+
+  v.page = dbQuery.value(0).toInt();
+  v.surah = dbQuery.value(1).toInt();
+  v.number = dbQuery.value(2).toInt();
+  return true;
+}
+
+int
+DBManager::addKhatmah(const Verse& v, const QString name, const int id)
+{
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  QSqlQuery dbQuery(m_openDBCon);
+  dbQuery.exec(
+    "CREATE TABLE IF NOT EXISTS khatmah(id INTEGER PRIMARY KEY "
+    "AUTOINCREMENT, name TEXT, page INTEGER, surah INTEGER, number INTEGER)");
+  QString q;
+  if (id == -1) {
+    q = "INSERT INTO khatmah(name, page, surah, number) VALUES ('%0', %1, %2, "
+        "%3)";
+    dbQuery.prepare(q.arg(name,
+                          QString::number(v.page),
+                          QString::number(v.surah),
+                          QString::number(v.number)));
+  } else {
+    q = "REPLACE INTO khatmah VALUES "
+        "(%0, "
+        "'%1', %2, %3, %4)";
+    dbQuery.prepare(q.arg(QString::number(id),
+                          name,
+                          QString::number(v.page),
+                          QString::number(v.surah),
+                          QString::number(v.number)));
+  }
+
+  if (!dbQuery.exec()) {
+    qCritical() << "Couldn't create new khatmah entry!";
+    qDebug() << m_openDBCon.lastError();
+    return -1;
+  }
+
+  if (id != -1)
+    return id;
+
+  dbQuery.exec("SELECT id FROM khatmah ORDER BY id DESC limit 1");
+  dbQuery.next();
+  return dbQuery.value(0).toInt();
+}
+
+bool
+DBManager::editKhatmah(const int khatmahId, QString newName)
+{
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  QSqlQuery dbQuery(m_openDBCon);
+  QString q = "UPDATE khatmah SET name = %0 WHERE id = %i";
+
+  if (!dbQuery.exec(q.arg(newName, QString::number(khatmahId)))) {
+    qCritical() << "Couldn't rename khatmah entry!";
+    qDebug() << m_openDBCon.lastError();
+    return false;
+  }
+  if (!m_openDBCon.commit())
+    return false;
+
+  return true;
+}
+
+bool
+DBManager::savePosition(const Verse& v)
+{
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  QSqlQuery dbQuery(m_openDBCon);
+  QString q = QString::asprintf(
+    "UPDATE khatmah SET page = %i, surah = %i, number = %i WHERE id = %i",
+    v.page,
+    v.surah,
+    v.number,
+    m_activeKhatmah);
+  if (!dbQuery.exec(q)) {
+    qCritical() << "Couldn't save position in mushaf";
+    return false;
+  }
+  if (!m_openDBCon.commit())
+    return false;
+
+  return true;
+}
+
 QString
 DBManager::getVerseText(const int sIdx, const int vIdx)
 {
@@ -676,7 +783,7 @@ QList<Verse>
 DBManager::bookmarkedVerses(int surahIdx)
 {
   QList<Verse> results;
-  setOpenDatabase(Database::bookmarks, m_bookmarksDbPath.filePath());
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   QString q = "SELECT page,surah,number FROM favorites";
   if (surahIdx != -1)
@@ -698,7 +805,7 @@ DBManager::bookmarkedVerses(int surahIdx)
 bool
 DBManager::isBookmarked(Verse v)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksDbPath.filePath());
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
 
   dbQuery.prepare(
@@ -720,13 +827,12 @@ DBManager::isBookmarked(Verse v)
 bool
 DBManager::addBookmark(Verse v)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksDbPath.filePath());
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.exec("CREATE TABLE IF NOT EXISTS favorites(id INTEGER PRIMARY KEY "
                "AUTOINCREMENT,"
                "page INTEGER, surah INTEGER, number INTEGER)");
 
-  dbQuery.clear();
   dbQuery.prepare(
     "INSERT INTO favorites(page, surah, number) VALUES (:p, :s, :n)");
   dbQuery.bindValue(0, v.page);
@@ -747,9 +853,8 @@ DBManager::addBookmark(Verse v)
 bool
 DBManager::removeBookmark(Verse v)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksDbPath.filePath());
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
-  // CODE TO REMOVE ENTRY FROM SQL TABLE
   dbQuery.prepare(
     "DELETE FROM favorites WHERE page=:p AND surah=:s AND number=:n");
   dbQuery.bindValue(0, v.page);

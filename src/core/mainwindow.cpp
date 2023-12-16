@@ -69,11 +69,12 @@ MainWindow::loadIcons()
 void
 MainWindow::loadSettings()
 {
-  m_settings->beginGroup("Reader");
-  m_currVerse.page = m_settings->value("Page").toInt();
-  m_currVerse.surah = m_settings->value("Surah").toInt();
-  m_currVerse.number = m_settings->value("Verse").toInt();
-  m_settings->endGroup();
+  int id = m_settings->value("Reader/Khatmah").toInt();
+  m_dbMgr->setActiveKhatmah(id);
+  if (!m_dbMgr->getPosition(id, m_currVerse)) {
+    QString name = id ? QString::asprintf("Khatmah %i", id) : "Default";
+    m_dbMgr->addKhatmah(m_currVerse, name, id);
+  }
 }
 
 void
@@ -182,111 +183,86 @@ MainWindow::setupShortcuts()
   connect(m_shortcutHandler,
           &ShortcutHandler::toggleMenubar,
           this,
-          &MainWindow::toggleMenubar,
-          Qt::UniqueConnection);
+          &MainWindow::toggleMenubar);
   connect(m_shortcutHandler,
           &ShortcutHandler::toggleNavDock,
           this,
-          &MainWindow::toggleNavDock,
-          Qt::UniqueConnection);
+          &MainWindow::toggleNavDock);
   connect(m_shortcutHandler,
           &ShortcutHandler::togglePlayback,
           this,
-          &MainWindow::togglePlayback,
-          Qt::UniqueConnection);
+          &MainWindow::togglePlayback);
   connect(m_shortcutHandler,
           &ShortcutHandler::incrementVolume,
           this,
-          &MainWindow::incrementVolume,
-          Qt::UniqueConnection);
+          &MainWindow::incrementVolume);
   connect(m_shortcutHandler,
           &ShortcutHandler::decrementVolume,
           this,
-          &MainWindow::decrementVolume,
-          Qt::UniqueConnection);
+          &MainWindow::decrementVolume);
   connect(m_shortcutHandler,
           &ShortcutHandler::bookmarkCurrent,
           this,
-          &MainWindow::addCurrentToBookmarks,
-          Qt::UniqueConnection);
+          &MainWindow::addCurrentToBookmarks);
   connect(m_shortcutHandler,
           &ShortcutHandler::nextPage,
           this,
-          &MainWindow::btnNextClicked,
-          Qt::UniqueConnection);
+          &MainWindow::btnNextClicked);
   connect(m_shortcutHandler,
           &ShortcutHandler::prevPage,
           this,
-          &MainWindow::btnPrevClicked,
-          Qt::UniqueConnection);
+          &MainWindow::btnPrevClicked);
   connect(m_shortcutHandler,
           &ShortcutHandler::nextVerse,
           this,
-          &MainWindow::nextVerse,
-          Qt::UniqueConnection);
+          &MainWindow::nextVerse);
   connect(m_shortcutHandler,
           &ShortcutHandler::prevVerse,
           this,
-          &MainWindow::prevVerse,
-          Qt::UniqueConnection);
-  connect(m_shortcutHandler,
-          &ShortcutHandler::nextJuz,
-          this,
-          &MainWindow::nextJuz,
-          Qt::UniqueConnection);
-  connect(m_shortcutHandler,
-          &ShortcutHandler::prevJuz,
-          this,
-          &MainWindow::prevJuz,
-          Qt::UniqueConnection);
+          &MainWindow::prevVerse);
+  connect(
+    m_shortcutHandler, &ShortcutHandler::nextJuz, this, &MainWindow::nextJuz);
+  connect(
+    m_shortcutHandler, &ShortcutHandler::prevJuz, this, &MainWindow::prevJuz);
   connect(m_shortcutHandler,
           &ShortcutHandler::nextSurah,
           this,
-          &MainWindow::nextSurah,
-          Qt::UniqueConnection);
+          &MainWindow::nextSurah);
   connect(m_shortcutHandler,
           &ShortcutHandler::prevSurah,
           this,
-          &MainWindow::prevSurah,
-          Qt::UniqueConnection);
+          &MainWindow::prevSurah);
   connect(m_shortcutHandler,
           &ShortcutHandler::openDownloads,
           this,
-          &MainWindow::actionDMTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionDMTriggered);
   connect(m_shortcutHandler,
           &ShortcutHandler::openBookmarks,
           this,
-          &MainWindow::actionBookmarksTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionBookmarksTriggered);
   connect(m_shortcutHandler,
           &ShortcutHandler::openSearch,
           this,
-          &MainWindow::actionSearchTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionSearchTriggered);
   connect(m_shortcutHandler,
           &ShortcutHandler::openSettings,
           this,
-          &MainWindow::actionPrefTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionPrefTriggered);
   connect(m_shortcutHandler,
           &ShortcutHandler::openTafsir,
           this,
-          &MainWindow::actionTafsirTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionTafsirTriggered);
 
   for (int i = 0; i <= 1; i++) {
     if (m_quranBrowsers[i]) {
       connect(m_shortcutHandler,
               &ShortcutHandler::zoomIn,
               m_quranBrowsers[i],
-              &QuranPageBrowser::actionZoomIn,
-              Qt::UniqueConnection);
+              &QuranPageBrowser::actionZoomIn);
       connect(m_shortcutHandler,
               &ShortcutHandler::zoomOut,
               m_quranBrowsers[i],
-              &QuranPageBrowser::actionZoomOut,
-              Qt::UniqueConnection);
+              &QuranPageBrowser::actionZoomOut);
     }
   }
 }
@@ -302,48 +278,37 @@ MainWindow::setupConnections()
   connect(ui->actionPereferences,
           &QAction::triggered,
           this,
-          &MainWindow::actionPrefTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionPrefTriggered);
   connect(ui->actionDownload_manager,
           &QAction::triggered,
           this,
-          &MainWindow::actionDMTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionDMTriggered);
   connect(ui->actionFind,
           &QAction::triggered,
           this,
-          &MainWindow::actionSearchTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionSearchTriggered);
   connect(ui->actionTafsir,
           &QAction::triggered,
           this,
-          &MainWindow::actionTafsirTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionTafsirTriggered);
   connect(ui->actionVerse_of_the_day,
           &QAction::triggered,
           this,
-          &MainWindow::actionVotdTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionVotdTriggered);
   connect(ui->actionCheck_for_updates,
           &QAction::triggered,
           this,
-          &MainWindow::checkForUpdates,
-          Qt::UniqueConnection);
-  connect(m_process,
-          &QProcess::finished,
-          this,
-          &MainWindow::updateProcessCallback,
-          Qt::UniqueConnection);
+          &MainWindow::checkForUpdates);
+  connect(
+    m_process, &QProcess::finished, this, &MainWindow::updateProcessCallback);
   connect(ui->actionBookmarks,
           &QAction::triggered,
           this,
-          &MainWindow::actionBookmarksTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionBookmarksTriggered);
   connect(ui->actionAbout_Quran_Companion,
           &QAction::triggered,
           this,
-          &MainWindow::actionAboutTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionAboutTriggered);
 
   // ########## Quran page ########## //
   connect(m_quranBrowsers[0],
@@ -358,184 +323,136 @@ MainWindow::setupConnections()
   }
 
   // ########## page controls ########## //
-  connect(ui->btnNext,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::btnNextClicked,
-          Qt::UniqueConnection);
-  connect(ui->btnPrev,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::btnPrevClicked,
-          Qt::UniqueConnection);
+  connect(
+    ui->btnNext, &QPushButton::clicked, this, &MainWindow::btnNextClicked);
+  connect(
+    ui->btnPrev, &QPushButton::clicked, this, &MainWindow::btnPrevClicked);
   connect(ui->cmbPage,
           &QComboBox::currentIndexChanged,
           this,
-          &MainWindow::cmbPageChanged,
-          Qt::UniqueConnection);
+          &MainWindow::cmbPageChanged);
   connect(ui->cmbVerse,
           &QComboBox::currentIndexChanged,
           this,
-          &MainWindow::cmbVerseChanged,
-          Qt::UniqueConnection);
+          &MainWindow::cmbVerseChanged);
   connect(ui->cmbJuz,
           &QComboBox::currentIndexChanged,
           this,
-          &MainWindow::cmbJuzChanged,
-          Qt::UniqueConnection);
+          &MainWindow::cmbJuzChanged);
   connect(m_player,
           &VersePlayer::missingVerseFile,
           this,
-          &MainWindow::missingRecitationFileWarn,
-          Qt::UniqueConnection);
+          &MainWindow::missingRecitationFileWarn);
 
   // ########## navigation dock ########## //
   connect(ui->lineEditSearchSurah,
           &QLineEdit::textChanged,
           this,
-          &MainWindow::searchSurahTextChanged,
-          Qt::UniqueConnection);
+          &MainWindow::searchSurahTextChanged);
   connect(ui->listViewSurahs,
           &QListView::clicked,
           this,
-          &MainWindow::listSurahNameClicked,
-          Qt::UniqueConnection);
+          &MainWindow::listSurahNameClicked);
 
   // ########## audio slider ########## //
   connect(m_player,
           &QMediaPlayer::positionChanged,
           this,
-          &MainWindow::mediaPosChanged,
-          Qt::UniqueConnection);
+          &MainWindow::mediaPosChanged);
   connect(m_player,
           &QMediaPlayer::playbackStateChanged,
           this,
-          &MainWindow::mediaStateChanged,
-          Qt::UniqueConnection);
+          &MainWindow::mediaStateChanged);
   connect(ui->sldrAudioPlayer,
           &QSlider::sliderMoved,
           m_player,
-          &QMediaPlayer::setPosition,
-          Qt::UniqueConnection);
+          &QMediaPlayer::setPosition);
   connect(ui->sldrVolume,
           &QSlider::valueChanged,
           this,
-          &MainWindow::volumeSliderValueChanged,
-          Qt::UniqueConnection);
+          &MainWindow::volumeSliderValueChanged);
 
   // ########## player control ########## //
   connect(m_player,
           &QMediaPlayer::mediaStatusChanged,
           this,
-          &MainWindow::mediaStatusChanged,
-          Qt::UniqueConnection);
-  connect(ui->btnPlay,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::btnPlayClicked,
-          Qt::UniqueConnection);
-  connect(ui->btnPause,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::btnPauseClicked,
-          Qt::UniqueConnection);
-  connect(ui->btnStop,
-          &QPushButton::clicked,
-          this,
-          &MainWindow::btnStopClicked,
-          Qt::UniqueConnection);
+          &MainWindow::mediaStatusChanged);
+  connect(
+    ui->btnPlay, &QPushButton::clicked, this, &MainWindow::btnPlayClicked);
+  connect(
+    ui->btnPause, &QPushButton::clicked, this, &MainWindow::btnPauseClicked);
+  connect(
+    ui->btnStop, &QPushButton::clicked, this, &MainWindow::btnStopClicked);
   connect(ui->cmbReciter,
           &QComboBox::currentIndexChanged,
           m_player,
-          &VersePlayer::changeReciter,
-          Qt::UniqueConnection);
+          &VersePlayer::changeReciter);
 
   // ########## system tray ########## //
   connect(m_notifyMgr, &NotificationManager::exit, this, &QApplication::exit);
   connect(m_notifyMgr,
           &NotificationManager::togglePlayback,
           this,
-          &MainWindow::togglePlayback,
-          Qt::UniqueConnection);
-  connect(m_notifyMgr,
-          &NotificationManager::showWindow,
-          this,
-          &MainWindow::show,
-          Qt::UniqueConnection);
-  connect(m_notifyMgr,
-          &NotificationManager::hideWindow,
-          this,
-          &MainWindow::hide,
-          Qt::UniqueConnection);
+          &MainWindow::togglePlayback);
+  connect(
+    m_notifyMgr, &NotificationManager::showWindow, this, &MainWindow::show);
+  connect(
+    m_notifyMgr, &NotificationManager::hideWindow, this, &MainWindow::hide);
   connect(m_notifyMgr,
           &NotificationManager::checkForUpdates,
           this,
-          &MainWindow::checkForUpdates,
-          Qt::UniqueConnection);
+          &MainWindow::checkForUpdates);
   connect(m_notifyMgr,
           &NotificationManager::openAbout,
           this,
-          &MainWindow::actionAboutTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionAboutTriggered);
   connect(m_notifyMgr,
           &NotificationManager::showVOTDmessagebox,
           this,
-          &MainWindow::showVOTDmessage,
-          Qt::UniqueConnection);
+          &MainWindow::showVOTDmessage);
   connect(m_notifyMgr,
           &NotificationManager::openPrefs,
           this,
-          &MainWindow::actionPrefTriggered,
-          Qt::UniqueConnection);
+          &MainWindow::actionPrefTriggered);
 
   // ########## Notification Popup ########## //
   connect(ui->sideDock,
           &QDockWidget::dockLocationChanged,
           m_popup,
-          &NotificationPopup::dockLocationChanged,
-          Qt::UniqueConnection);
+          &NotificationPopup::dockLocationChanged);
   connect(m_downManPtr,
           &DownloadManager::downloadComplete,
           m_popup,
-          &NotificationPopup::completedDownload,
-          Qt::UniqueConnection);
+          &NotificationPopup::completedDownload);
   connect(m_downManPtr,
           &DownloadManager::downloadError,
           m_popup,
-          &NotificationPopup::downloadError,
-          Qt::UniqueConnection);
+          &NotificationPopup::downloadError);
   connect(m_downManPtr,
           &DownloadManager::latestVersionFound,
           m_popup,
-          &NotificationPopup::checkUpdate,
-          Qt::UniqueConnection);
+          &NotificationPopup::checkUpdate);
 
   // ########## Settings Dialog ########## //
   // Restart signal
-  connect(m_settingsDlg,
-          &SettingsDialog::restartApp,
-          this,
-          &MainWindow::restartApp,
-          Qt::UniqueConnection);
+  connect(
+    m_settingsDlg, &SettingsDialog::restartApp, this, &MainWindow::restartApp);
 
   // Quran page signals
   connect(m_settingsDlg,
           &SettingsDialog::redrawQuranPage,
           this,
-          &MainWindow::redrawQuranPage,
-          Qt::UniqueConnection);
+          &MainWindow::redrawQuranPage);
   connect(m_settingsDlg,
           &SettingsDialog::highlightLayerChanged,
           this,
-          &MainWindow::updateHighlight,
-          Qt::UniqueConnection);
+          &MainWindow::updateHighlight);
   for (int i = 0; i <= 1; i++) {
     if (m_quranBrowsers[i]) {
       connect(m_settingsDlg,
               &SettingsDialog::quranFontChanged,
               m_quranBrowsers[i],
-              &QuranPageBrowser::updateFontSize,
-              Qt::UniqueConnection);
+              &QuranPageBrowser::updateFontSize);
     }
   }
 
@@ -543,37 +460,31 @@ MainWindow::setupConnections()
   connect(m_settingsDlg,
           &SettingsDialog::redrawSideContent,
           this,
-          &MainWindow::addSideContent,
-          Qt::UniqueConnection);
+          &MainWindow::addSideContent);
   connect(m_settingsDlg,
           &SettingsDialog::tafsirChanged,
           this,
-          &MainWindow::updateLoadedTafsir,
-          Qt::UniqueConnection);
+          &MainWindow::updateLoadedTafsir);
   connect(m_settingsDlg,
           &SettingsDialog::translationChanged,
           this,
-          &MainWindow::updateLoadedTranslation,
-          Qt::UniqueConnection);
+          &MainWindow::updateLoadedTranslation);
   connect(m_settingsDlg,
           &SettingsDialog::sideFontChanged,
           this,
-          &MainWindow::updateSideFont,
-          Qt::UniqueConnection);
+          &MainWindow::updateSideFont);
 
   // audio device signals
   connect(m_settingsDlg,
           &SettingsDialog::usedAudioDeviceChanged,
           m_player,
-          &VersePlayer::changeUsedAudioDevice,
-          Qt::UniqueConnection);
+          &VersePlayer::changeUsedAudioDevice);
 
   // shortcut change
   connect(m_settingsDlg,
           &SettingsDialog::shortcutChanged,
           m_shortcutHandler,
-          &ShortcutHandler::shortcutChanged,
-          Qt::UniqueConnection);
+          &ShortcutHandler::shortcutChanged);
 }
 
 void
@@ -1222,8 +1133,7 @@ MainWindow::actionBookmarksTriggered()
     connect(m_bookmarksDlg,
             &BookmarksDialog::navigateToVerse,
             this,
-            &MainWindow::navigateToVerse,
-            Qt::UniqueConnection);
+            &MainWindow::navigateToVerse);
   }
 
   m_bookmarksDlg->showWindow();
@@ -1563,11 +1473,7 @@ MainWindow::addSideContent()
     m_verseFrameList.insert(0, verseContFrame);
 
     // connect clicked signal for each label
-    connect(verselb,
-            &ClickableLabel::clicked,
-            this,
-            &MainWindow::verseClicked,
-            Qt::UniqueConnection);
+    connect(verselb, &ClickableLabel::clicked, this, &MainWindow::verseClicked);
   }
 
   if (m_player->playbackState() == QMediaPlayer::PlayingState) {
@@ -1645,15 +1551,9 @@ MainWindow::saveReaderState()
 {
   m_settings->setValue("WindowState", saveState());
   m_settings->setValue("Reciter", ui->cmbReciter->currentIndex());
-
-  m_settings->beginGroup("Reader");
-  m_settings->setValue("Page", m_currVerse.page);
-  m_settings->setValue("Surah", m_currVerse.surah);
-  m_settings->setValue("Verse",
-                       m_currVerse.number == 0 ? 1 : m_currVerse.number);
-  m_settings->endGroup();
-
   m_settings->sync();
+
+  m_dbMgr->savePosition(m_currVerse);
 }
 
 void

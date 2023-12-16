@@ -36,7 +36,7 @@ public:
     null,       ///< default value
     quran,      ///< (quran.db) main Quran database file
     glyphs,     ///< (glyphs.db) QCF glyphs database
-    bookmarks,  ///< (bookmarks.db) bookmarked verses database
+    bookmarks,  ///< (bookmarks.db) bookmarked verses and khatmah database
     tafsir,     ///< currently selected tafsir database file
     translation ///< currently selected translation database file
   };
@@ -114,6 +114,13 @@ public:
    * @return QString of the verse text
    */
   QString getVerseText(const int sIdx, const int vIdx);
+
+  void setActiveKhatmah(const int id);
+  bool getPosition(const int khatmahId, Verse& v);
+  bool savePosition(const Verse& v);
+  int addKhatmah(const Verse& v, const QString name, const int id = -1);
+  bool editKhatmah(const int khatmahId, QString newName);
+
   /**
    * @brief gets the number of the last verse in the surah passed
    * @param surahIdx - surah number (1-114)
@@ -252,6 +259,7 @@ private:
   const int m_qcfVer = Globals::qcfVersion;
   const QString m_bookmarksFilepath =
     Globals::configDir.absoluteFilePath("bookmarks.db");
+  int m_activeKhatmah = 0;
   /**
    * @brief the currently active database type
    */
@@ -293,10 +301,6 @@ private:
    * @brief path to the QCF glyphs database file
    */
   QFileInfo m_glyphsDbPath;
-  /**
-   * @brief path to the bookmarks database file
-   */
-  QFileInfo m_bookmarksDbPath;
   /**
    * @brief QList of sura names (Arabic if UI language is Arabic, Otherwise
    * English)

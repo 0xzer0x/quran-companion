@@ -187,9 +187,7 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->beginGroup("Reader");
       settings->setValue("Mode", settings->value("Mode", 0));
       settings->setValue("FGHighlight", settings->value("FGHighlight", 1));
-      settings->setValue("Page", settings->value("Page", 1));
-      settings->setValue("Surah", settings->value("Surah", 1));
-      settings->setValue("Verse", settings->value("Verse", 1));
+      settings->setValue("Khatmah", settings->value("Khatmah", 0));
       settings->setValue("AdaptiveFont", settings->value("AdaptiveFont", true));
       settings->setValue("QCF1Size", settings->value("QCF1Size", 22));
       settings->setValue("QCF2Size", settings->value("QCF2Size", 20));

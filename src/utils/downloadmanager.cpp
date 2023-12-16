@@ -20,7 +20,7 @@ void
 DownloadManager::getLatestVersion()
 {
   static QNetworkAccessManager* updater = new QNetworkAccessManager(this);
-  QNetworkRequest req(QUrl::fromEncoded(
+  static QNetworkRequest req(QUrl::fromEncoded(
     "https://raw.githubusercontent.com/0xzer0x/quran-companion/main/VERSION"));
   req.setTransferTimeout(1500);
   m_versionReply = updater->get(req);
