@@ -9,27 +9,22 @@ DownloadManager::DownloadManager(QObject* parent)
   : QObject(parent)
   , m_netMan{ new QNetworkAccessManager(this) }
 {
-  m_netMan->setTransferTimeout(4000);
   connect(m_netMan,
           &QNetworkAccessManager::finished,
           this,
           &DownloadManager::finishupTask);
+
+  m_versionReq.setUrl(QUrl::fromEncoded(
+    "https://raw.githubusercontent.com/0xzer0x/quran-companion/main/VERSION"));
+  m_versionReq.setTransferTimeout(1500);
+  m_versionReq.setAttribute(QNetworkRequest::User, 1);
 }
 
 void
 DownloadManager::getLatestVersion()
 {
-  static QNetworkAccessManager* updater = new QNetworkAccessManager(this);
-  static QNetworkRequest req(QUrl::fromEncoded(
-    "https://raw.githubusercontent.com/0xzer0x/quran-companion/main/VERSION"));
-  req.setTransferTimeout(1500);
-  m_versionReply = updater->get(req);
+  m_versionReply = m_netMan->get(m_versionReq);
   m_versionReply->ignoreSslErrors();
-
-  connect(m_versionReply,
-          &QNetworkReply::finished,
-          this,
-          &DownloadManager::handleVersionReply);
 }
 
 void
@@ -72,7 +67,7 @@ DownloadManager::cancelCurrentTask()
 void
 DownloadManager::enqeueVerseTask(int reciterIdx, int surah, int verse)
 {
-  DownloadTask t;
+  VerseTask t;
   t.surah = surah;
   t.verse = verse;
   t.reciterIdx = reciterIdx;
@@ -112,9 +107,10 @@ DownloadManager::processDownloadQueue()
   m_currentTask = m_downloadQueue.dequeue();
 
   while (m_currentTask.downloadPath.exists()) {
-    emit downloadProgressed(m_currentTask.verse, m_currSurahCount);
-    if (m_currentTask.verse == m_currSurahCount)
+    if (m_currentTask.verse == m_currSurahCount) {
+      emit downloadProgressed(m_currSurahCount, m_currSurahCount);
       emit surahFound(m_currentTask.reciterIdx, m_currentTask.surah);
+    }
 
     if (m_downloadQueue.empty()) {
       processSurahQueue();
@@ -161,10 +157,11 @@ DownloadManager::downloadProgress(qint64 bytes, qint64 total)
 void
 DownloadManager::finishupTask(QNetworkReply* replyData)
 {
-  if (m_currentTask.networkReply->error() != QNetworkReply::NoError) {
-    handleConError(m_currentTask.networkReply->error());
-    return;
-  }
+  if (replyData->request().attribute(QNetworkRequest::User).toInt() == 1)
+    return handleVersionReply();
+
+  if (m_currentTask.networkReply->error() != QNetworkReply::NoError)
+    return handleConError(m_currentTask.networkReply->error());
 
   saveFile(replyData);
 
@@ -245,7 +242,7 @@ DownloadManager::netMan() const
   return m_netMan;
 }
 
-DownloadManager::DownloadTask
+DownloadManager::VerseTask
 DownloadManager::currentTask() const
 {
   return m_currentTask;

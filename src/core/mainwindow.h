@@ -16,6 +16,7 @@
 #include "../widgets/verseframe.h"
 #include "bookmarksdialog.h"
 #include "downloaderdialog.h"
+#include "khatmahdialog.h"
 #include "searchdialog.h"
 #include "settingsdialog.h"
 #include "tafsirdialog.h"
@@ -229,6 +230,7 @@ private slots:
    * @brief open the BookmarksDialog, create instance if not set
    */
   void actionBookmarksTriggered();
+  void actionKhatmahTriggered();
   /**
    * @brief open the TafsirDialog for the current ::Verse
    */
@@ -563,6 +565,7 @@ private:
    * @brief pointer to BookmarksDialog instance
    */
   BookmarksDialog* m_bookmarksDlg = nullptr;
+  KhatmahDialog* m_khatmahDlg = nullptr;
   /**
    * @brief pointer to DownloaderDialog instance
    */

@@ -5,6 +5,7 @@
 
 #include "mainwindow.h"
 #include "../widgets/clickablelabel.h"
+#include "khatmahdialog.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget* parent)
@@ -72,7 +73,7 @@ MainWindow::loadSettings()
   int id = m_settings->value("Reader/Khatmah").toInt();
   m_dbMgr->setActiveKhatmah(id);
   if (!m_dbMgr->getPosition(id, m_currVerse)) {
-    QString name = id ? QString::asprintf("Khatmah %i", id) : "Default";
+    QString name = id ? tr("Khatmah ") + QString::number(id) : tr("Default");
     m_dbMgr->addKhatmah(m_currVerse, name, id);
   }
 }
@@ -305,6 +306,10 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::actionBookmarksTriggered);
+  connect(ui->actionKhatmah,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionKhatmahTriggered);
   connect(ui->actionAbout_Quran_Companion,
           &QAction::triggered,
           this,
@@ -1137,6 +1142,21 @@ MainWindow::actionBookmarksTriggered()
   }
 
   m_bookmarksDlg->showWindow();
+}
+
+void
+MainWindow::actionKhatmahTriggered()
+{
+  if (m_khatmahDlg == nullptr) {
+    m_khatmahDlg = new KhatmahDialog(m_currVerse, this);
+    connect(m_khatmahDlg,
+            &KhatmahDialog::navigateToVerse,
+            this,
+            &MainWindow::navigateToVerse);
+  }
+
+  m_dbMgr->savePosition(m_currVerse);
+  m_khatmahDlg->show();
 }
 
 void

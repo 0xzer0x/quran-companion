@@ -3,6 +3,7 @@
  * @brief Implementation for BookmarksDialog
  */
 
+#include <set>
 #include "bookmarksdialog.h"
 #include "ui_bookmarksdialog.h"
 
@@ -26,18 +27,15 @@ BookmarksDialog::setupConnections()
   connect(ui->listViewBookmarkedSurahs,
           &QListView::clicked,
           this,
-          &BookmarksDialog::surahSelected,
-          Qt::UniqueConnection);
+          &BookmarksDialog::surahSelected);
   connect(ui->btnNext,
           &QPushButton::clicked,
           this,
-          &BookmarksDialog::btnNextClicked,
-          Qt::UniqueConnection);
+          &BookmarksDialog::btnNextClicked);
   connect(ui->btnPrev,
           &QPushButton::clicked,
           this,
-          &BookmarksDialog::btnPrevClicked,
-          Qt::UniqueConnection);
+          &BookmarksDialog::btnPrevClicked);
 }
 
 void
@@ -126,13 +124,11 @@ BookmarksDialog::loadBookmarks(int surah)
     connect(goToVerse,
             &QPushButton::clicked,
             this,
-            &BookmarksDialog::btnGoToVerse,
-            Qt::UniqueConnection);
+            &BookmarksDialog::btnGoToVerse);
     connect(removeFromFav,
             &QPushButton::clicked,
             this,
-            &BookmarksDialog::btnRemove,
-            Qt::UniqueConnection);
+            &BookmarksDialog::btnRemove);
 
     QString info = tr("Surah: ") +
                    m_dbMgr->surahNameList().at(verse.surah - 1) + " - " +

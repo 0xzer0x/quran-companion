@@ -4,7 +4,7 @@
  */
 
 #include "dbmanager.h"
-#include <qlogging.h>
+#include <qdebug.h>
 
 DBManager::DBManager(QObject* parent)
   : QObject(parent)
@@ -573,12 +573,6 @@ DBManager::searchSurahNames(QString text)
 
 /* ---------------- Verse-related methods ---------------- */
 
-void
-DBManager::setActiveKhatmah(const int id)
-{
-  m_activeKhatmah = id;
-}
-
 bool
 DBManager::getPosition(const int khatmahId, Verse& v)
 {
@@ -586,7 +580,7 @@ DBManager::getPosition(const int khatmahId, Verse& v)
   QSqlQuery dbQuery(m_openDBCon);
 
   QString q = QString::asprintf(
-    "SELECT page,surah,number FROM khatmah WHERE id = %i", khatmahId);
+    "SELECT page,surah,number FROM khatmah WHERE id=%i", khatmahId);
   if (!dbQuery.exec(q)) {
     qCritical() << "Couldn't execute getPosition SQL query!";
     return false;
@@ -646,17 +640,33 @@ DBManager::editKhatmah(const int khatmahId, QString newName)
 {
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
-  QString q = "UPDATE khatmah SET name = %0 WHERE id = %i";
+  QString q = "SELECT DISTINCT id FROM khatmah WHERE name='%0'";
+  if (!dbQuery.exec(q.arg(newName))) {
+    qCritical() << "Couldn't execute sql query: " << dbQuery.lastQuery();
+    qDebug() << m_openDBCon.lastError();
+    return false;
+  }
+  if (dbQuery.next())
+    return false;
 
+  q = "UPDATE khatmah SET name='%0' WHERE id=%1";
   if (!dbQuery.exec(q.arg(newName, QString::number(khatmahId)))) {
     qCritical() << "Couldn't rename khatmah entry!";
     qDebug() << m_openDBCon.lastError();
     return false;
   }
-  if (!m_openDBCon.commit())
-    return false;
 
+  m_openDBCon.commit();
   return true;
+}
+
+void
+DBManager::removeKhatmah(const int id)
+{
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  QSqlQuery dbQuery(m_openDBCon);
+  if (!dbQuery.exec(QString::asprintf("DELETE FROM khatmah WHERE id=%i", id)))
+    qDebug() << "Couldn't execute query: " << dbQuery.lastQuery();
 }
 
 bool
@@ -665,7 +675,7 @@ DBManager::savePosition(const Verse& v)
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   QString q = QString::asprintf(
-    "UPDATE khatmah SET page = %i, surah = %i, number = %i WHERE id = %i",
+    "UPDATE khatmah SET page=%i, surah=%i, number=%i WHERE id=%i",
     v.page,
     v.surah,
     v.number,
@@ -696,6 +706,33 @@ DBManager::getVerseText(const int sIdx, const int vIdx)
   }
   dbQuery.next();
 
+  return dbQuery.value(0).toString();
+}
+
+QList<int>
+DBManager::getAllKhatmah()
+{
+  QList<int> res;
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  QSqlQuery dbQuery(m_openDBCon);
+  if (!dbQuery.exec("SELECT id FROM khatmah"))
+    qCritical() << "Couldn't execute sql query: " << dbQuery.lastQuery();
+
+  while (dbQuery.next())
+    res.append(dbQuery.value(0).toInt());
+
+  return res;
+}
+
+QString
+DBManager::getKhatmahName(const int id)
+{
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  QSqlQuery dbQuery(m_openDBCon);
+  if (!dbQuery.exec("SELECT name FROM khatmah WHERE id=" + QString::number(id)))
+    qCritical() << "Couldn't execute sql query: " << dbQuery.lastQuery();
+
+  dbQuery.next();
   return dbQuery.value(0).toString();
 }
 
@@ -914,4 +951,16 @@ Tafsir
 DBManager::currTafsir() const
 {
   return m_currTafsir;
+}
+
+void
+DBManager::setActiveKhatmah(const int id)
+{
+  m_activeKhatmah = id;
+}
+
+const int
+DBManager::activeKhatmah() const
+{
+  return m_activeKhatmah;
 }

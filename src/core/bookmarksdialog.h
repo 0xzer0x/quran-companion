@@ -14,7 +14,6 @@
 #include <QStandardItem>
 #include <QStringListModel>
 #include <QVBoxLayout>
-#include <set>
 
 namespace Ui {
 class BookmarksDialog;

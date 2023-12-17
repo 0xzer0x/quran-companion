@@ -16,18 +16,18 @@
   <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="lbCurrKhatmah">
+      <widget class="QLabel" name="lbFixed">
        <property name="text">
         <string>Current Khatmah:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="lbCurrName">
+      <widget class="QLabel" name="lbCurrKhatmah">
        <property name="text">
         <string>Default</string>
        </property>
@@ -54,6 +54,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
 	min-height: 30px;
@@ -61,7 +64,10 @@
 }</string>
        </property>
        <property name="text">
-        <string>start a new khatmah</string>
+        <string>Start a new khatmah</string>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+Shift+F12</string>
        </property>
       </widget>
      </item>
@@ -81,10 +87,17 @@
         <x>0</x>
         <y>0</y>
         <width>634</width>
-        <height>561</height>
+        <height>584</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="styleSheet">
+       <string notr="true">QFrame {
+  color: rgb(222, 219, 215);
+  background-color: #212121;
+  border-radius: 5px;
+}</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -98,7 +111,11 @@
         <number>0</number>
        </property>
        <item>
-        <layout class="QVBoxLayout" name="lytKhatmahList"/>
+        <layout class="QVBoxLayout" name="lytKhatmahList">
+         <property name="spacing">
+          <number>6</number>
+         </property>
+        </layout>
        </item>
        <item>
         <spacer name="verticalSpacer">
@@ -116,27 +133,6 @@
       </layout>
      </widget>
     </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="lytNav">
-     <property name="spacing">
-      <number>3</number>
-     </property>
-     <item>
-      <widget class="QPushButton" name="btnPrev">
-       <property name="text">
-        <string>&lt;</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnNext">
-       <property name="text">
-        <string>&gt;</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>

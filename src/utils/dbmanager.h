@@ -32,7 +32,6 @@ public:
    */
   enum Database
   {
-
     null,       ///< default value
     quran,      ///< (quran.db) main Quran database file
     glyphs,     ///< (glyphs.db) QCF glyphs database
@@ -115,11 +114,15 @@ public:
    */
   QString getVerseText(const int sIdx, const int vIdx);
 
+  const int activeKhatmah() const;
   void setActiveKhatmah(const int id);
+  QList<int> getAllKhatmah();
+  QString getKhatmahName(const int id);
   bool getPosition(const int khatmahId, Verse& v);
   bool savePosition(const Verse& v);
   int addKhatmah(const Verse& v, const QString name, const int id = -1);
   bool editKhatmah(const int khatmahId, QString newName);
+  void removeKhatmah(const int id);
 
   /**
    * @brief gets the number of the last verse in the surah passed

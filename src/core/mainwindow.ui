@@ -92,6 +92,9 @@ dialog-no-icon: off;
         </property>
         <item>
          <layout class="QHBoxLayout" name="layoutPlayerControls" stretch="0,1,0">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
@@ -650,6 +653,7 @@ dialog-no-icon: off;
      <string>Edit</string>
     </property>
     <addaction name="actionBookmarks"/>
+    <addaction name="actionKhatmah"/>
     <addaction name="separator"/>
     <addaction name="actionPereferences"/>
    </widget>
@@ -975,8 +979,8 @@ placeholder-text-color: #c0c0c0;
   <action name="actionExit">
    <property name="icon">
     <iconset theme="window-close">
-     <normaloff>.</normaloff>
-     <normalon>:/resources/exit.png</normalon>.</iconset>
+     <normalon>:/resources/exit.png</normalon>
+    </iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -1025,6 +1029,11 @@ placeholder-text-color: #c0c0c0;
   <action name="actionVerse_of_the_day">
    <property name="text">
     <string>Verse of the day</string>
+   </property>
+  </action>
+  <action name="actionKhatmah">
+   <property name="text">
+    <string>Khatmah</string>
    </property>
   </action>
  </widget>

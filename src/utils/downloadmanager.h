@@ -28,11 +28,11 @@ class DownloadManager : public QObject
   Q_OBJECT
 public:
   /**
-   * @brief DownloadTask struct represents a single verse file download task
+   * @brief VerseTask struct represents a single verse file download task
    * @details Quran surahs are downloaded as separate verse mp3 files which are
-   * represented as DownloadTask instances
+   * represented as VerseTask instances
    */
-  struct DownloadTask
+  struct VerseTask
   {
     int surah{ -1 };      ///< surah number
     int verse{ -1 };      ///< verse number
@@ -68,9 +68,9 @@ public:
   bool isDownloading() const;
   /**
    * @brief getter for m_currentTask
-   * @return DownloadTask
+   * @return VerseTask
    */
-  DownloadTask currentTask() const;
+  VerseTask currentTask() const;
   /**
    * @brief getter for m_netMan
    * @return QNetworkAccessManager*
@@ -206,6 +206,7 @@ private:
    * @brief the verse count of the current surah being downloaded
    */
   int m_currSurahCount;
+  QNetworkRequest m_versionReq;
   /**
    * @brief QNetworkReply for version info request
    */
@@ -216,9 +217,9 @@ private:
    */
   QNetworkAccessManager* m_netMan;
   /**
-   * @brief the currently active DownloadTask
+   * @brief the currently active VerseTask
    */
-  DownloadTask m_currentTask;
+  VerseTask m_currentTask;
   /**
    * @brief surah download queue
    */
@@ -226,7 +227,7 @@ private:
   /**
    * @brief individual verses download queue
    */
-  QQueue<DownloadTask> m_downloadQueue;
+  QQueue<VerseTask> m_downloadQueue;
   /**
    * @brief QTime object to get the download start time, used in calculating
    * download speed

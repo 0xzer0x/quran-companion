@@ -61,6 +61,8 @@ set(PROJECT_SOURCES
     src/widgets/verseframe.h
     src/widgets/notificationpopup.h
     src/widgets/notificationpopup.cpp
+    src/widgets/inputfield.h
+    src/widgets/inputfield.cpp
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
     src/utils/dbmanager.h
