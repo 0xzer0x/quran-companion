@@ -113,7 +113,7 @@ file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY bismillah DESTINATION ${CMAKE_BINARY_DIR})
 
 message(STATUS "Adding translations to executable")
-qt_add_translations(quran-companion TS_FILES src/translations/qc_ar.ts)
+qt_add_translations(quran-companion TS_FILES dist/translations/qc_ar.ts)
 
 message(STATUS "Copying qt translations")
 configure_file("dist/translations/qtbase_ar.qm" "${CMAKE_BINARY_DIR}/ar.qm"

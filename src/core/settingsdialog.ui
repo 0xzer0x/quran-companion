@@ -31,7 +31,7 @@ dialog-ok-icon: off;
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -233,64 +233,67 @@ dialog-ok-icon: off;
                 <property name="editable">
                  <bool>true</bool>
                 </property>
+                <property name="currentText">
+                 <string notr="true">10</string>
+                </property>
                 <item>
                  <property name="text">
-                  <string>10</string>
+                  <string notr="true">10</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>12</string>
+                  <string notr="true">12</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>14</string>
+                  <string notr="true">14</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>16</string>
+                  <string notr="true">16</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>18</string>
+                  <string notr="true">18</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>20</string>
+                  <string notr="true">20</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>22</string>
+                  <string notr="true">22</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>24</string>
+                  <string notr="true">24</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>28</string>
+                  <string notr="true">28</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>36</string>
+                  <string notr="true">36</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>48</string>
+                  <string notr="true">48</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>72</string>
+                  <string notr="true">72</string>
                  </property>
                 </item>
                </widget>
@@ -355,62 +358,62 @@ dialog-ok-icon: off;
                 </property>
                 <item>
                  <property name="text">
-                  <string>10</string>
+                  <string notr="true">10</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>12</string>
+                  <string notr="true">12</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>14</string>
+                  <string notr="true">14</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>16</string>
+                  <string notr="true">16</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>18</string>
+                  <string notr="true">18</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>20</string>
+                  <string notr="true">20</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>22</string>
+                  <string notr="true">22</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>24</string>
+                  <string notr="true">24</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>28</string>
+                  <string notr="true">28</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>36</string>
+                  <string notr="true">36</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>48</string>
+                  <string notr="true">48</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>72</string>
+                  <string notr="true">72</string>
                  </property>
                 </item>
                </widget>
@@ -533,152 +536,152 @@ dialog-ok-icon: off;
               </property>
               <item>
                <property name="text">
-                <string>عربي - التفسير الميسّر</string>
+                <string notr="true">عربي - التفسير الميسّر</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>عربي - معاني الكلمات</string>
+                <string notr="true">عربي - معاني الكلمات</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Bengali - Muhiuddin Khan</string>
+                <string notr="true">Bengali - Muhiuddin Khan</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Bosanski - Korkut</string>
+                <string notr="true">Bosanski - Korkut</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Deutsch - Bubenheim &amp; Elyas</string>
+                <string notr="true">Deutsch - Bubenheim &amp; Elyas</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>English - Clear Quran (Dr. Mustafa Khattab)</string>
+                <string notr="true">English - Clear Quran (Dr. Mustafa Khattab)</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>English - Sahih International</string>
+                <string notr="true">English - Sahih International</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>English - Abdullah Yusuf Ali</string>
+                <string notr="true">English - Abdullah Yusuf Ali</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Español - Abdel Ghani Navio</string>
+                <string notr="true">Español - Abdel Ghani Navio</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Français - Hamidullah</string>
+                <string notr="true">Français - Hamidullah</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Hausa - Gumi</string>
+                <string notr="true">Hausa - Gumi</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Indonesian - Bahasa Indonesia</string>
+                <string notr="true">Indonesian - Bahasa Indonesia</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Italiano - Piccardo</string>
+                <string notr="true">Italiano - Piccardo</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>كوردى - برهان محمد أمين</string>
+                <string notr="true">كوردى - برهان محمد أمين</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Malayalam - Abdul Hameed and Kunhi</string>
+                <string notr="true">Malayalam - Abdul Hameed and Kunhi</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Melayu - Basmeih</string>
+                <string notr="true">Melayu - Basmeih</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Dutch - Sofian Siregar</string>
+                <string notr="true">Dutch - Sofian Siregar</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>فارسى - حسين تاجى كله دارى</string>
+                <string notr="true">فارسى - حسين تاجى كله دارى</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Português - El Hayek</string>
+                <string notr="true">Português - El Hayek</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Russian - Elmir Kuliev</string>
+                <string notr="true">Russian - Elmir Kuliev</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Somali - Abduh</string>
+                <string notr="true">Somali - Abduh</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Shqiptar - Efendi Nahi</string>
+                <string notr="true">Shqiptar - Efendi Nahi</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Swedish - Bernström</string>
+                <string notr="true">Swedish - Bernström</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Swahili - Al-Barwani</string>
+                <string notr="true">Swahili - Al-Barwani</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Tamil - Jan Turst Foundation</string>
+                <string notr="true">Tamil - Jan Turst Foundation</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>ภาษาไทย - ภาษาไทย</string>
+                <string notr="true">ภาษาไทย - ภาษาไทย</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Türkçe - Diyanet Isleri</string>
+                <string notr="true">Türkçe - Diyanet Isleri</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>اردو - جالندربرى</string>
+                <string notr="true">اردو - جالندربرى</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Uzbek - Мухаммад Содик</string>
+                <string notr="true">Uzbek - Мухаммад Содик</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>中国语文 - Ma Jian</string>
+                <string notr="true">中国语文 - Ma Jian</string>
                </property>
               </item>
              </widget>

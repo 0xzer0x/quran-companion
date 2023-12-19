@@ -3,9 +3,9 @@
  * @brief Implementation for BookmarksDialog
  */
 
-#include <set>
 #include "bookmarksdialog.h"
 #include "ui_bookmarksdialog.h"
+#include <set>
 
 BookmarksDialog::BookmarksDialog(QWidget* parent)
   : QDialog(parent)
@@ -28,14 +28,10 @@ BookmarksDialog::setupConnections()
           &QListView::clicked,
           this,
           &BookmarksDialog::surahSelected);
-  connect(ui->btnNext,
-          &QPushButton::clicked,
-          this,
-          &BookmarksDialog::btnNextClicked);
-  connect(ui->btnPrev,
-          &QPushButton::clicked,
-          this,
-          &BookmarksDialog::btnPrevClicked);
+  connect(
+    ui->btnNext, &QPushButton::clicked, this, &BookmarksDialog::btnNextClicked);
+  connect(
+    ui->btnPrev, &QPushButton::clicked, this, &BookmarksDialog::btnPrevClicked);
 }
 
 void
@@ -121,14 +117,10 @@ BookmarksDialog::loadBookmarks(int surah)
     removeFromFav->setStyleSheet(
       "QPushButton { min-width: 150px; max-width: 150px; }");
 
-    connect(goToVerse,
-            &QPushButton::clicked,
-            this,
-            &BookmarksDialog::btnGoToVerse);
-    connect(removeFromFav,
-            &QPushButton::clicked,
-            this,
-            &BookmarksDialog::btnRemove);
+    connect(
+      goToVerse, &QPushButton::clicked, this, &BookmarksDialog::btnGoToVerse);
+    connect(
+      removeFromFav, &QPushButton::clicked, this, &BookmarksDialog::btnRemove);
 
     QString info = tr("Surah: ") +
                    m_dbMgr->surahNameList().at(verse.surah - 1) + " - " +
@@ -147,6 +139,7 @@ BookmarksDialog::loadBookmarks(int surah)
     lbLayout->addWidget(verseLb);
     lbLayout->addStretch();
 
+    btnLayout->setSpacing(2);
     btnLayout->addStretch();
     btnLayout->addWidget(goToVerse);
     btnLayout->addWidget(removeFromFav);

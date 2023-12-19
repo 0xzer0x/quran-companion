@@ -116,6 +116,7 @@ KhatmahDialog::renameKhatmah(QString name)
   else {
     m_names[id] = name;
     caller->setText(name);
+    caller->clearFocus();
     if (id == m_dbMgr->activeKhatmah())
       ui->lbCurrKhatmah->setText(name);
   }

@@ -71,6 +71,7 @@ SettingsDialog::fillLanguageCombobox()
 {
   ui->cmbLang->addItem("English", QLocale::English);
   ui->cmbLang->addItem("العربية", QLocale::Arabic);
+  ui->cmbLang->addItem("Turkish", QLocale::Turkish);
 }
 
 void

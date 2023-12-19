@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ar_EG">
+<TS version="2.1" language="ar">
 <context>
     <name>BookmarksDialog</name>
     <message>
@@ -148,6 +148,59 @@
         <location filename="../core/downloaderdialog.cpp" line="270"/>
         <source>Download Failed</source>
         <translation>فشل التحميل</translation>
+    </message>
+</context>
+<context>
+    <name>KhatmahDialog</name>
+    <message>
+        <location filename="../../src/core/khatmahdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/khatmahdialog.ui" line="25"/>
+        <source>Current Khatmah:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/khatmahdialog.ui" line="32"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/khatmahdialog.ui" line="67"/>
+        <source>Start a new khatmah</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/khatmahdialog.ui" line="70"/>
+        <source>Ctrl+Shift+F12</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/khatmahdialog.cpp" line="34"/>
+        <source>Set as active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/khatmahdialog.cpp" line="35"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/khatmahdialog.cpp" line="49"/>
+        <source>Surah: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/khatmahdialog.cpp" line="50"/>
+        <source>Verse: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/khatmahdialog.cpp" line="100"/>
+        <source>Khatmah </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -400,9 +453,29 @@
         <translation>الإعدادات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="954"/>
-        <source>Download manager</source>
-        <translation>إدارة التحميلات</translation>
+        <location filename="../core/mainwindow.ui" line="945"/>
+        <source>Ctrl+P</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="957"/>
+        <source>Ctrl+D</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="970"/>
+        <source>Ctrl+Q</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="982"/>
+        <source>Ctrl+F</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="995"/>
+        <source>Ctrl+B</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="1019"/>
@@ -410,19 +483,19 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="945"/>
-        <source>Ctrl+P</source>
-        <translation></translation>
+        <location filename="../../src/core/mainwindow.ui" line="1036"/>
+        <source>Khatmah</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.ui" line="954"/>
+        <source>Download manager</source>
+        <translation>إدارة التحميلات</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="967"/>
         <source>Exit</source>
         <translation>خروج</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="957"/>
-        <source>Ctrl+D</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="979"/>
@@ -440,20 +513,10 @@
         <translation>العلامات</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="970"/>
-        <source>Ctrl+Q</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="1000"/>
         <location filename="../core/mainwindow.cpp" line="1123"/>
         <source>About Quran Companion</source>
         <translation>عن البرنامج</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.ui" line="982"/>
-        <source>Ctrl+F</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="1008"/>
@@ -467,24 +530,9 @@
         <translation>التفسير</translation>
     </message>
     <message>
-        <location filename="../core/mainwindow.ui" line="995"/>
-        <source>Ctrl+B</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../core/mainwindow.ui" line="1024"/>
         <source>Verse of the day</source>
         <translation>آية اليوم</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
-        <source>Error</source>
-        <translation>خطأ</translation>
-    </message>
-    <message>
-        <location filename="../core/mainwindow.cpp" line="409"/>
-        <source>Update tool is unavailable.</source>
-        <translation>أداة التحديث غير موجودة.</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.cpp" line="420"/>
@@ -514,6 +562,16 @@
         <translation>هناك تحديثات متاحة، يمكنك إستخدام اداة التحديث للحصول على اخر التحديثات.</translation>
     </message>
     <message>
+        <location filename="../../src/core/mainwindow.cpp" line="76"/>
+        <source>Khatmah </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/mainwindow.cpp" line="76"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../core/mainwindow.cpp" line="1332"/>
         <source>Now playing: </source>
         <translation>يقرأ الآن: </translation>
@@ -527,6 +585,16 @@
         <location filename="../core/mainwindow.cpp" line="853"/>
         <source>Recitation not found</source>
         <translation>التلاوة غير موجودة</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Error</source>
+        <translation>خطأ</translation>
+    </message>
+    <message>
+        <location filename="../core/mainwindow.cpp" line="409"/>
+        <source>Update tool is unavailable.</source>
+        <translation>أداة التحديث غير موجودة.</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.cpp" line="854"/>
@@ -1049,37 +1117,6 @@
         <translation>صفحتين</translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="150"/>
-        <source>Font</source>
-        <translation>الخط</translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="158"/>
-        <source>QCF V1</source>
-        <translation>خط 1</translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="163"/>
-        <source>QCF V2</source>
-        <translation>خط 2</translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="205"/>
-        <source>Foreground Highlight</source>
-        <translation>تظليل النص</translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="175"/>
-        <source>Adaptive font size</source>
-        <translation>حجم خط تلقائي</translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="184"/>
-        <location filename="../core/settingsdialog.ui" line="309"/>
-        <source>Font size</source>
-        <translation>حجم الخط</translation>
-    </message>
-    <message>
         <location filename="../core/settingsdialog.ui" line="201"/>
         <location filename="../core/settingsdialog.ui" line="346"/>
         <source>10</source>
@@ -1158,16 +1195,6 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="276"/>
-        <source>Side content</source>
-        <translation>المحتوي الجانبي</translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="284"/>
-        <source>Font Family</source>
-        <translation>خط المحتوي</translation>
-    </message>
-    <message>
         <location filename="../core/settingsdialog.ui" line="326"/>
         <source>6</source>
         <translation></translation>
@@ -1186,6 +1213,209 @@
         <location filename="../core/settingsdialog.ui" line="341"/>
         <source>9</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="493"/>
+        <source>Tafheem-ul-Quran</source>
+        <oldsource>Tafheem</oldsource>
+        <translatorcomment>Tafheem-ul-Quran by Syed Abu-al-A&apos;la Maududi</translatorcomment>
+        <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="519"/>
+        <source>عربي - التفسير الميسّر</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="524"/>
+        <source>عربي - معاني الكلمات</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="529"/>
+        <source>Bengali - Muhiuddin Khan</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="534"/>
+        <source>Bosanski - Korkut</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="539"/>
+        <source>Deutsch - Bubenheim &amp; Elyas</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="544"/>
+        <source>English - Clear Quran (Dr. Mustafa Khattab)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="549"/>
+        <source>English - Sahih International</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="554"/>
+        <source>Español - Abdel Ghani Navio</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="559"/>
+        <source>Français - Hamidullah</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="564"/>
+        <source>Hausa - Gumi</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="569"/>
+        <source>Indonesian - Bahasa Indonesia</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="574"/>
+        <source>Italiano - Piccardo</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="579"/>
+        <source>كوردى - برهان محمد أمين</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="584"/>
+        <source>English - Abdullah Yusuf Ali</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="584"/>
+        <source>Malayalam - Abdul Hameed and Kunhi</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="589"/>
+        <source>Melayu - Basmeih</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="594"/>
+        <source>Dutch - Sofian Siregar</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="599"/>
+        <source>فارسى - حسین تاجی گله داری</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="604"/>
+        <source>Português - El Hayek</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="609"/>
+        <source>Russian - Elmir Kuliev</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="614"/>
+        <source>Somali - Abduh</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="616"/>
+        <source>فارسى - حسين تاجى كله دارى</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="619"/>
+        <source>Shqiptar - Efendi Nahi</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="624"/>
+        <source>Swedish - Bernström</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="629"/>
+        <source>Swahili - Al-Barwani</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="634"/>
+        <source>Tamil - Jan Turst Foundation</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="639"/>
+        <source>ภาษาไทย - ภาษาไทย</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="644"/>
+        <source>Türkçe - Diyanet Isleri</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="649"/>
+        <source>اردو - جالندربرى</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="654"/>
+        <source>Uzbek - Мухаммад Содик</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="659"/>
+        <source>中国语文 - Ma Jian</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="150"/>
+        <source>Font</source>
+        <translation>الخط</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="158"/>
+        <source>QCF V1</source>
+        <translation>خط 1</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="163"/>
+        <source>QCF V2</source>
+        <translation>خط 2</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="205"/>
+        <source>Foreground Highlight</source>
+        <translation>تظليل النص</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="175"/>
+        <source>Adaptive font size</source>
+        <translation>حجم خط تلقائي</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="184"/>
+        <location filename="../core/settingsdialog.ui" line="309"/>
+        <source>Font size</source>
+        <translation>حجم الخط</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="276"/>
+        <source>Side content</source>
+        <translation>المحتوي الجانبي</translation>
+    </message>
+    <message>
+        <location filename="../core/settingsdialog.ui" line="284"/>
+        <source>Font Family</source>
+        <translation>خط المحتوي</translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="420"/>
@@ -1263,13 +1493,6 @@
         <translation>تفسير الجلالين - إندونيسي</translation>
     </message>
     <message>
-        <location filename="../core/settingsdialog.ui" line="493"/>
-        <source>Tafheem-ul-Quran</source>
-        <oldsource>Tafheem</oldsource>
-        <translatorcomment>Tafheem-ul-Quran by Syed Abu-al-A&apos;la Maududi</translatorcomment>
-        <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
-    </message>
-    <message>
         <location filename="../core/settingsdialog.ui" line="488"/>
         <source>Russian - Kuliev &amp; Al-Sa&apos;ady</source>
         <translation>تفسير السعدي - روسي</translation>
@@ -1283,161 +1506,6 @@
         <location filename="../core/settingsdialog.ui" line="505"/>
         <source>Translation</source>
         <translation>الترجمة</translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="519"/>
-        <source>عربي - التفسير الميسّر</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="524"/>
-        <source>عربي - معاني الكلمات</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="529"/>
-        <source>Bengali - Muhiuddin Khan</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="534"/>
-        <source>Bosanski - Korkut</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="539"/>
-        <source>Deutsch - Bubenheim &amp; Elyas</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="544"/>
-        <source>English - Clear Quran (Dr. Mustafa Khattab)</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="549"/>
-        <source>English - Sahih International</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="584"/>
-        <source>English - Abdullah Yusuf Ali</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="554"/>
-        <source>Español - Abdel Ghani Navio</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="559"/>
-        <source>Français - Hamidullah</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="564"/>
-        <source>Hausa - Gumi</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="569"/>
-        <source>Indonesian - Bahasa Indonesia</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="574"/>
-        <source>Italiano - Piccardo</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="579"/>
-        <source>كوردى - برهان محمد أمين</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="584"/>
-        <source>Malayalam - Abdul Hameed and Kunhi</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="589"/>
-        <source>Melayu - Basmeih</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="594"/>
-        <source>Dutch - Sofian Siregar</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="599"/>
-        <source>فارسى - حسین تاجی گله داری</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="616"/>
-        <source>فارسى - حسين تاجى كله دارى</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="604"/>
-        <source>Português - El Hayek</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="609"/>
-        <source>Russian - Elmir Kuliev</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="614"/>
-        <source>Somali - Abduh</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="619"/>
-        <source>Shqiptar - Efendi Nahi</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="624"/>
-        <source>Swedish - Bernström</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="629"/>
-        <source>Swahili - Al-Barwani</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="634"/>
-        <source>Tamil - Jan Turst Foundation</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="639"/>
-        <source>ภาษาไทย - ภาษาไทย</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="644"/>
-        <source>Türkçe - Diyanet Isleri</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="649"/>
-        <source>اردو - جالندربرى</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="654"/>
-        <source>Uzbek - Мухаммад Содик</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../core/settingsdialog.ui" line="659"/>
-        <source>中国语文 - Ma Jian</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../core/settingsdialog.ui" line="708"/>
@@ -1721,14 +1789,14 @@
         <translation>تفسير السعدي</translation>
     </message>
     <message>
-        <location filename="../core/tafsirdialog.cpp" line="124"/>
-        <source>English - Tafheem-ul-Quran</source>
-        <translation>تفهيم القرآن - إنجليزي</translation>
-    </message>
-    <message>
         <location filename="../core/tafsirdialog.cpp" line="123"/>
         <source>Tafheem-ul-Quran</source>
         <translation>تفهيم القرآن لأبو الاعلى المودودي</translation>
+    </message>
+    <message>
+        <location filename="../core/tafsirdialog.cpp" line="124"/>
+        <source>English - Tafheem-ul-Quran</source>
+        <translation>تفهيم القرآن - إنجليزي</translation>
     </message>
     <message>
         <location filename="../core/tafsirdialog.cpp" line="126"/>

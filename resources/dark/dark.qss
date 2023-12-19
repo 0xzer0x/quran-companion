@@ -214,5 +214,18 @@ QFrame#Popup {
 }
 
 QDialog#dlgVOTD:hover {
-  background: rgba(0,161,185,40);
+  background: rgba(0, 161, 185, 40);
+}
+
+/* --------------- Khatmah Name Edit Styles --------------- */
+
+#InputField {
+  border: none;
+  background: transparent;
+}
+
+#InputField:focus {
+  border: 1px solid palette(highlight);
+  border-radius: 3px;
+  background: palette(window);
 }

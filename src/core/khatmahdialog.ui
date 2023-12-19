@@ -66,9 +66,6 @@
        <property name="text">
         <string>Start a new khatmah</string>
        </property>
-       <property name="shortcut">
-        <string>Ctrl+Shift+F12</string>
-       </property>
       </widget>
      </item>
     </layout>
@@ -87,7 +84,7 @@
         <x>0</x>
         <y>0</y>
         <width>634</width>
-        <height>584</height>
+        <height>595</height>
        </rect>
       </property>
       <property name="styleSheet">

@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="lbVerseInfo">
      <property name="text">
-      <string>s-v</string>
+      <string notr="true">s-v</string>
      </property>
     </widget>
    </item>
@@ -92,7 +92,7 @@
         <string>next</string>
        </property>
        <property name="text">
-        <string>🡸</string>
+        <string notr="true">🡸</string>
        </property>
        <property name="shortcut">
         <string>Left</string>
@@ -130,7 +130,7 @@
         <string>previous</string>
        </property>
        <property name="text">
-        <string>🡺</string>
+        <string notr="true">🡺</string>
        </property>
        <property name="shortcut">
         <string>Right</string>
