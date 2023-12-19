@@ -156,7 +156,7 @@
         <location filename="../core/mainwindow.ui" line="17"/>
         <location filename="../core/mainwindow.cpp" line="1115"/>
         <source>Quran Companion</source>
-        <translation type="unfinished"></translation>
+        <translation>Kur-an&apos;ı Kerim Arkadaşı</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="99"/>
@@ -458,7 +458,7 @@
         <location filename="../core/mainwindow.ui" line="1000"/>
         <location filename="../core/mainwindow.cpp" line="1123"/>
         <source>About Quran Companion</source>
-        <translation type="unfinished"></translation>
+        <translation>Kur-an&apos;ı Kerim Arkadaşı Hakkında</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.ui" line="1008"/>
@@ -536,7 +536,7 @@
     <message>
         <location filename="../core/mainwindow.cpp" line="1113"/>
         <source>Quran Companion v</source>
-        <translation type="unfinished"></translation>
+        <translation>Kur-an&apos;ı Kerim Arkadaşı v</translation>
     </message>
     <message>
         <location filename="../core/mainwindow.cpp" line="1116"/>
