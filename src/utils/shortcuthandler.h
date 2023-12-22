@@ -54,6 +54,7 @@ signals:
   void decrementVolume();
   void bookmarkCurrent();
   void openBookmarks();
+  void openKhatmah();
   void openDownloads();
   void openSearch();
   void openSettings();

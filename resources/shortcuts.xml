@@ -17,6 +17,7 @@
     <shortcut key="ZoomOut" description="Decrease the size of the quran page" />
     <shortcut key="BookmarkCurrent" description="Bookmark the current active verse" />
     <shortcut key="BookmarksDialog" description="Open the bookmarks dialog" />
+    <shortcut key="KhatmahDialog" description="Open the khatmah dialog" />
     <shortcut key="SearchDialog" description="Open the search dialog" />
     <shortcut key="SettingsDialog" description="Open the preferences dialog" />
     <shortcut key="TafsirDialog" description="Open the tafsir for the current active verse" />

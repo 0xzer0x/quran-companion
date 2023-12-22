@@ -115,6 +115,11 @@ ShortcutHandler::setupConnections()
           this,
           &ShortcutHandler::openBookmarks,
           Qt::UniqueConnection);
+  connect(m_shortcuts.value("KhatmahDialog"),
+          &QShortcut::activated,
+          this,
+          &ShortcutHandler::openKhatmah,
+          Qt::UniqueConnection);
   connect(m_shortcuts.value("SearchDialog"),
           &QShortcut::activated,
           this,

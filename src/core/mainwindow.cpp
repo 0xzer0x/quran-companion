@@ -136,13 +136,16 @@ MainWindow::loadReader()
 void
 MainWindow::checkForUpdates()
 {
+#if defined Q_OS_WIN
   QFileInfo tool(m_updateToolPath);
   if (tool.exists()) {
     m_process->setWorkingDirectory(QApplication::applicationDirPath());
     m_process->start(m_updateToolPath, QStringList("ch"));
-  } else {
-    m_downManPtr->getLatestVersion();
+    return;
   }
+#endif
+
+  m_downManPtr->getLatestVersion();
 }
 
 void
@@ -241,6 +244,10 @@ MainWindow::setupShortcuts()
           &ShortcutHandler::openBookmarks,
           this,
           &MainWindow::actionBookmarksTriggered);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openKhatmah,
+          this,
+          &MainWindow::actionKhatmahTriggered);
   connect(m_shortcutHandler,
           &ShortcutHandler::openSearch,
           this,
