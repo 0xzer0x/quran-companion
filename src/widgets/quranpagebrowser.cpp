@@ -6,6 +6,7 @@
 #include "quranpagebrowser.h"
 #include <QApplication>
 #include <QRegularExpression>
+using namespace fa;
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   : QTextBrowser(parent)
@@ -320,12 +321,13 @@ QuranPageBrowser::bestFitFontSize()
 {
   int sz;
   int margin = 50;
+  static QRegularExpression rem("frame.*|bsml");
   for (sz = 28; sz >= 12; sz--) {
     QFont pf(m_pageFont, sz);
     QFontMetrics fm(pf);
     QFontMetrics headerMetrics(QFont("PakType Naskh Basic", sz - 6));
     QString completePage = m_currPageLines.join('\n');
-    completePage.remove("bsml").remove(QRegularExpression("frame.*"));
+    completePage.remove(rem);
 
     QSize textSz = headerMetrics.size(Qt::TextSingleLine, m_currPageHeader) +
                    fm.size(0, completePage);
@@ -348,16 +350,14 @@ QuranPageBrowser::createActions()
   m_tafsirAct = new QAction(tr("Tafsir"), this);
   m_actAddBookmark = new QAction(tr("Add Bookmark"), this);
   m_actRemBookmark = new QAction(tr("Remove Bookmark"), this);
-  m_zoomIn->setIcon(QIcon(m_resources.filePath("icons/zoom-in.png")));
-  m_zoomOut->setIcon(QIcon(m_resources.filePath("icons/zoom-out.png")));
-  m_playAct->setIcon(QIcon(m_resources.filePath("icons/play.png")));
-  m_selectAct->setIcon(QIcon(m_resources.filePath("icons/select.png")));
-  m_tafsirAct->setIcon(QIcon(m_resources.filePath("icons/tafsir.png")));
-  m_copyAct->setIcon(QIcon(m_resources.filePath("icons/copy.png")));
-  m_actAddBookmark->setIcon(
-    QIcon(m_resources.filePath("icons/bookmark-false.png")));
-  m_actRemBookmark->setIcon(
-    QIcon(m_resources.filePath("icons/bookmark-true.png")));
+  m_zoomIn->setIcon(m_fa->icon(fa_solid, fa_magnifying_glass_plus));
+  m_zoomOut->setIcon(m_fa->icon(fa_solid, fa_magnifying_glass_minus));
+  m_playAct->setIcon(m_fa->icon(fa_solid, fa_play));
+  m_selectAct->setIcon(m_fa->icon(fa_solid, fa_hand_pointer));
+  m_tafsirAct->setIcon(m_fa->icon(fa_solid, fa_book_open));
+  m_copyAct->setIcon(m_fa->icon(fa_solid, fa_clipboard));
+  m_actAddBookmark->setIcon(m_fa->icon(fa_regular, fa_bookmark));
+  m_actRemBookmark->setIcon(m_fa->icon(fa_solid, fa_bookmark));
   connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
   connect(
     m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);

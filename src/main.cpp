@@ -14,6 +14,7 @@
 #include <QStyleFactory>
 #include <QTranslator>
 #include <QXmlStreamReader>
+#include <QtAwesome.h>
 using namespace Globals;
 
 /*!
@@ -347,6 +348,9 @@ setTheme(int themeIdx)
     qApp->setStyleSheet(styles.readAll());
     styles.close();
   }
+
+  awesome = new fa::QtAwesome(qApp);
+  awesome->initFontAwesome();
 }
 
 void

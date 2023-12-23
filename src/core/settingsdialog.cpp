@@ -14,7 +14,7 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   ui->setupUi(this);
   ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 72));
   ui->cmbSideFontSz->setValidator(new QIntValidator(10, 72));
-  setWindowIcon(QIcon(m_resources.filePath("icons/prefs.png")));
+  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_gear));
   fillLanguageCombobox();
   ui->tableViewShortcuts->setModel(&m_shortcutsModel);
   ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
@@ -36,13 +36,11 @@ SettingsDialog::setupConnections()
   connect(ui->tableViewShortcuts,
           &QTableView::doubleClicked,
           this,
-          &SettingsDialog::editShortcut,
-          Qt::UniqueConnection);
+          &SettingsDialog::editShortcut);
   connect(m_keySeqEdit,
           &QKeySequenceEdit::editingFinished,
           this,
-          &SettingsDialog::setShortcut,
-          Qt::UniqueConnection);
+          &SettingsDialog::setShortcut);
 }
 
 void
@@ -71,7 +69,7 @@ SettingsDialog::fillLanguageCombobox()
 {
   ui->cmbLang->addItem("English", QLocale::English);
   ui->cmbLang->addItem("العربية", QLocale::Arabic);
-  ui->cmbLang->addItem("Turkish", QLocale::Turkish);
+  ui->cmbLang->addItem("Türkçe", QLocale::Turkish);
 }
 
 void

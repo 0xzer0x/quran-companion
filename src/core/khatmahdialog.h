@@ -18,8 +18,8 @@ class KhatmahDialog : public QDialog
 
 public:
   explicit KhatmahDialog(const Verse& curr, QWidget* parent = nullptr);
-  void show();
   ~KhatmahDialog();
+  void show();
 
 signals:
   void navigateToVerse(Verse v);

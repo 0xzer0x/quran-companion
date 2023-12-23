@@ -10,8 +10,12 @@ TafsirDialog::TafsirDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::TafsirDialog)
 {
-  setWindowIcon(QIcon(m_resources.filePath("icons/tafsir.png")));
+  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_book_open));
   ui->setupUi(this);
+  ui->btnNext->setIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
+  ui->btnPrev->setIcon(
+    Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
+
   setTafsirAsTitle();
   setLayoutDirection(Qt::LeftToRight);
   if (m_qcfVer == 1)

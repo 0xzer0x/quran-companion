@@ -76,7 +76,7 @@
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="text">
-          <string>add to queue &gt;&gt;</string>
+          <string>Add to queue</string>
          </property>
         </widget>
        </item>

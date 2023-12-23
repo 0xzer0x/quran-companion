@@ -192,7 +192,6 @@ QPushButton#btnToggleNav {
   border: none;
   border-radius: 0px;
   background-color: transparent;
-  image: url(":/resources/dark/icons/navigation.svg");
   min-height: 1.2em;
   min-width: 40px;
 }

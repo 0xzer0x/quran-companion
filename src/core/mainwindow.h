@@ -378,10 +378,10 @@ private:
   const QLocale::Language& m_language = Globals::language;
   QSettings* const m_settings = Globals::settings;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
-  const QDir m_resources = Globals::themeResources;
   const QString& m_updateToolPath = Globals::updateToolPath;
   const ReaderMode& m_readerMode = Globals::readerMode;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  fa::QtAwesome* m_fa = Globals::awesome;
   /**
    * @brief initalizes different parts used by the app
    */

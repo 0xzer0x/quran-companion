@@ -26,6 +26,8 @@ if(DEFINED BUILD_FLATPAK)
   add_subdirectory(dist/flatpak)
 endif()
 
+add_subdirectory(third_party/QtAwesome)
+
 set(PROJECT_SOURCES
     src/main.cpp
     src/globals.h
@@ -87,7 +89,8 @@ endif()
 target_link_libraries(
   quran-companion
   PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql
-          Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::Network)
+          Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::Network
+          QtAwesome)
 
 if(WIN32)
   set_target_properties(quran-companion PROPERTIES WIN32_EXECUTABLE TRUE)
@@ -105,12 +108,12 @@ install(
   TARGETS quran-companion
   BUNDLE DESTINATION .
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY ./assets TYPE BIN)
-install(DIRECTORY ./bismillah TYPE BIN)
+install(DIRECTORY assets TYPE BIN)
+install(DIRECTORY bismillah TYPE BIN)
 
 message(STATUS "Copying application assets to build tree")
 file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY bismillah DESTINATION ${CMAKE_BINARY_DIR})
+file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
 
 message(STATUS "Adding translations to executable")
 qt_add_translations(quran-companion TS_FILES dist/translations/qc_ar.ts)

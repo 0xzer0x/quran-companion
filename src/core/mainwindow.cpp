@@ -7,6 +7,7 @@
 #include "../widgets/clickablelabel.h"
 #include "khatmahdialog.h"
 #include "ui_mainwindow.h"
+using namespace fa;
 
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
@@ -42,29 +43,25 @@ MainWindow::MainWindow(QWidget* parent)
 void
 MainWindow::loadIcons()
 {
-  ui->actionDownload_manager->setIcon(
-    QIcon(m_resources.filePath("icons/download-manager.png")));
-  ui->actionExit->setIcon(QIcon(m_resources.filePath("icons/exit.png")));
-  ui->actionFind->setIcon(QIcon(m_resources.filePath("icons/search.png")));
-  ui->actionTafsir->setIcon(QIcon(m_resources.filePath("icons/tafsir.png")));
-  ui->actionVerse_of_the_day->setIcon(
-    QIcon(m_resources.filePath("icons/today.png")));
-  ui->actionBookmarks->setIcon(
-    QIcon(m_resources.filePath("icons/bookmark-true.png")));
-  ui->actionPereferences->setIcon(
-    QIcon(m_resources.filePath("icons/prefs.png")));
-  ui->btnPlay->setIcon(QIcon(m_resources.filePath("icons/play.png")));
-  ui->btnPause->setIcon(QIcon(m_resources.filePath("icons/pause.png")));
-  ui->btnStop->setIcon(QIcon(m_resources.filePath("icons/stop.png")));
-  ui->actionCheck_for_updates->setIcon(
-    QIcon(m_resources.filePath("icons/update.png")));
+  ui->btnNext->setIcon(m_fa->icon(fa_solid, fa_arrow_left));
+  ui->btnPrev->setIcon(m_fa->icon(fa_solid, fa_arrow_right));
 
-  QLocale l(m_language);
-  if (l.textDirection() == Qt::RightToLeft)
-    ui->lbSpeaker->setPixmap(
-      QPixmap(m_resources.filePath("icons/volume-rtl.png")));
-  else
-    ui->lbSpeaker->setPixmap(QPixmap(m_resources.filePath("icons/volume.png")));
+  ui->actionKhatmah->setIcon(m_fa->icon(fa_solid, fa_list));
+  ui->actionDownload_manager->setIcon(m_fa->icon(fa_solid, fa_download));
+  ui->actionExit->setIcon(m_fa->icon(fa_solid, fa_xmark));
+  ui->actionFind->setIcon(m_fa->icon(fa_solid, fa_magnifying_glass));
+  ui->actionTafsir->setIcon(m_fa->icon(fa_solid, fa_book_open));
+  ui->actionVerse_of_the_day->setIcon(m_fa->icon(fa_solid, fa_calendar_day));
+  ui->actionBookmarks->setIcon(m_fa->icon(fa_solid, fa_bookmark));
+  ui->actionPereferences->setIcon(m_fa->icon(fa_solid, fa_gear));
+  ui->btnPlay->setIcon(m_fa->icon(fa_solid, fa_play));
+  ui->btnPause->setIcon(m_fa->icon(fa_solid, fa_pause));
+  ui->btnStop->setIcon(m_fa->icon(fa_solid, fa_stop));
+  ui->actionCheck_for_updates->setIcon(
+    m_fa->icon(fa_solid, fa_arrow_rotate_right));
+
+  ui->lbSpeaker->setText(QString(fa_volume_high));
+  ui->lbSpeaker->setFont(m_fa->font(fa_solid, 16));
 }
 
 void
@@ -573,6 +570,8 @@ MainWindow::setupMenubarToggle()
   toggleNav->setMinimumSize(
     QSize(ui->menubar->height() + 10, ui->menubar->height()));
   ui->menubar->setCornerWidget(toggleNav);
+  toggleNav->setIcon(m_fa->icon(fa_solid, fa_compass));
+  toggleNav->setIconSize(QSize(20, 20));
 
   connect(toggleNav, &QPushButton::toggled, this, [this](bool checked) {
     if (ui->sideDock->isVisible() != checked)
@@ -1540,7 +1539,7 @@ MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
   QPointer<QDialog> mbox = new QDialog(this);
   mbox->setObjectName("dlgVOTD");
   mbox->setLayout(new QVBoxLayout);
-  mbox->setWindowIcon(QIcon(m_resources.filePath("/icons/today.png")));
+  mbox->setWindowIcon(ui->actionVerse_of_the_day->icon());
   mbox->setWindowTitle(tr("Verse Of The Day"));
   ClickableLabel* lb = new ClickableLabel(mbox);
   lb->setText(votd.second);

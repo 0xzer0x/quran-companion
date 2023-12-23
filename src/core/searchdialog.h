@@ -95,7 +95,6 @@ private slots:
   void btnTransferClicked();
 
 private:
-  const QDir& m_resources = Globals::themeResources;
   const QString& m_fontPrefix = Globals::qcfFontPrefix;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**

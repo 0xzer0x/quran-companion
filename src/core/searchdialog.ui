@@ -149,7 +149,7 @@
              <string>next</string>
             </property>
             <property name="text">
-             <string notr="true">🡸</string>
+             <string notr="true"/>
             </property>
             <property name="shortcut">
              <string>Left</string>
@@ -177,7 +177,7 @@
              <string>previous</string>
             </property>
             <property name="text">
-             <string notr="true">🡺</string>
+             <string notr="true"/>
             </property>
             <property name="shortcut">
              <string>Right</string>
@@ -307,17 +307,17 @@
 min-width: 30px;
 max-width: 40px;
 text-align: center;
-border: none;	
 background: transparent;
+border: none;
 }</string>
             </property>
             <property name="text">
-             <string notr="true">⮀</string>
+             <string notr="true"/>
             </property>
             <property name="iconSize">
              <size>
-              <width>16</width>
-              <height>16</height>
+              <width>20</width>
+              <height>20</height>
              </size>
             </property>
             <property name="flat">

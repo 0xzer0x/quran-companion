@@ -12,6 +12,7 @@
 #include <QMap>
 #include <QSettings>
 #include <QString>
+#include <QtAwesome.h>
 
 /**
  * @struct Verse
@@ -189,6 +190,8 @@ extern QMap<QString, QString>
 extern QObject* databaseManager; ///< global pointer to the application-wide
                                  ///< DBManager instance for interacting with
                                  ///< different database files.
+
+extern fa::QtAwesome* awesome;
 
 };
 

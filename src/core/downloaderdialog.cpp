@@ -14,7 +14,7 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, DownloadManager* downloader)
 
 {
   ui->setupUi(this);
-  setWindowIcon(QIcon(m_resources.filePath("icons/download-manager.png")));
+  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_download));
 
   // treeview setup
   QStringList headers;
@@ -22,7 +22,7 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, DownloadManager* downloader)
   headers.append(tr("Name"));
   m_treeModel.setHorizontalHeaderLabels(headers);
   ui->treeView->setModel(&m_treeModel);
-  fillTreeView();
+  addRecitationsToModel();
 
   // connectors
   setupConnections();
@@ -34,50 +34,42 @@ DownloaderDialog::setupConnections()
   connect(ui->btnAddToQueue,
           &QPushButton::clicked,
           this,
-          &DownloaderDialog::addToQueue,
-          Qt::UniqueConnection);
+          &DownloaderDialog::addToQueue);
 
   connect(ui->btnDownloads,
           &QPushButton::clicked,
           this,
-          &DownloaderDialog::openDownloadsDir,
-          Qt::UniqueConnection);
+          &DownloaderDialog::openDownloadsDir);
 
   connect(ui->btnStopQueue,
           &QPushButton::clicked,
           this,
-          &DownloaderDialog::btnStopClicked,
-          Qt::UniqueConnection);
+          &DownloaderDialog::btnStopClicked);
 
   connect(ui->btnClearQueue,
           &QPushButton::clicked,
           this,
-          &DownloaderDialog::clearQueue,
-          Qt::UniqueConnection);
+          &DownloaderDialog::clearQueue);
 
   connect(m_downloaderPtr,
           &DownloadManager::downloadComplete,
           this,
-          &DownloaderDialog::surahDownloaded,
-          Qt::UniqueConnection);
+          &DownloaderDialog::surahDownloaded);
 
   connect(m_downloaderPtr,
           &DownloadManager::surahFound,
           this,
-          &DownloaderDialog::surahDownloaded,
-          Qt::UniqueConnection);
+          &DownloaderDialog::surahDownloaded);
 
   connect(m_downloaderPtr,
           &DownloadManager::downloadCanceled,
           this,
-          &DownloaderDialog::downloadAborted,
-          Qt::UniqueConnection);
+          &DownloaderDialog::downloadAborted);
 
   connect(m_downloaderPtr,
           &DownloadManager::downloadError,
           this,
-          &DownloaderDialog::topTaskDownloadError,
-          Qt::UniqueConnection);
+          &DownloaderDialog::topTaskDownloadError);
 
   connect(m_downloaderPtr,
           &DownloadManager::downloadSpeedUpdated,
@@ -86,7 +78,7 @@ DownloaderDialog::setupConnections()
 }
 
 void
-DownloaderDialog::fillTreeView()
+DownloaderDialog::addRecitationsToModel()
 {
   for (const Reciter& reciter : m_recitersList) {
     QStandardItem* item = new QStandardItem(reciter.displayName);

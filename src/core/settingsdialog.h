@@ -215,7 +215,6 @@ private:
   const ReaderMode m_readerMode = Globals::readerMode;
   const QLocale::Language m_languageCode = Globals::language;
   QSettings* const m_settings = Globals::settings;
-  const QDir& m_resources = Globals::themeResources;
   const QMap<QString, QString>& m_shortcutDescription =
     Globals::shortcutDescription;
   /**

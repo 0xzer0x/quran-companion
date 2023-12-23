@@ -104,7 +104,6 @@ public slots:
   void checkUpdate(QString appVer);
 
 private:
-  const QDir& m_resources = Globals::themeResources;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**

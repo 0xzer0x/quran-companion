@@ -33,5 +33,5 @@ QDir configDir =
 QList<Reciter> recitersList;
 QString updateToolPath;
 QMap<QString, QString> shortcutDescription;
-
+fa::QtAwesome* awesome;
 };

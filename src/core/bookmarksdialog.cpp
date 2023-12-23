@@ -12,9 +12,12 @@ BookmarksDialog::BookmarksDialog(QWidget* parent)
   , ui(new Ui::BookmarksDialog)
 {
   ui->setupUi(this);
-  ui->scrollArea->setLayoutDirection(Qt::LeftToRight);
   ui->navBar->setLayoutDirection(Qt::LeftToRight);
-  setWindowIcon(QIcon(m_resources.filePath("icons/bookmark-true.png")));
+  ui->btnNext->setIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
+  ui->btnPrev->setIcon(
+    Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
+  ui->scrollArea->setLayoutDirection(Qt::LeftToRight);
+  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_bookmark));
   ui->listViewBookmarkedSurahs->setModel(&m_surahsModel);
 
   loadDefault();

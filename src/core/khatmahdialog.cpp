@@ -1,8 +1,5 @@
 #include "khatmahdialog.h"
 #include "ui_khatmahdialog.h"
-#include <qnamespace.h>
-#include <qpushbutton.h>
-#include <qvariant.h>
 
 KhatmahDialog::KhatmahDialog(const Verse& curr, QWidget* parent)
   : QDialog(parent)
@@ -10,14 +7,14 @@ KhatmahDialog::KhatmahDialog(const Verse& curr, QWidget* parent)
   , ui(new Ui::KhatmahDialog)
 {
   ui->setupUi(this);
+  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_list));
   ui->lbCurrKhatmah->setText(m_dbMgr->getKhatmahName(m_dbMgr->activeKhatmah()));
   loadAll();
 
   connect(ui->btnStartKhatmah,
           &QPushButton::clicked,
           this,
-          &KhatmahDialog::startNewKhatmah,
-          Qt::UniqueConnection);
+          &KhatmahDialog::startNewKhatmah);
 }
 
 InputField*

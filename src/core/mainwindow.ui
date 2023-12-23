@@ -404,6 +404,9 @@ dialog-no-icon: off;
                  <pointsize>12</pointsize>
                 </font>
                </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
                <property name="textFormat">
                 <enum>Qt::PlainText</enum>
                </property>
@@ -485,7 +488,7 @@ dialog-no-icon: off;
 }</string>
              </property>
              <property name="text">
-              <string notr="true">🡸</string>
+              <string notr="true"/>
              </property>
              <property name="flat">
               <bool>false</bool>
@@ -615,7 +618,7 @@ dialog-no-icon: off;
 }</string>
              </property>
              <property name="text">
-              <string notr="true">🡺</string>
+              <string notr="true"/>
              </property>
             </widget>
            </item>
