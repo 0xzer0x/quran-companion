@@ -1,6 +1,9 @@
 *.exe
 *.run
 *.sh
+!reciters.sh
+!shortcuts.sh
+!update_translations.sh
 .cache
 .clangd
 .vscode
