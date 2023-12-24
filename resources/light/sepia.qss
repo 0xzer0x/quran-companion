@@ -204,5 +204,24 @@ QFrame#Popup {
 }
 
 QDialog#dlgVOTD:hover {
-  background: rgba(115,96,64,40);
+  background: rgba(115, 96, 64, 40);
+}
+
+/* --------------- Khatmah Dialog Styles --------------- */
+
+*[khatmah="true"] {
+  border: 1px outset #7e786a;
+  background-color: #f7ebd5;
+  border-radius: 5px;
+}
+
+#InputField {
+  border: none;
+  background: transparent;
+}
+
+#InputField:focus {
+  border: 1px solid palette(highlight);
+  border-radius: 3px;
+  background: palette(window);
 }

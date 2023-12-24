@@ -83,16 +83,12 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>634</width>
-        <height>595</height>
+        <width>644</width>
+        <height>607</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">QFrame {
-  color: rgb(222, 219, 215);
-  background-color: #212121;
-  border-radius: 5px;
-}</string>
+       <string notr="true"/>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">
        <property name="leftMargin">

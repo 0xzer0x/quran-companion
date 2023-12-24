@@ -216,7 +216,13 @@ QDialog#dlgVOTD:hover {
   background: rgba(0, 161, 185, 40);
 }
 
-/* --------------- Khatmah Name Edit Styles --------------- */
+/* --------------- Khatmah Dialog Styles --------------- */
+
+*[khatmah="true"] {
+  border: 1px outset #515151;
+  background-color: #424242;
+  border-radius: 5px;
+}
 
 #InputField {
   border: none;
