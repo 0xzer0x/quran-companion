@@ -69,7 +69,7 @@ MainWindow::loadSettings()
 {
   int id = m_settings->value("Reader/Khatmah").toInt();
   m_dbMgr->setActiveKhatmah(id);
-  if (!m_dbMgr->getPosition(id, m_currVerse)) {
+  if (!m_dbMgr->getKhatmahPos(id, m_currVerse)) {
     QString name = id ? tr("Khatmah ") + QString::number(id) : tr("Default");
     m_dbMgr->addKhatmah(m_currVerse, name, id);
   }
@@ -1161,7 +1161,7 @@ MainWindow::actionKhatmahTriggered()
             &MainWindow::navigateToVerse);
   }
 
-  m_dbMgr->savePosition(m_currVerse);
+  m_dbMgr->saveActiveKhatmah(m_currVerse);
   m_khatmahDlg->show();
 }
 
@@ -1579,7 +1579,7 @@ MainWindow::saveReaderState()
   m_settings->setValue("Reciter", ui->cmbReciter->currentIndex());
   m_settings->sync();
 
-  m_dbMgr->savePosition(m_currVerse);
+  m_dbMgr->saveActiveKhatmah(m_currVerse);
 }
 
 void

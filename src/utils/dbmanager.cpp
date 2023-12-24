@@ -574,7 +574,7 @@ DBManager::searchSurahNames(QString text)
 /* ---------------- Verse-related methods ---------------- */
 
 bool
-DBManager::getPosition(const int khatmahId, Verse& v)
+DBManager::getKhatmahPos(const int khatmahId, Verse& v)
 {
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
@@ -636,7 +636,7 @@ DBManager::addKhatmah(const Verse& v, const QString name, const int id)
 }
 
 bool
-DBManager::editKhatmah(const int khatmahId, QString newName)
+DBManager::editKhatmahName(const int khatmahId, QString newName)
 {
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
@@ -670,7 +670,7 @@ DBManager::removeKhatmah(const int id)
 }
 
 bool
-DBManager::savePosition(const Verse& v)
+DBManager::saveActiveKhatmah(const Verse& v)
 {
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);

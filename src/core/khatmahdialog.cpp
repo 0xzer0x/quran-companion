@@ -21,8 +21,11 @@ InputField*
 KhatmahDialog::loadKhatmah(const int id)
 {
   Verse v;
-  m_dbMgr->getPosition(id, v);
+  m_dbMgr->getKhatmahPos(id, v);
   QFrame* frame = new QFrame(ui->scrlDialogContent);
+  // property used for styling
+  frame->setProperty("khatmah", true);
+
   QHBoxLayout* frmLayout = new QHBoxLayout();
   QVBoxLayout* lbLayout = new QVBoxLayout();
   QVBoxLayout* btnLayout = new QVBoxLayout();
@@ -82,11 +85,11 @@ KhatmahDialog::loadKhatmah(const int id)
 void
 KhatmahDialog::loadAll()
 {
-  m_khatmahId = m_dbMgr->getAllKhatmah();
-  for (int i = 0; i < m_khatmahId.size(); i++) {
-    m_names.insert(m_khatmahId.at(i),
-                   m_dbMgr->getKhatmahName(m_khatmahId.at(i)));
-    loadKhatmah(m_khatmahId.at(i));
+  m_khatmahIds = m_dbMgr->getAllKhatmah();
+  for (int i = 0; i < m_khatmahIds.size(); i++) {
+    m_names.insert(m_khatmahIds.at(i),
+                   m_dbMgr->getKhatmahName(m_khatmahIds.at(i)));
+    loadKhatmah(m_khatmahIds.at(i));
   }
 }
 
@@ -95,9 +98,9 @@ KhatmahDialog::startNewKhatmah()
 {
   int id = m_dbMgr->addKhatmah(m_currVerse, "new");
   QString gen = tr("Khatmah ") + QString::number(id);
-  m_dbMgr->editKhatmah(id, gen);
+  m_dbMgr->editKhatmahName(id, gen);
   InputField* inpField = loadKhatmah(id);
-  m_khatmahId.append(id);
+  m_khatmahIds.append(id);
   m_names.insert(id, gen);
   inpField->setFocus();
 }
@@ -107,7 +110,7 @@ KhatmahDialog::renameKhatmah(QString name)
 {
   InputField* caller = qobject_cast<InputField*>(sender());
   int id = caller->parent()->objectName().toInt();
-  bool ok = m_dbMgr->editKhatmah(id, name);
+  bool ok = m_dbMgr->editKhatmahName(id, name);
   if (!ok)
     caller->setText(m_names.value(id));
   else {
@@ -137,9 +140,9 @@ KhatmahDialog::setActiveKhatmah()
   QVariant id = newActive->objectName();
 
   m_settings->setValue("Reader/Khatmah", id);
-  m_dbMgr->savePosition(m_currVerse);
+  m_dbMgr->saveActiveKhatmah(m_currVerse);
   m_dbMgr->setActiveKhatmah(id.toInt());
-  m_dbMgr->getPosition(id.toInt(), v);
+  m_dbMgr->getKhatmahPos(id.toInt(), v);
 
   newActive->findChild<QPushButton*>("activate")->setEnabled(false);
   newActive->findChild<QPushButton*>("remove")->setEnabled(false);

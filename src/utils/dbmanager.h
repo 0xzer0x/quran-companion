@@ -113,17 +113,51 @@ public:
    * @return QString of the verse text
    */
   QString getVerseText(const int sIdx, const int vIdx);
-
-  const int activeKhatmah() const;
-  void setActiveKhatmah(const int id);
+  /**
+   * @brief sets the given ::Verse as the last position reached in the current
+   * active khatmah
+   * @param v - ::Verse reached in khatmah
+   */
+  bool saveActiveKhatmah(const Verse& v);
+  /**
+   * @brief get all available khatmah ids
+   * @return QList of khatmah id(s)
+   */
   QList<int> getAllKhatmah();
+  /**
+   * @brief get the name of the khatmah with id given
+   * @return QString containing the khatmah name
+   */
   QString getKhatmahName(const int id);
-  bool getPosition(const int khatmahId, Verse& v);
-  bool savePosition(const Verse& v);
+  /**
+   * @brief gets the last position saved for the khatmah with the id given and
+   * stores the position in the ::Verse v
+   * @return boolean indicating a successful operation (false in case of error
+   * and in case id does not exist)
+   */
+  bool getKhatmahPos(const int khatmahId, Verse& v);
+  /**
+   * @brief add a new khatmah/replace khatmah with given id with position of
+   * ::Verse v
+   * @param v - ::Verse to set as the khatmah position
+   * @param name - new khatmah name
+   * @param id - id of khatmah to replace, -1 means do not replace (default: -1)
+   * @return id of newly added khatmah or id parameter if defined
+   */
   int addKhatmah(const Verse& v, const QString name, const int id = -1);
-  bool editKhatmah(const int khatmahId, QString newName);
+  /**
+   * @brief rename the khatmah with the given id to newName
+   * @param khatmahId - id of khatmah to rename
+   * @param newName - new name to set
+   * @return boolean indicating a successful operation (false in case the name
+   * exists)
+   */
+  bool editKhatmahName(const int khatmahId, QString newName);
+  /**
+   * @brief remove the khatmah with the given id from database
+   * @param id - id of khatmah to remove
+   */
   void removeKhatmah(const int id);
-
   /**
    * @brief gets the number of the last verse in the surah passed
    * @param surahIdx - surah number (1-114)
@@ -254,6 +288,16 @@ public:
    * @return the currently set DBManager::Tafsir
    */
   Tafsir currTafsir() const;
+  /**
+   * @brief getter for m_activeKhatmah
+   * @return the currently active khatmah id
+   */
+  const int activeKhatmah() const;
+  /**
+   * @brief setter for m_activeKhatmah
+   * @param id - id of the active khatmah
+   */
+  void setActiveKhatmah(const int id);
 
 private:
   QDir m_dbDir = Globals::assetsDir;
@@ -262,6 +306,9 @@ private:
   const int m_qcfVer = Globals::qcfVersion;
   const QString m_bookmarksFilepath =
     Globals::configDir.absoluteFilePath("bookmarks.db");
+  /**
+   * @brief integer id of the current active khatmah
+   */
   int m_activeKhatmah = 0;
   /**
    * @brief the currently active database type

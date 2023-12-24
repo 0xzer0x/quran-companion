@@ -16,12 +16,6 @@ InputField::setText(QString text)
 }
 
 void
-InputField::focusInEvent(QFocusEvent* event)
-{
-  QLineEdit::focusInEvent(event);
-}
-
-void
 InputField::focusOutEvent(QFocusEvent* event)
 {
   if (text().isEmpty())
