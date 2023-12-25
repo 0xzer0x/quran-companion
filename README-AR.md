@@ -128,7 +128,7 @@
 
 <p align="right">
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
-    <img width='240' alt='Download Flatpak' src='https://flathub.org/assets/badges/flathub-badge-i-en.svg'/>
+    <img width='240' alt='Download Flatpak' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/>
  </a>
  <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.1.11/Quran_Companion-1.1.11-x86_64.AppImage'>
     <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 10px'/>
@@ -180,6 +180,7 @@
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
 
 <a name="dependencies"></a>
+
 ### التبعيات
 
 <div dir='ltr'>
@@ -210,6 +211,7 @@ git clone --depth=1 -b main https://github.com/0xzer0x/quran-companion.git
 <a name="windows-build"></a>
 
 #### ويندوز
+
 <ol start=2>
 <li>قم بتثبيت Qt باستخدام <a href='https://www.qt.io/download-qt-installer'>المثبت عبر الانترنت</a></li>
 <li>إضافة مجلد bin الخاص ب Qt لمسار البحث الخاص بالنظام (PATH)، في الأغلب يكون المسار <code dir='ltr'>C:\Qt\6.X.X\msvc_2019\bin</code>
@@ -227,10 +229,12 @@ ninja
 <a name="linux-build"></a>
 
 #### لينكس
+
 <ol start=2>
 <li>تنصيب التبعيات</li>
 
 **أوبونتو**
+
 ```sh
 sudo apt install build-essential cmake qt6-tools-dev qt6-base-dev qt6-image-formats-plugins qt6-multimedia-dev qt6-l10n-tools qt6-translations-l10n
 ```
@@ -244,7 +248,7 @@ sudo pacman -Sy base-devel cmake qt6-base qt6-multimedia qt6-tools qt6-imageform
 <li>البناء</li>
 </ol>
 
-```sh    
+```sh
 mkdir build
 cd build
 cmake ..
@@ -264,6 +268,7 @@ QT_MEDIA_BACKEND=ffmpeg ./quran-companion
 <a name="roadmap"></a>
 
 ## خارطة الطريق 🎯
+
 - [x] إضافة خاصية الآية اليومية
 - [x] إضافة نافذة الايآت المفضلة
 - [x] تحسين خاصية البحث
@@ -288,36 +293,29 @@ QT_MEDIA_BACKEND=ffmpeg ./quran-companion
 
 ### التوثيق 📚
 
-
 - تم توثيق كافة أجزاء البرنامج باستخدام منهجية [Doxygen](https://www.doxygen.nl/) يمكنك بناء التوثيق في هيئة html عن طريق الخطوات التالية
-  - `git clone https://github.com/0xzer0x/quran-companion.git`
-  - `cd quran-companion/docs`
-  - `doxygen`
 
+<div dir='ltr'>
 
+- `git clone https://github.com/0xzer0x/quran-companion.git`
+- `cd quran-companion/docs`
+- `doxygen`
+
+</div>
 
 ### الترجمة 🌐
 
-للمشاركة في ترجمة البرنامج، يمكنك البدء عن طريق:
+ألق نظرة على [هذه الصفحة][translation-wiki] (إنجليزية)
 
-<ol>
-<li>تحميل أداه Qt Linguist من خلال المثبت الرسمي</li>
-<li>تفريع المستودع</li>
-<li>تحميل ملف src/translations/qc_template.ts</li>
-<li>فتح الملف في برنامج Qt Linguist و اختيار اللغة التي ستتم الترجمة إليها</li>
-<li>احفظ الملف بعد ترجمة الجمل</li>
-<li>اعادة تسمية الملف المترجم إلي qc_{lang}.ts حيث lang هي الرمز المكون من  حرفين الخاص باللغة</li>
-<li>رفع الملف لترفيعة المستودع الخاصة بك</li>
-<li>فتح طلب دمج تفريعتك مع المستودع الأصلي</li>
-</ol>
+### التلاوات 📻
 
+ألق نظرة على [هذه الصفحة][recitations-wiki] (إنجليزية)
 
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
 
 <!-- CREDITS -->
 
 <a name="credits"></a>
-
 
 ## الحقوق 📌
 
@@ -358,3 +356,5 @@ QT_MEDIA_BACKEND=ffmpeg ./quran-companion
 
 [latest-release]: https://github.com/0xzer0x/quran-companion/releases/latest
 [win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.9/qc_online_installer_x64_win.exe
+[translation-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations
+[recitations-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Recitations
