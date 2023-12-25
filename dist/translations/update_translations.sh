@@ -47,11 +47,3 @@ $SCRIPT_DIR/shortcuts.sh
 prompt -s "----- Updating template TS file -----\n"
 lupdate -recursive -no-obsolete $SCRIPT_DIR/../../src -ts qc_src.ts
 lconvert -i $SCRIPT_DIR/shortcuts.ts $SCRIPT_DIR/reciters.ts $SCRIPT_DIR/qc_src.ts -no-obsolete -o qc_template.ts
-
-for lang in "${languages[@]}"; do
-	if [[ -f "$SCRIPT_DIR/qc_$lang.ts" ]]; then
-		prompt -s "----- Updating ${lang^^} translation file -----\n"
-		lconvert -i $SCRIPT_DIR/qc_template.ts $SCRIPT_DIR/qc_$lang.ts -no-obsolete -o combined_$lang.ts
-		mv $SCRIPT_DIR/combined_$lang.ts $SCRIPT_DIR/qc_$lang.ts
-	fi
-done

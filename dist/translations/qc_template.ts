@@ -896,27 +896,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/khatmahdialog.cpp" line="31"/>
+        <location filename="../../src/core/khatmahdialog.cpp" line="34"/>
         <source>Set as active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/khatmahdialog.cpp" line="32"/>
+        <location filename="../../src/core/khatmahdialog.cpp" line="35"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/khatmahdialog.cpp" line="46"/>
+        <location filename="../../src/core/khatmahdialog.cpp" line="49"/>
         <source>Surah: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/khatmahdialog.cpp" line="47"/>
+        <location filename="../../src/core/khatmahdialog.cpp" line="50"/>
         <source>Verse: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/khatmahdialog.cpp" line="97"/>
+        <location filename="../../src/core/khatmahdialog.cpp" line="100"/>
         <source>Khatmah </source>
         <translation type="unfinished"></translation>
     </message>
