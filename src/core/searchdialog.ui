@@ -138,7 +138,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Noto Sans Symbols 2</family>
+              <family>Inter Variable</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -166,7 +166,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Noto Sans Symbols 2</family>
+              <family>Inter Variable</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -295,7 +295,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Noto Sans Symbols 2</family>
+              <family>Inter Variable</family>
               <pointsize>22</pointsize>
              </font>
             </property>

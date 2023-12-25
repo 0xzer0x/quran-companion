@@ -1546,7 +1546,7 @@ MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
   lb->setTextFormat(Qt::RichText);
   lb->setAlignment(Qt::AlignCenter);
   QStringList uiFonts;
-  uiFonts << "Noto Sans Display"
+  uiFonts << "Inter Variable"
           << "PakType Naskh Basic";
   lb->setFont(QFont(uiFonts, 15));
   lb->setCursor(Qt::PointingHandCursor);

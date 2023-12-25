@@ -267,7 +267,7 @@ dialog-no-icon: off;
                </property>
                <property name="font">
                 <font>
-                 <family>Noto Emoji</family>
+                 <family>Inter Variable</family>
                 </font>
                </property>
                <property name="cursor">
@@ -400,7 +400,7 @@ dialog-no-icon: off;
                </property>
                <property name="font">
                 <font>
-                 <family>Noto Sans Symbols 2</family>
+                 <family>Inter Variable</family>
                  <pointsize>12</pointsize>
                 </font>
                </property>
@@ -470,7 +470,7 @@ dialog-no-icon: off;
              </property>
              <property name="font">
               <font>
-               <family>Noto Sans Symbols 2</family>
+               <family>Inter Variable</family>
                <pointsize>12</pointsize>
                <kerning>true</kerning>
               </font>
@@ -601,7 +601,7 @@ dialog-no-icon: off;
              </property>
              <property name="font">
               <font>
-               <family>Noto Sans Symbols 2</family>
+               <family>Inter Variable</family>
                <pointsize>12</pointsize>
               </font>
              </property>

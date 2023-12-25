@@ -25,7 +25,7 @@
     <widget class="QLabel" name="lbVerseText">
      <property name="font">
       <font>
-       <family>SF Pro Display</family>
+       <family>Inter</family>
        <pointsize>10</pointsize>
       </font>
      </property>
@@ -80,7 +80,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Noto Sans Symbols 2</family>
+         <family>Inter Variable</family>
          <pointsize>12</pointsize>
          <underline>false</underline>
         </font>
@@ -115,7 +115,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Noto Sans Symbols 2</family>
+         <family>Inter Variable</family>
          <pointsize>12</pointsize>
          <italic>false</italic>
          <bold>false</bold>

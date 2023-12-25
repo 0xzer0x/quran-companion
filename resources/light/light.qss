@@ -214,8 +214,8 @@ QDialog#dlgVOTD:hover {
 /* --------------- Khatmah Dialog Styles --------------- */
 
 *[khatmah="true"] {
-  border: 1px outset #888888;
-  background-color: #d9d9d9;
+  border: 1px outset #bcbcbc;
+  background-color: #d8d8d8;
   border-radius: 5px;
 }
 
