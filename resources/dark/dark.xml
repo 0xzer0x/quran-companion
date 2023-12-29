@@ -2,31 +2,31 @@
 <palette>
     <enabled>
         <!-- Window -->
-        <color role="10" red="53" green="53" blue="53" />
+        <color role="10" red="18" green="18" blue="18" />
         <!-- WindowText -->
-        <color role="0" red="255" green="255" blue="255" />
+        <color role="0" red="223" green="223" blue="223" />
         <!-- Base -->
-        <color role="9" red="42" green="42" blue="42" />
+        <color role="9" red="30" green="30" blue="30" />
         <!-- AlternateBase -->
-        <color role="16" red="66" green="66" blue="66" />
+        <color role="16" red="30" green="30" blue="30" />
         <!-- ToolTipBase -->
-        <color role="18" red="22" green="22" blue="22" />
+        <color role="18" red="30" green="30" blue="30" />
         <!-- ToolTipText -->
         <color role="19" red="255" green="255" blue="255" />
         <!-- Text -->
-        <color role="6" red="255" green="255" blue="255" />
+        <color role="6" red="223" green="223" blue="223" />
         <!-- Dark -->
-        <color role="4" red="35" green="35" blue="35" />
+        <color role="4" red="13" green="13" blue="13" />
         <!-- Shadow -->
         <color role="11" red="20" green="20" blue="20" />
         <!-- Button -->
-        <color role="1" red="53" green="53" blue="53" />
+        <color role="1" red="46" green="46" blue="46" />
         <!-- ButtonText -->
-        <color role="8" red="255" green="255" blue="255" />
+        <color role="8" red="223" green="223" blue="223" />
         <!-- Link -->
-        <color role="14" red="42" green="130" blue="218" />
+        <color role="14" red="138" green="180" blue="248" />
         <!-- Highlight -->
-        <color role="12" red="0" green="161" blue="185" />
+        <color role="12" red="138" green="180" blue="248" />
         <!-- HighlightedText -->
         <color role="13" red="255" green="255" blue="255" />
         <!-- PlaceholderText -->
@@ -36,9 +36,9 @@
         <!-- WindowText -->
         <color role="0" red="127" green="127" blue="127" />
         <!-- Text -->
-        <color role="6" red="127" green="127" blue="127" />
+        <color role="6" red="129" green="129" blue="129" />
         <!-- ButtonText -->
-        <color role="8" red="127" green="127" blue="127" />
+        <color role="8" red="129" green="129" blue="129" />
         <!-- Highlight -->
         <color role="12" red="80" green="80" blue="80" />
         <!-- HighlightedText -->

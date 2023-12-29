@@ -14,8 +14,20 @@
    <string>Verse search</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
    <item>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="QTabWidget" name="searchTabWidget">
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
@@ -105,8 +117,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>634</width>
-            <height>485</height>
+            <width>654</width>
+            <height>516</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2"/>

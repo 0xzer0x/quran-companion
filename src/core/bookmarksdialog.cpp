@@ -106,6 +106,7 @@ BookmarksDialog::loadBookmarks(int surah)
     QString fontName =
       m_fontPrefix + QString::number(verse.page).rightJustified(3, '0');
     QFrame* frame = new QFrame(ui->scrlBookmarks);
+    frame->setProperty("bookmark", true);
     QHBoxLayout* frmLayout = new QHBoxLayout();
     QVBoxLayout* lbLayout = new QVBoxLayout();
     QVBoxLayout* btnLayout = new QVBoxLayout();

@@ -35,7 +35,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="QTextEdit" name="tedTafsir">
      <property name="font">
       <font>
        <family>PakType Naskh Basic</family>
@@ -117,6 +117,7 @@
         <font>
          <family>Inter Variable</family>
          <pointsize>12</pointsize>
+         <weight>50</weight>
          <italic>false</italic>
          <bold>false</bold>
          <underline>false</underline>

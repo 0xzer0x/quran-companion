@@ -28,6 +28,6 @@ void
 InputField::enterPressed()
 {
   if (!text().isEmpty()) {
-    emit rename(this->text());
+    emit rename(this->text().trimmed());
   }
 }

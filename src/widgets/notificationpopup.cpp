@@ -4,6 +4,7 @@
  */
 
 #include "notificationpopup.h"
+using namespace fa;
 
 NotificationPopup::NotificationPopup(QWidget* parent)
   : QFrame{ parent }
@@ -161,29 +162,29 @@ void
 NotificationPopup::setNotificationIcon(Action icon)
 {
   QString ico;
-  int faStyle = fa::fa_solid;
+  int faStyle = fa_solid;
   switch (icon) {
     case NotificationPopup::info:
-      ico = fa::fa_circle_info;
+      ico = fa_info_circle;
       break;
     case NotificationPopup::success:
-      ico = fa::fa_check_circle;
+      ico = fa_check_circle;
       break;
     case NotificationPopup::fail:
-      ico = fa::fa_xmark_circle;
+      ico = fa_xmark_circle;
       break;
     case NotificationPopup::bookmarkAdd:
-      ico = fa::fa_bookmark;
+      ico = fa_bookmark;
       break;
     case NotificationPopup::bookmarkRemove:
-      ico = fa::fa_bookmark;
-      faStyle = fa::fa_regular;
+      ico = fa_bookmark;
+      faStyle = fa_regular;
       break;
     case NotificationPopup::copiedText:
-      ico = fa::fa_clipboard;
+      ico = fa_clipboard;
       break;
     case NotificationPopup::updateInfo:
-      ico = fa::fa_circle_up;
+      ico = fa_circle_up;
       break;
   }
 

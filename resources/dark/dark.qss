@@ -6,10 +6,23 @@ QLineEdit {
   placeholder-text-color: #c0c0c0;
 }
 
+#searchTab,
+#filterTab,
+#generalTab,
+#readerTab,
+#shortcutsTab {
+  background-color: #2a2a2a;
+}
+
+QAbstractScrollArea#tedTafsir {
+  border: 1px solid #222222;
+  border-radius: 4px;
+}
+
 /* --------- Player Styles --------- */
 
 QFrame#framePlayer {
-  background-color: #222222;
+  background-color: #202020;
   border-radius: 8px;
 }
 
@@ -17,24 +30,28 @@ QPushButton:hover {
   background-color: #3b3b3b;
 }
 
-QPushButton:pressed {
-  background-color: #4c4c4c;
-}
-
 QPushButton:disabled {
   background-color: #515151;
 }
 
+QPushButton:pressed,
+QPushButton#btnPlay:disabled,
+QPushButton#btnPause:disabled,
+QPushButton#btnStop:disabled {
+  border-style: inset;
+  background-color: #4c4c4c;
+}
+
 QPushButton {
-  background-color: palette(dark);
-  border: 1px solid gray;
+  background-color: palette(button);
+  border: 1px outset #444444;
   border-radius: 4px;
   min-width: 72px;
   min-height: 25px;
 }
 
 QComboBox {
-  border: 1px solid gray;
+  border: 1px outset #444444;
   border-radius: 3px;
   padding: 1px 3px 1px 3px;
 }
@@ -54,13 +71,13 @@ QComboBox::down-arrow {
 
 QSplitter#centeralSplitter {
   border-radius: 7px;
-  background-color: #222222;
+  background-color: #202020;
 }
 
 /* VERTICAL SCROLLBAR */
 QScrollBar:vertical {
   border: none;
-  background: #222222;
+  background: #202020;
   width: 10px;
   margin: 0;
   border-radius: 3px;
@@ -103,7 +120,7 @@ QScrollBar::add-line:vertical {
 QScrollBar:horizontal {
   border: none;
   border-radius: 4px;
-  background: #222222;
+  background: #202020;
   height: 10px;
   margin: 0;
 }
@@ -152,12 +169,12 @@ QListView#listViewSurahs::item {
 
 QListView#listViewSurahs::item:selected,
 QListView#listViewSurahs::item:hover:selected {
-  border: 1px solid #008296;
-  background-color: rgba(0, 161, 185, 90);
+  border: 1px solid #8ab4f8;
+  background-color: rgba(138, 180, 248, 90);
 }
 
 QListView#listViewSurahs::item:hover {
-  background-color: rgba(0, 161, 185, 40);
+  background-color: rgba(138, 180, 248, 40);
 }
 
 QListView#listViewBookmarkedSurahs {
@@ -167,22 +184,24 @@ QListView#listViewBookmarkedSurahs {
 }
 
 QListView#listViewBookmarkedSurahs::item {
-  color: rgb(222, 219, 215);
+  color: #dfdfdf;
   margin: 0px 5px 0px 0px;
-  background-color: rgb(24, 26, 27);
-  border: 1px solid rgb(47, 47, 47);
+  background-color: palette(button);
+  border: 1px outset rgb(47, 47, 47);
   border-radius: 8px;
 }
 
 QListView#listViewBookmarkedSurahs::item:selected,
 QListView#listViewBookmarkedSurahs::item:hover:selected {
   text-align: center;
-  border-color: #008296;
+  border-style: solid;
+  border-color: palette(highlight);
   outline: 0;
 }
 
 QListView#listViewBookmarkedSurahs::item:hover {
-  background-color: rgb(23, 36, 36);
+  background-color: #26364f;
+  border-color: #26364f;
 }
 
 /* --------------- Toggle Styles --------------- */
@@ -192,7 +211,7 @@ QPushButton#btnToggleNav {
   border: none;
   border-radius: 0px;
   background-color: transparent;
-  min-height: 1.2em;
+  min-height: 1.4em;
   min-width: 40px;
 }
 
@@ -201,7 +220,7 @@ QPushButton#btnToggleNav:!checked:hover {
 }
 
 QPushButton#btnToggleNav:checked {
-  border: 1px solid #008296;
+  border: 1px solid palette(highlight);
   background-color: palette(highlight);
 }
 
@@ -212,15 +231,24 @@ QFrame#Popup {
   border-radius: 6px;
 }
 
+QFrame#Popup * {
+  color: rgb(47, 47, 47);
+}
+
 QDialog#dlgVOTD:hover {
-  background: rgba(0, 161, 185, 40);
+  background: rgba(138, 180, 248, 40);
 }
 
 /* --------------- Khatmah Dialog Styles --------------- */
 
 *[khatmah="true"] {
-  border: 1px outset #515151;
-  background-color: #424242;
+  border: 1px outset #444444;
+  background-color: #2a2a2a;
+  border-radius: 5px;
+}
+
+*[bookmark="true"] {
+  background-color: #2a2a2a;
   border-radius: 5px;
 }
 

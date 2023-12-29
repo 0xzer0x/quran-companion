@@ -158,8 +158,8 @@ TafsirDialog::loadVerseTafsir()
 
   QFont sideFont =
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
-  ui->textEdit->setFont(sideFont);
-  ui->textEdit->setHtml(
+  ui->tedTafsir->setFont(sideFont);
+  ui->tedTafsir->setHtml(
     m_dbMgr->getTafsir(m_shownVerse.surah, m_shownVerse.number));
 
   if (m_shownVerse.surah == 1 && m_shownVerse.number == 1)
