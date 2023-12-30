@@ -2,6 +2,12 @@ QDialogButtonBox {
   dialogbuttonbox-buttons-have-icons: 0;
 }
 
+QTextEdit#tedTafsir {
+  border: 1px solid #efe3cd;
+  background-color: #f7ebd5;
+  border-radius: 4px;
+}
+
 /* --------- Player Styles --------- */
 
 QFrame#framePlayer {
@@ -183,7 +189,7 @@ QPushButton#btnToggleNav {
   border-radius: 0px;
   background-color: transparent;
   image: url(":/resources/light/icons/navigation.svg");
-  min-height: 1.4em;
+  min-height: 1.1em;
   min-width: 40px;
 }
 

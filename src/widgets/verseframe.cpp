@@ -19,10 +19,10 @@ VerseFrame::VerseFrame(QWidget* parent)
 
   m_rgbHover = "rgba(" + QString::number(m_colorR) + ',' +
                QString::number(m_colorG) + ',' + QString::number(m_colorB) +
-               ",20)";
+               ",50)";
   m_rgbSelected = "rgba(" + QString::number(m_colorR) + ',' +
                   QString::number(m_colorG) + ',' + QString::number(m_colorB) +
-                  ",60)";
+                  ",90)";
 }
 
 void

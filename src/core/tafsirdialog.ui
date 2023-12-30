@@ -42,6 +42,11 @@
        <pointsize>15</pointsize>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+	border-radius: 4px;
+}</string>
+     </property>
      <property name="undoRedoEnabled">
       <bool>false</bool>
      </property>

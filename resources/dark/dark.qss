@@ -34,24 +34,26 @@ QPushButton:disabled {
   background-color: #515151;
 }
 
-QPushButton:pressed,
+QPushButton:pressed {
+  background-color: #4c4c4c;
+}
+
 QPushButton#btnPlay:disabled,
 QPushButton#btnPause:disabled,
 QPushButton#btnStop:disabled {
   border-style: inset;
-  background-color: #4c4c4c;
 }
 
 QPushButton {
   background-color: palette(button);
-  border: 1px outset #444444;
+  border: 1px solid #444444;
   border-radius: 4px;
   min-width: 72px;
   min-height: 25px;
 }
 
 QComboBox {
-  border: 1px outset #444444;
+  border: 1px solid #444444;
   border-radius: 3px;
   padding: 1px 3px 1px 3px;
 }
@@ -184,6 +186,7 @@ QListView#listViewBookmarkedSurahs {
 }
 
 QListView#listViewBookmarkedSurahs::item {
+  text-align: center;
   color: #dfdfdf;
   margin: 0px 5px 0px 0px;
   background-color: palette(button);
@@ -193,7 +196,6 @@ QListView#listViewBookmarkedSurahs::item {
 
 QListView#listViewBookmarkedSurahs::item:selected,
 QListView#listViewBookmarkedSurahs::item:hover:selected {
-  text-align: center;
   border-style: solid;
   border-color: palette(highlight);
   outline: 0;
@@ -211,7 +213,7 @@ QPushButton#btnToggleNav {
   border: none;
   border-radius: 0px;
   background-color: transparent;
-  min-height: 1.4em;
+  min-height: 1.1em;
   min-width: 40px;
 }
 

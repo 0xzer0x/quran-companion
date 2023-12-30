@@ -4,7 +4,7 @@
         <!-- Window -->
         <color role="10" red="240" green="240" blue="240" />
         <!-- WindowText -->
-        <color role="0" red="0" green="0" blue="0" />
+        <color role="0" red="48" green="48" blue="48" />
         <!-- Base -->
         <color role="9" red="255" green="255" blue="255" />
         <!-- AlternateBase -->
@@ -12,9 +12,9 @@
         <!-- ToolTipBase -->
         <color role="18" red="233" green="231" blue="227" />
         <!-- ToolTipText -->
-        <color role="19" red="0" green="0" blue="0" />
+        <color role="19" red="48" green="48" blue="48" />
         <!-- Text -->
-        <color role="6" red="0" green="0" blue="0" />
+        <color role="6" red="48" green="48" blue="48" />
         <!-- Dark -->
         <color role="4" red="160" green="160" blue="160" />
         <!-- Shadow -->
@@ -22,19 +22,19 @@
         <!-- Button -->
         <color role="1" red="240" green="240" blue="240" />
         <!-- ButtonText -->
-        <color role="8" red="0" green="0" blue="0" />
+        <color role="8" red="48" green="48" blue="48" />
         <!-- Link -->
         <color role="14" red="42" green="130" blue="218" />
         <!-- Highlight -->
-        <color role="12" red="0" green="161" blue="185" />
+        <color role="12" red="138" green="180" blue="248" />
         <!-- HighlightedText -->
-        <color role="13" red="0" green="0" blue="0" />
+        <color role="13" red="48" green="48" blue="48" />
         <!-- PlaceholderText -->
         <color role="20" red="192" green="192" blue="192" />
     </enabled>
     <disabled>
         <!-- WindowText -->
-        <color role="0" red="120" green="120" blue="120" />
+        <color role="48" red="120" green="120" blue="120" />
         <!-- Text -->
         <color role="6" red="120" green="120" blue="120" />
         <!-- ButtonText -->
@@ -42,6 +42,6 @@
         <!-- Highlight -->
         <color role="12" red="80" green="80" blue="80" />
         <!-- HighlightedText -->
-        <color role="13" red="0" green="0" blue="0" />
+        <color role="13" red="48" green="48" blue="48" />
     </disabled>
 </palette>
