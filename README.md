@@ -315,7 +315,7 @@ To contribute in translating the application, start by:
 The following projects/services were used in development:
 
 - [Ayat](https://quran.ksu.edu.sa/index.php)
-- [Quran.com API](https://quran.api-docs.io/)
+- [Quran.com API](https://api-docs.quran.com/)
 - [Every Ayah recitations](https://everyayah.com/recitations_ayat.html)
 - [Mosshaf](https://mosshaf.com/)
 
