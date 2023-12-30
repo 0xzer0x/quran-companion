@@ -232,6 +232,7 @@ checkSettingsGroup(QSettings* settings, int group)
                          settings->value("TafsirDialog", "Ctrl+T"));
       settings->setValue("DownloaderDialog",
                          settings->value("DownloaderDialog", "Ctrl+D"));
+      settings->setValue("CopyDialog", settings->value("CopyDialog", "Ctrl+'"));
       settings->setValue("Quit", settings->value("Quit", "Ctrl+Q"));
       settings->endGroup();
       break;

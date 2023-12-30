@@ -649,6 +649,7 @@ dialog-no-icon: off;
     </property>
     <addaction name="actionFind"/>
     <addaction name="actionTafsir"/>
+    <addaction name="actionAdvanced_copy"/>
     <addaction name="actionVerse_of_the_day"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -1037,6 +1038,11 @@ placeholder-text-color: #c0c0c0;
   <action name="actionKhatmah">
    <property name="text">
     <string>Khatmah</string>
+   </property>
+  </action>
+  <action name="actionAdvanced_copy">
+   <property name="text">
+    <string>Advanced copy</string>
    </property>
   </action>
  </widget>

@@ -47,12 +47,19 @@ public:
   /**
    * @brief checks if the verse of the day has been set and set it if not found
    */
-  void checkDailyVerse();
+  void checkDailyVerse(bool startup = true);
   /**
-   * @brief get verse of the day and emit signal to show verse of the day
-   * messagebox
+   * @brief generate the verse of the day and set the votd html
    */
-  void showVerseOfTheDay();
+  void genVerseOfTheDay();
+  /**
+   * @brief read the verse of the day from the timestamp file
+   */
+  void readVerseOfTheDay();
+  /**
+   * @brief write the current time and votd to the timestamp file
+   */
+  void writeTimestamp();
   /**
    * @brief serialize the verse of the day into a QString
    * @return QString of PAGE:SURA:NUMBER

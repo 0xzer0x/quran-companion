@@ -54,11 +54,13 @@ MainWindow::loadIcons()
   ui->actionVerse_of_the_day->setIcon(m_fa->icon(fa_solid, fa_calendar_day));
   ui->actionBookmarks->setIcon(m_fa->icon(fa_solid, fa_bookmark));
   ui->actionPereferences->setIcon(m_fa->icon(fa_solid, fa_gear));
+  ui->actionAdvanced_copy->setIcon(m_fa->icon(fa_solid, fa_clipboard));
+  ui->actionCheck_for_updates->setIcon(
+    m_fa->icon(fa_solid, fa_arrow_rotate_right));
+
   ui->btnPlay->setIcon(m_fa->icon(fa_solid, fa_play));
   ui->btnPause->setIcon(m_fa->icon(fa_solid, fa_pause));
   ui->btnStop->setIcon(m_fa->icon(fa_solid, fa_stop));
-  ui->actionCheck_for_updates->setIcon(
-    m_fa->icon(fa_solid, fa_arrow_rotate_right));
 
   ui->lbSpeaker->setText(QString(fa_volume_high));
   ui->lbSpeaker->setFont(m_fa->font(fa_solid, 16));
@@ -257,6 +259,10 @@ MainWindow::setupShortcuts()
           &ShortcutHandler::openTafsir,
           this,
           &MainWindow::actionTafsirTriggered);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::openAdvancedCopy,
+          this,
+          &MainWindow::actionAdvancedCopyTriggered);
 
   for (int i = 0; i <= 1; i++) {
     if (m_quranBrowsers[i]) {
@@ -300,6 +306,10 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::actionVotdTriggered);
+  connect(ui->actionAdvanced_copy,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionAdvancedCopyTriggered);
   connect(ui->actionCheck_for_updates,
           &QAction::triggered,
           this,
@@ -731,9 +741,7 @@ MainWindow::setVerseComboBoxRange(bool forceUpdate)
   updateSurahVerseCount();
 
   if (m_surahCount != oldCount || forceUpdate) {
-    if (m_verseValidator != nullptr)
-      delete m_verseValidator;
-    m_verseValidator = new QIntValidator(1, m_surahCount, ui->cmbVerse);
+    m_verseValidator->setTop(m_surahCount);
 
     // updates values in the combobox with the current surah verses
     ui->cmbVerse->clear();
@@ -1163,6 +1171,16 @@ MainWindow::actionKhatmahTriggered()
 
   m_dbMgr->saveActiveKhatmah(m_currVerse);
   m_khatmahDlg->show();
+}
+
+void
+MainWindow::actionAdvancedCopyTriggered()
+{
+
+  if (m_cpyDlg == nullptr)
+    m_cpyDlg = new CopyDialog(this);
+
+  m_cpyDlg->show(m_currVerse);
 }
 
 void

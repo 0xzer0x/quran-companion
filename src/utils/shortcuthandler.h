@@ -59,6 +59,7 @@ signals:
   void openSearch();
   void openSettings();
   void openTafsir();
+  void openAdvancedCopy();
 
 private:
   const QSettings* m_settings = Globals::settings;

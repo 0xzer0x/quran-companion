@@ -22,5 +22,6 @@
     <shortcut key="SettingsDialog" description="Open the preferences dialog" />
     <shortcut key="TafsirDialog" description="Open the tafsir for the current active verse" />
     <shortcut key="DownloaderDialog" description="Open the recitations download dialog" />
+    <shortcut key="CopyDialog" description="Open the advanced copy dialog" />
     <shortcut key="Quit" description="Quit" />
 </shortcuts>

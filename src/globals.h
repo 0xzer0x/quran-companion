@@ -191,7 +191,8 @@ extern QObject* databaseManager; ///< global pointer to the application-wide
                                  ///< DBManager instance for interacting with
                                  ///< different database files.
 
-extern fa::QtAwesome* awesome;
+extern fa::QtAwesome*
+  awesome; ///< global pointer used for generating font awesome icons
 
 };
 

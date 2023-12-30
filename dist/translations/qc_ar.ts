@@ -115,6 +115,11 @@
     </message>
     <message>
       <location filename="../main.cpp"/>
+      <source>Open the advanced copy dialog</source>
+      <translation>فتح نافذة النسخ المتقدم</translation>
+    </message>
+    <message>
+      <location filename="../main.cpp"/>
       <source>Quit</source>
       <translation>خروج</translation>
     </message>
@@ -518,8 +523,8 @@
     <message>
       <location filename="../../src/core/mainwindow.ui" line="17"/>
       <location filename="../../src/core/mainwindow.cpp" line="36"/>
-      <location filename="../../src/core/mainwindow.cpp" line="1004"/>
-      <location filename="../../src/core/mainwindow.cpp" line="1191"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1012"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1209"/>
       <source>Quran Companion</source>
       <translation>رفيق القرآن</translation>
     </message>
@@ -544,192 +549,197 @@
       <translation>عرض</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="656"/>
+      <location filename="../../src/core/mainwindow.ui" line="657"/>
       <source>Edit</source>
       <translation>تحرير</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="665"/>
+      <location filename="../../src/core/mainwindow.ui" line="666"/>
       <source>File</source>
       <translation>ملف</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="673"/>
+      <location filename="../../src/core/mainwindow.ui" line="674"/>
       <source>Help</source>
       <translation>مساعدة</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="711"/>
-      <location filename="../../src/core/mainwindow.cpp" line="568"/>
+      <location filename="../../src/core/mainwindow.ui" line="712"/>
+      <location filename="../../src/core/mainwindow.cpp" line="578"/>
       <source>Navigation</source>
       <translation>التصفح</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="726"/>
+      <location filename="../../src/core/mainwindow.ui" line="727"/>
       <source>Juz</source>
       <translation>الجزء</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="894"/>
+      <location filename="../../src/core/mainwindow.ui" line="895"/>
       <source>Page</source>
       <translation>الصفحة</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="908"/>
+      <location filename="../../src/core/mainwindow.ui" line="909"/>
       <source>Verse</source>
       <translation>الآية</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="929"/>
+      <location filename="../../src/core/mainwindow.ui" line="930"/>
       <source>Search surah</source>
       <translation>بحث السور</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="970"/>
+      <location filename="../../src/core/mainwindow.ui" line="971"/>
       <source>Preferences</source>
       <translation>الإعدادات</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="979"/>
+      <location filename="../../src/core/mainwindow.ui" line="980"/>
       <source>Download manager</source>
       <translation>مدير التحميلات</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="989"/>
+      <location filename="../../src/core/mainwindow.ui" line="990"/>
       <source>Exit</source>
       <translation>خروج</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="998"/>
+      <location filename="../../src/core/mainwindow.ui" line="999"/>
       <source>Find</source>
       <translation>البحث</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="1003"/>
+      <location filename="../../src/core/mainwindow.ui" line="1004"/>
       <source>Check for updates</source>
       <translation>التحقق من وجود تحديثات</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="1008"/>
+      <location filename="../../src/core/mainwindow.ui" line="1009"/>
       <source>Bookmarks</source>
       <translation>العلامات</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="1013"/>
-      <location filename="../../src/core/mainwindow.cpp" line="1198"/>
+      <location filename="../../src/core/mainwindow.ui" line="1014"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1216"/>
       <source>About Quran Companion</source>
       <translation>عن رفيق القرآن</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="1021"/>
-      <location filename="../../src/core/mainwindow.cpp" line="1204"/>
+      <location filename="../../src/core/mainwindow.ui" line="1022"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1222"/>
       <source>About Qt</source>
       <translation>عن كيوت</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="1029"/>
+      <location filename="../../src/core/mainwindow.ui" line="1030"/>
       <source>Tafsir</source>
       <translation>التفسير</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="1034"/>
+      <location filename="../../src/core/mainwindow.ui" line="1035"/>
       <source>Verse of the day</source>
       <translation>آية اليوم</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.ui" line="1039"/>
+      <location filename="../../src/core/mainwindow.ui" line="1040"/>
       <source>Khatmah</source>
       <translation>الختمات</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="73"/>
+      <location filename="../../src/core/mainwindow.ui" line="1045"/>
+      <source>Advanced copy</source>
+      <translation>النسخ المتقدم</translation>
+    </message>
+    <message>
+      <location filename="../../src/core/mainwindow.cpp" line="75"/>
       <source>Khatmah </source>
       <translation>ختمه </translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="73"/>
+      <location filename="../../src/core/mainwindow.cpp" line="75"/>
       <source>Default</source>
       <translation>افتراضي</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="155"/>
+      <location filename="../../src/core/mainwindow.cpp" line="157"/>
       <source>There are currently no updates available.</source>
       <translation>لا يوجد تحديثات متوفرة حاليا.</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="158"/>
       <location filename="../../src/core/mainwindow.cpp" line="160"/>
-      <location filename="../../src/core/mainwindow.cpp" line="174"/>
+      <location filename="../../src/core/mainwindow.cpp" line="162"/>
+      <location filename="../../src/core/mainwindow.cpp" line="176"/>
       <source>Update info</source>
       <translation>معلومات التحديث</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="164"/>
+      <location filename="../../src/core/mainwindow.cpp" line="166"/>
       <source>Updates available, do you want to open the update tool?</source>
       <translation>هناك تحديثات متاحة، هل تود تشغيل مدير التحديثات؟</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="167"/>
+      <location filename="../../src/core/mainwindow.cpp" line="169"/>
       <source>Updates info</source>
       <translation>معلومات التحديث</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="175"/>
+      <location filename="../../src/core/mainwindow.cpp" line="177"/>
       <source>Updates are available, use the maintainance tool to install the latest updates.</source>
       <translation>التحديثات متاحة، استخدم أداة الصيانة لتثبيت أحدث التحديثات.</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1000"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1008"/>
       <source>Now playing: </source>
       <translation>يقرأ الآن: </translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1001"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1009"/>
       <source>Surah </source>
       <translation>سورة </translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1047"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1055"/>
       <source>Recitation not found</source>
       <translation>التلاوة غير موجودة</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1048"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1056"/>
       <source>The recitation files for the current surah is missing, would you like to download it?</source>
       <translation>ملفات التلاوة الخاصة بالسورة الحالية غير متوفرة، هل تود الذَّهاب إلى صفحة التحميل؟</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1189"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1207"/>
       <source>Quran Companion v</source>
       <translation>رفيق القرآن إصدار </translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1192"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1210"/>
       <source> is a free cross-platform Quran reader &amp; player.</source>
       <translation> هو برنامَج مجاني متعدد-المنصات لقراءة و سماع القرآن الكريم.</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1193"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1211"/>
       <source>Licensed under the </source>
       <translation>مرخص بموجب </translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1194"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1212"/>
       <source>&apos;Waqf&apos; General Public License</source>
       <translation>رخصة وقف العامة</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1195"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1213"/>
       <source>Recitations</source>
       <translation>التلاوات</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1196"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1214"/>
       <source>Tafsir/Translations</source>
       <translation>التفسير/الترجمات</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1543"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1561"/>
       <source>Verse Of The Day</source>
       <translation>آية اليوم</translation>
     </message>
@@ -767,29 +777,62 @@
       <translation>لا توجد علامات متاحة. أضف علامات على الآيات لتراها هنا.</translation>
     </message>
     <message>
-      <location filename="../../src/core/bookmarksdialog.cpp" line="114"/>
+      <location filename="../../src/core/bookmarksdialog.cpp" line="115"/>
       <source>Go to verse</source>
       <translation>انتقل إلى الآية</translation>
     </message>
     <message>
-      <location filename="../../src/core/bookmarksdialog.cpp" line="115"/>
+      <location filename="../../src/core/bookmarksdialog.cpp" line="116"/>
       <source>Remove</source>
       <translation>إزالة</translation>
     </message>
     <message>
-      <location filename="../../src/core/bookmarksdialog.cpp" line="128"/>
+      <location filename="../../src/core/bookmarksdialog.cpp" line="129"/>
       <source>Surah: </source>
       <translation>سورة: </translation>
     </message>
     <message>
-      <location filename="../../src/core/bookmarksdialog.cpp" line="130"/>
+      <location filename="../../src/core/bookmarksdialog.cpp" line="131"/>
       <source>Verse: </source>
       <translation>آية: </translation>
     </message>
     <message>
-      <location filename="../../src/core/bookmarksdialog.cpp" line="169"/>
+      <location filename="../../src/core/bookmarksdialog.cpp" line="170"/>
       <source>All</source>
       <translation>الكل</translation>
+    </message>
+  </context>
+  <context>
+    <name>CopyDialog</name>
+    <message>
+      <location filename="../../src/core/copydialog.ui" line="14"/>
+      <source>Advanced Copy</source>
+      <translation>النسخ المتقدم</translation>
+    </message>
+    <message>
+      <location filename="../../src/core/copydialog.ui" line="22"/>
+      <source>Surah</source>
+      <translation>سورة</translation>
+    </message>
+    <message>
+      <location filename="../../src/core/copydialog.ui" line="53"/>
+      <source>From</source>
+      <translation>من</translation>
+    </message>
+    <message>
+      <location filename="../../src/core/copydialog.ui" line="71"/>
+      <source>To</source>
+      <translation>إلى</translation>
+    </message>
+    <message>
+      <location filename="../../src/core/copydialog.cpp" line="44"/>
+      <source>Invalid range</source>
+      <translation>نطاق غير صالح</translation>
+    </message>
+    <message>
+      <location filename="../../src/core/copydialog.cpp" line="44"/>
+      <source>The entered verse range is invalid</source>
+      <translation>نطاق الآيات الذي تم إدخاله غير صالح</translation>
     </message>
   </context>
   <context>
@@ -896,27 +939,27 @@
       <translation>إنشاء ختمة جديدة</translation>
     </message>
     <message>
-      <location filename="../../src/core/khatmahdialog.cpp" line="31"/>
+      <location filename="../../src/core/khatmahdialog.cpp" line="34"/>
       <source>Set as active</source>
       <translation>تفعيل</translation>
     </message>
     <message>
-      <location filename="../../src/core/khatmahdialog.cpp" line="32"/>
+      <location filename="../../src/core/khatmahdialog.cpp" line="35"/>
       <source>Remove</source>
       <translation>إزالة</translation>
     </message>
     <message>
-      <location filename="../../src/core/khatmahdialog.cpp" line="46"/>
+      <location filename="../../src/core/khatmahdialog.cpp" line="49"/>
       <source>Surah: </source>
       <translation>سورة: </translation>
     </message>
     <message>
-      <location filename="../../src/core/khatmahdialog.cpp" line="47"/>
+      <location filename="../../src/core/khatmahdialog.cpp" line="50"/>
       <source>Verse: </source>
       <translation>آية: </translation>
     </message>
     <message>
-      <location filename="../../src/core/khatmahdialog.cpp" line="97"/>
+      <location filename="../../src/core/khatmahdialog.cpp" line="100"/>
       <source>Khatmah </source>
       <translation>ختمه </translation>
     </message>
@@ -972,37 +1015,37 @@
   <context>
     <name>NotificationPopup</name>
     <message>
-      <location filename="../../src/widgets/notificationpopup.cpp" line="86"/>
+      <location filename="../../src/widgets/notificationpopup.cpp" line="87"/>
       <source>Download Completed</source>
       <translation>تم التحميل</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/notificationpopup.cpp" line="96"/>
+      <location filename="../../src/widgets/notificationpopup.cpp" line="97"/>
       <source>Download Failed</source>
       <translation>فشل التحميل</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/notificationpopup.cpp" line="106"/>
+      <location filename="../../src/widgets/notificationpopup.cpp" line="107"/>
       <source>Verse added to bookmarks</source>
       <translation>تم إضافة علامة</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/notificationpopup.cpp" line="114"/>
+      <location filename="../../src/widgets/notificationpopup.cpp" line="115"/>
       <source>Verse removed from bookmarks</source>
       <translation>تم إزالة العلامة</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/notificationpopup.cpp" line="122"/>
+      <location filename="../../src/widgets/notificationpopup.cpp" line="123"/>
       <source>Verse text copied to clipboard</source>
       <translation>تم نسخ نص الآية إلى الحافظة</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/notificationpopup.cpp" line="134"/>
+      <location filename="../../src/widgets/notificationpopup.cpp" line="135"/>
       <source>You are running the latest version</source>
       <translation>لديك أحدث إصدار</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/notificationpopup.cpp" line="137"/>
+      <location filename="../../src/widgets/notificationpopup.cpp" line="138"/>
       <source>Update available</source>
       <translation>تحديث متاح</translation>
     </message>
@@ -1058,67 +1101,67 @@
       <translation>بحث الآيات</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="27"/>
+      <location filename="../../src/core/searchdialog.ui" line="39"/>
       <source>Search</source>
       <translation>البحث</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="45"/>
+      <location filename="../../src/core/searchdialog.ui" line="57"/>
       <source>Find</source>
       <translation>بحث</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="79"/>
+      <location filename="../../src/core/searchdialog.ui" line="91"/>
       <source>Search selected surahs only</source>
       <translation>البحث في السور المختارة فقط</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="86"/>
+      <location filename="../../src/core/searchdialog.ui" line="98"/>
       <source>Whole word</source>
       <translation>كلمة كاملة</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="149"/>
+      <location filename="../../src/core/searchdialog.ui" line="161"/>
       <source>next</source>
       <translation>التالي</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="155"/>
+      <location filename="../../src/core/searchdialog.ui" line="167"/>
       <source>Left</source>
       <translation>يسار</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="177"/>
+      <location filename="../../src/core/searchdialog.ui" line="189"/>
       <source>previous</source>
       <translation>السابق</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="183"/>
+      <location filename="../../src/core/searchdialog.ui" line="195"/>
       <source>Right</source>
       <translation>يمين</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="194"/>
+      <location filename="../../src/core/searchdialog.ui" line="206"/>
       <source>Filter</source>
       <translation>تصفية</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="200"/>
+      <location filename="../../src/core/searchdialog.ui" line="212"/>
       <source>Pages</source>
       <translation>الصفحات</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="208"/>
+      <location filename="../../src/core/searchdialog.ui" line="220"/>
       <source>From</source>
       <translation>من</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="235"/>
+      <location filename="../../src/core/searchdialog.ui" line="247"/>
       <source>To</source>
       <translation>إلى</translation>
     </message>
     <message>
-      <location filename="../../src/core/searchdialog.ui" line="260"/>
+      <location filename="../../src/core/searchdialog.ui" line="272"/>
       <source>Surahs</source>
       <translation>السُور</translation>
     </message>
@@ -1147,22 +1190,22 @@
       <translation>التفسير</translation>
     </message>
     <message>
-      <location filename="../../src/core/tafsirdialog.ui" line="92"/>
+      <location filename="../../src/core/tafsirdialog.ui" line="97"/>
       <source>next</source>
       <translation>التالي</translation>
     </message>
     <message>
-      <location filename="../../src/core/tafsirdialog.ui" line="98"/>
+      <location filename="../../src/core/tafsirdialog.ui" line="103"/>
       <source>Left</source>
       <translation>يسار</translation>
     </message>
     <message>
-      <location filename="../../src/core/tafsirdialog.ui" line="130"/>
+      <location filename="../../src/core/tafsirdialog.ui" line="136"/>
       <source>previous</source>
       <translation>السابق</translation>
     </message>
     <message>
-      <location filename="../../src/core/tafsirdialog.ui" line="136"/>
+      <location filename="../../src/core/tafsirdialog.ui" line="142"/>
       <source>Right</source>
       <translation>يمين</translation>
     </message>

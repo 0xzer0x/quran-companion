@@ -135,6 +135,11 @@ ShortcutHandler::setupConnections()
           this,
           &ShortcutHandler::openTafsir,
           Qt::UniqueConnection);
+  connect(m_shortcuts.value("CopyDialog"),
+          &QShortcut::activated,
+          this,
+          &ShortcutHandler::openAdvancedCopy,
+          Qt::UniqueConnection);
 }
 
 void

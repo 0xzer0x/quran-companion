@@ -53,6 +53,9 @@ set(PROJECT_SOURCES
     src/core/khatmahdialog.h
     src/core/khatmahdialog.cpp
     src/core/khatmahdialog.ui
+    src/core/copydialog.h
+    src/core/copydialog.cpp
+    src/core/copydialog.ui
     src/widgets/quranpagebrowser.h
     src/widgets/quranpagebrowser.cpp
     src/widgets/clickablelabel.cpp
