@@ -28,7 +28,7 @@
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QWidget" name="lytWidget12">
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="leftMargin">
         <number>5</number>
@@ -97,6 +97,9 @@
            <width>400</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
