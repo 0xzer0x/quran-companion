@@ -1108,7 +1108,7 @@
     <message>
       <location filename="../../src/core/searchdialog.ui" line="57"/>
       <source>Find</source>
-      <translation>بحث</translation>
+      <translation>البحث</translation>
     </message>
     <message>
       <location filename="../../src/core/searchdialog.ui" line="91"/>
