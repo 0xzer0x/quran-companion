@@ -1,0 +1,3 @@
+files:
+  - source: /dist/translations/qc_template.ts
+    translation: /dist/translations/qc_%two_letters_code%.ts
