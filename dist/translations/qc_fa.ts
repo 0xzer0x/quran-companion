@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fa" sourcelanguage="en">
+<TS version="2.1" language="fa-AF" sourcelanguage="en">
   <context>
     <name>SettingsDialog</name>
     <message>
