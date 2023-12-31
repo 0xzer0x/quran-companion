@@ -1,3 +1,5 @@
+commit_message: "Update %langauge% translation"
+append_commit_message: false
 files:
   - source: /dist/translations/qc_template.ts
     translation: /dist/translations/qc_%two_letters_code%.ts
