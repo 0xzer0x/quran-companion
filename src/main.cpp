@@ -248,7 +248,7 @@ addFonts(int qcfVersion)
 
   QFontDatabase::addApplicationFont(fontsDir.filePath("PakTypeNaskhBasic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("ExpoArabic.ttf"));
-  QFontDatabase::addApplicationFont(fontsDir.filePath("InterVariable.ttf"));
+  QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
 
   switch (qcfVersion) {
     case 1:
@@ -277,7 +277,7 @@ addFonts(int qcfVersion)
 
   // set default UI fonts to use
   QStringList uiFonts;
-  uiFonts << "Inter Variable"
+  uiFonts << "Noto Sans Display"
           << "Expo Arabic";
   qApp->setFont(QFont(uiFonts, qApp->font().pointSize()));
 }

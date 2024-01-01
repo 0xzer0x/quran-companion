@@ -150,7 +150,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Inter Variable</family>
+              <family>Noto Sans Display</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -178,7 +178,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Inter Variable</family>
+              <family>Noto Sans Display</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -307,7 +307,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Inter Variable</family>
+              <family>Noto Sans Display</family>
               <pointsize>22</pointsize>
              </font>
             </property>

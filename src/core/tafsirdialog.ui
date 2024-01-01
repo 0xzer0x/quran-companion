@@ -85,7 +85,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Inter Variable</family>
+         <family>Noto Sans Display</family>
          <pointsize>12</pointsize>
          <underline>false</underline>
         </font>
@@ -120,7 +120,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Inter Variable</family>
+         <family>Noto Sans Display</family>
          <pointsize>12</pointsize>
          <weight>50</weight>
          <italic>false</italic>

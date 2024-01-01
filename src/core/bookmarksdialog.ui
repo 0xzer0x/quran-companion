@@ -159,7 +159,7 @@ background-color: transparent;
         </property>
         <property name="font">
          <font>
-          <family>Inter Variable</family>
+          <family>Noto Sans Display</family>
           <pointsize>12</pointsize>
          </font>
         </property>
@@ -187,7 +187,7 @@ background-color: transparent;
         </property>
         <property name="font">
          <font>
-          <family>Inter Variable</family>
+          <family>Noto Sans Display</family>
           <pointsize>12</pointsize>
          </font>
         </property>
