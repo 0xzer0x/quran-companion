@@ -18,16 +18,16 @@ b_CWAR="\033[1;33m" # bold warning color
 prompt() {
 	case ${1} in
 	"-s" | "--success")
-		echo -ne "${b_CGSC}${@/-s/}${CDEF}"
+		echo -ne "${b_CGSC}${*/-s/}${CDEF}"
 		;; # print success message
 	"-e" | "--error")
-		echo -ne "${b_CRER}${@/-e/}${CDEF}"
+		echo -ne "${b_CRER}${*/-e/}${CDEF}"
 		;; # print error message
 	"-w" | "--warning")
-		echo -ne "${b_CWAR}${@/-w/}${CDEF}"
+		echo -ne "${b_CWAR}${*/-w/}${CDEF}"
 		;; # print warning message
 	"-i" | "--info")
-		echo -ne "${b_CCIN}${@/-i/}${CDEF}"
+		echo -ne "${b_CCIN}${*/-i/}${CDEF}"
 		;; # print info message
 	*)
 		echo -ne "$@"
@@ -36,7 +36,6 @@ prompt() {
 }
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-languages=(ar tr)
 
 prompt -s "----- Generating reciters TS file -----\n"
 $SCRIPT_DIR/reciters.sh
