@@ -5,3 +5,4 @@ files:
     translation: /dist/translations/qc_%two_letters_code%.ts
 export_languages:
   - ar
+  - tr

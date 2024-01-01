@@ -364,8 +364,8 @@ addTranslation(QLocale::Language localeCode)
               *qtBase = new QTranslator(qApp);
 
   if (translation->load(":/i18n/qc_" + code + ".qm")) {
-    qInfo() << "tr" << translation->language() << "loaded";
-    qInfo() << "base tr loaded:" << qtBase->load(":/base/" + code + ".qm");
+    qInfo() << translation->language() << "translation loaded";
+    qInfo() << "base translation:" << qtBase->load(":/base/" + code + ".qm");
     qApp->installTranslator(translation);
     qApp->installTranslator(qtBase);
 

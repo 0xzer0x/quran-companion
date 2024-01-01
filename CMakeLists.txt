@@ -118,20 +118,21 @@ message(STATUS "Copying application assets to build tree")
 file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
 file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
 
-list(APPEND SUPPORTED_LANGUAGES ar)
+list(APPEND SUPPORTED_LANGUAGES ar tr)
 foreach(lang IN LISTS SUPPORTED_LANGUAGES)
-  message(STATUS "Adding ${lang} translations to executable")
-  qt_add_translations(quran-companion TS_FILES
-                      "dist/translations/qc_${lang}.ts")
+  message(STATUS "Adding ${lang} translation file to QC_TS")
+  list(APPEND QC_TS "dist/translations/qc_${lang}.ts")
 
-  message(STATUS "Copying ${lang} qt translations")
+  message(STATUS "Copying ${lang} qt translations to build tree")
   configure_file("dist/translations/qtbase_${lang}.qm"
                  "${CMAKE_BINARY_DIR}/${lang}.qm" COPYONLY)
 
+  message(STATUS "Adding ${lang} qtbase qm file to QTBASE_QM")
   list(APPEND QTBASE_QM "${CMAKE_BINARY_DIR}/${lang}.qm")
 endforeach()
 
 message(STATUS "Creating qt translations resource file")
+qt_add_translations(quran-companion TS_FILES ${QC_TS})
 qt_add_resources(
   quran-companion
   "qtTranslations"
