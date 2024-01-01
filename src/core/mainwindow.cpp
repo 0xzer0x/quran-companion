@@ -1176,7 +1176,6 @@ MainWindow::actionKhatmahTriggered()
 void
 MainWindow::actionAdvancedCopyTriggered()
 {
-
   if (m_cpyDlg == nullptr)
     m_cpyDlg = new CopyDialog(this);
 
