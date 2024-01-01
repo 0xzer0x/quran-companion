@@ -39,6 +39,16 @@
   </screenshots>
 
   <releases>
+    <release version="1.2.0" date="2024-01-01">
+      <description>
+        <ul>
+          <li>Türkçe (Turkish) UI translation by @halak0013 🎉</li>
+          <li>Added multiple khatmah tracking functionality</li>
+          <li>Now you can copy a range of verses using the new copy dialog</li>
+          <li>Updated Dark/Light themes</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.1.11" date="2023-12-03">
       <description>
         <ul>

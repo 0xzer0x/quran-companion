@@ -108,7 +108,7 @@ main(int argc, char* argv[])
   QApplication a(argc, argv);
   QApplication::setApplicationName("Quran Companion");
   QApplication::setOrganizationName("0xzer0x");
-  QApplication::setApplicationVersion("1.1.11");
+  QApplication::setApplicationVersion("1.2.0");
 
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
@@ -158,10 +158,9 @@ setGlobalPaths()
   configDir.cd("QuranCompanion");
   recitationsDir.cd("QuranCompanion/recitations");
 
-  updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
-                   "QCMaintenanceTool";
 #ifdef Q_OS_WIN
-  updateToolPath.append(".exe");
+  updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
+                   "QCMaintenanceTool.exe";
 #endif
 }
 
@@ -232,6 +231,8 @@ checkSettingsGroup(QSettings* settings, int group)
                          settings->value("TafsirDialog", "Ctrl+T"));
       settings->setValue("DownloaderDialog",
                          settings->value("DownloaderDialog", "Ctrl+D"));
+      settings->setValue("KhatmahDialog",
+                         settings->value("CopyDialog", "Ctrl+K"));
       settings->setValue("CopyDialog", settings->value("CopyDialog", "Ctrl+'"));
       settings->setValue("Quit", settings->value("Quit", "Ctrl+Q"));
       settings->endGroup();
