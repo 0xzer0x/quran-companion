@@ -12,6 +12,7 @@
 #include <QMap>
 #include <QSettings>
 #include <QString>
+#include <QtAwesome.h>
 
 /**
  * @struct Verse
@@ -90,7 +91,7 @@ enum Tafsir
   sa3dy,      ///< Tafsir ul-Sa'ady
   tabary,     ///< Tafsir ul-Tabary
   waseet,     ///< At-Tafsir ul-Waseet
-    jalalayn,    ///< Tafsir ul-Jalalyn
+  jalalayn,   ///< Tafsir ul-Jalalyn
   e3rab,      ///< Ea'rab of Quran verses
   tanweer,    ///< At-Tahreer wa At-Tanweer - Sheikh Ibn A'ashoor
   juzayy,     ///< Tafsir Ibn-Juzayy
@@ -189,6 +190,9 @@ extern QMap<QString, QString>
 extern QObject* databaseManager; ///< global pointer to the application-wide
                                  ///< DBManager instance for interacting with
                                  ///< different database files.
+
+extern fa::QtAwesome*
+  awesome; ///< global pointer used for generating font awesome icons
 
 };
 

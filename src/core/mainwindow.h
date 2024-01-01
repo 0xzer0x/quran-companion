@@ -15,7 +15,9 @@
 #include "../widgets/quranpagebrowser.h"
 #include "../widgets/verseframe.h"
 #include "bookmarksdialog.h"
+#include "copydialog.h"
 #include "downloaderdialog.h"
+#include "khatmahdialog.h"
 #include "searchdialog.h"
 #include "settingsdialog.h"
 #include "tafsirdialog.h"
@@ -230,8 +232,13 @@ private slots:
    */
   void actionBookmarksTriggered();
   /**
+   * @brief open the KhatmahDialog, create instance if not set
+   */
+  void actionKhatmahTriggered();
+  /**
    * @brief open the TafsirDialog for the current ::Verse
    */
+  void actionAdvancedCopyTriggered();
   void actionTafsirTriggered();
   /**
    * @brief open the verse of the day dialog
@@ -376,10 +383,10 @@ private:
   const QLocale::Language& m_language = Globals::language;
   QSettings* const m_settings = Globals::settings;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
-  const QDir m_resources = Globals::themeResources;
   const QString& m_updateToolPath = Globals::updateToolPath;
   const ReaderMode& m_readerMode = Globals::readerMode;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  fa::QtAwesome* m_fa = Globals::awesome;
   /**
    * @brief initalizes different parts used by the app
    */
@@ -564,6 +571,14 @@ private:
    */
   BookmarksDialog* m_bookmarksDlg = nullptr;
   /**
+   * @brief pointer to KhatmahDialog instance
+   */
+  KhatmahDialog* m_khatmahDlg = nullptr;
+  /**
+   * @brief pointer to CopyDialog instance
+   */
+  CopyDialog* m_cpyDlg = nullptr;
+  /**
    * @brief pointer to DownloaderDialog instance
    */
   DownloaderDialog* m_downloaderDlg = nullptr;
@@ -602,7 +617,7 @@ private:
    * @brief pointer to the validator for the editable verse combobox to ensure
    * the number entered is within the surah verse range
    */
-  QIntValidator* m_verseValidator = nullptr;
+  QIntValidator* m_verseValidator = new QIntValidator(this);
   /**
    * @brief QList for surah names as it appears in the navigation dock QListView
    */

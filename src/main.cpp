@@ -14,6 +14,7 @@
 #include <QStyleFactory>
 #include <QTranslator>
 #include <QXmlStreamReader>
+#include <QtAwesome.h>
 using namespace Globals;
 
 /*!
@@ -107,7 +108,7 @@ main(int argc, char* argv[])
   QApplication a(argc, argv);
   QApplication::setApplicationName("Quran Companion");
   QApplication::setOrganizationName("0xzer0x");
-  QApplication::setApplicationVersion("1.1.11");
+  QApplication::setApplicationVersion("1.2.0");
 
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
@@ -157,10 +158,9 @@ setGlobalPaths()
   configDir.cd("QuranCompanion");
   recitationsDir.cd("QuranCompanion/recitations");
 
-  updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
-                   "QCMaintenanceTool";
 #ifdef Q_OS_WIN
-  updateToolPath.append(".exe");
+  updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
+                   "QCMaintenanceTool.exe";
 #endif
 }
 
@@ -187,9 +187,7 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->beginGroup("Reader");
       settings->setValue("Mode", settings->value("Mode", 0));
       settings->setValue("FGHighlight", settings->value("FGHighlight", 1));
-      settings->setValue("Page", settings->value("Page", 1));
-      settings->setValue("Surah", settings->value("Surah", 1));
-      settings->setValue("Verse", settings->value("Verse", 1));
+      settings->setValue("Khatmah", settings->value("Khatmah", 0));
       settings->setValue("AdaptiveFont", settings->value("AdaptiveFont", true));
       settings->setValue("QCF1Size", settings->value("QCF1Size", 22));
       settings->setValue("QCF2Size", settings->value("QCF2Size", 20));
@@ -233,6 +231,9 @@ checkSettingsGroup(QSettings* settings, int group)
                          settings->value("TafsirDialog", "Ctrl+T"));
       settings->setValue("DownloaderDialog",
                          settings->value("DownloaderDialog", "Ctrl+D"));
+      settings->setValue("KhatmahDialog",
+                         settings->value("CopyDialog", "Ctrl+K"));
+      settings->setValue("CopyDialog", settings->value("CopyDialog", "Ctrl+'"));
       settings->setValue("Quit", settings->value("Quit", "Ctrl+Q"));
       settings->endGroup();
       break;
@@ -248,7 +249,6 @@ addFonts(int qcfVersion)
 
   QFontDatabase::addApplicationFont(fontsDir.filePath("PakTypeNaskhBasic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("ExpoArabic.ttf"));
-  QFontDatabase::addApplicationFont(fontsDir.filePath("noto-symbols.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
 
   switch (qcfVersion) {
@@ -349,6 +349,9 @@ setTheme(int themeIdx)
     qApp->setStyleSheet(styles.readAll());
     styles.close();
   }
+
+  awesome = new fa::QtAwesome(qApp);
+  awesome->initFontAwesome();
 }
 
 void
@@ -362,8 +365,8 @@ addTranslation(QLocale::Language localeCode)
               *qtBase = new QTranslator(qApp);
 
   if (translation->load(":/i18n/qc_" + code + ".qm")) {
-    qInfo() << "tr" << translation->language() << "loaded";
-    qInfo() << "base tr loaded:" << qtBase->load(":/base/" + code + ".qm");
+    qInfo() << translation->language() << "translation loaded";
+    qInfo() << "base translation:" << qtBase->load(":/base/" + code + ".qm");
     qApp->installTranslator(translation);
     qApp->installTranslator(qtBase);
 

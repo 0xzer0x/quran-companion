@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
   <id>io.github._0xzer0x.qurancompanion</id>
-  
   <name>Quran Companion</name>
   <summary>Cross-platform desktop offline Quran reader &amp; player</summary>
-  
   <metadata_license>MIT</metadata_license>
   <project_license>LGPL-3.0-or-later</project_license>
-  
+  <content_rating type="oars-1.1" />
   <description>
     <p>
       Quran Companion is a cross-platform Quran reader &amp; listener with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books &amp; translations
     </p>
   </description>
-  
   <launchable type="desktop-id">io.github._0xzer0x.qurancompanion.desktop</launchable>
+  <url type="homepage">https://github.com/0xzer0x/quran-companion</url>
+  <url type="translate">https://crowdin.com/project/quran-companion</url>
+  <url type="contact">https://github.com/0xzer0x/quran-companion</url>
+  <url type="bugtracker">https://github.com/0xzer0x/quran-companion/issues</url>	
+
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/light.png</image>
@@ -35,12 +37,18 @@
       <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_two-page.png</image>
     </screenshot>
   </screenshots>
-  <url type="homepage">https://github.com/0xzer0x/quran-companion</url>
-  <url type="translate">https://github.com/0xzer0x/quran-companion</url>
-  <url type="contact">https://github.com/0xzer0x/quran-companion</url>
-  <url type="bugtracker">https://github.com/0xzer0x/quran-companion/issues</url>	
-  <content_rating type="oars-1.1" />
+
   <releases>
+    <release version="1.2.0" date="2024-01-01">
+      <description>
+        <ul>
+          <li>Türkçe (Turkish) UI translation by @halak0013 🎉</li>
+          <li>Added multiple khatmah tracking functionality</li>
+          <li>Now you can copy a range of verses using the new copy dialog</li>
+          <li>Updated Dark/Light themes</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.1.11" date="2023-12-03">
       <description>
         <ul>

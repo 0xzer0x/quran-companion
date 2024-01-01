@@ -10,8 +10,12 @@ TafsirDialog::TafsirDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::TafsirDialog)
 {
-  setWindowIcon(QIcon(m_resources.filePath("icons/tafsir.png")));
+  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_book_open));
   ui->setupUi(this);
+  ui->btnNext->setIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
+  ui->btnPrev->setIcon(
+    Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
+
   setTafsirAsTitle();
   setLayoutDirection(Qt::LeftToRight);
   if (m_qcfVer == 1)
@@ -154,8 +158,8 @@ TafsirDialog::loadVerseTafsir()
 
   QFont sideFont =
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
-  ui->textEdit->setFont(sideFont);
-  ui->textEdit->setHtml(
+  ui->tedTafsir->setFont(sideFont);
+  ui->tedTafsir->setHtml(
     m_dbMgr->getTafsir(m_shownVerse.surah, m_shownVerse.number));
 
   if (m_shownVerse.surah == 1 && m_shownVerse.number == 1)

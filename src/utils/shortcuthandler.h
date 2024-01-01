@@ -54,10 +54,12 @@ signals:
   void decrementVolume();
   void bookmarkCurrent();
   void openBookmarks();
+  void openKhatmah();
   void openDownloads();
   void openSearch();
   void openSettings();
   void openTafsir();
+  void openAdvancedCopy();
 
 private:
   const QSettings* m_settings = Globals::settings;

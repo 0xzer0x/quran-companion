@@ -12,12 +12,17 @@ SearchDialog::SearchDialog(QWidget* parent)
   , ui(new Ui::SearchDialog)
   , m_surahNames{ m_dbMgr->surahNameList() }
 {
-  setWindowIcon(QIcon(m_resources.filePath("icons/search.png")));
+  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_magnifying_glass));
   ui->setupUi(this);
   ui->frmNavBtns->setLayoutDirection(Qt::LeftToRight);
+  ui->btnNext->setIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
+  ui->btnPrev->setIcon(
+    Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
   ui->btnNext->setDisabled(true);
   ui->btnPrev->setDisabled(true);
 
+  ui->btnTransfer->setIcon(
+    Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right_arrow_left));
   ui->listViewAllSurahs->setModel(&m_modelAllSurahs);
   ui->listViewSelected->setModel(&m_modelSelectedSurahs);
   fillListView();
@@ -29,26 +34,13 @@ SearchDialog::SearchDialog(QWidget* parent)
 void
 SearchDialog::setupConnections()
 {
-  connect(ui->btnSrch,
-          &QPushButton::clicked,
-          this,
-          &SearchDialog::getResults,
-          Qt::UniqueConnection);
-  connect(ui->btnNext,
-          &QPushButton::clicked,
-          this,
-          &SearchDialog::moveFwd,
-          Qt::UniqueConnection);
-  connect(ui->btnPrev,
-          &QPushButton::clicked,
-          this,
-          &SearchDialog::moveBwd,
-          Qt::UniqueConnection);
+  connect(ui->btnSrch, &QPushButton::clicked, this, &SearchDialog::getResults);
+  connect(ui->btnNext, &QPushButton::clicked, this, &SearchDialog::moveFwd);
+  connect(ui->btnPrev, &QPushButton::clicked, this, &SearchDialog::moveBwd);
   connect(ui->btnTransfer,
           &QPushButton::clicked,
           this,
-          &SearchDialog::btnTransferClicked,
-          Qt::UniqueConnection);
+          &SearchDialog::btnTransferClicked);
 }
 
 void

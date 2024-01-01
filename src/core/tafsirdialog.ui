@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="lbVerseInfo">
      <property name="text">
-      <string>s-v</string>
+      <string notr="true">s-v</string>
      </property>
     </widget>
    </item>
@@ -25,7 +25,7 @@
     <widget class="QLabel" name="lbVerseText">
      <property name="font">
       <font>
-       <family>SF Pro Display</family>
+       <family>Inter</family>
        <pointsize>10</pointsize>
       </font>
      </property>
@@ -35,12 +35,17 @@
     </widget>
    </item>
    <item>
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="QTextEdit" name="tedTafsir">
      <property name="font">
       <font>
        <family>PakType Naskh Basic</family>
        <pointsize>15</pointsize>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+	border-radius: 4px;
+}</string>
      </property>
      <property name="undoRedoEnabled">
       <bool>false</bool>
@@ -80,7 +85,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Noto Sans Symbols 2</family>
+         <family>Noto Sans Display</family>
          <pointsize>12</pointsize>
          <underline>false</underline>
         </font>
@@ -92,7 +97,7 @@
         <string>next</string>
        </property>
        <property name="text">
-        <string>🡸</string>
+        <string notr="true"/>
        </property>
        <property name="shortcut">
         <string>Left</string>
@@ -115,8 +120,9 @@
        </property>
        <property name="font">
         <font>
-         <family>Noto Sans Symbols 2</family>
+         <family>Noto Sans Display</family>
          <pointsize>12</pointsize>
+         <weight>50</weight>
          <italic>false</italic>
          <bold>false</bold>
          <underline>false</underline>
@@ -130,7 +136,7 @@
         <string>previous</string>
        </property>
        <property name="text">
-        <string>🡺</string>
+        <string notr="true"/>
        </property>
        <property name="shortcut">
         <string>Right</string>

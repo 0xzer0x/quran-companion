@@ -122,7 +122,6 @@ protected:
 private:
   const int m_languageCode = Globals::language;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
-  const QDir& m_resources = Globals::themeResources;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
@@ -133,7 +132,7 @@ private:
    * @brief Populates the QTreeView through which the user selects the surahs to
    * add to queue.
    */
-  void fillTreeView();
+  void addRecitationsToModel();
   /**
    * @brief Adds a download progress bar to the
    * downloader dialog to indicate download state

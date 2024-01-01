@@ -4,6 +4,7 @@
  */
 
 #include "notificationpopup.h"
+using namespace fa;
 
 NotificationPopup::NotificationPopup(QWidget* parent)
   : QFrame{ parent }
@@ -24,12 +25,13 @@ NotificationPopup::NotificationPopup(QWidget* parent)
   QFont fnt = m_textWidget->font();
   fnt.setPointSize(12);
   m_textWidget->setFont(fnt);
-  m_iconWidget->setScaledContents(true);
-  m_iconWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   m_textWidget->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
   m_textWidget->setWordWrap(true);
 
+  m_iconWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
   QHBoxLayout* lyt = new QHBoxLayout(this);
+  lyt->setSpacing(10);
   lyt->addWidget(m_iconWidget, 0);
   lyt->addWidget(m_textWidget, 1);
 
@@ -84,7 +86,7 @@ NotificationPopup::completedDownload(int reciterIdx, int surah)
   setStyleSheet("");
   QString msg = tr("Download Completed") + ": " +
                 m_recitersList.at(reciterIdx).displayName + " - " +
-                tr("Surah") + " " + m_dbMgr->surahNameList().at(surah - 1);
+                m_dbMgr->surahNameList().at(surah - 1);
   this->notify(msg, success);
 }
 
@@ -94,7 +96,7 @@ NotificationPopup::downloadError(int reciterIdx, int surah)
   setStyleSheet("QFrame#Popup { background-color: #a50500 }");
   QString msg = tr("Download Failed") + ": " +
                 m_recitersList.at(reciterIdx).displayName + " - " +
-                tr("Surah") + " " + m_dbMgr->surahNameList().at(surah - 1);
+                m_dbMgr->surahNameList().at(surah - 1);
   this->notify(msg, fail);
 }
 
@@ -159,32 +161,35 @@ NotificationPopup::adjustLocation()
 void
 NotificationPopup::setNotificationIcon(Action icon)
 {
-  QPixmap image;
+  QString ico;
+  int faStyle = fa_solid;
   switch (icon) {
     case NotificationPopup::info:
-      image = qApp->style()->standardPixmap(QStyle::SP_MessageBoxInformation);
+      ico = fa_info_circle;
       break;
     case NotificationPopup::success:
-      image = QPixmap(m_resources.filePath("icons/success.png"));
+      ico = fa_check_circle;
       break;
     case NotificationPopup::fail:
-      image = QPixmap(m_resources.filePath("icons/exit.png"));
+      ico = fa_xmark_circle;
       break;
     case NotificationPopup::bookmarkAdd:
-      image = QPixmap(m_resources.filePath("icons/bookmark-true.png"));
+      ico = fa_bookmark;
       break;
     case NotificationPopup::bookmarkRemove:
-      image = QPixmap(m_resources.filePath("icons/bookmark-false.png"));
+      ico = fa_bookmark;
+      faStyle = fa_regular;
       break;
     case NotificationPopup::copiedText:
-      image = QPixmap(m_resources.filePath("icons/copy.png"));
+      ico = fa_clipboard;
       break;
     case NotificationPopup::updateInfo:
-      image = QPixmap(m_resources.filePath("icons/update.png"));
+      ico = fa_circle_up;
       break;
   }
 
-  m_iconWidget->setPixmap(image.scaledToWidth(24, Qt::SmoothTransformation));
+  m_iconWidget->setFont(Globals::awesome->font(faStyle, 18));
+  m_iconWidget->setText(ico);
 }
 
 QPoint

@@ -14,8 +14,20 @@
    <string>Verse search</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
    <item>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="QTabWidget" name="searchTabWidget">
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
@@ -105,8 +117,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>634</width>
-            <height>485</height>
+            <width>654</width>
+            <height>516</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -138,7 +150,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Noto Sans Symbols 2</family>
+              <family>Noto Sans Display</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -149,7 +161,7 @@
              <string>next</string>
             </property>
             <property name="text">
-             <string notr="true">🡸</string>
+             <string notr="true"/>
             </property>
             <property name="shortcut">
              <string>Left</string>
@@ -166,7 +178,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Noto Sans Symbols 2</family>
+              <family>Noto Sans Display</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -177,7 +189,7 @@
              <string>previous</string>
             </property>
             <property name="text">
-             <string notr="true">🡺</string>
+             <string notr="true"/>
             </property>
             <property name="shortcut">
              <string>Right</string>
@@ -295,7 +307,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Noto Sans Symbols 2</family>
+              <family>Noto Sans Display</family>
               <pointsize>22</pointsize>
              </font>
             </property>
@@ -307,17 +319,17 @@
 min-width: 30px;
 max-width: 40px;
 text-align: center;
-border: none;	
 background: transparent;
+border: none;
 }</string>
             </property>
             <property name="text">
-             <string>⮀</string>
+             <string notr="true"/>
             </property>
             <property name="iconSize">
              <size>
-              <width>16</width>
-              <height>16</height>
+              <width>20</width>
+              <height>20</height>
              </size>
             </property>
             <property name="flat">
