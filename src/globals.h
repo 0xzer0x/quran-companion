@@ -81,9 +81,9 @@ enum VerseText
  */
 enum ReaderMode
 {
-  singlePage, ///< Single Quran page, side panel is used for displaying verses
+  SinglePage, ///< Single Quran page, side panel is used for displaying verses
               ///< with translation
-  doublePage  ///< Two Quran pages, both panels are used to display Quran pages,
+  DoublePage  ///< Two Quran pages, both panels are used to display Quran pages,
               ///< no translation
 };
 /**

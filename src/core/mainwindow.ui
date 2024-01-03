@@ -670,7 +670,7 @@ dialog-no-icon: off;
     <addaction name="actionAdvancedCopy"/>
     <addaction name="actionVOTD"/>
     <addaction name="separator"/>
-    <addaction name="actionSidePanel"/>
+    <addaction name="actionReaderViewToggle"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -1065,15 +1065,15 @@ placeholder-text-color: #c0c0c0;
     <string>Advanced copy</string>
    </property>
   </action>
-  <action name="actionSidePanel">
+  <action name="actionReaderViewToggle">
    <property name="checkable">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="checked">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
-    <string>Side panel</string>
+    <string>Toggle reader view</string>
    </property>
   </action>
  </widget>

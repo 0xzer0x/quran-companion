@@ -252,9 +252,9 @@ private slots:
    */
   void actionSearchTriggered();
   /**
-   * @brief toggle the visibility of the side content panel
+   * @brief toggle the main reader view by hiding one of the panels
    */
-  void actionSidePanelToggled(bool checked);
+  void toggleReaderView();
   /**
    * @brief open the about messagebox for the application
    */

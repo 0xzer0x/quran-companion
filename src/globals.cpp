@@ -9,7 +9,7 @@
 namespace Globals {
 // app settings
 int themeId = 0;
-ReaderMode readerMode = ReaderMode::singlePage;
+ReaderMode readerMode = ReaderMode::SinglePage;
 bool darkMode = false;
 QSettings* settings = nullptr;
 QObject* databaseManager = nullptr;

@@ -79,7 +79,7 @@ MainWindow::loadSettings()
 void
 MainWindow::loadReader()
 {
-  if (m_readerMode == ReaderMode::singlePage) {
+  if (m_readerMode == ReaderMode::SinglePage) {
     m_activeQuranBrowser = m_quranBrowsers[0] =
       new QuranPageBrowser(ui->frmPageContent, m_currVerse.page);
 
@@ -327,10 +327,10 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::actionAboutTriggered);
-  connect(ui->actionSidePanel,
-          &QAction::toggled,
+  connect(ui->actionReaderViewToggle,
+          &QAction::triggered,
           this,
-          &MainWindow::actionSidePanelToggled);
+          &MainWindow::toggleReaderView);
 
   // ########## Quran page ########## //
   connect(m_quranBrowsers[0],
@@ -536,7 +536,7 @@ MainWindow::init()
   redrawQuranPage(true);
   setVerseComboBoxRange(true);
 
-  if (m_readerMode == ReaderMode::singlePage)
+  if (m_readerMode == ReaderMode::SinglePage)
     addSideContent();
 
   for (int i = 1; i < 605; i++) {
@@ -630,7 +630,7 @@ MainWindow::switchActivePage()
 void
 MainWindow::btnNextClicked()
 {
-  if (m_readerMode == ReaderMode::singlePage || m_currVerse.page % 2 == 0)
+  if (m_readerMode == ReaderMode::SinglePage || m_currVerse.page % 2 == 0)
     nextPage(1);
   else
     nextPage(2);
@@ -639,7 +639,7 @@ MainWindow::btnNextClicked()
 void
 MainWindow::btnPrevClicked()
 {
-  if (m_readerMode == ReaderMode::singlePage || m_currVerse.page % 2 != 0)
+  if (m_readerMode == ReaderMode::SinglePage || m_currVerse.page % 2 != 0)
     prevPage(1);
   else
     prevPage(2);
@@ -690,7 +690,7 @@ MainWindow::updatePageVerseInfoList()
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_vLists[0] = m_dbMgr->getVerseInfoList(m_currVerse.page);
-    if (m_readerMode == doublePage)
+    if (m_readerMode == DoublePage)
       m_vLists[1] = m_dbMgr->getVerseInfoList(m_currVerse.page + 1);
 
     m_activeVList = &m_vLists[0];
@@ -773,7 +773,7 @@ MainWindow::gotoPage(int page, bool updateElements, bool automaticFlip)
     m_player->stop();
 
   if (m_activeQuranBrowser->page() != page) {
-    if (m_readerMode == ReaderMode::singlePage)
+    if (m_readerMode == ReaderMode::SinglePage)
       gotoSinglePage(page);
     else
       gotoDoublePage(page);
@@ -823,7 +823,7 @@ MainWindow::nextPage(int step)
 
     gotoPage(m_currVerse.page + step, true, true);
 
-    if (m_readerMode == ReaderMode::singlePage)
+    if (m_readerMode == ReaderMode::SinglePage)
       m_scrlVerseByVerse->verticalScrollBar()->setValue(0);
 
     // if the page is flipped automatically, resume playback
@@ -843,7 +843,7 @@ MainWindow::prevPage(int step)
 
     gotoPage(m_currVerse.page - step, true, true);
 
-    if (m_readerMode == ReaderMode::singlePage)
+    if (m_readerMode == ReaderMode::SinglePage)
       m_scrlVerseByVerse->verticalScrollBar()->setValue(0);
 
     if (keepPlaying) {
@@ -1244,9 +1244,22 @@ MainWindow::actionSearchTriggered()
 }
 
 void
-MainWindow::actionSidePanelToggled(bool checked)
+MainWindow::toggleReaderView()
 {
-  ui->frmSidePanel->setVisible(checked);
+  if (m_readerMode != ReaderMode::SinglePage)
+    return;
+
+  static bool hideSidePanel = true;
+  if (ui->frmPageContent->isVisible() && ui->frmSidePanel->isVisible()) {
+    if (hideSidePanel)
+      ui->frmSidePanel->setVisible(false);
+    else
+      ui->frmPageContent->setVisible(false);
+    hideSidePanel = !hideSidePanel;
+  } else if (ui->frmPageContent->isVisible())
+    ui->frmSidePanel->setVisible(true);
+  else
+    ui->frmPageContent->setVisible(true);
 }
 
 void
@@ -1447,7 +1460,7 @@ MainWindow::redrawQuranPage(bool manualSz)
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_quranBrowsers[0]->constructPage(m_currVerse.page, manualSz);
-    if (m_readerMode == doublePage && m_quranBrowsers[1])
+    if (m_readerMode == DoublePage && m_quranBrowsers[1])
       m_quranBrowsers[1]->constructPage(m_currVerse.page + 1, manualSz);
   } else {
     m_quranBrowsers[0]->constructPage(m_currVerse.page - 1, manualSz);
@@ -1470,7 +1483,7 @@ MainWindow::highlightCurrentVerse()
 
   m_activeQuranBrowser->highlightVerse(idx);
 
-  if (m_readerMode == ReaderMode::singlePage)
+  if (m_readerMode == ReaderMode::SinglePage)
     setHighlightedFrame();
 }
 
@@ -1493,7 +1506,7 @@ MainWindow::setHighlightedFrame()
 void
 MainWindow::addSideContent()
 {
-  if (m_readerMode != ReaderMode::singlePage)
+  if (m_readerMode != ReaderMode::SinglePage)
     return;
 
   if (!m_verseFrameList.isEmpty()) {
