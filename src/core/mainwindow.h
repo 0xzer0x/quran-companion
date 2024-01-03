@@ -236,9 +236,12 @@ private slots:
    */
   void actionKhatmahTriggered();
   /**
-   * @brief open the TafsirDialog for the current ::Verse
+   * @brief open the CopyDialog, create instance if not set
    */
   void actionAdvancedCopyTriggered();
+  /**
+   * @brief open the TafsirDialog for the current ::Verse
+   */
   void actionTafsirTriggered();
   /**
    * @brief open the verse of the day dialog
@@ -249,13 +252,17 @@ private slots:
    */
   void actionSearchTriggered();
   /**
+   * @brief toggle the visibility of the side content panel
+   */
+  void actionSidePanelToggled(bool checked);
+  /**
    * @brief open the about messagebox for the application
    */
   void actionAboutTriggered();
   /**
    * @brief open the about messagebox for Qt
    */
-  void on_actionAbout_Qt_triggered();
+  void on_actionAboutQt_triggered();
   /**
    * @brief slot to navigate to the clicked verse in the side panel and update
    * UI elements
@@ -311,6 +318,7 @@ private slots:
    * @brief set side content font to the one in the settings
    */
   void updateSideFont();
+  void updateVerseFont();
   /**
    * @brief search for the surahs with the given argument when the text in the
    * side dock search box is changed
@@ -631,5 +639,9 @@ private:
    * @brief QFont used in the side panel translation
    */
   QFont m_sideFont;
+  /**
+   * @brief QFont used in displaying Quranic verse
+   */
+  QFont m_versesFont;
 };
 #endif // MAINWINDOW_H

@@ -55,7 +55,7 @@ QComboBox::down-arrow {
 
 /* --------- Reader Styles --------- */
 
-QSplitter#centeralSplitter {
+QFrame#frmReader {
   border: 2px solid #efe3cd;
   border-radius: 7px;
   background-color: #f7ebd5;

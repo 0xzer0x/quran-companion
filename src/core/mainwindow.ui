@@ -453,7 +453,7 @@ dialog-no-icon: off;
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0">
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
             <widget class="QPushButton" name="btnNext">
              <property name="sizePolicy">
@@ -496,87 +496,105 @@ dialog-no-icon: off;
             </widget>
            </item>
            <item>
-            <widget class="QSplitter" name="centeralSplitter">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <widget class="QFrame" name="frmSidePanel">
-              <property name="styleSheet">
-               <string notr="true">QFrame#frmSidePanel
+            <widget class="QFrame" name="frmReader">
+             <layout class="QHBoxLayout" name="lytReader" stretch="1,0">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <property name="leftMargin">
+               <number>4</number>
+              </property>
+              <property name="topMargin">
+               <number>4</number>
+              </property>
+              <property name="rightMargin">
+               <number>4</number>
+              </property>
+              <property name="bottomMargin">
+               <number>4</number>
+              </property>
+              <item>
+               <widget class="QFrame" name="frmSidePanel">
+                <property name="styleSheet">
+                 <string notr="true">QFrame#frmSidePanel
 {
 	background: transparent;
 }
 </string>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_3">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-              </layout>
-             </widget>
-             <widget class="QFrame" name="frmPageContent">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>550</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">*.a {
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_3">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frmPageContent">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>550</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">*.a {
 	background-color:palette(base);
 }</string>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <property name="midLineWidth">
-               <number>0</number>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_3">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-              </layout>
-             </widget>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <property name="midLineWidth">
+                 <number>0</number>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
@@ -649,8 +667,10 @@ dialog-no-icon: off;
     </property>
     <addaction name="actionFind"/>
     <addaction name="actionTafsir"/>
-    <addaction name="actionAdvanced_copy"/>
-    <addaction name="actionVerse_of_the_day"/>
+    <addaction name="actionAdvancedCopy"/>
+    <addaction name="actionVOTD"/>
+    <addaction name="separator"/>
+    <addaction name="actionSidePanel"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -665,7 +685,7 @@ dialog-no-icon: off;
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionDownload_manager"/>
+    <addaction name="actionDownloadManager"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -673,10 +693,10 @@ dialog-no-icon: off;
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionCheck_for_updates"/>
+    <addaction name="actionUpdates"/>
     <addaction name="separator"/>
-    <addaction name="actionAbout_Quran_Companion"/>
-    <addaction name="actionAbout_Qt"/>
+    <addaction name="actionAboutQC"/>
+    <addaction name="actionAboutQt"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -971,7 +991,7 @@ placeholder-text-color: #c0c0c0;
     <string>Preferences</string>
    </property>
   </action>
-  <action name="actionDownload_manager">
+  <action name="actionDownloadManager">
    <property name="icon">
     <iconset>
      <normaloff>:/resources/download-manager.png</normaloff>:/resources/download-manager.png</iconset>
@@ -999,7 +1019,7 @@ placeholder-text-color: #c0c0c0;
     <string>Find</string>
    </property>
   </action>
-  <action name="actionCheck_for_updates">
+  <action name="actionUpdates">
    <property name="text">
     <string>Check for updates</string>
    </property>
@@ -1009,7 +1029,7 @@ placeholder-text-color: #c0c0c0;
     <string>Bookmarks</string>
    </property>
   </action>
-  <action name="actionAbout_Quran_Companion">
+  <action name="actionAboutQC">
    <property name="text">
     <string>About Quran Companion</string>
    </property>
@@ -1017,7 +1037,7 @@ placeholder-text-color: #c0c0c0;
     <enum>QAction::TextHeuristicRole</enum>
    </property>
   </action>
-  <action name="actionAbout_Qt">
+  <action name="actionAboutQt">
    <property name="text">
     <string>About Qt</string>
    </property>
@@ -1030,7 +1050,7 @@ placeholder-text-color: #c0c0c0;
     <string>Tafsir</string>
    </property>
   </action>
-  <action name="actionVerse_of_the_day">
+  <action name="actionVOTD">
    <property name="text">
     <string>Verse of the day</string>
    </property>
@@ -1040,9 +1060,20 @@ placeholder-text-color: #c0c0c0;
     <string>Khatmah</string>
    </property>
   </action>
-  <action name="actionAdvanced_copy">
+  <action name="actionAdvancedCopy">
    <property name="text">
     <string>Advanced copy</string>
+   </property>
+  </action>
+  <action name="actionSidePanel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Side panel</string>
    </property>
   </action>
  </widget>

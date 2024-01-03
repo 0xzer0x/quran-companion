@@ -20,6 +20,8 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   createActions();
   updateFontSize();
 
+  m_pageFont = m_fontnamePrefix;
+  m_pageFont.append(QString::number(initPage).rightJustified(3, '0'));
   m_pageFormat.setAlignment(Qt::AlignCenter);
   m_pageFormat.setNonBreakableLines(true);
   m_pageFormat.setLayoutDirection(Qt::RightToLeft);

@@ -148,8 +148,12 @@ TafsirDialog::loadVerseTafsir()
                   " - " + tr("Verse: ") + QString::number(m_shownVerse.number);
   QString glyphs =
     m_dbMgr->getVerseGlyphs(m_shownVerse.surah, m_shownVerse.number);
-  QString fontFamily =
-    m_fontPrefix + QString::number(m_shownVerse.page).rightJustified(3, '0');
+  QString fontFamily;
+  if (m_dbMgr->getVerseText() == VerseText::qcf)
+    fontFamily =
+      m_fontPrefix + QString::number(m_shownVerse.page).rightJustified(3, '0');
+  else
+    fontFamily = "kfgqpc_hafs_uthmanic _script";
 
   ui->lbVerseInfo->setText(title);
   ui->lbVerseText->setWordWrap(true);

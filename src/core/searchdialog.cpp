@@ -105,8 +105,12 @@ SearchDialog::showResults()
 
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
-    QString fontName =
-      m_fontPrefix + QString::number(v.page).rightJustified(3, '0');
+    QString fontName;
+    if (m_dbMgr->getVerseText() == VerseText::qcf)
+      fontName = m_fontPrefix + QString::number(v.page).rightJustified(3, '0');
+    else
+      fontName = "kfgqpc_hafs_uthmanic _script";
+
     VerseFrame* vFrame = new VerseFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);
     ClickableLabel* clkLb = new ClickableLabel(vFrame);

@@ -192,6 +192,8 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->setValue("QCF1Size", settings->value("QCF1Size", 22));
       settings->setValue("QCF2Size", settings->value("QCF2Size", 20));
       settings->setValue("QCF", settings->value("QCF", 1));
+      settings->setValue("VerseText", settings->value("VerseText", 0));
+      settings->setValue("VerseTextSize", settings->value("VerseTextSize", 20));
       settings->setValue("Tafsir", settings->value("Tafsir", 1));
       settings->setValue("Translation", settings->value("Translation", 5));
       settings->setValue(
@@ -250,6 +252,7 @@ addFonts(int qcfVersion)
   QFontDatabase::addApplicationFont(fontsDir.filePath("PakTypeNaskhBasic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("ExpoArabic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
+  QFontDatabase::addApplicationFont(fontsDir.filePath("uthmanic_hafs_v20.ttf"));
 
   switch (qcfVersion) {
     case 1:

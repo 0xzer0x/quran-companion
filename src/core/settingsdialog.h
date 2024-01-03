@@ -120,6 +120,8 @@ public slots:
    * @param size - QString representing the new font size
    */
   void updateSideFontSize(QString size);
+  void updateVerseText(int vt);
+  void updateVerseTextFontsize(QString size);
   /**
    * @brief update the key sequence that trigger the shortcut with the given key
    * @param key - QString of the shortcut name in the settings file
@@ -178,6 +180,7 @@ signals:
    * @brief signal emitted to notify changes in the side panel font.
    */
   void sideFontChanged();
+  void verseFontChanged();
   /**
    * @fn usedAudioDeviceChanged()
    * @brief signal emitted in order to changed audio output device used by
@@ -264,6 +267,8 @@ private:
    * the combobox.
    */
   int m_translation;
+  int m_verseText;
+  int m_verseTextSize;
   /**
    * @brief boolean flag representing the verse of the day option checkbox
    * state.

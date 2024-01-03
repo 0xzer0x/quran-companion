@@ -88,6 +88,9 @@ SettingsDialog::setCurrentSettingsAsRef()
   m_tafsir = m_settings->value("Reader/Tafsir").toInt();
   m_translation = m_settings->value("Reader/Translation").toInt();
 
+  m_verseText = m_settings->value("Reader/VerseText").toInt();
+  m_verseTextSize = m_settings->value("Reader/VerseTextSize").toInt();
+
   m_audioDevices = QMediaDevices::audioOutputs();
   ui->cmbAudioDevices->clear();
   for (int i = 0; i < m_audioDevices.length(); i++) {
@@ -112,6 +115,8 @@ SettingsDialog::setCurrentSettingsAsRef()
   ui->chkAdaptive->setChecked(m_adaptive);
   ui->chkMissingWarning->setChecked(m_missingFileWarning);
   ui->chkFgHighlight->setChecked(m_fgHighlight);
+  ui->cmbVerseText->setCurrentIndex(m_verseText);
+  ui->cmbVersesFontSz->setCurrentText(QString::number(m_verseTextSize));
 
   // shortcuts tab
   populateShortcutsModel();
@@ -268,6 +273,22 @@ SettingsDialog::updateSideFontSize(QString size)
 }
 
 void
+SettingsDialog::updateVerseText(int vt)
+{
+  m_settings->setValue("Reader/VerseText", vt);
+  emit verseFontChanged();
+  m_renderSideContent = true;
+}
+
+void
+SettingsDialog::updateVerseTextFontsize(QString size)
+{
+  m_settings->setValue("Reader/VerseTextSize", size);
+  emit verseFontChanged();
+  m_renderSideContent = true;
+}
+
+void
 SettingsDialog::updateShortcut(QString key, QString keySequence)
 {
   m_settings->setValue("Shortcuts/" + key, keySequence);
@@ -303,6 +324,12 @@ SettingsDialog::applyAllChanges()
 
   if (ui->cmbQCF->currentIndex() + 1 != m_qcfVer)
     updateQuranFont(ui->cmbQCF->currentIndex() + 1);
+
+  if (ui->cmbVerseText->currentIndex() != m_verseText)
+    updateVerseText(ui->cmbVerseText->currentIndex());
+
+  if (ui->cmbVersesFontSz->currentText() != QString::number(m_verseTextSize))
+    updateVerseTextFontsize(ui->cmbVersesFontSz->currentText());
 
   if (ui->chkAdaptive->isChecked() != m_adaptive)
     updateAdaptiveFont(ui->chkAdaptive->isChecked());

@@ -299,6 +299,9 @@ public:
    */
   void setActiveKhatmah(const int id);
 
+  void setVerseText(VerseText newVerseText);
+  VerseText getVerseText() const;
+
 private:
   QDir m_dbDir = Globals::assetsDir;
   const QSettings* m_settings = Globals::settings;
@@ -319,6 +322,8 @@ private:
    * databases
    */
   QSqlDatabase m_openDBCon;
+
+  VerseText m_verseText = VerseText::qcf;
   /**
    * @brief the current active DBManager::Tafsir
    */
