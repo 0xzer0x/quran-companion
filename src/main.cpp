@@ -232,7 +232,7 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->setValue("DownloaderDialog",
                          settings->value("DownloaderDialog", "Ctrl+D"));
       settings->setValue("KhatmahDialog",
-                         settings->value("CopyDialog", "Ctrl+K"));
+                         settings->value("KhatmahDialog", "Ctrl+K"));
       settings->setValue("CopyDialog", settings->value("CopyDialog", "Ctrl+'"));
       settings->setValue("Quit", settings->value("Quit", "Ctrl+Q"));
       settings->endGroup();
