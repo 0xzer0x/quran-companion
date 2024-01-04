@@ -104,11 +104,18 @@ BookmarksDialog::loadBookmarks(int surah)
   for (int i = m_startIdx; i < end; i++) {
     Verse verse = m_shownVerses.at(i);
     QString fontName;
-    if (m_dbMgr->getVerseText() == VerseText::qcf)
-      fontName =
-        m_fontPrefix + QString::number(verse.page).rightJustified(3, '0');
-    else
-      fontName = "kfgqpc_hafs_uthmanic _script";
+    switch (m_dbMgr->getVerseText()) {
+      case qcf:
+        fontName =
+          m_fontPrefix + QString::number(verse.page).rightJustified(3, '0');
+        break;
+      case uthmanic:
+        fontName = "kfgqpc_hafs_uthmanic _script";
+        break;
+      case annotated:
+        fontName = "Emine";
+        break;
+    }
 
     QFrame* frame = new QFrame(ui->scrlBookmarks);
     frame->setProperty("bookmark", true);

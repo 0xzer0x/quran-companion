@@ -204,9 +204,9 @@ checkSettingsGroup(QSettings* settings, int group)
     case 2:
       settings->beginGroup("Shortcuts");
       settings->setValue("ToggleMenubar",
-                         settings->value("ToggleMenubar", "Ctrl+M"));
+                         settings->value("ToggleMenubar", "M"));
       settings->setValue("ToggleNavDock",
-                         settings->value("ToggleNavDock", "Ctrl+N"));
+                         settings->value("ToggleNavDock", "N"));
       settings->setValue("TogglePlayback",
                          settings->value("TogglePlayback", "Space"));
       settings->setValue("VolumeUp", settings->value("VolumeUp", "+"));
@@ -222,20 +222,20 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->setValue("ZoomIn", settings->value("ZoomIn", "Ctrl+="));
       settings->setValue("ZoomOut", settings->value("ZoomOut", "Ctrl+-"));
       settings->setValue("BookmarkCurrent",
-                         settings->value("BookmarkCurrent", "Ctrl+Shift+B"));
+                         settings->value("BookmarkCurrent", "Shift+B"));
       settings->setValue("BookmarksDialog",
-                         settings->value("BookmarksDialog", "Ctrl+B"));
-      settings->setValue("SearchDialog",
-                         settings->value("SearchDialog", "Ctrl+F"));
+                         settings->value("BookmarksDialog", "B"));
+      settings->setValue("SearchDialog", settings->value("SearchDialog", "F"));
       settings->setValue("SettingsDialog",
-                         settings->value("SettingsDialog", "Ctrl+P"));
-      settings->setValue("TafsirDialog",
-                         settings->value("TafsirDialog", "Ctrl+T"));
+                         settings->value("SettingsDialog", "P"));
+      settings->setValue("TafsirDialog", settings->value("TafsirDialog", "T"));
       settings->setValue("DownloaderDialog",
-                         settings->value("DownloaderDialog", "Ctrl+D"));
+                         settings->value("DownloaderDialog", "D"));
       settings->setValue("KhatmahDialog",
-                         settings->value("KhatmahDialog", "Ctrl+K"));
-      settings->setValue("CopyDialog", settings->value("CopyDialog", "Ctrl+'"));
+                         settings->value("KhatmahDialog", "K"));
+      settings->setValue("CopyDialog", settings->value("CopyDialog", "'"));
+      settings->setValue("ToggleReaderView",
+                         settings->value("ToggleReaderView", "R"));
       settings->setValue("Quit", settings->value("Quit", "Ctrl+Q"));
       settings->endGroup();
       break;
@@ -253,6 +253,7 @@ addFonts(int qcfVersion)
   QFontDatabase::addApplicationFont(fontsDir.filePath("ExpoArabic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("uthmanic_hafs_v20.ttf"));
+  QFontDatabase::addApplicationFont(fontsDir.filePath("Emine.ttf"));
 
   switch (qcfVersion) {
     case 1:

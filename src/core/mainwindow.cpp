@@ -185,6 +185,10 @@ void
 MainWindow::setupShortcuts()
 {
   connect(m_shortcutHandler,
+          &ShortcutHandler::toggleReaderView,
+          this,
+          &MainWindow::toggleReaderView);
+  connect(m_shortcutHandler,
           &ShortcutHandler::toggleMenubar,
           this,
           &MainWindow::toggleMenubar);
@@ -1246,19 +1250,12 @@ MainWindow::actionSearchTriggered()
 void
 MainWindow::toggleReaderView()
 {
-  if (m_readerMode != ReaderMode::SinglePage)
-    return;
-
-  static bool hideSidePanel = true;
   if (ui->frmPageContent->isVisible() && ui->frmSidePanel->isVisible()) {
-    if (hideSidePanel)
-      ui->frmSidePanel->setVisible(false);
-    else
-      ui->frmPageContent->setVisible(false);
-    hideSidePanel = !hideSidePanel;
-  } else if (ui->frmPageContent->isVisible())
+    ui->frmSidePanel->setVisible(false);
+  } else if (ui->frmPageContent->isVisible()) {
     ui->frmSidePanel->setVisible(true);
-  else
+    ui->frmPageContent->setVisible(false);
+  } else
     ui->frmPageContent->setVisible(true);
 }
 
@@ -1316,12 +1313,19 @@ void
 MainWindow::updateVerseFont()
 {
   int idx = m_settings->value("Reader/VerseText").toInt();
-  if (idx == 0)
-    m_versesFont.setFamily(m_activeQuranBrowser->pageFont());
-  else
-    m_versesFont.setFamily("kfgqpc_hafs_uthmanic _script");
-  m_versesFont.setPointSize(m_settings->value("Reader/VerseTextSize").toInt());
+  switch (idx) {
+    case 0:
+      m_versesFont.setFamily(m_activeQuranBrowser->pageFont());
+      break;
+    case 1:
+      m_versesFont.setFamily("kfgqpc_hafs_uthmanic _script");
+      break;
+    case 2:
+      m_versesFont.setFamily("Emine");
+      break;
+  }
 
+  m_versesFont.setPointSize(m_settings->value("Reader/VerseTextSize").toInt());
   m_dbMgr->setVerseText(static_cast<VerseText>(idx));
 }
 
