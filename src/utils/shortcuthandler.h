@@ -37,6 +37,7 @@ public slots:
   void shortcutChanged(QString key);
 
 signals:
+  void toggleReaderView();
   void toggleNavDock();
   void toggleMenubar();
   void togglePlayback();

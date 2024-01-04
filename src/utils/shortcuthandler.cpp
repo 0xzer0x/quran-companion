@@ -25,6 +25,11 @@ ShortcutHandler::setupConnections()
   connect(m_shortcuts.value("Quit"), &QShortcut::activated, this, []() {
     emit QApplication::exit();
   });
+  connect(m_shortcuts.value("ToggleReaderView"),
+          &QShortcut::activated,
+          this,
+          &ShortcutHandler::toggleReaderView,
+          Qt::UniqueConnection);
   connect(m_shortcuts.value("ToggleMenubar"),
           &QShortcut::activated,
           this,

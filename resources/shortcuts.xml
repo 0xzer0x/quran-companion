@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shortcuts>
+    <shortcut key="ToggleReaderView"
+        description="Toggle the visibility of the different reader panels" />
     <shortcut key="ToggleMenubar" description="Toggle visibility of the menubar" />
     <shortcut key="ToggleNavDock" description="Toggle visibility of the navigation dock" />
     <shortcut key="TogglePlayback" description="Toggle playback state of recitation" />
