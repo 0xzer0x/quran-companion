@@ -34,7 +34,7 @@
     </enabled>
     <disabled>
         <!-- WindowText -->
-        <color role="48" red="120" green="120" blue="120" />
+        <color role="0" red="120" green="120" blue="120" />
         <!-- Text -->
         <color role="6" red="120" green="120" blue="120" />
         <!-- ButtonText -->

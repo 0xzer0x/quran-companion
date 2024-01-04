@@ -108,7 +108,7 @@ main(int argc, char* argv[])
   QApplication a(argc, argv);
   QApplication::setApplicationName("Quran Companion");
   QApplication::setOrganizationName("0xzer0x");
-  QApplication::setApplicationVersion("1.2.0");
+  QApplication::setApplicationVersion("1.2.1");
 
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
@@ -234,7 +234,7 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->setValue("DownloaderDialog",
                          settings->value("DownloaderDialog", "Ctrl+D"));
       settings->setValue("KhatmahDialog",
-                         settings->value("CopyDialog", "Ctrl+K"));
+                         settings->value("KhatmahDialog", "Ctrl+K"));
       settings->setValue("CopyDialog", settings->value("CopyDialog", "Ctrl+'"));
       settings->setValue("Quit", settings->value("Quit", "Ctrl+Q"));
       settings->endGroup();
