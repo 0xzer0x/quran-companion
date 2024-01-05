@@ -1,5 +1,6 @@
 name: Deployment
 on:
+  workflow_dispatch:
   push:
     tags:
       - "v*.*.*"
@@ -17,9 +18,7 @@ jobs:
           submodules: true
 
       - name: Set APP_VER env variable
-        run: |
-          cd ${{github.workspace}}
-          echo "APP_VER=$(cat VERSION)" >> "$GITHUB_ENV"
+        run: echo "APP_VER=$(cat ${{github.workspace}}/VERSION)" >> "$GITHUB_ENV"
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
@@ -104,8 +103,7 @@ jobs:
       - name: Run appimagetool
         run: >
           ${{github.workspace}}/appimagetool-x86_64.AppImage QuranCompanion.AppDir
-
-          mv Quran_Companion-x86_64.AppImage Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
+          Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
 
       - name: Create Release
         uses: ncipollo/release-action@v1.13.0
