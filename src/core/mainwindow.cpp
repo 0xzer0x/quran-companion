@@ -1209,22 +1209,8 @@ MainWindow::actionVotdTriggered()
 void
 MainWindow::actionAboutTriggered()
 {
-  QFile about(":/resources/about.html");
-  QString text;
-  if (about.open(QIODevice::ReadOnly))
-    text = about.readAll();
-  about.close();
-
-  text = text.arg(tr("Quran Companion v"))
-           .arg(QApplication::applicationVersion(),
-                tr("Quran Companion"),
-                tr(" is a free cross-platform Quran reader & player."),
-                tr("Licensed under the "),
-                tr("'Waqf' General Public License"),
-                tr("Recitations"),
-                tr("Tafsir/Translations"));
-
-  QMessageBox::about(this, tr("About Quran Companion"), text);
+  static AboutDialog* about = new AboutDialog(this);
+  about->show();
 }
 
 void

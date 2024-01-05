@@ -68,6 +68,9 @@ set(PROJECT_SOURCES
     src/widgets/notificationpopup.cpp
     src/widgets/inputfield.h
     src/widgets/inputfield.cpp
+    src/widgets/aboutdialog.h
+    src/widgets/aboutdialog.cpp
+    src/widgets/aboutdialog.ui
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
     src/utils/dbmanager.h

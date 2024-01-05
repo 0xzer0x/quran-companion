@@ -11,6 +11,7 @@
 #include "../utils/notificationmanager.h"
 #include "../utils/shortcuthandler.h"
 #include "../utils/verseplayer.h"
+#include "../widgets/aboutdialog.h"
 #include "../widgets/notificationpopup.h"
 #include "../widgets/quranpagebrowser.h"
 #include "../widgets/verseframe.h"
