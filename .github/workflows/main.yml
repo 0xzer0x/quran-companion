@@ -1,0 +1,116 @@
+name: Deployment
+on:
+  push:
+    tags:
+      - "v*.*.*"
+env:
+  BUILD_TYPE: Release
+jobs:
+  appimage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Set APP_VER env variable
+        run: |
+          cd ${{github.workspace}}
+          echo "APP_VER=$(cat VERSION)" >> "$GITHUB_ENV"
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          aqtversion: ==3.1.*
+          version: 6.6.*
+          host: linux
+          target: desktop
+          arch: gcc_64
+          tools: tools_ninja
+          modules: >-
+            qtconnectivity qtimageformats qtmultimedia qtnetworkauth
+            qtwaylandcompositor
+
+      - name: Install tools
+        run: >
+          sudo apt update -y && sudo apt install wget fuse libxcb-cursor0 appstream appstream-util -y
+
+          wget
+          https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+
+          wget
+          https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
+
+          chmod +x linuxdeployqt-continuous-x86_64.AppImage
+
+          chmod +x appimagetool-x86_64.AppImage
+
+      - name: Prepare AppDir
+        run: >
+          mkdir -p QuranCompanion.AppDir/usr/bin
+
+          mkdir -p QuranCompanion.AppDir/usr/share/applications
+
+          mkdir -p QuranCompanion.AppDir/usr/share/metainfo
+
+          mkdir -p QuranCompanion.AppDir/usr/share/icons/hicolor/256x256/apps
+
+          cp
+          ${{github.workspace}}/dist/xdg/io.github._0xzer0x.qurancompanion.desktop
+          QuranCompanion.AppDir/
+
+          cp ${{github.workspace}}/dist/xdg/logo256.png
+          QuranCompanion.AppDir/io.github._0xzer0x.qurancompanion.png
+
+          cp
+          ${{github.workspace}}/dist/xdg/io.github._0xzer0x.qurancompanion.desktop
+          QuranCompanion.AppDir/usr/share/applications/
+
+          cp ${{github.workspace}}/dist/xdg/logo256.png
+          QuranCompanion.AppDir/usr/share/icons/hicolor/256x256/apps/io.github._0xzer0x.qurancompanion.png
+
+          cp ${{github.workspace}}/dist/xdg/io.github._0xzer0x.qurancompanion.metainfo.xml
+          QuranCompanion.AppDir/usr/share/metainfo/io.github._0xzer0x.qurancompanion.appdata.xml
+
+          echo -e "[Paths]\nPlugins = ../plugins\nLibraries = ../lib\nImports =
+          ../qml\nQml2Imports = ../qml" > QuranCompanion.AppDir/usr/bin/qt.conf
+
+      - name: Configure CMake
+        run: >-
+          cmake -B ${{github.workspace}}/build
+          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: "cmake --build ${{github.workspace}}/build"
+
+      - name: Install
+        run: >-
+          cmake --install ${{github.workspace}}/build --prefix
+          QuranCompanion.AppDir/usr
+
+      - name: Run linuxdeployqt
+        run: >
+          rm ${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.so ${QT_PLUGIN_PATH}/sqldrivers/libqsqlmysql.so ${QT_PLUGIN_PATH}/sqldrivers/libqsqlodbc.so ${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.so
+
+          ${{github.workspace}}/linuxdeployqt-continuous-x86_64.AppImage
+          QuranCompanion.AppDir/usr/bin/quran-companion
+          -unsupported-allow-new-glibc -qmake=$(which qmake) -no-translations
+          -extra-plugins=sqldrivers,iconengines,imageformats,multimedia,networkinformation,platforms,platformthemes,wayland-decoration-client,wayland-graphics-integration-client,wayland-graphics-integration-server,wayland-shell-integration,xcbglintegrations,egldeviceintegrations
+          -verbose=1
+
+      - name: Run appimagetool
+        run: >
+          ${{github.workspace}}/appimagetool-x86_64.AppImage QuranCompanion.AppDir
+
+          mv Quran_Companion-x86_64.AppImage Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          name: "v${{env.APP_VER}}"
+          tag: "v${{env.APP_VER}}"
+          bodyFile: CHANGELOG.md
+          artifacts: "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage"
