@@ -145,7 +145,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideLeft</enum>
@@ -224,7 +224,7 @@
          <item>
           <widget class="QLabel" name="label_8">
            <property name="text">
-            <string notr="true">Turkish</string>
+            <string notr="true">Türkçe</string>
            </property>
           </widget>
          </item>
