@@ -4,6 +4,7 @@
  */
 
 #include "settingsdialog.h"
+#include "../widgets/shortcutdelegate.h"
 #include "ui_settingsdialog.h"
 
 SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
@@ -18,8 +19,7 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   fillLanguageCombobox();
   ui->tableViewShortcuts->setModel(&m_shortcutsModel);
   ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
-  m_keySeqEdit = new QKeySequenceEdit(this);
-  m_keySeqEdit->hide();
+  ui->tableViewShortcuts->setItemDelegate(new ShortcutDelegate);
 
   setCurrentSettingsAsRef();
   // connectors
@@ -33,14 +33,6 @@ SettingsDialog::setupConnections()
           &QDialogButtonBox::clicked,
           this,
           &SettingsDialog::btnBoxAction);
-  connect(ui->tableViewShortcuts,
-          &QTableView::doubleClicked,
-          this,
-          &SettingsDialog::editShortcut);
-  connect(m_keySeqEdit,
-          &QKeySequenceEdit::editingFinished,
-          this,
-          &SettingsDialog::setShortcut);
 }
 
 void
@@ -121,16 +113,6 @@ SettingsDialog::setCurrentSettingsAsRef()
   // shortcuts tab
   populateShortcutsModel();
   ui->tableViewShortcuts->resizeColumnsToContents();
-}
-
-bool
-SettingsDialog::shortcutAvailable(QString keySequence)
-{
-  // check if any item in the shortcut model contains the same key sequence
-  bool available =
-    m_shortcutsModel.findItems(keySequence, Qt::MatchExactly, 1).empty();
-
-  return available;
 }
 
 void
@@ -376,47 +358,6 @@ SettingsDialog::applyAllChanges()
 }
 
 void
-SettingsDialog::editShortcut(const QModelIndex& index)
-{
-  QString key =
-    m_shortcutsModel.index(index.row(), 0).data(Qt::UserRole).toString();
-
-  m_keySeqEdit->setObjectName(key + "-" + QString::number(index.row()));
-  m_keySeqEdit->resize(m_keySeqEdit->width() + 20, m_keySeqEdit->height() + 20);
-  m_keySeqEdit->move((width() - m_keySeqEdit->width()) / 2,
-                     (height() - m_keySeqEdit->height()) / 2);
-
-  m_keySeqEdit->setKeySequence(m_shortcutsModel.item(index.row(), 1)->text());
-  m_keySeqEdit->show();
-  m_keySeqEdit->setFocus();
-}
-
-void
-SettingsDialog::setShortcut()
-{
-  if (m_checkingShortcut)
-    return;
-
-  m_checkingShortcut = true;
-  QStringList key = m_keySeqEdit->objectName().split('-');
-  QString value = m_keySeqEdit->keySequence().toString();
-
-  m_keySeqEdit->hide();
-  qInfo() << "set shortcut triggered for " + key.at(0) + ": " + value;
-
-  if (shortcutAvailable(value))
-    m_shortcutsModel.item(key.at(1).toInt(), 1)->setText(value);
-  else {
-    QMessageBox::warning(this,
-                         tr("Shortcut conflicts"),
-                         tr("This key combination is used by another "
-                            "shortcut, please use a different one."));
-  }
-
-  m_checkingShortcut = false;
-}
-
-void
 SettingsDialog::btnBoxAction(QAbstractButton* btn)
 {
   if (btn->text().contains(tr("Apply"))) {
@@ -434,7 +375,6 @@ SettingsDialog::showWindow()
 {
   setCurrentSettingsAsRef();
   this->show();
-  m_keySeqEdit->hide();
 }
 
 void

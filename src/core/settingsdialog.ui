@@ -871,7 +871,7 @@ dialog-ok-icon: off;
        <item>
         <widget class="QTableView" name="tableViewShortcuts">
          <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
+          <set>QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked</set>
          </property>
          <property name="showDropIndicator" stdset="0">
           <bool>false</bool>

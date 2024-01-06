@@ -68,6 +68,8 @@ set(PROJECT_SOURCES
     src/widgets/notificationpopup.cpp
     src/widgets/inputfield.h
     src/widgets/inputfield.cpp
+    src/widgets/shortcutdelegate.h
+    src/widgets/shortcutdelegate.cpp
     src/widgets/aboutdialog.h
     src/widgets/aboutdialog.cpp
     src/widgets/aboutdialog.ui
@@ -138,7 +140,7 @@ message(STATUS "Creating qt translations resource file")
 qt_add_translations(quran-companion TS_FILES ${QC_TS})
 qt_add_resources(
   quran-companion
-  "qtTranslations"
+  "qttranslations"
   PREFIX
   "/base"
   BASE

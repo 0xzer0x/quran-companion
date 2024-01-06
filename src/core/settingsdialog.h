@@ -208,16 +208,13 @@ protected:
    */
   void closeEvent(QCloseEvent* event);
 
-private slots:
-  void editShortcut(const QModelIndex& index);
-  void setShortcut();
-
 private:
   const int m_qcfVer = Globals::qcfVersion;
   const int m_themeIdx = Globals::themeId;
   const ReaderMode m_readerMode = Globals::readerMode;
   const QLocale::Language m_languageCode = Globals::language;
   QSettings* const m_settings = Globals::settings;
+  const QDir& m_downloadsDir = Globals::downloadsDir;
   const QMap<QString, QString>& m_shortcutDescription =
     Globals::shortcutDescription;
   /**
@@ -239,15 +236,10 @@ private:
    */
   void setCurrentSettingsAsRef();
   /**
-   * @brief utility to check whether the given key sequence is available for use
-   * @param keySequence - the key sequence to check
-   * @return
-   */
-  bool shortcutAvailable(QString keySequence);
-  /**
    * @brief check if any shortcut was changed and updated it
    */
   void checkShortcuts();
+  void checkQCF(int ver);
   /**
    * @brief QCF font size used in constructing Quran page.
    */
@@ -315,11 +307,6 @@ private:
    * @brief pointer to VersePlayer instance.
    */
   VersePlayer* m_vPlayerPtr = nullptr;
-  /**
-   * @brief pointer to widget used for grabbing key combination entered to set
-   * as shortcut
-   */
-  QKeySequenceEdit* m_keySeqEdit = nullptr;
   /**
    * @brief model used by the shortcuts QTableView
    */
