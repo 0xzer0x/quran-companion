@@ -8,6 +8,7 @@
 #include "utils/logger.h"
 #include <QApplication>
 #include <QFontDatabase>
+#include <QLibraryInfo>
 #include <QLocale>
 #include <QSettings>
 #include <QSplashScreen>
@@ -152,11 +153,11 @@ setGlobalPaths()
   // config & downloads
   if (!configDir.exists("QuranCompanion"))
     configDir.mkpath("QuranCompanion");
-  if (!recitationsDir.exists("QuranCompanion/recitations"))
-    recitationsDir.mkpath("QuranCompanion/recitations");
+  if (!downloadsDir.exists("QuranCompanion/recitations"))
+    downloadsDir.mkpath("QuranCompanion/recitations");
 
   configDir.cd("QuranCompanion");
-  recitationsDir.cd("QuranCompanion/recitations");
+  downloadsDir.cd("QuranCompanion");
 
 #ifdef Q_OS_WIN
   updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
@@ -410,11 +411,12 @@ populateRecitersList()
   reciters.close();
 
   // create reciters directories
+  downloadsDir.cd("recitations");
   foreach (const Reciter& r, recitersList) {
-    if (!recitationsDir.exists(r.baseDirName)) {
-      recitationsDir.mkdir(r.baseDirName);
-    }
+    if (!downloadsDir.exists(r.baseDirName))
+      downloadsDir.mkdir(r.baseDirName);
   }
+  downloadsDir.cdUp();
 }
 
 void

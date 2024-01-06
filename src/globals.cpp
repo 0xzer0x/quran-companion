@@ -24,7 +24,7 @@ QString qcfBSMLFont;
 QDir themeResources;
 QDir assetsDir;
 QDir bismillahDir;
-QDir recitationsDir =
+QDir downloadsDir =
   QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 QDir configDir =
   QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);

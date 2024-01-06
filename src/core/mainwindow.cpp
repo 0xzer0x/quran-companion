@@ -55,6 +55,7 @@ MainWindow::loadIcons()
   ui->actionBookmarks->setIcon(m_fa->icon(fa_solid, fa_bookmark));
   ui->actionPereferences->setIcon(m_fa->icon(fa_solid, fa_gear));
   ui->actionAdvancedCopy->setIcon(m_fa->icon(fa_solid, fa_clipboard));
+  ui->actionReaderViewToggle->setIcon(m_fa->icon(fa_solid, fa_columns));
   ui->actionUpdates->setIcon(m_fa->icon(fa_solid, fa_arrow_rotate_right));
 
   ui->btnPlay->setIcon(m_fa->icon(fa_solid, fa_play));

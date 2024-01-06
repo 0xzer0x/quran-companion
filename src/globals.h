@@ -183,8 +183,8 @@ extern QDir assetsDir; ///< global QDir representing the application assets
 extern QDir
   bismillahDir; ///< global QDir representing the reciters basmallah files.
 
-extern QDir recitationsDir; ///< global QDir representing the top-level path
-                            ///< for recitations.
+extern QDir downloadsDir; ///< global QDir representing the top-level path
+                          ///< for downloaded files.
 
 extern QList<Reciter> recitersList; ///< global QList containing reciters
                                     ///< supported by the application.

@@ -73,6 +73,7 @@ DownloadManager::enqeueVerseTask(int reciterIdx, int surah, int verse)
   t.reciterIdx = reciterIdx;
   t.link = downloadUrl(reciterIdx, surah, verse);
   t.downloadPath.setFile(m_toplevelDownloadPath.absoluteFilePath(
+    QString("recitations") + QDir::separator() +
     m_recitersList.at(reciterIdx).baseDirName + QDir::separator() +
     QString::number(surah).rightJustified(3, '0') +
     QString::number(verse).rightJustified(3, '0') + ".mp3"));

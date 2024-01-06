@@ -290,7 +290,7 @@ DownloaderDialog::topTaskDownloadError(int reciter, int surah)
 void
 DownloaderDialog::openDownloadsDir()
 {
-  QUrl url = QUrl::fromLocalFile(Globals::recitationsDir.absolutePath());
+  QUrl url = QUrl::fromLocalFile(Globals::downloadsDir.absolutePath());
   QDesktopServices::openUrl(url);
 }
 

@@ -162,13 +162,13 @@ signals:
   void downloadError(int reciterIdx, int surah);
   /**
    * @fn void surahFound(int, int)
-   * @brief Emitted when the current surah verses are found in
-   * Globals::recitationsDir
+   * @brief Emitted when the current surah verses are found in recitations
+   * directory
    */
   void surahFound(int reciterIdx, int surah);
 
 private:
-  const QDir& m_toplevelDownloadPath = Globals::recitationsDir;
+  const QDir& m_toplevelDownloadPath = Globals::downloadsDir;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**

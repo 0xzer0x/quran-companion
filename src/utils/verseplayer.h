@@ -127,7 +127,7 @@ signals:
   void missingVerseFile(int reciterIdx, int surah);
 
 private:
-  QDir m_reciterDir = Globals::recitationsDir;
+  QDir m_reciterDir = Globals::downloadsDir.absoluteFilePath("recitations");
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
