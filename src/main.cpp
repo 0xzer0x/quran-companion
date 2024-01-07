@@ -252,25 +252,24 @@ addFonts(int qcfVersion)
   fontsDir = QApplication::applicationDirPath() + QDir::separator() + "assets" +
              QDir::separator() + "fonts";
 
+  // ui fonts
   QFontDatabase::addApplicationFont(fontsDir.filePath("PakTypeNaskhBasic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("ExpoArabic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
+  // fonts for verses
   QFontDatabase::addApplicationFont(fontsDir.filePath("uthmanic_hafs_v20.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("Emine.ttf"));
+  // font for surah frames
+  QFontDatabase::addApplicationFont(fontsDir.filePath("QCFV1/QCF_BSML.ttf"));
 
   switch (qcfVersion) {
     case 1:
       fontsDir.cd("QCFV1");
       qcfFontPrefix = "QCF_P";
-      qcfBSMLFont = "QCF_BSML";
-      QFontDatabase::addApplicationFont(fontsDir.filePath("QCF_BSML.ttf"));
       break;
-
     case 2:
-      fontsDir.cd("QCFV2");
+      fontsDir.setPath(downloadsDir.absolutePath() + "/QCFV2");
       qcfFontPrefix = "QCF2";
-      qcfBSMLFont = "QCF2BSML";
-      QFontDatabase::addApplicationFont(fontsDir.filePath("QCF2BSML.ttf"));
       break;
   }
 
@@ -280,7 +279,13 @@ addFonts(int qcfVersion)
     fontName.append(QString::number(i).rightJustified(3, '0'));
     fontName.append(".ttf");
 
-    QFontDatabase::addApplicationFont(fontsDir.filePath(fontName));
+    if (qcfVersion == 2 && !fontsDir.exists(fontName)) {
+      settings->setValue("Reader/QCF", 1);
+      settings->sync();
+      qFatal() << fontsDir.filePath(fontName)
+               << " font file not found, fallback to QCF v1";
+    } else
+      QFontDatabase::addApplicationFont(fontsDir.filePath(fontName));
   }
 
   // set default UI fonts to use

@@ -174,9 +174,6 @@ extern ReaderMode readerMode;
 extern QString qcfFontPrefix; ///< global variable for the QCF font prefix to
                               ///< generate font name from.
 
-extern QString
-  qcfBSMLFont; ///< global variable for the name of the QCF basmallah font.
-
 extern QDir themeResources; ///< global QDir for the current theme resources
                             ///< (icons & styles).
 extern QDir

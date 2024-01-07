@@ -80,6 +80,7 @@ DownloaderDialog::setupConnections()
 void
 DownloaderDialog::addRecitationsToModel()
 {
+  // add reciters
   for (const Reciter& reciter : m_recitersList) {
     QStandardItem* item = new QStandardItem(reciter.displayName);
     item->setToolTip(reciter.displayName);
@@ -97,6 +98,16 @@ DownloaderDialog::addRecitationsToModel()
       item->appendRow(rw);
     }
   }
+
+  // add extras
+  QStandardItem* extras = new QStandardItem(tr("Extras"));
+  extras->setToolTip(tr("Additional files"));
+  extras->setData("extras", Qt::UserRole);
+  m_treeModel.invisibleRootItem()->appendRow(extras);
+  // -- qcf 2
+  QStandardItem* qcf = new QStandardItem(tr("QCF V2"));
+  qcf->setData("qcf", Qt::UserRole);
+  extras->appendRow(qcf);
 }
 
 void
@@ -119,20 +130,27 @@ DownloaderDialog::removeFromDownloading(int reciter, int surah)
 void
 DownloaderDialog::addToQueue()
 {
+  static int extrasRow =
+    m_treeModel.rowCount(m_treeModel.invisibleRootItem()->index()) - 1;
   QModelIndexList selected = ui->treeView->selectionModel()->selectedRows();
 
-  int reciter = -1, surah = -1;
   foreach (const QModelIndex& i, selected) {
-    reciter = i.parent().row();
-    surah = i.row() + 1;
+    int parent = i.parent().row();
+    int current = i.row();
 
-    if (reciter < 0) {
-      reciter = i.row();
-      for (surah = 1; surah <= 114; surah++)
-        enqueueSurah(reciter, surah);
-
-    } else
-      enqueueSurah(reciter, surah);
+    // recitation (reciter selected)
+    if (parent < 0 && current < extrasRow) {
+      for (int surah = 1; surah <= 114; surah++)
+        enqueueSurah(current, surah);
+    }
+    // recitation (surah index selected)
+    else if (parent < extrasRow)
+      enqueueSurah(parent, current + 1);
+    // extras
+    else if (i.data(Qt::UserRole).toString() == "qcf") {
+      m_downloaderPtr->addQCFToQueue();
+      addTaskProgress(QCF);
+    }
   }
 
   setCurrentBar();
@@ -140,12 +158,12 @@ DownloaderDialog::addToQueue()
 }
 
 void
-DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
+DownloaderDialog::addTaskProgress(DownloadType type, QPair<int, int> info)
 {
   QString objName;
-  if (reciterIdx != -1) {
-    QString reciter = m_recitersList.at(reciterIdx).displayName;
-    QString surahName = m_surahDisplayNames.at(surah - 1);
+  if (type == Recitation) {
+    QString reciter = m_recitersList.at(info.first).displayName;
+    QString surahName = m_surahDisplayNames.at(info.second - 1);
     objName = reciter + tr(" // Surah: ") + surahName;
   } else {
     objName = tr("QCF V2");
@@ -172,7 +190,7 @@ DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
   downInfo->addWidget(downSpeed);
   prgFrm->layout()->addItem(downInfo);
 
-  int cnt = reciterIdx == -1 ? 604 : m_dbMgr->getSurahVerseCount(surah);
+  int cnt = type == QCF ? 604 : m_dbMgr->getSurahVerseCount(info.second);
   DownloadProgressBar* dpb = new DownloadProgressBar(prgFrm, cnt);
   prgFrm->layout()->addWidget(dpb);
   m_frameLst.append(prgFrm);
@@ -188,7 +206,7 @@ DownloaderDialog::enqueueSurah(int reciter, int surah)
     return;
 
   addToDownloading(reciter, surah);
-  addTaskProgress(reciter, surah);
+  addTaskProgress(Recitation, QPair<int, int>(reciter, surah));
   m_downloaderPtr->addSurahToQueue(reciter, surah);
 }
 

@@ -31,6 +31,8 @@ public:
    * @brief DownloadTask struct represents a single verse file download task
    * @details Quran surahs are downloaded as separate verse mp3 files which are
    * represented as DownloadTask instances
+   *
+   * MODIFIED
    */
   struct DownloadTask
   {
@@ -96,18 +98,26 @@ public slots:
    * @brief process download queue front task. sets the networkReply for the
    * current task
    */
-  void processDownloadQueue();
+  void processTaskQueue();
   /**
    * @brief process the surah queue which contains surahs to be downloaded, add
    * DownloadTask instance for each verse of the processed surah
+   *
+   * MODIFIED
    */
-  void processSurahQueue();
+  void processDownloadQueue();
   /**
    * @brief add a QPair of reciter & surah to the surah download queue
    * @param reciter - ::Globals::recitersList index for the reciter
    * @param surah - surah number to download
    */
   void addSurahToQueue(int reciter, int surah);
+  /**
+   * @brief addQCFToQueue
+   *
+   * MODIFIED
+   */
+  void addQCFToQueue();
   /**
    * @brief calculate download speed and emit signal for UI component to update
    * its value
@@ -127,8 +137,6 @@ public slots:
    */
   bool saveFile(QNetworkReply* data);
 
-  void enqeueQCFTasks();
-
 signals:
   /**
    * @fn void latestVersionFound(QString)
@@ -138,7 +146,7 @@ signals:
   void latestVersionFound(QString appVer);
   /**
    * @fn void downloadStarted()
-   * @brief Emitted when the download queue began processing
+   * @brief Emitted when the download queue begins processing
    */
   void downloadStarted();
   /**
@@ -158,6 +166,8 @@ signals:
   /**
    * @fn void downloadCompleted(int, int)
    * @brief Emitted when all surah download tasks are completed
+   *
+   * MODIFIED
    */
   void downloadCompleted(DownloadType type, const int metainfo[]);
   /**
@@ -193,6 +203,7 @@ private:
    * @param verse - verse number
    */
   void enqeueVerseTask(int reciterIdx, int surah, int verse);
+  void enqeueQCFTasks();
   /**
    * @brief emit signal according to the download error that occured
    * @param err - network error received
@@ -208,6 +219,8 @@ private:
   bool m_isDownloading = false;
   /**
    * @brief the verse count of the current surah being downloaded
+   *
+   * MODIFIED
    */
   int m_activeTotal;
   QNetworkRequest m_versionReq;
@@ -224,15 +237,24 @@ private:
    * @brief the currently active DownloadTask
    */
   DownloadTask m_activeTask;
+  /**
+   * @brief m_activeType
+   *
+   * MODIFIED
+   */
   DownloadType m_activeType = Recitation;
   /**
    * @brief surah download queue
+   *
+   * MODIFIED
    */
-  QQueue<QPair<int, int>> m_surahQueue;
+  QQueue<QPair<DownloadType, QPair<int, int>>> m_downloadQueue;
   /**
    * @brief individual verses download queue
+   *
+   * MODIFIED
    */
-  QQueue<DownloadTask> m_downloadQueue;
+  QQueue<DownloadTask> m_taskQueue;
   /**
    * @brief QTime object to get the download start time, used in calculating
    * download speed

@@ -30,14 +30,22 @@ DownloadManager::getLatestVersion()
 void
 DownloadManager::addSurahToQueue(int reciter, int surah)
 {
-  m_surahQueue.enqueue(QPair<int, int>(reciter, surah));
+  m_downloadQueue.enqueue(QPair<DownloadType, QPair<int, int>>(
+    Recitation, QPair<int, int>(reciter, surah)));
+}
+
+void
+DownloadManager::addQCFToQueue()
+{
+  m_downloadQueue.enqueue(
+    QPair<DownloadType, QPair<int, int>>(QCF, QPair<int, int>()));
 }
 
 void
 DownloadManager::startQueue()
 {
   if (!m_isDownloading) {
-    processDownloadQueue();
+    processTaskQueue();
     emit downloadStarted();
   }
 }
@@ -48,8 +56,8 @@ DownloadManager::stopQueue()
   if (m_isDownloading) {
     cancelCurrentTask();
     m_isDownloading = false;
-    m_surahQueue.clear();
     m_downloadQueue.clear();
+    m_taskQueue.clear();
   }
 }
 
@@ -76,14 +84,12 @@ DownloadManager::enqeueVerseTask(int reciterIdx, int surah, int verse)
     QString::number(surah).rightJustified(3, '0') +
     QString::number(verse).rightJustified(3, '0') + ".mp3"));
 
-  m_downloadQueue.enqueue(t);
+  m_taskQueue.enqueue(t);
 }
 
 void
 DownloadManager::enqeueQCFTasks()
 {
-  m_activeType = QCF;
-  m_activeTotal = 604;
   DownloadTask t;
   QString path;
   for (int i = 1; i <= 604; i++) {
@@ -91,59 +97,60 @@ DownloadManager::enqeueQCFTasks()
              .arg(QString::number(i).rightJustified(3, '0'));
     t.metainfo[2] = i;
     t.downloadPath.setFile(m_downloadsDir.absoluteFilePath(path));
-    t.link =
-      QUrl::fromEncoded(QString("https://github.com/0xzer0x/quran-companion/"
-                                "blob/main/assets/fonts/" +
-                                path)
-                          .toLatin1());
-    m_downloadQueue.enqueue(t);
+    t.link = QUrl::fromEncoded(
+      QString("https://github.com/0xzer0x/quran-companion/raw/dev/extras/" +
+              path)
+        .toLatin1());
+    m_taskQueue.enqueue(t);
   }
-}
-
-void
-DownloadManager::processSurahQueue()
-{
-  if (m_surahQueue.empty()) {
-    m_isDownloading = false;
-    return;
-  }
-
-  m_isDownloading = true;
-  QPair<int, int> current = m_surahQueue.dequeue();
-  m_activeTotal = m_dbMgr->getSurahVerseCount(current.second);
-  for (int v = 1; v <= m_activeTotal; v++)
-    enqeueVerseTask(current.first, current.second, v);
 }
 
 void
 DownloadManager::processDownloadQueue()
 {
-  if (m_downloadQueue.empty() && m_activeType == Recitation) {
-    processSurahQueue();
+  if (m_downloadQueue.empty()) {
+    m_isDownloading = false;
+    return;
+  }
+
+  m_isDownloading = true;
+  QPair<DownloadType, QPair<int, int>> current = m_downloadQueue.dequeue();
+  m_activeType = current.first;
+  if (current.first == QCF) {
+    m_activeTotal = 604;
+    enqeueQCFTasks();
+  } else {
+    QPair<int, int>& info = current.second;
+    m_activeTotal = m_dbMgr->getSurahVerseCount(info.second);
+    for (int v = 1; v <= m_activeTotal; v++)
+      enqeueVerseTask(info.first, info.second, v);
+  }
+}
+
+void
+DownloadManager::processTaskQueue()
+{
+  if (m_taskQueue.empty()) {
+    processDownloadQueue();
     if (!m_isDownloading)
       return;
   }
 
-  m_activeTask = m_downloadQueue.dequeue();
+  m_activeTask = m_taskQueue.dequeue();
 
   while (m_activeTask.downloadPath.exists()) {
     if (m_activeTask.metainfo[2] == m_activeTotal) {
       emit downloadProgressed(m_activeTotal, m_activeTotal);
-        emit filesFound(m_activeType, m_activeTask.metainfo);
-      if (m_activeType != Recitation)
-        m_activeType = Recitation;
+      emit filesFound(m_activeType, m_activeTask.metainfo);
     }
 
-    if (m_downloadQueue.empty()) {
-      if (m_activeType == Recitation)
-        processSurahQueue();
-      else
-        m_isDownloading = false;
+    if (m_taskQueue.empty()) {
+      processDownloadQueue();
       if (!m_isDownloading)
         return;
     }
 
-    m_activeTask = m_downloadQueue.dequeue();
+    m_activeTask = m_taskQueue.dequeue();
   }
 
   QNetworkRequest req(m_activeTask.link);
@@ -192,9 +199,7 @@ DownloadManager::finishupTask(QNetworkReply* replyData)
 
   emit downloadProgressed(m_activeTask.metainfo[2], m_activeTotal);
   if (m_activeTask.metainfo[2] == m_activeTotal) {
-      emit downloadCompleted(m_activeType, m_activeTask.metainfo);
-    if (m_activeType != Recitation)
-      m_activeType = Recitation;
+    emit downloadCompleted(m_activeType, m_activeTask.metainfo);
   }
 
   disconnect(m_activeTask.reply,
@@ -202,7 +207,7 @@ DownloadManager::finishupTask(QNetworkReply* replyData)
              this,
              &DownloadManager::downloadProgress);
 
-  processDownloadQueue();
+  processTaskQueue();
 }
 
 bool
@@ -250,8 +255,7 @@ DownloadManager::handleConError(QNetworkReply::NetworkError err)
 
     default:
       qInfo() << m_activeTask.reply->errorString();
-      if (m_activeType == Recitation)
-          emit downloadErrored(m_activeType, m_activeTask.metainfo);
+      emit downloadErrored(m_activeType, m_activeTask.metainfo);
   }
 }
 

@@ -18,7 +18,6 @@ QLocale::Language language;
 // qcf fonts
 int qcfVersion = 1;
 QString qcfFontPrefix;
-QString qcfBSMLFont;
 
 // app directories
 QDir themeResources;

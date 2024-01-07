@@ -139,8 +139,11 @@ private:
    * @param reciterIdx - ::Globals::recitersList index for the reciter whose
    * recitations are being downloaded
    * @param surah - number of surah being downloaded
+   *
+   * MODIFIED
    */
-  void addTaskProgress(int reciterIdx, int surah);
+  void addTaskProgress(DownloadType type,
+                       QPair<int, int> info = QPair<int, int>(-1, -1));
   /**
    * @brief enqueue a surah to download
    * @param reciter - ::Globals::recitersList index for the reciter whose
