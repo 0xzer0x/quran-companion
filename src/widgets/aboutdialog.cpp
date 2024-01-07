@@ -6,9 +6,11 @@ AboutDialog::AboutDialog(QWidget* parent)
   , ui(new Ui::AboutDialog)
 {
   ui->setupUi(this);
-  ui->aboutTabWidget->setLayoutDirection(Qt::LeftToRight);
+  ui->translatorsTab->setLayoutDirection(Qt::LeftToRight);
   ui->lbVersionNum->setText(qApp->applicationVersion());
   connect(ui->btnBox, &QDialogButtonBox::accepted, this, &QDialog::close);
+  if (m_lang == QLocale::Arabic)
+    ui->aboutTabWidget->setObjectName("rtlTabWidget");
 }
 
 AboutDialog::~AboutDialog()

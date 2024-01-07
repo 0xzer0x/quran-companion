@@ -25,8 +25,10 @@ SearchDialog::SearchDialog(QWidget* parent)
     Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right_arrow_left));
   ui->listViewAllSurahs->setModel(&m_modelAllSurahs);
   ui->listViewSelected->setModel(&m_modelSelectedSurahs);
-  fillListView();
+  if (m_lang == QLocale::Arabic)
+    ui->searchTabWidget->setObjectName("rtlTabWidget");
 
+  fillListView();
   // connectors
   setupConnections();
 }

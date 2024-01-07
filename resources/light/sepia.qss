@@ -8,26 +8,32 @@ QTabWidget::pane {
   border-top-left-radius: 0px;
 }
 
-QDialog#AboutDialog QTabBar::tab:hover,
-QDialog#AboutDialog QTabBar::tab:selected,
-QDialog#SearchDialog QTabBar::tab:hover,
-QDialog#SearchDialog QTabBar::tab:selected,
-QDialog#SettingsDialog QTabBar::tab:hover,
-QDialog#SettingsDialog QTabBar::tab:selected {
+QDialog #rtlTabWidget::pane {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 5px;
+}
+
+QDialog #rtlTabWidget QTabBar::tab:first {
+  margin-right: 0px;
+}
+
+QDialog QTabBar::tab:hover,
+QDialog QTabBar::tab:selected {
   color: palette(text);
   background: palette(button);
 }
 
-QDialog#AboutDialog QTabBar::tab:selected,
-QDialog#SearchDialog QTabBar::tab:selected,
-QDialog#SettingsDialog QTabBar::tab:selected {
+QDialog QTabBar::tab:selected {
   font: bold;
+}
+
+QDialog QTabBar::tab {
+  color: #aea491;
+  background: palette(base);
 }
 
 QDialog#AboutDialog QTabBar::tab,
 QDialog#SearchDialog QTabBar::tab {
-  color: grey;
-  background: palette(base);
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   min-width: 8ex;
@@ -38,8 +44,6 @@ QDialog#SearchDialog QTabBar::tab {
 }
 
 QDialog#SettingsDialog QTabBar::tab {
-  color: grey;
-  background: palette(base);
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   min-height: 8ex;
@@ -54,12 +58,7 @@ QWidget#readerTab,
 QWidget#shortcutsTab,
 QWidget#filterTab,
 QWidget#searchTab {
-  background-color: palette(button);
-}
-
-QWidget#generalTab,
-QWidget#readerTab,
-QWidget#shortcutsTab {
+  background-color: transparent;
   border-radius: 5px;
   border-top-left-radius: 0px;
 }
@@ -254,7 +253,6 @@ QPushButton#btnToggleNav {
   border: none;
   border-radius: 0px;
   background-color: transparent;
-  image: url(":/resources/light/icons/navigation.svg");
   min-height: 1.1em;
   min-width: 40px;
 }
