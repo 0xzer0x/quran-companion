@@ -14,16 +14,14 @@
    <string>Preferences</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QDialogButtonBox {
-dialogbuttonbox-buttons-have-icons: true;
-dialog-apply-icon: off;
-dialog-cancel-icon: off;
-dialog-ok-icon: off;
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="settingsTabWidget">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::West</enum>
      </property>
@@ -31,7 +29,10 @@ dialog-ok-icon: off;
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
+     </property>
+     <property name="elideMode">
+      <enum>Qt::ElideNone</enum>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">

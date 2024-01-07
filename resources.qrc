@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/about.html</file>
         <file>resources/basmalah.png</file>
         <file>resources/dark/dark.qss</file>
         <file>resources/dark/dark.xml</file>

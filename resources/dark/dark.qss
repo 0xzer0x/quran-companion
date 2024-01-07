@@ -6,6 +6,75 @@ QLineEdit {
   placeholder-text-color: #c0c0c0;
 }
 
+QTabWidget::pane {
+  background-color: palette(button);
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+}
+
+QDialog#AboutDialog QTabBar::tab:hover,
+QDialog#AboutDialog QTabBar::tab:selected,
+QDialog#SearchDialog QTabBar::tab:hover,
+QDialog#SearchDialog QTabBar::tab:selected,
+QDialog#SettingsDialog QTabBar::tab:hover,
+QDialog#SettingsDialog QTabBar::tab:selected {
+  color: palette(text);
+  background: palette(button);
+}
+
+QDialog#AboutDialog QTabBar::tab:selected,
+QDialog#SearchDialog QTabBar::tab:selected,
+QDialog#SettingsDialog QTabBar::tab:selected {
+  font: bold;
+}
+
+QDialog#AboutDialog QTabBar::tab,
+QDialog#SearchDialog QTabBar::tab,
+QDialog#SettingsDialog QTabBar::tab {
+  color: grey;
+  background: palette(base);
+}
+
+QDialog#AboutDialog QTabBar::tab,
+QDialog#SearchDialog QTabBar::tab {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  min-width: 8ex;
+  min-height: 4ex;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-right: 1px;
+}
+
+QDialog#SettingsDialog QTabBar::tab {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  min-height: 8ex;
+  min-width: 4ex;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 1px;
+}
+
+QWidget#generalTab,
+QWidget#readerTab,
+QWidget#shortcutsTab,
+QWidget#filterTab,
+QWidget#searchTab {
+  background-color: palette(button);
+}
+
+QWidget#generalTab,
+QWidget#readerTab,
+QWidget#shortcutsTab {
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+}
+
+#tableViewShortcuts {
+  border: none;
+}
+
 #searchTab,
 #filterTab,
 #generalTab,
