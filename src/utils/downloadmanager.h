@@ -28,28 +28,30 @@ class DownloadManager : public QObject
   Q_OBJECT
 public:
   /**
-   * @brief VerseTask struct represents a single verse file download task
+   * @brief DownloadTask struct represents a single verse file download task
    * @details Quran surahs are downloaded as separate verse mp3 files which are
-   * represented as VerseTask instances
+   * represented as DownloadTask instances
    */
-  struct VerseTask
+  struct DownloadTask
   {
-    int surah{ -1 };      ///< surah number
-    int verse{ -1 };      ///< verse number
-    int reciterIdx{ -1 }; ///<  ::Globals::recitersList index for the reciter
-    QUrl link{};          ///< download link for the verse
-    QFileInfo
-      downloadPath{}; ///< QFileInfo representing the path to save the file to
-    QNetworkReply* networkReply = nullptr; ///< reply data of the web request
     /**
-     * @brief resets the download task
+     * @brief metainfo array for storing information about the download task
+     * @details in case of a regular verse download, { reciter, surah, verse }
+     * and in case of QCF font download, { -1, -1, page }
      */
-    void clear()
-    {
-      surah = verse = reciterIdx = -1;
-      link.clear();
-      networkReply = nullptr;
-    }
+    int metainfo[3] = { -1, -1, -1 };
+    /**
+     * @brief download link for the verse
+     */
+    QUrl link;
+    /**
+     * @brief reply data of the web request
+     */
+    QNetworkReply* reply = nullptr;
+    /**
+     * @brief QFileInfo representing the path to save the file to
+     */
+    QFileInfo downloadPath;
   };
 
   /**
@@ -68,9 +70,9 @@ public:
   bool isDownloading() const;
   /**
    * @brief getter for m_currentTask
-   * @return VerseTask
+   * @return DownloadTask
    */
-  VerseTask currentTask() const;
+  DownloadTask currentTask() const;
   /**
    * @brief getter for m_netMan
    * @return QNetworkAccessManager*
@@ -125,6 +127,8 @@ public slots:
    */
   bool saveFile(QNetworkReply* data);
 
+  void enqeueQCFTasks();
+
 signals:
   /**
    * @fn void latestVersionFound(QString)
@@ -138,6 +142,10 @@ signals:
    */
   void downloadStarted();
   /**
+   * @fn void downloadCanceled()
+   */
+  void downloadCanceled();
+  /**
    * @fn void downloadProgressed(int, int)
    * @brief Emitted when a download task from the queue completed
    */
@@ -148,27 +156,23 @@ signals:
    */
   void downloadSpeedUpdated(int valuePerSec, QString unit);
   /**
-   * @fn void downloadCanceled()
-   */
-  void downloadCanceled();
-  /**
-   * @fn void downloadComplete(int, int)
+   * @fn void downloadCompleted(int, int)
    * @brief Emitted when all surah download tasks are completed
    */
-  void downloadComplete(int reciterIdx, int surah);
+  void downloadCompleted(DownloadType type, const int metainfo[]);
   /**
-   * @fn void downloadError(int, int)
+   * @fn void downloadErrored(int, int)
    */
-  void downloadError(int reciterIdx, int surah);
+  void downloadErrored(DownloadType type, const int metainfo[]);
   /**
-   * @fn void surahFound(int, int)
+   * @fn void filesFound(int, int)
    * @brief Emitted when the current surah verses are found in recitations
    * directory
    */
-  void surahFound(int reciterIdx, int surah);
+  void filesFound(DownloadType type, const int metainfo[]);
 
 private:
-  const QDir& m_toplevelDownloadPath = Globals::downloadsDir;
+  const QDir& m_downloadsDir = Globals::downloadsDir;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
@@ -205,7 +209,7 @@ private:
   /**
    * @brief the verse count of the current surah being downloaded
    */
-  int m_currSurahCount;
+  int m_activeTotal;
   QNetworkRequest m_versionReq;
   /**
    * @brief QNetworkReply for version info request
@@ -217,9 +221,10 @@ private:
    */
   QNetworkAccessManager* m_netMan;
   /**
-   * @brief the currently active VerseTask
+   * @brief the currently active DownloadTask
    */
-  VerseTask m_currentTask;
+  DownloadTask m_activeTask;
+  DownloadType m_activeType = Recitation;
   /**
    * @brief surah download queue
    */
@@ -227,7 +232,7 @@ private:
   /**
    * @brief individual verses download queue
    */
-  QQueue<VerseTask> m_downloadQueue;
+  QQueue<DownloadTask> m_downloadQueue;
   /**
    * @brief QTime object to get the download start time, used in calculating
    * download speed

@@ -52,12 +52,12 @@ DownloaderDialog::setupConnections()
           &DownloaderDialog::clearQueue);
 
   connect(m_downloaderPtr,
-          &DownloadManager::downloadComplete,
+          &DownloadManager::downloadCompleted,
           this,
           &DownloaderDialog::surahDownloaded);
 
   connect(m_downloaderPtr,
-          &DownloadManager::surahFound,
+          &DownloadManager::filesFound,
           this,
           &DownloaderDialog::surahDownloaded);
 
@@ -67,7 +67,7 @@ DownloaderDialog::setupConnections()
           &DownloaderDialog::downloadAborted);
 
   connect(m_downloaderPtr,
-          &DownloadManager::downloadError,
+          &DownloadManager::downloadErrored,
           this,
           &DownloaderDialog::topTaskDownloadError);
 
@@ -142,10 +142,14 @@ DownloaderDialog::addToQueue()
 void
 DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
 {
-  QString reciter = m_recitersList.at(reciterIdx).displayName;
-  QString surahName = m_surahDisplayNames.at(surah - 1);
-
-  QString objName = reciter + tr(" // Surah: ") + surahName;
+  QString objName;
+  if (reciterIdx != -1) {
+    QString reciter = m_recitersList.at(reciterIdx).displayName;
+    QString surahName = m_surahDisplayNames.at(surah - 1);
+    objName = reciter + tr(" // Surah: ") + surahName;
+  } else {
+    objName = tr("QCF V2");
+  }
 
   QFrame* prgFrm = new QFrame(ui->scrollAreaWidgetContents);
   prgFrm->setLayout(new QVBoxLayout);
@@ -168,8 +172,8 @@ DownloaderDialog::addTaskProgress(int reciterIdx, int surah)
   downInfo->addWidget(downSpeed);
   prgFrm->layout()->addItem(downInfo);
 
-  DownloadProgressBar* dpb =
-    new DownloadProgressBar(prgFrm, m_dbMgr->getSurahVerseCount(surah));
+  int cnt = reciterIdx == -1 ? 604 : m_dbMgr->getSurahVerseCount(surah);
+  DownloadProgressBar* dpb = new DownloadProgressBar(prgFrm, cnt);
   prgFrm->layout()->addWidget(dpb);
   m_frameLst.append(prgFrm);
 
@@ -203,8 +207,7 @@ DownloaderDialog::setCurrentBar()
   connect(m_downloaderPtr,
           &DownloadManager::downloadProgressed,
           m_currentBar,
-          &DownloadProgressBar::updateProgress,
-          Qt::UniqueConnection);
+          &DownloadProgressBar::updateProgress);
 }
 
 void
@@ -244,7 +247,7 @@ DownloaderDialog::btnStopClicked()
 }
 
 void
-DownloaderDialog::surahDownloaded(int reciter, int surah)
+DownloaderDialog::surahDownloaded(DownloadType type, const int metainfo[])
 {
   m_currentBar->setStyling(DownloadProgressBar::completed);
   m_currentLb->setText(m_currentLb->parent()->objectName());
@@ -254,7 +257,8 @@ DownloaderDialog::surahDownloaded(int reciter, int surah)
              m_currentBar,
              &DownloadProgressBar::updateProgress);
 
-  removeFromDownloading(reciter, surah);
+  if (type == Recitation)
+    removeFromDownloading(metainfo[0], metainfo[1]);
   m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
   setCurrentBar();
@@ -271,7 +275,7 @@ DownloaderDialog::downloadAborted()
 }
 
 void
-DownloaderDialog::topTaskDownloadError(int reciter, int surah)
+DownloaderDialog::topTaskDownloadError(DownloadType type, const int metainfo[])
 {
   m_currentBar->setStyling(DownloadProgressBar::aborted);
   m_currentLb->setText(m_currentLb->parent()->objectName());
@@ -281,7 +285,8 @@ DownloaderDialog::topTaskDownloadError(int reciter, int surah)
              m_currentBar,
              &DownloadProgressBar::updateProgress);
 
-  removeFromDownloading(reciter, surah);
+  if (type == Recitation)
+    removeFromDownloading(metainfo[0], metainfo[1]);
   m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
   setCurrentBar();

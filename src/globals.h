@@ -68,13 +68,18 @@ struct Reciter
      ///< Quran or a combination of surah and verse numbers.
 };
 
+enum DownloadType
+{
+  Recitation,
+  QCF
+};
+
 enum VerseText
 {
   qcf,
   uthmanic,
   annotated
 };
-
 /**
  * @brief ReaderMode enum represents the available modes for the Quran reader in
  * MainWindow

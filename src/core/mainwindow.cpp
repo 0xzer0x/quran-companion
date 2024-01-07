@@ -448,11 +448,11 @@ MainWindow::setupConnections()
           m_popup,
           &NotificationPopup::dockLocationChanged);
   connect(m_downManPtr,
-          &DownloadManager::downloadComplete,
+          &DownloadManager::downloadCompleted,
           m_popup,
           &NotificationPopup::completedDownload);
   connect(m_downManPtr,
-          &DownloadManager::downloadError,
+          &DownloadManager::downloadErrored,
           m_popup,
           &NotificationPopup::downloadError);
   connect(m_downManPtr,

@@ -66,7 +66,7 @@ public slots:
    * recitations are downloaded
    * @param surah - surah number
    */
-  void surahDownloaded(int reciter, int surah);
+  void surahDownloaded(DownloadType type, const int metainfo[]);
   /**
    * @brief slot to delete all download tasks /
    * progress bars from dialog
@@ -78,7 +78,7 @@ public slots:
    * @param reciter - ::Globals::recitersList index for the reciter
    * @param surah - surah number
    */
-  void topTaskDownloadError(int reciter, int surah);
+  void topTaskDownloadError(DownloadType type, const int metainfo[]);
   /**
    * @brief slot to update the displayed download speed in the currently active
    * download.

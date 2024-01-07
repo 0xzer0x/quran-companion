@@ -155,6 +155,8 @@ setGlobalPaths()
     configDir.mkpath("QuranCompanion");
   if (!downloadsDir.exists("QuranCompanion/recitations"))
     downloadsDir.mkpath("QuranCompanion/recitations");
+  if (!downloadsDir.exists("QuranCompanion/QCFV2"))
+    downloadsDir.mkpath("QuranCompanion/QCFV2");
 
   configDir.cd("QuranCompanion");
   downloadsDir.cd("QuranCompanion");

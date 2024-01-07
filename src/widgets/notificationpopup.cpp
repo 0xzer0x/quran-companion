@@ -81,22 +81,26 @@ NotificationPopup::notify(QString message, NotificationPopup::Action icon)
 }
 
 void
-NotificationPopup::completedDownload(int reciterIdx, int surah)
+NotificationPopup::completedDownload(DownloadType type, const int metainfo[])
 {
+  QString msg = tr("Download Completed");
   setStyleSheet("");
-  QString msg = tr("Download Completed") + ": " +
-                m_recitersList.at(reciterIdx).displayName + " - " +
-                m_dbMgr->surahNameList().at(surah - 1);
+  if (type == Recitation)
+    msg += ": " + m_recitersList.at(type).displayName + " - " +
+           m_dbMgr->surahNameList().at(metainfo[1] - 1);
+
   this->notify(msg, success);
 }
 
 void
-NotificationPopup::downloadError(int reciterIdx, int surah)
+NotificationPopup::downloadError(DownloadType type, const int metainfo[])
 {
   setStyleSheet("QFrame#Popup { background-color: #a50500 }");
-  QString msg = tr("Download Failed") + ": " +
-                m_recitersList.at(reciterIdx).displayName + " - " +
-                m_dbMgr->surahNameList().at(surah - 1);
+  QString msg = tr("Download Failed");
+  if (type == Recitation)
+    msg += +": " + m_recitersList.at(metainfo[0]).displayName + " - " +
+           m_dbMgr->surahNameList().at(metainfo[1] - 1);
+
   this->notify(msg, fail);
 }
 

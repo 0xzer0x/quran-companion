@@ -56,29 +56,48 @@ DownloadManager::stopQueue()
 void
 DownloadManager::cancelCurrentTask()
 {
-  if (m_currentTask.networkReply == nullptr)
+  if (m_activeTask.reply == nullptr)
     return;
 
-  m_currentTask.networkReply->abort();
-  m_currentTask.networkReply->close();
+  m_activeTask.reply->abort();
+  m_activeTask.reply->close();
   emit downloadCanceled();
 }
 
 void
 DownloadManager::enqeueVerseTask(int reciterIdx, int surah, int verse)
 {
-  VerseTask t;
-  t.surah = surah;
-  t.verse = verse;
-  t.reciterIdx = reciterIdx;
+  DownloadTask t;
+  t.metainfo[0] = reciterIdx, t.metainfo[1] = surah, t.metainfo[2] = verse;
   t.link = downloadUrl(reciterIdx, surah, verse);
-  t.downloadPath.setFile(m_toplevelDownloadPath.absoluteFilePath(
+  t.downloadPath.setFile(m_downloadsDir.absoluteFilePath(
     QString("recitations") + QDir::separator() +
     m_recitersList.at(reciterIdx).baseDirName + QDir::separator() +
     QString::number(surah).rightJustified(3, '0') +
     QString::number(verse).rightJustified(3, '0') + ".mp3"));
 
   m_downloadQueue.enqueue(t);
+}
+
+void
+DownloadManager::enqeueQCFTasks()
+{
+  m_activeType = QCF;
+  m_activeTotal = 604;
+  DownloadTask t;
+  QString path;
+  for (int i = 1; i <= 604; i++) {
+    path = QString("QCFV2/QCF2%0.ttf")
+             .arg(QString::number(i).rightJustified(3, '0'));
+    t.metainfo[2] = i;
+    t.downloadPath.setFile(m_downloadsDir.absoluteFilePath(path));
+    t.link =
+      QUrl::fromEncoded(QString("https://github.com/0xzer0x/quran-companion/"
+                                "blob/main/assets/fonts/" +
+                                path)
+                          .toLatin1());
+    m_downloadQueue.enqueue(t);
+  }
 }
 
 void
@@ -91,43 +110,48 @@ DownloadManager::processSurahQueue()
 
   m_isDownloading = true;
   QPair<int, int> current = m_surahQueue.dequeue();
-  m_currSurahCount = m_dbMgr->getSurahVerseCount(current.second);
-  for (int v = 1; v <= m_currSurahCount; v++)
+  m_activeTotal = m_dbMgr->getSurahVerseCount(current.second);
+  for (int v = 1; v <= m_activeTotal; v++)
     enqeueVerseTask(current.first, current.second, v);
 }
 
 void
 DownloadManager::processDownloadQueue()
 {
-  if (m_downloadQueue.empty()) {
+  if (m_downloadQueue.empty() && m_activeType == Recitation) {
     processSurahQueue();
     if (!m_isDownloading)
       return;
   }
 
-  m_currentTask = m_downloadQueue.dequeue();
+  m_activeTask = m_downloadQueue.dequeue();
 
-  while (m_currentTask.downloadPath.exists()) {
-    if (m_currentTask.verse == m_currSurahCount) {
-      emit downloadProgressed(m_currSurahCount, m_currSurahCount);
-      emit surahFound(m_currentTask.reciterIdx, m_currentTask.surah);
+  while (m_activeTask.downloadPath.exists()) {
+    if (m_activeTask.metainfo[2] == m_activeTotal) {
+      emit downloadProgressed(m_activeTotal, m_activeTotal);
+        emit filesFound(m_activeType, m_activeTask.metainfo);
+      if (m_activeType != Recitation)
+        m_activeType = Recitation;
     }
 
     if (m_downloadQueue.empty()) {
-      processSurahQueue();
+      if (m_activeType == Recitation)
+        processSurahQueue();
+      else
+        m_isDownloading = false;
       if (!m_isDownloading)
         return;
     }
 
-    m_currentTask = m_downloadQueue.dequeue();
+    m_activeTask = m_downloadQueue.dequeue();
   }
 
-  QNetworkRequest req(m_currentTask.link);
-  m_currentTask.networkReply = m_netMan->get(req);
-  m_currentTask.networkReply->ignoreSslErrors();
+  QNetworkRequest req(m_activeTask.link);
+  m_activeTask.reply = m_netMan->get(req);
+  m_activeTask.reply->ignoreSslErrors();
   m_downloadStart = QTime::currentTime();
 
-  connect(m_currentTask.networkReply,
+  connect(m_activeTask.reply,
           &QNetworkReply::downloadProgress,
           this,
           &DownloadManager::downloadProgress);
@@ -161,20 +185,22 @@ DownloadManager::finishupTask(QNetworkReply* replyData)
   if (replyData->request().attribute(QNetworkRequest::User).toInt() == 1)
     return handleVersionReply();
 
-  if (m_currentTask.networkReply->error() != QNetworkReply::NoError)
-    return handleConError(m_currentTask.networkReply->error());
+  if (m_activeTask.reply->error() != QNetworkReply::NoError)
+    return handleConError(m_activeTask.reply->error());
 
   saveFile(replyData);
 
-  emit downloadProgressed(m_currentTask.verse, m_currSurahCount);
-  if (m_currentTask.verse == m_currSurahCount)
-    emit downloadComplete(m_currentTask.reciterIdx, m_currentTask.surah);
+  emit downloadProgressed(m_activeTask.metainfo[2], m_activeTotal);
+  if (m_activeTask.metainfo[2] == m_activeTotal) {
+      emit downloadCompleted(m_activeType, m_activeTask.metainfo);
+    if (m_activeType != Recitation)
+      m_activeType = Recitation;
+  }
 
-  disconnect(m_currentTask.networkReply,
+  disconnect(m_activeTask.reply,
              &QNetworkReply::downloadProgress,
              this,
              &DownloadManager::downloadProgress);
-  m_currentTask.clear();
 
   processDownloadQueue();
 }
@@ -182,15 +208,15 @@ DownloadManager::finishupTask(QNetworkReply* replyData)
 bool
 DownloadManager::saveFile(QNetworkReply* data)
 {
-  QFile localFile(m_currentTask.downloadPath.absoluteFilePath());
+  QFile localFile(m_activeTask.downloadPath.absoluteFilePath());
 
   if (!localFile.open(QIODevice::WriteOnly)) {
-    qWarning() << "Couldn't open file:" << m_currentTask.downloadPath;
+    qWarning() << "Couldn't open file:" << m_activeTask.downloadPath;
     return false;
   }
 
   const QByteArray fdata = data->readAll();
-  m_currentTask.networkReply->close();
+  m_activeTask.reply->close();
 
   localFile.write(fdata);
   localFile.close();
@@ -219,12 +245,13 @@ DownloadManager::handleConError(QNetworkReply::NetworkError err)
 {
   switch (err) {
     case QNetworkReply::OperationCanceledError:
-      qInfo() << m_currentTask.networkReply->errorString();
+      qInfo() << m_activeTask.reply->errorString();
       break;
 
     default:
-      qInfo() << m_currentTask.networkReply->errorString();
-      emit downloadError(m_currentTask.reciterIdx, m_currentTask.surah);
+      qInfo() << m_activeTask.reply->errorString();
+      if (m_activeType == Recitation)
+          emit downloadErrored(m_activeType, m_activeTask.metainfo);
   }
 }
 
@@ -243,10 +270,10 @@ DownloadManager::netMan() const
   return m_netMan;
 }
 
-DownloadManager::VerseTask
+DownloadManager::DownloadTask
 DownloadManager::currentTask() const
 {
-  return m_currentTask;
+  return m_activeTask;
 }
 
 bool
