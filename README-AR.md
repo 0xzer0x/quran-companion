@@ -15,8 +15,16 @@
 <h2 align="center">رفيق القرآن</h2>
 
 <h4 align="center">
-    قارئ و مشغل للقرآن الكريم متعدد-المنصات مبني علي مكتبة كيوت
-  </h4>
+  قارئ و مشغل للقرآن الكريم متعدد-المنصات مبني علي مكتبة كيوت
+</h4>
+
+<p align="center">
+  <a href="https://techforpalestine.org/learn-more"><img alt="StandWithPalestine" src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/StandWithPalestine.svg"></a>
+  <img alt="GitHub Release" src="https://img.shields.io/github/v/release/0xzer0x/quran-companion">
+  <a href="https://aur.archlinux.org/packages/quran-companion"><img alt="AUR Version" src="https://img.shields.io/aur/version/quran-companion"></a>
+  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/main.yml">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/0xzer0x/quran-companion">
+</p>
 
 <p align="center">
     <a href="#key-features">أهم المميزات</a> •
@@ -25,7 +33,7 @@
     <a href="#credits">الحقوق</a> •
     <a href="https://github.com/0xzer0x/quran-companion/issues">بلّغ عن مشكلة</a> •
     <a href="#license">الترخيص</a> 
-  </p>
+</p>
 
 <!-- TABLE OF CONTENTS -->
 <div dir='rtl'>
@@ -43,11 +51,6 @@
     </li>
     <li>
     <a href="#installation">التنصيب</a>
-      <ul>
-        <li>
-          <a href="#keyboard-shortcuts">إختصارات لوحة المفاتيح</a>
-        </li>
-      </ul>
     </li>
     <li><a href="#compilation">البناء من المصدر</a>
         <ul>
@@ -124,7 +127,7 @@
 
 #### لينكس
 
-يمكنك تحميل البرنامج بأي صيغة من الصيغ المتوفرة (snap, flatpak, appimage)
+يمكنك تحميل البرنامج بأي صيغة من الصيغ المتوفرة (snap, flatpak, appimage, aur package)
 
 <p align="right">
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
@@ -137,37 +140,6 @@
   <img width='250' alt="احصل عليه من Snap Store" src="https://snapcraft.io/static/images/badges/ar/snap-store-black.svg"  />
 </a>
 </p>
-
-<a name="keyboard-shortcuts"></a>
-
-### إختصارات لوحة المفاتيح (قابلة للتخصيص)
-
-<div dir='ltr'>
-
-| المفتاح                                           | الوصف                          |
-| ------------------------------------------------- | ------------------------------ |
-| <kbd>Ctrl</kbd> + <kbd>M</kbd>                    | إظهار/إخفاء شريط القوائم       |
-| <kbd>Ctrl</kbd> + <kbd>N</kbd>                    | إظهار/إخفاء وحدة التصفح        |
-| <kbd>Space</kbd>                                  | تشغيل/إيقاف التلاوة            |
-| <kbd>+</kbd>                                      | زيادة مستوى صوت القراءة        |
-| <kbd>-</kbd>                                      | خفض مستوى صوت القراءة          |
-| <kbd>&#8592;</kbd>                                | الإنتقال إلى الصفحة التالية    |
-| <kbd>&#8594;</kbd>                                | الإنتقال إلى الصفحة السابقة    |
-| <kbd>V</kbd>                                      | الإنتقال إلي الآية التالية     |
-| <kbd>Shift</kbd> + <kbd>V</kbd>                   | الإنتقال إلي الآية السابقة     |
-| <kbd>S</kbd>                                      | الإنتقال إلي السورة التالية    |
-| <kbd>Shift</kbd> + <kbd>S</kbd>                   | الإنتقال إلي السورة السابقة    |
-| <kbd>J</kbd>                                      | الإنتقال إلى الجزء التالي      |
-| <kbd>Shift</kbd> + <kbd>J</kbd>                   | الإنتقال إلى الجزء السابق      |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | إضافة علامة عند الآية النشطة   |
-| <kbd>Ctrl</kbd> + <kbd>B</kbd>                    | فتح نافذة العلامات             |
-| <kbd>Ctrl</kbd> + <kbd>F</kbd>                    | فتح نافذة البحث                |
-| <kbd>Ctrl</kbd> + <kbd>P</kbd>                    | فتح نافذة الإعدادات            |
-| <kbd>Ctrl</kbd> + <kbd>D</kbd>                    | فتح نافذة تحميل التلاوات       |
-| <kbd>Ctrl</kbd> + <kbd>T</kbd>                    | فتح نافذة التفسير للآية النشطة |
-| <kbd>Ctrl</kbd> + <kbd>Q</kbd>                    | خروج                           |
-
-</div>
 
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
 
