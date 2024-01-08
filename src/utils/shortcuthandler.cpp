@@ -25,126 +25,106 @@ ShortcutHandler::setupConnections()
   connect(m_shortcuts.value("Quit"), &QShortcut::activated, this, []() {
     emit QApplication::exit();
   });
+  connect(m_shortcuts.value("TogglePlayerControls"),
+          &QShortcut::activated,
+          this,
+          &ShortcutHandler::togglePlayerControls);
   connect(m_shortcuts.value("ToggleReaderView"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::toggleReaderView,
-          Qt::UniqueConnection);
+          &ShortcutHandler::toggleReaderView);
   connect(m_shortcuts.value("ToggleMenubar"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::toggleMenubar,
-          Qt::UniqueConnection);
+          &ShortcutHandler::toggleMenubar);
   connect(m_shortcuts.value("ToggleNavDock"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::toggleNavDock,
-          Qt::UniqueConnection);
+          &ShortcutHandler::toggleNavDock);
   connect(m_shortcuts.value("TogglePlayback"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::togglePlayback,
-          Qt::UniqueConnection);
+          &ShortcutHandler::togglePlayback);
   connect(m_shortcuts.value("VolumeUp"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::incrementVolume,
-          Qt::UniqueConnection);
+          &ShortcutHandler::incrementVolume);
   connect(m_shortcuts.value("VolumeDown"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::decrementVolume,
-          Qt::UniqueConnection);
+          &ShortcutHandler::decrementVolume);
   connect(m_shortcuts.value("BookmarkCurrent"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::bookmarkCurrent,
-          Qt::UniqueConnection);
+          &ShortcutHandler::bookmarkCurrent);
   connect(m_shortcuts.value("NextPage"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::nextPage,
-          Qt::UniqueConnection);
+          &ShortcutHandler::nextPage);
   connect(m_shortcuts.value("PrevPage"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::prevPage,
-          Qt::UniqueConnection);
+          &ShortcutHandler::prevPage);
   connect(m_shortcuts.value("NextVerse"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::nextVerse,
-          Qt::UniqueConnection);
+          &ShortcutHandler::nextVerse);
   connect(m_shortcuts.value("PrevVerse"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::prevVerse,
-          Qt::UniqueConnection);
+          &ShortcutHandler::prevVerse);
   connect(m_shortcuts.value("NextJuz"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::nextJuz,
-          Qt::UniqueConnection);
+          &ShortcutHandler::nextJuz);
   connect(m_shortcuts.value("PrevJuz"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::prevJuz,
-          Qt::UniqueConnection);
+          &ShortcutHandler::prevJuz);
   connect(m_shortcuts.value("NextSurah"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::nextSurah,
-          Qt::UniqueConnection);
+          &ShortcutHandler::nextSurah);
   connect(m_shortcuts.value("PrevSurah"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::prevSurah,
-          Qt::UniqueConnection);
+          &ShortcutHandler::prevSurah);
   connect(m_shortcuts.value("ZoomIn"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::zoomIn,
-          Qt::UniqueConnection);
+          &ShortcutHandler::zoomIn);
   connect(m_shortcuts.value("ZoomOut"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::zoomOut,
-          Qt::UniqueConnection);
+          &ShortcutHandler::zoomOut);
   connect(m_shortcuts.value("DownloaderDialog"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::openDownloads,
-          Qt::UniqueConnection);
+          &ShortcutHandler::openDownloads);
   connect(m_shortcuts.value("BookmarksDialog"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::openBookmarks,
-          Qt::UniqueConnection);
+          &ShortcutHandler::openBookmarks);
   connect(m_shortcuts.value("KhatmahDialog"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::openKhatmah,
-          Qt::UniqueConnection);
+          &ShortcutHandler::openKhatmah);
   connect(m_shortcuts.value("SearchDialog"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::openSearch,
-          Qt::UniqueConnection);
+          &ShortcutHandler::openSearch);
   connect(m_shortcuts.value("SettingsDialog"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::openSettings,
-          Qt::UniqueConnection);
+          &ShortcutHandler::openSettings);
   connect(m_shortcuts.value("TafsirDialog"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::openTafsir,
-          Qt::UniqueConnection);
+          &ShortcutHandler::openTafsir);
   connect(m_shortcuts.value("CopyDialog"),
           &QShortcut::activated,
           this,
-          &ShortcutHandler::openAdvancedCopy,
-          Qt::UniqueConnection);
+          &ShortcutHandler::openAdvancedCopy);
 }
 
 void

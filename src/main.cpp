@@ -67,7 +67,7 @@ void
 checkSettings(QSettings* settings);
 /**
  * @brief set the default values for non-existing keys in a certain settings
- * group (0 - general, 1 - Reader, 2 - Shortcuts).
+ * group (0 - general, 1 - Reader).
  * @param settings - pointer to QSettings instance to access app settings
  * @param group - integer refering to group to check
  */
@@ -86,8 +86,9 @@ void
 populateRecitersList();
 /**
  * @brief populates the Globals::shortcutDescription QMap with key-value pairs
- * of (name - description), any new shortcuts should be added to shortcuts.xml
- * along with the default keybinding for it in the shortcuts settings group.
+ * of (name - description) and set the default value if shortcut is not found in
+ * settings, any new shortcuts should be added to shortcuts.xml along with the
+ * default keybinding for it.
  */
 void
 populateShortcutsMap();
@@ -170,7 +171,7 @@ setGlobalPaths()
 void
 checkSettings(QSettings* settings)
 {
-  for (int i = 0; i <= 2; i++)
+  for (int i = 0; i < 2; i++)
     checkSettingsGroup(settings, i);
 }
 
@@ -202,44 +203,6 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->setValue(
         "SideContentFont",
         settings->value("SideContentFont", QFont("Expo Arabic", 14)));
-      settings->endGroup();
-      break;
-    case 2:
-      settings->beginGroup("Shortcuts");
-      settings->setValue("ToggleMenubar",
-                         settings->value("ToggleMenubar", "M"));
-      settings->setValue("ToggleNavDock",
-                         settings->value("ToggleNavDock", "N"));
-      settings->setValue("TogglePlayback",
-                         settings->value("TogglePlayback", "Space"));
-      settings->setValue("VolumeUp", settings->value("VolumeUp", "+"));
-      settings->setValue("VolumeDown", settings->value("VolumeDown", "-"));
-      settings->setValue("NextPage", settings->value("NextPage", "Left"));
-      settings->setValue("PrevPage", settings->value("PrevPage", "Right"));
-      settings->setValue("NextVerse", settings->value("NextVerse", "V"));
-      settings->setValue("PrevVerse", settings->value("PrevVerse", "Shift+V"));
-      settings->setValue("NextSurah", settings->value("NextSurah", "S"));
-      settings->setValue("PrevSurah", settings->value("PrevSurah", "Shift+S"));
-      settings->setValue("NextJuz", settings->value("NextJuz", "J"));
-      settings->setValue("PrevJuz", settings->value("PrevJuz", "Shift+J"));
-      settings->setValue("ZoomIn", settings->value("ZoomIn", "Ctrl+="));
-      settings->setValue("ZoomOut", settings->value("ZoomOut", "Ctrl+-"));
-      settings->setValue("BookmarkCurrent",
-                         settings->value("BookmarkCurrent", "Shift+B"));
-      settings->setValue("BookmarksDialog",
-                         settings->value("BookmarksDialog", "B"));
-      settings->setValue("SearchDialog", settings->value("SearchDialog", "F"));
-      settings->setValue("SettingsDialog",
-                         settings->value("SettingsDialog", "P"));
-      settings->setValue("TafsirDialog", settings->value("TafsirDialog", "T"));
-      settings->setValue("DownloaderDialog",
-                         settings->value("DownloaderDialog", "D"));
-      settings->setValue("KhatmahDialog",
-                         settings->value("KhatmahDialog", "K"));
-      settings->setValue("CopyDialog", settings->value("CopyDialog", "'"));
-      settings->setValue("ToggleReaderView",
-                         settings->value("ToggleReaderView", "R"));
-      settings->setValue("Quit", settings->value("Quit", "Ctrl+Q"));
       settings->endGroup();
       break;
   }
@@ -433,18 +396,25 @@ populateShortcutsMap()
   if (!shortcuts.open(QIODevice::ReadOnly))
     qCritical("Couldn't Open Shortcuts XML");
 
+  settings->beginGroup("Shortcuts");
   QXmlStreamReader reader(&shortcuts);
   while (!reader.atEnd() && !reader.hasError()) {
     QXmlStreamReader::TokenType token = reader.readNext();
     if (token == QXmlStreamReader::StartElement) {
       if (reader.name().toString() == "shortcut") {
+        QString key = reader.attributes().value("key").toString();
         shortcutDescription.insert(
-          reader.attributes().value("key").toString(),
+          key,
           qApp->translate("SettingsDialog",
                           reader.attributes().value("description").toLatin1()));
+
+        if (!settings->contains(key))
+          settings->setValue(key,
+                             reader.attributes().value("default").toString());
       }
     }
   }
 
+  settings->endGroup();
   shortcuts.close();
 }

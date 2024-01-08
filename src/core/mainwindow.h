@@ -257,6 +257,12 @@ private slots:
    */
   void toggleReaderView();
   /**
+   * @brief togglePlayerControls
+   *
+   * MODIFIED
+   */
+  void togglePlayerControls();
+  /**
    * @brief open the about messagebox for the application
    */
   void actionAboutTriggered();

@@ -137,14 +137,15 @@ DownloaderDialog::addToQueue()
   foreach (const QModelIndex& i, selected) {
     int parent = i.parent().row();
     int current = i.row();
+    bool toplevel = parent < 0;
 
     // recitation (reciter selected)
-    if (parent < 0 && current < extrasRow) {
+    if (toplevel && current < extrasRow) {
       for (int surah = 1; surah <= 114; surah++)
         enqueueSurah(current, surah);
     }
     // recitation (surah index selected)
-    else if (parent < extrasRow)
+    else if (!toplevel && parent < extrasRow)
       enqueueSurah(parent, current + 1);
     // extras
     else if (i.data(Qt::UserRole).toString() == "qcf") {

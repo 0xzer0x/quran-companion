@@ -186,6 +186,10 @@ void
 MainWindow::setupShortcuts()
 {
   connect(m_shortcutHandler,
+          &ShortcutHandler::togglePlayerControls,
+          this,
+          &MainWindow::togglePlayerControls);
+  connect(m_shortcutHandler,
           &ShortcutHandler::toggleReaderView,
           this,
           &MainWindow::toggleReaderView);
@@ -1244,6 +1248,12 @@ MainWindow::toggleReaderView()
     ui->frmPageContent->setVisible(false);
   } else
     ui->frmPageContent->setVisible(true);
+}
+
+void
+MainWindow::togglePlayerControls()
+{
+  ui->frmTopControls->setVisible(!ui->frmTopControls->isVisible());
 }
 
 void
