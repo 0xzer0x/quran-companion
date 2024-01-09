@@ -28,12 +28,6 @@ TafsirDialog::TafsirDialog(QWidget* parent)
 }
 
 void
-TafsirDialog::setShownVerse(const Verse& newShownVerse)
-{
-  m_shownVerse = newShownVerse;
-}
-
-void
 TafsirDialog::btnNextClicked()
 {
   if (m_shownVerse.number == m_dbMgr->getSurahVerseCount(m_shownVerse.surah) &&
@@ -67,77 +61,16 @@ TafsirDialog::btnPrevClicked()
 void
 TafsirDialog::setupConnections()
 {
-  connect(ui->btnNext,
-          &QPushButton::clicked,
-          this,
-          &TafsirDialog::btnNextClicked,
-          Qt::UniqueConnection);
-  connect(ui->btnPrev,
-          &QPushButton::clicked,
-          this,
-          &TafsirDialog::btnPrevClicked,
-          Qt::UniqueConnection);
+  connect(
+    ui->btnNext, &QPushButton::clicked, this, &TafsirDialog::btnNextClicked);
+  connect(
+    ui->btnPrev, &QPushButton::clicked, this, &TafsirDialog::btnPrevClicked);
 }
 
 void
 TafsirDialog::setTafsirAsTitle()
 {
-  QString title;
-  Tafsir id = m_dbMgr->currTafsir();
-  switch (id) {
-    case Tafsir::adwa:
-      title.append(tr("Adwa' ul-Bayan"));
-      break;
-    case Tafsir::aysar:
-      title.append(tr("Aysar Al-Tafasir"));
-      break;
-    case Tafsir::baghawy:
-      title.append(tr("Al-Baghawy"));
-      break;
-    case Tafsir::e3rab:
-      title.append(tr("Earab"));
-      break;
-    case Tafsir::indonesian:
-      title.append(tr("Indonesian - Tafsir Jalalayn"));
-      break;
-    case Tafsir::juzayy:
-      title.append(tr("Ibn-Juzayy"));
-      break;
-    case Tafsir::katheer:
-      title.append(tr("Ibn-Katheer"));
-      break;
-    case Tafsir::katheer_en:
-      title.append(tr("English - Ibn-Katheer"));
-      break;
-    case Tafsir::qortoby:
-      title.append(tr("Al-Qortoby"));
-      break;
-    case Tafsir::russian:
-      title.append(tr("Russian - Kuliev & Al-Sa'ady"));
-      break;
-    case Tafsir::tabary:
-      title.append(tr("Al-Tabary"));
-      break;
-    case Tafsir::sa3dy:
-      title.append(tr("Al-Sa'ady"));
-      break;
-    case Tafsir::tafheem:
-      title.append(tr("English - Tafheem-ul-Quran"));
-      break;
-    case Tafsir::tanweer:
-      title.append(tr("Ibn-Ashoor"));
-      break;
-    case Tafsir::waseet:
-      title.append(tr("Al-Tafsir Al-Waseet"));
-      break;
-    case Tafsir::jalalayn:
-      title.append(tr("Al-Jalalayn"));
-      break;
-    default:
-      title.append(tr("Tafsir"));
-      break;
-  }
-
+  QString title = m_dbMgr->currTafsir()->displayName;
   setWindowTitle(title);
 }
 
@@ -170,8 +103,13 @@ TafsirDialog::loadVerseTafsir()
   QFont sideFont =
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
   ui->tedTafsir->setFont(sideFont);
-  ui->tedTafsir->setHtml(
-    m_dbMgr->getTafsir(m_shownVerse.surah, m_shownVerse.number));
+
+  if (m_dbMgr->currTafsir()->text)
+    ui->tedTafsir->setText(
+      m_dbMgr->getTafsir(m_shownVerse.surah, m_shownVerse.number));
+  else
+    ui->tedTafsir->setHtml(
+      m_dbMgr->getTafsir(m_shownVerse.surah, m_shownVerse.number));
 
   if (m_shownVerse.surah == 1 && m_shownVerse.number == 1)
     ui->btnPrev->setDisabled(true);
@@ -181,6 +119,12 @@ TafsirDialog::loadVerseTafsir()
     ui->btnPrev->setDisabled(false);
     ui->btnNext->setDisabled(false);
   }
+}
+
+void
+TafsirDialog::setShownVerse(const Verse& newShownVerse)
+{
+  m_shownVerse = newShownVerse;
 }
 
 void

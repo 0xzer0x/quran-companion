@@ -7,7 +7,7 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 tsfile=$SCRIPT_DIR/shortcuts.ts
 xmlfile=$SCRIPT_DIR/../../resources/shortcuts.xml
 
-mapfile -t names <<<"$(awk -F'[<>]' '/description=/ { for(i=1;i<NF;i++) if($i~/description="[^"]+"/) {gsub(/.*="/,"",$i); gsub(/"/,"",$i); gsub(" /", "", $i); print $i}}' "$xmlfile")"
+mapfile -t names <<<"$(awk -F'"' '/desc/ { for(i=1;i<NF;i++) if($i~/description=/) { print $(i+1) } }' "$xmlfile")"
 
 printf "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!DOCTYPE TS>\n<TS version=\"2.1\">\n" >"$tsfile"
 printf "<context>\n\t<name>SettingsDialog</name>" >>"$tsfile"

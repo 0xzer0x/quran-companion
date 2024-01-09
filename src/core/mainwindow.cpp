@@ -1285,7 +1285,7 @@ MainWindow::navigateToSurah(QModelIndex& index)
 void
 MainWindow::updateLoadedTafsir()
 {
-  Tafsir currTafsir = qvariant_cast<Tafsir>(m_settings->value("Reader/Tafsir"));
+  int currTafsir = m_settings->value("Reader/Tafsir").toInt();
 
   m_dbMgr->setCurrentTafsir(currTafsir);
 }
@@ -1293,8 +1293,7 @@ MainWindow::updateLoadedTafsir()
 void
 MainWindow::updateLoadedTranslation()
 {
-  Translation currTrans =
-    qvariant_cast<Translation>(m_settings->value("Reader/Translation"));
+  int currTrans = m_settings->value("Reader/Translation").toInt();
 
   m_dbMgr->setCurrentTranslation(currTrans);
 }

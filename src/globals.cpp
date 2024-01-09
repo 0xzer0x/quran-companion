@@ -30,6 +30,8 @@ QDir configDir =
 
 // application specific
 QList<Reciter> recitersList;
+QList<Tafsir> tafasirList;
+QList<Translation> translationsList;
 QString updateToolPath;
 QMap<QString, QString> shortcutDescription;
 fa::QtAwesome* awesome;

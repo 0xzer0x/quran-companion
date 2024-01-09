@@ -54,12 +54,12 @@ public:
    * @brief sets the active tafsir
    * @param tafsirName - DBManager::Tafsir entry
    */
-  void setCurrentTafsir(Tafsir tafsirName);
+  void setCurrentTafsir(int tafsirIdx);
   /**
    * @brief sets the active translation
    * @param translationName - DBManager::Translation entry
    */
-  void setCurrentTranslation(Translation translationName);
+  void setCurrentTranslation(int translationIdx);
   /**
    * @brief sets the currently active sqlite database file and opens
    * corresponding connection based on the DBManager::Database type
@@ -285,9 +285,9 @@ public:
   bool removeBookmark(Verse v);
   /**
    * @brief getter for m_currTafsir
-   * @return the currently set DBManager::Tafsir
+   * @return the currently set DBManager::Tafasir
    */
-  Tafsir currTafsir() const;
+  const Tafsir* currTafsir() const;
   /**
    * @brief getter for m_activeKhatmah
    * @return the currently active khatmah id
@@ -300,6 +300,7 @@ public:
   void setActiveKhatmah(const int id);
 
   void setVerseText(VerseText newVerseText);
+
   VerseText getVerseText() const;
 
 private:
@@ -307,6 +308,8 @@ private:
   const QSettings* m_settings = Globals::settings;
   const QLocale::Language m_languageCode = Globals::language;
   const int m_qcfVer = Globals::qcfVersion;
+  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
+  const QList<Translation>& m_translationsList = Globals::translationsList;
   const QString m_bookmarksFilepath =
     Globals::configDir.absoluteFilePath("bookmarks.db");
   /**
@@ -325,21 +328,13 @@ private:
 
   VerseText m_verseText = VerseText::qcf;
   /**
-   * @brief the current active DBManager::Tafsir
+   * @brief the current active DBManager::Tafasir
    */
-  Tafsir m_currTafsir = Tafsir::sa3dy;
+  const Tafsir* m_currTafsir = nullptr;
   /**
    * @brief the current active DBManager::Translation
    */
-  Translation m_currTrans = Translation::en_sahih;
-  /**
-   * @brief the currently active tafsir database filename
-   */
-  QString m_tafsirDbFilename;
-  /**
-   * @brief the currently active translation database filename
-   */
-  QString m_transDbFilename;
+  const Translation* m_currTrans = nullptr;
   /**
    * @brief path to the currently active tafsir database file
    */

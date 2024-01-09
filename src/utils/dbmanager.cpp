@@ -65,188 +65,26 @@ DBManager::setOpenDatabase(Database db, QString filePath)
 }
 
 void
-DBManager::setCurrentTafsir(Tafsir tafsirName)
+DBManager::setCurrentTafsir(int tafsirIdx)
 {
+  if (tafsirIdx < 0 || tafsirIdx >= m_tafasirList.size())
+    return;
+
   m_dbDir.cd("tafasir");
-  m_currTafsir = tafsirName;
-
-  switch (m_currTafsir) {
-    case Tafsir::adwa:
-      m_tafsirDbFilename = "adwa.db";
-      break;
-
-    case Tafsir::aysar:
-      m_tafsirDbFilename = "aysar.db";
-      break;
-
-    case Tafsir::baghawy:
-      m_tafsirDbFilename = "baghawy.db";
-      break;
-
-    case Tafsir::qortoby:
-      m_tafsirDbFilename = "qortoby.db";
-      break;
-
-    case Tafsir::sa3dy:
-      m_tafsirDbFilename = "sa3dy.db";
-      break;
-
-    case Tafsir::tabary:
-      m_tafsirDbFilename = "tabary.db";
-      break;
-
-    case Tafsir::waseet:
-      m_tafsirDbFilename = "waseet.db";
-      break;
-
-    case Tafsir::jalalayn:
-      m_tafsirDbFilename = "jalalayn.db";
-      break;
-
-    case Tafsir::e3rab:
-      m_tafsirDbFilename = "e3rab.db";
-      break;
-
-    case Tafsir::tanweer:
-      m_tafsirDbFilename = "tanweer.db";
-      break;
-
-    case Tafsir::juzayy:
-      m_tafsirDbFilename = "tasheel.db";
-      break;
-
-    case Tafsir::katheer:
-      m_tafsirDbFilename = "katheer.db";
-      break;
-
-    case Tafsir::katheer_en:
-      m_tafsirDbFilename = "katheer_en.db";
-      break;
-
-    case Tafsir::indonesian:
-      m_tafsirDbFilename = "indonesian.db";
-      break;
-
-    case Tafsir::russian:
-      m_tafsirDbFilename = "russian.db";
-      break;
-
-    case Tafsir::tafheem:
-      m_tafsirDbFilename = "tafheem.db";
-      break;
-
-    default:
-      m_tafsirDbFilename = "sa3dy.db";
-      break;
-  }
-
-  m_tafsirDbPath.setFile(m_dbDir.filePath(m_tafsirDbFilename));
+  m_currTafsir = &m_tafasirList[tafsirIdx];
+  m_tafsirDbPath.setFile(m_dbDir.filePath(m_currTafsir->filename));
   m_dbDir.cdUp();
 }
 
 void
-DBManager::setCurrentTranslation(Translation translationName)
+DBManager::setCurrentTranslation(int translationIdx)
 {
+  if (translationIdx < 0 || translationIdx >= m_translationsList.size())
+    return;
+
   m_dbDir.cd("translations");
-  m_currTrans = translationName;
-
-  switch (m_currTrans) {
-    case muyassar:
-      m_transDbFilename = "muyassar.db";
-      break;
-    case ar_ma3any:
-      m_transDbFilename = "ar_ma3any.db";
-      break;
-    case bn_bengali:
-      m_transDbFilename = "bn_bengali.db";
-      break;
-    case bs_korkut:
-      m_transDbFilename = "bs_korkut.db";
-      break;
-    case de_bubenheim:
-      m_transDbFilename = "de_bubenheim.db";
-      break;
-    case en_khattab:
-      m_transDbFilename = "en_khattab.db";
-      break;
-    case en_sahih:
-      m_transDbFilename = "en_sahih.db";
-      break;
-    case en_yusuf:
-      m_transDbFilename = "en_yusuf.db";
-      break;
-    case es_navio:
-      m_transDbFilename = "es_navio.db";
-      break;
-    case fr_hamidullah:
-      m_transDbFilename = "fr_hamidullah.db";
-      break;
-    case ha_gumi:
-      m_transDbFilename = "ha_gumi.db";
-      break;
-    case id_indonesian:
-      m_transDbFilename = "id_indonesian.db";
-      break;
-    case it_piccardo:
-      m_transDbFilename = "it_piccardo.db";
-      break;
-    case ku_asan:
-      m_transDbFilename = "ku_asan.db";
-      break;
-    case ml_abdulhameed:
-      m_transDbFilename = "ml_abdulhameed.db";
-      break;
-    case ms_basmeih:
-      m_transDbFilename = "ms_basmeih.db";
-      break;
-    case nl_siregar:
-      m_transDbFilename = "nl_siregar.db";
-      break;
-    case pr_tagi:
-      m_transDbFilename = "pr_tagi.db";
-      break;
-    case pt_elhayek:
-      m_transDbFilename = "pt_elhayek.db";
-      break;
-    case ru_kuliev:
-      m_transDbFilename = "ru_kuliev.db";
-      break;
-    case so_abduh:
-      m_transDbFilename = "so_abduh.db";
-      break;
-    case sq_nahi:
-      m_transDbFilename = "sq_nahi.db";
-      break;
-    case sv_bernstrom:
-      m_transDbFilename = "sv_bernstrom.db";
-      break;
-    case sw_barwani:
-      m_transDbFilename = "sw_barwani.db";
-      break;
-    case ta_tamil:
-      m_transDbFilename = "ta_tamil.db";
-      break;
-    case th_thai:
-      m_transDbFilename = "th_thai.db";
-      break;
-    case tr_diyanet:
-      m_transDbFilename = "tr_diyanet.db";
-      break;
-    case ur_jalandhry:
-      m_transDbFilename = "ur_jalandhry.db";
-      break;
-    case uz_sodik:
-      m_transDbFilename = "uz_sodik.db";
-      break;
-    case zh_jian:
-      m_transDbFilename = "zh_jian.db";
-      break;
-    default:
-      m_transDbFilename = "en_sahih.db";
-      break;
-  }
-
-  m_transDbPath.setFile(m_dbDir.filePath(m_transDbFilename));
+  m_currTrans = &m_translationsList[translationIdx];
+  m_transDbPath.setFile(m_dbDir.filePath(m_currTrans->filename));
   m_dbDir.cdUp();
 }
 
@@ -922,9 +760,9 @@ DBManager::getTafsir(const int sIdx, const int vIdx)
 
   QSqlQuery dbQuery(m_openDBCon);
 
-  QString q = "SELECT text FROM %0 WHERE sura=%1 AND aya=%2";
-  q = q.arg(m_tafsirDbPath.baseName()).arg(sIdx).arg(vIdx);
-  dbQuery.prepare(q);
+  dbQuery.prepare("SELECT text FROM content WHERE sura=:s AND aya=:v");
+  dbQuery.bindValue(0, sIdx);
+  dbQuery.bindValue(1, vIdx);
 
   if (!dbQuery.exec()) {
     qFatal("Couldn't execute getTafsir query!");
@@ -954,12 +792,6 @@ DBManager::getTranslation(const int sIdx, const int vIdx)
   return dbQuery.value(0).toString();
 }
 
-Tafsir
-DBManager::currTafsir() const
-{
-  return m_currTafsir;
-}
-
 void
 DBManager::setActiveKhatmah(const int id)
 {
@@ -982,4 +814,10 @@ const int
 DBManager::activeKhatmah() const
 {
   return m_activeKhatmah;
+}
+
+const Tafsir*
+DBManager::currTafsir() const
+{
+  return m_currTafsir;
 }

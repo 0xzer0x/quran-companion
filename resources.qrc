@@ -15,5 +15,6 @@
         <file>resources/splash.png</file>
         <file>resources/sura_box.png</file>
         <file>resources/tray.png</file>
+        <file>resources/files.xml</file>
     </qresource>
 </RCC>

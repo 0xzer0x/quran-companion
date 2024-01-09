@@ -17,6 +17,7 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   ui->cmbSideFontSz->setValidator(new QIntValidator(10, 72));
   setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_gear));
   fillLanguageCombobox();
+  fillContentCombobox();
   ui->tableViewShortcuts->setModel(&m_shortcutsModel);
   ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
   ui->tableViewShortcuts->setItemDelegate(new ShortcutDelegate);
@@ -62,6 +63,15 @@ SettingsDialog::fillLanguageCombobox()
   ui->cmbLang->addItem("English", QLocale::English);
   ui->cmbLang->addItem("العربية", QLocale::Arabic);
   ui->cmbLang->addItem("Türkçe", QLocale::Turkish);
+}
+
+void
+SettingsDialog::fillContentCombobox()
+{
+  foreach (const Tafsir& t, m_tafasirList)
+    ui->cmbTafsir->addItem(t.displayName);
+  foreach (const Translation& tr, m_translationsList)
+    ui->cmbTranslation->addItem(tr.displayName);
 }
 
 void

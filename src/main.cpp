@@ -85,6 +85,12 @@ checkSettingsGroup(QSettings* settings, int group);
 void
 populateRecitersList();
 /**
+ *
+ * MODIFIED
+ */
+void
+populateContentLists();
+/**
  * @brief populates the Globals::shortcutDescription QMap with key-value pairs
  * of (name - description) and set the default value if shortcut is not found in
  * settings, any new shortcuts should be added to shortcuts.xml along with the
@@ -132,6 +138,7 @@ main(int argc, char* argv[])
   addTranslation(language);
   populateRecitersList();
   populateShortcutsMap();
+  populateContentLists();
 
   databaseManager = new DBManager(&a);
   MainWindow w(nullptr);
@@ -417,4 +424,35 @@ populateShortcutsMap()
 
   settings->endGroup();
   shortcuts.close();
+}
+
+void
+populateContentLists()
+{
+  QFile content(":/resources/files.xml");
+  if (!content.open(QIODevice::ReadOnly))
+    qCritical("Couldn't Open Files XML");
+
+  QXmlStreamReader reader(&content);
+  while (!reader.atEnd() && !reader.hasError()) {
+    QXmlStreamReader::TokenType token = reader.readNext();
+    if (token == QXmlStreamReader::StartElement) {
+      if (reader.name().toString() == "tafsir") {
+        QString name = qApp->translate(
+          "SettingsDialog", reader.attributes().value("name").toLatin1());
+        QString file = reader.attributes().value("file").toString();
+        bool text = reader.attributes().value("text").toInt();
+        bool extra = reader.attributes().value("extra").toInt();
+        tafasirList.append(Tafsir{ name, file, text, extra });
+      }
+      // translations
+      else if (reader.name().toString() == "translation") {
+        QString name = reader.attributes().value("name").toString();
+        QString file = reader.attributes().value("file").toString();
+        translationsList.append(Translation{ name, file });
+      }
+    }
+  }
+
+  content.close();
 }

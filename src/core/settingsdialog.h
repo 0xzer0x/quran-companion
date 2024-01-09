@@ -215,6 +215,8 @@ private:
   const QLocale::Language m_languageCode = Globals::language;
   QSettings* const m_settings = Globals::settings;
   const QDir& m_downloadsDir = Globals::downloadsDir;
+  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
+  const QList<Translation>& m_translationsList = Globals::translationsList;
   const QMap<QString, QString>& m_shortcutDescription =
     Globals::shortcutDescription;
   /**
@@ -230,6 +232,12 @@ private:
    * @brief adds all supported language entries in the langauge combobox.
    */
   void fillLanguageCombobox();
+  /**
+   * @brief fillContentCombobox
+   *
+   * MODIFIED
+   */
+  void fillContentCombobox();
   /**
    * @brief loads all the settings from the settings file into their
    * corresponding variables and updates UI components to match them.

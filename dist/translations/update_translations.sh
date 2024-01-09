@@ -4,11 +4,6 @@ set -e
 
 #COLORS
 CDEF="\033[0m"      # default color
-CCIN="\033[0;36m"   # info color
-CGSC="\033[0;32m"   # success color
-CRER="\033[0;31m"   # error color
-CWAR="\033[0;33m"   # waring color
-b_CDEF="\033[1;37m" # bold default color
 b_CCIN="\033[1;36m" # bold info color
 b_CGSC="\033[1;32m" # bold success color
 b_CRER="\033[1;31m" # bold error color
@@ -38,11 +33,11 @@ prompt() {
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
 prompt -s "----- Generating reciters TS file -----\n"
-$SCRIPT_DIR/reciters.sh
+"$SCRIPT_DIR/reciters.sh"
 
 prompt -s "----- Generating shortcuts TS file -----\n"
-$SCRIPT_DIR/shortcuts.sh
+"$SCRIPT_DIR/shortcuts.sh"
 
 prompt -s "----- Updating template TS file -----\n"
-lupdate -recursive -no-obsolete $SCRIPT_DIR/../../src -ts $SCRIPT_DIR/qc_src.ts
-lconvert -i $SCRIPT_DIR/shortcuts.ts $SCRIPT_DIR/reciters.ts $SCRIPT_DIR/qc_src.ts -no-obsolete -o qc_template.ts
+lupdate -recursive -no-obsolete "$SCRIPT_DIR/../../src" -ts "$SCRIPT_DIR/qc_src.ts"
+lconvert -i "$SCRIPT_DIR/shortcuts.ts" "$SCRIPT_DIR/reciters.ts" "$SCRIPT_DIR/tafasir.ts" "$SCRIPT_DIR/qc_src.ts" -no-obsolete -o qc_template.ts
