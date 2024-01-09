@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files>
     <tafasir>
-        <tafsir name="Adwa' ul-Bayan" file="adwa.db" text="0" extra="1" />
+        <tafsir name="Adwa&apos; ul-Bayan" file="adwa.db" text="0" extra="1" />
         <tafsir name="Aysar ul-Tafasir" file="aysar.db" text="0" extra="1" />
         <tafsir name="Al-Tafsir Al-Waseet" file="waseet.db" text="0" extra="1" />
         <tafsir name="Al-Mukhtasar fil Tafsir" file="mukhtasar.db" text="1" extra="1" />
         <tafsir name="Al-baghawy" file="baghawy.db" text="0" extra="1" />
         <tafsir name="Al-Qortoby" file="qortoby.db" text="0" extra="1" />
-        <tafsir name="Al-Sa'ady" file="sa3dy.db" text="1" extra="0" />
+        <tafsir name="Al-Sa&apos;ady" file="sa3dy.db" text="1" extra="0" />
         <tafsir name="Al-Tabary" file="tabary.db" text="0" extra="1" />
         <tafsir name="Al-Jalalayn" file="jalalayn.db" text="0" extra="1" />
-        <tafsir name="Ea'rab" file="e3rab.db" text="0" extra="1" />
+        <tafsir name="Ea&apos;rab" file="e3rab.db" text="0" extra="1" />
         <tafsir name="Ibn-Ashoor" file="tanweer.db" text="0" extra="1" />
         <tafsir name="Ibn-Juzayy" file="juzayy.db" text="0" extra="1" />
         <tafsir name="Ibn-Katheer" file="katheer.db" text="0" extra="1" />
         <tafsir name="Ibn-Katheer - English" file="katheer_en.db" text="0" extra="1" />
+        <tafsir name="Al-Jalalayn - English" file="jalalayn_en.db" text="0" extra="1" />
         <tafsir name="Al-Jalalayn - Indonesian" file="jalalayn_in.db" text="0" extra="1" />
         <tafsir name="Kuliev &amp; Al-Sa'ady - Russian" file="sa3dy_ru.db" text="0" extra="1" />
         <tafsir name="Tafheem ul-Quran - English" file="tafheem_en.db" text="0" extra="1" />
