@@ -140,6 +140,7 @@ public slots:
   void showWindow();
 
 signals:
+  void qcf2Missing();
   /**
    * @fn quranFontChanged()
    * @brief signal emitted for QuranPageBrowser to set the new Quran page font
@@ -247,7 +248,7 @@ private:
    * @brief check if any shortcut was changed and updated it
    */
   void checkShortcuts();
-  void checkQCF(int ver);
+  bool checkQCF2();
   /**
    * @brief QCF font size used in constructing Quran page.
    */

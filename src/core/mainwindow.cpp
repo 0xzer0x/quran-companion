@@ -468,7 +468,11 @@ MainWindow::setupConnections()
   // Restart signal
   connect(
     m_settingsDlg, &SettingsDialog::restartApp, this, &MainWindow::restartApp);
-
+  // qcf2 missing files warning
+  connect(m_settingsDlg,
+          &SettingsDialog::qcf2Missing,
+          this,
+          &MainWindow::missingQCF2);
   // Quran page signals
   connect(m_settingsDlg,
           &SettingsDialog::redrawQuranPage,
@@ -1076,7 +1080,21 @@ MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectTask(reciterIdx, surah);
+    m_downloaderDlg->selectDownload(Recitation, { reciterIdx, surah });
+  }
+}
+
+void
+MainWindow::missingQCF2()
+{
+  QMessageBox::StandardButton btn = QMessageBox::question(
+    this,
+    tr("Files Missing"),
+    tr("The Selected font files are missing, would you like to download it?"));
+
+  if (btn == QMessageBox::Yes) {
+    actionDMTriggered();
+    m_downloaderDlg->selectDownload(QCF);
   }
 }
 
@@ -1109,7 +1127,7 @@ MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
 {
   if (hrefUrl.toString().at(1) == 'F') {
     int surah = hrefUrl.toString().remove("#F").toInt();
-    qDebug() << "SURAH FRAME" << surah;
+    qDebug() << "SURAH CARD:" << surah;
     m_betaqaViewer->showSurah(surah);
     return;
   }

@@ -77,13 +77,13 @@ public slots:
    * @param reciterIdx - ::Globals::recitersList index for the reciter
    * @param surah - the surah that was downloaded
    */
-  void completedDownload(DownloadType type, const int metainfo[]);
+  void completedDownload(DownloadType type, const QList<int> &metainfo);
   /**
    * @brief slot to show a notification on download error
    * @param reciterIdx - ::Globals::recitersList index for the reciter
    * @param surah - the surah that was downloaded
    */
-  void downloadError(DownloadType type, const int metainfo[]);
+  void downloadError(DownloadType type, const QList<int> &metainfo);
   /**
    * @brief slot to show a notification on bookmark addition
    */

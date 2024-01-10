@@ -66,7 +66,7 @@ public slots:
    * recitations are downloaded
    * @param surah - surah number
    */
-  void surahDownloaded(DownloadType type, const int metainfo[]);
+  void surahDownloaded(DownloadType type, const QList<int>& metainfo);
   /**
    * @brief slot to delete all download tasks /
    * progress bars from dialog
@@ -78,7 +78,7 @@ public slots:
    * @param reciter - ::Globals::recitersList index for the reciter
    * @param surah - surah number
    */
-  void topTaskDownloadError(DownloadType type, const int metainfo[]);
+  void topTaskDownloadError(DownloadType type, const QList<int>& metainfo);
   /**
    * @brief slot to update the displayed download speed in the currently active
    * download.
@@ -93,7 +93,8 @@ public slots:
    * @param reciter - ::Globals::recitersList index for the reciter
    * @param surah - surah number
    */
-  void selectTask(int reciter, int surah);
+  void selectDownload(DownloadType type,
+                      QPair<int, int> info = QPair<int, int>(0, 1));
   /**
    * @brief Stops downloading tasks and clears the downloads scrollarea
    * (including completed tasks)

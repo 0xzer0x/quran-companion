@@ -37,11 +37,11 @@ public:
   struct DownloadTask
   {
     /**
-     * @brief metainfo array for storing information about the download task
+     * @brief metainfo vector for storing information about the download task
      * @details in case of a regular verse download, { reciter, surah, verse }
      * and in case of QCF font download, { -1, -1, page }
      */
-    int metainfo[3] = { -1, -1, -1 };
+    QList<int> metainfo;
     /**
      * @brief download link for the verse
      */
@@ -169,17 +169,17 @@ signals:
    *
    * MODIFIED
    */
-  void downloadCompleted(DownloadType type, const int metainfo[]);
+  void downloadCompleted(DownloadType type, const QList<int>& metainfo);
   /**
    * @fn void downloadErrored(int, int)
    */
-  void downloadErrored(DownloadType type, const int metainfo[]);
+  void downloadErrored(DownloadType type, const QList<int>& metainfo);
   /**
    * @fn void filesFound(int, int)
    * @brief Emitted when the current surah verses are found in recitations
    * directory
    */
-  void filesFound(DownloadType type, const int metainfo[]);
+  void filesFound(DownloadType type, const QList<int>& metainfo);
 
 private:
   const QDir& m_downloadsDir = Globals::downloadsDir;

@@ -236,14 +236,23 @@ DownloaderDialog::updateDownloadSpeed(int value, QString unit)
 }
 
 void
-DownloaderDialog::selectTask(int reciter, int surah)
+DownloaderDialog::selectDownload(DownloadType type, QPair<int, int> info)
 {
   QItemSelectionModel* selector = ui->treeView->selectionModel();
-  QModelIndex reciterIdx = m_treeModel.index(reciter, 0);
+  QModelIndex parent;
+  QModelIndex task;
+  if (type == Recitation) {
+    parent = m_treeModel.index(info.first, 0);
+    task = m_treeModel.index(info.second - 1, 1, parent);
+  } else if (type == QCF) {
+    parent = m_treeModel.index(m_treeModel.rowCount() - 1, 0);
+    task = m_treeModel.index(0, 0, parent);
+  }
+
   ui->treeView->collapseAll();
-  ui->treeView->expand(reciterIdx);
+  ui->treeView->expand(parent);
   selector->clearSelection();
-  selector->select(m_treeModel.index(surah - 1, 1, reciterIdx),
+  selector->select(task,
                    QItemSelectionModel::Rows | QItemSelectionModel::Select);
 }
 
@@ -266,7 +275,7 @@ DownloaderDialog::btnStopClicked()
 }
 
 void
-DownloaderDialog::surahDownloaded(DownloadType type, const int metainfo[])
+DownloaderDialog::surahDownloaded(DownloadType type, const QList<int>& metainfo)
 {
   m_currentBar->setStyling(DownloadProgressBar::completed);
   m_currentLb->setText(m_currentLb->parent()->objectName());
@@ -294,7 +303,8 @@ DownloaderDialog::downloadAborted()
 }
 
 void
-DownloaderDialog::topTaskDownloadError(DownloadType type, const int metainfo[])
+DownloaderDialog::topTaskDownloadError(DownloadType type,
+                                       const QList<int>& metainfo)
 {
   m_currentBar->setStyling(DownloadProgressBar::aborted);
   m_currentLb->setText(m_currentLb->parent()->objectName());

@@ -76,7 +76,8 @@ void
 DownloadManager::enqeueVerseTask(int reciterIdx, int surah, int verse)
 {
   DownloadTask t;
-  t.metainfo[0] = reciterIdx, t.metainfo[1] = surah, t.metainfo[2] = verse;
+  t.metainfo = { reciterIdx, surah, verse };
+  t.metainfo.squeeze();
   t.link = downloadUrl(reciterIdx, surah, verse);
   t.downloadPath.setFile(m_downloadsDir.absoluteFilePath(
     QString("recitations") + QDir::separator() +
@@ -95,7 +96,8 @@ DownloadManager::enqeueQCFTasks()
   for (int i = 1; i <= 604; i++) {
     path = QString("QCFV2/QCF2%0.ttf")
              .arg(QString::number(i).rightJustified(3, '0'));
-    t.metainfo[2] = i;
+    t.metainfo = { -1, -1, i };
+    t.metainfo.squeeze();
     t.downloadPath.setFile(m_downloadsDir.absoluteFilePath(path));
     t.link = QUrl::fromEncoded(
       QString("https://github.com/0xzer0x/quran-companion/raw/dev/extras/" +

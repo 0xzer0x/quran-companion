@@ -392,40 +392,40 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/settingsdialog.cpp" line="149"/>
-        <location filename="../../src/core/settingsdialog.cpp" line="164"/>
-        <location filename="../../src/core/settingsdialog.cpp" line="206"/>
-        <location filename="../../src/core/settingsdialog.cpp" line="220"/>
+        <location filename="../../src/core/settingsdialog.cpp" line="162"/>
+        <location filename="../../src/core/settingsdialog.cpp" line="177"/>
+        <location filename="../../src/core/settingsdialog.cpp" line="219"/>
+        <location filename="../../src/core/settingsdialog.cpp" line="239"/>
         <source>Restart required</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/settingsdialog.cpp" line="150"/>
+        <location filename="../../src/core/settingsdialog.cpp" line="163"/>
         <source>Application theme was changed, restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/settingsdialog.cpp" line="165"/>
+        <location filename="../../src/core/settingsdialog.cpp" line="178"/>
         <source>Application language was changed, restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/settingsdialog.cpp" line="206"/>
+        <location filename="../../src/core/settingsdialog.cpp" line="219"/>
         <source>Reading mode was changed, restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/settingsdialog.cpp" line="221"/>
+        <location filename="../../src/core/settingsdialog.cpp" line="240"/>
         <source>Restart is required to load new quran font, restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/settingsdialog.cpp" line="373"/>
+        <location filename="../../src/core/settingsdialog.cpp" line="392"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/settingsdialog.cpp" line="375"/>
+        <location filename="../../src/core/settingsdialog.cpp" line="394"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -555,7 +555,7 @@
     <message>
         <location filename="../../src/core/mainwindow.ui" line="17"/>
         <location filename="../../src/core/mainwindow.cpp" line="36"/>
-        <location filename="../../src/core/mainwindow.cpp" line="1030"/>
+        <location filename="../../src/core/mainwindow.cpp" line="1034"/>
         <source>Quran Companion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -596,7 +596,7 @@
     </message>
     <message>
         <location filename="../../src/core/mainwindow.ui" line="755"/>
-        <location filename="../../src/core/mainwindow.cpp" line="596"/>
+        <location filename="../../src/core/mainwindow.cpp" line="600"/>
         <source>Navigation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -657,7 +657,7 @@
     </message>
     <message>
         <location filename="../../src/core/mainwindow.ui" line="1065"/>
-        <location filename="../../src/core/mainwindow.cpp" line="1232"/>
+        <location filename="../../src/core/mainwindow.cpp" line="1250"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
@@ -724,27 +724,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1026"/>
+        <location filename="../../src/core/mainwindow.cpp" line="1030"/>
         <source>Now playing: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1027"/>
+        <location filename="../../src/core/mainwindow.cpp" line="1031"/>
         <source>Surah </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1073"/>
+        <location filename="../../src/core/mainwindow.cpp" line="1077"/>
         <source>Recitation not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1074"/>
+        <location filename="../../src/core/mainwindow.cpp" line="1078"/>
         <source>The recitation files for the current surah is missing, would you like to download it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1607"/>
+        <location filename="../../src/core/mainwindow.cpp" line="1092"/>
+        <source>Files Missing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/mainwindow.cpp" line="1093"/>
+        <source>The Selected font files are missing, would you like to download it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/mainwindow.cpp" line="1625"/>
         <source>Verse Of The Day</source>
         <translation type="unfinished"></translation>
     </message>
@@ -926,17 +936,17 @@
 <context>
     <name>DownloadManager</name>
     <message>
-        <location filename="../../src/utils/downloadmanager.cpp" line="175"/>
+        <location filename="../../src/utils/downloadmanager.cpp" line="177"/>
         <source>bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/utils/downloadmanager.cpp" line="177"/>
+        <location filename="../../src/utils/downloadmanager.cpp" line="179"/>
         <source>KB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/utils/downloadmanager.cpp" line="182"/>
+        <location filename="../../src/utils/downloadmanager.cpp" line="184"/>
         <source>MB</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1010,12 +1020,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/downloaderdialog.cpp" line="273"/>
+        <location filename="../../src/core/downloaderdialog.cpp" line="282"/>
         <source>Download Completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/downloaderdialog.cpp" line="301"/>
+        <location filename="../../src/core/downloaderdialog.cpp" line="311"/>
         <source>Download Failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1119,37 +1129,42 @@
 <context>
     <name>NotificationPopup</name>
     <message>
-        <location filename="../../src/widgets/notificationpopup.cpp" line="86"/>
+        <location filename="../../src/widgets/notificationpopup.cpp" line="87"/>
         <source>Download Completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/notificationpopup.cpp" line="99"/>
+        <location filename="../../src/widgets/notificationpopup.cpp" line="93"/>
+        <source>QCF V2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/notificationpopup.cpp" line="102"/>
         <source>Download Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/notificationpopup.cpp" line="111"/>
+        <location filename="../../src/widgets/notificationpopup.cpp" line="114"/>
         <source>Verse added to bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/notificationpopup.cpp" line="119"/>
+        <location filename="../../src/widgets/notificationpopup.cpp" line="122"/>
         <source>Verse removed from bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/notificationpopup.cpp" line="127"/>
+        <location filename="../../src/widgets/notificationpopup.cpp" line="130"/>
         <source>Verse text copied to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/notificationpopup.cpp" line="139"/>
+        <location filename="../../src/widgets/notificationpopup.cpp" line="142"/>
         <source>You are running the latest version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/notificationpopup.cpp" line="142"/>
+        <location filename="../../src/widgets/notificationpopup.cpp" line="145"/>
         <source>Update available</source>
         <translation type="unfinished"></translation>
     </message>

@@ -185,6 +185,7 @@ private slots:
    * @param surah
    */
   void missingRecitationFileWarn(int reciterIdx, int surah);
+  void missingQCF2();
   /**
    * @brief sets the current position in the audio file as the position of the
    * slider
