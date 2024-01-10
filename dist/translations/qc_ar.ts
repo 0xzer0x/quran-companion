@@ -6,12 +6,12 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Toggle player controls</source>
-      <translation type="unfinished">Toggle player controls</translation>
+      <translation>إظهار/إخفاء التحكم في المشغل</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Toggle reader view</source>
-      <translation type="unfinished">Toggle reader view</translation>
+      <translation>تبديل طريقة عرض القارئ</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
@@ -121,7 +121,7 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Open the download manager dialog</source>
-      <translation type="unfinished">Open the download manager dialog</translation>
+      <translation>فتح نافذة مدير التحميل</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
@@ -141,7 +141,7 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Aysar ul-Tafasir</source>
-      <translation type="unfinished">Aysar ul-Tafasir</translation>
+      <translation>أيسر التفاسير</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
@@ -151,12 +151,12 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Mukhtasar fil Tafsir</source>
-      <translation type="unfinished">Al-Mukhtasar fil Tafsir</translation>
+      <translation>المختصر في التفسير</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
-      <source>Al-baghawy</source>
-      <translation type="unfinished">Al-baghawy</translation>
+      <source>Al-Baghawy</source>
+      <translation type="unfinished">Al-Baghawy</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
@@ -181,7 +181,7 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Ea&apos;rab</source>
-      <translation type="unfinished">Ea&apos;rab</translation>
+      <translation>إعراب الكلمات</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
@@ -201,27 +201,27 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Ibn-Katheer - English</source>
-      <translation type="unfinished">Ibn-Katheer - English</translation>
+      <translation>ابن كثير - الإنجليزية</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Jalalayn - English</source>
-      <translation type="unfinished">Al-Jalalayn - English</translation>
+      <translation>الجلالين - الإنجليزية</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Jalalayn - Indonesian</source>
-      <translation type="unfinished">Al-Jalalayn - Indonesian</translation>
+      <translation>الجلالين - الإندونيسية</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Kuliev &amp; Al-Sa&apos;ady - Russian</source>
-      <translation type="unfinished">Kuliev &amp; Al-Sa&apos;ady - Russian</translation>
+      <translation>كولييف و السعدي - الروسية</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Tafheem ul-Quran - English</source>
-      <translation type="unfinished">Tafheem ul-Quran - English</translation>
+      <translation>تفهيم القرآن - الإنجليزية</translation>
     </message>
     <message>
       <location filename="../../src/core/settingsdialog.ui" line="14"/>
@@ -317,7 +317,7 @@
     <message>
       <location filename="../../src/core/settingsdialog.ui" line="225"/>
       <source>Page font</source>
-      <translation type="unfinished">Page font</translation>
+      <translation>خط الصفحة</translation>
     </message>
     <message>
       <location filename="../../src/core/settingsdialog.ui" line="239"/>
@@ -334,27 +334,27 @@
       <location filename="../../src/core/settingsdialog.ui" line="377"/>
       <location filename="../../src/core/settingsdialog.ui" line="500"/>
       <source>size</source>
-      <translation type="unfinished">size</translation>
+      <translation>الحجم</translation>
     </message>
     <message>
       <location filename="../../src/core/settingsdialog.ui" line="349"/>
       <source>Verse font</source>
-      <translation type="unfinished">Verse font</translation>
+      <translation>خط الآيات</translation>
     </message>
     <message>
       <location filename="../../src/core/settingsdialog.ui" line="357"/>
       <source>QCF</source>
-      <translation type="unfinished">QCF</translation>
+      <translation>خط الصفحة</translation>
     </message>
     <message>
       <location filename="../../src/core/settingsdialog.ui" line="362"/>
       <source>Uthmanic</source>
-      <translation type="unfinished">Uthmanic</translation>
+      <translation>عثماني</translation>
     </message>
     <message>
       <location filename="../../src/core/settingsdialog.ui" line="367"/>
       <source>Uthmanic (annotated)</source>
-      <translation type="unfinished">Uthmanic (annotated)</translation>
+      <translation>عثماني (مرمز)</translation>
     </message>
     <message>
       <location filename="../../src/core/settingsdialog.ui" line="467"/>
@@ -684,7 +684,7 @@
     <message>
       <location filename="../../src/core/mainwindow.ui" line="1099"/>
       <source>Toggle reader view</source>
-      <translation type="unfinished">Toggle reader view</translation>
+      <translation>تبديل طريقة عرض القارئ</translation>
     </message>
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="75"/>
@@ -753,8 +753,8 @@
     <name>AboutDialog</name>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="20"/>
-      <source>Dialog</source>
-      <translation type="unfinished">Dialog</translation>
+      <source>About Quran Companion</source>
+      <translation>عن رفيق القرآن</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="102"/>
