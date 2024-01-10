@@ -208,7 +208,7 @@
        <item>
         <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;Waqf General Public License&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>Licensed under the &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;Waqf General Public License&lt;/a&gt;</string>
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
@@ -225,7 +225,7 @@
        <item>
         <widget class="QLabel" name="label_15">
          <property name="toolTip">
-          <string>https://github.com/0xzer0x/quran-companion</string>
+          <string notr="true">https://github.com/0xzer0x/quran-companion</string>
          </property>
          <property name="text">
           <string>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;Project Homepage&lt;/a&gt;</string>
@@ -238,7 +238,7 @@
        <item>
         <widget class="QLabel" name="label_5">
          <property name="toolTip">
-          <string>https://github.com/0xzer0x/quran-companion/issues</string>
+          <string notr="true">https://github.com/0xzer0x/quran-companion/issues</string>
          </property>
          <property name="text">
           <string>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;Report a bug/Request a feature&lt;/a&gt;</string>
@@ -251,7 +251,7 @@
        <item>
         <widget class="QLabel" name="label_6">
          <property name="toolTip">
-          <string>https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations</string>
+          <string notr="true">https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations</string>
          </property>
          <property name="text">
           <string>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;Contribute to translations&lt;/a&gt;</string>
@@ -293,7 +293,7 @@
          <item>
           <widget class="QLabel" name="label_9">
            <property name="toolTip">
-            <string>https://crowdin.com/profile/halak0013</string>
+            <string notr="true">https://crowdin.com/profile/halak0013</string>
            </property>
            <property name="text">
             <string notr="true">&lt;a href=&quot;https://crowdin.com/profile/halak0013&quot;&gt;@halak0013&lt;/a&gt;</string>

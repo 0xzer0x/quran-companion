@@ -38,6 +38,9 @@ prompt -s "----- Generating reciters TS file -----\n"
 prompt -s "----- Generating shortcuts TS file -----\n"
 "$SCRIPT_DIR/shortcuts.sh"
 
+prompt -s "----- Generating tafasir TS file -----\n"
+"$SCRIPT_DIR/tafasir.sh"
+
 prompt -s "----- Updating template TS file -----\n"
 lupdate -recursive -no-obsolete "$SCRIPT_DIR/../../src" -ts "$SCRIPT_DIR/qc_src.ts"
 lconvert -i "$SCRIPT_DIR/shortcuts.ts" "$SCRIPT_DIR/reciters.ts" "$SCRIPT_DIR/tafasir.ts" "$SCRIPT_DIR/qc_src.ts" -no-obsolete -o qc_template.ts

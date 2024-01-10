@@ -19,8 +19,11 @@
   <property name="focusPolicy">
    <enum>Qt::StrongFocus</enum>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Betaqa</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
