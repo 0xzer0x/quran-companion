@@ -156,7 +156,7 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Baghawy</source>
-      <translation type="unfinished">Al-Baghawy</translation>
+      <translation>البغوي</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
@@ -759,12 +759,12 @@
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="102"/>
       <source>&lt;b&gt;Quran Companion&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;Quran Companion&lt;/b&gt;</translation>
+      <translation>&lt;b&gt;رفيق القرآن&lt;/b&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="123"/>
       <source>Version</source>
-      <translation type="unfinished">Version</translation>
+      <translation>إصدار</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="198"/>
@@ -774,62 +774,62 @@
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="204"/>
       <source>A free, open-source Quran reader &amp; player</source>
-      <translation type="unfinished">A free, open-source Quran reader &amp; player</translation>
+      <translation>قارئ ومشغل للقرآن الكريم مفتوح المصدر</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="211"/>
       <source>Licensed under the &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;Waqf General Public License&lt;/a&gt;</source>
-      <translation type="unfinished">Licensed under the &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;Waqf General Public License&lt;/a&gt;</translation>
+      <translation>مرخص بموجب رخصة &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;وقف العامة&lt;/a&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="221"/>
       <source>&lt;b&gt;Useful Links&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;Useful Links&lt;/b&gt;</translation>
+      <translation>&lt;b&gt;روابط مفيدة&lt;/b&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="231"/>
       <source>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;Project Homepage&lt;/a&gt;</source>
-      <translation type="unfinished">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;Project Homepage&lt;/a&gt;</translation>
+      <translation>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;صفحة المشروع&lt;/a&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="244"/>
       <source>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;Report a bug/Request a feature&lt;/a&gt;</source>
-      <translation type="unfinished">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;Report a bug/Request a feature&lt;/a&gt;</translation>
+      <translation>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;التبليغ عن خلل / طلب ميزة&lt;/a&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="257"/>
       <source>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;Contribute to translations&lt;/a&gt;</source>
-      <translation type="unfinished">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;Contribute to translations&lt;/a&gt;</translation>
+      <translation>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;ساهم في الترجمة&lt;/a&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="268"/>
       <source>Translators</source>
-      <translation type="unfinished">Translators</translation>
+      <translation>المترجمون</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="325"/>
       <source>Credits</source>
-      <translation type="unfinished">Credits</translation>
+      <translation>شكر وتقدير</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="339"/>
       <source>&lt;b&gt;Recitations&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;Recitations&lt;/b&gt;</translation>
+      <translation>&lt;b&gt;التلاوات&lt;/b&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="380"/>
       <source>&lt;b&gt;Tafsir/Translations&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;Tafsir/Translations&lt;/b&gt;</translation>
+      <translation>&lt;b&gt;التفسير/الترجمات&lt;/b&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="424"/>
       <source>&lt;b&gt;Surah Cards&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;Surah Cards&lt;/b&gt;</translation>
+      <translation>&lt;b&gt;بطاقات السور&lt;/b&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="465"/>
       <source>&lt;b&gt;Libraries&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;Libraries&lt;/b&gt;</translation>
+      <translation>&lt;b&gt;المكتبات&lt;/b&gt;</translation>
     </message>
   </context>
   <context>
@@ -981,12 +981,12 @@
     <message>
       <location filename="../../src/core/downloaderdialog.cpp" line="103"/>
       <source>Extras</source>
-      <translation type="unfinished">Extras</translation>
+      <translation>إضافات</translation>
     </message>
     <message>
       <location filename="../../src/core/downloaderdialog.cpp" line="104"/>
       <source>Additional files</source>
-      <translation type="unfinished">Additional files</translation>
+      <translation>ملفات إضافية</translation>
     </message>
     <message>
       <location filename="../../src/core/downloaderdialog.cpp" line="108"/>
@@ -1290,12 +1290,12 @@
     <message>
       <location filename="../../src/widgets/shortcutdelegate.h" line="15"/>
       <source>Shortcut Conflict</source>
-      <translation type="unfinished">Shortcut Conflict</translation>
+      <translation>تضارب اختصارات</translation>
     </message>
     <message>
       <location filename="../../src/widgets/shortcutdelegate.h" line="16"/>
       <source>The key sequence chosen is already reserved, try again</source>
-      <translation type="unfinished">The key sequence chosen is already reserved, try again</translation>
+      <translation>تسلسل المفتاح المختار محجوزة فعلًا، حاول مرة أخرى</translation>
     </message>
   </context>
   <context>
