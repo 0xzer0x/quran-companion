@@ -746,12 +746,12 @@
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="1092"/>
       <source>Files Missing</source>
-      <translation type="unfinished">Files Missing</translation>
+      <translation>الملفات مفقودة</translation>
     </message>
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="1093"/>
       <source>The Selected font files are missing, would you like to download it?</source>
-      <translation type="unfinished">The Selected font files are missing, would you like to download it?</translation>
+      <translation>ملفات الخط المحدد مفقودة، هل ترغب في تحميلها؟</translation>
     </message>
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="1625"/>
