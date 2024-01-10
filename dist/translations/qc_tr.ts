@@ -155,8 +155,8 @@
     </message>
     <message>
       <location filename="../main.cpp"/>
-      <source>Al-baghawy</source>
-      <translation type="unfinished">Al-baghawy</translation>
+      <source>Al-Baghawy</source>
+      <translation type="unfinished">Al-Baghawy</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
@@ -753,8 +753,8 @@
     <name>AboutDialog</name>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="20"/>
-      <source>Dialog</source>
-      <translation type="unfinished">Dialog</translation>
+      <source>About Quran Companion</source>
+      <translation>Kura-an'ı Kerim Arkadaşı hakkında</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="102"/>
