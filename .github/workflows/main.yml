@@ -49,13 +49,7 @@ jobs:
 
       - name: Prepare AppDir
         run: >
-          mkdir -p QuranCompanion.AppDir/usr/bin
-
-          mkdir -p QuranCompanion.AppDir/usr/share/applications
-
-          mkdir -p QuranCompanion.AppDir/usr/share/metainfo
-
-          mkdir -p QuranCompanion.AppDir/usr/share/icons/hicolor/256x256/apps
+          mkdir -p QuranCompanion.AppDir/usr/{bin,share/{applications,metainfo,icons/hicolor/256x256/apps}}
 
           cp
           ${{github.workspace}}/dist/xdg/io.github._0xzer0x.qurancompanion.desktop
@@ -77,7 +71,7 @@ jobs:
           echo -e "[Paths]\nPlugins = ../plugins\nLibraries = ../lib\nImports =
           ../qml\nQml2Imports = ../qml" > QuranCompanion.AppDir/usr/bin/qt.conf
 
-      - name: Configure CMake
+      - name: Configure
         run: >-
           cmake -B ${{github.workspace}}/build
           -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
@@ -100,10 +94,12 @@ jobs:
           -extra-plugins=sqldrivers,iconengines,imageformats,multimedia,networkinformation,platforms,platformthemes,wayland-decoration-client,wayland-graphics-integration-client,wayland-graphics-integration-server,wayland-shell-integration,xcbglintegrations,egldeviceintegrations
           -verbose=1
 
-      - name: Run appimagetool
+      - name: Make AppImage
         run: >
           ${{github.workspace}}/appimagetool-x86_64.AppImage QuranCompanion.AppDir
           Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
+
+          echo "$(md5sum "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" | cut -d' ' -f1)" > "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage.md5"
 
       - name: Create Release
         uses: ncipollo/release-action@v1.13.0
@@ -111,4 +107,4 @@ jobs:
           name: "v${{env.APP_VER}}"
           tag: "v${{env.APP_VER}}"
           bodyFile: CHANGELOG.md
-          artifacts: "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage"
+          artifacts: "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage*"
