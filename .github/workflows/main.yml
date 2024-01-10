@@ -99,7 +99,7 @@ jobs:
           ${{github.workspace}}/appimagetool-x86_64.AppImage QuranCompanion.AppDir
           Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
 
-          echo "$(md5sum "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" | cut -d' ' -f1)" > "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage.md5"
+          md5sum "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" > "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage.md5"
 
       - name: Create Release
         uses: ncipollo/release-action@v1.13.0
