@@ -155,7 +155,7 @@
     </message>
     <message>
         <location filename="../main.cpp"/>
-        <source>Al-baghawy</source>
+        <source>Al-Baghawy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -753,7 +753,7 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../../src/widgets/aboutdialog.ui" line="20"/>
-        <source>Dialog</source>
+        <source>About Quran Companion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
