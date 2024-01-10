@@ -205,13 +205,18 @@
     </message>
     <message>
       <location filename="../main.cpp"/>
+      <source>Al-Jalalayn - English</source>
+      <translation type="unfinished">Al-Jalalayn - English</translation>
+    </message>
+    <message>
+      <location filename="../main.cpp"/>
       <source>Al-Jalalayn - Indonesian</source>
       <translation type="unfinished">Al-Jalalayn - Indonesian</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
-      <source>Kluiev &amp; Al-Sa&apos;ady - Russian</source>
-      <translation type="unfinished">Kluiev &amp; Al-Sa&apos;ady - Russian</translation>
+      <source>Kuliev &amp; Al-Sa&apos;ady - Russian</source>
+      <translation type="unfinished">Kuliev &amp; Al-Sa&apos;ady - Russian</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
@@ -550,7 +555,7 @@
     <message>
       <location filename="../../src/core/mainwindow.ui" line="17"/>
       <location filename="../../src/core/mainwindow.cpp" line="36"/>
-      <location filename="../../src/core/mainwindow.cpp" line="1029"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1030"/>
       <source>Quran Companion</source>
       <translation>Kura-an'ı Kerim Arkadaşı</translation>
     </message>
@@ -591,7 +596,7 @@
     </message>
     <message>
       <location filename="../../src/core/mainwindow.ui" line="755"/>
-      <location filename="../../src/core/mainwindow.cpp" line="595"/>
+      <location filename="../../src/core/mainwindow.cpp" line="596"/>
       <source>Navigation</source>
       <translation>Gezinme</translation>
     </message>
@@ -652,7 +657,7 @@
     </message>
     <message>
       <location filename="../../src/core/mainwindow.ui" line="1065"/>
-      <location filename="../../src/core/mainwindow.cpp" line="1224"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1232"/>
       <source>About Qt</source>
       <translation>Qt Hakkında</translation>
     </message>
@@ -719,27 +724,27 @@
       <translation>Güncellemeler mevcuttur, en son güncellemeleri yüklemek için bakım aracını kullanın.</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1025"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1026"/>
       <source>Now playing: </source>
       <translation>Şimdi oynatılıyor: </translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1026"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1027"/>
       <source>Surah </source>
       <translation>Sure </translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1072"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1073"/>
       <source>Recitation not found</source>
       <translation>Kıraat bulunamadı</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1073"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1074"/>
       <source>The recitation files for the current surah is missing, would you like to download it?</source>
       <translation>Güncel Surenin kıraat dosyaları eksik, indirmek ister misiniz?</translation>
     </message>
     <message>
-      <location filename="../../src/core/mainwindow.cpp" line="1599"/>
+      <location filename="../../src/core/mainwindow.cpp" line="1607"/>
       <source>Verse Of The Day</source>
       <translation>Günün Ayeti</translation>
     </message>
@@ -753,8 +758,8 @@
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="102"/>
-      <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Quran Companion&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-      <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Quran Companion&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+      <source>&lt;b&gt;Quran Companion&lt;/b&gt;</source>
+      <translation type="unfinished">&lt;b&gt;Quran Companion&lt;/b&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="123"/>
@@ -773,51 +778,56 @@
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="211"/>
-      <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;Waqf General Public License&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-      <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;Waqf General Public License&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+      <source>Licensed under the &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;Waqf General Public License&lt;/a&gt;</source>
+      <translation type="unfinished">Licensed under the &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;Waqf General Public License&lt;/a&gt;</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="221"/>
-      <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Useful Links&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-      <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Useful Links&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+      <source>&lt;b&gt;Useful Links&lt;/b&gt;</source>
+      <translation type="unfinished">&lt;b&gt;Useful Links&lt;/b&gt;</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/aboutdialog.ui" line="228"/>
-      <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;Project Link&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-      <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;Project Link&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+      <location filename="../../src/widgets/aboutdialog.ui" line="231"/>
+      <source>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;Project Homepage&lt;/a&gt;</source>
+      <translation type="unfinished">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;Project Homepage&lt;/a&gt;</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/aboutdialog.ui" line="238"/>
-      <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;Report a bug/Request a feature&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-      <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;Report a bug/Request a feature&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+      <location filename="../../src/widgets/aboutdialog.ui" line="244"/>
+      <source>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;Report a bug/Request a feature&lt;/a&gt;</source>
+      <translation type="unfinished">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;Report a bug/Request a feature&lt;/a&gt;</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/aboutdialog.ui" line="248"/>
-      <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;Contribute to translations&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-      <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;Contribute to translations&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+      <location filename="../../src/widgets/aboutdialog.ui" line="257"/>
+      <source>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;Contribute to translations&lt;/a&gt;</source>
+      <translation type="unfinished">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;Contribute to translations&lt;/a&gt;</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/aboutdialog.ui" line="259"/>
+      <location filename="../../src/widgets/aboutdialog.ui" line="268"/>
       <source>Translators</source>
       <translation type="unfinished">Translators</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/aboutdialog.ui" line="313"/>
+      <location filename="../../src/widgets/aboutdialog.ui" line="325"/>
       <source>Credits</source>
       <translation type="unfinished">Credits</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/aboutdialog.ui" line="330"/>
-      <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Recitations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-      <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Recitations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+      <location filename="../../src/widgets/aboutdialog.ui" line="339"/>
+      <source>&lt;b&gt;Recitations&lt;/b&gt;</source>
+      <translation type="unfinished">&lt;b&gt;Recitations&lt;/b&gt;</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/aboutdialog.ui" line="364"/>
-      <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Tafsir/Translations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-      <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Tafsir/Translations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+      <location filename="../../src/widgets/aboutdialog.ui" line="380"/>
+      <source>&lt;b&gt;Tafsir/Translations&lt;/b&gt;</source>
+      <translation type="unfinished">&lt;b&gt;Tafsir/Translations&lt;/b&gt;</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/aboutdialog.ui" line="398"/>
+      <location filename="../../src/widgets/aboutdialog.ui" line="424"/>
+      <source>&lt;b&gt;Surah Cards&lt;/b&gt;</source>
+      <translation type="unfinished">&lt;b&gt;Surah Cards&lt;/b&gt;</translation>
+    </message>
+    <message>
+      <location filename="../../src/widgets/aboutdialog.ui" line="465"/>
       <source>&lt;b&gt;Libraries&lt;/b&gt;</source>
       <translation type="unfinished">&lt;b&gt;Libraries&lt;/b&gt;</translation>
     </message>
@@ -1147,42 +1157,42 @@
   <context>
     <name>QuranPageBrowser</name>
     <message>
-      <location filename="../../src/widgets/quranpagebrowser.cpp" line="347"/>
+      <location filename="../../src/widgets/quranpagebrowser.cpp" line="356"/>
       <source>Zoom In</source>
       <translation>Yakınlaştır</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/quranpagebrowser.cpp" line="348"/>
+      <location filename="../../src/widgets/quranpagebrowser.cpp" line="357"/>
       <source>Zoom Out</source>
       <translation>Uzaklaştır</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/quranpagebrowser.cpp" line="349"/>
+      <location filename="../../src/widgets/quranpagebrowser.cpp" line="358"/>
       <source>Copy Verse</source>
       <translation>Ayeti kopyala</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/quranpagebrowser.cpp" line="350"/>
+      <location filename="../../src/widgets/quranpagebrowser.cpp" line="359"/>
       <source>Select</source>
       <translation>Seç</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/quranpagebrowser.cpp" line="351"/>
+      <location filename="../../src/widgets/quranpagebrowser.cpp" line="360"/>
       <source>Play</source>
       <translation>Oynat</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/quranpagebrowser.cpp" line="352"/>
+      <location filename="../../src/widgets/quranpagebrowser.cpp" line="361"/>
       <source>Tafsir</source>
       <translation>Tefsir</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/quranpagebrowser.cpp" line="353"/>
+      <location filename="../../src/widgets/quranpagebrowser.cpp" line="362"/>
       <source>Add Bookmark</source>
       <translation>Yer işareti Ekle</translation>
     </message>
     <message>
-      <location filename="../../src/widgets/quranpagebrowser.cpp" line="354"/>
+      <location filename="../../src/widgets/quranpagebrowser.cpp" line="363"/>
       <source>Remove Bookmark</source>
       <translation>Yer imini kaldır</translation>
     </message>
