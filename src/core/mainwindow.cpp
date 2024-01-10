@@ -528,6 +528,7 @@ MainWindow::init()
   m_player =
     new VersePlayer(this, m_currVerse, m_settings->value("Reciter", 0).toInt());
   m_popup = new NotificationPopup(this);
+  m_betaqaViewer = new BetaqaViewer(this);
   m_downManPtr = new DownloadManager(this);
   m_settingsDlg = new SettingsDialog(this, m_player);
 
@@ -1106,6 +1107,13 @@ MainWindow::verseClicked()
 void
 MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
 {
+  if (hrefUrl.toString().at(1) == 'F') {
+    int surah = hrefUrl.toString().remove("#F").toInt();
+    qDebug() << "SURAH FRAME" << surah;
+    m_betaqaViewer->showSurah(surah);
+    return;
+  }
+
   QuranPageBrowser* senderBrowser = qobject_cast<QuranPageBrowser*>(sender());
   int browerIdx = senderBrowser == m_quranBrowsers[1];
   int idx = hrefUrl.toString().remove('#').toInt();
@@ -1622,10 +1630,9 @@ void
 MainWindow::resizeEvent(QResizeEvent* event)
 {
   QMainWindow::resizeEvent(event);
-  if (m_popup) {
-    m_popup->adjustLocation();
-    m_popup->move(m_popup->notificationPos());
-  }
+  m_popup->adjustLocation();
+  m_popup->move(m_popup->notificationPos());
+  m_betaqaViewer->center();
 }
 
 void

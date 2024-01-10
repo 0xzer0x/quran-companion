@@ -32,9 +32,10 @@ public:
    */
   enum Database
   {
-    null,       ///< default value
-    quran,      ///< (quran.db) main Quran database file
-    glyphs,     ///< (glyphs.db) QCF glyphs database
+    null,   ///< default value
+    quran,  ///< (quran.db) main Quran database file
+    glyphs, ///< (glyphs.db) QCF glyphs database
+    betaqat,
     bookmarks,  ///< (bookmarks.db) bookmarked verses and khatmah database
     tafsir,     ///< currently selected tafsir database file
     translation ///< currently selected translation database file
@@ -73,7 +74,7 @@ public:
    * @param page - Quran page number
    * @return QList of 2 integers [0: surah index, 1: juz number]
    */
-  QList<int> getPageMetadata(const int page);
+  QPair<int, int> getPageMetadata(const int page);
   /**
    * @brief get Quran page QCF glyphs separated as lines
    * @param page - Quran page number
@@ -177,6 +178,9 @@ public:
    * @return QString containing the sura name
    */
   QString getSurahName(const int sIdx, bool ar = false);
+
+  QString getBetaqa(const int surah);
+
   /**
    * @brief gets the corresponding id for the verse in the database
    * @param sIdx - sura number
@@ -351,6 +355,8 @@ private:
    * @brief path to the QCF glyphs database file
    */
   QFileInfo m_glyphsDbPath;
+
+  QFileInfo m_betaqatDbPath;
   /**
    * @brief QList of sura names (Arabic if UI language is Arabic, Otherwise
    * English)

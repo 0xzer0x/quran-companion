@@ -114,17 +114,32 @@ QuranPageBrowser::surahFrame(int surah)
   return baseImage;
 }
 
+int
+QuranPageBrowser::setHref(QTextCursor* cursor, int to, QString url)
+{
+  QTextCharFormat anchorFormat;
+  anchorFormat.setAnchor(true);
+  anchorFormat.setAnchorHref(url);
+
+  int lastInsertPos = cursor->position();
+  cursor->setPosition(to, QTextCursor::KeepAnchor);
+  cursor->mergeCharFormat(anchorFormat);
+  cursor->setPosition(lastInsertPos);
+
+  return lastInsertPos;
+}
+
 QString
 QuranPageBrowser::pageHeader(int page)
 {
-  QList<int> headerData = m_dbMgr->getPageMetadata(page);
+  m_headerData = m_dbMgr->getPageMetadata(page);
 
   QString suraHeader, jozzHeader;
   suraHeader.append("سورة ");
-  suraHeader.append(m_dbMgr->getSurahName(headerData.at(0), true));
+  suraHeader.append(m_dbMgr->getSurahName(m_headerData.first, true));
   suraHeader.append("$");
   jozzHeader.append("الجزء ");
-  jozzHeader.append(m_dbMgr->getJuzGlyph(headerData.at(1)));
+  jozzHeader.append(m_dbMgr->getJuzGlyph(m_headerData.second));
 
   return suraHeader + jozzHeader;
 }
@@ -137,10 +152,8 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
     m_highlightedIdx = -1;
   }
   // cleanup
-  if (!m_pageVerseCoords.empty()) {
-    qDeleteAll(m_pageVerseCoords);
-    m_pageVerseCoords.clear();
-  }
+  if (!m_verseCoordinates.empty())
+    m_verseCoordinates.clear();
   this->document()->clear();
 
   m_pageFont = m_fontnamePrefix;
@@ -162,7 +175,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
   // insert header in pages 3-604
   if (pageNo > 2) {
     m_headerTextFormat.setForeground(
-      QBrush(qApp->palette().color(QPalette::ColorRole::PlaceholderText)));
+      QBrush(qApp->palette().color(QPalette::PlaceholderText)));
 
     // smaller header font size for long juz > 10
     if (m_qcfVer == 1 && pageNo >= 202)
@@ -172,6 +185,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
 
     textCursor.insertBlock(m_pageFormat, m_headerTextFormat);
     textCursor.insertText(this->justifyHeader(m_currPageHeader));
+    setHref(&textCursor, 1, "#F" + QString::number(m_headerData.first));
   }
 
   this->parentWidget()->setMinimumWidth(m_pageLineSize.width() + 70);
@@ -187,11 +201,14 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
 
     if (l.contains("frame")) {
       // generate frame for surah
-      QImage surahFrame = this->surahFrame(l.split('_').at(1).toInt());
+      int surah = l.split('_').at(1).toInt();
+      QImage surahFrame = this->surahFrame(surah);
       // insert the surah image in the document
       textCursor.insertBlock(m_pageFormat, m_bodyTextFormat);
       textCursor.insertImage(surahFrame.scaledToWidth(
         m_pageLineSize.width() + 5, Qt::SmoothTransformation));
+
+      setHref(&textCursor, prevAnchor, "#F" + QString::number(surah));
       prevAnchor += 2;
     } else if (l.contains("bsml")) {
       QImage bsml(":/resources/basmalah.png");
@@ -211,22 +228,14 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
           if (glyph != ':') {
             textCursor.insertText(glyph);
           } else {
-            QTextCharFormat anchorFormat;
-            anchorFormat.setAnchor(true);
-            anchorFormat.setAnchorHref("#" + QString::number(counter));
+            int lastInsertPos =
+              setHref(&textCursor, prevAnchor, "#" + QString::number(counter));
 
-            int lastInsertPos = textCursor.position();
-            textCursor.setPosition(prevAnchor, QTextCursor::KeepAnchor);
-            textCursor.mergeCharFormat(anchorFormat);
-
-            int* coords = new int[2];
-            coords[0] = prevAnchor;
-            coords[1] = lastInsertPos;
-            m_pageVerseCoords.append(coords);
+            QPair<int, int> coords(prevAnchor, lastInsertPos);
+            m_verseCoordinates.append(coords);
 
             counter++;
             prevAnchor = lastInsertPos;
-            textCursor.setPosition(lastInsertPos);
           }
         }
 
@@ -246,7 +255,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
 void
 QuranPageBrowser::highlightVerse(int verseIdxInPage)
 {
-  if (verseIdxInPage > m_pageVerseCoords.size() || verseIdxInPage < 0) {
+  if (verseIdxInPage > m_verseCoordinates.size() || verseIdxInPage < 0) {
     qCritical() << "verseIdxInPage is out of page coords range!!!";
     return;
   }
@@ -259,10 +268,10 @@ QuranPageBrowser::highlightVerse(int verseIdxInPage)
   else
     tcf.setBackground(m_highlightColor);
 
-  const int* const bounds = m_pageVerseCoords.at(verseIdxInPage);
+  const QPair<int, int>& bounds = m_verseCoordinates.at(verseIdxInPage);
 
-  m_highlighter->setPosition(bounds[0]);
-  m_highlighter->setPosition(bounds[1], QTextCursor::KeepAnchor);
+  m_highlighter->setPosition(bounds.first);
+  m_highlighter->setPosition(bounds.second, QTextCursor::KeepAnchor);
   m_highlighter->mergeCharFormat(tcf);
 
   m_highlightedIdx = verseIdxInPage;
@@ -413,7 +422,8 @@ QuranPageBrowser::updateHighlightLayer()
     hc.setAlpha(80);
 
   m_highlightColor.setColor(hc);
-  highlightVerse(old);
+  if (old != -1)
+    highlightVerse(old);
 }
 
 int

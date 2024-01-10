@@ -295,3 +295,10 @@ QDialog#dlgVOTD:hover {
   border-radius: 3px;
   background: palette(window);
 }
+
+QWidget#BetaqaViewer QTextBrowser {
+  border: 2px solid palette(highlight);
+  background-color: #ddd2c0;
+  border-radius: 12px;
+  padding: 8px;
+}

@@ -11,10 +11,12 @@ DBManager::DBManager(QObject* parent)
 {
   m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
   m_glyphsDbPath.setFile(m_dbDir.filePath("glyphs.db"));
+  m_betaqatDbPath.setFile(m_dbDir.filePath("betaqat.db"));
 
   // set database driver, set the path & open a connection with the db
   QSqlDatabase::addDatabase("QSQLITE", "QuranCon");
   QSqlDatabase::addDatabase("QSQLITE", "GlyphsCon");
+  QSqlDatabase::addDatabase("QSQLITE", "BetaqatCon");
   QSqlDatabase::addDatabase("QSQLITE", "BookmarksCon");
   QSqlDatabase::addDatabase("QSQLITE", "TafsirCon");
   QSqlDatabase::addDatabase("QSQLITE", "TranslationCon");
@@ -35,6 +37,9 @@ DBManager::setOpenDatabase(Database db, QString filePath)
   m_currentDb = db;
   m_openDBCon.close();
   switch (db) {
+    case null:
+      break;
+
     case quran:
       m_openDBCon = QSqlDatabase::database("QuranCon");
       break;
@@ -55,7 +60,8 @@ DBManager::setOpenDatabase(Database db, QString filePath)
       m_openDBCon = QSqlDatabase::database("TranslationCon");
       break;
 
-    case null:
+    case betaqat:
+      m_openDBCon = QSqlDatabase::database("BetaqatCon");
       break;
   }
 
@@ -90,7 +96,7 @@ DBManager::setCurrentTranslation(int translationIdx)
 
 /* ---------------- Page-related methods ---------------- */
 
-QList<int>
+QPair<int, int>
 DBManager::getPageMetadata(const int page)
 {
   QList<int> data; // { surahIdx, jozz }
@@ -104,10 +110,7 @@ DBManager::getPageMetadata(const int page)
     qCritical() << "Error occurred during getPageMetadata SQL statment exec";
 
   dbQuery.next();
-  data.push_back(dbQuery.value(0).toInt());
-  data.push_back(dbQuery.value(1).toInt());
-
-  return data;
+  return { dbQuery.value(0).toInt(), dbQuery.value(1).toInt() };
 }
 
 QStringList
@@ -265,6 +268,26 @@ DBManager::getSurahName(const int sIdx, bool ar)
   dbQuery.bindValue(0, sIdx);
   if (!dbQuery.exec()) {
     qCritical() << "Error occurred during getSurahName SQL statment exec";
+  }
+
+  dbQuery.next();
+  return dbQuery.value(0).toString();
+}
+
+QString
+DBManager::getBetaqa(const int surah)
+{
+  setOpenDatabase(betaqat, m_betaqatDbPath.filePath());
+  QSqlQuery dbQuery(m_openDBCon);
+
+  if (m_languageCode == QLocale::Arabic)
+    dbQuery.prepare("SELECT text FROM content WHERE sura=:i");
+  else
+    dbQuery.prepare("SELECT text_en FROM content WHERE sura=:i");
+
+  dbQuery.bindValue(0, surah);
+  if (!dbQuery.exec()) {
+    qCritical() << "Error occurred during getBetaqa SQL statment exec";
   }
 
   dbQuery.next();
@@ -780,9 +803,9 @@ DBManager::getTranslation(const int sIdx, const int vIdx)
 
   QSqlQuery dbQuery(m_openDBCon);
 
-  QString q = "SELECT text FROM %0 WHERE sura=%1 AND aya=%2";
-  q = q.arg(m_transDbPath.baseName()).arg(sIdx).arg(vIdx);
-  dbQuery.prepare(q);
+  dbQuery.prepare("SELECT text FROM content WHERE sura=:s AND aya=:v");
+  dbQuery.bindValue(0, sIdx);
+  dbQuery.bindValue(1, vIdx);
 
   if (!dbQuery.exec())
     qFatal("Couldn't execute getTranslation query!");

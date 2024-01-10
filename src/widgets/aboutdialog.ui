@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>330</width>
-    <height>398</height>
+    <height>472</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
     <width>330</width>
-    <height>398</height>
+    <height>472</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
    <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="frmAppInfo">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -42,7 +42,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="lbLogo">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -73,7 +73,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0">
+       <layout class="QVBoxLayout" name="lytInfo" stretch="0,0,1,0">
         <property name="spacing">
          <number>2</number>
         </property>
@@ -91,7 +91,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="lbAppName">
           <property name="font">
            <font>
             <family>Sans Serif</family>
@@ -99,7 +99,7 @@
            </font>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Quran Companion&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;b&gt;Quran Companion&lt;/b&gt;</string>
           </property>
          </widget>
         </item>
@@ -218,14 +218,17 @@
        <item>
         <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Useful Links&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;b&gt;Useful Links&lt;/b&gt;</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_15">
+         <property name="toolTip">
+          <string>https://github.com/0xzer0x/quran-companion</string>
+         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;Project Link&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;Project Homepage&lt;/a&gt;</string>
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
@@ -234,8 +237,11 @@
        </item>
        <item>
         <widget class="QLabel" name="label_5">
+         <property name="toolTip">
+          <string>https://github.com/0xzer0x/quran-companion/issues</string>
+         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;Report a bug/Request a feature&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;Report a bug/Request a feature&lt;/a&gt;</string>
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
@@ -244,8 +250,11 @@
        </item>
        <item>
         <widget class="QLabel" name="label_6">
+         <property name="toolTip">
+          <string>https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations</string>
+         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;Contribute to translations&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;Contribute to translations&lt;/a&gt;</string>
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
@@ -283,8 +292,11 @@
          </item>
          <item>
           <widget class="QLabel" name="label_9">
+           <property name="toolTip">
+            <string>https://crowdin.com/profile/halak0013</string>
+           </property>
            <property name="text">
-            <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://crowdin.com/profile/halak0013&quot;&gt;@halak0013&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string notr="true">&lt;a href=&quot;https://crowdin.com/profile/halak0013&quot;&gt;@halak0013&lt;/a&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
@@ -312,29 +324,30 @@
       <attribute name="title">
        <string>Credits</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
-       <property name="spacing">
-        <number>2</number>
-       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
+        <layout class="QVBoxLayout" name="lytRecitations">
          <property name="spacing">
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="label_12">
+          <widget class="QLabel" name="lbRecitations">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Recitations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;b&gt;Recitations&lt;/b&gt;</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QLabel" name="label_11">
            <property name="text">
-            <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://everyayah.com/recitations_ayat.html&quot;&gt;EveryAyah&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://alquran.cloud/cdn&quot;&gt;AlQuran Cloud CDN&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://quran.ksu.edu.sa/index.php&quot;&gt;Ayat&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string notr="true">- &lt;a href=&quot;https://everyayah.com/recitations_ayat.html&quot;&gt;EveryAyah&lt;/a&gt;
+&lt;br/&gt;
+- &lt;a href=&quot;https://alquran.cloud/cdn&quot;&gt;AlQuran Cloud CDN&lt;/a&gt;
+&lt;br/&gt;
+- &lt;a href=&quot;https://quran.ksu.edu.sa/index.php&quot;&gt;Ayat&lt;/a&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
@@ -357,18 +370,25 @@
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
+        <layout class="QVBoxLayout" name="lytContent">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
-          <widget class="QLabel" name="label_13">
+          <widget class="QLabel" name="lbContentType">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Tafsir/Translations&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;b&gt;Tafsir/Translations&lt;/b&gt;</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QLabel" name="label_14">
            <property name="text">
-            <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://quran.ksu.edu.sa/index.php&quot;&gt;Ayat&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://api-docs.quran.com/&quot;&gt;Quran.com API&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://mosshaf.com&quot;&gt;Mosshaf&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string notr="true">- &lt;a href=&quot;https://quran.ksu.edu.sa/index.php&quot;&gt;Ayat&lt;/a&gt;
+&lt;br/&gt;
+- &lt;a href=&quot;https://api-docs.quran.com/&quot;&gt;Quran.com API&lt;/a&gt;
+&lt;br/&gt;
+- &lt;a href=&quot;https://mosshaf.com&quot;&gt;Mosshaf&lt;/a&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
@@ -391,9 +411,56 @@
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_7">
+        <layout class="QVBoxLayout" name="lytCards">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
-          <widget class="QLabel" name="label_20">
+          <widget class="QLabel" name="lbSurahCards">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>&lt;b&gt;Surah Cards&lt;/b&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_19">
+           <property name="text">
+            <string notr="true">- &lt;a href=&quot;https://albitaqat.com&quot;&gt;AlBitaqat&lt;/a&gt;
+&lt;br/&gt;
+- &lt;a href=&quot;https://api-docs.quran.com&quot;&gt;Sayyid Abul Ala Maududi - Tafheem ul-Qur'an&lt;/a&gt;
+
+</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="lytLibs">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="lbLibraries">
            <property name="text">
             <string>&lt;b&gt;Libraries&lt;/b&gt;</string>
            </property>
@@ -402,7 +469,7 @@
          <item>
           <widget class="QLabel" name="label_21">
            <property name="text">
-            <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://github.com/gamecreature/QtAwesome&quot;&gt;QtAwesome&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string notr="true">- &lt;a href=&quot;https://github.com/gamecreature/QtAwesome&quot;&gt;QtAwesome&lt;/a&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>

@@ -172,6 +172,17 @@ private:
    */
   QImage surahFrame(int surah);
   /**
+   * @brief Set the Href object
+   *
+   * @param cursor
+   * @param to
+   * @param url
+   * @return int
+   *
+   * MODIFIED
+   */
+  int setHref(QTextCursor* cursor, int to, QString url);
+  /**
    * @brief boolean indicating whether to highlight the foreground of the active
    * verse or not
    */
@@ -269,7 +280,8 @@ private:
    * @brief QList of integer arrays of start & end position for each verse in
    * the current page
    */
-  QList<int*> m_pageVerseCoords;
+  QList<QPair<int, int>> m_verseCoordinates;
+  QPair<int, int> m_headerData;
   /**
    * @brief Hash Table used for converting page number to arabic numbers
    */

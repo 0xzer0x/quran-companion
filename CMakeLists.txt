@@ -73,6 +73,9 @@ set(PROJECT_SOURCES
     src/widgets/aboutdialog.h
     src/widgets/aboutdialog.cpp
     src/widgets/aboutdialog.ui
+    src/widgets/betaqaviewer.h
+    src/widgets/betaqaviewer.cpp
+    src/widgets/betaqaviewer.ui
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
     src/utils/dbmanager.h

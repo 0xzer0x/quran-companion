@@ -12,6 +12,7 @@
 #include "../utils/shortcuthandler.h"
 #include "../utils/verseplayer.h"
 #include "../widgets/aboutdialog.h"
+#include "../widgets/betaqaviewer.h"
 #include "../widgets/notificationpopup.h"
 #include "../widgets/quranpagebrowser.h"
 #include "../widgets/verseframe.h"
@@ -605,6 +606,12 @@ private:
    * @brief pointer to the currently highlighted VerseFrame in the side panel
    */
   VerseFrame* m_highlightedFrm = nullptr;
+  /**
+   * @brief m_betaqaViewer
+   *
+   * MODIFIED
+   */
+  BetaqaViewer* m_betaqaViewer = nullptr;
   /**
    * @brief the currently selected ::Verse
    */

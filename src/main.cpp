@@ -226,6 +226,7 @@ addFonts(int qcfVersion)
   QFontDatabase::addApplicationFont(fontsDir.filePath("PakTypeNaskhBasic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("ExpoArabic.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
+  QFontDatabase::addApplicationFont(fontsDir.filePath("droid_sans.ttf"));
   // fonts for verses
   QFontDatabase::addApplicationFont(fontsDir.filePath("uthmanic_hafs_v20.ttf"));
   QFontDatabase::addApplicationFont(fontsDir.filePath("Emine.ttf"));
