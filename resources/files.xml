@@ -5,7 +5,7 @@
         <tafsir name="Aysar ul-Tafasir" file="aysar.db" text="0" extra="1" />
         <tafsir name="Al-Tafsir Al-Waseet" file="waseet.db" text="0" extra="1" />
         <tafsir name="Al-Mukhtasar fil Tafsir" file="mukhtasar.db" text="1" extra="1" />
-        <tafsir name="Al-baghawy" file="baghawy.db" text="0" extra="1" />
+        <tafsir name="Al-Baghawy" file="baghawy.db" text="0" extra="1" />
         <tafsir name="Al-Qortoby" file="qortoby.db" text="0" extra="1" />
         <tafsir name="Al-Sa&apos;ady" file="sa3dy.db" text="1" extra="0" />
         <tafsir name="Al-Tabary" file="tabary.db" text="0" extra="1" />
