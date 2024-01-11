@@ -10,12 +10,6 @@
     <height>700</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <family>Droid Sans</family>
-    <pointsize>10</pointsize>
-   </font>
-  </property>
   <property name="focusPolicy">
    <enum>Qt::StrongFocus</enum>
   </property>
@@ -45,7 +39,7 @@
     <widget class="QTextBrowser" name="betaqaTextBrowser">
      <property name="font">
       <font>
-       <family>Droid Sans</family>
+       <family>Noto Serif Old Uyghur</family>
        <pointsize>14</pointsize>
       </font>
      </property>
