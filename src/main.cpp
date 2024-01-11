@@ -203,8 +203,8 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->setValue("QCF1Size", settings->value("QCF1Size", 22));
       settings->setValue("QCF2Size", settings->value("QCF2Size", 20));
       settings->setValue("QCF", settings->value("QCF", 1));
-      settings->setValue("VerseText", settings->value("VerseText", 0));
-      settings->setValue("VerseTextSize", settings->value("VerseTextSize", 20));
+      settings->setValue("VerseType", settings->value("VerseType", 0));
+      settings->setValue("VerseFontSize", settings->value("VerseFontSize", 20));
       settings->setValue("Tafsir", settings->value("Tafsir", 1));
       settings->setValue("Translation", settings->value("Translation", 5));
       settings->setValue(
@@ -236,7 +236,6 @@ addFonts(int qcfVersion)
   switch (qcfVersion) {
     case 1:
       fontsDir.cd("QCFV1");
-      qcfFontPrefix = "QCF_P";
       break;
     case 2:
       fontsDir.setPath(downloadsDir.absolutePath() + "/QCFV2");
@@ -246,9 +245,7 @@ addFonts(int qcfVersion)
 
   // add required fonts
   for (int i = 1; i < 605; i++) {
-    QString fontName = qcfFontPrefix;
-    fontName.append(QString::number(i).rightJustified(3, '0'));
-    fontName.append(".ttf");
+    QString fontName = pageFontname(i) + ".ttf";
 
     if (qcfVersion == 2 && !fontsDir.exists(fontName)) {
       settings->setValue("Reader/QCF", 1);

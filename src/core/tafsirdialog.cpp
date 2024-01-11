@@ -81,19 +81,8 @@ TafsirDialog::loadVerseTafsir()
                   " - " + tr("Verse: ") + QString::number(m_shownVerse.number);
   QString glyphs =
     m_dbMgr->getVerseGlyphs(m_shownVerse.surah, m_shownVerse.number);
-  QString fontFamily;
-  switch (m_dbMgr->getVerseText()) {
-    case qcf:
-      fontFamily = m_fontPrefix +
-                   QString::number(m_shownVerse.page).rightJustified(3, '0');
-      break;
-    case uthmanic:
-      fontFamily = "kfgqpc_hafs_uthmanic _script";
-      break;
-    case annotated:
-      fontFamily = "Emine";
-      break;
-  }
+  QString fontFamily =
+      Globals::verseFontname(m_dbMgr->getVerseType(), m_shownVerse.page);
 
   ui->lbVerseInfo->setText(title);
   ui->lbVerseText->setWordWrap(true);

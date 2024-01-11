@@ -17,7 +17,7 @@ QLocale::Language language;
 
 // qcf fonts
 int qcfVersion = 1;
-QString qcfFontPrefix;
+QString qcfFontPrefix = "QCF_P";
 
 // app directories
 QDir themeResources;
@@ -35,4 +35,29 @@ QList<Translation> translationsList;
 QString updateToolPath;
 QMap<QString, QString> shortcutDescription;
 fa::QtAwesome* awesome;
+
+QString
+pageFontname(int page)
+{
+  return qcfFontPrefix + QString::number(page).rightJustified(3, '0');
+}
+
+QString
+verseFontname(VerseType type, int page)
+{
+  QString fontname;
+  switch (type) {
+    case qcf:
+      fontname = pageFontname(page);
+      break;
+    case uthmanic:
+      fontname = "kfgqpc_hafs_uthmanic _script";
+      break;
+    case annotated:
+      fontname = "Emine";
+      break;
+  }
+  return fontname;
+}
+
 };

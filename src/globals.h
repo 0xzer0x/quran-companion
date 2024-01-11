@@ -95,12 +95,13 @@ enum DownloadType
   QCF
 };
 
-enum VerseText
+enum VerseType
 {
   qcf,
   uthmanic,
   annotated
 };
+
 /**
  * @brief ReaderMode enum represents the available modes for the Quran reader in
  * MainWindow
@@ -169,6 +170,10 @@ extern QObject* databaseManager; ///< global pointer to the application-wide
 extern fa::QtAwesome*
   awesome; ///< global pointer used for generating font awesome icons
 
+extern QString
+pageFontname(int page);
+extern QString
+verseFontname(VerseType type, int page);
 };
 
 #endif // GLOBALS_H

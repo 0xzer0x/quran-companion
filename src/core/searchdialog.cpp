@@ -107,19 +107,7 @@ SearchDialog::showResults()
 
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
-    QString fontName;
-    switch (m_dbMgr->getVerseText()) {
-      case qcf:
-        fontName =
-          m_fontPrefix + QString::number(v.page).rightJustified(3, '0');
-        break;
-      case uthmanic:
-        fontName = "kfgqpc_hafs_uthmanic _script";
-        break;
-      case annotated:
-        fontName = "Emine";
-        break;
-    }
+      QString fontName = Globals::verseFontname(m_dbMgr->getVerseType(), v.page);
 
     VerseFrame* vFrame = new VerseFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);

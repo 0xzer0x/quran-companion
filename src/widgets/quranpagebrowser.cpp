@@ -13,15 +13,13 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   , m_highlighter{ new QTextCursor(document()) }
   , m_highlightColor{ QBrush(qApp->palette().color(QPalette::Highlight)) }
 {
-  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-  verticalScrollBar()->setVisible(false);
-  setStyleSheet("QTextBrowser{background-color: transparent;}");
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setTextInteractionFlags(Qt::TextInteractionFlag::LinksAccessibleByMouse);
+  setStyleSheet("QTextBrowser{background-color: transparent;}");
   createActions();
   updateFontSize();
 
-  m_pageFont = m_fontnamePrefix;
-  m_pageFont.append(QString::number(initPage).rightJustified(3, '0'));
+  m_pageFont = Globals::pageFontname(initPage);
   m_pageFormat.setAlignment(Qt::AlignCenter);
   m_pageFormat.setNonBreakableLines(true);
   m_pageFormat.setLayoutDirection(Qt::RightToLeft);
@@ -156,8 +154,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
     m_verseCoordinates.clear();
   this->document()->clear();
 
-  m_pageFont = m_fontnamePrefix;
-  m_pageFont.append(QString::number(m_page).rightJustified(3, '0'));
+  m_pageFont = Globals::pageFontname(pageNo);
   QTextCursor textCursor(this->document());
 
   m_currPageHeader = this->pageHeader(m_page);

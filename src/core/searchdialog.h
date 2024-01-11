@@ -96,7 +96,6 @@ private slots:
 
 private:
   const QLocale::Language m_lang = Globals::language;
-  const QString& m_fontPrefix = Globals::qcfFontPrefix;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI

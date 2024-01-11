@@ -143,7 +143,6 @@ protected:
 
 private:
   QSettings* const m_settings = Globals::settings;
-  const QString& m_fontnamePrefix = Globals::qcfFontPrefix;
   const int m_qcfVer = Globals::qcfVersion;
   const bool m_darkMode = Globals::darkMode;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
