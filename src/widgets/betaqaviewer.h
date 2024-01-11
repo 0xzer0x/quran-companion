@@ -3,6 +3,8 @@
 
 #include "../globals.h"
 #include "../utils/dbmanager.h"
+#include <QGraphicsDropShadowEffect>
+#include <QPropertyAnimation>
 #include <QSettings>
 #include <QWidget>
 
@@ -28,6 +30,8 @@ private:
   Ui::BetaqaViewer* ui;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   int m_surah = -1;
+  QGraphicsDropShadowEffect* m_shadowEffect = nullptr;
+  QPropertyAnimation* m_sizeAnim = nullptr;
 };
 
 #endif // BETAQAVIEWER_H

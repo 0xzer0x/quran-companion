@@ -280,7 +280,13 @@ QDialog#dlgVOTD:hover {
 /* --------------- Khatmah Dialog Styles --------------- */
 
 *[khatmah="true"] {
-  border: 1px outset #cabfa4;
+  border: 1px solid #cabfa4;
+  background-color: #f7ebd5;
+  border-radius: 5px;
+}
+
+*[bookmark="true"] {
+  border: 1px solid #cabfa4;
   background-color: #f7ebd5;
   border-radius: 5px;
 }
@@ -297,7 +303,7 @@ QDialog#dlgVOTD:hover {
 }
 
 QWidget#BetaqaViewer QTextBrowser {
-  border: 2px solid palette(highlight);
+  border: 1px solid palette(highlight);
   background-color: #ddd2c0;
   border-radius: 12px;
   padding: 8px;

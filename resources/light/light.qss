@@ -313,7 +313,7 @@ QDialog#dlgVOTD:hover {
 }
 
 QWidget#BetaqaViewer QTextBrowser {
-  border: 2px solid palette(highlight);
+  border: 1px solid palette(highlight);
   background-color: #a8c7fa;
   border-radius: 12px;
   padding: 8px;

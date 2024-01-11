@@ -1,5 +1,7 @@
 #include "khatmahdialog.h"
 #include "ui_khatmahdialog.h"
+#include <qgraphicseffect.h>
+#include <qpalette.h>
 
 KhatmahDialog::KhatmahDialog(const Verse& curr, QWidget* parent)
   : QDialog(parent)
@@ -25,6 +27,13 @@ KhatmahDialog::loadKhatmah(const int id)
   QFrame* frame = new QFrame(ui->scrlDialogContent);
   // property used for styling
   frame->setProperty("khatmah", true);
+  if (!m_darkmode) {
+    QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect(frame);
+    shadow->setColor(palette().color(QPalette::Shadow));
+    shadow->setOffset(2);
+    shadow->setBlurRadius(8);
+    frame->setGraphicsEffect(shadow);
+  }
 
   QHBoxLayout* frmLayout = new QHBoxLayout();
   QVBoxLayout* lbLayout = new QVBoxLayout();

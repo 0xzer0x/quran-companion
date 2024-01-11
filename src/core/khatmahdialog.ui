@@ -83,8 +83,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>634</width>
-        <height>595</height>
+        <width>644</width>
+        <height>607</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -106,6 +106,18 @@
        <item>
         <layout class="QVBoxLayout" name="lytKhatmahList">
          <property name="spacing">
+          <number>6</number>
+         </property>
+         <property name="leftMargin">
+          <number>6</number>
+         </property>
+         <property name="topMargin">
+          <number>6</number>
+         </property>
+         <property name="rightMargin">
+          <number>6</number>
+         </property>
+         <property name="bottomMargin">
           <number>6</number>
          </property>
         </layout>

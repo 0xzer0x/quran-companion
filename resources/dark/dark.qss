@@ -301,7 +301,7 @@ QDialog#dlgVOTD:hover {
 /* --------------- Khatmah Dialog Styles --------------- */
 
 *[khatmah="true"] {
-  border: 1px outset #444444;
+  border: 1px solid #444444;
   background-color: #2a2a2a;
   border-radius: 5px;
 }
@@ -323,7 +323,7 @@ QDialog#dlgVOTD:hover {
 }
 
 QWidget#BetaqaViewer QTextBrowser {
-  border: 2px solid palette(highlight);
+  border: 1px solid palette(highlight);
   background-color: #293b57;
   border-radius: 12px;
   padding: 8px;
