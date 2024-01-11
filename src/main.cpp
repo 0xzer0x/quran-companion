@@ -16,6 +16,7 @@
 #include <QTranslator>
 #include <QXmlStreamReader>
 #include <QtAwesome.h>
+#include <qforeach.h>
 using namespace Globals;
 
 /*!
@@ -223,16 +224,11 @@ addFonts(int qcfVersion)
              QDir::separator() + "fonts";
 
   // ui fonts
-  QFontDatabase::addApplicationFont(fontsDir.filePath("PakTypeNaskhBasic.ttf"));
-  QFontDatabase::addApplicationFont(fontsDir.filePath("ExpoArabic.ttf"));
-  QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
-  QFontDatabase::addApplicationFont(fontsDir.filePath("noto-uyghur.ttf"));
-  // fonts for verses
-  QFontDatabase::addApplicationFont(fontsDir.filePath("uthmanic_hafs_v20.ttf"));
-  QFontDatabase::addApplicationFont(fontsDir.filePath("Emine.ttf"));
+  foreach (const QFileInfo& font, fontsDir.entryInfoList(QDir::Files))
+    QFontDatabase::addApplicationFont(font.absoluteFilePath());
+
   // font for surah frames
   QFontDatabase::addApplicationFont(fontsDir.filePath("QCFV1/QCF_BSML.ttf"));
-
   switch (qcfVersion) {
     case 1:
       fontsDir.cd("QCFV1");
