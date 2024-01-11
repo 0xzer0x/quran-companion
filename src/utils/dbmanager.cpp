@@ -231,7 +231,7 @@ DBManager::getJuzGlyph(const int juz)
 QString
 DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
 {
-  if (m_verseText != VerseText::qcf)
+    if (m_verseType != VerseType::qcf)
     return getVerseText(sIdx, vIdx);
 
   setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
@@ -559,7 +559,7 @@ DBManager::getVerseText(const int sIdx, const int vIdx)
 {
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
-  if (m_verseText == VerseText::annotated)
+  if (m_verseType == VerseType::annotated)
     dbQuery.prepare("SELECT aya_text_annotated FROM verses_v1 WHERE sura_no=:s "
                     "AND aya_no=:v");
   else
@@ -822,15 +822,15 @@ DBManager::setActiveKhatmah(const int id)
 }
 
 void
-DBManager::setVerseText(VerseText newVerseText)
+DBManager::setVerseType(VerseType newVerseType)
 {
-  m_verseText = newVerseText;
+    m_verseType = newVerseType;
 }
 
-VerseText
-DBManager::getVerseText() const
+VerseType
+DBManager::getVerseType() const
 {
-  return m_verseText;
+    return m_verseType;
 }
 
 const int

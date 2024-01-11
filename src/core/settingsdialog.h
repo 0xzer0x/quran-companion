@@ -181,7 +181,7 @@ signals:
    * @brief signal emitted to notify changes in the side panel font.
    */
   void sideFontChanged();
-  void verseFontChanged();
+  void verseTypeChanged();
   /**
    * @fn usedAudioDeviceChanged()
    * @brief signal emitted in order to changed audio output device used by
@@ -268,8 +268,8 @@ private:
    * the combobox.
    */
   int m_translation;
-  int m_verseText;
-  int m_verseTextSize;
+  int m_verseType;
+  int m_verseFontSize;
   /**
    * @brief boolean flag representing the verse of the day option checkbox
    * state.

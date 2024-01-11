@@ -327,7 +327,7 @@ private slots:
    * @brief set side content font to the one in the settings
    */
   void updateSideFont();
-  void updateVerseFont();
+  void updateVerseType();
   /**
    * @brief search for the surahs with the given argument when the text in the
    * side dock search box is changed

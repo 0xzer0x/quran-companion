@@ -509,9 +509,9 @@ MainWindow::setupConnections()
           this,
           &MainWindow::updateSideFont);
   connect(m_settingsDlg,
-          &SettingsDialog::verseFontChanged,
+          &SettingsDialog::verseTypeChanged,
           this,
-          &MainWindow::updateVerseFont);
+          &MainWindow::updateVerseType);
 
   // audio device signals
   connect(m_settingsDlg,
@@ -545,7 +545,7 @@ MainWindow::init()
   updateLoadedTafsir();
   updateLoadedTranslation();
   updateSideFont();
-  updateVerseFont();
+  updateVerseType();
 
   redrawQuranPage(true);
   setVerseComboBoxRange(true);
@@ -1332,9 +1332,9 @@ MainWindow::updateSideFont()
 }
 
 void
-MainWindow::updateVerseFont()
+MainWindow::updateVerseType()
 {
-  int idx = m_settings->value("Reader/VerseText").toInt();
+  int idx = m_settings->value("Reader/VerseType").toInt();
   switch (idx) {
     case 0:
       m_versesFont.setFamily(m_activeQuranBrowser->pageFont());
@@ -1347,8 +1347,8 @@ MainWindow::updateVerseFont()
       break;
   }
 
-  m_versesFont.setPointSize(m_settings->value("Reader/VerseTextSize").toInt());
-  m_dbMgr->setVerseText(static_cast<VerseText>(idx));
+  m_versesFont.setPointSize(m_settings->value("Reader/VerseFontSize").toInt());
+  m_dbMgr->setVerseType(static_cast<VerseType>(idx));
 }
 
 Verse
@@ -1619,6 +1619,7 @@ void
 MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
 {
   QPointer<QDialog> mbox = new QDialog(this);
+  mbox->setMinimumSize(600, 300);
   mbox->setObjectName("dlgVOTD");
   mbox->setLayout(new QVBoxLayout);
   mbox->setWindowIcon(ui->actionVOTD->icon());
@@ -1627,10 +1628,7 @@ MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
   lb->setText(votd.second);
   lb->setTextFormat(Qt::RichText);
   lb->setAlignment(Qt::AlignCenter);
-  QStringList uiFonts;
-  uiFonts << "Noto Sans Display"
-          << "PakType Naskh Basic";
-  lb->setFont(QFont(uiFonts, 15));
+  lb->setFont(QFont(qApp->font().families(), 15));
   lb->setCursor(Qt::PointingHandCursor);
   if (votd.second.length() > 200)
     lb->setWordWrap(true);

@@ -52,8 +52,7 @@ NotificationPopup::setupConnections()
   connect(m_fadeoutAnim,
           &QPropertyAnimation::finished,
           this,
-          &NotificationPopup::hide,
-          Qt::UniqueConnection);
+          &NotificationPopup::hide);
 }
 
 void
@@ -82,7 +81,7 @@ NotificationPopup::notify(QString message, NotificationPopup::Action icon)
 
 void
 NotificationPopup::completedDownload(DownloadType type,
-                                     const QList<int> &metainfo)
+                                     const QList<int>& metainfo)
 {
   QString msg = tr("Download Completed") + ": ";
   setStyleSheet("");
@@ -96,7 +95,7 @@ NotificationPopup::completedDownload(DownloadType type,
 }
 
 void
-NotificationPopup::downloadError(DownloadType type, const QList<int> &metainfo)
+NotificationPopup::downloadError(DownloadType type, const QList<int>& metainfo)
 {
   setStyleSheet("QFrame#Popup { background-color: #a50500 }");
   QString msg = tr("Download Failed") + ": ";

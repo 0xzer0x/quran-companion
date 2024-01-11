@@ -90,8 +90,8 @@ SettingsDialog::setCurrentSettingsAsRef()
   m_tafsir = m_settings->value("Reader/Tafsir").toInt();
   m_translation = m_settings->value("Reader/Translation").toInt();
 
-  m_verseText = m_settings->value("Reader/VerseText").toInt();
-  m_verseTextSize = m_settings->value("Reader/VerseTextSize").toInt();
+  m_verseType = m_settings->value("Reader/VerseType").toInt();
+  m_verseFontSize = m_settings->value("Reader/VerseFontSize").toInt();
 
   m_audioDevices = QMediaDevices::audioOutputs();
   ui->cmbAudioDevices->clear();
@@ -117,8 +117,8 @@ SettingsDialog::setCurrentSettingsAsRef()
   ui->chkAdaptive->setChecked(m_adaptive);
   ui->chkMissingWarning->setChecked(m_missingFileWarning);
   ui->chkFgHighlight->setChecked(m_fgHighlight);
-  ui->cmbVerseText->setCurrentIndex(m_verseText);
-  ui->cmbVersesFontSz->setCurrentText(QString::number(m_verseTextSize));
+  ui->cmbVerseText->setCurrentIndex(m_verseType);
+  ui->cmbVersesFontSz->setCurrentText(QString::number(m_verseFontSize));
 
   // shortcuts tab
   populateShortcutsModel();
@@ -286,16 +286,16 @@ SettingsDialog::updateSideFontSize(QString size)
 void
 SettingsDialog::updateVerseText(int vt)
 {
-  m_settings->setValue("Reader/VerseText", vt);
-  emit verseFontChanged();
+  m_settings->setValue("Reader/VerseType", vt);
+  emit verseTypeChanged();
   m_renderSideContent = true;
 }
 
 void
 SettingsDialog::updateVerseTextFontsize(QString size)
 {
-  m_settings->setValue("Reader/VerseTextSize", size);
-  emit verseFontChanged();
+  m_settings->setValue("Reader/VerseFontSize", size);
+  emit verseTypeChanged();
   m_renderSideContent = true;
 }
 
@@ -336,10 +336,10 @@ SettingsDialog::applyAllChanges()
   if (ui->cmbQCF->currentIndex() + 1 != m_qcfVer)
     updateQuranFont(ui->cmbQCF->currentIndex() + 1);
 
-  if (ui->cmbVerseText->currentIndex() != m_verseText)
+  if (ui->cmbVerseText->currentIndex() != m_verseType)
     updateVerseText(ui->cmbVerseText->currentIndex());
 
-  if (ui->cmbVersesFontSz->currentText() != QString::number(m_verseTextSize))
+  if (ui->cmbVersesFontSz->currentText() != QString::number(m_verseFontSize))
     updateVerseTextFontsize(ui->cmbVersesFontSz->currentText());
 
   if (ui->chkAdaptive->isChecked() != m_adaptive)

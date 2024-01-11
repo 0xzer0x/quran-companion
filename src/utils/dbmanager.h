@@ -302,16 +302,26 @@ public:
    * @param id - id of the active khatmah
    */
   void setActiveKhatmah(const int id);
-
-  void setVerseText(VerseText newVerseText);
-
-  VerseText getVerseText() const;
+  /**
+   * @brief setVerseType
+   * @param newVerseType
+   *
+   * MODIFIED
+   */
+  void setVerseType(VerseType newVerseType);
+  /**
+   * @brief getVerseType
+   * @return
+   *
+   * MODIFIED
+   */
+  VerseType getVerseType() const;
 
 private:
   QDir m_dbDir = Globals::assetsDir;
+  const int m_qcfVer = Globals::qcfVersion;
   const QSettings* m_settings = Globals::settings;
   const QLocale::Language m_languageCode = Globals::language;
-  const int m_qcfVer = Globals::qcfVersion;
   const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
   const QList<Translation>& m_translationsList = Globals::translationsList;
   const QString m_bookmarksFilepath =
@@ -330,7 +340,7 @@ private:
    */
   QSqlDatabase m_openDBCon;
 
-  VerseText m_verseText = VerseText::qcf;
+  VerseType m_verseType = VerseType::qcf;
   /**
    * @brief the current active DBManager::Tafasir
    */

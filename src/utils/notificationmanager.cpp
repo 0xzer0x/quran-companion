@@ -130,38 +130,14 @@ NotificationManager::addActions()
   connect(togglePlay,
           &QAction::triggered,
           this,
-          &NotificationManager::togglePlayback,
-          Qt::UniqueConnection);
-  connect(show,
-          &QAction::triggered,
-          this,
-          &NotificationManager::showWindow,
-          Qt::UniqueConnection);
-  connect(hide,
-          &QAction::triggered,
-          this,
-          &NotificationManager::hideWindow,
-          Qt::UniqueConnection);
-  connect(prefs,
-          &QAction::triggered,
-          this,
-          &NotificationManager::openPrefs,
-          Qt::UniqueConnection);
-  connect(exit,
-          &QAction::triggered,
-          this,
-          &NotificationManager::exit,
-          Qt::UniqueConnection);
-  connect(about,
-          &QAction::triggered,
-          this,
-          &NotificationManager::openAbout,
-          Qt::UniqueConnection);
-  connect(update,
-          &QAction::triggered,
-          this,
-          &NotificationManager::checkForUpdates,
-          Qt::UniqueConnection);
+          &NotificationManager::togglePlayback);
+  connect(show, &QAction::triggered, this, &NotificationManager::showWindow);
+  connect(hide, &QAction::triggered, this, &NotificationManager::hideWindow);
+  connect(prefs, &QAction::triggered, this, &NotificationManager::openPrefs);
+  connect(exit, &QAction::triggered, this, &NotificationManager::exit);
+  connect(about, &QAction::triggered, this, &NotificationManager::openAbout);
+  connect(
+    update, &QAction::triggered, this, &NotificationManager::checkForUpdates);
 }
 
 void
@@ -169,12 +145,9 @@ NotificationManager::setVotdMsg()
 {
   QString msg;
 
-  m_votd.second.truncate(m_votd.second.size() - 2);
-
-  msg.append("<span>");
+  msg.append("<font size='5' face='kfgqpc_hafs_uthmanic _script'>");
   msg.append("« " + m_votd.second + " »");
-  msg.append("</span>");
-  msg.append("<hr/>");
+  msg.append("</font><hr/>");
   msg.append(m_dbMgr->getTranslation(m_votd.first.surah, m_votd.first.number));
   msg.append("<p align='center'>");
   msg.append(tr("Surah: ") + m_dbMgr->getSurahName(m_votd.first.surah) + " - " +
