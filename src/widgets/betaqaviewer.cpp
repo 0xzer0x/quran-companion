@@ -15,7 +15,7 @@ BetaqaViewer::BetaqaViewer(QWidget* parent)
   ui->setupUi(this);
   ui->betaqaTextBrowser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->betaqaTextBrowser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  ui->betaqaTextBrowser->setFont(QFont("Noto Serif Old Uyghur", 14));
+  ui->betaqaTextBrowser->setFont(QFont(qApp->font().families(), 14));
 
   m_shadowEffect->setOffset(4);
   m_shadowEffect->setBlurRadius(18);

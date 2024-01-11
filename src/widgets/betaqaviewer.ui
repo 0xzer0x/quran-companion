@@ -39,7 +39,7 @@
     <widget class="QTextBrowser" name="betaqaTextBrowser">
      <property name="font">
       <font>
-       <family>Noto Serif Old Uyghur</family>
+       <family>SF Pro Display</family>
        <pointsize>14</pointsize>
       </font>
      </property>
