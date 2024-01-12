@@ -17,8 +17,8 @@ BetaqaViewer::BetaqaViewer(QWidget* parent)
   ui->betaqaTextBrowser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->betaqaTextBrowser->setFont(QFont(qApp->font().families(), 14));
 
-  m_shadowEffect->setOffset(4);
-  m_shadowEffect->setBlurRadius(18);
+  m_shadowEffect->setOffset(2);
+  m_shadowEffect->setBlurRadius(22);
   m_shadowEffect->setColor(palette().color(QPalette::Shadow));
   this->setGraphicsEffect(m_shadowEffect);
 

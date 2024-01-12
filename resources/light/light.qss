@@ -233,6 +233,7 @@ QListView#listViewSurahs::item:hover {
 }
 
 QListView#listViewBookmarkedSurahs {
+  outline: none;
   font-size: 10pt;
   background-color: transparent;
 }
@@ -290,7 +291,6 @@ QDialog#dlgVOTD:hover {
 /* --------------- Khatmah Dialog Styles --------------- */
 
 *[khatmah="true"] {
-  border: 1px outset #b7b7b7;
   background-color: #ffffff;
   border-radius: 5px;
 }
@@ -313,8 +313,8 @@ QDialog#dlgVOTD:hover {
 }
 
 QWidget#BetaqaViewer QTextBrowser {
-  border: 1px solid palette(highlight);
-  background-color: #a8c7fa;
+  border: 1px solid #566b8d;
+  background-color: #c2d7f9;
   border-radius: 12px;
   padding: 8px;
 }

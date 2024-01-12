@@ -18,7 +18,7 @@
         <!-- Dark -->
         <color role="4" red="13" green="13" blue="13" />
         <!-- Shadow -->
-        <color role="11" red="20" green="20" blue="20" />
+        <color role="11" red="0" green="0" blue="0" />
         <!-- Button -->
         <color role="1" red="46" green="46" blue="46" />
         <!-- ButtonText -->

@@ -30,7 +30,7 @@ KhatmahDialog::loadKhatmah(const int id)
   if (!m_darkmode) {
     QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect(frame);
     shadow->setColor(palette().color(QPalette::Shadow));
-    shadow->setOffset(2);
+    shadow->setOffset(1);
     shadow->setBlurRadius(8);
     frame->setGraphicsEffect(shadow);
   }

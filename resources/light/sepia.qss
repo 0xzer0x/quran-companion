@@ -224,6 +224,7 @@ QListView#listViewSurahs::item:hover:selected {
 }
 
 QListView#listViewBookmarkedSurahs {
+  outline: none;
   font-size: 10pt;
   background-color: transparent;
 }
@@ -231,11 +232,12 @@ QListView#listViewBookmarkedSurahs {
 QListView#listViewBookmarkedSurahs::item {
   margin: 0px 5px 0px 0px;
   background-color: #f7ebd5;
-  border: 1px solid #bfb7a5;
+  border: 1px outset #d6c9b0;
   border-radius: 8px;
 }
 
 QListView#listViewBookmarkedSurahs::item:hover {
+  border-color: #b5a68b;
   background-color: #eee2cc;
 }
 
@@ -280,7 +282,6 @@ QDialog#dlgVOTD:hover {
 /* --------------- Khatmah Dialog Styles --------------- */
 
 *[khatmah="true"] {
-  border: 1px solid #cabfa4;
   background-color: #f7ebd5;
   border-radius: 5px;
 }
