@@ -784,7 +784,7 @@
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="204"/>
       <source>A free, open-source Quran reader &amp; player</source>
-      <translation>قارئ ومشغل للقرآن الكريم مفتوح المصدر</translation>
+      <translation>قارئ ومشغل للقرآن الكريم مجاني و مفتوح المصدر</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="211"/>
