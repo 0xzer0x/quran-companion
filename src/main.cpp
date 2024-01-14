@@ -211,7 +211,7 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->setValue("QCF", settings->value("QCF", 1));
       settings->setValue("VerseType", settings->value("VerseType", 0));
       settings->setValue("VerseFontSize", settings->value("VerseFontSize", 20));
-      settings->setValue("Tafsir", settings->value("Tafsir", 1));
+      settings->setValue("Tafsir", settings->value("Tafsir", 6));
       settings->setValue("Translation", settings->value("Translation", 5));
       settings->setValue(
         "SideContentFont",

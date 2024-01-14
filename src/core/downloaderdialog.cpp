@@ -84,7 +84,6 @@ DownloaderDialog::addRecitationsToModel()
   for (const Reciter& reciter : m_recitersList) {
     QStandardItem* item = new QStandardItem(reciter.displayName);
     item->setToolTip(reciter.displayName);
-
     m_treeModel.invisibleRootItem()->appendRow(item);
 
     for (int j = 1; j <= 114; j++) {
@@ -98,7 +97,6 @@ DownloaderDialog::addRecitationsToModel()
       item->appendRow(rw);
     }
   }
-
   // add extras
   QStandardItem* extras = new QStandardItem(tr("Extras"));
   extras->setToolTip(tr("Additional files"));
@@ -109,9 +107,13 @@ DownloaderDialog::addRecitationsToModel()
   qcf->setData("qcf", Qt::UserRole);
   extras->appendRow(qcf);
   // -- tafasir
-  foreach (const Tafsir& t, m_tafasirList) {
+  for (int i = 0; i < m_tafasirList.size(); i++) {
+    const Tafsir& t = m_tafasirList.at(i);
+    if (!t.extra)
+      continue;
     QStandardItem* item = new QStandardItem(t.displayName);
     item->setData("tafsir", Qt::UserRole);
+    item->setData(i, Qt::UserRole + 1);
     extras->appendRow(item);
   }
 }
@@ -160,9 +162,9 @@ DownloaderDialog::addToQueue()
     }
     // tafasir
     else if (i.data(Qt::UserRole).toString() == "tafsir") {
-      qDebug() << "DETECTED TAFSIR";
-      m_downloaderPtr->addToQueue(current - 1);
-      addTaskProgress(File, { current - 1, -1 });
+      int idx = i.data(Qt::UserRole + 1).toInt();
+      m_downloaderPtr->addToQueue(idx);
+      addTaskProgress(File, { idx, -1 });
     }
   }
 
@@ -173,7 +175,7 @@ DownloaderDialog::addToQueue()
 void
 DownloaderDialog::addTaskProgress(DownloadType type, QPair<int, int> info)
 {
-  int total = 1;
+  int total = 0;
   QString objName;
   if (type == Recitation) {
     QString reciter = m_recitersList.at(info.first).displayName;
