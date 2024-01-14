@@ -178,9 +178,10 @@ public:
    * @return QString containing the sura name
    */
   QString getSurahName(const int sIdx, bool ar = false);
-
+  /**
+   * MODIFIED
+   */
   QString getBetaqa(const int surah);
-
   /**
    * @brief gets the corresponding id for the verse in the database
    * @param sIdx - sura number

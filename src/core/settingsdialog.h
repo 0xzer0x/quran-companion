@@ -140,7 +140,14 @@ public slots:
   void showWindow();
 
 signals:
+  /**
+   * MODIFIED
+   */
   void qcf2Missing();
+  /**
+   * MODIFIED
+   */
+  void tafsirMissing(int idx);
   /**
    * @fn quranFontChanged()
    * @brief signal emitted for QuranPageBrowser to set the new Quran page font
@@ -181,6 +188,9 @@ signals:
    * @brief signal emitted to notify changes in the side panel font.
    */
   void sideFontChanged();
+  /**
+   * MODIFIED
+   */
   void verseTypeChanged();
   /**
    * @fn usedAudioDeviceChanged()
@@ -234,8 +244,6 @@ private:
    */
   void fillLanguageCombobox();
   /**
-   * @brief fillContentCombobox
-   *
    * MODIFIED
    */
   void fillContentCombobox();
@@ -248,7 +256,14 @@ private:
    * @brief check if any shortcut was changed and updated it
    */
   void checkShortcuts();
-  bool checkQCF2();
+  /**
+   * MODIFIED
+   */
+  bool qcfExists();
+  /**
+   * MODIFIED
+   */
+  bool tafsirExists(int idx);
   /**
    * @brief QCF font size used in constructing Quran page.
    */

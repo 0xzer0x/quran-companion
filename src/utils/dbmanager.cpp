@@ -77,11 +77,10 @@ DBManager::setCurrentTafsir(int tafsirIdx)
     return;
 
   m_currTafsir = &m_tafasirList[tafsirIdx];
+  const QDir& baseDir = m_currTafsir->extra ? m_downloadsDir : m_assetsDir;
   QString path = "tafasir/" + m_currTafsir->filename;
-  if (m_currTafsir->extra)
-    m_tafsirDbPath.setFile(m_downloadsDir.filePath(path));
-  else
-    m_tafsirDbPath.setFile(m_assetsDir.filePath(path));
+  if (baseDir.exists(path))
+    m_tafsirDbPath.setFile(baseDir.filePath(path));
 }
 
 void

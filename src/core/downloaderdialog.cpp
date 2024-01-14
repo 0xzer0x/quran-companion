@@ -210,7 +210,7 @@ DownloaderDialog::addTaskProgress(DownloadType type, QPair<int, int> info)
   downInfo->addWidget(downSpeed);
   prgFrm->layout()->addItem(downInfo);
 
-  DownloadProgressBar* dpb = new DownloadProgressBar(prgFrm, total);
+  DownloadProgressBar* dpb = new DownloadProgressBar(prgFrm, type, total);
   prgFrm->layout()->addWidget(dpb);
   m_frameLst.append(prgFrm);
 
@@ -265,6 +265,9 @@ DownloaderDialog::selectDownload(DownloadType type, QPair<int, int> info)
   } else if (type == QCF) {
     parent = m_treeModel.index(m_treeModel.rowCount() - 1, 0);
     task = m_treeModel.index(0, 0, parent);
+  } else if (type == File) {
+    parent = m_treeModel.index(m_treeModel.rowCount() - 1, 0);
+    task = m_treeModel.index(info.first + 1, 0, parent);
   }
 
   ui->treeView->collapseAll();
@@ -293,6 +296,16 @@ DownloaderDialog::btnStopClicked()
 }
 
 void
+DownloaderDialog::downloadAborted()
+{
+  m_downloadingTasks.clear();
+  if (!m_frameLst.isEmpty()) {
+    qDeleteAll(m_frameLst);
+    m_frameLst.clear();
+  }
+}
+
+void
 DownloaderDialog::downloadCompleted(DownloadType type,
                                     const QList<int>& metainfo)
 {
@@ -309,16 +322,6 @@ DownloaderDialog::downloadCompleted(DownloadType type,
   m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
   setCurrentBar();
-}
-
-void
-DownloaderDialog::downloadAborted()
-{
-  m_downloadingTasks.clear();
-  if (!m_frameLst.isEmpty()) {
-    qDeleteAll(m_frameLst);
-    m_frameLst.clear();
-  }
 }
 
 void

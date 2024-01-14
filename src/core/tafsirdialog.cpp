@@ -82,7 +82,7 @@ TafsirDialog::loadVerseTafsir()
   QString glyphs =
     m_dbMgr->getVerseGlyphs(m_shownVerse.surah, m_shownVerse.number);
   QString fontFamily =
-      Globals::verseFontname(m_dbMgr->getVerseType(), m_shownVerse.page);
+    Globals::verseFontname(m_dbMgr->getVerseType(), m_shownVerse.page);
 
   ui->lbVerseInfo->setText(title);
   ui->lbVerseText->setWordWrap(true);

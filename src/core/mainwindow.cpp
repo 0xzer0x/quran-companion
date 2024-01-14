@@ -4,6 +4,7 @@
  */
 
 #include "mainwindow.h"
+#include "../widgets/aboutdialog.h"
 #include "../widgets/clickablelabel.h"
 #include "khatmahdialog.h"
 #include "ui_mainwindow.h"
@@ -469,10 +470,13 @@ MainWindow::setupConnections()
   connect(
     m_settingsDlg, &SettingsDialog::restartApp, this, &MainWindow::restartApp);
   // qcf2 missing files warning
+  connect(
+    m_settingsDlg, &SettingsDialog::qcf2Missing, this, &MainWindow::missingQCF);
+  // tafsir missing warning
   connect(m_settingsDlg,
-          &SettingsDialog::qcf2Missing,
+          &SettingsDialog::tafsirMissing,
           this,
-          &MainWindow::missingQCF2);
+          &MainWindow::missingTafsir);
   // Quran page signals
   connect(m_settingsDlg,
           &SettingsDialog::redrawQuranPage,
@@ -1085,16 +1089,30 @@ MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 }
 
 void
-MainWindow::missingQCF2()
+MainWindow::missingQCF()
 {
   QMessageBox::StandardButton btn = QMessageBox::question(
     this,
     tr("Files Missing"),
-    tr("The Selected font files are missing, would you like to download it?"));
+    tr("The selected font files are missing, would you like to download it?"));
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
     m_downloaderDlg->selectDownload(QCF);
+  }
+}
+
+void
+MainWindow::missingTafsir(int idx)
+{
+  QMessageBox::StandardButton btn = QMessageBox::question(
+    this,
+    tr("Files Missing"),
+    tr("The selected tafsir is missing, would you like to download it?"));
+
+  if (btn == QMessageBox::Yes) {
+    actionDMTriggered();
+    m_downloaderDlg->selectDownload(File, { idx, -1 });
   }
 }
 

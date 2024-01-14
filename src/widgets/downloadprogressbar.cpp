@@ -5,16 +5,21 @@
 
 #include "downloadprogressbar.h"
 
-DownloadProgressBar::DownloadProgressBar(QWidget* parent, int max)
+DownloadProgressBar::DownloadProgressBar(QWidget* parent,
+                                         DownloadType type,
+                                         int max)
   : QProgressBar(parent)
 {
   m_defStylesheet = "QProgressBar {text-align: center; "
                     "color: palette(text); border-radius: 3px; border: 1px "
                     "solid palette(button); }";
   setStyling(downloading);
-  setFormat("%v / %m");
   setMaximum(max);
   setValue(0);
+  if (type == File)
+    setFormat("%v / %m " + tr("KB"));
+  else
+    setFormat("%v / %m");
 }
 
 void

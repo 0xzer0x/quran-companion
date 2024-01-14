@@ -138,7 +138,7 @@ SettingsDialog::checkShortcuts()
 }
 
 bool
-SettingsDialog::checkQCF2()
+SettingsDialog::qcfExists()
 {
   QString filename = "QCFV2/QCF2%0.ttf";
   for (int i = 1; i <= 604; i++) {
@@ -148,6 +148,14 @@ SettingsDialog::checkQCF2()
   }
 
   return true;
+}
+
+bool
+SettingsDialog::tafsirExists(int idx)
+{
+  if (!m_tafasirList.at(idx).extra)
+    return true;
+  return m_downloadsDir.exists("tafasir/" + m_tafasirList.at(idx).filename);
 }
 
 void
@@ -195,6 +203,12 @@ SettingsDialog::updateFileWarning(bool on)
 void
 SettingsDialog::updateTafsir(int idx)
 {
+  if (!tafsirExists(idx)) {
+    emit tafsirMissing(idx);
+    ui->cmbTafsir->setCurrentIndex(m_tafsir);
+    return;
+  }
+
   m_settings->setValue("Reader/Tafsir", idx);
   emit tafsirChanged();
 }
@@ -224,7 +238,7 @@ SettingsDialog::updateReaderMode(int idx)
 void
 SettingsDialog::updateQuranFont(int qcfV)
 {
-  if (qcfV == 2 && !checkQCF2()) {
+  if (qcfV == 2 && !qcfExists()) {
     emit qcf2Missing();
     ui->cmbQCF->setCurrentIndex(0);
     return;
