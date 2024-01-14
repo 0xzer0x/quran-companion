@@ -61,22 +61,16 @@ public slots:
    */
   void setCurrentBar();
   /**
-   * @brief slot to delete the finished progress bar on download completion
-   * @param reciter - ::Globals::recitersList index for the reciter whose
-   * recitations are downloaded
-   * @param surah - surah number
-   */
-  void surahDownloaded(DownloadType type, const QList<int>& metainfo);
-  /**
    * @brief slot to delete all download tasks /
    * progress bars from dialog
    */
   void downloadAborted();
   /**
-   * @brief slot to update the current task
-   * in case of download error
-   * @param reciter - ::Globals::recitersList index for the reciter
-   * @param surah - surah number
+   * MODIFIED
+   */
+  void downloadCompleted(DownloadType type, const QList<int>& metainfo);
+  /**
+   * MODIFIED
    */
   void topTaskDownloadError(DownloadType type, const QList<int>& metainfo);
   /**
@@ -87,11 +81,7 @@ public slots:
    */
   void updateDownloadSpeed(int value, QString unit);
   /**
-   * @brief Selects a surah within a specific reciter in order to download.
-   * @details Typically called when recitaion is missing in order to select the
-   * missing surah automatically.
-   * @param reciter - ::Globals::recitersList index for the reciter
-   * @param surah - surah number
+   * MODIFIED
    */
   void selectDownload(DownloadType type,
                       QPair<int, int> info = QPair<int, int>(0, 1));
@@ -123,6 +113,7 @@ protected:
 private:
   const int m_languageCode = Globals::language;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
+  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
@@ -135,12 +126,6 @@ private:
    */
   void addRecitationsToModel();
   /**
-   * @brief Adds a download progress bar to the
-   * downloader dialog to indicate download state
-   * @param reciterIdx - ::Globals::recitersList index for the reciter whose
-   * recitations are being downloaded
-   * @param surah - number of surah being downloaded
-   *
    * MODIFIED
    */
   void addTaskProgress(DownloadType type,

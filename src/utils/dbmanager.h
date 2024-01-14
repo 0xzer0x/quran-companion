@@ -318,7 +318,8 @@ public:
   VerseType getVerseType() const;
 
 private:
-  QDir m_dbDir = Globals::assetsDir;
+  const QDir& m_assetsDir = Globals::assetsDir;
+  const QDir& m_downloadsDir = Globals::downloadsDir;
   const int m_qcfVer = Globals::qcfVersion;
   const QSettings* m_settings = Globals::settings;
   const QLocale::Language m_languageCode = Globals::language;

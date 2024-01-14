@@ -9,9 +9,9 @@
 DBManager::DBManager(QObject* parent)
   : QObject(parent)
 {
-  m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
-  m_glyphsDbPath.setFile(m_dbDir.filePath("glyphs.db"));
-  m_betaqatDbPath.setFile(m_dbDir.filePath("betaqat.db"));
+  m_quranDbPath.setFile(m_assetsDir.filePath("quran.db"));
+  m_glyphsDbPath.setFile(m_assetsDir.filePath("glyphs.db"));
+  m_betaqatDbPath.setFile(m_assetsDir.filePath("betaqat.db"));
 
   // set database driver, set the path & open a connection with the db
   QSqlDatabase::addDatabase("QSQLITE", "QuranCon");
@@ -76,10 +76,12 @@ DBManager::setCurrentTafsir(int tafsirIdx)
   if (tafsirIdx < 0 || tafsirIdx >= m_tafasirList.size())
     return;
 
-  m_dbDir.cd("tafasir");
   m_currTafsir = &m_tafasirList[tafsirIdx];
-  m_tafsirDbPath.setFile(m_dbDir.filePath(m_currTafsir->filename));
-  m_dbDir.cdUp();
+  QString path = "tafasir/" + m_currTafsir->filename;
+  if (m_currTafsir->extra)
+    m_tafsirDbPath.setFile(m_downloadsDir.filePath(path));
+  else
+    m_tafsirDbPath.setFile(m_assetsDir.filePath(path));
 }
 
 void
@@ -88,10 +90,9 @@ DBManager::setCurrentTranslation(int translationIdx)
   if (translationIdx < 0 || translationIdx >= m_translationsList.size())
     return;
 
-  m_dbDir.cd("translations");
   m_currTrans = &m_translationsList[translationIdx];
-  m_transDbPath.setFile(m_dbDir.filePath(m_currTrans->filename));
-  m_dbDir.cdUp();
+  QString path = "translations/" + m_currTrans->filename;
+  m_transDbPath.setFile(m_assetsDir.filePath(path));
 }
 
 /* ---------------- Page-related methods ---------------- */
@@ -99,7 +100,6 @@ DBManager::setCurrentTranslation(int translationIdx)
 QPair<int, int>
 DBManager::getPageMetadata(const int page)
 {
-  QList<int> data; // { surahIdx, jozz }
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.prepare(
@@ -110,6 +110,7 @@ DBManager::getPageMetadata(const int page)
     qCritical() << "Error occurred during getPageMetadata SQL statment exec";
 
   dbQuery.next();
+  // { surahIdx, jozz }
   return { dbQuery.value(0).toInt(), dbQuery.value(1).toInt() };
 }
 
@@ -231,7 +232,7 @@ DBManager::getJuzGlyph(const int juz)
 QString
 DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
 {
-    if (m_verseType != VerseType::qcf)
+  if (m_verseType != VerseType::qcf)
     return getVerseText(sIdx, vIdx);
 
   setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
@@ -787,9 +788,8 @@ DBManager::getTafsir(const int sIdx, const int vIdx)
   dbQuery.bindValue(0, sIdx);
   dbQuery.bindValue(1, vIdx);
 
-  if (!dbQuery.exec()) {
-    qFatal("Couldn't execute getTafsir query!");
-  }
+  if (!dbQuery.exec())
+    qCritical("Couldn't execute getTafsir query!");
 
   dbQuery.next();
 
@@ -808,7 +808,7 @@ DBManager::getTranslation(const int sIdx, const int vIdx)
   dbQuery.bindValue(1, vIdx);
 
   if (!dbQuery.exec())
-    qFatal("Couldn't execute getTranslation query!");
+    qCritical("Couldn't execute getTranslation query!");
 
   dbQuery.next();
 
@@ -824,13 +824,13 @@ DBManager::setActiveKhatmah(const int id)
 void
 DBManager::setVerseType(VerseType newVerseType)
 {
-    m_verseType = newVerseType;
+  m_verseType = newVerseType;
 }
 
 VerseType
 DBManager::getVerseType() const
 {
-    return m_verseType;
+  return m_verseType;
 }
 
 const int

@@ -107,17 +107,17 @@ public slots:
    */
   void processDownloadQueue();
   /**
-   * @brief add a QPair of reciter & surah to the surah download queue
-   * @param reciter - ::Globals::recitersList index for the reciter
-   * @param surah - surah number to download
-   */
-  void addSurahToQueue(int reciter, int surah);
-  /**
-   * @brief addQCFToQueue
-   *
    * MODIFIED
    */
-  void addQCFToQueue();
+  void addToQueue();
+  /**
+   * MODIFIED
+   */
+  void addToQueue(int tafsirIdx);
+  /**
+   * MODIFIED
+   */
+  void addToQueue(int reciter, int surah);
   /**
    * @brief calculate download speed and emit signal for UI component to update
    * its value
@@ -184,6 +184,7 @@ signals:
 private:
   const QDir& m_downloadsDir = Globals::downloadsDir;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
+  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief generate download url for specified verse using the reciter download
@@ -197,13 +198,26 @@ private:
                    const int surah,
                    const int verse) const;
   /**
+   * @brief enqeueQCFTasks
+   *
+   * MODIFIED
+   */
+  void enqeueQCF();
+  /**
+   * @brief enqeueFile
+   * @param tafsiridx
+   *
+   * MODIFIED
+   */
+  void enqeueTask(int tafsirIdx);
+  /**
    * @brief create a DownloadTask and add it to the download Queue
    * @param reciterIdx - ::Globals::recitersList index for the reciter
    * @param surah - surah number
    * @param verse - verse number
    */
-  void enqeueVerseTask(int reciterIdx, int surah, int verse);
-  void enqeueQCFTasks();
+  void enqeueTask(int reciterIdx, int surah, int verse);
+
   /**
    * @brief emit signal according to the download error that occured
    * @param err - network error received

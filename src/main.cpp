@@ -162,13 +162,18 @@ setGlobalPaths()
   // config & downloads
   if (!configDir.exists("QuranCompanion"))
     configDir.mkpath("QuranCompanion");
-  if (!downloadsDir.exists("QuranCompanion/recitations"))
-    downloadsDir.mkpath("QuranCompanion/recitations");
-  if (!downloadsDir.exists("QuranCompanion/QCFV2"))
-    downloadsDir.mkpath("QuranCompanion/QCFV2");
-
   configDir.cd("QuranCompanion");
+
+  if (!downloadsDir.exists("QuranCompanion"))
+    downloadsDir.mkpath("QuranCompanion");
   downloadsDir.cd("QuranCompanion");
+
+  if (!downloadsDir.exists("recitations"))
+    downloadsDir.mkpath("recitations");
+  if (!downloadsDir.exists("QCFV2"))
+    downloadsDir.mkpath("QCFV2");
+  if (!downloadsDir.exists("tafasir"))
+    downloadsDir.mkpath("tafasir");
 
 #ifdef Q_OS_WIN
   updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
@@ -404,14 +409,14 @@ populateShortcutsMap()
     if (token == QXmlStreamReader::StartElement) {
       if (reader.name().toString() == "shortcut") {
         QString key = reader.attributes().value("key").toString();
-        shortcutDescription.insert(
-          key,
+        QString defBind = reader.attributes().value("default").toString();
+        QString desc =
           qApp->translate("SettingsDialog",
-                          reader.attributes().value("description").toLatin1()));
+                          reader.attributes().value("description").toLatin1());
 
+        shortcutDescription.insert(key, desc);
         if (!settings->contains(key))
-          settings->setValue(key,
-                             reader.attributes().value("default").toString());
+          settings->setValue(key, defBind);
       }
     }
   }

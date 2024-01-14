@@ -91,8 +91,9 @@ struct Translation
 
 enum DownloadType
 {
+  QCF,
   Recitation,
-  QCF
+  File
 };
 
 enum VerseType

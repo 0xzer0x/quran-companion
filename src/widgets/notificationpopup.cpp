@@ -83,11 +83,13 @@ void
 NotificationPopup::completedDownload(DownloadType type,
                                      const QList<int>& metainfo)
 {
-  QString msg = tr("Download Completed") + ": ";
   setStyleSheet("");
+  QString msg = tr("Download Completed") + ": ";
   if (type == Recitation)
     msg += m_recitersList.at(metainfo[0]).displayName + " - " +
            m_dbMgr->surahNameList().at(metainfo[1] - 1);
+  else if (type == File)
+    msg += m_tafasirList.at(metainfo[0]).displayName;
   else if (type == QCF)
     msg += tr("QCF V2");
 

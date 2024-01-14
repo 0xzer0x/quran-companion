@@ -77,13 +77,13 @@ public slots:
    * @param reciterIdx - ::Globals::recitersList index for the reciter
    * @param surah - the surah that was downloaded
    */
-  void completedDownload(DownloadType type, const QList<int> &metainfo);
+  void completedDownload(DownloadType type, const QList<int>& metainfo);
   /**
    * @brief slot to show a notification on download error
    * @param reciterIdx - ::Globals::recitersList index for the reciter
    * @param surah - the surah that was downloaded
    */
-  void downloadError(DownloadType type, const QList<int> &metainfo);
+  void downloadError(DownloadType type, const QList<int>& metainfo);
   /**
    * @brief slot to show a notification on bookmark addition
    */
@@ -105,6 +105,7 @@ public slots:
 
 private:
   const QList<Reciter>& m_recitersList = Globals::recitersList;
+  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI

@@ -21,7 +21,7 @@ public:
    * @param max - maximum value for the progress bar (defaults to longest surah
    * in the Quran)
    */
-  DownloadProgressBar(QWidget* parent = nullptr, int max = 286);
+  DownloadProgressBar(QWidget* parent, int max);
   /**
    * @brief The State enum represents the different states of the progressbar UI
    * component
