@@ -37,9 +37,6 @@ public:
 public slots:
   void updateProgress(qint64 downloaded, qint64 total);
   void setStyling(State);
-
-private:
-  QString m_defStylesheet;
 };
 
 #endif // DOWNLOADPROGRESSBAR_H

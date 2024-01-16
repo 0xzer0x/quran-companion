@@ -124,7 +124,7 @@ private:
    * @brief Populates the QTreeView through which the user selects the surahs to
    * add to queue.
    */
-  void addRecitationsToModel();
+  void populateTreeModel();
   /**
    * MODIFIED
    */

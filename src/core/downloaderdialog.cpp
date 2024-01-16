@@ -18,11 +18,12 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, DownloadManager* downloader)
 
   // treeview setup
   QStringList headers;
-  headers.append(tr("Number"));
   headers.append(tr("Name"));
+  headers.append(tr("Number"));
   m_treeModel.setHorizontalHeaderLabels(headers);
   ui->treeView->setModel(&m_treeModel);
-  addRecitationsToModel();
+  populateTreeModel();
+  ui->treeView->resizeColumnToContents(0);
 
   // connectors
   setupConnections();
@@ -78,7 +79,7 @@ DownloaderDialog::setupConnections()
 }
 
 void
-DownloaderDialog::addRecitationsToModel()
+DownloaderDialog::populateTreeModel()
 {
   // add reciters
   for (const Reciter& reciter : m_recitersList) {
@@ -91,19 +92,25 @@ DownloaderDialog::addRecitationsToModel()
         new QStandardItem(m_surahDisplayNames.at(j - 1));
 
       QList<QStandardItem*> rw;
-      rw.append(new QStandardItem(QString::number(j)));
       rw.append(suraItem);
+      rw.append(new QStandardItem(QString::number(j)));
 
       item->appendRow(rw);
     }
   }
-  // add extras
+  // tafsir submenu
+  QStandardItem* tafsir =
+    new QStandardItem(qApp->translate("MainWindow", "Tafsir"));
+  tafsir->setData("tafsir", Qt::UserRole);
+  m_treeModel.invisibleRootItem()->appendRow(tafsir);
+  // extras submenu
   QStandardItem* extras = new QStandardItem(tr("Extras"));
   extras->setToolTip(tr("Additional files"));
   extras->setData("extras", Qt::UserRole);
   m_treeModel.invisibleRootItem()->appendRow(extras);
   // -- qcf 2
-  QStandardItem* qcf = new QStandardItem(tr("QCF V2"));
+  QStandardItem* qcf =
+    new QStandardItem(qApp->translate("SettingsDialog", "QCF V2"));
   qcf->setData("qcf", Qt::UserRole);
   extras->appendRow(qcf);
   // -- tafasir
@@ -112,9 +119,9 @@ DownloaderDialog::addRecitationsToModel()
     if (!t.extra)
       continue;
     QStandardItem* item = new QStandardItem(t.displayName);
-    item->setData("tafsir", Qt::UserRole);
+    item->setData("tdb", Qt::UserRole);
     item->setData(i, Qt::UserRole + 1);
-    extras->appendRow(item);
+    tafsir->appendRow(item);
   }
 }
 
@@ -138,8 +145,7 @@ DownloaderDialog::removeFromDownloading(int reciter, int surah)
 void
 DownloaderDialog::addToQueue()
 {
-  static int extrasRow =
-    m_treeModel.rowCount(m_treeModel.invisibleRootItem()->index()) - 1;
+  static int recitersnum = m_recitersList.size();
   QModelIndexList selected = ui->treeView->selectionModel()->selectedRows();
 
   foreach (const QModelIndex& i, selected) {
@@ -148,23 +154,23 @@ DownloaderDialog::addToQueue()
     bool toplevel = parent < 0;
 
     // recitation (reciter selected)
-    if (toplevel && current < extrasRow) {
+    if (toplevel && current < recitersnum) {
       for (int surah = 1; surah <= 114; surah++)
         enqueueSurah(current, surah);
     }
     // recitation (surah index selected)
-    else if (!toplevel && parent < extrasRow)
+    else if (!toplevel && parent < recitersnum)
       enqueueSurah(parent, current + 1);
+    // tafasir
+    else if (i.data(Qt::UserRole).toString() == "tdb") {
+      int idx = i.data(Qt::UserRole + 1).toInt();
+      m_downloaderPtr->addToQueue(idx);
+      addTaskProgress(File, { idx, -1 });
+    }
     // extras
     else if (i.data(Qt::UserRole).toString() == "qcf") {
       m_downloaderPtr->addToQueue();
       addTaskProgress(QCF);
-    }
-    // tafasir
-    else if (i.data(Qt::UserRole).toString() == "tafsir") {
-      int idx = i.data(Qt::UserRole + 1).toInt();
-      m_downloaderPtr->addToQueue(idx);
-      addTaskProgress(File, { idx, -1 });
     }
   }
 
@@ -185,7 +191,7 @@ DownloaderDialog::addTaskProgress(DownloadType type, QPair<int, int> info)
   } else if (type == File) {
     objName = m_tafasirList.at(info.first).displayName;
   } else if (type == QCF) {
-    objName = tr("QCF V2");
+    objName = qApp->translate("SettingsDialog", "QCF V2");
     total = 604;
   }
 
@@ -266,8 +272,9 @@ DownloaderDialog::selectDownload(DownloadType type, QPair<int, int> info)
     parent = m_treeModel.index(m_treeModel.rowCount() - 1, 0);
     task = m_treeModel.index(0, 0, parent);
   } else if (type == File) {
-    parent = m_treeModel.index(m_treeModel.rowCount() - 1, 0);
-    task = m_treeModel.index(info.first + 1, 0, parent);
+    parent = m_treeModel.index(m_treeModel.rowCount() - 2, 0);
+    info.first -= info.first > 6;
+    task = m_treeModel.index(info.first, 0, parent);
   }
 
   ui->treeView->collapseAll();
