@@ -294,7 +294,7 @@ QFrame#Popup * {
   color: rgb(47, 47, 47);
 }
 
-QDialog#dlgVOTD:hover {
+QDialog#VerseDialog:hover {
   background: rgba(138, 180, 248, 40);
 }
 

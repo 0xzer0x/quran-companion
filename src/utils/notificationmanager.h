@@ -44,32 +44,6 @@ public:
    * @param text - tooltip message
    */
   void setTooltip(QString text);
-  /**
-   * @brief checks if the verse of the day has been set and set it if not found
-   */
-  void checkDailyVerse(bool startup = true);
-  /**
-   * @brief generate the verse of the day and set the votd html
-   */
-  void genVerseOfTheDay();
-  /**
-   * @brief read the verse of the day from the timestamp file
-   */
-  void readVerseOfTheDay();
-  /**
-   * @brief write the current time and votd to the timestamp file
-   */
-  void writeTimestamp();
-  /**
-   * @brief serialize the verse of the day into a QString
-   * @return QString of PAGE:SURA:NUMBER
-   */
-  QString votdStringEntry() const;
-  /**
-   * @brief getter for m_votd
-   * @return QPair of the ::Verse of the day and the verse text
-   */
-  QPair<Verse, QString> votd();
 
 signals:
   /**
@@ -108,12 +82,6 @@ signals:
    * @brief signal connected to 'about' systray action
    */
   void openAbout();
-  /**
-   * @fn void showVOTDmessagebox(QPair<Verse, QString>)
-   * @brief signal emitted when no votd is found for the current date
-   * @param votd - the fetched votd
-   */
-  void showVOTDmessagebox(QPair<Verse, QString> votd);
 
 private:
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
@@ -122,21 +90,6 @@ private:
    */
   void addActions();
   /**
-   * @brief utility to convert the plain verse text in m_votd to html formatted
-   * text to be displayed in the messagebox
-   */
-  void setVotdMsg();
-  QFile m_timestampFile = Globals::configDir.absoluteFilePath("votd.log");
-  /**
-   * @brief boolean to indicate whether the verse of the day have been shown
-   * before
-   */
-  bool m_votdShown = false;
-  /**
-   * @brief date and time at application launch
-   */
-  QDateTime m_dtNow;
-  /**
    * @brief system tray context menu
    */
   QMenu* m_trayMenu;
@@ -144,10 +97,6 @@ private:
    * @brief QSystemTrayIcon instance
    */
   QSystemTrayIcon* m_sysTray;
-  /**
-   * @brief QPair representing a random ::Verse and the verse text
-   */
-  QPair<Verse, QString> m_votd;
 };
 
 #endif // NOTIFICATIONMANAGER_H

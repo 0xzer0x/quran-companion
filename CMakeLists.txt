@@ -76,6 +76,9 @@ set(PROJECT_SOURCES
     src/widgets/betaqaviewer.h
     src/widgets/betaqaviewer.cpp
     src/widgets/betaqaviewer.ui
+    src/widgets/versedialog.h
+    src/widgets/versedialog.cpp
+    src/widgets/versedialog.ui
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
     src/utils/dbmanager.h

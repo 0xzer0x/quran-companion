@@ -14,6 +14,7 @@
 #include "../widgets/betaqaviewer.h"
 #include "../widgets/notificationpopup.h"
 #include "../widgets/quranpagebrowser.h"
+#include "../widgets/versedialog.h"
 #include "../widgets/verseframe.h"
 #include "bookmarksdialog.h"
 #include "copydialog.h"
@@ -619,6 +620,10 @@ private:
    * MODIFIED
    */
   BetaqaViewer* m_betaqaViewer = nullptr;
+  /**
+   * @brief m_verseDlg
+   */
+  VerseDialog* m_verseDlg = nullptr;
   /**
    * @brief the currently selected ::Verse
    */

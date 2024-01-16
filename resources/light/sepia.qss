@@ -275,7 +275,7 @@ QFrame#Popup {
   border-radius: 6px;
 }
 
-QDialog#dlgVOTD:hover {
+QDialog#VerseDialog:hover {
   background: rgba(115, 96, 64, 40);
 }
 

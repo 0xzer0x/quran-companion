@@ -604,10 +604,9 @@ DBManager::getKhatmahName(const int id)
   return dbQuery.value(0).toString();
 }
 
-QPair<Verse, QString>
+Verse
 DBManager::randomVerse()
 {
-  QPair<Verse, QString> res;
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -620,13 +619,9 @@ DBManager::randomVerse()
     qCritical() << "Error occurred during randomVerse SQL statment exec";
   }
   dbQuery.next();
-  Verse v{ dbQuery.value(0).toInt(),
+  return { dbQuery.value(0).toInt(),
            dbQuery.value(1).toInt(),
            dbQuery.value(2).toInt() };
-
-  res.first = v;
-  res.second = dbQuery.value(3).toString();
-  return res;
 }
 
 int

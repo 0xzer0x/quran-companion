@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   m_notifyMgr->setTooltip(tr("Quran Companion"));
   if (m_settings->value("VOTD").toBool())
-    m_notifyMgr->checkDailyVerse();
+    m_verseDlg->showVOTD(true);
 
   m_popup->dockLocationChanged(dockWidgetArea(ui->sideDock));
 }
@@ -341,6 +341,10 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::toggleReaderView);
+  connect(m_verseDlg,
+          &VerseDialog::navigateToVerse,
+          this,
+          &MainWindow::navigateToVerse);
 
   // ########## Quran page ########## //
   connect(m_quranBrowsers[0],
@@ -439,10 +443,6 @@ MainWindow::setupConnections()
           this,
           &MainWindow::actionAboutTriggered);
   connect(m_notifyMgr,
-          &NotificationManager::showVOTDmessagebox,
-          this,
-          &MainWindow::showVOTDmessage);
-  connect(m_notifyMgr,
           &NotificationManager::openPrefs,
           this,
           &MainWindow::actionPrefTriggered);
@@ -537,6 +537,7 @@ MainWindow::init()
     new VersePlayer(this, m_currVerse, m_settings->value("Reciter", 0).toInt());
   m_popup = new NotificationPopup(this);
   m_betaqaViewer = new BetaqaViewer(this);
+  m_verseDlg = new VerseDialog(this);
   m_downManPtr = new DownloadManager(this);
   m_settingsDlg = new SettingsDialog(this, m_player);
 
@@ -1252,7 +1253,7 @@ MainWindow::actionTafsirTriggered()
 void
 MainWindow::actionVotdTriggered()
 {
-  showVOTDmessage(m_notifyMgr->votd());
+  m_verseDlg->showVOTD(false);
 }
 
 void

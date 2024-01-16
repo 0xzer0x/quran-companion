@@ -262,7 +262,7 @@ public:
    * @brief gets a random verse from the Quran
    * @return QPair of ::Verse instance and verse text
    */
-  QPair<Verse, QString> randomVerse();
+  Verse randomVerse();
   /**
    * @brief gets a QList of ::Verse instances representing the bookmarked verse
    * within the given sura (default gets all)
