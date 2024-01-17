@@ -4,6 +4,7 @@
  */
 
 #include "downloadprogressbar.h"
+#include <QStyle>
 
 DownloadProgressBar::DownloadProgressBar(QWidget* parent,
                                          DownloadType type,
@@ -31,7 +32,6 @@ DownloadProgressBar::updateProgress(qint64 downloaded, qint64 total)
 void
 DownloadProgressBar::setStyling(State downState)
 {
-  // QString ss = m_defStylesheet;
   switch (downState) {
     case downloading:
       break;
@@ -42,4 +42,8 @@ DownloadProgressBar::setStyling(State downState)
       setProperty("progress-state", 2);
       break;
   }
+
+  style()->unpolish(this);
+  style()->polish(this);
+  update();
 }

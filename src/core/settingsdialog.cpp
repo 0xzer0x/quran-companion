@@ -150,14 +150,6 @@ SettingsDialog::qcfExists()
   return true;
 }
 
-bool
-SettingsDialog::tafsirExists(int idx)
-{
-  if (!m_tafasirList.at(idx).extra)
-    return true;
-  return m_downloadsDir.exists("tafasir/" + m_tafasirList.at(idx).filename);
-}
-
 void
 SettingsDialog::updateTheme(int themeIdx)
 {
@@ -203,12 +195,6 @@ SettingsDialog::updateFileWarning(bool on)
 void
 SettingsDialog::updateTafsir(int idx)
 {
-  if (!tafsirExists(idx)) {
-    emit tafsirMissing(idx);
-    ui->cmbTafsir->setCurrentIndex(m_tafsir);
-    return;
-  }
-
   m_settings->setValue("Reader/Tafsir", idx);
   emit tafsirChanged();
 }

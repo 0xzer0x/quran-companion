@@ -175,6 +175,8 @@ extern QString
 pageFontname(int page);
 extern QString
 verseFontname(VerseType type, int page);
+extern bool
+tafsirExists(const Tafsir* tafsir);
 };
 
 #endif // GLOBALS_H

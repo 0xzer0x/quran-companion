@@ -145,10 +145,6 @@ signals:
    */
   void qcf2Missing();
   /**
-   * MODIFIED
-   */
-  void tafsirMissing(int idx);
-  /**
    * @fn quranFontChanged()
    * @brief signal emitted for QuranPageBrowser to set the new Quran page font
    * size.

@@ -196,7 +196,6 @@ DownloadManager::downloadProgress(qint64 bytes, qint64 total)
     if (!m_activeTask.metainfo[2])
       m_activeTotal = total / 1024;
     m_activeTask.metainfo[2] = bytes / 1024;
-
     emit downloadProgressed(m_activeTask.metainfo[2], m_activeTotal);
   }
 

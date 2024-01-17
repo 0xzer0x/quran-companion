@@ -60,4 +60,11 @@ verseFontname(VerseType type, int page)
   return fontname;
 }
 
+bool
+tafsirExists(const Tafsir* tafsir)
+{
+  const QDir& baseDir = tafsir->extra ? downloadsDir : assetsDir;
+  return baseDir.exists("tafasir/" + tafsir->filename);
+}
+
 };

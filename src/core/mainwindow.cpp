@@ -472,11 +472,6 @@ MainWindow::setupConnections()
   // qcf2 missing files warning
   connect(
     m_settingsDlg, &SettingsDialog::qcf2Missing, this, &MainWindow::missingQCF);
-  // tafsir missing warning
-  connect(m_settingsDlg,
-          &SettingsDialog::tafsirMissing,
-          this,
-          &MainWindow::missingTafsir);
   // Quran page signals
   connect(m_settingsDlg,
           &SettingsDialog::redrawQuranPage,
@@ -1611,6 +1606,21 @@ MainWindow::addSideContent()
 void
 MainWindow::showVerseTafsir(Verse v)
 {
+  static bool reload = false;
+  if (reload) {
+    updateLoadedTafsir();
+    reload = false;
+  }
+
+  if (!Globals::tafsirExists(m_dbMgr->currTafsir())) {
+    int i;
+    for (i = 0; i < m_tafasirList.size(); i++)
+      if (m_dbMgr->currTafsir() == &m_tafasirList[i])
+        break;
+    reload = true;
+    return missingTafsir(i);
+  }
+
   if (m_tafsirDlg == nullptr) {
     m_tafsirDlg = new TafsirDialog(this);
   }

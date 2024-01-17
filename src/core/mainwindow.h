@@ -334,6 +334,9 @@ private slots:
    * @brief set side content font to the one in the settings
    */
   void updateSideFont();
+  /**
+   * MODIFIED
+   */
   void updateVerseType();
   /**
    * @brief search for the surahs with the given argument when the text in the
@@ -407,6 +410,7 @@ private:
   const QLocale::Language& m_language = Globals::language;
   QSettings* const m_settings = Globals::settings;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
+  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
   const QString& m_updateToolPath = Globals::updateToolPath;
   const ReaderMode& m_readerMode = Globals::readerMode;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);

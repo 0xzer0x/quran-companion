@@ -385,6 +385,7 @@ populateRecitersList()
   }
 
   reciters.close();
+  recitersList.squeeze();
 
   // create reciters directories
   downloadsDir.cd("recitations");
@@ -454,4 +455,6 @@ populateContentLists()
   }
 
   content.close();
+  tafasirList.squeeze();
+  translationsList.squeeze();
 }
