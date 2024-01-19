@@ -96,10 +96,12 @@
            <font>
             <family>Sans Serif</family>
             <pointsize>11</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
            </font>
           </property>
           <property name="text">
-           <string>&lt;b&gt;Quran Companion&lt;/b&gt;</string>
+           <string>Quran Companion</string>
           </property>
          </widget>
         </item>
@@ -197,69 +199,86 @@
       <attribute name="title">
        <string>About</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,1">
        <item>
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>A free, open-source Quran reader &amp; player</string>
-         </property>
-        </widget>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>A free, open-source Quran reader &amp; player</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbLicense">
+           <property name="text">
+            <string notr="true">%0 &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;%1&lt;/a&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Licensed under the &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;Waqf General Public License&lt;/a&gt;</string>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>0</number>
          </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>&lt;b&gt;Useful Links&lt;/b&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_15">
-         <property name="toolTip">
-          <string notr="true">https://github.com/0xzer0x/quran-companion</string>
-         </property>
-         <property name="text">
-          <string>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;Project Homepage&lt;/a&gt;</string>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_5">
-         <property name="toolTip">
-          <string notr="true">https://github.com/0xzer0x/quran-companion/issues</string>
-         </property>
-         <property name="text">
-          <string>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;Report a bug/Request a feature&lt;/a&gt;</string>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_6">
-         <property name="toolTip">
-          <string notr="true">https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations</string>
-         </property>
-         <property name="text">
-          <string>- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;Contribute to translations&lt;/a&gt;</string>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
+         <item>
+          <widget class="QLabel" name="label_10">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Useful Links</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbHomepage">
+           <property name="toolTip">
+            <string notr="true">https://github.com/0xzer0x/quran-companion</string>
+           </property>
+           <property name="text">
+            <string notr="true">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;%0&lt;/a&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbBugFeatureReq">
+           <property name="toolTip">
+            <string notr="true">https://github.com/0xzer0x/quran-companion/issues</string>
+           </property>
+           <property name="text">
+            <string notr="true">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;%0&lt;/a&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbContribTranslation">
+           <property name="toolTip">
+            <string notr="true">https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations</string>
+           </property>
+           <property name="text">
+            <string notr="true">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;%0&lt;/a&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -332,11 +351,17 @@
          </property>
          <item>
           <widget class="QLabel" name="lbRecitations">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>&lt;b&gt;Recitations&lt;/b&gt;</string>
+            <string>Recitations</string>
            </property>
           </widget>
          </item>
@@ -376,8 +401,14 @@
          </property>
          <item>
           <widget class="QLabel" name="lbContentType">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="text">
-            <string>&lt;b&gt;Tafsir/Translations&lt;/b&gt;</string>
+            <string>Tafsir/Translations</string>
            </property>
           </widget>
          </item>
@@ -417,11 +448,17 @@
          </property>
          <item>
           <widget class="QLabel" name="lbSurahCards">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>&lt;b&gt;Surah Cards&lt;/b&gt;</string>
+            <string>Surah Cards</string>
            </property>
           </widget>
          </item>
@@ -461,8 +498,14 @@
          </property>
          <item>
           <widget class="QLabel" name="lbLibraries">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="text">
-            <string>&lt;b&gt;Libraries&lt;/b&gt;</string>
+            <string>Libraries</string>
            </property>
           </widget>
          </item>
