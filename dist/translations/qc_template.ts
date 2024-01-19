@@ -1358,7 +1358,7 @@
     <name>VerseDialog</name>
     <message>
         <location filename="../../src/widgets/versedialog.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Verse Of The Day</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
