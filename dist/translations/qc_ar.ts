@@ -756,12 +756,12 @@
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="1093"/>
       <source>The selected font files are missing, would you like to download it?</source>
-      <translation type="unfinished">The selected font files are missing, would you like to download it?</translation>
+      <translation>ملفات الخط المحدد مفقودة، هل ترغب في تحميلها؟</translation>
     </message>
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="1107"/>
       <source>The selected tafsir is missing, would you like to download it?</source>
-      <translation type="unfinished">The selected tafsir is missing, would you like to download it?</translation>
+      <translation>التفسير المحدد مفقود، هل ترغب في تحميله؟</translation>
     </message>
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="1655"/>
@@ -799,7 +799,7 @@
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="238"/>
       <source>Useful Links</source>
-      <translation type="unfinished">Useful Links</translation>
+      <translation>روابط مفيدة</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="287"/>
@@ -814,47 +814,47 @@
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="364"/>
       <source>Recitations</source>
-      <translation type="unfinished">Recitations</translation>
+      <translation>التلاوات</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="411"/>
       <source>Tafsir/Translations</source>
-      <translation type="unfinished">Tafsir/Translations</translation>
+      <translation>التفسير/الترجمات</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="461"/>
       <source>Surah Cards</source>
-      <translation type="unfinished">Surah Cards</translation>
+      <translation>بطاقات السور</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="508"/>
       <source>Libraries</source>
-      <translation type="unfinished">Libraries</translation>
+      <translation>المكتبات</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.cpp" line="12"/>
       <source>Licensed under the</source>
-      <translation type="unfinished">Licensed under the</translation>
+      <translation>مرخص بموجب</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.cpp" line="12"/>
       <source>Waqf General Public License</source>
-      <translation type="unfinished">Waqf General Public License</translation>
+      <translation>رخصة وقف العامة</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.cpp" line="13"/>
       <source>Project Homepage</source>
-      <translation type="unfinished">Project Homepage</translation>
+      <translation>صفحة المشروع</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.cpp" line="15"/>
       <source>Report a bug/Request a feature</source>
-      <translation type="unfinished">Report a bug/Request a feature</translation>
+      <translation>التبليغ عن خلل / طلب ميزة</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.cpp" line="17"/>
       <source>Contribute to translations</source>
-      <translation type="unfinished">Contribute to translations</translation>
+      <translation>ساهم في الترجمة</translation>
     </message>
   </context>
   <context>
