@@ -78,7 +78,7 @@ QTextEdit#tedTafsir {
 QFrame#framePlayer {
   background-color: #f7ebd5;
   border-radius: 8px;
-  border: 2px solid #efe3cd;
+  border: 1px solid #d9cdb8;
 }
 
 QPushButton:hover {
@@ -121,7 +121,7 @@ QComboBox::down-arrow {
 /* --------- Reader Styles --------- */
 
 QFrame#frmReader {
-  border: 2px solid #efe3cd;
+  border: 1px solid #d9cdb8;
   border-radius: 7px;
   background-color: #f7ebd5;
 }
@@ -318,6 +318,7 @@ QProgressBar {
 }
 
 QProgressBar::chunk {
+  border: 1px solid #585041;
   border-radius: 2px;
   background-color: qlineargradient(
     x1: 0,
@@ -330,6 +331,7 @@ QProgressBar::chunk {
 }
 
 QProgressBar[progress-state="1"]::chunk {
+  border-color: #0c886c;
   background-color: qlineargradient(
     x1: 0,
     y1: 0,
@@ -341,6 +343,7 @@ QProgressBar[progress-state="1"]::chunk {
 }
 
 QProgressBar[progress-state="2"]::chunk {
+  border-color: #88100c;
   background-color: qlineargradient(
     x1: 0,
     y1: 0,
