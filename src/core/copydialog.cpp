@@ -39,7 +39,8 @@ CopyDialog::copyRange()
 {
   int from = ui->cmbCopyFrom->currentText().toInt();
   int to = ui->cmbCopyTo->currentText().toInt();
-  if (to < from || from < 0 || from > m_surahCnt || to < 0 || to > m_surahCnt) {
+  if (to < from || from <= 0 || from > m_surahCnt || to <= 0 ||
+      to > m_surahCnt) {
     QMessageBox::warning(
       this, tr("Invalid range"), tr("The entered verse range is invalid"));
     return;
