@@ -1358,8 +1358,8 @@
     <name>VerseDialog</name>
     <message>
       <location filename="../../src/widgets/versedialog.ui" line="14"/>
-      <source>Dialog</source>
-      <translation type="unfinished">Dialog</translation>
+      <source>Verse Of The Day</source>
+      <translation>Günün Ayeti</translation>
     </message>
   </context>
 </TS>
