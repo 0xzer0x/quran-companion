@@ -174,6 +174,8 @@ setGlobalPaths()
     downloadsDir.mkpath("QCFV2");
   if (!downloadsDir.exists("tafasir"))
     downloadsDir.mkpath("tafasir");
+  if (!downloadsDir.exists("translations"))
+    downloadsDir.mkpath("translations");
 
 #ifdef Q_OS_WIN
   updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
@@ -449,7 +451,8 @@ populateContentLists()
       else if (reader.name().toString() == "translation") {
         QString name = reader.attributes().value("name").toString();
         QString file = reader.attributes().value("file").toString();
-        translationsList.append(Translation{ name, file });
+        bool extra = reader.attributes().value("extra").toInt();
+        translationsList.append(Translation{ name, file, extra });
       }
     }
   }

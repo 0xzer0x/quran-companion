@@ -80,13 +80,14 @@ struct Tafsir
   bool extra;
 };
 /**
- * @brief Translation class holds different values representing available Quran
+ * @brief Translation struct holds different values representing available Quran
  * translations
  */
 struct Translation
 {
   QString displayName;
   QString filename;
+  bool extra;
 };
 
 enum DownloadType
@@ -177,6 +178,8 @@ extern QString
 verseFontname(VerseType type, int page);
 extern bool
 tafsirExists(const Tafsir* tafsir);
+extern bool
+translationExists(const Translation* tr);
 };
 
 #endif // GLOBALS_H

@@ -90,8 +90,10 @@ DBManager::setCurrentTranslation(int translationIdx)
     return;
 
   m_currTrans = &m_translationsList[translationIdx];
+  const QDir& baseDir = m_currTrans->extra ? m_downloadsDir : m_assetsDir;
   QString path = "translations/" + m_currTrans->filename;
-  m_transDbPath.setFile(m_assetsDir.filePath(path));
+  if (baseDir.exists(path))
+    m_transDbPath.setFile(baseDir.filePath(path));
 }
 
 /* ---------------- Page-related methods ---------------- */

@@ -100,9 +100,36 @@ DownloaderDialog::populateTreeModel()
   }
   // tafsir submenu
   QStandardItem* tafsir =
-    new QStandardItem(qApp->translate("MainWindow", "Tafsir"));
+    new QStandardItem(qApp->translate("SettingsDialog", "Tafsir"));
   tafsir->setData("tafsir", Qt::UserRole);
   m_treeModel.invisibleRootItem()->appendRow(tafsir);
+  // -- tafasir
+  for (int i = 0; i < m_tafasirList.size(); i++) {
+    const Tafsir& t = m_tafasirList.at(i);
+    if (!t.extra)
+      continue;
+    QStandardItem* item = new QStandardItem(t.displayName);
+    item->setData("tadb", Qt::UserRole);
+    item->setData(i, Qt::UserRole + 1);
+    tafsir->appendRow(item);
+  }
+
+  // translation submenu
+  QStandardItem* translation =
+    new QStandardItem(qApp->translate("SettingsDialog", "Translation"));
+  tafsir->setData("translation", Qt::UserRole);
+  m_treeModel.invisibleRootItem()->appendRow(translation);
+  // -- translations
+  for (int i = 0; i < m_trList.size(); i++) {
+    const Translation& tr = m_trList.at(i);
+    if (!tr.extra)
+      continue;
+    QStandardItem* item = new QStandardItem(tr.displayName);
+    item->setData("trdb", Qt::UserRole);
+    item->setData(i, Qt::UserRole + 1);
+    translation->appendRow(item);
+  }
+
   // extras submenu
   QStandardItem* extras = new QStandardItem(tr("Extras"));
   extras->setToolTip(tr("Additional files"));
@@ -113,16 +140,6 @@ DownloaderDialog::populateTreeModel()
     new QStandardItem(qApp->translate("SettingsDialog", "QCF V2"));
   qcf->setData("qcf", Qt::UserRole);
   extras->appendRow(qcf);
-  // -- tafasir
-  for (int i = 0; i < m_tafasirList.size(); i++) {
-    const Tafsir& t = m_tafasirList.at(i);
-    if (!t.extra)
-      continue;
-    QStandardItem* item = new QStandardItem(t.displayName);
-    item->setData("tdb", Qt::UserRole);
-    item->setData(i, Qt::UserRole + 1);
-    tafsir->appendRow(item);
-  }
 }
 
 void
@@ -162,14 +179,20 @@ DownloaderDialog::addToQueue()
     else if (!toplevel && parent < recitersnum)
       enqueueSurah(parent, current + 1);
     // tafasir
-    else if (i.data(Qt::UserRole).toString() == "tdb") {
-      int idx = i.data(Qt::UserRole + 1).toInt();
-      m_downloaderPtr->addToQueue(idx);
-      addTaskProgress(File, { idx, -1 });
+    else if (i.data(Qt::UserRole).toString() == "tadb") {
+      QPair<int, int> info(0, i.data(Qt::UserRole + 1).toInt());
+      m_downloaderPtr->addToQueue(File, info);
+      addTaskProgress(File, info);
+    }
+    // translation
+    else if (i.data(Qt::UserRole).toString() == "trdb") {
+      QPair<int, int> info(1, i.data(Qt::UserRole + 1).toInt());
+      m_downloaderPtr->addToQueue(File, info);
+      addTaskProgress(File, info);
     }
     // extras
     else if (i.data(Qt::UserRole).toString() == "qcf") {
-      m_downloaderPtr->addToQueue();
+      m_downloaderPtr->addToQueue(QCF);
       addTaskProgress(QCF);
     }
   }
@@ -188,11 +211,12 @@ DownloaderDialog::addTaskProgress(DownloadType type, QPair<int, int> info)
     QString surahName = m_surahDisplayNames.at(info.second - 1);
     objName = reciter + tr(" // Surah: ") + surahName;
     total = m_dbMgr->getSurahVerseCount(info.second);
-  } else if (type == File) {
-    objName = m_tafasirList.at(info.first).displayName;
   } else if (type == QCF) {
     objName = qApp->translate("SettingsDialog", "QCF V2");
     total = 604;
+  } else if (type == File) {
+    objName = info.first ? m_trList.at(info.second).displayName
+                         : m_tafasirList.at(info.second).displayName;
   }
 
   QFrame* prgFrm = new QFrame(ui->scrollAreaWidgetContents);
@@ -272,9 +296,12 @@ DownloaderDialog::selectDownload(DownloadType type, QPair<int, int> info)
     parent = m_treeModel.index(m_treeModel.rowCount() - 1, 0);
     task = m_treeModel.index(0, 0, parent);
   } else if (type == File) {
-    parent = m_treeModel.index(m_treeModel.rowCount() - 2, 0);
-    info.first -= info.first > 6;
-    task = m_treeModel.index(info.first, 0, parent);
+    parent = m_treeModel.index(m_treeModel.rowCount() - 2 - !info.first, 0);
+    if (!info.first)
+      info.second -= info.second > 6;
+    else
+      info.second -= 1 + info.second > 5;
+    task = m_treeModel.index(info.second, 0, parent);
   }
 
   ui->treeView->collapseAll();

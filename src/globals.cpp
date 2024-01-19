@@ -67,4 +67,10 @@ tafsirExists(const Tafsir* tafsir)
   return baseDir.exists("tafasir/" + tafsir->filename);
 }
 
+bool
+translationExists(const Translation* tr)
+{
+  const QDir& baseDir = tr->extra ? downloadsDir : assetsDir;
+  return baseDir.exists("translations/" + tr->filename);
+}
 };

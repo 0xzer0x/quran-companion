@@ -68,10 +68,16 @@ SettingsDialog::fillLanguageCombobox()
 void
 SettingsDialog::fillContentCombobox()
 {
-  foreach (const Tafsir& t, m_tafasirList)
-    ui->cmbTafsir->addItem(t.displayName);
-  foreach (const Translation& tr, m_translationsList)
-    ui->cmbTranslation->addItem(tr.displayName);
+  for (int i = 0; i < m_tafasirList.size(); i++) {
+    const Tafsir& t = m_tafasirList[i];
+    if (Globals::tafsirExists(&t))
+      ui->cmbTafsir->addItem(t.displayName, i);
+  }
+  for (int i = 0; i < m_trList.size(); i++) {
+    const Translation& tr = m_trList[i];
+    if (Globals::translationExists(&tr))
+      ui->cmbTranslation->addItem(tr.displayName, i);
+  }
 }
 
 void
@@ -87,8 +93,9 @@ SettingsDialog::setCurrentSettingsAsRef()
       .toInt();
   m_sideFont =
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
-  m_tafsir = m_settings->value("Reader/Tafsir").toInt();
-  m_translation = m_settings->value("Reader/Translation").toInt();
+  m_tafsir = ui->cmbTafsir->findData(m_settings->value("Reader/Tafsir"));
+  m_translation =
+    ui->cmbTranslation->findData(m_settings->value("Reader/Translation"));
 
   m_verseType = m_settings->value("Reader/VerseType").toInt();
   m_verseFontSize = m_settings->value("Reader/VerseFontSize").toInt();
@@ -328,10 +335,10 @@ SettingsDialog::applyAllChanges()
     updateFgHighlight(ui->chkFgHighlight->isChecked());
 
   if (ui->cmbTafsir->currentIndex() != m_tafsir)
-    updateTafsir(ui->cmbTafsir->currentIndex());
+    updateTafsir(ui->cmbTafsir->currentData().toInt());
 
   if (ui->cmbTranslation->currentIndex() != m_translation)
-    updateTranslation(ui->cmbTranslation->currentIndex());
+    updateTranslation(ui->cmbTranslation->currentData().toInt());
 
   if (ui->cmbQCF->currentIndex() + 1 != m_qcfVer)
     updateQuranFont(ui->cmbQCF->currentIndex() + 1);

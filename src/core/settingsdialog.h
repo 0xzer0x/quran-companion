@@ -223,7 +223,7 @@ private:
   QSettings* const m_settings = Globals::settings;
   const QDir& m_downloadsDir = Globals::downloadsDir;
   const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
-  const QList<Translation>& m_translationsList = Globals::translationsList;
+  const QList<Translation>& m_trList = Globals::translationsList;
   const QMap<QString, QString>& m_shortcutDescription =
     Globals::shortcutDescription;
   /**

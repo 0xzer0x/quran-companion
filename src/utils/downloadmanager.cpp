@@ -28,17 +28,9 @@ DownloadManager::getLatestVersion()
 }
 
 void
-DownloadManager::addToQueue()
+DownloadManager::addToQueue(DownloadType type, QPair<int, int> info)
 {
-  m_downloadQueue.enqueue(
-    QPair<DownloadType, QPair<int, int>>(QCF, QPair<int, int>()));
-}
-
-void
-DownloadManager::addToQueue(int tafsirIdx)
-{
-  m_downloadQueue.enqueue(
-    QPair<DownloadType, QPair<int, int>>(File, QPair<int, int>(tafsirIdx, -1)));
+  m_downloadQueue.enqueue(QPair<DownloadType, QPair<int, int>>(type, info));
 }
 
 void
@@ -98,13 +90,17 @@ DownloadManager::enqeueQCF()
 }
 
 void
-DownloadManager::enqeueTask(int tafsirIdx)
+DownloadManager::enqeueTask(QPair<int, int> info)
 {
   static const QString base =
     "https://github.com/0xzer0x/quran-companion/raw/dev/extras/";
-  QString path = "tafasir/" + m_tafasirList.at(tafsirIdx).filename;
+  QString path;
+  if (info.first)
+    path = "translations/" + m_trList.at(info.second).filename;
+  else
+    path = "tafasir/" + m_tafasirList.at(info.second).filename;
   DownloadTask t;
-  t.metainfo = { tafsirIdx, -1, 0 };
+  t.metainfo = { info.first, info.second, 0 };
   t.metainfo.squeeze();
   t.link = QUrl::fromEncoded((base + path).toLatin1());
   t.downloadPath.setFile(m_downloadsDir.absoluteFilePath(path));
@@ -148,7 +144,7 @@ DownloadManager::processDownloadQueue()
       enqeueTask(info.first, info.second, v);
   } else if (current.first == File) {
     m_activeTotal = 1;
-    enqeueTask(info.first);
+    enqeueTask(info);
   }
 }
 

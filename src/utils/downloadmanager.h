@@ -109,11 +109,7 @@ public slots:
   /**
    * MODIFIED
    */
-  void addToQueue();
-  /**
-   * MODIFIED
-   */
-  void addToQueue(int tafsirIdx);
+  void addToQueue(DownloadType type, QPair<int, int> info = { -1, -1 });
   /**
    * MODIFIED
    */
@@ -185,6 +181,7 @@ private:
   const QDir& m_downloadsDir = Globals::downloadsDir;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
+  const QList<Translation>& m_trList = Globals::translationsList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief generate download url for specified verse using the reciter download
@@ -209,7 +206,7 @@ private:
    *
    * MODIFIED
    */
-  void enqeueTask(int tafsirIdx);
+  void enqeueTask(QPair<int, int> info);
   /**
    * @brief create a DownloadTask and add it to the download Queue
    * @param reciterIdx - ::Globals::recitersList index for the reciter

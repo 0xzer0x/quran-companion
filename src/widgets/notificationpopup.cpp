@@ -88,10 +88,11 @@ NotificationPopup::completedDownload(DownloadType type,
   if (type == Recitation)
     msg += m_recitersList.at(metainfo[0]).displayName + " - " +
            m_dbMgr->surahNameList().at(metainfo[1] - 1);
-  else if (type == File)
-    msg += m_tafasirList.at(metainfo[0]).displayName;
   else if (type == QCF)
     msg += tr("QCF V2");
+  else if (type == File)
+    msg += metainfo[0] ? m_trList.at(metainfo[1]).displayName
+                       : m_tafasirList.at(metainfo[1]).displayName;
 
   this->notify(msg, success);
 }
@@ -104,6 +105,11 @@ NotificationPopup::downloadError(DownloadType type, const QList<int>& metainfo)
   if (type == Recitation)
     msg += m_recitersList.at(metainfo[0]).displayName + " - " +
            m_dbMgr->surahNameList().at(metainfo[1] - 1);
+  else if (type == QCF)
+    msg += tr("QCF V2");
+  else if (type == File)
+    msg += metainfo[0] ? m_trList.at(metainfo[1]).displayName
+                       : m_tafasirList.at(metainfo[1]).displayName;
 
   this->notify(msg, fail);
 }

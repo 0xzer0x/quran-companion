@@ -106,6 +106,7 @@ public slots:
 private:
   const QList<Reciter>& m_recitersList = Globals::recitersList;
   const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
+  const QList<Translation>& m_trList = Globals::translationsList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
