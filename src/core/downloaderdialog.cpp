@@ -353,6 +353,8 @@ DownloaderDialog::downloadCompleted(DownloadType type,
 
   if (type == Recitation)
     removeFromDownloading(metainfo[0], metainfo[1]);
+  if (m_currentBar->maximum() == 1)
+    m_currentBar->setFormat("1 / 1");
   m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
   setCurrentBar();
