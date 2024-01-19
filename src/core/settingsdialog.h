@@ -242,7 +242,7 @@ private:
   /**
    * MODIFIED
    */
-  void fillContentCombobox();
+  void updateContentCombobox();
   /**
    * @brief loads all the settings from the settings file into their
    * corresponding variables and updates UI components to match them.

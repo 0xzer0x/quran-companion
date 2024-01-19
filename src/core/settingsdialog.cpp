@@ -16,12 +16,11 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 72));
   ui->cmbSideFontSz->setValidator(new QIntValidator(10, 72));
   setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_gear));
-  fillLanguageCombobox();
-  fillContentCombobox();
   ui->tableViewShortcuts->setModel(&m_shortcutsModel);
   ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
   ui->tableViewShortcuts->setItemDelegate(new ShortcutDelegate);
 
+  fillLanguageCombobox();
   setCurrentSettingsAsRef();
   // connectors
   setupConnections();
@@ -66,18 +65,26 @@ SettingsDialog::fillLanguageCombobox()
 }
 
 void
-SettingsDialog::fillContentCombobox()
+SettingsDialog::updateContentCombobox()
 {
+  ui->cmbTafsir->clear();
   for (int i = 0; i < m_tafasirList.size(); i++) {
     const Tafsir& t = m_tafasirList[i];
     if (Globals::tafsirExists(&t))
       ui->cmbTafsir->addItem(t.displayName, i);
   }
+  ui->cmbTranslation->clear();
   for (int i = 0; i < m_trList.size(); i++) {
     const Translation& tr = m_trList[i];
     if (Globals::translationExists(&tr))
       ui->cmbTranslation->addItem(tr.displayName, i);
   }
+
+  m_tafsir = ui->cmbTafsir->findData(m_settings->value("Reader/Tafsir"));
+  m_translation =
+    ui->cmbTranslation->findData(m_settings->value("Reader/Translation"));
+  ui->cmbTafsir->setCurrentIndex(m_tafsir);
+  ui->cmbTranslation->setCurrentIndex(m_translation);
 }
 
 void
@@ -93,9 +100,6 @@ SettingsDialog::setCurrentSettingsAsRef()
       .toInt();
   m_sideFont =
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
-  m_tafsir = ui->cmbTafsir->findData(m_settings->value("Reader/Tafsir"));
-  m_translation =
-    ui->cmbTranslation->findData(m_settings->value("Reader/Translation"));
 
   m_verseType = m_settings->value("Reader/VerseType").toInt();
   m_verseFontSize = m_settings->value("Reader/VerseFontSize").toInt();
@@ -117,8 +121,6 @@ SettingsDialog::setCurrentSettingsAsRef()
   ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
   ui->fntCmbSide->setCurrentFont(m_sideFont);
   ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
-  ui->cmbTafsir->setCurrentIndex(m_tafsir);
-  ui->cmbTranslation->setCurrentIndex(m_translation);
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
   ui->chkDailyVerse->setChecked(m_votd);
   ui->chkAdaptive->setChecked(m_adaptive);
@@ -129,6 +131,7 @@ SettingsDialog::setCurrentSettingsAsRef()
 
   // shortcuts tab
   populateShortcutsModel();
+  updateContentCombobox();
   ui->tableViewShortcuts->resizeColumnsToContents();
 }
 
