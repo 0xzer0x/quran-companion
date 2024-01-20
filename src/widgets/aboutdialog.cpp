@@ -6,6 +6,15 @@ AboutDialog::AboutDialog(QWidget* parent)
   , ui(new Ui::AboutDialog)
 {
   ui->setupUi(this);
+  QFont bolded = qApp->font();
+  bolded.setBold(true);
+  ui->lbAppName->setFont(bolded);
+  ui->lbContentType->setFont(bolded);
+  ui->lbLibraries->setFont(bolded);
+  ui->lbLinks->setFont(bolded);
+  ui->lbRecitations->setFont(bolded);
+  ui->lbSurahCards->setFont(bolded);
+
   ui->translatorsTab->setLayoutDirection(Qt::LeftToRight);
   ui->lbVersionNum->setText(qApp->applicationVersion());
   ui->lbLicense->setText(ui->lbLicense->text().arg(
@@ -15,6 +24,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     ui->lbBugFeatureReq->text().arg(tr("Report a bug/Request a feature")));
   ui->lbContribTranslation->setText(
     ui->lbContribTranslation->text().arg(tr("Contribute to translations")));
+
   connect(ui->btnBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
   if (m_lang == QLocale::Arabic)
     ui->aboutTabWidget->setObjectName("rtlTabWidget");

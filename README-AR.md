@@ -8,14 +8,14 @@
 <br />
 <div align="center">
   <a href="https://github.com/0xzer0x/quran-companion">
-    <img src="resources/tray.png" alt="Logo" width="120" height="120">
+    <img src="resources/tray.png" alt="Logo">
   </a>
 </div>
 
 <h2 align="center">رفيق القرآن</h2>
 
 <h4 align="center">
-  قارئ و مشغل للقرآن الكريم متعدد-المنصات مبني علي مكتبة كيوت
+  قارئ و مشغل للقرآن الكريم متعدد-المنصات
 </h4>
 
 <p align="center">
@@ -297,6 +297,7 @@ QT_MEDIA_BACKEND=ffmpeg ./quran-companion
 - [Quran.com API](https://api-docs.quran.com/)
 - [Every Ayah recitations](https://everyayah.com/recitations_ayat.html)
 - [Mosshaf](https://mosshaf.com/)
+- [Original icon design](https://pngtree.com/freepng/green-al-quran-illustration_6955404.html)
 
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
 

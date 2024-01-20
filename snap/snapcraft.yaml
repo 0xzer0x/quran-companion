@@ -5,9 +5,9 @@ title: Quran Companion
 website: https://github.com/0xzer0x/quran-companion
 source-code: https://github.com/0xzer0x/quran-companion
 contact: youssefessamasu@gmail.com
-summary: Quran offline reader and player
+summary: Cross-platform Quran reader and player
 description: |
-   Quran Companion is a cross-platform Quran reader and listener with recitation download capabilities, verse highlighting, re-sizable Quran font, and a variety of tafsir books and translations.
+   Quran Companion is a cross-platform Quran reader and player with recitation download capabilities, verse highlighting, re-sizable Quran font, and a variety of tafsir books and translations.
 
 grade: stable
 confinement: strict

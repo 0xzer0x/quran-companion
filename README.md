@@ -10,14 +10,14 @@
 <br />
 <div align="center">
   <a href="https://github.com/0xzer0x/quran-companion">
-    <img src="resources/tray.png" alt="Logo" width="120" height="120">
+    <img src="resources/tray.png" alt="Logo">
   </a>
 </div>
 
 <h2 align="center">Quran Companion</h2>
 
 <h4 align="center">
-  cross-platform desktop Qt-based Quran reader & player
+  Cross-platform desktop Quran reader & player
 </h4>
 
 <p align="center">
@@ -81,7 +81,7 @@
 
 ## About the project ✨
 
-Quran Companion is a cross-platform Quran reader/listener with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books & translations
+Quran Companion is a cross-platform Quran reader/player with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books & translations
 
 ### Key Features
 
@@ -282,6 +282,7 @@ The following projects/services were used in development:
 - [Quran.com API](https://api-docs.quran.com/)
 - [Every Ayah recitations](https://everyayah.com/recitations_ayat.html)
 - [Mosshaf](https://mosshaf.com/)
+- [Original icon design](https://pngtree.com/freepng/green-al-quran-illustration_6955404.html)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
