@@ -8,7 +8,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/0xzer0x/quran-companion">
-    <img src="resources/tray.png" alt="Logo">
+    <img src="resources/logo.ico" alt="Logo" width=128>
   </a>
 </div>
 
@@ -297,7 +297,6 @@ QT_MEDIA_BACKEND=ffmpeg ./quran-companion
 - [Quran.com API](https://api-docs.quran.com/)
 - [Every Ayah recitations](https://everyayah.com/recitations_ayat.html)
 - [Mosshaf](https://mosshaf.com/)
-- [Original icon design](https://pngtree.com/freepng/green-al-quran-illustration_6955404.html)
 
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
 
