@@ -599,8 +599,10 @@ MainWindow::setupMenubarToggle()
   toggleNav->setCursor(Qt::PointingHandCursor);
   toggleNav->setToolTip(tr("Navigation"));
   toggleNav->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-  toggleNav->setMinimumSize(
-    QSize(ui->menubar->height() + 10, ui->menubar->height()));
+  toggleNav->setStyleSheet(
+    QString("QPushButton { min-height: %0px; min-width: %1px; }")
+      .arg(QString::number(ui->menubar->height()),
+           QString::number(ui->menubar->height() * 2)));
   ui->menubar->setCornerWidget(toggleNav);
   toggleNav->setIcon(m_fa->icon(fa_solid, fa_compass));
   toggleNav->setIconSize(QSize(20, 20));

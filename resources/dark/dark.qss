@@ -270,8 +270,6 @@ QPushButton#btnToggleNav {
   border: none;
   border-radius: 0px;
   background-color: transparent;
-  min-height: 1.1em;
-  min-width: 40px;
 }
 
 QPushButton#btnToggleNav:!checked:hover {
