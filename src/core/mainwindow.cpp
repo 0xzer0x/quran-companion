@@ -1110,7 +1110,7 @@ MainWindow::missingTafsir(int idx)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(File, { idx, -1 });
+    m_downloaderDlg->selectDownload(File, { 0, idx });
   }
 }
 

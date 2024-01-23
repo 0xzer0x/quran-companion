@@ -297,8 +297,10 @@ DownloaderDialog::selectDownload(DownloadType type, QPair<int, int> info)
     task = m_treeModel.index(0, 0, parent);
   } else if (type == File) {
     parent = m_treeModel.index(m_treeModel.rowCount() - 2 - !info.first, 0);
+    // tafsir
     if (!info.first)
       info.second -= info.second > 6;
+    // translation
     else
       info.second -= 1 + info.second > 5;
     task = m_treeModel.index(info.second, 0, parent);
