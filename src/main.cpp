@@ -86,8 +86,8 @@ checkSettingsGroup(QSettings* settings, int group);
 void
 populateRecitersList();
 /**
- *
- * MODIFIED
+ * @brief populates the global tafasir and translation lists with data from
+ * files.xml
  */
 void
 populateContentLists();

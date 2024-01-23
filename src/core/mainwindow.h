@@ -186,11 +186,12 @@ private slots:
    */
   void missingRecitationFileWarn(int reciterIdx, int surah);
   /**
-   * MODIFIED
+   * @brief display a warning messagebox when QCF2 files are not found
    */
   void missingQCF();
   /**
-   * MODIFIED
+   * @brief display a warning messagebox when a tafsir db file is not found
+   * @param idx - index of tafsir in Globals::tafasirList
    */
   void missingTafsir(int idx);
   /**
@@ -266,9 +267,7 @@ private slots:
    */
   void toggleReaderView();
   /**
-   * @brief togglePlayerControls
-   *
-   * MODIFIED
+   * @brief toggle the visibility of the player controls in the main window
    */
   void togglePlayerControls();
   /**
@@ -335,7 +334,8 @@ private slots:
    */
   void updateSideFont();
   /**
-   * MODIFIED
+   * @brief Updates the type of the verses shown and reload the font family and
+   * size
    */
   void updateVerseType();
   /**
@@ -619,13 +619,11 @@ private:
    */
   VerseFrame* m_highlightedFrm = nullptr;
   /**
-   * @brief m_betaqaViewer
-   *
-   * MODIFIED
+   * @brief pointer to the surah card (betaqa) widget
    */
   BetaqaViewer* m_betaqaViewer = nullptr;
   /**
-   * @brief m_verseDlg
+   * @brief pointer to the votd dialog
    */
   VerseDialog* m_verseDlg = nullptr;
   /**

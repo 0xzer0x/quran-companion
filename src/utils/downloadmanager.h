@@ -29,17 +29,24 @@ class DownloadManager : public QObject
 public:
   /**
    * @brief DownloadTask struct represents a single verse file download task
-   * @details Quran surahs are downloaded as separate verse mp3 files which are
-   * represented as DownloadTask instances
-   *
-   * MODIFIED
+   * @details downloads are separated into 3 different types
+   * DownloadType::Recitation - MP3 recitation for a single verse - reciter
+   * combination
+   * DownloadType::QCF - QCF v2 font files
+   * DownloadType::File - single file download, used for downloading tafsir and
+   * translation DB files
    */
   struct DownloadTask
   {
     /**
      * @brief metainfo vector for storing information about the download task
-     * @details in case of a regular verse download, { reciter, surah, verse }
-     * and in case of QCF font download, { -1, -1, page }
+     * @details data in the metainfo QList depends on the DownloadType
+     * DownloadType::Recitation - { reciter, surah, verse }
+     * DownloadType::QCF - { -1, -1, page }
+     * DownloadType::File - { k, idx, bytes } where
+     * k: kind of file (0 for tafsir, 1 for translation)
+     * idx: index of the file in its corresponding global QList
+     * bytes: is the current number of bytes downloaded (updated automatically)
      */
     QList<int> metainfo;
     /**
@@ -100,18 +107,20 @@ public slots:
    */
   void processTaskQueue();
   /**
-   * @brief process the surah queue which contains surahs to be downloaded, add
-   * DownloadTask instance for each verse of the processed surah
-   *
-   * MODIFIED
+   * @brief process the download group queue by adding appropriate download
+   * tasks according to the DownloadType and metainfo
    */
   void processDownloadQueue();
   /**
-   * MODIFIED
+   * @brief enqueues an entry in the download group queue
+   * @param type - DownloadType of group
+   * @param info - additional info of the download required
    */
   void addToQueue(DownloadType type, QPair<int, int> info = { -1, -1 });
   /**
-   * MODIFIED
+   * @brief overload to enqueue a Recitation entry in the download group queue
+   * @param reciter - reciter index in Globals::recitersList
+   * @param surah - surah number to download
    */
   void addToQueue(int reciter, int surah);
   /**
@@ -161,9 +170,7 @@ signals:
   void downloadSpeedUpdated(int valuePerSec, QString unit);
   /**
    * @fn void downloadCompleted(int, int)
-   * @brief Emitted when all surah download tasks are completed
-   *
-   * MODIFIED
+   * @brief Emitted when the currently active download group is completed
    */
   void downloadCompleted(DownloadType type, const QList<int>& metainfo);
   /**
@@ -195,16 +202,12 @@ private:
                    const int surah,
                    const int verse) const;
   /**
-   * @brief enqeueQCFTasks
-   *
-   * MODIFIED
+   * @brief enqueues QCF font file tasks
    */
   void enqeueQCF();
   /**
-   * @brief enqeueFile
-   * @param tafsiridx
-   *
-   * MODIFIED
+   * @brief enqueues a File task based on the given info
+   * @param info
    */
   void enqeueTask(QPair<int, int> info);
   /**
@@ -229,9 +232,8 @@ private:
    */
   bool m_isDownloading = false;
   /**
-   * @brief the verse count of the current surah being downloaded
-   *
-   * MODIFIED
+   * @brief the total count of files in the current group download / total bytes
+   * if downloading a single file
    */
   int m_activeTotal;
   QNetworkRequest m_versionReq;
@@ -249,21 +251,16 @@ private:
    */
   DownloadTask m_activeTask;
   /**
-   * @brief m_activeType
-   *
-   * MODIFIED
+   * @brief currently active DownloadType
    */
   DownloadType m_activeType = Recitation;
   /**
-   * @brief surah download queue
-   *
-   * MODIFIED
+   * @brief download group queue, used for quickly adding downloads that will be
+   * expanding into separate DownloadTask (s) when its processed
    */
   QQueue<QPair<DownloadType, QPair<int, int>>> m_downloadQueue;
   /**
-   * @brief individual verses download queue
-   *
-   * MODIFIED
+   * @brief individual DownloadTask queue
    */
   QQueue<DownloadTask> m_taskQueue;
   /**

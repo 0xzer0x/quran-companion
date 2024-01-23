@@ -1350,21 +1350,11 @@ MainWindow::updateSideFont()
 void
 MainWindow::updateVerseType()
 {
-  int idx = m_settings->value("Reader/VerseType").toInt();
-  switch (idx) {
-    case 0:
-      m_versesFont.setFamily(m_activeQuranBrowser->pageFont());
-      break;
-    case 1:
-      m_versesFont.setFamily("kfgqpc_hafs_uthmanic _script");
-      break;
-    case 2:
-      m_versesFont.setFamily("Emine");
-      break;
-  }
-
+  VerseType type =
+    qvariant_cast<VerseType>(m_settings->value("Reader/VerseType"));
+  m_versesFont.setFamily(Globals::verseFontname(type, m_currVerse.page));
   m_versesFont.setPointSize(m_settings->value("Reader/VerseFontSize").toInt());
-  m_dbMgr->setVerseType(static_cast<VerseType>(idx));
+  m_dbMgr->setVerseType(type);
 }
 
 Verse

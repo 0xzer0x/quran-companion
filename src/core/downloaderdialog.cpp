@@ -291,17 +291,19 @@ DownloaderDialog::selectDownload(DownloadType type, QPair<int, int> info)
   QModelIndex task;
   if (type == Recitation) {
     parent = m_treeModel.index(info.first, 0);
-    task = m_treeModel.index(info.second - 1, 1, parent);
+    task = m_treeModel.index(info.second - 1, 0, parent);
   } else if (type == QCF) {
     parent = m_treeModel.index(m_treeModel.rowCount() - 1, 0);
     task = m_treeModel.index(0, 0, parent);
   } else if (type == File) {
     parent = m_treeModel.index(m_treeModel.rowCount() - 2 - !info.first, 0);
-    // tafsir
+    // remove default db indices from current index as defaults are not
+    // downloadable
     if (!info.first)
+      // tafsir
       info.second -= info.second > 6;
-    // translation
     else
+      // translation
       info.second -= 1 + info.second > 5;
     task = m_treeModel.index(info.second, 0, parent);
   }

@@ -69,8 +69,7 @@ struct Reciter
 };
 /**
  * @brief Tafsir struct contains data about a single tafsir
- *
- * MODIFIED
+ * @details tafasir are stored in the resource file "files.xml"
  */
 struct Tafsir
 {

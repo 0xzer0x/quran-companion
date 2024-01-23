@@ -171,14 +171,12 @@ private:
    */
   QImage surahFrame(int surah);
   /**
-   * @brief Set the Href object
-   *
-   * @param cursor
-   * @param to
-   * @param url
-   * @return int
-   *
-   * MODIFIED
+   * @brief utility to set the href url for the text from the current cursor
+   * position to the position given
+   * @param cursor - pointer to the current QTextCursor used for inserting text
+   * @param to  - the position in document to stop at
+   * @param url - url to set for the selected portion
+   * @return int - the current cursor postion
    */
   int setHref(QTextCursor* cursor, int to, QString url);
   /**

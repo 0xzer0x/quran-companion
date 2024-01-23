@@ -179,7 +179,9 @@ public:
    */
   QString getSurahName(const int sIdx, bool ar = false);
   /**
-   * MODIFIED
+   * @brief get the surah card (betaqa) content
+   * @param surah - surah number
+   * @return QString of the surah card text
    */
   QString getBetaqa(const int surah);
   /**
@@ -304,17 +306,13 @@ public:
    */
   void setActiveKhatmah(const int id);
   /**
-   * @brief setVerseType
+   * @brief Set the VerseType shown
    * @param newVerseType
-   *
-   * MODIFIED
    */
   void setVerseType(VerseType newVerseType);
   /**
-   * @brief getVerseType
-   * @return
-   *
-   * MODIFIED
+   * @brief getter for m_verseType
+   * @return VerseType
    */
   VerseType getVerseType() const;
 

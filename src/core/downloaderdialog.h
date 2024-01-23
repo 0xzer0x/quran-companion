@@ -66,11 +66,16 @@ public slots:
    */
   void downloadAborted();
   /**
-   * MODIFIED
+   * @brief Update UI elements on download group completion
+   * @param type - DownloadType of the download group
+   * @param metainfo - QList of download group information
    */
   void downloadCompleted(DownloadType type, const QList<int>& metainfo);
   /**
-   * MODIFIED
+   * @brief Callback function to update UI elements when the current active
+   * download group fails
+   * @param type - DownloadType of the download group
+   * @param metainfo - QList of download group information
    */
   void topTaskDownloadError(DownloadType type, const QList<int>& metainfo);
   /**
@@ -81,7 +86,9 @@ public slots:
    */
   void updateDownloadSpeed(int value, QString unit);
   /**
-   * MODIFIED
+   * @brief automatically select a group/task to download
+   * @param type - DownloadType of the download group to select
+   * @param info - metainfo for the download task
    */
   void selectDownload(DownloadType type,
                       QPair<int, int> info = QPair<int, int>(0, 1));
@@ -127,7 +134,10 @@ private:
    */
   void populateTreeModel();
   /**
-   * MODIFIED
+   * @brief adds a QFrame of download task info and a progressbar
+   * @param type - DownloadType of the download group to select
+   * @param info - download metainfo QPair used by DownloadType::Recitation and
+   * DownloadType::File
    */
   void addTaskProgress(DownloadType type,
                        QPair<int, int> info = QPair<int, int>(-1, -1));

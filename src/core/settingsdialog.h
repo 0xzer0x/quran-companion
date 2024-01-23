@@ -141,7 +141,8 @@ public slots:
 
 signals:
   /**
-   * MODIFIED
+   * @fn qcf2Missing()
+   * @brief signal emitted when one of the 604 QCF2 files is missing
    */
   void qcf2Missing();
   /**
@@ -185,7 +186,8 @@ signals:
    */
   void sideFontChanged();
   /**
-   * MODIFIED
+   * @fn verseTypeChanged()
+   * @brief signal emitted when the type shown changes
    */
   void verseTypeChanged();
   /**
@@ -240,7 +242,8 @@ private:
    */
   void fillLanguageCombobox();
   /**
-   * MODIFIED
+   * @brief reload all tafsir and translation options to show all available
+   * files and sets the shown index to the selected one
    */
   void updateContentCombobox();
   /**
@@ -253,13 +256,12 @@ private:
    */
   void checkShortcuts();
   /**
-   * MODIFIED
+   * @brief check if QCF2 font files exist
+   *
+   * @return true - all 604 QCF2 files are found
+   * @return false - one of the files is missing
    */
   bool qcfExists();
-  /**
-   * MODIFIED
-   */
-  bool tafsirExists(int idx);
   /**
    * @brief QCF font size used in constructing Quran page.
    */
