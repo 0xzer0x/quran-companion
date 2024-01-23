@@ -75,7 +75,7 @@ void
 DownloadManager::enqeueQCF()
 {
   static const QString base =
-    "https://github.com/0xzer0x/quran-companion/raw/dev/extras/";
+    "https://github.com/0xzer0x/quran-companion/raw/main/extras/";
   QString path;
   DownloadTask t;
   for (int i = 1; i <= 604; i++) {
@@ -93,7 +93,7 @@ void
 DownloadManager::enqeueTask(QPair<int, int> info)
 {
   static const QString base =
-    "https://github.com/0xzer0x/quran-companion/raw/dev/extras/";
+    "https://github.com/0xzer0x/quran-companion/raw/main/extras/";
   QString path;
   if (info.first)
     path = "translations/" + m_trList.at(info.second).filename;
