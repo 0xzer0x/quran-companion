@@ -5,56 +5,59 @@
   <summary>Cross-platform Quran reader and player</summary>
   <metadata_license>MIT</metadata_license>
   <project_license>LGPL-3.0-or-later</project_license>
-  <content_rating type="oars-1.1" />
+  <content_rating type="oars-1.1"></content_rating>
   <description>
-    <p>
-      Quran Companion is a cross-platform Quran reader and player with recitation download
-      capabilities, verse highlighting, resizable quran font, and a variety of tafsir books and
-      translations
-    </p>
+    <p>Quran Companion is a cross-platform Quran reader and player with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books and translations</p>
   </description>
   <launchable type="desktop-id">io.github._0xzer0x.qurancompanion.desktop</launchable>
   <url type="homepage">https://github.com/0xzer0x/quran-companion</url>
   <url type="translate">https://crowdin.com/project/quran-companion</url>
   <url type="contact">https://github.com/0xzer0x/quran-companion</url>
   <url type="bugtracker">https://github.com/0xzer0x/quran-companion/issues</url>
-
   <screenshots>
     <screenshot type="default">
-      <image xml:lang="en">
-        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/light.png</image>
+      <image xml:lang="en">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/light.png</image>
     </screenshot>
     <screenshot>
-      <image xml:lang="en">
-        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/dark.png</image>
+      <image xml:lang="en">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/dark.png</image>
     </screenshot>
     <screenshot>
-      <image xml:lang="en">
-        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/sepia.png</image>
+      <image xml:lang="en">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/sepia.png</image>
     </screenshot>
     <screenshot>
-      <image xml:lang="ar">
-        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_light.png</image>
+      <image xml:lang="ar">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_light.png</image>
     </screenshot>
     <screenshot>
-      <image xml:lang="ar">
-        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_dark.png</image>
+      <image xml:lang="ar">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_dark.png</image>
     </screenshot>
     <screenshot>
-      <image xml:lang="ar">
-        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_two-page.png</image>
+      <image xml:lang="ar">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_two-page.png</image>
     </screenshot>
   </screenshots>
-
   <releases>
-    <release version="1.2.1" date="2024-01-03">
+    <release date="2024-01-24" version="1.2.2">
+      <description>
+        <ul>
+          <li>Added different fonts for displaying verses</li>
+          <li>Added annotated Hafs verse text</li>
+          <li>Move QCF 2 font files out of application bundle and added option to download it (Reduced bundle size)</li>
+          <li>Move tafsir and translation files out of the application bundle and added option to download any one of them (Reduced bundle size)</li>
+          <li>Added Surah card functionality (Accessed by clicking the Surah frame/clicking the Surah name in the page header)</li>
+          <li>Added new shortcut to hide player controls</li>
+          <li>Replaced the dynamic resizing of reader panels with panel toggling functionality</li>
+          <li>Added Tafsir Al-Jalalayn (English)</li>
+          <li>Better About dialog</li>
+        </ul>
+      </description>
+    </release>
+    <release date="2024-01-03" version="1.2.1">
       <description>
         <ul>
           <li>Bugfixes</li>
         </ul>
       </description>
     </release>
-    <release version="1.2.0" date="2024-01-01">
+    <release date="2024-01-01" version="1.2.0">
       <description>
         <ul>
           <li>Türkçe (Turkish) UI translation by @halak0013 🎉</li>
@@ -64,7 +67,7 @@
         </ul>
       </description>
     </release>
-    <release version="1.1.11" date="2023-12-03">
+    <release date="2023-12-03" version="1.1.11">
       <description>
         <ul>
           <li>Bugfix</li>
@@ -74,14 +77,14 @@
         </ul>
       </description>
     </release>
-    <release version="1.1.10" date="2023-10-15">
+    <release date="2023-10-15" version="1.1.10">
       <description>
         <ul>
           <li>Hotfixes</li>
         </ul>
       </description>
     </release>
-    <release version="1.1.9" date="2023-10-13">
+    <release date="2023-10-13" version="1.1.9">
       <description>
         <ul>
           <li>Sepia theme added</li>
@@ -90,7 +93,7 @@
         </ul>
       </description>
     </release>
-    <release version="1.1.8" date="2023-09-15">
+    <release date="2023-09-15" version="1.1.8">
       <description>
         <ul>
           <li>Two-page mode added</li>
@@ -100,14 +103,14 @@
         </ul>
       </description>
     </release>
-    <release version="1.1.7" date="2023-07-16">
+    <release date="2023-07-16" version="1.1.7">
       <description>
         <ul>
           <li>Bugfixes</li>
         </ul>
       </description>
     </release>
-    <release version="1.1.6" date="2023-07-15">
+    <release date="2023-07-15" version="1.1.6">
       <description>
         <ul>
           <li>Recitation downloading bugs fixed</li>
@@ -118,7 +121,6 @@
         </ul>
       </description>
     </release>
-    <release version="1.1.5" date="2023-06-25">
-    </release>
+    <release date="2023-06-25" version="1.1.5"></release>
   </releases>
 </component>
