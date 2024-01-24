@@ -6,6 +6,7 @@
 #ifndef DOWNLOADPROGRESSBAR_H
 #define DOWNLOADPROGRESSBAR_H
 
+#include "../globals.h"
 #include <QProgressBar>
 
 /**
@@ -21,7 +22,7 @@ public:
    * @param max - maximum value for the progress bar (defaults to longest surah
    * in the Quran)
    */
-  DownloadProgressBar(QWidget* parent = nullptr, int max = 286);
+  DownloadProgressBar(QWidget* parent, DownloadType type, int max);
   /**
    * @brief The State enum represents the different states of the progressbar UI
    * component
@@ -36,9 +37,6 @@ public:
 public slots:
   void updateProgress(qint64 downloaded, qint64 total);
   void setStyling(State);
-
-private:
-  QString m_defStylesheet;
 };
 
 #endif // DOWNLOADPROGRESSBAR_H

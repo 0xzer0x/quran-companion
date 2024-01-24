@@ -72,7 +72,6 @@ private slots:
 
 private:
   const int m_qcfVer = Globals::qcfVersion;
-  const QString& m_fontPrefix = Globals::qcfFontPrefix;
   const QSettings* m_settings = Globals::settings;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**

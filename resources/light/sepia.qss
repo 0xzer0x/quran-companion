@@ -2,6 +2,71 @@ QDialogButtonBox {
   dialogbuttonbox-buttons-have-icons: 0;
 }
 
+QTabWidget::pane {
+  background-color: palette(button);
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+}
+
+QDialog #rtlTabWidget::pane {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 5px;
+}
+
+QDialog #rtlTabWidget QTabBar::tab:first {
+  margin-right: 0px;
+}
+
+QDialog QTabBar::tab:hover,
+QDialog QTabBar::tab:selected {
+  color: palette(text);
+  background: palette(button);
+}
+
+QDialog QTabBar::tab:selected {
+  font: bold;
+}
+
+QDialog QTabBar::tab {
+  color: #aea491;
+  background: palette(base);
+}
+
+QDialog#AboutDialog QTabBar::tab,
+QDialog#SearchDialog QTabBar::tab {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  min-width: 60px;
+  min-height: 20px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-right: 1px;
+}
+
+QDialog#SettingsDialog QTabBar::tab {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  min-height: 60px;
+  min-width: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 1px;
+}
+
+QWidget#generalTab,
+QWidget#readerTab,
+QWidget#shortcutsTab,
+QWidget#filterTab,
+QWidget#searchTab {
+  background-color: transparent;
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+}
+
+#tableViewShortcuts {
+  border: none;
+}
+
 QTextEdit#tedTafsir {
   border: 1px solid #efe3cd;
   background-color: #f7ebd5;
@@ -13,7 +78,7 @@ QTextEdit#tedTafsir {
 QFrame#framePlayer {
   background-color: #f7ebd5;
   border-radius: 8px;
-  border: 2px solid #efe3cd;
+  border: 1px solid #d9cdb8;
 }
 
 QPushButton:hover {
@@ -55,8 +120,8 @@ QComboBox::down-arrow {
 
 /* --------- Reader Styles --------- */
 
-QSplitter#centeralSplitter {
-  border: 2px solid #efe3cd;
+QFrame#frmReader {
+  border: 1px solid #d9cdb8;
   border-radius: 7px;
   background-color: #f7ebd5;
 }
@@ -159,6 +224,7 @@ QListView#listViewSurahs::item:hover:selected {
 }
 
 QListView#listViewBookmarkedSurahs {
+  outline: none;
   font-size: 10pt;
   background-color: transparent;
 }
@@ -166,11 +232,12 @@ QListView#listViewBookmarkedSurahs {
 QListView#listViewBookmarkedSurahs::item {
   margin: 0px 5px 0px 0px;
   background-color: #f7ebd5;
-  border: 1px solid #bfb7a5;
+  border: 1px outset #d6c9b0;
   border-radius: 8px;
 }
 
 QListView#listViewBookmarkedSurahs::item:hover {
+  border-color: #b5a68b;
   background-color: #eee2cc;
 }
 
@@ -188,9 +255,6 @@ QPushButton#btnToggleNav {
   border: none;
   border-radius: 0px;
   background-color: transparent;
-  image: url(":/resources/light/icons/navigation.svg");
-  min-height: 1.1em;
-  min-width: 40px;
 }
 
 QPushButton#btnToggleNav:!checked:hover {
@@ -209,14 +273,19 @@ QFrame#Popup {
   border-radius: 6px;
 }
 
-QDialog#dlgVOTD:hover {
+QDialog#VerseDialog:hover {
   background: rgba(115, 96, 64, 40);
 }
 
 /* --------------- Khatmah Dialog Styles --------------- */
 
 *[khatmah="true"] {
-  border: 1px outset #cabfa4;
+  background-color: #f7ebd5;
+  border-radius: 5px;
+}
+
+*[bookmark="true"] {
+  border: 1px solid #cabfa4;
   background-color: #f7ebd5;
   border-radius: 5px;
 }
@@ -230,4 +299,55 @@ QDialog#dlgVOTD:hover {
   border: 1px solid palette(highlight);
   border-radius: 3px;
   background: palette(window);
+}
+
+QWidget#BetaqaViewer QTextBrowser {
+  border: 1px solid palette(highlight);
+  background-color: #ddd2c0;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+QProgressBar {
+  text-align: center;
+  color: palette(text);
+  border-radius: 3px;
+  border: 1px solid palette(button);
+}
+
+QProgressBar::chunk {
+  border: 1px solid #585041;
+  border-radius: 2px;
+  background-color: qlineargradient(
+    x1: 0,
+    y1: 0,
+    x2: 0,
+    y2: 1,
+    stop: 0.5 #8e7d60,
+    stop: 1 #736040
+  );
+}
+
+QProgressBar[progress-state="1"]::chunk {
+  border-color: #0c886c;
+  background-color: qlineargradient(
+    x1: 0,
+    y1: 0,
+    x2: 0,
+    y2: 1,
+    stop: 0.5 #00a57f,
+    stop: 1 #00916f
+  );
+}
+
+QProgressBar[progress-state="2"]::chunk {
+  border-color: #88100c;
+  background-color: qlineargradient(
+    x1: 0,
+    y1: 0,
+    x2: 0,
+    y2: 1,
+    stop: 0.5 #a50500,
+    stop: 1 #930400
+  );
 }

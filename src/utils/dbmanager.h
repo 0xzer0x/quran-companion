@@ -32,9 +32,10 @@ public:
    */
   enum Database
   {
-    null,       ///< default value
-    quran,      ///< (quran.db) main Quran database file
-    glyphs,     ///< (glyphs.db) QCF glyphs database
+    null,   ///< default value
+    quran,  ///< (quran.db) main Quran database file
+    glyphs, ///< (glyphs.db) QCF glyphs database
+    betaqat,
     bookmarks,  ///< (bookmarks.db) bookmarked verses and khatmah database
     tafsir,     ///< currently selected tafsir database file
     translation ///< currently selected translation database file
@@ -54,12 +55,12 @@ public:
    * @brief sets the active tafsir
    * @param tafsirName - DBManager::Tafsir entry
    */
-  void setCurrentTafsir(Tafsir tafsirName);
+  void setCurrentTafsir(int tafsirIdx);
   /**
    * @brief sets the active translation
    * @param translationName - DBManager::Translation entry
    */
-  void setCurrentTranslation(Translation translationName);
+  void setCurrentTranslation(int translationIdx);
   /**
    * @brief sets the currently active sqlite database file and opens
    * corresponding connection based on the DBManager::Database type
@@ -73,7 +74,7 @@ public:
    * @param page - Quran page number
    * @return QList of 2 integers [0: surah index, 1: juz number]
    */
-  QList<int> getPageMetadata(const int page);
+  QPair<int, int> getPageMetadata(const int page);
   /**
    * @brief get Quran page QCF glyphs separated as lines
    * @param page - Quran page number
@@ -178,6 +179,12 @@ public:
    */
   QString getSurahName(const int sIdx, bool ar = false);
   /**
+   * @brief get the surah card (betaqa) content
+   * @param surah - surah number
+   * @return QString of the surah card text
+   */
+  QString getBetaqa(const int surah);
+  /**
    * @brief gets the corresponding id for the verse in the database
    * @param sIdx - sura number
    * @param vIdx - verse number
@@ -257,7 +264,7 @@ public:
    * @brief gets a random verse from the Quran
    * @return QPair of ::Verse instance and verse text
    */
-  QPair<Verse, QString> randomVerse();
+  Verse randomVerse();
   /**
    * @brief gets a QList of ::Verse instances representing the bookmarked verse
    * within the given sura (default gets all)
@@ -285,9 +292,9 @@ public:
   bool removeBookmark(Verse v);
   /**
    * @brief getter for m_currTafsir
-   * @return the currently set DBManager::Tafsir
+   * @return the currently set DBManager::Tafasir
    */
-  Tafsir currTafsir() const;
+  const Tafsir* currTafsir() const;
   /**
    * @brief getter for m_activeKhatmah
    * @return the currently active khatmah id
@@ -298,12 +305,25 @@ public:
    * @param id - id of the active khatmah
    */
   void setActiveKhatmah(const int id);
+  /**
+   * @brief Set the VerseType shown
+   * @param newVerseType
+   */
+  void setVerseType(VerseType newVerseType);
+  /**
+   * @brief getter for m_verseType
+   * @return VerseType
+   */
+  VerseType getVerseType() const;
 
 private:
-  QDir m_dbDir = Globals::assetsDir;
+  const QDir& m_assetsDir = Globals::assetsDir;
+  const QDir& m_downloadsDir = Globals::downloadsDir;
+  const int m_qcfVer = Globals::qcfVersion;
   const QSettings* m_settings = Globals::settings;
   const QLocale::Language m_languageCode = Globals::language;
-  const int m_qcfVer = Globals::qcfVersion;
+  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
+  const QList<Translation>& m_translationsList = Globals::translationsList;
   const QString m_bookmarksFilepath =
     Globals::configDir.absoluteFilePath("bookmarks.db");
   /**
@@ -319,22 +339,16 @@ private:
    * databases
    */
   QSqlDatabase m_openDBCon;
+
+  VerseType m_verseType = VerseType::qcf;
   /**
-   * @brief the current active DBManager::Tafsir
+   * @brief the current active DBManager::Tafasir
    */
-  Tafsir m_currTafsir = Tafsir::sa3dy;
+  const Tafsir* m_currTafsir = nullptr;
   /**
    * @brief the current active DBManager::Translation
    */
-  Translation m_currTrans = Translation::en_sahih;
-  /**
-   * @brief the currently active tafsir database filename
-   */
-  QString m_tafsirDbFilename;
-  /**
-   * @brief the currently active translation database filename
-   */
-  QString m_transDbFilename;
+  const Translation* m_currTrans = nullptr;
   /**
    * @brief path to the currently active tafsir database file
    */
@@ -351,6 +365,8 @@ private:
    * @brief path to the QCF glyphs database file
    */
   QFileInfo m_glyphsDbPath;
+
+  QFileInfo m_betaqatDbPath;
   /**
    * @brief QList of sura names (Arabic if UI language is Arabic, Otherwise
    * English)

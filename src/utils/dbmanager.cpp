@@ -9,12 +9,14 @@
 DBManager::DBManager(QObject* parent)
   : QObject(parent)
 {
-  m_quranDbPath.setFile(m_dbDir.filePath("quran.db"));
-  m_glyphsDbPath.setFile(m_dbDir.filePath("glyphs.db"));
+  m_quranDbPath.setFile(m_assetsDir.filePath("quran.db"));
+  m_glyphsDbPath.setFile(m_assetsDir.filePath("glyphs.db"));
+  m_betaqatDbPath.setFile(m_assetsDir.filePath("betaqat.db"));
 
   // set database driver, set the path & open a connection with the db
   QSqlDatabase::addDatabase("QSQLITE", "QuranCon");
   QSqlDatabase::addDatabase("QSQLITE", "GlyphsCon");
+  QSqlDatabase::addDatabase("QSQLITE", "BetaqatCon");
   QSqlDatabase::addDatabase("QSQLITE", "BookmarksCon");
   QSqlDatabase::addDatabase("QSQLITE", "TafsirCon");
   QSqlDatabase::addDatabase("QSQLITE", "TranslationCon");
@@ -35,6 +37,9 @@ DBManager::setOpenDatabase(Database db, QString filePath)
   m_currentDb = db;
   m_openDBCon.close();
   switch (db) {
+    case null:
+      break;
+
     case quran:
       m_openDBCon = QSqlDatabase::database("QuranCon");
       break;
@@ -55,7 +60,8 @@ DBManager::setOpenDatabase(Database db, QString filePath)
       m_openDBCon = QSqlDatabase::database("TranslationCon");
       break;
 
-    case null:
+    case betaqat:
+      m_openDBCon = QSqlDatabase::database("BetaqatCon");
       break;
   }
 
@@ -65,197 +71,36 @@ DBManager::setOpenDatabase(Database db, QString filePath)
 }
 
 void
-DBManager::setCurrentTafsir(Tafsir tafsirName)
+DBManager::setCurrentTafsir(int tafsirIdx)
 {
-  m_dbDir.cd("tafasir");
-  m_currTafsir = tafsirName;
+  if (tafsirIdx < 0 || tafsirIdx >= m_tafasirList.size())
+    return;
 
-  switch (m_currTafsir) {
-    case Tafsir::adwa:
-      m_tafsirDbFilename = "adwa.db";
-      break;
-
-    case Tafsir::aysar:
-      m_tafsirDbFilename = "aysar.db";
-      break;
-
-    case Tafsir::baghawy:
-      m_tafsirDbFilename = "baghawy.db";
-      break;
-
-    case Tafsir::qortoby:
-      m_tafsirDbFilename = "qortoby.db";
-      break;
-
-    case Tafsir::sa3dy:
-      m_tafsirDbFilename = "sa3dy.db";
-      break;
-
-    case Tafsir::tabary:
-      m_tafsirDbFilename = "tabary.db";
-      break;
-
-    case Tafsir::waseet:
-      m_tafsirDbFilename = "waseet.db";
-      break;
-
-    case Tafsir::jalalayn:
-      m_tafsirDbFilename = "jalalayn.db";
-      break;
-
-    case Tafsir::e3rab:
-      m_tafsirDbFilename = "e3rab.db";
-      break;
-
-    case Tafsir::tanweer:
-      m_tafsirDbFilename = "tanweer.db";
-      break;
-
-    case Tafsir::juzayy:
-      m_tafsirDbFilename = "tasheel.db";
-      break;
-
-    case Tafsir::katheer:
-      m_tafsirDbFilename = "katheer.db";
-      break;
-
-    case Tafsir::katheer_en:
-      m_tafsirDbFilename = "katheer_en.db";
-      break;
-
-    case Tafsir::indonesian:
-      m_tafsirDbFilename = "indonesian.db";
-      break;
-
-    case Tafsir::russian:
-      m_tafsirDbFilename = "russian.db";
-      break;
-
-    case Tafsir::tafheem:
-      m_tafsirDbFilename = "tafheem.db";
-      break;
-
-    default:
-      m_tafsirDbFilename = "sa3dy.db";
-      break;
-  }
-
-  m_tafsirDbPath.setFile(m_dbDir.filePath(m_tafsirDbFilename));
-  m_dbDir.cdUp();
+  m_currTafsir = &m_tafasirList[tafsirIdx];
+  const QDir& baseDir = m_currTafsir->extra ? m_downloadsDir : m_assetsDir;
+  QString path = "tafasir/" + m_currTafsir->filename;
+  if (baseDir.exists(path))
+    m_tafsirDbPath.setFile(baseDir.filePath(path));
 }
 
 void
-DBManager::setCurrentTranslation(Translation translationName)
+DBManager::setCurrentTranslation(int translationIdx)
 {
-  m_dbDir.cd("translations");
-  m_currTrans = translationName;
+  if (translationIdx < 0 || translationIdx >= m_translationsList.size())
+    return;
 
-  switch (m_currTrans) {
-    case muyassar:
-      m_transDbFilename = "muyassar.db";
-      break;
-    case ar_ma3any:
-      m_transDbFilename = "ar_ma3any.db";
-      break;
-    case bn_bengali:
-      m_transDbFilename = "bn_bengali.db";
-      break;
-    case bs_korkut:
-      m_transDbFilename = "bs_korkut.db";
-      break;
-    case de_bubenheim:
-      m_transDbFilename = "de_bubenheim.db";
-      break;
-    case en_khattab:
-      m_transDbFilename = "en_khattab.db";
-      break;
-    case en_sahih:
-      m_transDbFilename = "en_sahih.db";
-      break;
-    case en_yusuf:
-      m_transDbFilename = "en_yusuf.db";
-      break;
-    case es_navio:
-      m_transDbFilename = "es_navio.db";
-      break;
-    case fr_hamidullah:
-      m_transDbFilename = "fr_hamidullah.db";
-      break;
-    case ha_gumi:
-      m_transDbFilename = "ha_gumi.db";
-      break;
-    case id_indonesian:
-      m_transDbFilename = "id_indonesian.db";
-      break;
-    case it_piccardo:
-      m_transDbFilename = "it_piccardo.db";
-      break;
-    case ku_asan:
-      m_transDbFilename = "ku_asan.db";
-      break;
-    case ml_abdulhameed:
-      m_transDbFilename = "ml_abdulhameed.db";
-      break;
-    case ms_basmeih:
-      m_transDbFilename = "ms_basmeih.db";
-      break;
-    case nl_siregar:
-      m_transDbFilename = "nl_siregar.db";
-      break;
-    case pr_tagi:
-      m_transDbFilename = "pr_tagi.db";
-      break;
-    case pt_elhayek:
-      m_transDbFilename = "pt_elhayek.db";
-      break;
-    case ru_kuliev:
-      m_transDbFilename = "ru_kuliev.db";
-      break;
-    case so_abduh:
-      m_transDbFilename = "so_abduh.db";
-      break;
-    case sq_nahi:
-      m_transDbFilename = "sq_nahi.db";
-      break;
-    case sv_bernstrom:
-      m_transDbFilename = "sv_bernstrom.db";
-      break;
-    case sw_barwani:
-      m_transDbFilename = "sw_barwani.db";
-      break;
-    case ta_tamil:
-      m_transDbFilename = "ta_tamil.db";
-      break;
-    case th_thai:
-      m_transDbFilename = "th_thai.db";
-      break;
-    case tr_diyanet:
-      m_transDbFilename = "tr_diyanet.db";
-      break;
-    case ur_jalandhry:
-      m_transDbFilename = "ur_jalandhry.db";
-      break;
-    case uz_sodik:
-      m_transDbFilename = "uz_sodik.db";
-      break;
-    case zh_jian:
-      m_transDbFilename = "zh_jian.db";
-      break;
-    default:
-      m_transDbFilename = "en_sahih.db";
-      break;
-  }
-
-  m_transDbPath.setFile(m_dbDir.filePath(m_transDbFilename));
-  m_dbDir.cdUp();
+  m_currTrans = &m_translationsList[translationIdx];
+  const QDir& baseDir = m_currTrans->extra ? m_downloadsDir : m_assetsDir;
+  QString path = "translations/" + m_currTrans->filename;
+  if (baseDir.exists(path))
+    m_transDbPath.setFile(baseDir.filePath(path));
 }
 
 /* ---------------- Page-related methods ---------------- */
 
-QList<int>
+QPair<int, int>
 DBManager::getPageMetadata(const int page)
 {
-  QList<int> data; // { surahIdx, jozz }
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.prepare(
@@ -266,10 +111,8 @@ DBManager::getPageMetadata(const int page)
     qCritical() << "Error occurred during getPageMetadata SQL statment exec";
 
   dbQuery.next();
-  data.push_back(dbQuery.value(0).toInt());
-  data.push_back(dbQuery.value(1).toInt());
-
-  return data;
+  // { surahIdx, jozz }
+  return { dbQuery.value(0).toInt(), dbQuery.value(1).toInt() };
 }
 
 QStringList
@@ -390,6 +233,9 @@ DBManager::getJuzGlyph(const int juz)
 QString
 DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
 {
+  if (m_verseType != VerseType::qcf)
+    return getVerseText(sIdx, vIdx);
+
   setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
 
   QSqlQuery dbQuery(m_openDBCon);
@@ -424,6 +270,26 @@ DBManager::getSurahName(const int sIdx, bool ar)
   dbQuery.bindValue(0, sIdx);
   if (!dbQuery.exec()) {
     qCritical() << "Error occurred during getSurahName SQL statment exec";
+  }
+
+  dbQuery.next();
+  return dbQuery.value(0).toString();
+}
+
+QString
+DBManager::getBetaqa(const int surah)
+{
+  setOpenDatabase(betaqat, m_betaqatDbPath.filePath());
+  QSqlQuery dbQuery(m_openDBCon);
+
+  if (m_languageCode == QLocale::Arabic)
+    dbQuery.prepare("SELECT text FROM content WHERE sura=:i");
+  else
+    dbQuery.prepare("SELECT text_en FROM content WHERE sura=:i");
+
+  dbQuery.bindValue(0, surah);
+  if (!dbQuery.exec()) {
+    qCritical() << "Error occurred during getBetaqa SQL statment exec";
   }
 
   dbQuery.next();
@@ -695,9 +561,13 @@ DBManager::getVerseText(const int sIdx, const int vIdx)
 {
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
+  if (m_verseType == VerseType::annotated)
+    dbQuery.prepare("SELECT aya_text_annotated FROM verses_v1 WHERE sura_no=:s "
+                    "AND aya_no=:v");
+  else
+    dbQuery.prepare(
+      "SELECT aya_text FROM verses_v1 WHERE sura_no=:s AND aya_no=:v");
 
-  dbQuery.prepare(
-    "SELECT aya_text FROM verses_v1 WHERE sura_no=:s AND aya_no=:v");
   dbQuery.bindValue(0, sIdx);
   dbQuery.bindValue(1, vIdx);
 
@@ -736,10 +606,9 @@ DBManager::getKhatmahName(const int id)
   return dbQuery.value(0).toString();
 }
 
-QPair<Verse, QString>
+Verse
 DBManager::randomVerse()
 {
-  QPair<Verse, QString> res;
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -752,13 +621,9 @@ DBManager::randomVerse()
     qCritical() << "Error occurred during randomVerse SQL statment exec";
   }
   dbQuery.next();
-  Verse v{ dbQuery.value(0).toInt(),
+  return { dbQuery.value(0).toInt(),
            dbQuery.value(1).toInt(),
            dbQuery.value(2).toInt() };
-
-  res.first = v;
-  res.second = dbQuery.value(3).toString();
-  return res;
 }
 
 int
@@ -915,13 +780,12 @@ DBManager::getTafsir(const int sIdx, const int vIdx)
 
   QSqlQuery dbQuery(m_openDBCon);
 
-  QString q = "SELECT text FROM %0 WHERE sura=%1 AND aya=%2";
-  q = q.arg(m_tafsirDbPath.baseName()).arg(sIdx).arg(vIdx);
-  dbQuery.prepare(q);
+  dbQuery.prepare("SELECT text FROM content WHERE sura=:s AND aya=:v");
+  dbQuery.bindValue(0, sIdx);
+  dbQuery.bindValue(1, vIdx);
 
-  if (!dbQuery.exec()) {
-    qFatal("Couldn't execute getTafsir query!");
-  }
+  if (!dbQuery.exec())
+    qCritical("Couldn't execute getTafsir query!");
 
   dbQuery.next();
 
@@ -935,22 +799,16 @@ DBManager::getTranslation(const int sIdx, const int vIdx)
 
   QSqlQuery dbQuery(m_openDBCon);
 
-  QString q = "SELECT text FROM %0 WHERE sura=%1 AND aya=%2";
-  q = q.arg(m_transDbPath.baseName()).arg(sIdx).arg(vIdx);
-  dbQuery.prepare(q);
+  dbQuery.prepare("SELECT text FROM content WHERE sura=:s AND aya=:v");
+  dbQuery.bindValue(0, sIdx);
+  dbQuery.bindValue(1, vIdx);
 
   if (!dbQuery.exec())
-    qFatal("Couldn't execute getTranslation query!");
+    qCritical("Couldn't execute getTranslation query!");
 
   dbQuery.next();
 
   return dbQuery.value(0).toString();
-}
-
-Tafsir
-DBManager::currTafsir() const
-{
-  return m_currTafsir;
 }
 
 void
@@ -959,8 +817,26 @@ DBManager::setActiveKhatmah(const int id)
   m_activeKhatmah = id;
 }
 
+void
+DBManager::setVerseType(VerseType newVerseType)
+{
+  m_verseType = newVerseType;
+}
+
+VerseType
+DBManager::getVerseType() const
+{
+  return m_verseType;
+}
+
 const int
 DBManager::activeKhatmah() const
 {
   return m_activeKhatmah;
+}
+
+const Tafsir*
+DBManager::currTafsir() const
+{
+  return m_currTafsir;
 }

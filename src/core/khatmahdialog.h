@@ -73,6 +73,7 @@ private slots:
 
 private:
   const Verse& m_currVerse;
+  const bool m_darkmode = Globals::themeId == 2;
   QSettings* m_settings = Globals::settings;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**

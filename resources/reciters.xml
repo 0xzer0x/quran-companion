@@ -33,7 +33,7 @@
 
     <reciter id="8" dirname="Khalefa_Al-Tunaiji" display="Khalefa Al-Tunaiji"
         basmallah="tunaiji.mp3"
-        url="https://everyayah.com/data/khalefa_al_tunaiji_64kbps/" useid="0" />
+        url="https://quran.ksu.edu.sa/ayat/mp3/tunaiji_64kbps/" useid="0" />
 
     <reciter id="9" dirname="Yasser_Ad-Dussary" display="Yasser Ad-Dussary"
         basmallah="ad-dussary.mp3"
