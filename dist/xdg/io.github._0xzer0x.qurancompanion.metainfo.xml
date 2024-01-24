@@ -2,39 +2,47 @@
 <component type="desktop-application">
   <id>io.github._0xzer0x.qurancompanion</id>
   <name>Quran Companion</name>
-  <summary>Cross-platform desktop offline Quran reader &amp; player</summary>
+  <summary>Cross-platform Quran reader and player</summary>
   <metadata_license>MIT</metadata_license>
   <project_license>LGPL-3.0-or-later</project_license>
   <content_rating type="oars-1.1" />
   <description>
     <p>
-      Quran Companion is a cross-platform Quran reader &amp; listener with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books &amp; translations
+      Quran Companion is a cross-platform Quran reader and player with recitation download
+      capabilities, verse highlighting, resizable quran font, and a variety of tafsir books and
+      translations
     </p>
   </description>
   <launchable type="desktop-id">io.github._0xzer0x.qurancompanion.desktop</launchable>
   <url type="homepage">https://github.com/0xzer0x/quran-companion</url>
   <url type="translate">https://crowdin.com/project/quran-companion</url>
   <url type="contact">https://github.com/0xzer0x/quran-companion</url>
-  <url type="bugtracker">https://github.com/0xzer0x/quran-companion/issues</url>	
+  <url type="bugtracker">https://github.com/0xzer0x/quran-companion/issues</url>
 
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/light.png</image>
+      <image xml:lang="en">
+        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/light.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/dark.png</image>
+      <image xml:lang="en">
+        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/dark.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/sepia.png</image>
+      <image xml:lang="en">
+        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/sepia.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_light.png</image>
+      <image xml:lang="ar">
+        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_light.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_dark.png</image>
+      <image xml:lang="ar">
+        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_dark.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_two-page.png</image>
+      <image xml:lang="ar">
+        https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_two-page.png</image>
     </screenshot>
   </screenshots>
 
@@ -68,46 +76,46 @@
     </release>
     <release version="1.1.10" date="2023-10-15">
       <description>
-          <ul>
-            <li>Hotfixes</li>
-          </ul>
+        <ul>
+          <li>Hotfixes</li>
+        </ul>
       </description>
     </release>
     <release version="1.1.9" date="2023-10-13">
       <description>
-          <ul>
-            <li>Sepia theme added</li>
-            <li>zoom in/out shortcuts added</li>
-            <li>Bug fixes</li>
-          </ul>
+        <ul>
+          <li>Sepia theme added</li>
+          <li>zoom in/out shortcuts added</li>
+          <li>Bug fixes</li>
+        </ul>
       </description>
     </release>
     <release version="1.1.8" date="2023-09-15">
       <description>
-          <ul>
-            <li>Two-page mode added</li>
-            <li>Customizable shortcuts feature</li>
-            <li>English Tafsir Ibn-Katheer added</li>
-            <li>Abdullah Yusuf Ali English Translation added</li>
-          </ul>
+        <ul>
+          <li>Two-page mode added</li>
+          <li>Customizable shortcuts feature</li>
+          <li>English Tafsir Ibn-Katheer added</li>
+          <li>Abdullah Yusuf Ali English Translation added</li>
+        </ul>
       </description>
     </release>
     <release version="1.1.7" date="2023-07-16">
       <description>
-          <ul>
-            <li>Bugfixes</li>
-          </ul>
-      </description>  
+        <ul>
+          <li>Bugfixes</li>
+        </ul>
+      </description>
     </release>
     <release version="1.1.6" date="2023-07-15">
       <description>
-          <ul>
-            <li>Recitation downloading bugs fixed</li>
-            <li>On-screen notifications for download status &amp; other actions</li>
-            <li>Updated Quran page header font</li>
-            <li>Bookmark the current verse through Ctrl+Shift+B</li>
-            <li>Platform-independent Update checking</li>
-          </ul>
+        <ul>
+          <li>Recitation downloading bugs fixed</li>
+          <li>On-screen notifications for download status &amp; other actions</li>
+          <li>Updated Quran page header font</li>
+          <li>Bookmark the current verse through Ctrl+Shift+B</li>
+          <li>Platform-independent Update checking</li>
+        </ul>
       </description>
     </release>
     <release version="1.1.5" date="2023-06-25">

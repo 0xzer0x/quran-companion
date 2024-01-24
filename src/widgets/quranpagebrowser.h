@@ -143,8 +143,6 @@ protected:
 
 private:
   QSettings* const m_settings = Globals::settings;
-  const QString& m_bsmlFont = Globals::qcfBSMLFont;
-  const QString& m_fontnamePrefix = Globals::qcfFontPrefix;
   const int m_qcfVer = Globals::qcfVersion;
   const bool m_darkMode = Globals::darkMode;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
@@ -172,6 +170,15 @@ private:
    * @return QImage of the surah frame
    */
   QImage surahFrame(int surah);
+  /**
+   * @brief utility to set the href url for the text from the current cursor
+   * position to the position given
+   * @param cursor - pointer to the current QTextCursor used for inserting text
+   * @param to  - the position in document to stop at
+   * @param url - url to set for the selected portion
+   * @return int - the current cursor postion
+   */
+  int setHref(QTextCursor* cursor, int to, QString url);
   /**
    * @brief boolean indicating whether to highlight the foreground of the active
    * verse or not
@@ -270,7 +277,8 @@ private:
    * @brief QList of integer arrays of start & end position for each verse in
    * the current page
    */
-  QList<int*> m_pageVerseCoords;
+  QList<QPair<int, int>> m_verseCoordinates;
+  QPair<int, int> m_headerData;
   /**
    * @brief Hash Table used for converting page number to arabic numbers
    */

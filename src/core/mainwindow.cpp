@@ -4,6 +4,7 @@
  */
 
 #include "mainwindow.h"
+#include "../widgets/aboutdialog.h"
 #include "../widgets/clickablelabel.h"
 #include "khatmahdialog.h"
 #include "ui_mainwindow.h"
@@ -35,7 +36,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   m_notifyMgr->setTooltip(tr("Quran Companion"));
   if (m_settings->value("VOTD").toBool())
-    m_notifyMgr->checkDailyVerse();
+    m_verseDlg->showVOTD(true);
 
   m_popup->dockLocationChanged(dockWidgetArea(ui->sideDock));
 }
@@ -47,16 +48,16 @@ MainWindow::loadIcons()
   ui->btnPrev->setIcon(m_fa->icon(fa_solid, fa_arrow_right));
 
   ui->actionKhatmah->setIcon(m_fa->icon(fa_solid, fa_list));
-  ui->actionDownload_manager->setIcon(m_fa->icon(fa_solid, fa_download));
+  ui->actionDownloadManager->setIcon(m_fa->icon(fa_solid, fa_download));
   ui->actionExit->setIcon(m_fa->icon(fa_solid, fa_xmark));
   ui->actionFind->setIcon(m_fa->icon(fa_solid, fa_magnifying_glass));
   ui->actionTafsir->setIcon(m_fa->icon(fa_solid, fa_book_open));
-  ui->actionVerse_of_the_day->setIcon(m_fa->icon(fa_solid, fa_calendar_day));
+  ui->actionVOTD->setIcon(m_fa->icon(fa_solid, fa_calendar_day));
   ui->actionBookmarks->setIcon(m_fa->icon(fa_solid, fa_bookmark));
   ui->actionPereferences->setIcon(m_fa->icon(fa_solid, fa_gear));
-  ui->actionAdvanced_copy->setIcon(m_fa->icon(fa_solid, fa_clipboard));
-  ui->actionCheck_for_updates->setIcon(
-    m_fa->icon(fa_solid, fa_arrow_rotate_right));
+  ui->actionAdvancedCopy->setIcon(m_fa->icon(fa_solid, fa_clipboard));
+  ui->actionReaderViewToggle->setIcon(m_fa->icon(fa_solid, fa_columns));
+  ui->actionUpdates->setIcon(m_fa->icon(fa_solid, fa_arrow_rotate_right));
 
   ui->btnPlay->setIcon(m_fa->icon(fa_solid, fa_play));
   ui->btnPause->setIcon(m_fa->icon(fa_solid, fa_pause));
@@ -80,11 +81,12 @@ MainWindow::loadSettings()
 void
 MainWindow::loadReader()
 {
-  if (m_readerMode == ReaderMode::singlePage) {
+  if (m_readerMode == ReaderMode::SinglePage) {
     m_activeQuranBrowser = m_quranBrowsers[0] =
       new QuranPageBrowser(ui->frmPageContent, m_currVerse.page);
 
     QWidget* scrollWidget = new QWidget();
+    scrollWidget->setObjectName("scrollWidget");
     QVBoxLayout* vbl = new QVBoxLayout();
     vbl->setDirection(QBoxLayout::BottomToTop);
     scrollWidget->setLayout(vbl);
@@ -92,11 +94,15 @@ MainWindow::loadReader()
     m_scrlVerseByVerse = new QScrollArea;
     m_scrlVerseByVerse->setWidget(scrollWidget);
     m_scrlVerseByVerse->setWidgetResizable(true);
-    m_scrlVerseByVerse->setStyleSheet("* { background: transparent }");
+    m_scrlVerseByVerse->setStyleSheet(
+      "QLabel, QAbstractScrollArea, QWidget#scrollWidget { "
+      "background: "
+      "transparent }");
 
+    QHBoxLayout* lyt = qobject_cast<QHBoxLayout*>(ui->frmReader->layout());
     ui->frmSidePanel->layout()->addWidget(m_scrlVerseByVerse);
-    ui->centeralSplitter->setStretchFactor(0, 1);
-    ui->centeralSplitter->setStretchFactor(1, 0);
+    lyt->setStretch(0, 1);
+    lyt->setStretch(1, 0);
     ui->frmCenteralCont->setMinimumWidth(900);
   }
 
@@ -116,17 +122,14 @@ MainWindow::loadReader()
     }
 
     ui->frmSidePanel->layout()->addWidget(m_quranBrowsers[1]);
-    ui->centeralSplitter->insertWidget(0, new QWidget);
-    ui->centeralSplitter->addWidget(new QWidget);
+    QHBoxLayout* lyt = qobject_cast<QHBoxLayout*>(ui->frmReader->layout());
+    lyt->insertSpacerItem(0, new QSpacerItem(20, 20, QSizePolicy::Expanding));
+    lyt->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Expanding));
 
-    ui->centeralSplitter->setStretchFactor(0, 5);
-    ui->centeralSplitter->setStretchFactor(1, 0);
-    ui->centeralSplitter->setStretchFactor(2, 0);
-    ui->centeralSplitter->setStretchFactor(3, 5);
-
-    ui->centeralSplitter->setHandleWidth(0);
-    for (int i = 0; i < 4; i++)
-      ui->centeralSplitter->handle(i)->setEnabled(false);
+    lyt->setStretch(0, 1);
+    lyt->setStretch(1, 0);
+    lyt->setStretch(2, 0);
+    lyt->setStretch(3, 1);
   }
 
   ui->frmPageContent->layout()->addWidget(m_quranBrowsers[0]);
@@ -183,6 +186,14 @@ MainWindow::updateProcessCallback()
 void
 MainWindow::setupShortcuts()
 {
+  connect(m_shortcutHandler,
+          &ShortcutHandler::togglePlayerControls,
+          this,
+          &MainWindow::togglePlayerControls);
+  connect(m_shortcutHandler,
+          &ShortcutHandler::toggleReaderView,
+          this,
+          &MainWindow::toggleReaderView);
   connect(m_shortcutHandler,
           &ShortcutHandler::toggleMenubar,
           this,
@@ -290,7 +301,7 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::actionPrefTriggered);
-  connect(ui->actionDownload_manager,
+  connect(ui->actionDownloadManager,
           &QAction::triggered,
           this,
           &MainWindow::actionDMTriggered);
@@ -302,18 +313,16 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::actionTafsirTriggered);
-  connect(ui->actionVerse_of_the_day,
+  connect(ui->actionVOTD,
           &QAction::triggered,
           this,
           &MainWindow::actionVotdTriggered);
-  connect(ui->actionAdvanced_copy,
+  connect(ui->actionAdvancedCopy,
           &QAction::triggered,
           this,
           &MainWindow::actionAdvancedCopyTriggered);
-  connect(ui->actionCheck_for_updates,
-          &QAction::triggered,
-          this,
-          &MainWindow::checkForUpdates);
+  connect(
+    ui->actionUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
   connect(
     m_process, &QProcess::finished, this, &MainWindow::updateProcessCallback);
   connect(ui->actionBookmarks,
@@ -324,10 +333,18 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::actionKhatmahTriggered);
-  connect(ui->actionAbout_Quran_Companion,
+  connect(ui->actionAboutQC,
           &QAction::triggered,
           this,
           &MainWindow::actionAboutTriggered);
+  connect(ui->actionReaderViewToggle,
+          &QAction::triggered,
+          this,
+          &MainWindow::toggleReaderView);
+  connect(m_verseDlg,
+          &VerseDialog::navigateToVerse,
+          this,
+          &MainWindow::navigateToVerse);
 
   // ########## Quran page ########## //
   connect(m_quranBrowsers[0],
@@ -426,10 +443,6 @@ MainWindow::setupConnections()
           this,
           &MainWindow::actionAboutTriggered);
   connect(m_notifyMgr,
-          &NotificationManager::showVOTDmessagebox,
-          this,
-          &MainWindow::showVOTDmessage);
-  connect(m_notifyMgr,
           &NotificationManager::openPrefs,
           this,
           &MainWindow::actionPrefTriggered);
@@ -440,11 +453,11 @@ MainWindow::setupConnections()
           m_popup,
           &NotificationPopup::dockLocationChanged);
   connect(m_downManPtr,
-          &DownloadManager::downloadComplete,
+          &DownloadManager::downloadCompleted,
           m_popup,
           &NotificationPopup::completedDownload);
   connect(m_downManPtr,
-          &DownloadManager::downloadError,
+          &DownloadManager::downloadErrored,
           m_popup,
           &NotificationPopup::downloadError);
   connect(m_downManPtr,
@@ -456,7 +469,9 @@ MainWindow::setupConnections()
   // Restart signal
   connect(
     m_settingsDlg, &SettingsDialog::restartApp, this, &MainWindow::restartApp);
-
+  // qcf2 missing files warning
+  connect(
+    m_settingsDlg, &SettingsDialog::qcf2Missing, this, &MainWindow::missingQCF);
   // Quran page signals
   connect(m_settingsDlg,
           &SettingsDialog::redrawQuranPage,
@@ -492,6 +507,10 @@ MainWindow::setupConnections()
           &SettingsDialog::sideFontChanged,
           this,
           &MainWindow::updateSideFont);
+  connect(m_settingsDlg,
+          &SettingsDialog::verseTypeChanged,
+          this,
+          &MainWindow::updateVerseType);
 
   // audio device signals
   connect(m_settingsDlg,
@@ -512,6 +531,8 @@ MainWindow::init()
   m_player =
     new VersePlayer(this, m_currVerse, m_settings->value("Reciter", 0).toInt());
   m_popup = new NotificationPopup(this);
+  m_betaqaViewer = new BetaqaViewer(this);
+  m_verseDlg = new VerseDialog(this);
   m_downManPtr = new DownloadManager(this);
   m_settingsDlg = new SettingsDialog(this, m_player);
 
@@ -524,11 +545,12 @@ MainWindow::init()
   updateLoadedTafsir();
   updateLoadedTranslation();
   updateSideFont();
+  updateVerseType();
 
   redrawQuranPage(true);
   setVerseComboBoxRange(true);
 
-  if (m_readerMode == ReaderMode::singlePage)
+  if (m_readerMode == ReaderMode::SinglePage)
     addSideContent();
 
   for (int i = 1; i < 605; i++) {
@@ -577,8 +599,10 @@ MainWindow::setupMenubarToggle()
   toggleNav->setCursor(Qt::PointingHandCursor);
   toggleNav->setToolTip(tr("Navigation"));
   toggleNav->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-  toggleNav->setMinimumSize(
-    QSize(ui->menubar->height() + 10, ui->menubar->height()));
+  toggleNav->setStyleSheet(
+    QString("QPushButton { min-height: %0px; min-width: %1px; }")
+      .arg(QString::number(ui->menubar->height()),
+           QString::number(ui->menubar->height() * 2)));
   ui->menubar->setCornerWidget(toggleNav);
   toggleNav->setIcon(m_fa->icon(fa_solid, fa_compass));
   toggleNav->setIconSize(QSize(20, 20));
@@ -622,7 +646,7 @@ MainWindow::switchActivePage()
 void
 MainWindow::btnNextClicked()
 {
-  if (m_readerMode == ReaderMode::singlePage || m_currVerse.page % 2 == 0)
+  if (m_readerMode == ReaderMode::SinglePage || m_currVerse.page % 2 == 0)
     nextPage(1);
   else
     nextPage(2);
@@ -631,7 +655,7 @@ MainWindow::btnNextClicked()
 void
 MainWindow::btnPrevClicked()
 {
-  if (m_readerMode == ReaderMode::singlePage || m_currVerse.page % 2 != 0)
+  if (m_readerMode == ReaderMode::SinglePage || m_currVerse.page % 2 != 0)
     prevPage(1);
   else
     prevPage(2);
@@ -682,7 +706,7 @@ MainWindow::updatePageVerseInfoList()
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_vLists[0] = m_dbMgr->getVerseInfoList(m_currVerse.page);
-    if (m_readerMode == doublePage)
+    if (m_readerMode == DoublePage)
       m_vLists[1] = m_dbMgr->getVerseInfoList(m_currVerse.page + 1);
 
     m_activeVList = &m_vLists[0];
@@ -765,7 +789,7 @@ MainWindow::gotoPage(int page, bool updateElements, bool automaticFlip)
     m_player->stop();
 
   if (m_activeQuranBrowser->page() != page) {
-    if (m_readerMode == ReaderMode::singlePage)
+    if (m_readerMode == ReaderMode::SinglePage)
       gotoSinglePage(page);
     else
       gotoDoublePage(page);
@@ -815,7 +839,7 @@ MainWindow::nextPage(int step)
 
     gotoPage(m_currVerse.page + step, true, true);
 
-    if (m_readerMode == ReaderMode::singlePage)
+    if (m_readerMode == ReaderMode::SinglePage)
       m_scrlVerseByVerse->verticalScrollBar()->setValue(0);
 
     // if the page is flipped automatically, resume playback
@@ -835,7 +859,7 @@ MainWindow::prevPage(int step)
 
     gotoPage(m_currVerse.page - step, true, true);
 
-    if (m_readerMode == ReaderMode::singlePage)
+    if (m_readerMode == ReaderMode::SinglePage)
       m_scrlVerseByVerse->verticalScrollBar()->setValue(0);
 
     if (keepPlaying) {
@@ -1058,7 +1082,35 @@ MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectTask(reciterIdx, surah);
+    m_downloaderDlg->selectDownload(Recitation, { reciterIdx, surah });
+  }
+}
+
+void
+MainWindow::missingQCF()
+{
+  QMessageBox::StandardButton btn = QMessageBox::question(
+    this,
+    tr("Files Missing"),
+    tr("The selected font files are missing, would you like to download it?"));
+
+  if (btn == QMessageBox::Yes) {
+    actionDMTriggered();
+    m_downloaderDlg->selectDownload(QCF);
+  }
+}
+
+void
+MainWindow::missingTafsir(int idx)
+{
+  QMessageBox::StandardButton btn = QMessageBox::question(
+    this,
+    tr("Files Missing"),
+    tr("The selected tafsir is missing, would you like to download it?"));
+
+  if (btn == QMessageBox::Yes) {
+    actionDMTriggered();
+    m_downloaderDlg->selectDownload(File, { 0, idx });
   }
 }
 
@@ -1089,6 +1141,13 @@ MainWindow::verseClicked()
 void
 MainWindow::verseAnchorClicked(const QUrl& hrefUrl)
 {
+  if (hrefUrl.toString().at(1) == 'F') {
+    int surah = hrefUrl.toString().remove("#F").toInt();
+    qDebug() << "SURAH CARD:" << surah;
+    m_betaqaViewer->showSurah(surah);
+    return;
+  }
+
   QuranPageBrowser* senderBrowser = qobject_cast<QuranPageBrowser*>(sender());
   int browerIdx = senderBrowser == m_quranBrowsers[1];
   int idx = hrefUrl.toString().remove('#').toInt();
@@ -1191,32 +1250,18 @@ MainWindow::actionTafsirTriggered()
 void
 MainWindow::actionVotdTriggered()
 {
-  showVOTDmessage(m_notifyMgr->votd());
+  m_verseDlg->showVOTD(false);
 }
 
 void
 MainWindow::actionAboutTriggered()
 {
-  QFile about(":/resources/about.html");
-  QString text;
-  if (about.open(QIODevice::ReadOnly))
-    text = about.readAll();
-  about.close();
-
-  text = text.arg(tr("Quran Companion v"))
-           .arg(QApplication::applicationVersion(),
-                tr("Quran Companion"),
-                tr(" is a free cross-platform Quran reader & player."),
-                tr("Licensed under the "),
-                tr("'Waqf' General Public License"),
-                tr("Recitations"),
-                tr("Tafsir/Translations"));
-
-  QMessageBox::about(this, tr("About Quran Companion"), text);
+  static AboutDialog* about = new AboutDialog(this);
+  about->show();
 }
 
 void
-MainWindow::on_actionAbout_Qt_triggered()
+MainWindow::on_actionAboutQt_triggered()
 {
   QMessageBox::aboutQt(this, tr("About Qt"));
 }
@@ -1233,6 +1278,24 @@ MainWindow::actionSearchTriggered()
   }
 
   m_searchDlg->show();
+}
+
+void
+MainWindow::toggleReaderView()
+{
+  if (ui->frmPageContent->isVisible() && ui->frmSidePanel->isVisible()) {
+    ui->frmSidePanel->setVisible(false);
+  } else if (ui->frmPageContent->isVisible()) {
+    ui->frmSidePanel->setVisible(true);
+    ui->frmPageContent->setVisible(false);
+  } else
+    ui->frmPageContent->setVisible(true);
+}
+
+void
+MainWindow::togglePlayerControls()
+{
+  ui->frmTopControls->setVisible(!ui->frmTopControls->isVisible());
 }
 
 void
@@ -1264,7 +1327,7 @@ MainWindow::navigateToSurah(QModelIndex& index)
 void
 MainWindow::updateLoadedTafsir()
 {
-  Tafsir currTafsir = qvariant_cast<Tafsir>(m_settings->value("Reader/Tafsir"));
+  int currTafsir = m_settings->value("Reader/Tafsir").toInt();
 
   m_dbMgr->setCurrentTafsir(currTafsir);
 }
@@ -1272,8 +1335,7 @@ MainWindow::updateLoadedTafsir()
 void
 MainWindow::updateLoadedTranslation()
 {
-  Translation currTrans =
-    qvariant_cast<Translation>(m_settings->value("Reader/Translation"));
+  int currTrans = m_settings->value("Reader/Translation").toInt();
 
   m_dbMgr->setCurrentTranslation(currTrans);
 }
@@ -1283,6 +1345,16 @@ MainWindow::updateSideFont()
 {
   m_sideFont =
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
+}
+
+void
+MainWindow::updateVerseType()
+{
+  VerseType type =
+    qvariant_cast<VerseType>(m_settings->value("Reader/VerseType"));
+  m_versesFont.setFamily(Globals::verseFontname(type, m_currVerse.page));
+  m_versesFont.setPointSize(m_settings->value("Reader/VerseFontSize").toInt());
+  m_dbMgr->setVerseType(type);
 }
 
 Verse
@@ -1420,7 +1492,7 @@ MainWindow::redrawQuranPage(bool manualSz)
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_quranBrowsers[0]->constructPage(m_currVerse.page, manualSz);
-    if (m_readerMode == doublePage && m_quranBrowsers[1])
+    if (m_readerMode == DoublePage && m_quranBrowsers[1])
       m_quranBrowsers[1]->constructPage(m_currVerse.page + 1, manualSz);
   } else {
     m_quranBrowsers[0]->constructPage(m_currVerse.page - 1, manualSz);
@@ -1443,7 +1515,7 @@ MainWindow::highlightCurrentVerse()
 
   m_activeQuranBrowser->highlightVerse(idx);
 
-  if (m_readerMode == ReaderMode::singlePage)
+  if (m_readerMode == ReaderMode::SinglePage)
     setHighlightedFrame();
 }
 
@@ -1466,7 +1538,7 @@ MainWindow::setHighlightedFrame()
 void
 MainWindow::addSideContent()
 {
-  if (m_readerMode != ReaderMode::singlePage)
+  if (m_readerMode != ReaderMode::SinglePage)
     return;
 
   if (!m_verseFrameList.isEmpty()) {
@@ -1489,8 +1561,7 @@ MainWindow::addSideContent()
     verseContFrame->setObjectName(
       QString("%0_%1").arg(vInfo.surah).arg(vInfo.number));
 
-    verselb->setFont(QFont(m_activeQuranBrowser->pageFont(),
-                           m_activeQuranBrowser->fontSize() - 2));
+    verselb->setFont(m_versesFont);
     verselb->setText(m_dbMgr->getVerseGlyphs(vInfo.surah, vInfo.number));
     verselb->setAlignment(Qt::AlignCenter);
     verselb->setWordWrap(true);
@@ -1527,6 +1598,21 @@ MainWindow::addSideContent()
 void
 MainWindow::showVerseTafsir(Verse v)
 {
+  static bool reload = false;
+  if (reload) {
+    updateLoadedTafsir();
+    reload = false;
+  }
+
+  if (!Globals::tafsirExists(m_dbMgr->currTafsir())) {
+    int i;
+    for (i = 0; i < m_tafasirList.size(); i++)
+      if (m_dbMgr->currTafsir() == &m_tafasirList[i])
+        break;
+    reload = true;
+    return missingTafsir(i);
+  }
+
   if (m_tafsirDlg == nullptr) {
     m_tafsirDlg = new TafsirDialog(this);
   }
@@ -1554,18 +1640,16 @@ void
 MainWindow::showVOTDmessage(QPair<Verse, QString> votd)
 {
   QPointer<QDialog> mbox = new QDialog(this);
+  mbox->setMinimumSize(600, 300);
   mbox->setObjectName("dlgVOTD");
   mbox->setLayout(new QVBoxLayout);
-  mbox->setWindowIcon(ui->actionVerse_of_the_day->icon());
+  mbox->setWindowIcon(ui->actionVOTD->icon());
   mbox->setWindowTitle(tr("Verse Of The Day"));
   ClickableLabel* lb = new ClickableLabel(mbox);
   lb->setText(votd.second);
   lb->setTextFormat(Qt::RichText);
   lb->setAlignment(Qt::AlignCenter);
-  QStringList uiFonts;
-  uiFonts << "Noto Sans Display"
-          << "PakType Naskh Basic";
-  lb->setFont(QFont(uiFonts, 15));
+  lb->setFont(QFont(qApp->font().families(), 15));
   lb->setCursor(Qt::PointingHandCursor);
   if (votd.second.length() > 200)
     lb->setWordWrap(true);
@@ -1583,10 +1667,9 @@ void
 MainWindow::resizeEvent(QResizeEvent* event)
 {
   QMainWindow::resizeEvent(event);
-  if (m_popup) {
-    m_popup->adjustLocation();
-    m_popup->move(m_popup->notificationPos());
-  }
+  m_popup->adjustLocation();
+  m_popup->move(m_popup->notificationPos());
+  m_betaqaViewer->center();
 }
 
 void

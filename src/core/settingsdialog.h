@@ -120,6 +120,8 @@ public slots:
    * @param size - QString representing the new font size
    */
   void updateSideFontSize(QString size);
+  void updateVerseText(int vt);
+  void updateVerseTextFontsize(QString size);
   /**
    * @brief update the key sequence that trigger the shortcut with the given key
    * @param key - QString of the shortcut name in the settings file
@@ -138,6 +140,11 @@ public slots:
   void showWindow();
 
 signals:
+  /**
+   * @fn qcf2Missing()
+   * @brief signal emitted when one of the 604 QCF2 files is missing
+   */
+  void qcf2Missing();
   /**
    * @fn quranFontChanged()
    * @brief signal emitted for QuranPageBrowser to set the new Quran page font
@@ -179,6 +186,11 @@ signals:
    */
   void sideFontChanged();
   /**
+   * @fn verseTypeChanged()
+   * @brief signal emitted when the type shown changes
+   */
+  void verseTypeChanged();
+  /**
    * @fn usedAudioDeviceChanged()
    * @brief signal emitted in order to changed audio output device used by
    * VersePlayer for playback.
@@ -205,16 +217,15 @@ protected:
    */
   void closeEvent(QCloseEvent* event);
 
-private slots:
-  void editShortcut(const QModelIndex& index);
-  void setShortcut();
-
 private:
   const int m_qcfVer = Globals::qcfVersion;
   const int m_themeIdx = Globals::themeId;
   const ReaderMode m_readerMode = Globals::readerMode;
   const QLocale::Language m_languageCode = Globals::language;
   QSettings* const m_settings = Globals::settings;
+  const QDir& m_downloadsDir = Globals::downloadsDir;
+  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
+  const QList<Translation>& m_trList = Globals::translationsList;
   const QMap<QString, QString>& m_shortcutDescription =
     Globals::shortcutDescription;
   /**
@@ -231,20 +242,26 @@ private:
    */
   void fillLanguageCombobox();
   /**
+   * @brief reload all tafsir and translation options to show all available
+   * files and sets the shown index to the selected one
+   */
+  void updateContentCombobox();
+  /**
    * @brief loads all the settings from the settings file into their
    * corresponding variables and updates UI components to match them.
    */
   void setCurrentSettingsAsRef();
   /**
-   * @brief utility to check whether the given key sequence is available for use
-   * @param keySequence - the key sequence to check
-   * @return
-   */
-  bool shortcutAvailable(QString keySequence);
-  /**
    * @brief check if any shortcut was changed and updated it
    */
   void checkShortcuts();
+  /**
+   * @brief check if QCF2 font files exist
+   *
+   * @return true - all 604 QCF2 files are found
+   * @return false - one of the files is missing
+   */
+  bool qcfExists();
   /**
    * @brief QCF font size used in constructing Quran page.
    */
@@ -264,6 +281,8 @@ private:
    * the combobox.
    */
   int m_translation;
+  int m_verseType;
+  int m_verseFontSize;
   /**
    * @brief boolean flag representing the verse of the day option checkbox
    * state.
@@ -310,11 +329,6 @@ private:
    * @brief pointer to VersePlayer instance.
    */
   VersePlayer* m_vPlayerPtr = nullptr;
-  /**
-   * @brief pointer to widget used for grabbing key combination entered to set
-   * as shortcut
-   */
-  QKeySequenceEdit* m_keySeqEdit = nullptr;
   /**
    * @brief model used by the shortcuts QTableView
    */

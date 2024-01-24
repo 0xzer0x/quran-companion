@@ -6,24 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>744</width>
-    <height>435</height>
+    <width>771</width>
+    <height>426</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Preferences</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QDialogButtonBox {
-dialogbuttonbox-buttons-have-icons: true;
-dialog-apply-icon: off;
-dialog-cancel-icon: off;
-dialog-ok-icon: off;
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="settingsTabWidget">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::West</enum>
      </property>
@@ -31,7 +29,10 @@ dialog-ok-icon: off;
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
+     </property>
+     <property name="elideMode">
+      <enum>Qt::ElideNone</enum>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -148,6 +149,44 @@ dialog-ok-icon: off;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Features</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="chkFgHighlight">
+              <property name="text">
+               <string>Foreground Highlight</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="chkAdaptive">
+              <property name="text">
+               <string>Adaptive font size</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_12">
             <item>
              <widget class="QLabel" name="lbReaderMode">
@@ -176,13 +215,25 @@ dialog-ok-icon: off;
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QLabel" name="label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
-               <string>Font</string>
+               <string>Page font</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QComboBox" name="cmbQCF">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <item>
                <property name="text">
                 <string>QCF V1</string>
@@ -195,35 +246,140 @@ dialog-ok-icon: off;
               </item>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <item>
-             <widget class="QCheckBox" name="chkFgHighlight">
-              <property name="text">
-               <string>Foreground Highlight</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="chkAdaptive">
-              <property name="text">
-               <string>Adaptive font size</string>
-              </property>
-             </widget>
-            </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
                <widget class="QLabel" name="lbQuranFontSz">
                 <property name="text">
-                 <string>Font size</string>
+                 <string>size</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QComboBox" name="cmbQuranFontSz">
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="editable">
+                 <bool>true</bool>
+                </property>
+                <property name="currentText">
+                 <string notr="true">10</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string notr="true">10</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">12</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">14</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">16</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">18</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">20</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">22</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">24</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">28</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">36</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">48</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">72</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
+            <item>
+             <widget class="QLabel" name="lbVerseType">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Verse font</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cmbVerseText">
+              <item>
+               <property name="text">
+                <string>QCF</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Uthmanic</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Uthmanic (annotated)</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_14">
+              <item>
+               <widget class="QLabel" name="lbVersesFontSz">
+                <property name="text">
+                 <string>size</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cmbVersesFontSz">
                 <property name="minimumSize">
                  <size>
                   <width>200</width>
@@ -341,7 +497,7 @@ dialog-ok-icon: off;
               <item>
                <widget class="QLabel" name="lbSideFontSz">
                 <property name="text">
-                 <string>Font size</string>
+                 <string>size</string>
                 </property>
                </widget>
               </item>
@@ -432,88 +588,7 @@ dialog-ok-icon: off;
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="cmbTafsir">
-              <item>
-               <property name="text">
-                <string>Adwa' ul-Bayan</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Aysar Al-Tafasir</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Al-Baghawy</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Al-Qortoby</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Al-Sa'ady</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Al-Tabary</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Al-Tafsir Al-Waseet</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Al-Jalalayn</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Earab</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Ibn-Ashoor</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Ibn-Juzayy</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Ibn-Katheer</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>English - Ibn-Katheer</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Indonesian - Tafsir Jalalayn</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Russian - Kuliev &amp; Al-Sa'ady</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>English - Tafheem-ul-Quran</string>
-               </property>
-              </item>
-             </widget>
+             <widget class="QComboBox" name="cmbTafsir"/>
             </item>
            </layout>
           </item>
@@ -534,156 +609,6 @@ dialog-ok-icon: off;
               <property name="frame">
                <bool>true</bool>
               </property>
-              <item>
-               <property name="text">
-                <string notr="true">عربي - التفسير الميسّر</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">عربي - معاني الكلمات</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Bengali - Muhiuddin Khan</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Bosanski - Korkut</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Deutsch - Bubenheim &amp; Elyas</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">English - Clear Quran (Dr. Mustafa Khattab)</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">English - Sahih International</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">English - Abdullah Yusuf Ali</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Español - Abdel Ghani Navio</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Français - Hamidullah</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Hausa - Gumi</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Indonesian - Bahasa Indonesia</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Italiano - Piccardo</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">كوردى - برهان محمد أمين</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Malayalam - Abdul Hameed and Kunhi</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Melayu - Basmeih</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Dutch - Sofian Siregar</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">فارسى - حسين تاجى كله دارى</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Português - El Hayek</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Russian - Elmir Kuliev</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Somali - Abduh</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Shqiptar - Efendi Nahi</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Swedish - Bernström</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Swahili - Al-Barwani</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Tamil - Jan Turst Foundation</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">ภาษาไทย - ภาษาไทย</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Türkçe - Diyanet Isleri</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">اردو - جالندربرى</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">Uzbek - Мухаммад Содик</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">中国语文 - Ma Jian</string>
-               </property>
-              </item>
              </widget>
             </item>
            </layout>
@@ -716,7 +641,7 @@ dialog-ok-icon: off;
        <item>
         <widget class="QTableView" name="tableViewShortcuts">
          <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
+          <set>QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked</set>
          </property>
          <property name="showDropIndicator" stdset="0">
           <bool>false</bool>

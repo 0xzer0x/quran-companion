@@ -61,24 +61,23 @@ public slots:
    */
   void setCurrentBar();
   /**
-   * @brief slot to delete the finished progress bar on download completion
-   * @param reciter - ::Globals::recitersList index for the reciter whose
-   * recitations are downloaded
-   * @param surah - surah number
-   */
-  void surahDownloaded(int reciter, int surah);
-  /**
    * @brief slot to delete all download tasks /
    * progress bars from dialog
    */
   void downloadAborted();
   /**
-   * @brief slot to update the current task
-   * in case of download error
-   * @param reciter - ::Globals::recitersList index for the reciter
-   * @param surah - surah number
+   * @brief Update UI elements on download group completion
+   * @param type - DownloadType of the download group
+   * @param metainfo - QList of download group information
    */
-  void topTaskDownloadError(int reciter, int surah);
+  void downloadCompleted(DownloadType type, const QList<int>& metainfo);
+  /**
+   * @brief Callback function to update UI elements when the current active
+   * download group fails
+   * @param type - DownloadType of the download group
+   * @param metainfo - QList of download group information
+   */
+  void topTaskDownloadError(DownloadType type, const QList<int>& metainfo);
   /**
    * @brief slot to update the displayed download speed in the currently active
    * download.
@@ -87,13 +86,12 @@ public slots:
    */
   void updateDownloadSpeed(int value, QString unit);
   /**
-   * @brief Selects a surah within a specific reciter in order to download.
-   * @details Typically called when recitaion is missing in order to select the
-   * missing surah automatically.
-   * @param reciter - ::Globals::recitersList index for the reciter
-   * @param surah - surah number
+   * @brief automatically select a group/task to download
+   * @param type - DownloadType of the download group to select
+   * @param info - metainfo for the download task
    */
-  void selectTask(int reciter, int surah);
+  void selectDownload(DownloadType type,
+                      QPair<int, int> info = QPair<int, int>(0, 1));
   /**
    * @brief Stops downloading tasks and clears the downloads scrollarea
    * (including completed tasks)
@@ -122,6 +120,8 @@ protected:
 private:
   const int m_languageCode = Globals::language;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
+  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
+  const QList<Translation>& m_trList = Globals::translationsList;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI
@@ -132,15 +132,15 @@ private:
    * @brief Populates the QTreeView through which the user selects the surahs to
    * add to queue.
    */
-  void addRecitationsToModel();
+  void populateTreeModel();
   /**
-   * @brief Adds a download progress bar to the
-   * downloader dialog to indicate download state
-   * @param reciterIdx - ::Globals::recitersList index for the reciter whose
-   * recitations are being downloaded
-   * @param surah - number of surah being downloaded
+   * @brief adds a QFrame of download task info and a progressbar
+   * @param type - DownloadType of the download group to select
+   * @param info - download metainfo QPair used by DownloadType::Recitation and
+   * DownloadType::File
    */
-  void addTaskProgress(int reciterIdx, int surah);
+  void addTaskProgress(DownloadType type,
+                       QPair<int, int> info = QPair<int, int>(-1, -1));
   /**
    * @brief enqueue a surah to download
    * @param reciter - ::Globals::recitersList index for the reciter whose

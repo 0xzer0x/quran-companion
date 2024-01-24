@@ -8,6 +8,7 @@
 #include "utils/logger.h"
 #include <QApplication>
 #include <QFontDatabase>
+#include <QLibraryInfo>
 #include <QLocale>
 #include <QSettings>
 #include <QSplashScreen>
@@ -15,6 +16,7 @@
 #include <QTranslator>
 #include <QXmlStreamReader>
 #include <QtAwesome.h>
+#include <qforeach.h>
 using namespace Globals;
 
 /*!
@@ -66,7 +68,7 @@ void
 checkSettings(QSettings* settings);
 /**
  * @brief set the default values for non-existing keys in a certain settings
- * group (0 - general, 1 - Reader, 2 - Shortcuts).
+ * group (0 - general, 1 - Reader).
  * @param settings - pointer to QSettings instance to access app settings
  * @param group - integer refering to group to check
  */
@@ -84,9 +86,16 @@ checkSettingsGroup(QSettings* settings, int group);
 void
 populateRecitersList();
 /**
+ * @brief populates the global tafasir and translation lists with data from
+ * files.xml
+ */
+void
+populateContentLists();
+/**
  * @brief populates the Globals::shortcutDescription QMap with key-value pairs
- * of (name - description), any new shortcuts should be added to shortcuts.xml
- * along with the default keybinding for it in the shortcuts settings group.
+ * of (name - description) and set the default value if shortcut is not found in
+ * settings, any new shortcuts should be added to shortcuts.xml along with the
+ * default keybinding for it.
  */
 void
 populateShortcutsMap();
@@ -108,7 +117,7 @@ main(int argc, char* argv[])
   QApplication a(argc, argv);
   QApplication::setApplicationName("Quran Companion");
   QApplication::setOrganizationName("0xzer0x");
-  QApplication::setApplicationVersion("1.2.1");
+  QApplication::setApplicationVersion("1.2.2");
 
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
@@ -130,6 +139,7 @@ main(int argc, char* argv[])
   addTranslation(language);
   populateRecitersList();
   populateShortcutsMap();
+  populateContentLists();
 
   databaseManager = new DBManager(&a);
   MainWindow w(nullptr);
@@ -152,11 +162,20 @@ setGlobalPaths()
   // config & downloads
   if (!configDir.exists("QuranCompanion"))
     configDir.mkpath("QuranCompanion");
-  if (!recitationsDir.exists("QuranCompanion/recitations"))
-    recitationsDir.mkpath("QuranCompanion/recitations");
-
   configDir.cd("QuranCompanion");
-  recitationsDir.cd("QuranCompanion/recitations");
+
+  if (!downloadsDir.exists("QuranCompanion"))
+    downloadsDir.mkpath("QuranCompanion");
+  downloadsDir.cd("QuranCompanion");
+
+  if (!downloadsDir.exists("recitations"))
+    downloadsDir.mkpath("recitations");
+  if (!downloadsDir.exists("QCFV2"))
+    downloadsDir.mkpath("QCFV2");
+  if (!downloadsDir.exists("tafasir"))
+    downloadsDir.mkpath("tafasir");
+  if (!downloadsDir.exists("translations"))
+    downloadsDir.mkpath("translations");
 
 #ifdef Q_OS_WIN
   updateToolPath = QApplication::applicationDirPath() + QDir::separator() +
@@ -167,7 +186,7 @@ setGlobalPaths()
 void
 checkSettings(QSettings* settings)
 {
-  for (int i = 0; i <= 2; i++)
+  for (int i = 0; i < 2; i++)
     checkSettingsGroup(settings, i);
 }
 
@@ -192,49 +211,13 @@ checkSettingsGroup(QSettings* settings, int group)
       settings->setValue("QCF1Size", settings->value("QCF1Size", 22));
       settings->setValue("QCF2Size", settings->value("QCF2Size", 20));
       settings->setValue("QCF", settings->value("QCF", 1));
-      settings->setValue("Tafsir", settings->value("Tafsir", 1));
+      settings->setValue("VerseType", settings->value("VerseType", 0));
+      settings->setValue("VerseFontSize", settings->value("VerseFontSize", 20));
+      settings->setValue("Tafsir", settings->value("Tafsir", 6));
       settings->setValue("Translation", settings->value("Translation", 5));
       settings->setValue(
         "SideContentFont",
         settings->value("SideContentFont", QFont("Expo Arabic", 14)));
-      settings->endGroup();
-      break;
-    case 2:
-      settings->beginGroup("Shortcuts");
-      settings->setValue("ToggleMenubar",
-                         settings->value("ToggleMenubar", "Ctrl+M"));
-      settings->setValue("ToggleNavDock",
-                         settings->value("ToggleNavDock", "Ctrl+N"));
-      settings->setValue("TogglePlayback",
-                         settings->value("TogglePlayback", "Space"));
-      settings->setValue("VolumeUp", settings->value("VolumeUp", "+"));
-      settings->setValue("VolumeDown", settings->value("VolumeDown", "-"));
-      settings->setValue("NextPage", settings->value("NextPage", "Left"));
-      settings->setValue("PrevPage", settings->value("PrevPage", "Right"));
-      settings->setValue("NextVerse", settings->value("NextVerse", "V"));
-      settings->setValue("PrevVerse", settings->value("PrevVerse", "Shift+V"));
-      settings->setValue("NextSurah", settings->value("NextSurah", "S"));
-      settings->setValue("PrevSurah", settings->value("PrevSurah", "Shift+S"));
-      settings->setValue("NextJuz", settings->value("NextJuz", "J"));
-      settings->setValue("PrevJuz", settings->value("PrevJuz", "Shift+J"));
-      settings->setValue("ZoomIn", settings->value("ZoomIn", "Ctrl+="));
-      settings->setValue("ZoomOut", settings->value("ZoomOut", "Ctrl+-"));
-      settings->setValue("BookmarkCurrent",
-                         settings->value("BookmarkCurrent", "Ctrl+Shift+B"));
-      settings->setValue("BookmarksDialog",
-                         settings->value("BookmarksDialog", "Ctrl+B"));
-      settings->setValue("SearchDialog",
-                         settings->value("SearchDialog", "Ctrl+F"));
-      settings->setValue("SettingsDialog",
-                         settings->value("SettingsDialog", "Ctrl+P"));
-      settings->setValue("TafsirDialog",
-                         settings->value("TafsirDialog", "Ctrl+T"));
-      settings->setValue("DownloaderDialog",
-                         settings->value("DownloaderDialog", "Ctrl+D"));
-      settings->setValue("KhatmahDialog",
-                         settings->value("KhatmahDialog", "Ctrl+K"));
-      settings->setValue("CopyDialog", settings->value("CopyDialog", "Ctrl+'"));
-      settings->setValue("Quit", settings->value("Quit", "Ctrl+Q"));
       settings->endGroup();
       break;
   }
@@ -247,33 +230,33 @@ addFonts(int qcfVersion)
   fontsDir = QApplication::applicationDirPath() + QDir::separator() + "assets" +
              QDir::separator() + "fonts";
 
-  QFontDatabase::addApplicationFont(fontsDir.filePath("PakTypeNaskhBasic.ttf"));
-  QFontDatabase::addApplicationFont(fontsDir.filePath("ExpoArabic.ttf"));
-  QFontDatabase::addApplicationFont(fontsDir.filePath("noto-display.ttf"));
+  // ui fonts
+  foreach (const QFileInfo& font, fontsDir.entryInfoList(QDir::Files))
+    QFontDatabase::addApplicationFont(font.absoluteFilePath());
 
+  // font for surah frames
+  QFontDatabase::addApplicationFont(fontsDir.filePath("QCFV1/QCF_BSML.ttf"));
   switch (qcfVersion) {
     case 1:
       fontsDir.cd("QCFV1");
-      qcfFontPrefix = "QCF_P";
-      qcfBSMLFont = "QCF_BSML";
-      QFontDatabase::addApplicationFont(fontsDir.filePath("QCF_BSML.ttf"));
       break;
-
     case 2:
-      fontsDir.cd("QCFV2");
+      fontsDir.setPath(downloadsDir.absolutePath() + "/QCFV2");
       qcfFontPrefix = "QCF2";
-      qcfBSMLFont = "QCF2BSML";
-      QFontDatabase::addApplicationFont(fontsDir.filePath("QCF2BSML.ttf"));
       break;
   }
 
   // add required fonts
   for (int i = 1; i < 605; i++) {
-    QString fontName = qcfFontPrefix;
-    fontName.append(QString::number(i).rightJustified(3, '0'));
-    fontName.append(".ttf");
+    QString fontName = pageFontname(i) + ".ttf";
 
-    QFontDatabase::addApplicationFont(fontsDir.filePath(fontName));
+    if (qcfVersion == 2 && !fontsDir.exists(fontName)) {
+      settings->setValue("Reader/QCF", 1);
+      settings->sync();
+      qFatal() << fontsDir.filePath(fontName)
+               << " font file not found, fallback to QCF v1";
+    } else
+      QFontDatabase::addApplicationFont(fontsDir.filePath(fontName));
   }
 
   // set default UI fonts to use
@@ -404,13 +387,15 @@ populateRecitersList()
   }
 
   reciters.close();
+  recitersList.squeeze();
 
   // create reciters directories
+  downloadsDir.cd("recitations");
   foreach (const Reciter& r, recitersList) {
-    if (!recitationsDir.exists(r.baseDirName)) {
-      recitationsDir.mkdir(r.baseDirName);
-    }
+    if (!downloadsDir.exists(r.baseDirName))
+      downloadsDir.mkdir(r.baseDirName);
   }
+  downloadsDir.cdUp();
 }
 
 void
@@ -420,18 +405,59 @@ populateShortcutsMap()
   if (!shortcuts.open(QIODevice::ReadOnly))
     qCritical("Couldn't Open Shortcuts XML");
 
+  settings->beginGroup("Shortcuts");
   QXmlStreamReader reader(&shortcuts);
   while (!reader.atEnd() && !reader.hasError()) {
     QXmlStreamReader::TokenType token = reader.readNext();
     if (token == QXmlStreamReader::StartElement) {
       if (reader.name().toString() == "shortcut") {
-        shortcutDescription.insert(
-          reader.attributes().value("key").toString(),
+        QString key = reader.attributes().value("key").toString();
+        QString defBind = reader.attributes().value("default").toString();
+        QString desc =
           qApp->translate("SettingsDialog",
-                          reader.attributes().value("description").toLatin1()));
+                          reader.attributes().value("description").toLatin1());
+
+        shortcutDescription.insert(key, desc);
+        if (!settings->contains(key))
+          settings->setValue(key, defBind);
       }
     }
   }
 
+  settings->endGroup();
   shortcuts.close();
+}
+
+void
+populateContentLists()
+{
+  QFile content(":/resources/files.xml");
+  if (!content.open(QIODevice::ReadOnly))
+    qCritical("Couldn't Open Files XML");
+
+  QXmlStreamReader reader(&content);
+  while (!reader.atEnd() && !reader.hasError()) {
+    QXmlStreamReader::TokenType token = reader.readNext();
+    if (token == QXmlStreamReader::StartElement) {
+      if (reader.name().toString() == "tafsir") {
+        QString name = qApp->translate(
+          "SettingsDialog", reader.attributes().value("name").toLatin1());
+        QString file = reader.attributes().value("file").toString();
+        bool text = reader.attributes().value("text").toInt();
+        bool extra = reader.attributes().value("extra").toInt();
+        tafasirList.append(Tafsir{ name, file, text, extra });
+      }
+      // translations
+      else if (reader.name().toString() == "translation") {
+        QString name = reader.attributes().value("name").toString();
+        QString file = reader.attributes().value("file").toString();
+        bool extra = reader.attributes().value("extra").toInt();
+        translationsList.append(Translation{ name, file, extra });
+      }
+    }
+  }
+
+  content.close();
+  tafasirList.squeeze();
+  translationsList.squeeze();
 }

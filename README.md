@@ -10,15 +10,23 @@
 <br />
 <div align="center">
   <a href="https://github.com/0xzer0x/quran-companion">
-    <img src="resources/tray.png" alt="Logo" width="120" height="120">
+    <img src="resources/logo.ico" alt="Logo" width=128>
   </a>
 </div>
 
 <h2 align="center">Quran Companion</h2>
 
 <h4 align="center">
-    cross-platform desktop Qt-based Quran reader & player
-  </h4>
+  Cross-platform desktop Quran reader & player
+</h4>
+
+<p align="center">
+  <a href="https://techforpalestine.org/learn-more"><img alt="StandWithPalestine" src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/StandWithPalestine.svg"></a>
+  <img alt="GitHub Release" src="https://img.shields.io/github/v/release/0xzer0x/quran-companion">
+  <a href="https://aur.archlinux.org/packages/quran-companion"><img alt="AUR Version" src="https://img.shields.io/aur/version/quran-companion"></a>
+  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/main.yml">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/0xzer0x/quran-companion">
+</p>
 
 <p align="center">
     <a href="#key-features">Key Features</a> •
@@ -27,7 +35,7 @@
     <a href="#credits">Credits</a> •
     <a href="https://github.com/0xzer0x/quran-companion/issues">Report Bug</a> •
     <a href="#license">License</a> 
-  </p>
+</p>
 
 <!-- TABLE OF CONTENTS -->
 
@@ -45,11 +53,6 @@
     </li>
     <li>
     <a href="#installation">Installation</a>
-      <ul>
-        <li>
-          <a href="#keyboard-shortcuts">Keyboard Shortcuts</a>
-        </li>
-      </ul>
     </li>
     <li><a href="#compilation">Compilation</a>
         <ul>
@@ -78,7 +81,7 @@
 
 ## About the project ✨
 
-Quran Companion is a cross-platform Quran reader/listener with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books & translations
+Quran Companion is a cross-platform Quran reader/player with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books & translations
 
 ### Key Features
 
@@ -121,44 +124,19 @@ Online installer can be downloaded from [here][win-installer].
 
 #### Linux
 
-The application can be downloaded in any of the available packages (snap, flatpak, appimage).
+The application can be downloaded in any of the available packages (snap, flatpak, appimage, aur package).
 
 <p align="left">
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
     <img width='240' alt='Download Flatpak' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/>
  </a>
- <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.2.1/Quran_Companion-1.2.1-x86_64.AppImage'>
+ <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.2.2/Quran_Companion-1.2.2-x86_64.AppImage'>
     <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 10px'/>
  </a>
  <a href="https://snapcraft.io/quran-companion">
   <img width='250' alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
  </a>
 </p>
-
-### Keyboard Shortcuts (Customizable)
-
-| Key                                               | Description                              |
-| ------------------------------------------------- | ---------------------------------------- |
-| <kbd>Ctrl</kbd> + <kbd>M</kbd>                    | Toggle menubar visibility                |
-| <kbd>Ctrl</kbd> + <kbd>N</kbd>                    | Toggle navigation dock visibility        |
-| <kbd>Space</kbd>                                  | Toggle recitation playback               |
-| <kbd>+</kbd>                                      | Increase volume                          |
-| <kbd>-</kbd>                                      | decrease volume                          |
-| <kbd>&#8592;</kbd>                                | Next page(s)                             |
-| <kbd>&#8594;</kbd>                                | Previous page(s)                         |
-| <kbd>V</kbd>                                      | Next verse                               |
-| <kbd>Shift</kbd> + <kbd>V</kbd>                   | Previous verse                           |
-| <kbd>S</kbd>                                      | Next surah                               |
-| <kbd>Shift</kbd> + <kbd>S</kbd>                   | Previous surah                           |
-| <kbd>J</kbd>                                      | Next juz                                 |
-| <kbd>Shift</kbd> + <kbd>J</kbd>                   | Previous juz                             |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> | Bookmark current verse                   |
-| <kbd>Ctrl</kbd> + <kbd>B</kbd>                    | Open Bookmarks dialog                    |
-| <kbd>Ctrl</kbd> + <kbd>F</kbd>                    | Open Search dialog                       |
-| <kbd>Ctrl</kbd> + <kbd>P</kbd>                    | Open Preferences dialog                  |
-| <kbd>Ctrl</kbd> + <kbd>D</kbd>                    | Open Downloader dialog                   |
-| <kbd>Ctrl</kbd> + <kbd>T</kbd>                    | Open Tafsir dialog for the current verse |
-| <kbd>Ctrl</kbd> + <kbd>Q</kbd>                    | Exit                                     |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

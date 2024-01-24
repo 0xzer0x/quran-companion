@@ -67,6 +67,41 @@ struct Reciter
      ///< downloading using the verse number relative to the beginning of the
      ///< Quran or a combination of surah and verse numbers.
 };
+/**
+ * @brief Tafsir struct contains data about a single tafsir
+ * @details tafasir are stored in the resource file "files.xml"
+ */
+struct Tafsir
+{
+  QString displayName;
+  QString filename;
+  bool text;
+  bool extra;
+};
+/**
+ * @brief Translation struct holds different values representing available Quran
+ * translations
+ */
+struct Translation
+{
+  QString displayName;
+  QString filename;
+  bool extra;
+};
+
+enum DownloadType
+{
+  QCF,
+  Recitation,
+  File
+};
+
+enum VerseType
+{
+  qcf,
+  uthmanic,
+  annotated
+};
 
 /**
  * @brief ReaderMode enum represents the available modes for the Quran reader in
@@ -74,69 +109,10 @@ struct Reciter
  */
 enum ReaderMode
 {
-  singlePage, ///< Single Quran page, side panel is used for displaying verses
+  SinglePage, ///< Single Quran page, side panel is used for displaying verses
               ///< with translation
-  doublePage  ///< Two Quran pages, both panels are used to display Quran pages,
+  DoublePage  ///< Two Quran pages, both panels are used to display Quran pages,
               ///< no translation
-};
-/**
- * @brief Tafsir enum values representing available tafasir.
- */
-enum Tafsir
-{
-  adwa,       ///< Adwa' ul-Bayan - Sheikh Shinqiti
-  aysar,      ///< Aysar ul-Tafasir - Sheikh Abu-bakr al-Jazaeri
-  baghawy,    ///< Tafsir ul-baghawy
-  qortoby,    ///< Tafsir ul-Qortoby
-  sa3dy,      ///< Tafsir ul-Sa'ady
-  tabary,     ///< Tafsir ul-Tabary
-  waseet,     ///< At-Tafsir ul-Waseet
-  jalalayn,   ///< Tafsir ul-Jalalyn
-  e3rab,      ///< Ea'rab of Quran verses
-  tanweer,    ///< At-Tahreer wa At-Tanweer - Sheikh Ibn A'ashoor
-  juzayy,     ///< Tafsir Ibn-Juzayy
-  katheer,    ///< Tafsir Ibn-Katheer
-  katheer_en, ///< (English) Tafsir Ibn-Katheer
-  indonesian, ///< (Indonesian) Tafsir ul-Jalalyn
-  russian,    ///< (Russian) Tafsir ul-Sa'ady
-  tafheem     ///< (English) Tafheem ul-Quran - Sheikh Abul-Aa'la al-Maududy
-};
-/**
- * @brief Translation enum holds different values representing available Quran
- * translations
- */
-enum Translation
-{
-  muyassar,       ///< (Arabic) Tafsir muyassar
-  ar_ma3any,      ///< (Arabic) Word Meanings
-  bn_bengali,     ///< (Bengali) Muhiuddin Khan
-  bs_korkut,      ///< (Bosanski) Korkut
-  de_bubenheim,   ///< (Deutsch) Bubenheim & Elyas
-  en_khattab,     ///< (English) Clear Quran
-  en_sahih,       ///< (English) Sahih International
-  en_yusuf,       ///< (English) Abdullah Yusuf Ali
-  es_navio,       ///< (Español) Abdel Ghani Navio
-  fr_hamidullah,  ///< (Français) Hamidullah
-  ha_gumi,        ///< (Hausa) Gumi
-  id_indonesian,  ///< (Indonesian) Bahasa Indonesia
-  it_piccardo,    ///< (Italiano) Piccardo
-  ku_asan,        ///< (كوردى) برهان محمد أمين
-  ml_abdulhameed, ///< (Malayalam) Abdul Hameed and Kunhi
-  ms_basmeih,     ///< (Melayu) Basmeih
-  nl_siregar,     ///< (Dutch) Sofian Siregar
-  pr_tagi,        ///< (فارسى) حسین تاجی گله داری
-  pt_elhayek,     ///< (Português) El Hayek
-  ru_kuliev,      ///< (Русский) Кулиев (Russian - Elmir Kuliev)
-  so_abduh,       ///< (Somali) Abduh
-  sq_nahi,        ///< (Shqiptar) Efendi Nahi
-  sv_bernstrom,   ///< (Swedish) Bernström
-  sw_barwani,     ///< (Swahili) Al-Barwani
-  ta_tamil, ///< (தமிழ்) ஜான் டிரஸ்ட் (Tamil - Jan Turst Foundation)
-  th_thai,  ///< (ภาษาไทย) ภาษาไทย (Thai)
-  tr_diyanet,   ///< (Türkçe) Diyanet Isleri
-  ur_jalandhry, ///< (اردو) جالندربرى
-  uz_sodik,     ///< (Uzbek) Мухаммад Содик
-  zh_jian       ///< (中国语文) Ma Jian (Chinese)
 };
 
 namespace Globals {
@@ -162,9 +138,6 @@ extern ReaderMode readerMode;
 extern QString qcfFontPrefix; ///< global variable for the QCF font prefix to
                               ///< generate font name from.
 
-extern QString
-  qcfBSMLFont; ///< global variable for the name of the QCF basmallah font.
-
 extern QDir themeResources; ///< global QDir for the current theme resources
                             ///< (icons & styles).
 extern QDir
@@ -176,11 +149,15 @@ extern QDir assetsDir; ///< global QDir representing the application assets
 extern QDir
   bismillahDir; ///< global QDir representing the reciters basmallah files.
 
-extern QDir recitationsDir; ///< global QDir representing the top-level path
-                            ///< for recitations.
+extern QDir downloadsDir; ///< global QDir representing the top-level path
+                          ///< for downloaded files.
 
 extern QList<Reciter> recitersList; ///< global QList containing reciters
                                     ///< supported by the application.
+
+extern QList<Tafsir> tafasirList;
+
+extern QList<Translation> translationsList;
 
 extern QMap<QString, QString>
   shortcutDescription; ///< global QMap containing all available
@@ -194,6 +171,14 @@ extern QObject* databaseManager; ///< global pointer to the application-wide
 extern fa::QtAwesome*
   awesome; ///< global pointer used for generating font awesome icons
 
+extern QString
+pageFontname(int page);
+extern QString
+verseFontname(VerseType type, int page);
+extern bool
+tafsirExists(const Tafsir* tafsir);
+extern bool
+translationExists(const Translation* tr);
 };
 
 #endif // GLOBALS_H

@@ -25,8 +25,10 @@ SearchDialog::SearchDialog(QWidget* parent)
     Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right_arrow_left));
   ui->listViewAllSurahs->setModel(&m_modelAllSurahs);
   ui->listViewSelected->setModel(&m_modelSelectedSurahs);
-  fillListView();
+  if (m_lang == QLocale::Arabic)
+    ui->searchTabWidget->setObjectName("rtlTabWidget");
 
+  fillListView();
   // connectors
   setupConnections();
 }
@@ -105,8 +107,8 @@ SearchDialog::showResults()
 
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
-    QString fontName =
-      m_fontPrefix + QString::number(v.page).rightJustified(3, '0');
+      QString fontName = Globals::verseFontname(m_dbMgr->getVerseType(), v.page);
+
     VerseFrame* vFrame = new VerseFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);
     ClickableLabel* clkLb = new ClickableLabel(vFrame);

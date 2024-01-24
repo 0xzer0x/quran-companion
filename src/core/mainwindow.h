@@ -11,8 +11,10 @@
 #include "../utils/notificationmanager.h"
 #include "../utils/shortcuthandler.h"
 #include "../utils/verseplayer.h"
+#include "../widgets/betaqaviewer.h"
 #include "../widgets/notificationpopup.h"
 #include "../widgets/quranpagebrowser.h"
+#include "../widgets/versedialog.h"
 #include "../widgets/verseframe.h"
 #include "bookmarksdialog.h"
 #include "copydialog.h"
@@ -184,6 +186,15 @@ private slots:
    */
   void missingRecitationFileWarn(int reciterIdx, int surah);
   /**
+   * @brief display a warning messagebox when QCF2 files are not found
+   */
+  void missingQCF();
+  /**
+   * @brief display a warning messagebox when a tafsir db file is not found
+   * @param idx - index of tafsir in Globals::tafasirList
+   */
+  void missingTafsir(int idx);
+  /**
    * @brief sets the current position in the audio file as the position of the
    * slider
    * @param position - position in audio file in milliseconds
@@ -236,9 +247,12 @@ private slots:
    */
   void actionKhatmahTriggered();
   /**
-   * @brief open the TafsirDialog for the current ::Verse
+   * @brief open the CopyDialog, create instance if not set
    */
   void actionAdvancedCopyTriggered();
+  /**
+   * @brief open the TafsirDialog for the current ::Verse
+   */
   void actionTafsirTriggered();
   /**
    * @brief open the verse of the day dialog
@@ -249,13 +263,21 @@ private slots:
    */
   void actionSearchTriggered();
   /**
+   * @brief toggle the main reader view by hiding one of the panels
+   */
+  void toggleReaderView();
+  /**
+   * @brief toggle the visibility of the player controls in the main window
+   */
+  void togglePlayerControls();
+  /**
    * @brief open the about messagebox for the application
    */
   void actionAboutTriggered();
   /**
    * @brief open the about messagebox for Qt
    */
-  void on_actionAbout_Qt_triggered();
+  void on_actionAboutQt_triggered();
   /**
    * @brief slot to navigate to the clicked verse in the side panel and update
    * UI elements
@@ -311,6 +333,11 @@ private slots:
    * @brief set side content font to the one in the settings
    */
   void updateSideFont();
+  /**
+   * @brief Updates the type of the verses shown and reload the font family and
+   * size
+   */
+  void updateVerseType();
   /**
    * @brief search for the surahs with the given argument when the text in the
    * side dock search box is changed
@@ -383,6 +410,7 @@ private:
   const QLocale::Language& m_language = Globals::language;
   QSettings* const m_settings = Globals::settings;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
+  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
   const QString& m_updateToolPath = Globals::updateToolPath;
   const ReaderMode& m_readerMode = Globals::readerMode;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
@@ -591,6 +619,14 @@ private:
    */
   VerseFrame* m_highlightedFrm = nullptr;
   /**
+   * @brief pointer to the surah card (betaqa) widget
+   */
+  BetaqaViewer* m_betaqaViewer = nullptr;
+  /**
+   * @brief pointer to the votd dialog
+   */
+  VerseDialog* m_verseDlg = nullptr;
+  /**
    * @brief the currently selected ::Verse
    */
   Verse m_currVerse{ 1, 1, 1 };
@@ -631,5 +667,9 @@ private:
    * @brief QFont used in the side panel translation
    */
   QFont m_sideFont;
+  /**
+   * @brief QFont used in displaying Quranic verse
+   */
+  QFont m_versesFont;
 };
 #endif // MAINWINDOW_H

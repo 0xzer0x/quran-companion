@@ -95,7 +95,7 @@ private slots:
   void btnTransferClicked();
 
 private:
-  const QString& m_fontPrefix = Globals::qcfFontPrefix;
+  const QLocale::Language m_lang = Globals::language;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   /**
    * @brief connects signals and slots for different UI

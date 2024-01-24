@@ -4,6 +4,7 @@
  */
 
 #include "settingsdialog.h"
+#include "../widgets/shortcutdelegate.h"
 #include "ui_settingsdialog.h"
 
 SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
@@ -15,12 +16,11 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 72));
   ui->cmbSideFontSz->setValidator(new QIntValidator(10, 72));
   setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_gear));
-  fillLanguageCombobox();
   ui->tableViewShortcuts->setModel(&m_shortcutsModel);
   ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
-  m_keySeqEdit = new QKeySequenceEdit(this);
-  m_keySeqEdit->hide();
+  ui->tableViewShortcuts->setItemDelegate(new ShortcutDelegate);
 
+  fillLanguageCombobox();
   setCurrentSettingsAsRef();
   // connectors
   setupConnections();
@@ -33,14 +33,6 @@ SettingsDialog::setupConnections()
           &QDialogButtonBox::clicked,
           this,
           &SettingsDialog::btnBoxAction);
-  connect(ui->tableViewShortcuts,
-          &QTableView::doubleClicked,
-          this,
-          &SettingsDialog::editShortcut);
-  connect(m_keySeqEdit,
-          &QKeySequenceEdit::editingFinished,
-          this,
-          &SettingsDialog::setShortcut);
 }
 
 void
@@ -73,6 +65,29 @@ SettingsDialog::fillLanguageCombobox()
 }
 
 void
+SettingsDialog::updateContentCombobox()
+{
+  ui->cmbTafsir->clear();
+  for (int i = 0; i < m_tafasirList.size(); i++) {
+    const Tafsir& t = m_tafasirList[i];
+    if (Globals::tafsirExists(&t))
+      ui->cmbTafsir->addItem(t.displayName, i);
+  }
+  ui->cmbTranslation->clear();
+  for (int i = 0; i < m_trList.size(); i++) {
+    const Translation& tr = m_trList[i];
+    if (Globals::translationExists(&tr))
+      ui->cmbTranslation->addItem(tr.displayName, i);
+  }
+
+  m_tafsir = ui->cmbTafsir->findData(m_settings->value("Reader/Tafsir"));
+  m_translation =
+    ui->cmbTranslation->findData(m_settings->value("Reader/Translation"));
+  ui->cmbTafsir->setCurrentIndex(m_tafsir);
+  ui->cmbTranslation->setCurrentIndex(m_translation);
+}
+
+void
 SettingsDialog::setCurrentSettingsAsRef()
 {
   m_votd = m_settings->value("VOTD").toBool();
@@ -85,8 +100,9 @@ SettingsDialog::setCurrentSettingsAsRef()
       .toInt();
   m_sideFont =
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
-  m_tafsir = m_settings->value("Reader/Tafsir").toInt();
-  m_translation = m_settings->value("Reader/Translation").toInt();
+
+  m_verseType = m_settings->value("Reader/VerseType").toInt();
+  m_verseFontSize = m_settings->value("Reader/VerseFontSize").toInt();
 
   m_audioDevices = QMediaDevices::audioOutputs();
   ui->cmbAudioDevices->clear();
@@ -105,27 +121,18 @@ SettingsDialog::setCurrentSettingsAsRef()
   ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
   ui->fntCmbSide->setCurrentFont(m_sideFont);
   ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
-  ui->cmbTafsir->setCurrentIndex(m_tafsir);
-  ui->cmbTranslation->setCurrentIndex(m_translation);
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
   ui->chkDailyVerse->setChecked(m_votd);
   ui->chkAdaptive->setChecked(m_adaptive);
   ui->chkMissingWarning->setChecked(m_missingFileWarning);
   ui->chkFgHighlight->setChecked(m_fgHighlight);
+  ui->cmbVerseText->setCurrentIndex(m_verseType);
+  ui->cmbVersesFontSz->setCurrentText(QString::number(m_verseFontSize));
 
   // shortcuts tab
   populateShortcutsModel();
+  updateContentCombobox();
   ui->tableViewShortcuts->resizeColumnsToContents();
-}
-
-bool
-SettingsDialog::shortcutAvailable(QString keySequence)
-{
-  // check if any item in the shortcut model contains the same key sequence
-  bool available =
-    m_shortcutsModel.findItems(keySequence, Qt::MatchExactly, 1).empty();
-
-  return available;
 }
 
 void
@@ -138,6 +145,19 @@ SettingsDialog::checkShortcuts()
     if (m_settings->value("Shortcuts/" + key).toString() != keySequence)
       updateShortcut(key, keySequence);
   }
+}
+
+bool
+SettingsDialog::qcfExists()
+{
+  QString filename = "QCFV2/QCF2%0.ttf";
+  for (int i = 1; i <= 604; i++) {
+    if (!m_downloadsDir.exists(
+          filename.arg(QString::number(i).rightJustified(3, '0'))))
+      return false;
+  }
+
+  return true;
 }
 
 void
@@ -214,6 +234,12 @@ SettingsDialog::updateReaderMode(int idx)
 void
 SettingsDialog::updateQuranFont(int qcfV)
 {
+  if (qcfV == 2 && !qcfExists()) {
+    emit qcf2Missing();
+    ui->cmbQCF->setCurrentIndex(0);
+    return;
+  }
+
   m_settings->setValue("Reader/QCF", qcfV);
   if (m_restartReq)
     return;
@@ -268,6 +294,22 @@ SettingsDialog::updateSideFontSize(QString size)
 }
 
 void
+SettingsDialog::updateVerseText(int vt)
+{
+  m_settings->setValue("Reader/VerseType", vt);
+  emit verseTypeChanged();
+  m_renderSideContent = true;
+}
+
+void
+SettingsDialog::updateVerseTextFontsize(QString size)
+{
+  m_settings->setValue("Reader/VerseFontSize", size);
+  emit verseTypeChanged();
+  m_renderSideContent = true;
+}
+
+void
 SettingsDialog::updateShortcut(QString key, QString keySequence)
 {
   m_settings->setValue("Shortcuts/" + key, keySequence);
@@ -296,13 +338,19 @@ SettingsDialog::applyAllChanges()
     updateFgHighlight(ui->chkFgHighlight->isChecked());
 
   if (ui->cmbTafsir->currentIndex() != m_tafsir)
-    updateTafsir(ui->cmbTafsir->currentIndex());
+    updateTafsir(ui->cmbTafsir->currentData().toInt());
 
   if (ui->cmbTranslation->currentIndex() != m_translation)
-    updateTranslation(ui->cmbTranslation->currentIndex());
+    updateTranslation(ui->cmbTranslation->currentData().toInt());
 
   if (ui->cmbQCF->currentIndex() + 1 != m_qcfVer)
     updateQuranFont(ui->cmbQCF->currentIndex() + 1);
+
+  if (ui->cmbVerseText->currentIndex() != m_verseType)
+    updateVerseText(ui->cmbVerseText->currentIndex());
+
+  if (ui->cmbVersesFontSz->currentText() != QString::number(m_verseFontSize))
+    updateVerseTextFontsize(ui->cmbVersesFontSz->currentText());
 
   if (ui->chkAdaptive->isChecked() != m_adaptive)
     updateAdaptiveFont(ui->chkAdaptive->isChecked());
@@ -349,47 +397,6 @@ SettingsDialog::applyAllChanges()
 }
 
 void
-SettingsDialog::editShortcut(const QModelIndex& index)
-{
-  QString key =
-    m_shortcutsModel.index(index.row(), 0).data(Qt::UserRole).toString();
-
-  m_keySeqEdit->setObjectName(key + "-" + QString::number(index.row()));
-  m_keySeqEdit->resize(m_keySeqEdit->width() + 20, m_keySeqEdit->height() + 20);
-  m_keySeqEdit->move((width() - m_keySeqEdit->width()) / 2,
-                     (height() - m_keySeqEdit->height()) / 2);
-
-  m_keySeqEdit->setKeySequence(m_shortcutsModel.item(index.row(), 1)->text());
-  m_keySeqEdit->show();
-  m_keySeqEdit->setFocus();
-}
-
-void
-SettingsDialog::setShortcut()
-{
-  if (m_checkingShortcut)
-    return;
-
-  m_checkingShortcut = true;
-  QStringList key = m_keySeqEdit->objectName().split('-');
-  QString value = m_keySeqEdit->keySequence().toString();
-
-  m_keySeqEdit->hide();
-  qInfo() << "set shortcut triggered for " + key.at(0) + ": " + value;
-
-  if (shortcutAvailable(value))
-    m_shortcutsModel.item(key.at(1).toInt(), 1)->setText(value);
-  else {
-    QMessageBox::warning(this,
-                         tr("Shortcut conflicts"),
-                         tr("This key combination is used by another "
-                            "shortcut, please use a different one."));
-  }
-
-  m_checkingShortcut = false;
-}
-
-void
 SettingsDialog::btnBoxAction(QAbstractButton* btn)
 {
   if (btn->text().contains(tr("Apply"))) {
@@ -407,7 +414,6 @@ SettingsDialog::showWindow()
 {
   setCurrentSettingsAsRef();
   this->show();
-  m_keySeqEdit->hide();
 }
 
 void
