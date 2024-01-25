@@ -35,6 +35,22 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release date="2024-01-25" version="1.2.3">
+      <description>
+        <ul>
+          <li>Bugfixes</li>
+          <li>Added different fonts for displaying verses</li>
+          <li>Added annotated Hafs verse text</li>
+          <li>Move QCF 2 font files out of application bundle and added option to download it (Reduced bundle size)</li>
+          <li>Move tafsir and translation files out of the application bundle and added option to download any one of them (Reduced bundle size)</li>
+          <li>Added Surah card functionality (Accessed by clicking the Surah frame/clicking the Surah name in the page header)</li>
+          <li>Added new shortcut to hide player controls</li>
+          <li>Replaced the dynamic resizing of reader panels with panel toggling functionality</li>
+          <li>Added Tafsir Al-Jalalayn (English)</li>
+          <li>Better About dialog</li>
+        </ul>
+      </description>
+    </release>
     <release date="2024-01-24" version="1.2.2">
       <description>
         <ul>

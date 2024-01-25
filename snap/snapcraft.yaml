@@ -1,6 +1,6 @@
 name: quran-companion
 base: core22
-version: '1.2.2'
+version: '1.2.3'
 title: Quran Companion
 website: https://github.com/0xzer0x/quran-companion
 source-code: https://github.com/0xzer0x/quran-companion
