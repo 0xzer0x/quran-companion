@@ -51,12 +51,13 @@ BetaqaViewer::showSurah(int surah)
 void
 BetaqaViewer::center()
 {
-  int w = std::min((int)(parentWidget()->width() * 0.7), 800);
-  this->resize(w, w);
+  int w = std::max((int)(parentWidget()->width() * 0.4), 600);
+  int h = std::max((int)(parentWidget()->height() * 0.8), 600);
+  this->resize(w, h);
   m_sizeAnim->setEndValue(size());
 
   QPoint center(((parentWidget()->width() / 2) - (w / 2)),
-                ((parentWidget()->height() / 2) - (w / 2)));
+                ((parentWidget()->height() / 2) - (h / 2)));
   move(center);
 }
 
