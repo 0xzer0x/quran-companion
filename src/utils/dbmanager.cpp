@@ -613,9 +613,9 @@ DBManager::randomVerse()
   QSqlQuery dbQuery(m_openDBCon);
 
   int id = QRandomGenerator::global()->bounded(1, 6237);
-  dbQuery.prepare(
-    "SELECT page,sura_no,aya_no,aya_text FROM verses_v1 WHERE id=" +
-    QString::number(id));
+  dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v" +
+                  QString::number(m_qcfVer) +
+                  " WHERE id=" + QString::number(id));
 
   if (!dbQuery.exec()) {
     qCritical() << "Error occurred during randomVerse SQL statment exec";

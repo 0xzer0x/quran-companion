@@ -1551,6 +1551,9 @@ MainWindow::addSideContent()
   QLabel* contentLb;
   VerseFrame* verseContFrame;
   QString prevLbContent, currLbContent;
+  if (m_dbMgr->getVerseType() == qcf)
+    m_versesFont.setFamily(Globals::pageFontname(m_currVerse.page));
+
   for (int i = m_activeVList->size() - 1; i >= 0; i--) {
     Verse vInfo = m_activeVList->at(i);
 
