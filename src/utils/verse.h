@@ -24,8 +24,8 @@ public:
   QList<int> toList() const;
   void update(const Verse& v);
   void update(const QList<int>& vInfo);
-  Verse next() const;
-  Verse prev() const;
+  Verse next();
+  Verse prev();
 
   Verse& operator=(const Verse& cp);
   Verse& operator=(const QList<int>& vInfo);

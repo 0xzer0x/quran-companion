@@ -32,6 +32,7 @@ public slots:
   void togglePlayback();
 
 signals:
+  void currentVerseChanged();
   void currentSurahChanged();
 
 private slots:

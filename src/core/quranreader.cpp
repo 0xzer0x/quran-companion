@@ -11,6 +11,7 @@ QuranReader::QuranReader(QWidget* parent,
   , m_player(player)
 {
   ui->setupUi(this);
+  setLayoutDirection(Qt::LeftToRight);
   loadIcons();
   loadReader();
   updateHighlight();

@@ -256,6 +256,14 @@ MainWindow::setupConnections()
           &QuranReader::currentSurahChanged,
           this,
           &MainWindow::currentSurahChanged);
+  connect(m_playerControls,
+          &PlayerControls::currentVerseChanged,
+          this,
+          &MainWindow::currentVerseChanged);
+  connect(m_playerControls,
+          &PlayerControls::currentSurahChanged,
+          this,
+          &MainWindow::currentSurahChanged);
 
   // ########## navigation dock ########## //
   connect(ui->lineEditSearchSurah,
@@ -376,6 +384,18 @@ MainWindow::setupConnections()
           &QMediaPlayer::playbackStateChanged,
           this,
           &MainWindow::updateTrayTooltip);
+  connect(m_player,
+          &QMediaPlayer::mediaStatusChanged,
+          this,
+          &MainWindow::mediaStatusChanged);
+
+  connect(m_reader,
+          &QuranReader::showVerseTafsir,
+          this,
+          &MainWindow::showVerseTafsir);
+  connect(m_reader, &QuranReader::showBetaqa, this, [this](int surah) {
+    m_betaqaViewer->showSurah(surah);
+  });
 }
 
 void
@@ -392,15 +412,15 @@ MainWindow::init()
   m_settingsDlg = new SettingsDialog(this, m_player);
 
   QHBoxLayout* controls = new QHBoxLayout();
+  QFrame* controlsFrame = new QFrame(this);
   controls->setAlignment(Qt::AlignCenter);
   controls->setContentsMargins(0, 0, 0, 0);
   controls->setSpacing(0);
   controls->addStretch(1);
   controls->addWidget(m_playerControls);
   controls->addStretch(1);
-  QFrame* frm = new QFrame(this);
-  frm->setLayout(controls);
-  ui->scrollAreaWidgetContents->layout()->addWidget(frm);
+  controlsFrame->setLayout(controls);
+  ui->scrollAreaWidgetContents->layout()->addWidget(controlsFrame);
   ui->scrollAreaWidgetContents->layout()->addWidget(m_reader);
 
   ui->cmbPage->setValidator(new QIntValidator(1, 604, this));

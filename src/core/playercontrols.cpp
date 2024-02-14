@@ -129,6 +129,7 @@ PlayerControls::btnStopClicked()
 {
   m_player->stop();
   m_reader->setVerseToStartOfPage();
+  emit currentVerseChanged();
   emit currentSurahChanged();
 }
 

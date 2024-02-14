@@ -95,7 +95,7 @@ private:
   /**
    * @brief ::Verse instance representing the shown verse.
    */
-  Verse m_shownVerse{ 1, 1, 1 };
+  Verse m_shownVerse;
 };
 
 #endif // TAFSIRDIALOG_H
