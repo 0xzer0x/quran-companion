@@ -78,7 +78,7 @@ QAbstractScrollArea#tedTafsir {
 
 /* --------- Player Styles --------- */
 
-QFrame#framePlayer {
+QWidget#PlayerControls QFrame#playerFrame {
   background-color: #202020;
   border-radius: 8px;
 }

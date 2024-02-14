@@ -35,6 +35,12 @@ set(PROJECT_SOURCES
     src/core/mainwindow.cpp
     src/core/mainwindow.h
     src/core/mainwindow.ui
+    src/core/quranreader.h
+    src/core/quranreader.cpp
+    src/core/quranreader.ui
+    src/core/playercontrols.h
+    src/core/playercontrols.cpp
+    src/core/playercontrols.ui
     src/core/searchdialog.h
     src/core/searchdialog.cpp
     src/core/searchdialog.ui
@@ -79,6 +85,8 @@ set(PROJECT_SOURCES
     src/widgets/versedialog.h
     src/widgets/versedialog.cpp
     src/widgets/versedialog.ui
+    src/utils/verse.h
+    src/utils/verse.cpp
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
     src/utils/dbmanager.h
@@ -87,8 +95,8 @@ set(PROJECT_SOURCES
     src/utils/verseplayer.cpp
     src/utils/downloadmanager.h
     src/utils/downloadmanager.cpp
-    src/utils/notificationmanager.h
-    src/utils/notificationmanager.cpp
+    src/utils/systemtray.h
+    src/utils/systemtray.cpp
     src/utils/logger.h
     src/utils/logger.cpp
     resources.qrc

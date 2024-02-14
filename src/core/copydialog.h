@@ -3,6 +3,7 @@
 
 #include "../globals.h"
 #include "../utils/dbmanager.h"
+#include "../utils/verse.h"
 #include <QClipboard>
 #include <QDialog>
 #include <QIntValidator>
@@ -18,18 +19,20 @@ class CopyDialog : public QDialog
 
 public:
   explicit CopyDialog(QWidget* parent);
-  void show(const Verse& curr);
   ~CopyDialog();
+
+  void show();
 
 protected:
   void closeEvent(QCloseEvent* event);
 
 private:
   Ui::CopyDialog* ui;
+  Verse* m_currVerse = Verse::current();
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
   void copyRange();
+
   int m_surah = -1;
-  int m_surahCnt = 0;
   QIntValidator* m_verseValidator = new QIntValidator(this);
 };
 

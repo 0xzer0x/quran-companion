@@ -12,14 +12,17 @@ VerseDialog::VerseDialog(QWidget* parent)
   ui->lbContent->setFont(sideFont);
   ui->lbInfo->setFont(sideFont);
   ui->lbVerse->setFont(QFont("kfgqpc_hafs_uthmanic _script", 20));
+
+  if (m_settings->value("VOTD").toBool())
+    showVOTD(true);
 }
 
 QString
 VerseDialog::votdStringEntry() const
 {
-  QString entry = QString::number(m_votd.page).rightJustified(3, '0') + ":" +
-                  QString::number(m_votd.surah).rightJustified(3, '0') + ":" +
-                  QString::number(m_votd.number).rightJustified(3, '0');
+  QString entry = QString::number(m_votd.page()).rightJustified(3, '0') + ":" +
+                  QString::number(m_votd.surah()).rightJustified(3, '0') + ":" +
+                  QString::number(m_votd.number()).rightJustified(3, '0');
 
   return entry;
 }
@@ -79,12 +82,13 @@ void
 VerseDialog::updateLabels()
 {
   ui->lbVerse->setText(
-    "ﵩ " + m_dbMgr->getVerseText(m_votd.surah, m_votd.number) + " ﵨ");
-  ui->lbContent->setText(m_dbMgr->getTranslation(m_votd.surah, m_votd.number));
+    "ﵩ " + m_dbMgr->getVerseText(m_votd.surah(), m_votd.number()) + " ﵨ");
+  ui->lbContent->setText(
+    m_dbMgr->getTranslation(m_votd.surah(), m_votd.number()));
   ui->lbInfo->setText(qApp->translate("BookmarksDialog", "Surah: ") +
-                      m_dbMgr->getSurahName(m_votd.surah) + " - " +
+                      m_dbMgr->getSurahName(m_votd.surah()) + " - " +
                       qApp->translate("BookmarksDialog", "Verse: ") +
-                      QString::number(m_votd.number));
+                      QString::number(m_votd.number()));
 }
 
 void

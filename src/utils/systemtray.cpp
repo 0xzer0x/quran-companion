@@ -1,35 +1,36 @@
 /**
  * @file notificationmanager.cpp
- * @brief Implementation file for NotificationManager
+ * @brief Implementation file for SystemTray
  */
 
-#include "notificationmanager.h"
+#include "systemtray.h"
 
-NotificationManager::NotificationManager(QObject* parent)
+SystemTray::SystemTray(QObject* parent)
   : QObject{ parent }
   , m_sysTray{ new QSystemTrayIcon(this) }
   , m_trayMenu{ new QMenu() }
 {
   addActions();
+  setTooltip(qApp->translate("MainWindow", "Quran Companion"));
   m_sysTray->setContextMenu(m_trayMenu);
   m_sysTray->setIcon(QIcon(":/resources/tray.png"));
   m_sysTray->show();
 }
 
 void
-NotificationManager::notify(QString title, QString msg)
+SystemTray::notify(QString title, QString msg)
 {
   m_sysTray->showMessage(title, msg);
 }
 
 void
-NotificationManager::setTooltip(QString text)
+SystemTray::setTooltip(QString text)
 {
   m_sysTray->setToolTip(text);
 }
 
 void
-NotificationManager::addActions()
+SystemTray::addActions()
 {
   QAction* togglePlay = new QAction(tr("Play/Pause recitation"), m_trayMenu);
   QAction* show = new QAction(tr("Show window"), m_trayMenu);
@@ -50,20 +51,16 @@ NotificationManager::addActions()
   m_trayMenu->addSeparator();
   m_trayMenu->addAction(exit);
 
-  connect(togglePlay,
-          &QAction::triggered,
-          this,
-          &NotificationManager::togglePlayback);
-  connect(show, &QAction::triggered, this, &NotificationManager::showWindow);
-  connect(hide, &QAction::triggered, this, &NotificationManager::hideWindow);
-  connect(prefs, &QAction::triggered, this, &NotificationManager::openPrefs);
-  connect(exit, &QAction::triggered, this, &NotificationManager::exit);
-  connect(about, &QAction::triggered, this, &NotificationManager::openAbout);
-  connect(
-    update, &QAction::triggered, this, &NotificationManager::checkForUpdates);
+  connect(togglePlay, &QAction::triggered, this, &SystemTray::togglePlayback);
+  connect(show, &QAction::triggered, this, &SystemTray::showWindow);
+  connect(hide, &QAction::triggered, this, &SystemTray::hideWindow);
+  connect(prefs, &QAction::triggered, this, &SystemTray::openPrefs);
+  connect(exit, &QAction::triggered, this, &SystemTray::exit);
+  connect(about, &QAction::triggered, this, &SystemTray::openAbout);
+  connect(update, &QAction::triggered, this, &SystemTray::checkForUpdates);
 }
 
-NotificationManager::~NotificationManager()
+SystemTray::~SystemTray()
 {
   delete m_trayMenu;
 }

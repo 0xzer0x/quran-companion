@@ -86,7 +86,7 @@ public:
    * @param page - Quran page number
    * @return QList of ::Verse instances
    */
-  QList<Verse> getVerseInfoList(const int page);
+  QList<QList<int>> getVerseInfoList(const int page);
   /**
    * @brief gets the surah name glyph for the QCF_BSML font, used to render
    * surah frame in Quran page
@@ -119,7 +119,7 @@ public:
    * active khatmah
    * @param v - ::Verse reached in khatmah
    */
-  bool saveActiveKhatmah(const Verse& v);
+  bool saveActiveKhatmah(QList<int> vInfo);
   /**
    * @brief get all available khatmah ids
    * @return QList of khatmah id(s)
@@ -136,7 +136,7 @@ public:
    * @return boolean indicating a successful operation (false in case of error
    * and in case id does not exist)
    */
-  bool getKhatmahPos(const int khatmahId, Verse& v);
+  bool getKhatmahPos(const int khatmahId, QList<int>& vInfo);
   /**
    * @brief add a new khatmah/replace khatmah with given id with position of
    * ::Verse v
@@ -145,7 +145,7 @@ public:
    * @param id - id of khatmah to replace, -1 means do not replace (default: -1)
    * @return id of newly added khatmah or id parameter if defined
    */
-  int addKhatmah(const Verse& v, const QString name, const int id = -1);
+  int addKhatmah(QList<int> vInfo, const QString name, const int id = -1);
   /**
    * @brief rename the khatmah with the given id to newName
    * @param khatmahId - id of khatmah to rename
@@ -197,7 +197,7 @@ public:
    * @param id - verse id
    * @return ::Verse instance
    */
-  Verse getVerseById(const int id);
+  QList<int> getVerseById(const int id);
   /**
    * @brief gets the page where the verse is found
    * @param surahIdx - sura number
@@ -231,9 +231,9 @@ public:
    * @param whole - boolean value to search for whole words only
    * @return QList of ::Verse instances representing the search results
    */
-  QList<Verse> searchSurahs(QString searchText,
-                            const QList<int> surahs,
-                            const bool whole = false);
+  QList<QList<int>> searchSurahs(QString searchText,
+                                 const QList<int> surahs,
+                                 const bool whole = false);
   /**
    * @brief search a range of pages for the given search text
    * @param searchText - text to search for
@@ -241,9 +241,9 @@ public:
    * @param whole - boolean value to indicate search for whole words only
    * @return QList of ::Verse instances representing the search results
    */
-  QList<Verse> searchVerses(QString searchText,
-                            const int range[2] = new int[2]{ 1, 604 },
-                            const bool whole = false);
+  QList<QList<int>> searchVerses(QString searchText,
+                                 const int range[2] = new int[2]{ 1, 604 },
+                                 const bool whole = false);
   /**
    * @brief gets the tafsir content for the given verse using the active
    * DBManager::Tafsir
@@ -264,32 +264,32 @@ public:
    * @brief gets a random verse from the Quran
    * @return QPair of ::Verse instance and verse text
    */
-  Verse randomVerse();
+  QList<int> randomVerse();
   /**
    * @brief gets a QList of ::Verse instances representing the bookmarked verse
    * within the given sura (default gets all)
    * @param surahIdx - sura number (-1 returns all bookmarks)
    * @return QList of bookmarked verses
    */
-  QList<Verse> bookmarkedVerses(int surahIdx = -1);
+  QList<QList<int>> bookmarkedVerses(int surahIdx = -1);
   /**
    * @brief checks whether the given ::Verse is bookmarked
-   * @param v - ::Verse instance to check
+   * @param vInfo - ::Verse instance to check
    * @return boolean
    */
-  bool isBookmarked(Verse v);
+  bool isBookmarked(QList<int> vInfo);
   /**
    * @brief add the given ::Verse to bookmarks
-   * @param v - ::Verse instance to add
+   * @param vInfo - ::Verse instance to add
    * @return boolean
    */
-  bool addBookmark(Verse v);
+  bool addBookmark(QList<int> vInfo);
   /**
    * @brief remove the given ::Verse from bookmarks
-   * @param v - ::Verse instance to remove
+   * @param vInfo - ::Verse instance to remove
    * @return boolean indicating successful removal
    */
-  bool removeBookmark(Verse v);
+  bool removeBookmark(QList<int> vInfo);
   /**
    * @brief getter for m_currTafsir
    * @return the currently set DBManager::Tafasir

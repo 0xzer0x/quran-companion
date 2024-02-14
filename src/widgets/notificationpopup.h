@@ -71,7 +71,7 @@ public slots:
    * @brief slot to update m_dockArea variable on dock position change
    * @param dockPos - new dock position relative to the main window
    */
-  void dockLocationChanged(Qt::DockWidgetArea dockPos);
+  void setDockArea(Qt::DockWidgetArea dockPos);
   /**
    * @brief slot to show a notification on download completion
    * @param reciterIdx - ::Globals::recitersList index for the reciter

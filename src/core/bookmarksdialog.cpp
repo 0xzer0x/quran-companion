@@ -79,7 +79,7 @@ BookmarksDialog::loadBookmarks(int surah)
 {
   if (m_shownSurah != surah) {
     m_shownSurah = surah;
-    m_shownVerses = m_dbMgr->bookmarkedVerses(surah);
+    m_shownVerses = Verse::fromList(m_dbMgr->bookmarkedVerses(surah));
     if (m_shownSurah == -1)
       m_allBookmarked = m_shownVerses;
   }
@@ -102,9 +102,9 @@ BookmarksDialog::loadBookmarks(int surah)
   }
 
   for (int i = m_startIdx; i < end; i++) {
-    Verse verse = m_shownVerses.at(i);
+    const Verse& verse = m_shownVerses.at(i);
     QString fontName =
-        Globals::verseFontname(m_dbMgr->getVerseType(), verse.page);
+      Globals::verseFontname(m_dbMgr->getVerseType(), verse.page());
 
     QFrame* frame = new QFrame(ui->scrlBookmarks);
     frame->setProperty("bookmark", true);
@@ -128,13 +128,13 @@ BookmarksDialog::loadBookmarks(int surah)
       removeFromFav, &QPushButton::clicked, this, &BookmarksDialog::btnRemove);
 
     QString info = tr("Surah: ") +
-                   m_dbMgr->surahNameList().at(verse.surah - 1) + " - " +
-                   tr("Verse: ") + QString::number(verse.number);
+                   m_dbMgr->surahNameList().at(verse.surah() - 1) + " - " +
+                   tr("Verse: ") + QString::number(verse.number());
     lbMeta->setText(info);
     lbMeta->setAlignment(Qt::AlignLeft);
 
     verseLb->setFont(QFont(fontName, 15));
-    verseLb->setText(m_dbMgr->getVerseGlyphs(verse.surah, verse.number));
+    verseLb->setText(m_dbMgr->getVerseGlyphs(verse.surah(), verse.number()));
     verseLb->setAlignment(Qt::AlignLeft);
     verseLb->setWordWrap(true);
     verseLb->setMargin(5);
@@ -154,9 +154,9 @@ BookmarksDialog::loadBookmarks(int surah)
     frmLayout->addItem(lbLayout);
 
     frame->setLayout(frmLayout);
-    frame->setObjectName(QString::number(verse.page) + '-' +
-                         QString::number(verse.surah) + '-' +
-                         QString::number(verse.number));
+    frame->setObjectName(QString::number(verse.page()) + '-' +
+                         QString::number(verse.surah()) + '-' +
+                         QString::number(verse.number()));
 
     ui->layoutFavorites->addWidget(frame);
     m_frames.append(frame);
@@ -175,7 +175,7 @@ BookmarksDialog::loadSurahs()
 
   std::set<int> surahs;
   foreach (const Verse& v, m_allBookmarked) {
-    surahs.insert(v.surah);
+      surahs.insert(v.surah());
   }
 
   for (int s : surahs) {
@@ -210,7 +210,7 @@ BookmarksDialog::btnGoToVerse()
 {
   QStringList info = sender()->parent()->objectName().split('-');
   Verse verse{ info.at(0).toInt(), info.at(1).toInt(), info.at(2).toInt() };
-  emit navigateToVerse(verse);
+  emit navigateToVerse(verse.toList());
 }
 
 void
@@ -219,7 +219,7 @@ BookmarksDialog::btnRemove()
   QStringList info = sender()->parent()->objectName().split('-');
   Verse verse{ info.at(0).toInt(), info.at(1).toInt(), info.at(2).toInt() };
 
-  if (m_dbMgr->removeBookmark(verse)) {
+  if (m_dbMgr->removeBookmark(verse.toList())) {
     QFrame* frm = qobject_cast<QFrame*>(sender()->parent());
     int idx = m_frames.indexOf(frm);
     if (idx != -1)

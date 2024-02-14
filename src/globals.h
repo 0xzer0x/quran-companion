@@ -15,41 +15,6 @@
 #include <QtAwesome.h>
 
 /**
- * @struct Verse
- * @brief Verse struct represents a single quran verse
- * @details Quran verses consist of 3 attributes. page (1-604). surah (1-114).
- * number represents the number of the verse in the surah (0-surah verse count).
- * Basmallah before the 1st verse is represented as verse number 0.
- */
-struct Verse
-{
-  int page{ -1 };   ///< verse page
-  int surah{ -1 };  ///< verse surah number
-  int number{ -1 }; ///< verse number in surah
-  bool operator==(const Verse& v2) const
-  {
-    return (this->number == v2.number && this->surah == v2.surah);
-  }
-  bool operator!=(const Verse& v2) const
-  {
-    return (this->number != v2.number || this->surah != v2.surah);
-  }
-  bool operator<(const Verse& v2) const
-  {
-    if (this->surah == v2.surah)
-      return this->number < v2.number;
-
-    return this->surah < v2.surah;
-  }
-  bool operator>(const Verse& v2) const
-  {
-    if (this->surah == v2.surah)
-      return this->number > v2.number;
-
-    return this->surah > v2.surah;
-  }
-};
-/**
  * @struct Reciter
  * @brief Reciter struct represents a quran reciter
  */

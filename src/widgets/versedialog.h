@@ -3,6 +3,7 @@
 
 #include "../globals.h"
 #include "../utils/dbmanager.h"
+#include "../utils/verse.h"
 #include <QDateTime>
 #include <QDialog>
 

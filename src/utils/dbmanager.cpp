@@ -4,7 +4,6 @@
  */
 
 #include "dbmanager.h"
-#include <qdebug.h>
 
 DBManager::DBManager(QObject* parent)
   : QObject(parent)
@@ -134,10 +133,10 @@ DBManager::getPageLines(const int page)
   return lines;
 }
 
-QList<Verse>
+QList<QList<int>>
 DBManager::getVerseInfoList(int page)
 {
-  QList<Verse> viList;
+  QList<QList<int>> viList;
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -150,7 +149,7 @@ DBManager::getVerseInfoList(int page)
   }
 
   while (dbQuery.next()) {
-    Verse v{ page, dbQuery.value(0).toInt(), dbQuery.value(1).toInt() };
+    QList<int> v{ page, dbQuery.value(0).toInt(), dbQuery.value(1).toInt() };
     viList.append(v);
   }
 
@@ -313,7 +312,7 @@ DBManager::getVerseId(const int sIdx, const int vIdx)
   return dbQuery.value(0).toInt();
 }
 
-Verse
+QList<int>
 DBManager::getVerseById(const int id)
 {
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
@@ -326,9 +325,9 @@ DBManager::getVerseById(const int id)
 
   dbQuery.next();
 
-  return Verse{ dbQuery.value(0).toInt(),
-                dbQuery.value(1).toInt(),
-                dbQuery.value(2).toInt() };
+  return { dbQuery.value(0).toInt(),
+           dbQuery.value(1).toInt(),
+           dbQuery.value(2).toInt() };
 }
 
 int
@@ -374,12 +373,12 @@ DBManager::surahNameList()
   return m_surahNames;
 }
 
-QList<Verse>
+QList<QList<int>>
 DBManager::searchSurahs(QString searchText,
                         const QList<int> surahs,
                         const bool whole)
 {
-  QList<Verse> results;
+  QList<QList<int>> results;
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -404,9 +403,9 @@ DBManager::searchSurahs(QString searchText,
   }
 
   while (dbQuery.next()) {
-    results.append(Verse{ dbQuery.value(0).toInt(),
-                          dbQuery.value(1).toInt(),
-                          dbQuery.value(2).toInt() });
+    results.append({ dbQuery.value(0).toInt(),
+                     dbQuery.value(1).toInt(),
+                     dbQuery.value(2).toInt() });
   }
 
   return results;
@@ -440,7 +439,7 @@ DBManager::searchSurahNames(QString text)
 /* ---------------- Verse-related methods ---------------- */
 
 bool
-DBManager::getKhatmahPos(const int khatmahId, Verse& v)
+DBManager::getKhatmahPos(const int khatmahId, QList<int>& vInfo)
 {
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
@@ -454,14 +453,14 @@ DBManager::getKhatmahPos(const int khatmahId, Verse& v)
   if (!dbQuery.next())
     return false;
 
-  v.page = dbQuery.value(0).toInt();
-  v.surah = dbQuery.value(1).toInt();
-  v.number = dbQuery.value(2).toInt();
+  vInfo[0] = dbQuery.value(0).toInt();
+  vInfo[1] = dbQuery.value(1).toInt();
+  vInfo[2] = dbQuery.value(2).toInt();
   return true;
 }
 
 int
-DBManager::addKhatmah(const Verse& v, const QString name, const int id)
+DBManager::addKhatmah(QList<int> vInfo, const QString name, const int id)
 {
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
@@ -473,18 +472,18 @@ DBManager::addKhatmah(const Verse& v, const QString name, const int id)
     q = "INSERT INTO khatmah(name, page, surah, number) VALUES ('%0', %1, %2, "
         "%3)";
     dbQuery.prepare(q.arg(name,
-                          QString::number(v.page),
-                          QString::number(v.surah),
-                          QString::number(v.number)));
+                          QString::number(vInfo[0]),
+                          QString::number(vInfo[1]),
+                          QString::number(vInfo[2])));
   } else {
     q = "REPLACE INTO khatmah VALUES "
         "(%0, "
         "'%1', %2, %3, %4)";
     dbQuery.prepare(q.arg(QString::number(id),
                           name,
-                          QString::number(v.page),
-                          QString::number(v.surah),
-                          QString::number(v.number)));
+                          QString::number(vInfo[0]),
+                          QString::number(vInfo[1]),
+                          QString::number(vInfo[2])));
   }
 
   if (!dbQuery.exec()) {
@@ -536,15 +535,15 @@ DBManager::removeKhatmah(const int id)
 }
 
 bool
-DBManager::saveActiveKhatmah(const Verse& v)
+DBManager::saveActiveKhatmah(QList<int> vInfo)
 {
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   QString q = QString::asprintf(
     "UPDATE khatmah SET page=%i, surah=%i, number=%i WHERE id=%i",
-    v.page,
-    v.surah,
-    v.number,
+    vInfo[0],
+    vInfo[1],
+    vInfo[2],
     m_activeKhatmah);
   if (!dbQuery.exec(q)) {
     qCritical() << "Couldn't save position in mushaf";
@@ -606,7 +605,7 @@ DBManager::getKhatmahName(const int id)
   return dbQuery.value(0).toString();
 }
 
-Verse
+QList<int>
 DBManager::randomVerse()
 {
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
@@ -645,12 +644,12 @@ DBManager::getVersePage(const int& surahIdx, const int& verse)
   return dbQuery.value(0).toInt();
 }
 
-QList<Verse>
+QList<QList<int>>
 DBManager::searchVerses(QString searchText,
                         const int range[2],
                         const bool whole)
 {
-  QList<Verse> results;
+  QList<QList<int>> results;
   setOpenDatabase(Database::quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -672,19 +671,19 @@ DBManager::searchVerses(QString searchText,
   }
 
   while (dbQuery.next()) {
-    Verse entry{ dbQuery.value(0).toInt(),
-                 dbQuery.value(1).toInt(),
-                 dbQuery.value(2).toInt() };
+    QList<int> entry{ dbQuery.value(0).toInt(),
+                      dbQuery.value(1).toInt(),
+                      dbQuery.value(2).toInt() };
     results.append(entry);
   }
 
   return results;
 }
 
-QList<Verse>
+QList<QList<int>>
 DBManager::bookmarkedVerses(int surahIdx)
 {
-  QList<Verse> results;
+  QList<QList<int>> results;
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   QString q = "SELECT page,surah,number FROM favorites";
@@ -696,25 +695,25 @@ DBManager::bookmarkedVerses(int surahIdx)
     qCritical() << "Couldn't execute bookmarkedVerses SELECT query";
 
   while (dbQuery.next()) {
-    results.append(Verse{ dbQuery.value(0).toInt(),
-                          dbQuery.value(1).toInt(),
-                          dbQuery.value(2).toInt() });
+    results.append({ dbQuery.value(0).toInt(),
+                     dbQuery.value(1).toInt(),
+                     dbQuery.value(2).toInt() });
   }
 
   return results;
 }
 
 bool
-DBManager::isBookmarked(Verse v)
+DBManager::isBookmarked(QList<int> vInfo)
 {
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
 
   dbQuery.prepare(
     "SELECT page FROM favorites WHERE page=:p AND surah=:s AND number=:n");
-  dbQuery.bindValue(0, v.page);
-  dbQuery.bindValue(1, v.surah);
-  dbQuery.bindValue(2, v.number);
+  dbQuery.bindValue(0, vInfo[0]);
+  dbQuery.bindValue(1, vInfo[1]);
+  dbQuery.bindValue(2, vInfo[2]);
 
   if (!dbQuery.exec()) {
     qWarning() << "Couldn't check if verse is bookmarked";
@@ -727,7 +726,7 @@ DBManager::isBookmarked(Verse v)
 }
 
 bool
-DBManager::addBookmark(Verse v)
+DBManager::addBookmark(QList<int> vInfo)
 {
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
@@ -737,9 +736,9 @@ DBManager::addBookmark(Verse v)
 
   dbQuery.prepare(
     "INSERT INTO favorites(page, surah, number) VALUES (:p, :s, :n)");
-  dbQuery.bindValue(0, v.page);
-  dbQuery.bindValue(1, v.surah);
-  dbQuery.bindValue(2, v.number);
+  dbQuery.bindValue(0, vInfo[0]);
+  dbQuery.bindValue(1, vInfo[1]);
+  dbQuery.bindValue(2, vInfo[2]);
 
   if (!dbQuery.exec()) {
     qWarning() << "Couldn't add verse to bookmarks db";
@@ -753,15 +752,15 @@ DBManager::addBookmark(Verse v)
 }
 
 bool
-DBManager::removeBookmark(Verse v)
+DBManager::removeBookmark(QList<int> vInfo)
 {
   setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.prepare(
     "DELETE FROM favorites WHERE page=:p AND surah=:s AND number=:n");
-  dbQuery.bindValue(0, v.page);
-  dbQuery.bindValue(1, v.surah);
-  dbQuery.bindValue(2, v.number);
+  dbQuery.bindValue(0, vInfo[0]);
+  dbQuery.bindValue(1, vInfo[1]);
+  dbQuery.bindValue(2, vInfo[2]);
 
   if (!dbQuery.exec()) {
     qWarning() << "Couldn't remove verse from bookmarks";

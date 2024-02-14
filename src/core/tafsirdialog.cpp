@@ -16,6 +16,9 @@ TafsirDialog::TafsirDialog(QWidget* parent)
   ui->btnPrev->setIcon(
     Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
 
+  foreach (const Tafsir& t, Globals::tafasirList) {
+    ui->cmbTafsir->addItem(t.displayName);
+  }
   setTafsirAsTitle();
   setLayoutDirection(Qt::LeftToRight);
   if (m_qcfVer == 1)
@@ -30,32 +33,20 @@ TafsirDialog::TafsirDialog(QWidget* parent)
 void
 TafsirDialog::btnNextClicked()
 {
-  if (m_shownVerse.number == m_dbMgr->getSurahVerseCount(m_shownVerse.surah) &&
-      m_shownVerse.surah < 114) {
-    m_shownVerse.number = 1;
-    m_shownVerse.surah++;
-  } else {
-    m_shownVerse.number++;
+  if (m_shownVerse.number() == m_shownVerse.surahCount() &&
+      m_shownVerse.surah() < 114) {
+    m_shownVerse = m_shownVerse.next();
+    loadVerseTafsir();
   }
-
-  m_shownVerse.page =
-    m_dbMgr->getVersePage(m_shownVerse.surah, m_shownVerse.number);
-  loadVerseTafsir();
 }
 
 void
 TafsirDialog::btnPrevClicked()
 {
-  if (m_shownVerse.number == 1 && m_shownVerse.surah > 1) {
-    m_shownVerse.surah--;
-    m_shownVerse.number = m_dbMgr->getSurahVerseCount(m_shownVerse.surah);
-  } else {
-    m_shownVerse.number--;
+  if (m_shownVerse.number() == 1 && m_shownVerse.surah() > 1) {
+    m_shownVerse = m_shownVerse.prev();
+    loadVerseTafsir();
   }
-
-  m_shownVerse.page =
-    m_dbMgr->getVersePage(m_shownVerse.surah, m_shownVerse.number);
-  loadVerseTafsir();
 }
 
 void
@@ -77,12 +68,12 @@ TafsirDialog::setTafsirAsTitle()
 void
 TafsirDialog::loadVerseTafsir()
 {
-  QString title = tr("Surah: ") + m_dbMgr->getSurahName(m_shownVerse.surah) +
-                  " - " + tr("Verse: ") + QString::number(m_shownVerse.number);
+    QString title = tr("Surah: ") + m_dbMgr->getSurahName(m_shownVerse.surah()) +
+                    " - " + tr("Verse: ") + QString::number(m_shownVerse.number());
   QString glyphs =
-    m_dbMgr->getVerseGlyphs(m_shownVerse.surah, m_shownVerse.number);
+        m_dbMgr->getVerseGlyphs(m_shownVerse.surah(), m_shownVerse.number());
   QString fontFamily =
-    Globals::verseFontname(m_dbMgr->getVerseType(), m_shownVerse.page);
+      Globals::verseFontname(m_dbMgr->getVerseType(), m_shownVerse.page());
 
   ui->lbVerseInfo->setText(title);
   ui->lbVerseText->setWordWrap(true);
@@ -95,14 +86,14 @@ TafsirDialog::loadVerseTafsir()
 
   if (m_dbMgr->currTafsir()->text)
     ui->tedTafsir->setText(
-      m_dbMgr->getTafsir(m_shownVerse.surah, m_shownVerse.number));
+          m_dbMgr->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
   else
     ui->tedTafsir->setHtml(
-      m_dbMgr->getTafsir(m_shownVerse.surah, m_shownVerse.number));
+          m_dbMgr->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
 
-  if (m_shownVerse.surah == 1 && m_shownVerse.number == 1)
+  if (m_shownVerse.surah() == 1 && m_shownVerse.number() == 1)
     ui->btnPrev->setDisabled(true);
-  else if (m_shownVerse.surah == 114 && m_shownVerse.number == 6)
+  else if (m_shownVerse.surah() == 114 && m_shownVerse.number() == 6)
     ui->btnNext->setDisabled(true);
   else {
     ui->btnPrev->setDisabled(false);

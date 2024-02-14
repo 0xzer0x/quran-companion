@@ -13,23 +13,22 @@ CopyDialog::CopyDialog(QWidget* parent)
 }
 
 void
-CopyDialog::show(const Verse& curr)
+CopyDialog::show()
 {
   ui->cmbCopyFrom->clear();
   ui->cmbCopyTo->clear();
-  ui->lbCopySurahName->setText(m_dbMgr->getSurahName(curr.surah));
+  ui->lbCopySurahName->setText(m_dbMgr->getSurahName(m_currVerse->surah()));
 
-  m_surah = curr.surah;
-  m_surahCnt = m_dbMgr->getSurahVerseCount(curr.surah);
-  for (int i = 1; i <= m_surahCnt; i++) {
+  m_surah = m_currVerse->surah();
+  for (int i = 1; i <= m_currVerse->surahCount(); i++) {
     ui->cmbCopyFrom->addItem(QString::number(i));
     ui->cmbCopyTo->addItem(QString::number(i));
   }
-  int idx = curr.number ? curr.number - 1 : 0;
+  int idx = m_currVerse->number() ? m_currVerse->number() - 1 : 0;
   ui->cmbCopyFrom->setCurrentIndex(idx);
   ui->cmbCopyTo->setCurrentIndex(idx);
   m_verseValidator->setBottom(1);
-  m_verseValidator->setTop(m_surahCnt);
+  m_verseValidator->setTop(m_currVerse->surahCount());
 
   QDialog::show();
 }
@@ -39,8 +38,8 @@ CopyDialog::copyRange()
 {
   int from = ui->cmbCopyFrom->currentText().toInt();
   int to = ui->cmbCopyTo->currentText().toInt();
-  if (to < from || from <= 0 || from > m_surahCnt || to <= 0 ||
-      to > m_surahCnt) {
+  if (to < from || from <= 0 || from > m_currVerse->surahCount() || to <= 0 ||
+      to > m_currVerse->surahCount()) {
     QMessageBox::warning(
       this, tr("Invalid range"), tr("The entered verse range is invalid"));
     return;

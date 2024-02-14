@@ -70,11 +70,13 @@ SearchDialog::getResults()
       ui->spnEndPage->setValue(range[0]);
     range[1] = ui->spnEndPage->value();
 
-    m_currResults =
-      m_dbMgr->searchVerses(m_searchText, range, ui->chkWholeWord->isChecked());
+    m_currResults = Verse::fromList(m_dbMgr->searchVerses(
+      m_searchText, range, ui->chkWholeWord->isChecked()));
   } else {
-    m_currResults = m_dbMgr->searchSurahs(
-      m_searchText, m_selectedSurahMap.values(), ui->chkWholeWord->isChecked());
+    m_currResults =
+      Verse::fromList(m_dbMgr->searchSurahs(m_searchText,
+                                            m_selectedSurahMap.values(),
+                                            ui->chkWholeWord->isChecked()));
   }
   ui->lbResultCount->setText(QString::number(m_currResults.size()) +
                              tr(" Search results"));
@@ -86,7 +88,7 @@ void
 SearchDialog::verseClicked()
 {
   QStringList data = sender()->objectName().split('-');
-  Verse selected{ data.at(0).toInt(), data.at(1).toInt(), data.at(2).toInt() };
+  Verse selected(data.at(0).toInt(), data.at(1).toInt(), data.at(2).toInt());
   emit navigateToVerse(selected);
 }
 
@@ -107,25 +109,25 @@ SearchDialog::showResults()
 
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
-      QString fontName = Globals::verseFontname(m_dbMgr->getVerseType(), v.page);
+      QString fontName = Globals::verseFontname(m_dbMgr->getVerseType(), v.page());
 
     VerseFrame* vFrame = new VerseFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);
     ClickableLabel* clkLb = new ClickableLabel(vFrame);
 
-    QString info = tr("Surah: ") + m_surahNames.at(v.surah - 1) + " - " +
-                   tr("Verse: ") + QString::number(v.number);
+    QString info = tr("Surah: ") + m_surahNames.at(v.surah() - 1) + " - " +
+                   tr("Verse: ") + QString::number(v.number());
     lbInfo->setText(info);
     lbInfo->setMaximumHeight(50);
     lbInfo->setAlignment(Qt::AlignLeft);
     lbInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     clkLb->setMargin(5);
-    clkLb->setObjectName(QString::number(v.page) + '-' +
-                         QString::number(v.surah) + '-' +
-                         QString::number(v.number));
+    clkLb->setObjectName(QString::number(v.page()) + '-' +
+                         QString::number(v.surah()) + '-' +
+                         QString::number(v.number()));
     clkLb->setFont(QFont(fontName, 15));
-    clkLb->setText(m_dbMgr->getVerseGlyphs(v.surah, v.number));
+    clkLb->setText(m_dbMgr->getVerseGlyphs(v.surah(), v.number()));
     clkLb->setAlignment(Qt::AlignLeft);
     clkLb->setWordWrap(true);
 

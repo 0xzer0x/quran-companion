@@ -75,7 +75,7 @@ QTextEdit#tedTafsir {
 
 /* --------- Player Styles --------- */
 
-QFrame#framePlayer {
+QWidget#PlayerControls QFrame#playerFrame {
   background-color: #f7ebd5;
   border-radius: 8px;
   border: 1px solid #d9cdb8;

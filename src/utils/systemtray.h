@@ -3,8 +3,8 @@
  * @brief Header file for NotificationManager
  */
 
-#ifndef NOTIFICATIONMANAGER_H
-#define NOTIFICATIONMANAGER_H
+#ifndef SYSTEMTRAY_H
+#define SYSTEMTRAY_H
 
 #include "../globals.h"
 #include "dbmanager.h"
@@ -18,10 +18,10 @@
 #include <QTimer>
 
 /**
- * @brief NotificationManager class is responsible for system tray functionality
+ * @brief SystemTray class is responsible for system tray functionality
  * and verse of the day notification
  */
-class NotificationManager : public QObject
+class SystemTray : public QObject
 {
   Q_OBJECT
 
@@ -30,8 +30,8 @@ public:
    * @brief Class constructor
    * @param parent - pointer to parent widget
    */
-  explicit NotificationManager(QObject* parent = nullptr);
-  ~NotificationManager();
+    explicit SystemTray(QObject* parent = nullptr);
+    ~SystemTray();
 
   /**
    * @brief send a desktop notification message
@@ -99,4 +99,4 @@ private:
   QSystemTrayIcon* m_sysTray;
 };
 
-#endif // NOTIFICATIONMANAGER_H
+#endif // SYSTEMTRAY_H

@@ -8,6 +8,7 @@
 
 #include "../globals.h"
 #include "../utils/dbmanager.h"
+#include "../utils/verse.h"
 #include <QDialog>
 #include <QSettings>
 #include <QShortcut>

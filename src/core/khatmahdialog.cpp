@@ -3,9 +3,8 @@
 #include <qgraphicseffect.h>
 #include <qpalette.h>
 
-KhatmahDialog::KhatmahDialog(const Verse& curr, QWidget* parent)
+KhatmahDialog::KhatmahDialog(QWidget* parent)
   : QDialog(parent)
-  , m_currVerse(curr)
   , ui(new Ui::KhatmahDialog)
 {
   ui->setupUi(this);
@@ -22,8 +21,8 @@ KhatmahDialog::KhatmahDialog(const Verse& curr, QWidget* parent)
 InputField*
 KhatmahDialog::loadKhatmah(const int id)
 {
-  Verse v;
-  m_dbMgr->getKhatmahPos(id, v);
+  QList<int> vInfo;
+  m_dbMgr->getKhatmahPos(id, vInfo);
   QFrame* frame = new QFrame(ui->scrlDialogContent);
   // property used for styling
   frame->setProperty("khatmah", true);
@@ -55,8 +54,8 @@ KhatmahDialog::loadKhatmah(const int id)
     remove->setDisabled(true);
   }
 
-  QString info = tr("Surah: ") + m_dbMgr->surahNameList().at(v.surah - 1) +
-                 " - " + tr("Verse: ") + QString::number(v.number);
+  QString info = tr("Surah: ") + m_dbMgr->surahNameList().at(vInfo[1] - 1) +
+                 " - " + tr("Verse: ") + QString::number(vInfo[2]);
   lbPosition->setText(info);
 
   activate->setFocusPolicy(Qt::NoFocus);
@@ -105,7 +104,7 @@ KhatmahDialog::loadAll()
 void
 KhatmahDialog::startNewKhatmah()
 {
-  int id = m_dbMgr->addKhatmah(m_currVerse, "new");
+  int id = m_dbMgr->addKhatmah(m_currVerse->toList(), "new");
   QString gen = tr("Khatmah ") + QString::number(id);
   m_dbMgr->editKhatmahName(id, gen);
   InputField* inpField = loadKhatmah(id);
@@ -144,14 +143,14 @@ KhatmahDialog::removeKhatmah()
 void
 KhatmahDialog::setActiveKhatmah()
 {
-  Verse v;
+  QList<int> vInfo;
   QFrame* newActive = qobject_cast<QFrame*>(sender()->parent());
   QVariant id = newActive->objectName();
 
   m_settings->setValue("Reader/Khatmah", id);
-  m_dbMgr->saveActiveKhatmah(m_currVerse);
+  m_dbMgr->saveActiveKhatmah(m_currVerse->toList());
   m_dbMgr->setActiveKhatmah(id.toInt());
-  m_dbMgr->getKhatmahPos(id.toInt(), v);
+  m_dbMgr->getKhatmahPos(id.toInt(), vInfo);
 
   newActive->findChild<QPushButton*>("activate")->setEnabled(false);
   newActive->findChild<QPushButton*>("remove")->setEnabled(false);
@@ -160,13 +159,7 @@ KhatmahDialog::setActiveKhatmah()
   m_currActive = newActive;
 
   ui->lbCurrKhatmah->setText(m_dbMgr->getKhatmahName(id.toInt()));
-  emit navigateToVerse(v);
-}
-
-void
-KhatmahDialog::closeEvent(QCloseEvent* event)
-{
-  this->hide();
+  emit navigateToVerse(vInfo);
 }
 
 void
@@ -176,6 +169,12 @@ KhatmahDialog::show()
   m_frmLst.clear();
   loadAll();
   QDialog::show();
+}
+
+void
+KhatmahDialog::closeEvent(QCloseEvent* event)
+{
+  this->hide();
 }
 
 KhatmahDialog::~KhatmahDialog()

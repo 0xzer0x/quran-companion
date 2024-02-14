@@ -56,7 +56,7 @@ NotificationPopup::setupConnections()
 }
 
 void
-NotificationPopup::dockLocationChanged(Qt::DockWidgetArea dockPos)
+NotificationPopup::setDockArea(Qt::DockWidgetArea dockPos)
 {
   m_dockArea = dockPos;
 }

@@ -3,6 +3,7 @@
 
 #include "../globals.h"
 #include "../utils/dbmanager.h"
+#include "../utils/verse.h"
 #include "../widgets/inputfield.h"
 #include <QDialog>
 #include <QLineEdit>
@@ -26,7 +27,7 @@ public:
    * @param curr - reference to the current active verse
    * @param parent - pointer to the parent widget
    */
-  explicit KhatmahDialog(const Verse& curr, QWidget* parent = nullptr);
+  explicit KhatmahDialog(QWidget* parent = nullptr);
   ~KhatmahDialog();
   /**
    * @brief reload shown khatmah entries and show the dialog
@@ -72,7 +73,7 @@ private slots:
   void setActiveKhatmah();
 
 private:
-  const Verse& m_currVerse;
+  const Verse* m_currVerse = Verse::current();
   const bool m_darkmode = Globals::themeId == 2;
   QSettings* m_settings = Globals::settings;
   DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
