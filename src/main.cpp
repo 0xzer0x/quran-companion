@@ -141,7 +141,6 @@ main(int argc, char* argv[])
   populateShortcutsMap();
   populateContentLists();
 
-  databaseManager = new DBManager(&a);
   MainWindow w(nullptr);
   splash.finish(&w);
   w.show();

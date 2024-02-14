@@ -28,7 +28,7 @@ protected:
 
 private:
   Ui::BetaqaViewer* ui;
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   int m_surah = -1;
   QGraphicsDropShadowEffect* m_shadowEffect = nullptr;
   QPropertyAnimation* m_sizeAnim = nullptr;

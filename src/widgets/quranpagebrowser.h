@@ -145,7 +145,7 @@ private:
   QSettings* const m_settings = Globals::settings;
   const int m_qcfVer = Globals::qcfVersion;
   const bool m_darkMode = Globals::darkMode;
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   fa::QtAwesome* m_fa = Globals::awesome;
   /**
    * @brief utility for creating menu actions for interacting with the widget

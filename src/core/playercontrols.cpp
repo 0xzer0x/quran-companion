@@ -33,11 +33,6 @@ PlayerControls::loadIcons()
 }
 
 void
-PlayerControls::setupConnections()
-{
-}
-
-void
 PlayerControls::setupShortcuts(ShortcutHandler* handler)
 {
 

@@ -84,7 +84,7 @@ signals:
   void openAbout();
 
 private:
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   /**
    * @brief adds system tray actions and set their connections
    */

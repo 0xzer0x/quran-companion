@@ -74,7 +74,7 @@ private slots:
 private:
   const int m_qcfVer = Globals::qcfVersion;
   const QSettings* m_settings = Globals::settings;
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

@@ -149,7 +149,7 @@ private:
   const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
   const QString& m_updateToolPath = Globals::updateToolPath;
   const ReaderMode& m_readerMode = Globals::readerMode;
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   fa::QtAwesome* m_fa = Globals::awesome;
   Ui::QuranReader* ui;
   void setupConnections();

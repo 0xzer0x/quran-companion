@@ -36,7 +36,7 @@ protected:
 private:
   Ui::VerseDialog* ui;
   const QSettings* m_settings = Globals::settings;
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   QFile m_timestampFile = Globals::configDir.absoluteFilePath("votd.log");
   fa::QtAwesome* m_fa = Globals::awesome;
   /**

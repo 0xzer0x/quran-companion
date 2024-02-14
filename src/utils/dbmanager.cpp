@@ -5,6 +5,13 @@
 
 #include "dbmanager.h"
 
+DBManager*
+DBManager::instance()
+{
+  static DBManager controller = DBManager(qApp);
+  return &controller;
+}
+
 DBManager::DBManager(QObject* parent)
   : QObject(parent)
 {

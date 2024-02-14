@@ -43,9 +43,8 @@ public:
   void setNumber(int newNumber);
 
 private:
-  static Verse m_current;
   const QSettings* m_settings = Globals::settings;
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   void updateSurahCount();
 
   int m_page = -1;      ///< verse page

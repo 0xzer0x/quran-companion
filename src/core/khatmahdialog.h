@@ -76,7 +76,7 @@ private:
   const Verse* m_currVerse = Verse::current();
   const bool m_darkmode = Globals::themeId == 2;
   QSettings* m_settings = Globals::settings;
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   /**
    * @brief load all khatmah entries available
    */

@@ -12,7 +12,6 @@ int themeId = 0;
 ReaderMode readerMode = ReaderMode::SinglePage;
 bool darkMode = false;
 QSettings* settings = nullptr;
-QObject* databaseManager = nullptr;
 QLocale::Language language;
 
 // qcf fonts

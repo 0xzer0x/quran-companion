@@ -83,17 +83,13 @@ private:
   Verse* m_currVerse = Verse::current();
   QSettings* const m_settings = Globals::settings;
   const QList<Reciter>& m_recitersList = Globals::recitersList;
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   fa::QtAwesome* m_fa = Globals::awesome;
   Ui::PlayerControls* ui;
   /**
    * @brief load icons for different UI elements
    */
   void loadIcons();
-  /**
-   * @brief connects signals and slots for different UI components
-   */
-  void setupConnections();
   /**
    * @brief connect ShortcutHandler signals to their corresponding slots
    */

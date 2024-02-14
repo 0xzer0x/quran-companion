@@ -558,214 +558,194 @@
     </message>
     <message>
         <location filename="../../src/core/mainwindow.ui" line="17"/>
-        <location filename="../../src/core/mainwindow.cpp" line="37"/>
-        <location filename="../../src/core/mainwindow.cpp" line="1034"/>
+        <location filename="../../src/core/mainwindow.cpp" line="654"/>
+        <location filename="../../src/utils/systemtray.cpp" line="14"/>
         <source>Quran Companion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="163"/>
-        <source>Reciter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/core/mainwindow.ui" line="505"/>
-        <source>next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/core/mainwindow.ui" line="653"/>
-        <source>previous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/core/mainwindow.ui" line="686"/>
+        <location filename="../../src/core/mainwindow.ui" line="106"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="700"/>
+        <location filename="../../src/core/mainwindow.ui" line="120"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="709"/>
+        <location filename="../../src/core/mainwindow.ui" line="129"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="717"/>
+        <location filename="../../src/core/mainwindow.ui" line="137"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="755"/>
-        <location filename="../../src/core/mainwindow.cpp" line="600"/>
+        <location filename="../../src/core/mainwindow.ui" line="175"/>
+        <location filename="../../src/core/mainwindow.cpp" line="470"/>
         <source>Navigation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="770"/>
+        <location filename="../../src/core/mainwindow.ui" line="190"/>
         <source>Juz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="938"/>
+        <location filename="../../src/core/mainwindow.ui" line="358"/>
         <source>Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="952"/>
+        <location filename="../../src/core/mainwindow.ui" line="372"/>
         <source>Verse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="973"/>
+        <location filename="../../src/core/mainwindow.ui" line="391"/>
         <source>Search surah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1014"/>
+        <location filename="../../src/core/mainwindow.ui" line="432"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1023"/>
+        <location filename="../../src/core/mainwindow.ui" line="441"/>
         <source>Download manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1033"/>
+        <location filename="../../src/core/mainwindow.ui" line="451"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1042"/>
+        <location filename="../../src/core/mainwindow.ui" line="460"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1047"/>
+        <location filename="../../src/core/mainwindow.ui" line="465"/>
         <source>Check for updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1052"/>
+        <location filename="../../src/core/mainwindow.ui" line="470"/>
         <source>Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1057"/>
+        <location filename="../../src/core/mainwindow.ui" line="475"/>
         <source>About Quran Companion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1065"/>
-        <location filename="../../src/core/mainwindow.cpp" line="1264"/>
+        <location filename="../../src/core/mainwindow.ui" line="483"/>
+        <location filename="../../src/core/mainwindow.cpp" line="788"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1073"/>
+        <location filename="../../src/core/mainwindow.ui" line="491"/>
         <source>Tafsir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1078"/>
+        <location filename="../../src/core/mainwindow.ui" line="496"/>
         <source>Verse of the day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1083"/>
+        <location filename="../../src/core/mainwindow.ui" line="501"/>
         <source>Khatmah</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1088"/>
+        <location filename="../../src/core/mainwindow.ui" line="506"/>
         <source>Advanced copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.ui" line="1099"/>
+        <location filename="../../src/core/mainwindow.ui" line="517"/>
         <source>Toggle reader view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="76"/>
+        <location filename="../../src/core/mainwindow.cpp" line="61"/>
         <source>Khatmah </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="76"/>
+        <location filename="../../src/core/mainwindow.cpp" line="61"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="160"/>
+        <location filename="../../src/core/mainwindow.cpp" line="90"/>
         <source>There are currently no updates available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="163"/>
-        <location filename="../../src/core/mainwindow.cpp" line="165"/>
-        <location filename="../../src/core/mainwindow.cpp" line="179"/>
+        <location filename="../../src/core/mainwindow.cpp" line="93"/>
+        <location filename="../../src/core/mainwindow.cpp" line="95"/>
+        <location filename="../../src/core/mainwindow.cpp" line="109"/>
         <source>Update info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="169"/>
+        <location filename="../../src/core/mainwindow.cpp" line="99"/>
         <source>Updates available, do you want to open the update tool?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="172"/>
+        <location filename="../../src/core/mainwindow.cpp" line="102"/>
         <source>Updates info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="180"/>
+        <location filename="../../src/core/mainwindow.cpp" line="110"/>
         <source>Updates are available, use the maintainance tool to install the latest updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1030"/>
+        <location filename="../../src/core/mainwindow.cpp" line="650"/>
         <source>Now playing: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1031"/>
+        <location filename="../../src/core/mainwindow.cpp" line="651"/>
         <source>Surah </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1077"/>
+        <location filename="../../src/core/mainwindow.cpp" line="675"/>
         <source>Recitation not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1078"/>
+        <location filename="../../src/core/mainwindow.cpp" line="676"/>
         <source>The recitation files for the current surah is missing, would you like to download it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1092"/>
-        <location filename="../../src/core/mainwindow.cpp" line="1106"/>
+        <location filename="../../src/core/mainwindow.cpp" line="690"/>
+        <location filename="../../src/core/mainwindow.cpp" line="704"/>
         <source>Files Missing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1093"/>
+        <location filename="../../src/core/mainwindow.cpp" line="691"/>
         <source>The selected font files are missing, would you like to download it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1107"/>
+        <location filename="../../src/core/mainwindow.cpp" line="705"/>
         <source>The selected tafsir is missing, would you like to download it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/core/mainwindow.cpp" line="1655"/>
-        <source>Verse Of The Day</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -777,82 +757,82 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="104"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="103"/>
         <source>Quran Companion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="125"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="118"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="200"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="193"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="208"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="201"/>
         <source>A free, open-source Quran reader &amp; player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="238"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="232"/>
         <source>Useful Links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="287"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="281"/>
         <source>Translators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="344"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="338"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="364"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="359"/>
         <source>Recitations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="411"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="407"/>
         <source>Tafsir/Translations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="461"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="458"/>
         <source>Surah Cards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.ui" line="508"/>
+        <location filename="../../src/widgets/aboutdialog.ui" line="506"/>
         <source>Libraries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.cpp" line="12"/>
+        <location filename="../../src/widgets/aboutdialog.cpp" line="21"/>
         <source>Licensed under the</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.cpp" line="12"/>
+        <location filename="../../src/widgets/aboutdialog.cpp" line="21"/>
         <source>Waqf General Public License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.cpp" line="13"/>
+        <location filename="../../src/widgets/aboutdialog.cpp" line="22"/>
         <source>Project Homepage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.cpp" line="15"/>
+        <location filename="../../src/widgets/aboutdialog.cpp" line="24"/>
         <source>Report a bug/Request a feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/aboutdialog.cpp" line="17"/>
+        <location filename="../../src/widgets/aboutdialog.cpp" line="26"/>
         <source>Contribute to translations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -901,13 +881,13 @@
     </message>
     <message>
         <location filename="../../src/core/bookmarksdialog.cpp" line="130"/>
-        <location filename="../../src/widgets/versedialog.cpp" line="84"/>
+        <location filename="../../src/widgets/versedialog.cpp" line="88"/>
         <source>Surah: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/core/bookmarksdialog.cpp" line="132"/>
-        <location filename="../../src/widgets/versedialog.cpp" line="86"/>
+        <location filename="../../src/widgets/versedialog.cpp" line="90"/>
         <source>Verse: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -940,12 +920,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/copydialog.cpp" line="45"/>
+        <location filename="../../src/core/copydialog.cpp" line="44"/>
         <source>Invalid range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/copydialog.cpp" line="45"/>
+        <location filename="../../src/core/copydialog.cpp" line="44"/>
         <source>The entered verse range is invalid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1032,12 +1012,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/downloaderdialog.cpp" line="348"/>
+        <location filename="../../src/core/downloaderdialog.cpp" line="352"/>
         <source>Download Completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/downloaderdialog.cpp" line="367"/>
+        <location filename="../../src/core/downloaderdialog.cpp" line="373"/>
         <source>Download Failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1065,66 +1045,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/khatmahdialog.cpp" line="43"/>
+        <location filename="../../src/core/khatmahdialog.cpp" line="42"/>
         <source>Set as active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/khatmahdialog.cpp" line="44"/>
+        <location filename="../../src/core/khatmahdialog.cpp" line="43"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/khatmahdialog.cpp" line="58"/>
+        <location filename="../../src/core/khatmahdialog.cpp" line="57"/>
         <source>Surah: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/khatmahdialog.cpp" line="59"/>
+        <location filename="../../src/core/khatmahdialog.cpp" line="58"/>
         <source>Verse: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/khatmahdialog.cpp" line="109"/>
+        <location filename="../../src/core/khatmahdialog.cpp" line="108"/>
         <source>Khatmah </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>NotificationManager</name>
-    <message>
-        <location filename="../../src/utils/notificationmanager.cpp" line="34"/>
-        <source>Play/Pause recitation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/utils/notificationmanager.cpp" line="35"/>
-        <source>Show window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/utils/notificationmanager.cpp" line="36"/>
-        <source>Hide window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/utils/notificationmanager.cpp" line="37"/>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/utils/notificationmanager.cpp" line="38"/>
-        <source>Check for updates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/utils/notificationmanager.cpp" line="39"/>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/utils/notificationmanager.cpp" line="40"/>
-        <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1173,6 +1115,14 @@
     </message>
 </context>
 <context>
+    <name>PlayerControls</name>
+    <message>
+        <location filename="../../src/core/playercontrols.ui" line="74"/>
+        <source>Reciter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QuranPageBrowser</name>
     <message>
         <location filename="../../src/widgets/quranpagebrowser.cpp" line="353"/>
@@ -1212,6 +1162,19 @@
     <message>
         <location filename="../../src/widgets/quranpagebrowser.cpp" line="360"/>
         <source>Remove Bookmark</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QuranReader</name>
+    <message>
+        <location filename="../../src/core/quranreader.ui" line="51"/>
+        <source>next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/core/quranreader.ui" line="193"/>
+        <source>previous</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1288,17 +1251,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/searchdialog.cpp" line="80"/>
+        <location filename="../../src/core/searchdialog.cpp" line="82"/>
         <source> Search results</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/searchdialog.cpp" line="116"/>
+        <location filename="../../src/core/searchdialog.cpp" line="118"/>
         <source>Surah: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/searchdialog.cpp" line="117"/>
+        <location filename="../../src/core/searchdialog.cpp" line="119"/>
         <source>Verse: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1317,6 +1280,44 @@
     </message>
 </context>
 <context>
+    <name>SystemTray</name>
+    <message>
+        <location filename="../../src/utils/systemtray.cpp" line="35"/>
+        <source>Play/Pause recitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/systemtray.cpp" line="36"/>
+        <source>Show window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/systemtray.cpp" line="37"/>
+        <source>Hide window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/systemtray.cpp" line="38"/>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/systemtray.cpp" line="39"/>
+        <source>Check for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/systemtray.cpp" line="40"/>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/utils/systemtray.cpp" line="41"/>
+        <source>Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TafsirDialog</name>
     <message>
         <location filename="../../src/core/tafsirdialog.ui" line="14"/>
@@ -1324,32 +1325,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/tafsirdialog.ui" line="97"/>
+        <location filename="../../src/core/tafsirdialog.ui" line="115"/>
         <source>next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/tafsirdialog.ui" line="103"/>
+        <location filename="../../src/core/tafsirdialog.ui" line="121"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/tafsirdialog.ui" line="136"/>
+        <location filename="../../src/core/tafsirdialog.ui" line="153"/>
         <source>previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/tafsirdialog.ui" line="142"/>
+        <location filename="../../src/core/tafsirdialog.ui" line="159"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/tafsirdialog.cpp" line="80"/>
+        <location filename="../../src/core/tafsirdialog.cpp" line="71"/>
         <source>Surah: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/core/tafsirdialog.cpp" line="81"/>
+        <location filename="../../src/core/tafsirdialog.cpp" line="72"/>
         <source>Verse: </source>
         <translation type="unfinished"></translation>
     </message>

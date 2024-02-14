@@ -29,6 +29,8 @@ public:
    */
   explicit ShortcutHandler(QObject* parent = nullptr);
 
+  void setContext(QWidget* newContext);
+
 public slots:
   /**
    * @brief slot to reload the key sequence for the shortcut with the given key

@@ -119,7 +119,7 @@ private:
   Verse* m_activeVerse = Verse::current();
   QDir m_reciterDir = Globals::downloadsDir.absoluteFilePath("recitations");
   const QList<Reciter>& m_recitersList = Globals::recitersList;
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   /**
    * @brief boolean indicating whether the player is on or off, 'on' implies
    * that playback should continue in case of verse change

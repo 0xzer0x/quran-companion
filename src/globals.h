@@ -129,10 +129,6 @@ extern QMap<QString, QString>
                        ///< application shortcuts as keys and their descriptions
                        ///< as values.
 
-extern QObject* databaseManager; ///< global pointer to the application-wide
-                                 ///< DBManager instance for interacting with
-                                 ///< different database files.
-
 extern fa::QtAwesome*
   awesome; ///< global pointer used for generating font awesome icons
 

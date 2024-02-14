@@ -1,7 +1,6 @@
 #ifndef COPYDIALOG_H
 #define COPYDIALOG_H
 
-#include "../globals.h"
 #include "../utils/dbmanager.h"
 #include "../utils/verse.h"
 #include <QClipboard>
@@ -29,7 +28,7 @@ protected:
 private:
   Ui::CopyDialog* ui;
   Verse* m_currVerse = Verse::current();
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  DBManager* m_dbMgr = DBManager::instance();
   void copyRange();
 
   int m_surah = -1;
