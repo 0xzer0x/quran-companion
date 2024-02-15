@@ -4,8 +4,11 @@
  */
 
 #include "quranpagebrowser.h"
+#include "../utils/fontmanager.h"
+#include "../utils/stylemanager.h"
 #include <QApplication>
 #include <QRegularExpression>
+#include <QtAwesome.h>
 using namespace fa;
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
@@ -19,7 +22,7 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   createActions();
   updateFontSize();
 
-  m_pageFont = Globals::pageFontname(initPage);
+  m_pageFont = FontManager::pageFontname(initPage);
   m_pageFormat.setAlignment(Qt::AlignCenter);
   m_pageFormat.setNonBreakableLines(true);
   m_pageFormat.setLayoutDirection(Qt::RightToLeft);
@@ -106,7 +109,7 @@ QuranPageBrowser::surahFrame(int surah)
   p.setFont(QFont("QCF_BSML", 77));
   p.drawText(baseImage.rect(), Qt::AlignCenter, frmText);
 
-  if (m_darkMode)
+  if (Settings::darkMode)
     baseImage.invertPixels();
 
   return baseImage;
@@ -154,7 +157,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
     m_verseCoordinates.clear();
   this->document()->clear();
 
-  m_pageFont = Globals::pageFontname(pageNo);
+  m_pageFont = FontManager::pageFontname(pageNo);
   QTextCursor textCursor(this->document());
 
   m_currPageHeader = this->pageHeader(m_page);
@@ -209,7 +212,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
       prevAnchor += 2;
     } else if (l.contains("bsml")) {
       QImage bsml(":/resources/basmalah.png");
-      if (m_darkMode)
+      if (Settings::darkMode)
         bsml.invertPixels();
 
       textCursor.insertBlock(m_pageFormat, m_bodyTextFormat);
@@ -279,7 +282,7 @@ QuranPageBrowser::resetHighlight()
 {
   QTextCharFormat tcf;
   if (m_fgHighlight)
-    tcf.setForeground(m_darkMode ? Qt::white : Qt::black);
+    tcf.setForeground(Settings::darkMode ? Qt::white : Qt::black);
   else
     tcf.setBackground(Qt::transparent);
 
@@ -358,14 +361,17 @@ QuranPageBrowser::createActions()
   m_tafsirAct = new QAction(tr("Tafsir"), this);
   m_actAddBookmark = new QAction(tr("Add Bookmark"), this);
   m_actRemBookmark = new QAction(tr("Remove Bookmark"), this);
-  m_zoomIn->setIcon(m_fa->icon(fa_solid, fa_magnifying_glass_plus));
-  m_zoomOut->setIcon(m_fa->icon(fa_solid, fa_magnifying_glass_minus));
-  m_playAct->setIcon(m_fa->icon(fa_solid, fa_play));
-  m_selectAct->setIcon(m_fa->icon(fa_solid, fa_hand_pointer));
-  m_tafsirAct->setIcon(m_fa->icon(fa_solid, fa_book_open));
-  m_copyAct->setIcon(m_fa->icon(fa_solid, fa_clipboard));
-  m_actAddBookmark->setIcon(m_fa->icon(fa_regular, fa_bookmark));
-  m_actRemBookmark->setIcon(m_fa->icon(fa_solid, fa_bookmark));
+  m_zoomIn->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_magnifying_glass_plus));
+  m_zoomOut->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_magnifying_glass_minus));
+  m_playAct->setIcon(StyleManager::awesome->icon(fa_solid, fa_play));
+  m_selectAct->setIcon(StyleManager::awesome->icon(fa_solid, fa_hand_pointer));
+  m_tafsirAct->setIcon(StyleManager::awesome->icon(fa_solid, fa_book_open));
+  m_copyAct->setIcon(StyleManager::awesome->icon(fa_solid, fa_clipboard));
+  m_actAddBookmark->setIcon(
+    StyleManager::awesome->icon(fa_regular, fa_bookmark));
+  m_actRemBookmark->setIcon(StyleManager::awesome->icon(fa_solid, fa_bookmark));
   connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
   connect(
     m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);

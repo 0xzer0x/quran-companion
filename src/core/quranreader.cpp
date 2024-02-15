@@ -1,11 +1,13 @@
 #include "quranreader.h"
+#include "../utils/fontmanager.h"
+#include "../utils/shortcuthandler.h"
+#include "../utils/stylemanager.h"
 #include "../widgets/clickablelabel.h"
 #include "ui_quranreader.h"
+#include <QtAwesome.h>
 using namespace fa;
 
-QuranReader::QuranReader(QWidget* parent,
-                         VersePlayer* player,
-                         ShortcutHandler* handler)
+QuranReader::QuranReader(QWidget* parent, VersePlayer* player)
   : QWidget(parent)
   , ui(new Ui::QuranReader)
   , m_player(player)
@@ -24,14 +26,13 @@ QuranReader::QuranReader(QWidget* parent,
     addSideContent();
 
   setupConnections();
-  setupShortcuts(handler);
 }
 
 void
 QuranReader::loadIcons()
 {
-  ui->btnNext->setIcon(m_fa->icon(fa_solid, fa_arrow_left));
-  ui->btnPrev->setIcon(m_fa->icon(fa_solid, fa_arrow_right));
+  ui->btnNext->setIcon(StyleManager::awesome->icon(fa_solid, fa_arrow_left));
+  ui->btnPrev->setIcon(StyleManager::awesome->icon(fa_solid, fa_arrow_right));
 }
 
 void
@@ -108,28 +109,28 @@ QuranReader::setupConnections()
           &QuranReader::currentVerseChanged,
           m_player,
           &VersePlayer::loadActiveVerse);
-}
 
-void
-QuranReader::setupShortcuts(ShortcutHandler* handler)
-{
-  connect(handler,
+  QSharedPointer<ShortcutHandler> handler = ShortcutHandler::current();
+  connect(handler.data(),
+          &ShortcutHandler::nextPage,
+          this,
+          &QuranReader::btnNextClicked);
+  connect(handler.data(),
+          &ShortcutHandler::prevPage,
+          this,
+          &QuranReader::btnPrevClicked);
+  connect(handler.data(),
           &ShortcutHandler::toggleReaderView,
           this,
           &QuranReader::toggleReaderView);
 
-  connect(
-    handler, &ShortcutHandler::nextPage, this, &QuranReader::btnNextClicked);
-  connect(
-    handler, &ShortcutHandler::prevPage, this, &QuranReader::btnPrevClicked);
-
   for (int i = 0; i <= 1; i++) {
     if (m_quranBrowsers[i]) {
-      connect(handler,
+      connect(handler.data(),
               &ShortcutHandler::zoomIn,
               m_quranBrowsers[i],
               &QuranPageBrowser::actionZoomIn);
-      connect(handler,
+      connect(handler.data(),
               &ShortcutHandler::zoomOut,
               m_quranBrowsers[i],
               &QuranPageBrowser::actionZoomOut);
@@ -175,7 +176,7 @@ QuranReader::updateVerseType()
 {
   VerseType type =
     qvariant_cast<VerseType>(m_settings->value("Reader/VerseType"));
-  m_versesFont.setFamily(Globals::verseFontname(type, m_currVerse->page()));
+  m_versesFont.setFamily(FontManager::verseFontname(type, m_currVerse->page()));
   m_versesFont.setPointSize(m_settings->value("Reader/VerseFontSize").toInt());
   m_dbMgr->setVerseType(type);
 }
@@ -203,7 +204,7 @@ QuranReader::redrawQuranPage(bool manualSz)
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_quranBrowsers[0]->constructPage(m_currVerse->page(), manualSz);
-    if (m_readerMode == DoublePage && m_quranBrowsers[1])
+    if (m_readerMode == Settings::DoublePage && m_quranBrowsers[1])
       m_quranBrowsers[1]->constructPage(m_currVerse->page() + 1, manualSz);
   } else {
     m_quranBrowsers[0]->constructPage(m_currVerse->page() - 1, manualSz);
@@ -229,8 +230,8 @@ QuranReader::addSideContent()
   QLabel* contentLb;
   VerseFrame* verseContFrame;
   QString prevLbContent, currLbContent;
-  if (m_dbMgr->getVerseType() == qcf)
-    m_versesFont.setFamily(Globals::pageFontname(m_currVerse->page()));
+  if (m_dbMgr->getVerseType() == Settings::qcf)
+    m_versesFont.setFamily(FontManager::pageFontname(m_currVerse->page()));
 
   for (int i = m_activeVList->size() - 1; i >= 0; i--) {
     const Verse* vInfo = &(m_activeVList->at(i));
@@ -326,7 +327,7 @@ QuranReader::updatePageVerseInfoList()
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_vLists[0] =
       Verse::fromList(m_dbMgr->getVerseInfoList(m_currVerse->page()));
-    if (m_readerMode == DoublePage)
+    if (m_readerMode == Settings::DoublePage)
       m_vLists[1] =
         Verse::fromList(m_dbMgr->getVerseInfoList(m_currVerse->page() + 1));
 
@@ -442,12 +443,10 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
       break;
     case QuranPageBrowser::addBookmark:
       m_dbMgr->addBookmark(v.toList());
-      emit notifyBookmarkAdded();
       break;
     case QuranPageBrowser::removeBookmark:
       if (m_dbMgr->removeBookmark(v.toList()))
-        emit notifyBookmarkRemoved();
-      break;
+        break;
     default:
       break;
   }

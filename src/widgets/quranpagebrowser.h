@@ -6,7 +6,6 @@
 #ifndef QURANPAGEBROWSER_H
 #define QURANPAGEBROWSER_H
 
-#include "../globals.h"
 #include "../utils/dbmanager.h"
 #include <QContextMenuEvent>
 #include <QHBoxLayout>
@@ -48,7 +47,6 @@ public:
    * @param initPage - inital page to load
    */
   QuranPageBrowser(QWidget* parent = nullptr, int initPage = 1);
-
   /**
    * @brief sets m_fontSize to the fontsize in the settings file
    */
@@ -142,11 +140,9 @@ protected:
 #endif
 
 private:
-  QSettings* const m_settings = Globals::settings;
-  const int m_qcfVer = Globals::qcfVersion;
-  const bool m_darkMode = Globals::darkMode;
-  DBManager* m_dbMgr = DBManager::instance();
-  fa::QtAwesome* m_fa = Globals::awesome;
+  const int m_qcfVer = Settings::qcfVersion;
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QSettings> const m_settings = Settings::settings;
   /**
    * @brief utility for creating menu actions for interacting with the widget
    */

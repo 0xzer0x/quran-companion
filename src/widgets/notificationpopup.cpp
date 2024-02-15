@@ -4,6 +4,8 @@
  */
 
 #include "notificationpopup.h"
+#include "../utils/stylemanager.h"
+#include <QtAwesome.h>
 using namespace fa;
 
 NotificationPopup::NotificationPopup(QWidget* parent)
@@ -85,14 +87,14 @@ NotificationPopup::completedDownload(DownloadType type,
 {
   setStyleSheet("");
   QString msg = tr("Download Completed") + ": ";
-  if (type == Recitation)
-    msg += m_recitersList.at(metainfo[0]).displayName + " - " +
+  if (type == DownloadManager::Recitation)
+    msg += m_recitersList.at(metainfo[0])->displayName() + " - " +
            m_dbMgr->surahNameList().at(metainfo[1] - 1);
-  else if (type == QCF)
+  else if (type == DownloadManager::QCF)
     msg += tr("QCF V2");
-  else if (type == File)
-    msg += metainfo[0] ? m_trList.at(metainfo[1]).displayName
-                       : m_tafasirList.at(metainfo[1]).displayName;
+  else if (type == DownloadManager::File)
+    msg += metainfo[0] ? m_trList.at(metainfo[1])->displayName()
+                       : m_tafasirList.at(metainfo[1])->displayName();
 
   this->notify(msg, success);
 }
@@ -102,14 +104,14 @@ NotificationPopup::downloadError(DownloadType type, const QList<int>& metainfo)
 {
   setStyleSheet("QFrame#Popup { background-color: #a50500 }");
   QString msg = tr("Download Failed") + ": ";
-  if (type == Recitation)
-    msg += m_recitersList.at(metainfo[0]).displayName + " - " +
+  if (type == DownloadManager::Recitation)
+    msg += m_recitersList.at(metainfo[0])->displayName() + " - " +
            m_dbMgr->surahNameList().at(metainfo[1] - 1);
-  else if (type == QCF)
+  else if (type == DownloadManager::QCF)
     msg += tr("QCF V2");
-  else if (type == File)
-    msg += metainfo[0] ? m_trList.at(metainfo[1]).displayName
-                       : m_tafasirList.at(metainfo[1]).displayName;
+  else if (type == DownloadManager::File)
+    msg += metainfo[0] ? m_trList.at(metainfo[1])->displayName()
+                       : m_tafasirList.at(metainfo[1])->displayName();
 
   this->notify(msg, fail);
 }
@@ -202,7 +204,7 @@ NotificationPopup::setNotificationIcon(Action icon)
       break;
   }
 
-  m_iconWidget->setFont(Globals::awesome->font(faStyle, 18));
+  m_iconWidget->setFont(StyleManager::awesome->font(faStyle, 18));
   m_iconWidget->setText(ico);
 }
 

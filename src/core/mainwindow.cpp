@@ -4,20 +4,22 @@
  */
 
 #include "mainwindow.h"
+#include "../utils/stylemanager.h"
 #include "../widgets/aboutdialog.h"
 #include "khatmahdialog.h"
 #include "ui_mainwindow.h"
+#include <QtAwesome.h>
 using namespace fa;
 
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
   , m_process(new QProcess(this))
-  , m_shortcutHandler(new ShortcutHandler(this))
+  , m_shortcutHandler(ShortcutHandler::current())
 {
   ui->setupUi(this);
-  loadCurrent();
   loadIcons();
+  loadVerse();
   init();
 
   if (m_settings->value("WindowState").isNull())
@@ -38,21 +40,30 @@ MainWindow::MainWindow(QWidget* parent)
 void
 MainWindow::loadIcons()
 {
-  ui->actionKhatmah->setIcon(m_fa->icon(fa_solid, fa_list));
-  ui->actionDownloadManager->setIcon(m_fa->icon(fa_solid, fa_download));
-  ui->actionExit->setIcon(m_fa->icon(fa_solid, fa_xmark));
-  ui->actionFind->setIcon(m_fa->icon(fa_solid, fa_magnifying_glass));
-  ui->actionTafsir->setIcon(m_fa->icon(fa_solid, fa_book_open));
-  ui->actionVOTD->setIcon(m_fa->icon(fa_solid, fa_calendar_day));
-  ui->actionBookmarks->setIcon(m_fa->icon(fa_solid, fa_bookmark));
-  ui->actionPereferences->setIcon(m_fa->icon(fa_solid, fa_gear));
-  ui->actionAdvancedCopy->setIcon(m_fa->icon(fa_solid, fa_clipboard));
-  ui->actionReaderViewToggle->setIcon(m_fa->icon(fa_solid, fa_columns));
-  ui->actionUpdates->setIcon(m_fa->icon(fa_solid, fa_arrow_rotate_right));
+  ui->actionKhatmah->setIcon(StyleManager::awesome->icon(fa_solid, fa_list));
+  ui->actionDownloadManager->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_download));
+  ui->actionExit->setIcon(StyleManager::awesome->icon(fa_solid, fa_xmark));
+  ui->actionFind->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_magnifying_glass));
+  ui->actionTafsir->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_book_open));
+  ui->actionVOTD->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_calendar_day));
+  ui->actionBookmarks->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_bookmark));
+  ui->actionPereferences->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_gear));
+  ui->actionAdvancedCopy->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_clipboard));
+  ui->actionReaderViewToggle->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_columns));
+  ui->actionUpdates->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_arrow_rotate_right));
 }
 
 void
-MainWindow::loadCurrent()
+MainWindow::loadVerse()
 {
   int id = m_settings->value("Reader/Khatmah").toInt();
   QList<int> vInfo = m_currVerse->toList();
@@ -69,10 +80,12 @@ void
 MainWindow::checkForUpdates()
 {
 #if defined Q_OS_WIN
-  QFileInfo tool(m_updateToolPath);
+  static QString updateTool = QApplication::applicationDirPath() +
+                              QDir::separator() + "QCMaintenanceTool.exe";
+  QFileInfo tool(updateTool);
   if (tool.exists()) {
     m_process->setWorkingDirectory(QApplication::applicationDirPath());
-    m_process->start(m_updateToolPath, QStringList("ch"));
+    m_process->start(updateTool, QStringList("ch"));
     return;
   }
 #endif
@@ -83,6 +96,9 @@ MainWindow::checkForUpdates()
 void
 MainWindow::updateProcessCallback()
 {
+  static QString updateTool = QApplication::applicationDirPath() +
+                              QDir::separator() + "QCMaintenanceTool.exe";
+
   QString output = m_process->readAll();
   QString displayText;
 
@@ -101,7 +117,7 @@ MainWindow::updateProcessCallback()
       QMessageBox::StandardButton btn =
         QMessageBox::question(this, tr("Updates info"), displayText);
       if (btn == QMessageBox::Yes)
-        m_process->startDetached(m_updateToolPath);
+        m_process->startDetached(updateTool);
     }
 
     else {
@@ -116,74 +132,77 @@ MainWindow::updateProcessCallback()
 void
 MainWindow::setupShortcuts()
 {
-  connect(m_shortcutHandler,
+  m_shortcutHandler->createShortcuts(this);
+
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::toggleMenubar,
           this,
           &MainWindow::toggleMenubar);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::toggleNavDock,
           this,
           &MainWindow::toggleNavDock);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::bookmarkCurrent,
           this,
           &MainWindow::addCurrentToBookmarks);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::openDownloads,
           this,
           &MainWindow::actionDMTriggered);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::openBookmarks,
           this,
           &MainWindow::actionBookmarksTriggered);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::openKhatmah,
           this,
           &MainWindow::actionKhatmahTriggered);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::openSearch,
           this,
           &MainWindow::actionSearchTriggered);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::openSettings,
           this,
           &MainWindow::actionPrefTriggered);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::openTafsir,
           this,
           &MainWindow::actionTafsirTriggered);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::openAdvancedCopy,
           this,
           &MainWindow::actionAdvancedCopyTriggered);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::nextVerse,
           this,
           &MainWindow::nextVerse);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::prevVerse,
           this,
           &MainWindow::prevVerse);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::nextSurah,
           this,
           &MainWindow::nextSurah);
-  connect(m_shortcutHandler,
+  connect(m_shortcutHandler.data(),
           &ShortcutHandler::prevSurah,
           this,
           &MainWindow::prevSurah);
-  connect(
-    m_shortcutHandler, &ShortcutHandler::nextJuz, this, &MainWindow::nextJuz);
-  connect(
-    m_shortcutHandler, &ShortcutHandler::prevJuz, this, &MainWindow::prevJuz);
+  connect(m_shortcutHandler.data(),
+          &ShortcutHandler::nextJuz,
+          this,
+          &MainWindow::nextJuz);
+  connect(m_shortcutHandler.data(),
+          &ShortcutHandler::prevJuz,
+          this,
+          &MainWindow::prevJuz);
 }
 
 void
 MainWindow::setupConnections()
 {
-
-  /* ------------------ UI connectors ------------------ */
-
   // ########## Menubar ########## //
   connect(ui->actionExit, &QAction::triggered, this, &QApplication::exit);
   connect(ui->actionPereferences,
@@ -226,14 +245,6 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::actionAboutTriggered);
-  connect(ui->actionReaderViewToggle,
-          &QAction::triggered,
-          m_reader,
-          &QuranReader::toggleReaderView);
-  connect(m_verseDlg,
-          &VerseDialog::navigateToVerse,
-          m_reader,
-          &QuranReader::navigateToVerse);
 
   // ########## page controls ########## //
   connect(ui->cmbPage,
@@ -313,16 +324,18 @@ MainWindow::setupConnections()
           &DownloadManager::latestVersionFound,
           m_popup,
           &NotificationPopup::checkUpdate);
-  connect(m_reader,
-          &QuranReader::notifyBookmarkAdded,
+  connect(m_cpyDlg,
+          &CopyDialog::verseCopied,
+          m_popup,
+          &NotificationPopup::copiedToClipboard);
+  connect(m_dbMgr.data(),
+          &DBManager::bookmarkAdded,
           m_popup,
           &NotificationPopup::bookmarkAdded);
-  connect(m_reader,
-          &QuranReader::notifyBookmarkRemoved,
+  connect(m_dbMgr.data(),
+          &DBManager::bookmarkRemoved,
           m_popup,
           &NotificationPopup::bookmarkRemoved);
-  connect(
-    m_reader, &QuranReader::copyVerseText, this, &MainWindow::copyVerseText);
 
   // ########## Settings Dialog ########## //
   // Restart signal
@@ -373,7 +386,7 @@ MainWindow::setupConnections()
   // shortcut change
   connect(m_settingsDlg,
           &SettingsDialog::shortcutChanged,
-          m_shortcutHandler,
+          m_shortcutHandler.data(),
           &ShortcutHandler::shortcutChanged);
 
   connect(m_player,
@@ -389,27 +402,40 @@ MainWindow::setupConnections()
           this,
           &MainWindow::mediaStatusChanged);
 
+  connect(ui->actionReaderViewToggle,
+          &QAction::triggered,
+          m_reader,
+          &QuranReader::toggleReaderView);
+  connect(m_verseDlg,
+          &VerseDialog::navigateToVerse,
+          m_reader,
+          &QuranReader::navigateToVerse);
+  connect(m_reader,
+          &QuranReader::copyVerseText,
+          m_cpyDlg,
+          &CopyDialog::copyVerseText);
   connect(m_reader,
           &QuranReader::showVerseTafsir,
           this,
           &MainWindow::showVerseTafsir);
-  connect(m_reader, &QuranReader::showBetaqa, this, [this](int surah) {
-    m_betaqaViewer->showSurah(surah);
-  });
+  connect(m_reader,
+          &QuranReader::showBetaqa,
+          m_betaqaViewer,
+          &BetaqaViewer::showSurah);
 }
 
 void
 MainWindow::init()
 {
   m_player = new VersePlayer(this, m_settings->value("Reciter", 0).toInt());
-  m_reader = new QuranReader(this, m_player, m_shortcutHandler);
-  m_playerControls =
-    new PlayerControls(this, m_player, m_reader, m_shortcutHandler);
+  m_reader = new QuranReader(this, m_player);
+  m_playerControls = new PlayerControls(this, m_player, m_reader);
+  m_settingsDlg = new SettingsDialog(this, m_player);
   m_popup = new NotificationPopup(this);
   m_betaqaViewer = new BetaqaViewer(this);
   m_verseDlg = new VerseDialog(this);
   m_downManPtr = new DownloadManager(this);
-  m_settingsDlg = new SettingsDialog(this, m_player);
+  m_cpyDlg = new CopyDialog(this);
 
   QHBoxLayout* controls = new QHBoxLayout();
   QFrame* controlsFrame = new QFrame(this);
@@ -474,7 +500,7 @@ MainWindow::setupMenubarToggle()
       .arg(QString::number(ui->menubar->height()),
            QString::number(ui->menubar->height() * 2)));
   ui->menubar->setCornerWidget(toggleNav);
-  toggleNav->setIcon(m_fa->icon(fa_solid, fa_compass));
+  toggleNav->setIcon(StyleManager::awesome->icon(fa_solid, fa_compass));
   toggleNav->setIconSize(QSize(20, 20));
 
   connect(toggleNav, &QPushButton::toggled, this, [this](bool checked) {
@@ -658,9 +684,35 @@ void
 MainWindow::addCurrentToBookmarks()
 {
   QList<int> vInfo = m_currVerse->toList();
-  if (!m_dbMgr->isBookmarked(vInfo)) {
+  if (!m_dbMgr->isBookmarked(vInfo))
     m_dbMgr->addBookmark(vInfo);
-    m_popup->bookmarkAdded();
+}
+
+void
+MainWindow::missingQCF()
+{
+  QMessageBox::StandardButton btn = QMessageBox::question(
+    this,
+    tr("Files Missing"),
+    tr("The selected font files are missing, would you like to download it?"));
+
+  if (btn == QMessageBox::Yes) {
+    actionDMTriggered();
+    m_downloaderDlg->selectDownload(DownloadManager::QCF);
+  }
+}
+
+void
+MainWindow::missingTafsir(int idx)
+{
+  QMessageBox::StandardButton btn = QMessageBox::question(
+    this,
+    tr("Files Missing"),
+    tr("The selected tafsir is missing, would you like to download it?"));
+
+  if (btn == QMessageBox::Yes) {
+    actionDMTriggered();
+    m_downloaderDlg->selectDownload(DownloadManager::File, { 0, idx });
   }
 }
 
@@ -678,35 +730,8 @@ MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(Recitation, { reciterIdx, surah });
-  }
-}
-
-void
-MainWindow::missingQCF()
-{
-  QMessageBox::StandardButton btn = QMessageBox::question(
-    this,
-    tr("Files Missing"),
-    tr("The selected font files are missing, would you like to download it?"));
-
-  if (btn == QMessageBox::Yes) {
-    actionDMTriggered();
-    m_downloaderDlg->selectDownload(QCF);
-  }
-}
-
-void
-MainWindow::missingTafsir(int idx)
-{
-  QMessageBox::StandardButton btn = QMessageBox::question(
-    this,
-    tr("Files Missing"),
-    tr("The selected tafsir is missing, would you like to download it?"));
-
-  if (btn == QMessageBox::Yes) {
-    actionDMTriggered();
-    m_downloaderDlg->selectDownload(File, { 0, idx });
+    m_downloaderDlg->selectDownload(DownloadManager::Recitation,
+                                    { reciterIdx, surah });
   }
 }
 
@@ -757,8 +782,6 @@ MainWindow::actionKhatmahTriggered()
 void
 MainWindow::actionAdvancedCopyTriggered()
 {
-  if (m_cpyDlg == nullptr)
-    m_cpyDlg = new CopyDialog(this);
 
   m_cpyDlg->show();
 }
@@ -885,10 +908,10 @@ MainWindow::showVerseTafsir(Verse v)
     reload = false;
   }
 
-  if (!Globals::tafsirExists(m_dbMgr->currTafsir())) {
+  if (!Tafsir::tafsirExists(m_dbMgr->currTafsir())) {
     int i;
-    for (i = 0; i < m_tafasirList.size(); i++)
-      if (m_dbMgr->currTafsir() == &m_tafasirList[i])
+    for (i = 0; i < m_tafasir.size(); i++)
+      if (m_dbMgr->currTafsir() == m_tafasir[i])
         break;
     reload = true;
     return missingTafsir(i);
@@ -901,21 +924,6 @@ MainWindow::showVerseTafsir(Verse v)
   m_tafsirDlg->setShownVerse(v);
   m_tafsirDlg->loadVerseTafsir();
   m_tafsirDlg->show();
-}
-
-void
-MainWindow::copyVerseText(const Verse v)
-{
-  QClipboard* clip = QApplication::clipboard();
-  QString text = m_dbMgr->getVerseText(v.surah(), v.number());
-  QString vNum = QString::number(v.number());
-  text.remove(text.size() - 1, 1);
-  text = text.trimmed();
-  text = "{" + text + "}";
-  text += ' ';
-  text += "[" + m_dbMgr->surahNameList().at(v.surah() - 1) + ":" + vNum + "]";
-  clip->setText(text);
-  m_popup->copiedToClipboard();
 }
 
 void

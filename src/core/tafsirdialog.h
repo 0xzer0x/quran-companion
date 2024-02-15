@@ -6,9 +6,8 @@
 #ifndef TAFSIRDIALOG_H
 #define TAFSIRDIALOG_H
 
-#include "../globals.h"
+#include "../types/verse.h"
 #include "../utils/dbmanager.h"
-#include "../utils/verse.h"
 #include <QDialog>
 #include <QSettings>
 #include <QShortcut>
@@ -22,7 +21,7 @@ class TafsirDialog;
  * @details Tafsir is shown for a single verse at a time. Navigation between
  * verses is independant of the main Quran reader navigation for easier
  * navigation. Tafsir is displayed using the side content font set in the
- * Globals::settings.
+ * Settings::settings.
  */
 class TafsirDialog : public QDialog
 {
@@ -72,22 +71,26 @@ private slots:
   void btnPrevClicked();
 
 private:
-  const int m_qcfVer = Globals::qcfVersion;
-  const QSettings* m_settings = Globals::settings;
-  DBManager* m_dbMgr = DBManager::instance();
+  Ui::TafsirDialog* ui;
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  const int m_qcfVer = Settings::qcfVersion;
+  const QSharedPointer<QSettings> m_settings = Settings::settings;
+  const QList<QSharedPointer<Tafsir>>& m_tafasirList = Tafsir::tafasir;
+  const QList<QSharedPointer<Translation>>& m_trList =
+    Translation::translations;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
    */
   void setupConnections();
+  void updateContentComboBox();
   /**
-   * @brief sets the Tafsir dialog title to match the displayed tafsir name.
+   * @brief Tafsir enum value mapped to the tafsir index in the
+   * combobox.
+   *
+   * MODIFIED
    */
-  void setTafsirAsTitle();
-  /**
-   * @brief Pointer to access ui elements generated from .ui files.
-   */
-  Ui::TafsirDialog* ui;
+  int m_tafsir;
   /**
    * @brief fixed font size for the verse text displayed above the tafsir.
    */

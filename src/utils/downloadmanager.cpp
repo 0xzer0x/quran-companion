@@ -83,7 +83,7 @@ DownloadManager::enqeueQCF()
              .arg(QString::number(i).rightJustified(3, '0'));
     t.metainfo = { -1, -1, i };
     t.metainfo.squeeze();
-    t.downloadPath.setFile(m_downloadsDir.absoluteFilePath(path));
+    t.downloadPath.setFile(m_downloadsDir->absoluteFilePath(path));
     t.link = QUrl::fromEncoded((base + path).toLatin1());
     m_taskQueue.enqueue(t);
   }
@@ -96,14 +96,14 @@ DownloadManager::enqeueTask(QPair<int, int> info)
     "https://github.com/0xzer0x/quran-companion/raw/main/extras/";
   QString path;
   if (info.first)
-    path = "translations/" + m_trList.at(info.second).filename;
+    path = "translations/" + m_trList.at(info.second)->filename();
   else
-    path = "tafasir/" + m_tafasirList.at(info.second).filename;
+    path = "tafasir/" + m_tafasirList.at(info.second)->filename();
   DownloadTask t;
   t.metainfo = { info.first, info.second, 0 };
   t.metainfo.squeeze();
   t.link = QUrl::fromEncoded((base + path).toLatin1());
-  t.downloadPath.setFile(m_downloadsDir.absoluteFilePath(path));
+  t.downloadPath.setFile(m_downloadsDir->absoluteFilePath(path));
   m_taskQueue.enqueue(t);
 }
 
@@ -115,8 +115,8 @@ DownloadManager::enqeueTask(int reciterIdx, int surah, int verse)
   t.metainfo = { reciterIdx, surah, verse };
   t.metainfo.squeeze();
   t.link = downloadUrl(reciterIdx, surah, verse);
-  t.downloadPath.setFile(m_downloadsDir.absoluteFilePath(
-    path.arg(m_recitersList.at(reciterIdx).baseDirName,
+  t.downloadPath.setFile(m_downloadsDir->absoluteFilePath(
+    path.arg(m_recitersList.at(reciterIdx)->baseDirName(),
              QString::number(surah).rightJustified(3, '0') +
                QString::number(verse).rightJustified(3, '0'))));
 
@@ -262,9 +262,9 @@ DownloadManager::downloadUrl(const int reciterIdx,
                              const int surah,
                              const int verse) const
 {
-  const Reciter& r = m_recitersList.at(reciterIdx);
-  QString url = r.baseUrl;
-  if (r.useId)
+  const Reciter& r = *m_recitersList.at(reciterIdx);
+    QString url = r.baseUrl();
+  if (r.useId())
     url.append(QString::number(m_dbMgr->getVerseId(surah, verse)) + ".mp3");
   else
     url.append(QString::number(surah).rightJustified(3, '0') +

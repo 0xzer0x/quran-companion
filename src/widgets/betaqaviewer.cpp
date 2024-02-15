@@ -51,7 +51,7 @@ BetaqaViewer::showSurah(int surah)
 void
 BetaqaViewer::center()
 {
-  int w = std::max((int)(parentWidget()->width() * 0.4), 600);
+  int w = std::max((int)(parentWidget()->width() * 0.6), 600);
   int h = std::max((int)(parentWidget()->height() * 0.8), 600);
   this->resize(w, h);
   m_sizeAnim->setEndValue(size());

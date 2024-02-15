@@ -6,6 +6,8 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
+#include "../utils/settings.h"
+#include "../utils/shortcuthandler.h"
 #include "../utils/verseplayer.h"
 #include <QApplication>
 #include <QAudioDevice>
@@ -21,6 +23,7 @@
 #include <QShortcut>
 #include <QStandardItemModel>
 #include <QValidator>
+typedef Settings::ReaderMode ReaderMode;
 
 namespace Ui {
 class SettingsDialog;
@@ -120,8 +123,8 @@ public slots:
    * @param size - QString representing the new font size
    */
   void updateSideFontSize(QString size);
-  void updateVerseText(int vt);
-  void updateVerseTextFontsize(QString size);
+  void updateVerseType(int vt);
+  void updateVerseFontsize(QString size);
   /**
    * @brief update the key sequence that trigger the shortcut with the given key
    * @param key - QString of the shortcut name in the settings file
@@ -218,16 +221,17 @@ protected:
   void closeEvent(QCloseEvent* event);
 
 private:
-  const int m_qcfVer = Globals::qcfVersion;
-  const int m_themeIdx = Globals::themeId;
-  const ReaderMode m_readerMode = Globals::readerMode;
-  const QLocale::Language m_languageCode = Globals::language;
-  QSettings* const m_settings = Globals::settings;
-  const QDir& m_downloadsDir = Globals::downloadsDir;
-  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
-  const QList<Translation>& m_trList = Globals::translationsList;
+  const int m_qcfVer = Settings::qcfVersion;
+  const int m_themeIdx = Settings::themeId;
+  const ReaderMode m_readerMode = Settings::readerMode;
+  const QLocale::Language m_languageCode = Settings::language;
+  QSharedPointer<QSettings> const m_settings = Settings::settings;
+  const QDir& m_downloadsDir = *DirManager::downloadsDir;
+  const QList<QSharedPointer<Tafsir>>& m_tafasirList = Tafsir::tafasir;
+  const QList<QSharedPointer<Translation>>& m_trList =
+    Translation::translations;
   const QMap<QString, QString>& m_shortcutDescription =
-    Globals::shortcutDescription;
+      ShortcutHandler::shortcutsDescription;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -274,11 +278,15 @@ private:
   /**
    * @brief DBManager::Tafsir enum value mapped to the tafsir index in the
    * combobox.
+   *
+   * MODIFIED
    */
   int m_tafsir;
   /**
    * @brief DBManager::Translation enum value mapped to the translation index in
    * the combobox.
+   *
+   * MODIFIED
    */
   int m_translation;
   int m_verseType;

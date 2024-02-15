@@ -1,7 +1,6 @@
 #ifndef BETAQAVIEWER_H
 #define BETAQAVIEWER_H
 
-#include "../globals.h"
 #include "../utils/dbmanager.h"
 #include <QGraphicsDropShadowEffect>
 #include <QPropertyAnimation>
@@ -20,15 +19,18 @@ public:
   explicit BetaqaViewer(QWidget* parent = nullptr);
   ~BetaqaViewer();
 
-  void showSurah(int surah);
   void center();
+
+public slots:
+  void showSurah(int surah);
 
 protected:
   void focusOutEvent(QFocusEvent* event);
 
 private:
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   Ui::BetaqaViewer* ui;
-  DBManager* m_dbMgr = DBManager::instance();
+
   int m_surah = -1;
   QGraphicsDropShadowEffect* m_shadowEffect = nullptr;
   QPropertyAnimation* m_sizeAnim = nullptr;

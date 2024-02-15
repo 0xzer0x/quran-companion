@@ -6,7 +6,7 @@
 #ifndef DOWNLOADMANAGER_H
 #define DOWNLOADMANAGER_H
 
-#include "../globals.h"
+#include "../types/reciter.h"
 #include "dbmanager.h"
 #include <QApplication>
 #include <QDialog>
@@ -27,6 +27,12 @@ class DownloadManager : public QObject
 {
   Q_OBJECT
 public:
+  enum DownloadType
+  {
+    QCF,
+    Recitation,
+    File
+  };
   /**
    * @brief DownloadTask struct represents a single verse file download task
    * @details downloads are separated into 3 different types
@@ -185,11 +191,12 @@ signals:
   void filesFound(DownloadType type, const QList<int>& metainfo);
 
 private:
-  const QDir& m_downloadsDir = Globals::downloadsDir;
-  const QList<Reciter>& m_recitersList = Globals::recitersList;
-  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
-  const QList<Translation>& m_trList = Globals::translationsList;
-  DBManager* m_dbMgr = DBManager::instance();
+  QSharedPointer<const QDir> m_downloadsDir = DirManager::downloadsDir;
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
+  const QList<QSharedPointer<Tafsir>>& m_tafasirList = Tafsir::tafasir;
+  const QList<QSharedPointer<Translation>>& m_trList =
+    Translation::translations;
   /**
    * @brief generate download url for specified verse using the reciter download
    * url

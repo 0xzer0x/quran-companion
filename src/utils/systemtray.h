@@ -6,7 +6,6 @@
 #ifndef SYSTEMTRAY_H
 #define SYSTEMTRAY_H
 
-#include "../globals.h"
 #include "dbmanager.h"
 #include <QDateTime>
 #include <QDir>
@@ -30,8 +29,8 @@ public:
    * @brief Class constructor
    * @param parent - pointer to parent widget
    */
-    explicit SystemTray(QObject* parent = nullptr);
-    ~SystemTray();
+  explicit SystemTray(QObject* parent = nullptr);
+  ~SystemTray();
 
   /**
    * @brief send a desktop notification message
@@ -84,7 +83,7 @@ signals:
   void openAbout();
 
 private:
-  DBManager* m_dbMgr = DBManager::instance();
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   /**
    * @brief adds system tray actions and set their connections
    */

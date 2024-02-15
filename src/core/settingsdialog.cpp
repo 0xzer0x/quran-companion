@@ -4,6 +4,7 @@
  */
 
 #include "settingsdialog.h"
+#include "../utils/stylemanager.h"
 #include "../widgets/shortcutdelegate.h"
 #include "ui_settingsdialog.h"
 
@@ -15,7 +16,7 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   ui->setupUi(this);
   ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 72));
   ui->cmbSideFontSz->setValidator(new QIntValidator(10, 72));
-  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_gear));
+  setWindowIcon(StyleManager::awesome->icon(fa::fa_solid, fa::fa_gear));
   ui->tableViewShortcuts->setModel(&m_shortcutsModel);
   ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
   ui->tableViewShortcuts->setItemDelegate(new ShortcutDelegate);
@@ -69,15 +70,15 @@ SettingsDialog::updateContentCombobox()
 {
   ui->cmbTafsir->clear();
   for (int i = 0; i < m_tafasirList.size(); i++) {
-    const Tafsir& t = m_tafasirList[i];
-    if (Globals::tafsirExists(&t))
-      ui->cmbTafsir->addItem(t.displayName, i);
+    const QSharedPointer<Tafsir>& t = m_tafasirList[i];
+    if (Tafsir::tafsirExists(t))
+      ui->cmbTafsir->addItem(t->displayName(), i);
   }
   ui->cmbTranslation->clear();
   for (int i = 0; i < m_trList.size(); i++) {
-    const Translation& tr = m_trList[i];
-    if (Globals::translationExists(&tr))
-      ui->cmbTranslation->addItem(tr.displayName, i);
+    const QSharedPointer<Translation>& tr = m_trList[i];
+    if (Translation::translationExists(tr))
+      ui->cmbTranslation->addItem(tr->displayName(), i);
   }
 
   m_tafsir = ui->cmbTafsir->findData(m_settings->value("Reader/Tafsir"));
@@ -294,7 +295,7 @@ SettingsDialog::updateSideFontSize(QString size)
 }
 
 void
-SettingsDialog::updateVerseText(int vt)
+SettingsDialog::updateVerseType(int vt)
 {
   m_settings->setValue("Reader/VerseType", vt);
   emit verseTypeChanged();
@@ -302,7 +303,7 @@ SettingsDialog::updateVerseText(int vt)
 }
 
 void
-SettingsDialog::updateVerseTextFontsize(QString size)
+SettingsDialog::updateVerseFontsize(QString size)
 {
   m_settings->setValue("Reader/VerseFontSize", size);
   emit verseTypeChanged();
@@ -347,10 +348,10 @@ SettingsDialog::applyAllChanges()
     updateQuranFont(ui->cmbQCF->currentIndex() + 1);
 
   if (ui->cmbVerseText->currentIndex() != m_verseType)
-    updateVerseText(ui->cmbVerseText->currentIndex());
+    updateVerseType(ui->cmbVerseText->currentIndex());
 
   if (ui->cmbVersesFontSz->currentText() != QString::number(m_verseFontSize))
-    updateVerseTextFontsize(ui->cmbVersesFontSz->currentText());
+    updateVerseFontsize(ui->cmbVersesFontSz->currentText());
 
   if (ui->chkAdaptive->isChecked() != m_adaptive)
     updateAdaptiveFont(ui->chkAdaptive->isChecked());

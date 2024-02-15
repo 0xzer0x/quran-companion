@@ -4,23 +4,24 @@
  */
 
 #include "tafsirdialog.h"
+#include "../types/tafsir.h"
+#include "../utils/fontmanager.h"
+#include "../utils/stylemanager.h"
 #include "ui_tafsirdialog.h"
 
 TafsirDialog::TafsirDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::TafsirDialog)
 {
-  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_book_open));
+  setWindowTitle(qApp->translate("SettingsDialog", "Tafsir"));
+  setWindowIcon(StyleManager::awesome->icon(fa::fa_solid, fa::fa_book_open));
   ui->setupUi(this);
-  ui->btnNext->setIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
-  ui->btnPrev->setIcon(
-    Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
-
-  foreach (const Tafsir& t, Globals::tafasirList) {
-    ui->cmbTafsir->addItem(t.displayName);
-  }
-  setTafsirAsTitle();
   ui->frmNav->setLayoutDirection(Qt::LeftToRight);
+  ui->btnNext->setIcon(
+    StyleManager::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
+  ui->btnPrev->setIcon(
+    StyleManager::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
+
   if (m_qcfVer == 1)
     m_fontSZ = 18;
   else
@@ -56,10 +57,17 @@ TafsirDialog::setupConnections()
 }
 
 void
-TafsirDialog::setTafsirAsTitle()
+TafsirDialog::updateContentComboBox()
 {
-  QString title = m_dbMgr->currTafsir()->displayName;
-  setWindowTitle(title);
+  ui->cmbTafsir->clear();
+  for (int i = 0; i < m_tafasirList.size(); i++) {
+    const QSharedPointer<Tafsir> t = m_tafasirList.at(i);
+    if (Tafsir::tafsirExists(t))
+      ui->cmbTafsir->addItem(t->displayName(), i);
+  }
+
+  m_tafsir = ui->cmbTafsir->findData(m_settings->value("Reader/Tafsir"));
+  ui->cmbTafsir->setCurrentIndex(m_tafsir);
 }
 
 void
@@ -74,7 +82,7 @@ TafsirDialog::loadVerseTafsir()
   QString glyphs =
     m_dbMgr->getVerseGlyphs(m_shownVerse.surah(), m_shownVerse.number());
   QString fontFamily =
-    Globals::verseFontname(m_dbMgr->getVerseType(), m_shownVerse.page());
+    FontManager::verseFontname(m_dbMgr->getVerseType(), m_shownVerse.page());
 
   ui->lbVerseInfo->setText(title);
   ui->lbVerseText->setWordWrap(true);
@@ -85,7 +93,7 @@ TafsirDialog::loadVerseTafsir()
     qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
   ui->tedTafsir->setFont(sideFont);
 
-  if (m_dbMgr->currTafsir()->text)
+  if (m_dbMgr->currTafsir()->isText())
     ui->tedTafsir->setText(
       m_dbMgr->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
   else
@@ -117,7 +125,7 @@ TafsirDialog::closeEvent(QCloseEvent* event)
 void
 TafsirDialog::showEvent(QShowEvent* event)
 {
-  setTafsirAsTitle();
+  updateContentComboBox();
   QDialog::showEvent(event);
 }
 

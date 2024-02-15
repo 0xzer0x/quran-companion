@@ -1,9 +1,8 @@
 #ifndef KHATMAHDIALOG_H
 #define KHATMAHDIALOG_H
 
-#include "../globals.h"
+#include "../types/verse.h"
 #include "../utils/dbmanager.h"
-#include "../utils/verse.h"
 #include "../widgets/inputfield.h"
 #include <QDialog>
 #include <QLineEdit>
@@ -74,9 +73,8 @@ private slots:
 
 private:
   const Verse* m_currVerse = Verse::current();
-  const bool m_darkmode = Globals::themeId == 2;
-  QSettings* m_settings = Globals::settings;
-  DBManager* m_dbMgr = DBManager::instance();
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QSettings> m_settings = Settings::settings;
   /**
    * @brief load all khatmah entries available
    */

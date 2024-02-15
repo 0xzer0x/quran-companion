@@ -30,8 +30,14 @@ add_subdirectory(third_party/QtAwesome)
 
 set(PROJECT_SOURCES
     src/main.cpp
-    src/globals.h
-    src/globals.cpp
+    src/types/verse.h
+    src/types/verse.cpp
+    src/types/reciter.h
+    src/types/reciter.cpp
+    src/types/tafsir.h
+    src/types/tafsir.cpp
+    src/types/translation.h
+    src/types/translation.cpp
     src/core/mainwindow.cpp
     src/core/mainwindow.h
     src/core/mainwindow.ui
@@ -62,6 +68,26 @@ set(PROJECT_SOURCES
     src/core/copydialog.h
     src/core/copydialog.cpp
     src/core/copydialog.ui
+    src/utils/settings.h
+    src/utils/settings.cpp
+    src/utils/shortcuthandler.h
+    src/utils/shortcuthandler.cpp
+    src/utils/dbmanager.h
+    src/utils/dbmanager.cpp
+    src/utils/verseplayer.h
+    src/utils/verseplayer.cpp
+    src/utils/downloadmanager.h
+    src/utils/downloadmanager.cpp
+    src/utils/systemtray.h
+    src/utils/systemtray.cpp
+    src/utils/logger.h
+    src/utils/logger.cpp
+    src/utils/dirmanager.h
+    src/utils/dirmanager.cpp
+    src/utils/stylemanager.h
+    src/utils/stylemanager.cpp
+    src/utils/fontmanager.h
+    src/utils/fontmanager.cpp
     src/widgets/quranpagebrowser.h
     src/widgets/quranpagebrowser.cpp
     src/widgets/clickablelabel.cpp
@@ -85,20 +111,6 @@ set(PROJECT_SOURCES
     src/widgets/versedialog.h
     src/widgets/versedialog.cpp
     src/widgets/versedialog.ui
-    src/utils/verse.h
-    src/utils/verse.cpp
-    src/utils/shortcuthandler.h
-    src/utils/shortcuthandler.cpp
-    src/utils/dbmanager.h
-    src/utils/dbmanager.cpp
-    src/utils/verseplayer.h
-    src/utils/verseplayer.cpp
-    src/utils/downloadmanager.h
-    src/utils/downloadmanager.cpp
-    src/utils/systemtray.h
-    src/utils/systemtray.cpp
-    src/utils/logger.h
-    src/utils/logger.cpp
     resources.qrc
     qurancompanion.rc)
 

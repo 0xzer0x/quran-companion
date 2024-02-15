@@ -1,15 +1,14 @@
 #ifndef QURANREADER_H
 #define QURANREADER_H
 
-#include "../globals.h"
-#include "../utils/shortcuthandler.h"
-#include "../utils/verse.h"
+#include "../types/verse.h"
 #include "../utils/verseplayer.h"
 #include "../widgets/quranpagebrowser.h"
 #include "../widgets/verseframe.h"
 #include <QLabel>
 #include <QScrollArea>
 #include <QWidget>
+typedef Settings::ReaderMode ReaderMode;
 
 namespace Ui {
 class QuranReader;
@@ -20,13 +19,10 @@ class QuranReader : public QWidget
   Q_OBJECT
 
 public:
-  explicit QuranReader(QWidget* parent,
-                       VersePlayer* player,
-                       ShortcutHandler* handler);
+  explicit QuranReader(QWidget* parent, VersePlayer* player);
   ~QuranReader();
 
 public slots:
-  void updatePageFontSize();
   /**
    * @brief highlight the currently active ::Verse m_currVerse in the
    * active QuranPageBrowser and the side panel depending on the ::ReaderMode
@@ -100,15 +96,19 @@ public slots:
    * @brief sets m_currVerse to the first verse in m_vInfoList
    */
   void setVerseToStartOfPage();
+  /**
+   * @brief updatePageFontSize
+   *
+   * MODIFIED
+   */
+  void updatePageFontSize();
 
 signals:
+  void currentVerseChanged();
+  void currentSurahChanged();
   void showBetaqa(int surah);
   void showVerseTafsir(const Verse& v);
   void copyVerseText(const Verse& v);
-  void currentVerseChanged();
-  void currentSurahChanged();
-  void notifyBookmarkAdded();
-  void notifyBookmarkRemoved();
 
 private slots:
   /**
@@ -143,17 +143,14 @@ private slots:
   void gotoDoublePage(int page);
 
 private:
-  Verse* m_currVerse = Verse::current();
-  QSettings* const m_settings = Globals::settings;
-  const QList<Reciter>& m_recitersList = Globals::recitersList;
-  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
-  const QString& m_updateToolPath = Globals::updateToolPath;
-  const ReaderMode& m_readerMode = Globals::readerMode;
-  DBManager* m_dbMgr = DBManager::instance();
-  fa::QtAwesome* m_fa = Globals::awesome;
   Ui::QuranReader* ui;
+  Verse* m_currVerse = Verse::current();
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QSettings> m_settings = Settings::settings;
+  const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
+  const QList<QSharedPointer<Tafsir>>& m_tafasirList = Tafsir::tafasir;
+  const ReaderMode& m_readerMode = Settings::readerMode;
   void setupConnections();
-  void setupShortcuts(ShortcutHandler* handler);
   /**
    * @brief load icons for different UI elements
    */

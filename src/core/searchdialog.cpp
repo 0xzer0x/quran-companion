@@ -4,6 +4,8 @@
  */
 
 #include "searchdialog.h"
+#include "../utils/fontmanager.h"
+#include "../utils/stylemanager.h"
 #include "../widgets/clickablelabel.h"
 #include "ui_searchdialog.h"
 
@@ -12,17 +14,19 @@ SearchDialog::SearchDialog(QWidget* parent)
   , ui(new Ui::SearchDialog)
   , m_surahNames{ m_dbMgr->surahNameList() }
 {
-  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_magnifying_glass));
+  setWindowIcon(
+    StyleManager::awesome->icon(fa::fa_solid, fa::fa_magnifying_glass));
   ui->setupUi(this);
   ui->frmNavBtns->setLayoutDirection(Qt::LeftToRight);
-  ui->btnNext->setIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
+  ui->btnNext->setIcon(
+    StyleManager::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
   ui->btnPrev->setIcon(
-    Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
+    StyleManager::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
   ui->btnNext->setDisabled(true);
   ui->btnPrev->setDisabled(true);
 
   ui->btnTransfer->setIcon(
-    Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right_arrow_left));
+    StyleManager::awesome->icon(fa::fa_solid, fa::fa_arrow_right_arrow_left));
   ui->listViewAllSurahs->setModel(&m_modelAllSurahs);
   ui->listViewSelected->setModel(&m_modelSelectedSurahs);
   if (m_lang == QLocale::Arabic)
@@ -109,7 +113,8 @@ SearchDialog::showResults()
 
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
-      QString fontName = Globals::verseFontname(m_dbMgr->getVerseType(), v.page());
+    QString fontName =
+      FontManager::verseFontname(m_dbMgr->getVerseType(), v.page());
 
     VerseFrame* vFrame = new VerseFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);

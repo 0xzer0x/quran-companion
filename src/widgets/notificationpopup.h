@@ -6,8 +6,8 @@
 #ifndef NOTIFICATIONPOPUP_H
 #define NOTIFICATIONPOPUP_H
 
-#include "../globals.h"
 #include "../utils/dbmanager.h"
+#include "../utils/downloadmanager.h"
 #include <QApplication>
 #include <QDockWidget>
 #include <QGraphicsOpacityEffect>
@@ -17,6 +17,7 @@
 #include <QStyle>
 #include <QTimer>
 #include <QWidget>
+typedef DownloadManager::DownloadType DownloadType;
 
 /**
  * @brief NotificationPopup class represents an in-app popup for notifying the
@@ -104,10 +105,10 @@ public slots:
   void checkUpdate(QString appVer);
 
 private:
-  const QList<Reciter>& m_recitersList = Globals::recitersList;
-  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
-  const QList<Translation>& m_trList = Globals::translationsList;
-  DBManager* m_dbMgr = DBManager::instance();
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
+  QList<QSharedPointer<Tafsir>>& m_tafasirList = Tafsir::tafasir;
+  QList<QSharedPointer<Translation>>& m_trList = Translation::translations;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

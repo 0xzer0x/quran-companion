@@ -1,7 +1,7 @@
 #ifndef ABOUTDIALOG_H
 #define ABOUTDIALOG_H
 
-#include "../globals.h"
+#include "../utils/settings.h"
 #include <QDialog>
 
 namespace Ui {
@@ -18,7 +18,7 @@ public:
 
 private:
   Ui::AboutDialog* ui;
-  QLocale::Language m_lang = Globals::language;
+  QLocale::Language m_lang = Settings::language;
 };
 
 #endif // ABOUTDIALOG_H

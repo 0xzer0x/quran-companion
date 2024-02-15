@@ -5,19 +5,20 @@
 
 #include "dbmanager.h"
 
-DBManager*
-DBManager::instance()
+QSharedPointer<DBManager>
+DBManager::current()
 {
-  static DBManager controller = DBManager(qApp);
-  return &controller;
+  static QSharedPointer<DBManager> controller =
+    QSharedPointer<DBManager>::create();
+  return controller;
 }
 
 DBManager::DBManager(QObject* parent)
   : QObject(parent)
 {
-  m_quranDbPath.setFile(m_assetsDir.filePath("quran.db"));
-  m_glyphsDbPath.setFile(m_assetsDir.filePath("glyphs.db"));
-  m_betaqatDbPath.setFile(m_assetsDir.filePath("betaqat.db"));
+  m_quranDbPath.setFile(m_assetsDir->filePath("quran.db"));
+  m_glyphsDbPath.setFile(m_assetsDir->filePath("glyphs.db"));
+  m_betaqatDbPath.setFile(m_assetsDir->filePath("betaqat.db"));
 
   // set database driver, set the path & open a connection with the db
   QSqlDatabase::addDatabase("QSQLITE", "QuranCon");
@@ -82,9 +83,10 @@ DBManager::setCurrentTafsir(int tafsirIdx)
   if (tafsirIdx < 0 || tafsirIdx >= m_tafasirList.size())
     return;
 
-  m_currTafsir = &m_tafasirList[tafsirIdx];
-  const QDir& baseDir = m_currTafsir->extra ? m_downloadsDir : m_assetsDir;
-  QString path = "tafasir/" + m_currTafsir->filename;
+  m_currTafsir = m_tafasirList[tafsirIdx];
+  const QDir& baseDir =
+    m_currTafsir->isExtra() ? *m_downloadsDir : *m_assetsDir;
+  QString path = "tafasir/" + m_currTafsir->filename();
   if (baseDir.exists(path))
     m_tafsirDbPath.setFile(baseDir.filePath(path));
 }
@@ -95,9 +97,9 @@ DBManager::setCurrentTranslation(int translationIdx)
   if (translationIdx < 0 || translationIdx >= m_translationsList.size())
     return;
 
-  m_currTrans = &m_translationsList[translationIdx];
-  const QDir& baseDir = m_currTrans->extra ? m_downloadsDir : m_assetsDir;
-  QString path = "translations/" + m_currTrans->filename;
+  m_currTrans = m_translationsList[translationIdx];
+  const QDir& baseDir = m_currTrans->isExtra() ? *m_downloadsDir : *m_assetsDir;
+  QString path = "translations/" + m_currTrans->filename();
   if (baseDir.exists(path))
     m_transDbPath.setFile(baseDir.filePath(path));
 }
@@ -752,9 +754,8 @@ DBManager::addBookmark(QList<int> vInfo)
     return false;
   }
 
-  if (!m_openDBCon.commit())
-    return false;
-
+  m_openDBCon.commit();
+  emit bookmarkAdded();
   return true;
 }
 
@@ -774,6 +775,7 @@ DBManager::removeBookmark(QList<int> vInfo)
     return false;
   }
 
+  emit bookmarkRemoved();
   return true;
 }
 
@@ -841,7 +843,7 @@ DBManager::activeKhatmah() const
   return m_activeKhatmah;
 }
 
-const Tafsir*
+QSharedPointer<Tafsir>
 DBManager::currTafsir() const
 {
   return m_currTafsir;

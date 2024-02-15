@@ -1,14 +1,15 @@
 #include "khatmahdialog.h"
+#include "../utils/settings.h"
+#include "../utils/stylemanager.h"
 #include "ui_khatmahdialog.h"
-#include <qgraphicseffect.h>
-#include <qpalette.h>
+#include <QGraphicsDropShadowEffect>
 
 KhatmahDialog::KhatmahDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::KhatmahDialog)
 {
   ui->setupUi(this);
-  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_list));
+  setWindowIcon(StyleManager::awesome->icon(fa::fa_solid, fa::fa_list));
   ui->lbCurrKhatmah->setText(m_dbMgr->getKhatmahName(m_dbMgr->activeKhatmah()));
   loadAll();
 
@@ -21,12 +22,12 @@ KhatmahDialog::KhatmahDialog(QWidget* parent)
 InputField*
 KhatmahDialog::loadKhatmah(const int id)
 {
-  QList<int> vInfo;
+  QList<int> vInfo(3);
   m_dbMgr->getKhatmahPos(id, vInfo);
   QFrame* frame = new QFrame(ui->scrlDialogContent);
   // property used for styling
   frame->setProperty("khatmah", true);
-  if (!m_darkmode) {
+  if (!Settings::darkMode) {
     QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect(frame);
     shadow->setColor(palette().color(QPalette::Shadow));
     shadow->setOffset(1);
@@ -143,7 +144,7 @@ KhatmahDialog::removeKhatmah()
 void
 KhatmahDialog::setActiveKhatmah()
 {
-  QList<int> vInfo;
+  QList<int> vInfo(3);
   QFrame* newActive = qobject_cast<QFrame*>(sender()->parent());
   QVariant id = newActive->objectName();
 

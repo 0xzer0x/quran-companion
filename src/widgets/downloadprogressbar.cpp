@@ -14,7 +14,7 @@ DownloadProgressBar::DownloadProgressBar(QWidget* parent,
   setStyling(downloading);
   setMaximum(max);
   setValue(0);
-  if (type == File)
+  if (type == DownloadManager::File)
     setFormat("%v / %m " + qApp->translate("DownloadManager", "KB"));
   else
     setFormat("%v / %m");

@@ -1,9 +1,7 @@
 #ifndef PLAYERCONTROLS_H
 #define PLAYERCONTROLS_H
 
-#include "../globals.h"
-#include "../utils/shortcuthandler.h"
-#include "../utils/verse.h"
+#include "../types/verse.h"
 #include "../utils/verseplayer.h"
 #include "quranreader.h"
 #include <QWidget>
@@ -19,8 +17,7 @@ class PlayerControls : public QWidget
 public:
   explicit PlayerControls(QWidget* parent,
                           VersePlayer* player,
-                          QuranReader* reader,
-                          ShortcutHandler* handler);
+                          QuranReader* reader);
   ~PlayerControls();
 
   int currentReciter() const;
@@ -80,12 +77,11 @@ private slots:
   void decrementVolume();
 
 private:
-  Verse* m_currVerse = Verse::current();
-  QSettings* const m_settings = Globals::settings;
-  const QList<Reciter>& m_recitersList = Globals::recitersList;
-  DBManager* m_dbMgr = DBManager::instance();
-  fa::QtAwesome* m_fa = Globals::awesome;
   Ui::PlayerControls* ui;
+  Verse* m_currVerse = Verse::current();
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QSettings> const m_settings = Settings::settings;
+  const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
   /**
    * @brief load icons for different UI elements
    */
@@ -93,7 +89,7 @@ private:
   /**
    * @brief connect ShortcutHandler signals to their corresponding slots
    */
-  void setupShortcuts(ShortcutHandler* handler);
+  void setupConnections();
   /**
    * @brief float value of the current playback volume (0 - 1.0)
    */

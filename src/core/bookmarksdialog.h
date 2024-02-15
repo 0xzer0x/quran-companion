@@ -6,9 +6,9 @@
 #ifndef BOOKMARKSDIALOG_H
 #define BOOKMARKSDIALOG_H
 
-#include "../globals.h"
+#include "../types/verse.h"
 #include "../utils/dbmanager.h"
-#include "../utils/verse.h"
+#include "../utils/settings.h"
 #include <QDialog>
 #include <QLabel>
 #include <QShortcut>
@@ -116,8 +116,8 @@ private slots:
   void surahSelected(const QModelIndex& index);
 
 private:
-  const int m_qcfVer = Globals::qcfVersion;
-  DBManager* m_dbMgr = DBManager::instance();
+  const int m_qcfVer = Settings::qcfVersion;
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

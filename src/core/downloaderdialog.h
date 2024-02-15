@@ -6,7 +6,6 @@
 #ifndef DOWNLOADERDIALOG_H
 #define DOWNLOADERDIALOG_H
 
-#include "../globals.h"
 #include "../utils/dbmanager.h"
 #include "../utils/downloadmanager.h"
 #include "../widgets/downloadprogressbar.h"
@@ -118,11 +117,11 @@ protected:
   void closeEvent(QCloseEvent* event);
 
 private:
-  const int m_languageCode = Globals::language;
-  const QList<Reciter>& m_recitersList = Globals::recitersList;
-  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
-  const QList<Translation>& m_trList = Globals::translationsList;
-  DBManager* m_dbMgr = DBManager::instance();
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  const int m_languageCode = Settings::language;
+  const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
+  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
+  const QList<QSharedPointer<Translation>>& m_tr = Translation::translations;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

@@ -6,11 +6,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "../globals.h"
+#include "../types/verse.h"
 #include "../utils/dbmanager.h"
 #include "../utils/shortcuthandler.h"
 #include "../utils/systemtray.h"
-#include "../utils/verse.h"
 #include "../utils/verseplayer.h"
 #include "../widgets/betaqaviewer.h"
 #include "../widgets/notificationpopup.h"
@@ -222,11 +221,6 @@ private slots:
    */
   void showVerseTafsir(Verse v);
   /**
-   * @brief copy to clipboard the text of the verse with the given index
-   * @param IdxInPage - verse index relative to the start of the page
-   */
-  void copyVerseText(const Verse v);
-  /**
    * @brief search for the surahs with the given argument when the text in the
    * side dock search box is changed
    * @param arg1 - QString of the new text in the search box
@@ -248,14 +242,12 @@ private slots:
   void toggleNavDock();
 
 private:
-  Verse* m_currVerse = Verse::current();
-  QSettings* const m_settings = Globals::settings;
-  const QList<Reciter>& m_recitersList = Globals::recitersList;
-  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
-  const QString& m_updateToolPath = Globals::updateToolPath;
-  DBManager* m_dbMgr = DBManager::instance();
-  fa::QtAwesome* m_fa = Globals::awesome;
   Ui::MainWindow* ui;
+  Verse* m_currVerse = Verse::current();
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QSettings> m_settings = Settings::settings;
+  const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
+  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
   /**
    * @brief initalizes different parts used by the app
    */
@@ -267,7 +259,7 @@ private:
   /**
    * @brief set the current ::Verse from settings
    */
-  void loadCurrent();
+  void loadVerse();
   /**
    * @brief connect ShortcutHandler signals to their corresponding slots
    */
@@ -333,7 +325,7 @@ private:
   /**
    * @brief ShortcutHandler instance for handling shortcuts
    */
-  ShortcutHandler* m_shortcutHandler = nullptr;
+  QSharedPointer<ShortcutHandler> m_shortcutHandler = nullptr;
   /**
    * @brief pointer to SystemTray instance
    */

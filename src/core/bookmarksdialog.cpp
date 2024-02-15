@@ -4,6 +4,8 @@
  */
 
 #include "bookmarksdialog.h"
+#include "../utils/fontmanager.h"
+#include "../utils/stylemanager.h"
 #include "ui_bookmarksdialog.h"
 #include <set>
 
@@ -13,11 +15,12 @@ BookmarksDialog::BookmarksDialog(QWidget* parent)
 {
   ui->setupUi(this);
   ui->navBar->setLayoutDirection(Qt::LeftToRight);
-  ui->btnNext->setIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
+  ui->btnNext->setIcon(
+    StyleManager::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
   ui->btnPrev->setIcon(
-    Globals::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
+    StyleManager::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
   ui->scrollArea->setLayoutDirection(Qt::LeftToRight);
-  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_bookmark));
+  setWindowIcon(StyleManager::awesome->icon(fa::fa_solid, fa::fa_bookmark));
   ui->listViewBookmarkedSurahs->setModel(&m_surahsModel);
 
   loadDefault();
@@ -104,7 +107,7 @@ BookmarksDialog::loadBookmarks(int surah)
   for (int i = m_startIdx; i < end; i++) {
     const Verse& verse = m_shownVerses.at(i);
     QString fontName =
-      Globals::verseFontname(m_dbMgr->getVerseType(), verse.page());
+      FontManager::verseFontname(m_dbMgr->getVerseType(), verse.page());
 
     QFrame* frame = new QFrame(ui->scrlBookmarks);
     frame->setProperty("bookmark", true);
@@ -175,7 +178,7 @@ BookmarksDialog::loadSurahs()
 
   std::set<int> surahs;
   foreach (const Verse& v, m_allBookmarked) {
-      surahs.insert(v.surah());
+    surahs.insert(v.surah());
   }
 
   for (int s : surahs) {

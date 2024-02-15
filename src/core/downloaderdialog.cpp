@@ -4,6 +4,7 @@
  */
 
 #include "downloaderdialog.h"
+#include "../utils/stylemanager.h"
 #include "ui_downloaderdialog.h"
 
 DownloaderDialog::DownloaderDialog(QWidget* parent, DownloadManager* downloader)
@@ -14,7 +15,7 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, DownloadManager* downloader)
 
 {
   ui->setupUi(this);
-  setWindowIcon(Globals::awesome->icon(fa::fa_solid, fa::fa_download));
+  setWindowIcon(StyleManager::awesome->icon(fa::fa_solid, fa::fa_download));
 
   // treeview setup
   QStringList headers;
@@ -82,9 +83,9 @@ void
 DownloaderDialog::populateTreeModel()
 {
   // add reciters
-  for (const Reciter& reciter : m_recitersList) {
-    QStandardItem* item = new QStandardItem(reciter.displayName);
-    item->setToolTip(reciter.displayName);
+  for (const QSharedPointer<Reciter>& reciter : m_reciters) {
+    QStandardItem* item = new QStandardItem(reciter->displayName());
+    item->setToolTip(reciter->displayName());
     m_treeModel.invisibleRootItem()->appendRow(item);
 
     for (int j = 1; j <= 114; j++) {
@@ -104,11 +105,11 @@ DownloaderDialog::populateTreeModel()
   tafsir->setData("tafsir", Qt::UserRole);
   m_treeModel.invisibleRootItem()->appendRow(tafsir);
   // -- tafasir
-  for (int i = 0; i < m_tafasirList.size(); i++) {
-    const Tafsir& t = m_tafasirList.at(i);
-    if (!t.extra)
+  for (int i = 0; i < m_tafasir.size(); i++) {
+    const QSharedPointer<Tafsir>& t = m_tafasir.at(i);
+    if (!t->isExtra())
       continue;
-    QStandardItem* item = new QStandardItem(t.displayName);
+    QStandardItem* item = new QStandardItem(t->displayName());
     item->setData("tadb", Qt::UserRole);
     item->setData(i, Qt::UserRole + 1);
     tafsir->appendRow(item);
@@ -120,11 +121,11 @@ DownloaderDialog::populateTreeModel()
   tafsir->setData("translation", Qt::UserRole);
   m_treeModel.invisibleRootItem()->appendRow(translation);
   // -- translations
-  for (int i = 0; i < m_trList.size(); i++) {
-    const Translation& tr = m_trList.at(i);
-    if (!tr.extra)
+  for (int i = 0; i < m_tr.size(); i++) {
+    const QSharedPointer<Translation>& tr = m_tr.at(i);
+    if (!tr->isExtra())
       continue;
-    QStandardItem* item = new QStandardItem(tr.displayName);
+    QStandardItem* item = new QStandardItem(tr->displayName());
     item->setData("trdb", Qt::UserRole);
     item->setData(i, Qt::UserRole + 1);
     translation->appendRow(item);
@@ -162,7 +163,7 @@ DownloaderDialog::removeFromDownloading(int reciter, int surah)
 void
 DownloaderDialog::addToQueue()
 {
-  static int recitersnum = m_recitersList.size();
+  static int recitersnum = m_reciters.size();
   QModelIndexList selected = ui->treeView->selectionModel()->selectedRows();
 
   foreach (const QModelIndex& i, selected) {
@@ -181,19 +182,19 @@ DownloaderDialog::addToQueue()
     // tafasir
     else if (i.data(Qt::UserRole).toString() == "tadb") {
       QPair<int, int> info(0, i.data(Qt::UserRole + 1).toInt());
-      m_downloaderPtr->addToQueue(File, info);
-      addTaskProgress(File, info);
+      m_downloaderPtr->addToQueue(DownloadManager::File, info);
+      addTaskProgress(DownloadManager::File, info);
     }
     // translation
     else if (i.data(Qt::UserRole).toString() == "trdb") {
       QPair<int, int> info(1, i.data(Qt::UserRole + 1).toInt());
-      m_downloaderPtr->addToQueue(File, info);
-      addTaskProgress(File, info);
+      m_downloaderPtr->addToQueue(DownloadManager::File, info);
+      addTaskProgress(DownloadManager::File, info);
     }
     // extras
     else if (i.data(Qt::UserRole).toString() == "qcf") {
-      m_downloaderPtr->addToQueue(QCF);
-      addTaskProgress(QCF);
+      m_downloaderPtr->addToQueue(DownloadManager::QCF);
+      addTaskProgress(DownloadManager::QCF);
     }
   }
 
@@ -206,17 +207,17 @@ DownloaderDialog::addTaskProgress(DownloadType type, QPair<int, int> info)
 {
   int total = 0;
   QString objName;
-  if (type == Recitation) {
-    QString reciter = m_recitersList.at(info.first).displayName;
+  if (type == DownloadManager::Recitation) {
+    QString reciter = m_reciters.at(info.first)->displayName();
     QString surahName = m_surahDisplayNames.at(info.second - 1);
     objName = reciter + tr(" // Surah: ") + surahName;
     total = m_dbMgr->getSurahVerseCount(info.second);
-  } else if (type == QCF) {
+  } else if (type == DownloadManager::QCF) {
     objName = qApp->translate("SettingsDialog", "QCF V2");
     total = 604;
-  } else if (type == File) {
-    objName = info.first ? m_trList.at(info.second).displayName
-                         : m_tafasirList.at(info.second).displayName;
+  } else if (type == DownloadManager::File) {
+      objName = info.first ? m_tr.at(info.second)->displayName()
+                           : m_tafasir.at(info.second)->displayName();
   }
 
   QFrame* prgFrm = new QFrame(ui->scrollAreaWidgetContents);
@@ -255,7 +256,7 @@ DownloaderDialog::enqueueSurah(int reciter, int surah)
     return;
 
   addToDownloading(reciter, surah);
-  addTaskProgress(Recitation, QPair<int, int>(reciter, surah));
+  addTaskProgress(DownloadManager::Recitation, QPair<int, int>(reciter, surah));
   m_downloaderPtr->addToQueue(reciter, surah);
 }
 
@@ -289,13 +290,13 @@ DownloaderDialog::selectDownload(DownloadType type, QPair<int, int> info)
   QItemSelectionModel* selector = ui->treeView->selectionModel();
   QModelIndex parent;
   QModelIndex task;
-  if (type == Recitation) {
+  if (type == DownloadManager::Recitation) {
     parent = m_treeModel.index(info.first, 0);
     task = m_treeModel.index(info.second - 1, 0, parent);
-  } else if (type == QCF) {
+  } else if (type == DownloadManager::QCF) {
     parent = m_treeModel.index(m_treeModel.rowCount() - 1, 0);
     task = m_treeModel.index(0, 0, parent);
-  } else if (type == File) {
+  } else if (type == DownloadManager::File) {
     parent = m_treeModel.index(m_treeModel.rowCount() - 2 - !info.first, 0);
     // remove default db indices from current index as defaults are not
     // downloadable
@@ -355,7 +356,7 @@ DownloaderDialog::downloadCompleted(DownloadType type,
              m_currentBar,
              &DownloadProgressBar::updateProgress);
 
-  if (type == Recitation)
+  if (type == DownloadManager::Recitation)
     removeFromDownloading(metainfo[0], metainfo[1]);
   if (m_currentBar->maximum() == 1)
     m_currentBar->setFormat("1 / 1");
@@ -376,7 +377,7 @@ DownloaderDialog::topTaskDownloadError(DownloadType type,
              m_currentBar,
              &DownloadProgressBar::updateProgress);
 
-  if (type == Recitation)
+  if (type == DownloadManager::Recitation)
     removeFromDownloading(metainfo[0], metainfo[1]);
   m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
@@ -386,7 +387,7 @@ DownloaderDialog::topTaskDownloadError(DownloadType type,
 void
 DownloaderDialog::openDownloadsDir()
 {
-  QUrl url = QUrl::fromLocalFile(Globals::downloadsDir.absolutePath());
+  QUrl url = QUrl::fromLocalFile(DirManager::downloadsDir->absolutePath());
   QDesktopServices::openUrl(url);
 }
 

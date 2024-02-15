@@ -6,9 +6,8 @@
 #ifndef SEARCHDIALOG_H
 #define SEARCHDIALOG_H
 
-#include "../globals.h"
+#include "../types/verse.h"
 #include "../utils/dbmanager.h"
-#include "../utils/verse.h"
 #include "../widgets/verseframe.h"
 #include <QDialog>
 #include <QScrollBar>
@@ -96,8 +95,8 @@ private slots:
   void btnTransferClicked();
 
 private:
-  const QLocale::Language m_lang = Globals::language;
-  DBManager* m_dbMgr = DBManager::instance();
+  const QLocale::Language m_lang = Settings::language;
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

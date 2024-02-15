@@ -1,8 +1,9 @@
 #ifndef VERSE_H
 #define VERSE_H
 
-#include "../globals.h"
-#include "dbmanager.h"
+#include "../utils/settings.h"
+#include "../utils/dbmanager.h"
+#include <QSharedPointer>
 
 /**
  * @brief Verse class represents a single quran verse
@@ -43,8 +44,8 @@ public:
   void setNumber(int newNumber);
 
 private:
-  const QSettings* m_settings = Globals::settings;
-  DBManager* m_dbMgr = DBManager::instance();
+  const QSharedPointer<QSettings> m_settings = Settings::settings;
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   void updateSurahCount();
 
   int m_page = -1;      ///< verse page

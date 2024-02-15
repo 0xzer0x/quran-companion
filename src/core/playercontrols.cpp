@@ -1,11 +1,13 @@
 #include "playercontrols.h"
+#include "../utils/shortcuthandler.h"
+#include "../utils/stylemanager.h"
 #include "ui_playercontrols.h"
+#include <QtAwesome.h>
 using namespace fa;
 
 PlayerControls::PlayerControls(QWidget* parent,
                                VersePlayer* player,
-                               QuranReader* reader,
-                               ShortcutHandler* handler)
+                               QuranReader* reader)
   : QWidget(parent)
   , ui(new Ui::PlayerControls)
   , m_player(player)
@@ -13,10 +15,10 @@ PlayerControls::PlayerControls(QWidget* parent,
 {
   ui->setupUi(this);
   loadIcons();
-  setupShortcuts(handler);
+  setupConnections();
 
-  foreach (const Reciter& r, m_recitersList)
-    ui->cmbReciter->addItem(r.displayName);
+  foreach (const QSharedPointer<Reciter>& r, m_reciters)
+    ui->cmbReciter->addItem(r->displayName());
 
   ui->cmbReciter->setCurrentIndex(m_settings->value("Reciter", 0).toInt());
 }
@@ -24,31 +26,31 @@ PlayerControls::PlayerControls(QWidget* parent,
 void
 PlayerControls::loadIcons()
 {
-  ui->btnPlay->setIcon(m_fa->icon(fa_solid, fa_play));
-  ui->btnPause->setIcon(m_fa->icon(fa_solid, fa_pause));
-  ui->btnStop->setIcon(m_fa->icon(fa_solid, fa_stop));
+  ui->btnPlay->setIcon(StyleManager::awesome->icon(fa_solid, fa_play));
+  ui->btnPause->setIcon(StyleManager::awesome->icon(fa_solid, fa_pause));
+  ui->btnStop->setIcon(StyleManager::awesome->icon(fa_solid, fa_stop));
 
   ui->lbSpeaker->setText(QString(fa_volume_high));
-  ui->lbSpeaker->setFont(m_fa->font(fa_solid, 16));
+  ui->lbSpeaker->setFont(StyleManager::awesome->font(fa_solid, 16));
 }
 
 void
-PlayerControls::setupShortcuts(ShortcutHandler* handler)
+PlayerControls::setupConnections()
 {
-
-  connect(handler,
+  QSharedPointer<ShortcutHandler> handler = ShortcutHandler::current();
+  connect(handler.data(),
           &ShortcutHandler::togglePlayerControls,
           this,
           &PlayerControls::toggleVisibility);
-  connect(handler,
+  connect(handler.data(),
           &ShortcutHandler::togglePlayback,
           this,
           &PlayerControls::togglePlayback);
-  connect(handler,
+  connect(handler.data(),
           &ShortcutHandler::incrementVolume,
           this,
           &PlayerControls::incrementVolume);
-  connect(handler,
+  connect(handler.data(),
           &ShortcutHandler::decrementVolume,
           this,
           &PlayerControls::decrementVolume);

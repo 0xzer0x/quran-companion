@@ -1,9 +1,9 @@
 #ifndef VERSEDIALOG_H
 #define VERSEDIALOG_H
 
-#include "../globals.h"
+#include "../types/verse.h"
 #include "../utils/dbmanager.h"
-#include "../utils/verse.h"
+#include "../utils/dirmanager.h"
 #include <QDateTime>
 #include <QDialog>
 
@@ -35,10 +35,9 @@ protected:
 
 private:
   Ui::VerseDialog* ui;
-  const QSettings* m_settings = Globals::settings;
-  DBManager* m_dbMgr = DBManager::instance();
-  QFile m_timestampFile = Globals::configDir.absoluteFilePath("votd.log");
-  fa::QtAwesome* m_fa = Globals::awesome;
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  const QSharedPointer<QSettings> m_settings = Settings::settings;
+  QFile m_timestampFile = DirManager::configDir->absoluteFilePath("votd.log");
   /**
    * @brief generate the verse of the day and set the votd html
    */

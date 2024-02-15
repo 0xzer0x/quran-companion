@@ -6,8 +6,9 @@
 #ifndef DOWNLOADPROGRESSBAR_H
 #define DOWNLOADPROGRESSBAR_H
 
-#include "../globals.h"
+#include "../utils/downloadmanager.h"
 #include <QProgressBar>
+typedef DownloadManager::DownloadType DownloadType;
 
 /**
  * @brief DownloadProgressBar class is a modified QProgressBar to change its

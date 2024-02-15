@@ -6,9 +6,9 @@
 #ifndef VERSEPLAYER_H
 #define VERSEPLAYER_H
 
-#include "../globals.h"
+#include "../types/reciter.h"
+#include "../types/verse.h"
 #include "dbmanager.h"
-#include "verse.h"
 #include <QApplication>
 #include <QAudioDevice>
 #include <QAudioOutput>
@@ -117,9 +117,9 @@ signals:
 
 private:
   Verse* m_activeVerse = Verse::current();
-  QDir m_reciterDir = Globals::downloadsDir.absoluteFilePath("recitations");
-  const QList<Reciter>& m_recitersList = Globals::recitersList;
-  DBManager* m_dbMgr = DBManager::instance();
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QDir m_reciterDir = DirManager::downloadsDir->absoluteFilePath("recitations");
+  const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
   /**
    * @brief boolean indicating whether the player is on or off, 'on' implies
    * that playback should continue in case of verse change

@@ -12,7 +12,7 @@ VersePlayer::VersePlayer(QObject* parent, int reciterIdx)
 {
   setAudioOutput(m_output);
 
-  m_reciterDir.cd(m_recitersList.at(m_reciter).baseDirName);
+    m_reciterDir.cd(m_recitersList.at(m_reciter)->baseDirName());
   loadActiveVerse();
 }
 
@@ -84,7 +84,7 @@ VersePlayer::changeReciter(int reciterIdx)
   stop();
   if (reciterIdx != m_reciter) {
     m_reciterDir.cdUp();
-    m_reciterDir.cd(m_recitersList.at(reciterIdx).baseDirName);
+      m_reciterDir.cd(m_recitersList.at(reciterIdx)->baseDirName());
     m_reciter = reciterIdx;
   }
 
@@ -111,7 +111,7 @@ bool
 VersePlayer::loadActiveVerse()
 {
   if (m_activeVerse->number() == 0) {
-    setSource(QUrl::fromLocalFile(m_recitersList.at(m_reciter).basmallahPath));
+        setSource(QUrl::fromLocalFile(m_recitersList.at(m_reciter)->basmallahPath()));
     return true;
   }
 
@@ -121,7 +121,7 @@ VersePlayer::loadActiveVerse()
 QString
 VersePlayer::reciterName() const
 {
-  return m_recitersList.at(m_reciter).displayName;
+    return m_recitersList.at(m_reciter)->displayName();
 }
 
 QAudioOutput*
