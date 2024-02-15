@@ -769,7 +769,7 @@
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="193"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>عن البرنامَج</translation>
     </message>
     <message>
       <location filename="../../src/widgets/aboutdialog.ui" line="201"/>
@@ -847,7 +847,7 @@
     <message>
       <location filename="../../src/core/bookmarksdialog.ui" line="170"/>
       <source>next</source>
-      <translation type="unfinished">next</translation>
+      <translation>التالي</translation>
     </message>
     <message>
       <location filename="../../src/core/bookmarksdialog.ui" line="176"/>
@@ -857,7 +857,7 @@
     <message>
       <location filename="../../src/core/bookmarksdialog.ui" line="198"/>
       <source>previous</source>
-      <translation type="unfinished">previous</translation>
+      <translation>السابق</translation>
     </message>
     <message>
       <location filename="../../src/core/bookmarksdialog.ui" line="204"/>
@@ -1119,7 +1119,7 @@
     <message>
       <location filename="../../src/core/playercontrols.ui" line="74"/>
       <source>Reciter</source>
-      <translation type="unfinished">Reciter</translation>
+      <translation>القارئ</translation>
     </message>
   </context>
   <context>
@@ -1170,12 +1170,12 @@
     <message>
       <location filename="../../src/core/quranreader.ui" line="51"/>
       <source>next</source>
-      <translation type="unfinished">next</translation>
+      <translation>التالي</translation>
     </message>
     <message>
       <location filename="../../src/core/quranreader.ui" line="193"/>
       <source>previous</source>
-      <translation type="unfinished">previous</translation>
+      <translation>السابق</translation>
     </message>
   </context>
   <context>
@@ -1208,7 +1208,7 @@
     <message>
       <location filename="../../src/core/searchdialog.ui" line="161"/>
       <source>next</source>
-      <translation type="unfinished">next</translation>
+      <translation>التالي</translation>
     </message>
     <message>
       <location filename="../../src/core/searchdialog.ui" line="167"/>
@@ -1218,7 +1218,7 @@
     <message>
       <location filename="../../src/core/searchdialog.ui" line="189"/>
       <source>previous</source>
-      <translation type="unfinished">previous</translation>
+      <translation>السابق</translation>
     </message>
     <message>
       <location filename="../../src/core/searchdialog.ui" line="195"/>
@@ -1284,17 +1284,17 @@
     <message>
       <location filename="../../src/utils/systemtray.cpp" line="35"/>
       <source>Play/Pause recitation</source>
-      <translation type="unfinished">Play/Pause recitation</translation>
+      <translation>تشغيل/إيقاف التلاوة</translation>
     </message>
     <message>
       <location filename="../../src/utils/systemtray.cpp" line="36"/>
       <source>Show window</source>
-      <translation type="unfinished">Show window</translation>
+      <translation>إظهار النافذة</translation>
     </message>
     <message>
       <location filename="../../src/utils/systemtray.cpp" line="37"/>
       <source>Hide window</source>
-      <translation type="unfinished">Hide window</translation>
+      <translation>إخفاء النافذة</translation>
     </message>
     <message>
       <location filename="../../src/utils/systemtray.cpp" line="38"/>
@@ -1309,7 +1309,7 @@
     <message>
       <location filename="../../src/utils/systemtray.cpp" line="40"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>عن البرنامَج</translation>
     </message>
     <message>
       <location filename="../../src/utils/systemtray.cpp" line="41"/>
@@ -1327,7 +1327,7 @@
     <message>
       <location filename="../../src/core/tafsirdialog.ui" line="115"/>
       <source>next</source>
-      <translation type="unfinished">next</translation>
+      <translation>التالي</translation>
     </message>
     <message>
       <location filename="../../src/core/tafsirdialog.ui" line="121"/>
@@ -1337,7 +1337,7 @@
     <message>
       <location filename="../../src/core/tafsirdialog.ui" line="153"/>
       <source>previous</source>
-      <translation type="unfinished">previous</translation>
+      <translation>السابق</translation>
     </message>
     <message>
       <location filename="../../src/core/tafsirdialog.ui" line="159"/>
