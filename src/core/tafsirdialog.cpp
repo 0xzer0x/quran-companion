@@ -32,6 +32,19 @@ TafsirDialog::TafsirDialog(QWidget* parent)
 }
 
 void
+TafsirDialog::setupConnections()
+{
+  connect(
+    ui->btnNext, &QPushButton::clicked, this, &TafsirDialog::btnNextClicked);
+  connect(
+    ui->btnPrev, &QPushButton::clicked, this, &TafsirDialog::btnPrevClicked);
+  connect(ui->cmbTafsir,
+          &QComboBox::currentIndexChanged,
+          this,
+          &TafsirDialog::tafsirChanged);
+}
+
+void
 TafsirDialog::btnNextClicked()
 {
   m_shownVerse = m_shownVerse.next();
@@ -48,26 +61,31 @@ TafsirDialog::btnPrevClicked()
 }
 
 void
-TafsirDialog::setupConnections()
+TafsirDialog::tafsirChanged()
 {
-  connect(
-    ui->btnNext, &QPushButton::clicked, this, &TafsirDialog::btnNextClicked);
-  connect(
-    ui->btnPrev, &QPushButton::clicked, this, &TafsirDialog::btnPrevClicked);
+  if (m_internalTafsirLoading)
+    return;
+
+  m_tafsir = ui->cmbTafsir->currentData().toInt();
+  m_settings->setValue("Reader/Tafsir", m_tafsir);
+  m_dbMgr->updateLoadedTafsir();
+  loadVerseTafsir();
 }
 
 void
 TafsirDialog::updateContentComboBox()
 {
+  m_internalTafsirLoading = true;
   ui->cmbTafsir->clear();
-  for (int i = 0; i < m_tafasirList.size(); i++) {
-    const QSharedPointer<Tafsir> t = m_tafasirList.at(i);
+  for (int i = 0; i < m_tafasir.size(); i++) {
+    const QSharedPointer<Tafsir>& t = m_tafasir.at(i);
     if (Tafsir::tafsirExists(t))
       ui->cmbTafsir->addItem(t->displayName(), i);
   }
 
   m_tafsir = ui->cmbTafsir->findData(m_settings->value("Reader/Tafsir"));
   ui->cmbTafsir->setCurrentIndex(m_tafsir);
+  m_internalTafsirLoading = false;
 }
 
 void

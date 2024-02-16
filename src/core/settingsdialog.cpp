@@ -70,8 +70,8 @@ void
 SettingsDialog::updateContentCombobox()
 {
   ui->cmbTafsir->clear();
-  for (int i = 0; i < m_tafasirList.size(); i++) {
-    const QSharedPointer<Tafsir>& t = m_tafasirList[i];
+  for (int i = 0; i < m_tafasir.size(); i++) {
+    const QSharedPointer<Tafsir>& t = m_tafasir[i];
     if (Tafsir::tafsirExists(t))
       ui->cmbTafsir->addItem(t->displayName(), i);
   }

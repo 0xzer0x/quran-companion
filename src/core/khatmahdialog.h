@@ -39,7 +39,7 @@ signals:
    * @brief Emitted when changing the active khatmah
    * @param v - ::Verse to navigate to
    */
-  void navigateToVerse(Verse v);
+  void navigateToVerse(const Verse& v);
 
 protected:
   /**

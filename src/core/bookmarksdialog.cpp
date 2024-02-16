@@ -212,8 +212,8 @@ void
 BookmarksDialog::btnGoToVerse()
 {
   QStringList info = sender()->parent()->objectName().split('-');
-  Verse verse{ info.at(0).toInt(), info.at(1).toInt(), info.at(2).toInt() };
-  emit navigateToVerse(verse.toList());
+  Verse verse(info.at(0).toInt(), info.at(1).toInt(), info.at(2).toInt());
+  emit navigateToVerse(verse);
 }
 
 void

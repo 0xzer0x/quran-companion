@@ -27,7 +27,7 @@ public slots:
   void showVOTD(bool startup);
 
 signals:
-  void navigateToVerse(Verse v);
+  void navigateToVerse(const Verse& v);
 
 protected:
   void mouseReleaseEvent(QMouseEvent* event);

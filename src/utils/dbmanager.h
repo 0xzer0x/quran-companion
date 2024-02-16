@@ -322,6 +322,16 @@ public:
    */
   VerseType getVerseType() const;
 
+public slots:
+  /**
+   * @brief set tafsir to the one in the settings, update the selected db
+   */
+  void updateLoadedTafsir();
+  /**
+   * @brief set translation to the one in the settings, update the selected db
+   */
+  void updateLoadedTranslation();
+
 signals:
   void bookmarkAdded();
   void bookmarkRemoved();
@@ -332,7 +342,7 @@ private:
   const QSharedPointer<QDir> m_assetsDir = DirManager::assetsDir;
   const QSharedPointer<QDir> m_downloadsDir = DirManager::downloadsDir;
   const QSharedPointer<QSettings> m_settings = Settings::settings;
-  const QList<QSharedPointer<Tafsir>>& m_tafasirList = Tafsir::tafasir;
+  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
   const QList<QSharedPointer<Translation>>& m_translationsList =
     Translation::translations;
   const QString m_bookmarksFilepath =
@@ -350,16 +360,20 @@ private:
    * databases
    */
   QSqlDatabase m_openDBCon;
-
+  /**
+   * @brief m_verseType
+   *
+   * MODIFIED
+   */
   VerseType m_verseType = Settings::qcf;
   /**
    * @brief the current active DBManager::Tafasir
    */
-  QSharedPointer<Tafsir> m_currTafsir = nullptr;
+  QSharedPointer<Tafsir> m_currTafsir;
   /**
    * @brief the current active DBManager::Translation
    */
-  QSharedPointer<Translation> m_currTrans = nullptr;
+  QSharedPointer<Translation> m_currTrans;
   /**
    * @brief path to the currently active tafsir database file
    */

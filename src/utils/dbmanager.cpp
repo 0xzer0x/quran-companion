@@ -28,9 +28,11 @@ DBManager::DBManager(QObject* parent)
   QSqlDatabase::addDatabase("QSQLITE", "TafsirCon");
   QSqlDatabase::addDatabase("QSQLITE", "TranslationCon");
 
-  for (int i = 1; i <= 114; i++) {
+  for (int i = 1; i <= 114; i++)
     m_surahNames.append(getSurahName(i));
-  }
+
+  updateLoadedTafsir();
+  updateLoadedTranslation();
 }
 
 /* ---------------- Database handling ---------------- */
@@ -80,10 +82,10 @@ DBManager::setOpenDatabase(Database db, QString filePath)
 void
 DBManager::setCurrentTafsir(int tafsirIdx)
 {
-  if (tafsirIdx < 0 || tafsirIdx >= m_tafasirList.size())
+  if (tafsirIdx < 0 || tafsirIdx >= m_tafasir.size())
     return;
 
-  m_currTafsir = m_tafasirList[tafsirIdx];
+  m_currTafsir = m_tafasir[tafsirIdx];
   const QDir& baseDir =
     m_currTafsir->isExtra() ? *m_downloadsDir : *m_assetsDir;
   QString path = "tafasir/" + m_currTafsir->filename();
@@ -817,6 +819,20 @@ DBManager::getTranslation(const int sIdx, const int vIdx)
   dbQuery.next();
 
   return dbQuery.value(0).toString();
+}
+
+void
+DBManager::updateLoadedTafsir()
+{
+  int currTafsir = m_settings->value("Reader/Tafsir").toInt();
+  setCurrentTafsir(currTafsir);
+}
+
+void
+DBManager::updateLoadedTranslation()
+{
+  int currTrans = m_settings->value("Reader/Translation").toInt();
+  setCurrentTranslation(currTrans);
 }
 
 void

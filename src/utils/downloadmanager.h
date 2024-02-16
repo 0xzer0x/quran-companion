@@ -194,7 +194,7 @@ private:
   QSharedPointer<const QDir> m_downloadsDir = DirManager::downloadsDir;
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
-  const QList<QSharedPointer<Tafsir>>& m_tafasirList = Tafsir::tafasir;
+  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
   const QList<QSharedPointer<Translation>>& m_trList =
     Translation::translations;
   /**

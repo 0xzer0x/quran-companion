@@ -36,19 +36,11 @@ public slots:
    * @brief navigate to the given Verse and update UI elements accordingly
    * @param v - Verse to navigate to
    */
-  void navigateToVerse(Verse v);
+  void navigateToVerse(const Verse& v);
   /**
    * @brief toggle the main reader view by hiding one of the panels
    */
   void toggleReaderView();
-  /**
-   * @brief set tafsir to the one in the settings, update the selected db
-   */
-  void updateLoadedTafsir();
-  /**
-   * @brief set translation to the one in the settings, update the selected db
-   */
-  void updateLoadedTranslation();
   /**
    * @brief redraw the current Quran page
    * @param manualSz - boolean flag to force the use of the manually set
@@ -148,7 +140,7 @@ private:
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QSharedPointer<QSettings> m_settings = Settings::settings;
   const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
-  const QList<QSharedPointer<Tafsir>>& m_tafasirList = Tafsir::tafasir;
+  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
   const ReaderMode& m_readerMode = Settings::readerMode;
   void setupConnections();
   /**

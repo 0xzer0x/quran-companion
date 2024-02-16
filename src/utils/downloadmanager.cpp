@@ -98,7 +98,7 @@ DownloadManager::enqeueTask(QPair<int, int> info)
   if (info.first)
     path = "translations/" + m_trList.at(info.second)->filename();
   else
-    path = "tafasir/" + m_tafasirList.at(info.second)->filename();
+    path = "tafasir/" + m_tafasir.at(info.second)->filename();
   DownloadTask t;
   t.metainfo = { info.first, info.second, 0 };
   t.metainfo.squeeze();

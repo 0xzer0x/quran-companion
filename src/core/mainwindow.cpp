@@ -364,12 +364,12 @@ MainWindow::setupConnections()
           &QuranReader::addSideContent);
   connect(m_settingsDlg,
           &SettingsDialog::tafsirChanged,
-          m_reader,
-          &QuranReader::updateLoadedTafsir);
+          m_dbMgr.data(),
+          &DBManager::updateLoadedTafsir);
   connect(m_settingsDlg,
           &SettingsDialog::translationChanged,
-          m_reader,
-          &QuranReader::updateLoadedTranslation);
+          m_dbMgr.data(),
+          &DBManager::updateLoadedTranslation);
   connect(m_settingsDlg,
           &SettingsDialog::sideFontChanged,
           m_reader,
@@ -904,7 +904,7 @@ MainWindow::showVerseTafsir(Verse v)
 {
   static bool reload = false;
   if (reload) {
-    m_reader->updateLoadedTafsir();
+    m_dbMgr->updateLoadedTafsir();
     reload = false;
   }
 

@@ -69,13 +69,17 @@ private slots:
    * tafsir.
    */
   void btnPrevClicked();
+  /**
+   * @brief tafsirChanged
+   */
+  void tafsirChanged();
 
 private:
   Ui::TafsirDialog* ui;
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   const int m_qcfVer = Settings::qcfVersion;
   const QSharedPointer<QSettings> m_settings = Settings::settings;
-  const QList<QSharedPointer<Tafsir>>& m_tafasirList = Tafsir::tafasir;
+  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
   const QList<QSharedPointer<Translation>>& m_trList =
     Translation::translations;
   /**
@@ -83,7 +87,16 @@ private:
    * components and shortcuts.
    */
   void setupConnections();
+  /**
+   * @brief updateContentComboBox
+   *
+   * MODIFIED
+   */
   void updateContentComboBox();
+  /**
+   * @brief m_internalTafsirLoading
+   */
+  bool m_internalTafsirLoading = false;
   /**
    * @brief Tafsir enum value mapped to the tafsir index in the
    * combobox.

@@ -227,7 +227,7 @@ private:
   const QLocale::Language m_languageCode = Settings::language;
   QSharedPointer<QSettings> const m_settings = Settings::settings;
   const QDir& m_downloadsDir = *DirManager::downloadsDir;
-  const QList<QSharedPointer<Tafsir>>& m_tafasirList = Tafsir::tafasir;
+  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
   const QList<QSharedPointer<Translation>>& m_trList =
     Translation::translations;
   const QMap<QString, QString>& m_shortcutDescription =

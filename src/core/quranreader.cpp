@@ -17,8 +17,6 @@ QuranReader::QuranReader(QWidget* parent, VersePlayer* player)
   loadIcons();
   loadReader();
   updateHighlight();
-  updateLoadedTafsir();
-  updateLoadedTranslation();
   updateSideFont();
   updateVerseType();
   redrawQuranPage(true);
@@ -148,20 +146,6 @@ QuranReader::toggleReaderView()
     ui->frmPageContent->setVisible(false);
   } else
     ui->frmPageContent->setVisible(true);
-}
-
-void
-QuranReader::updateLoadedTafsir()
-{
-  int currTafsir = m_settings->value("Reader/Tafsir").toInt();
-  m_dbMgr->setCurrentTafsir(currTafsir);
-}
-
-void
-QuranReader::updateLoadedTranslation()
-{
-  int currTrans = m_settings->value("Reader/Translation").toInt();
-  m_dbMgr->setCurrentTranslation(currTrans);
 }
 
 void
@@ -311,7 +295,7 @@ QuranReader::setHighlightedFrame()
 }
 
 void
-QuranReader::navigateToVerse(Verse v)
+QuranReader::navigateToVerse(const Verse& v)
 {
   gotoPage(v.page(), false);
 
