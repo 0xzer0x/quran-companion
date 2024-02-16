@@ -77,11 +77,6 @@ public slots:
    */
   void updateFileWarning(bool on);
   /**
-   * @brief Update the selected tafsir
-   * @param idx - index of the tafsir value in DBManager::Tafsir enum
-   */
-  void updateTafsir(int idx);
-  /**
    * @brief Update the selected translation
    * @param idx - index of the translation value in DBManager::Translation enum
    */
@@ -174,11 +169,6 @@ signals:
    */
   void redrawQuranPage(bool manual);
   /**
-   * @fn tafsirChanged()
-   * @brief signal emitted to notify changes in the displayed tafsir
-   */
-  void tafsirChanged();
-  /**
    * @fn translationChanged()
    * @brief signal emitted to notify changes in the displayed translation
    */
@@ -268,13 +258,6 @@ private:
    * SettingsDialog::m_audioDevices.
    */
   int m_audioOutIdx;
-  /**
-   * @brief DBManager::Tafsir enum value mapped to the tafsir index in the
-   * combobox.
-   *
-   * MODIFIED
-   */
-  int m_tafsir;
   /**
    * @brief DBManager::Translation enum value mapped to the translation index in
    * the combobox.

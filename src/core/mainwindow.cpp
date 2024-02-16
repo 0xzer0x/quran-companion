@@ -363,10 +363,6 @@ MainWindow::setupConnections()
           m_reader,
           &QuranReader::addSideContent);
   connect(m_settingsDlg,
-          &SettingsDialog::tafsirChanged,
-          m_dbMgr.data(),
-          &DBManager::updateLoadedTafsir);
-  connect(m_settingsDlg,
           &SettingsDialog::translationChanged,
           m_dbMgr.data(),
           &DBManager::updateLoadedTranslation);

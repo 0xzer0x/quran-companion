@@ -69,12 +69,6 @@ SettingsDialog::fillLanguageCombobox()
 void
 SettingsDialog::updateContentCombobox()
 {
-  ui->cmbTafsir->clear();
-  for (int i = 0; i < m_tafasir.size(); i++) {
-    const QSharedPointer<Tafsir>& t = m_tafasir[i];
-    if (Tafsir::tafsirExists(t))
-      ui->cmbTafsir->addItem(t->displayName(), i);
-  }
   ui->cmbTranslation->clear();
   for (int i = 0; i < m_trList.size(); i++) {
     const QSharedPointer<Translation>& tr = m_trList[i];
@@ -82,10 +76,8 @@ SettingsDialog::updateContentCombobox()
       ui->cmbTranslation->addItem(tr->displayName(), i);
   }
 
-  m_tafsir = ui->cmbTafsir->findData(m_settings->value("Reader/Tafsir"));
   m_translation =
     ui->cmbTranslation->findData(m_settings->value("Reader/Translation"));
-  ui->cmbTafsir->setCurrentIndex(m_tafsir);
   ui->cmbTranslation->setCurrentIndex(m_translation);
 }
 
@@ -189,13 +181,6 @@ void
 SettingsDialog::updateFileWarning(bool on)
 {
   m_settings->setValue("MissingFileWarning", on);
-}
-
-void
-SettingsDialog::updateTafsir(int idx)
-{
-  m_settings->setValue("Reader/Tafsir", idx);
-  emit tafsirChanged();
 }
 
 void
@@ -325,9 +310,6 @@ SettingsDialog::applyAllChanges()
 
   if (ui->chkFgHighlight->isChecked() != m_fgHighlight)
     updateFgHighlight(ui->chkFgHighlight->isChecked());
-
-  if (ui->cmbTafsir->currentIndex() != m_tafsir)
-    updateTafsir(ui->cmbTafsir->currentData().toInt());
 
   if (ui->cmbTranslation->currentIndex() != m_translation)
     updateTranslation(ui->cmbTranslation->currentData().toInt());

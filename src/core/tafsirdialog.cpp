@@ -68,7 +68,7 @@ TafsirDialog::tafsirChanged()
 
   m_tafsir = ui->cmbTafsir->currentData().toInt();
   m_settings->setValue("Reader/Tafsir", m_tafsir);
-  m_dbMgr->updateLoadedTafsir();
+  m_dbMgr->setCurrentTafsir(m_tafsir);
   loadVerseTafsir();
 }
 
