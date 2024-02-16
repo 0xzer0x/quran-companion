@@ -231,7 +231,7 @@ private:
   const QList<QSharedPointer<Translation>>& m_trList =
     Translation::translations;
   const QMap<QString, QString>& m_shortcutDescription =
-      ShortcutHandler::shortcutsDescription;
+    ShortcutHandler::shortcutsDescription;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -259,13 +259,6 @@ private:
    * @brief check if any shortcut was changed and updated it
    */
   void checkShortcuts();
-  /**
-   * @brief check if QCF2 font files exist
-   *
-   * @return true - all 604 QCF2 files are found
-   * @return false - one of the files is missing
-   */
-  bool qcfExists();
   /**
    * @brief QCF font size used in constructing Quran page.
    */

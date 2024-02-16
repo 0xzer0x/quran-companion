@@ -73,3 +73,16 @@ FontManager::verseFontname(Settings::VerseType type, int page)
   }
   return fontname;
 }
+
+bool
+FontManager::qcfExists()
+{
+  QString filename = "QCFV2/QCF2%0.ttf";
+  for (int i = 1; i <= 604; i++) {
+    if (!DirManager::downloadsDir->exists(
+          filename.arg(QString::number(i).rightJustified(3, '0'))))
+      return false;
+  }
+
+  return true;
+}

@@ -1,8 +1,8 @@
 #ifndef VERSE_H
 #define VERSE_H
 
-#include "../utils/settings.h"
 #include "../utils/dbmanager.h"
+#include "../utils/settings.h"
 #include <QSharedPointer>
 
 /**
@@ -14,7 +14,7 @@
 class Verse
 {
 public:
-  static Verse* current();
+  static QSharedPointer<Verse> current();
   static QList<Verse> fromList(QList<QList<int>> lst);
 
   Verse();

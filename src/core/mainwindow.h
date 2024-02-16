@@ -55,11 +55,21 @@ public:
    * @brief class constructor
    * @param parent - pointer to parent widget
    */
-  explicit MainWindow(QWidget* parent = nullptr);
+  explicit MainWindow(QWidget* parent);
   ~MainWindow();
 
 public slots:
+  /**
+   * @brief currentVerseChanged
+   *
+   * MODIFIED
+   */
   void currentVerseChanged();
+  /**
+   * @brief currentSurahChanged
+   *
+   * MODIFIED
+   */
   void currentSurahChanged();
   /**
    * @brief check if there are updates using the maintainence tool if available,
@@ -243,8 +253,10 @@ private slots:
 
 private:
   Ui::MainWindow* ui;
-  Verse* m_currVerse = Verse::current();
+  QSharedPointer<Verse> m_currVerse = Verse::current();
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<ShortcutHandler> m_shortcutHandler =
+    ShortcutHandler::current();
   QSharedPointer<QSettings> m_settings = Settings::settings;
   const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
   const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
@@ -320,74 +332,6 @@ private:
    * change of juz combobox index
    */
   bool m_internalJuzChange = false;
-  QuranReader* m_reader = nullptr;
-  PlayerControls* m_playerControls = nullptr;
-  /**
-   * @brief ShortcutHandler instance for handling shortcuts
-   */
-  QSharedPointer<ShortcutHandler> m_shortcutHandler = nullptr;
-  /**
-   * @brief pointer to SystemTray instance
-   */
-  SystemTray* m_systemTray = nullptr;
-  /**
-   * @brief pointer to NotificationPopup instance
-   */
-  NotificationPopup* m_popup = nullptr;
-  /**
-   * @brief pointer to VersePlayer instance
-   */
-  VersePlayer* m_player = nullptr;
-  /**
-   * @brief pointer to TafsirDialog instance
-   */
-  TafsirDialog* m_tafsirDlg = nullptr;
-  /**
-   * @brief pointer to SearchDialog instance
-   */
-  SearchDialog* m_searchDlg = nullptr;
-  /**
-   * @brief pointer to SettingsDialog instance
-   */
-  SettingsDialog* m_settingsDlg = nullptr;
-  /**
-   * @brief pointer to BookmarksDialog instance
-   */
-  BookmarksDialog* m_bookmarksDlg = nullptr;
-  /**
-   * @brief pointer to KhatmahDialog instance
-   */
-  KhatmahDialog* m_khatmahDlg = nullptr;
-  /**
-   * @brief pointer to CopyDialog instance
-   */
-  CopyDialog* m_cpyDlg = nullptr;
-  /**
-   * @brief pointer to DownloaderDialog instance
-   */
-  DownloaderDialog* m_downloaderDlg = nullptr;
-  /**
-   * @brief pointer to DownloadManager instance
-   */
-  DownloadManager* m_downManPtr = nullptr;
-  /**
-   * @brief pointer to the surah card (betaqa) widget
-   */
-  BetaqaViewer* m_betaqaViewer = nullptr;
-  /**
-   * @brief pointer to the votd dialog
-   */
-  VerseDialog* m_verseDlg = nullptr;
-  /**
-   * @brief pointer to the QProcess instance of the maintainence tool that
-   * checks for updates
-   */
-  QProcess* m_process = nullptr;
-  /**
-   * @brief pointer to the validator for the editable verse combobox to ensure
-   * the number entered is within the surah verse range
-   */
-  QIntValidator* m_verseValidator = new QIntValidator(this);
   /**
    * @brief QList for surah names as it appears in the navigation dock QListView
    */
@@ -397,5 +341,79 @@ private:
    * list of surahs
    */
   QStringListModel m_surahListModel;
+  /**
+   * @brief m_reader
+   *
+   * MODIFIED
+   */
+  QPointer<QuranReader> m_reader;
+  /**
+   * @brief m_playerControls
+   *
+   * MODIFIED
+   */
+  QPointer<PlayerControls> m_playerControls;
+  /**
+   * @brief pointer to SystemTray instance
+   */
+  QPointer<SystemTray> m_systemTray;
+  /**
+   * @brief pointer to NotificationPopup instance
+   */
+  QPointer<NotificationPopup> m_popup;
+  /**
+   * @brief pointer to VersePlayer instance
+   */
+  QPointer<VersePlayer> m_player;
+  /**
+   * @brief pointer to TafsirDialog instance
+   */
+  QPointer<TafsirDialog> m_tafsirDlg;
+  /**
+   * @brief pointer to SearchDialog instance
+   */
+  QPointer<SearchDialog> m_searchDlg;
+  /**
+   * @brief pointer to SettingsDialog instance
+   */
+  QPointer<SettingsDialog> m_settingsDlg;
+  /**
+   * @brief pointer to BookmarksDialog instance
+   */
+  QPointer<BookmarksDialog> m_bookmarksDlg;
+  /**
+   * @brief pointer to KhatmahDialog instance
+   */
+  QPointer<KhatmahDialog> m_khatmahDlg;
+  /**
+   * @brief pointer to CopyDialog instance
+   */
+  QPointer<CopyDialog> m_cpyDlg;
+  /**
+   * @brief pointer to DownloaderDialog instance
+   */
+  QPointer<DownloaderDialog> m_downloaderDlg;
+  /**
+   * @brief pointer to DownloadManager instance
+   */
+  QPointer<DownloadManager> m_downManPtr;
+  /**
+   * @brief pointer to the surah card (betaqa) widget
+   */
+  QPointer<BetaqaViewer> m_betaqaViewer;
+  /**
+   * @brief pointer to the votd dialog
+   */
+  QPointer<VerseDialog> m_verseDlg;
+  /**
+   * @brief pointer to the QProcess instance of the maintainence tool that
+   * checks for updates
+   */
+  QPointer<QProcess> m_process;
+  /**
+   * @brief pointer to the validator for the editable verse combobox to ensure
+   * the number entered is within the surah verse range
+   */
+  QPointer<QIntValidator> m_verseValidator;
 };
 #endif // MAINWINDOW_H

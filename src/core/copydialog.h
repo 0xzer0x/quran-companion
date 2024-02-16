@@ -38,7 +38,7 @@ protected:
 
 private:
   Ui::CopyDialog* ui;
-  Verse* m_currVerse = Verse::current();
+  QSharedPointer<Verse> m_currVerse = Verse::current();
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   void copyRange();
 

@@ -117,16 +117,16 @@ TafsirDialog::setShownVerse(const Verse& newShownVerse)
 }
 
 void
-TafsirDialog::closeEvent(QCloseEvent* event)
-{
-  this->hide();
-}
-
-void
 TafsirDialog::showEvent(QShowEvent* event)
 {
   updateContentComboBox();
   QDialog::showEvent(event);
+}
+
+void
+TafsirDialog::closeEvent(QCloseEvent* event)
+{
+  this->hide();
 }
 
 TafsirDialog::~TafsirDialog()

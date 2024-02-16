@@ -78,7 +78,7 @@ private slots:
 
 private:
   Ui::PlayerControls* ui;
-  Verse* m_currVerse = Verse::current();
+  QSharedPointer<Verse> m_currVerse = Verse::current();
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QSharedPointer<QSettings> const m_settings = Settings::settings;
   const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;

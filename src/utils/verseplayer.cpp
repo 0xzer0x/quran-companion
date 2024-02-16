@@ -57,7 +57,7 @@ VersePlayer::setPlayerVolume(qreal volume)
 }
 
 QString
-VersePlayer::constructVerseFilename(const Verse* v)
+VersePlayer::constructVerseFilename(const QSharedPointer<Verse> v)
 {
   // construct verse mp3 filename e.g. 002005.mp3
   QString filename;

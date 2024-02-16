@@ -39,7 +39,7 @@ public:
    * @param v - ::Verse to get the filename of
    * @return QString of the filename
    */
-  QString constructVerseFilename(const Verse* v);
+  QString constructVerseFilename(const QSharedPointer<Verse> v);
   /**
    * @brief load the verse mp3 from the current reciter directory and set the
    * m_verseFile variable
@@ -116,7 +116,7 @@ signals:
   void missingVerseFile(int reciterIdx, int surah);
 
 private:
-  Verse* m_activeVerse = Verse::current();
+  QSharedPointer<Verse> m_activeVerse = Verse::current();
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QDir m_reciterDir = DirManager::downloadsDir->absoluteFilePath("recitations");
   const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;

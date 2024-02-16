@@ -72,7 +72,7 @@ private slots:
   void setActiveKhatmah();
 
 private:
-  const Verse* m_currVerse = Verse::current();
+  const QSharedPointer<Verse> m_currVerse = Verse::current();
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QSharedPointer<QSettings> m_settings = Settings::settings;
   /**

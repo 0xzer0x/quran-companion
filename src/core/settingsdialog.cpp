@@ -4,6 +4,7 @@
  */
 
 #include "settingsdialog.h"
+#include "../utils/fontmanager.h"
 #include "../utils/stylemanager.h"
 #include "../widgets/shortcutdelegate.h"
 #include "ui_settingsdialog.h"
@@ -148,19 +149,6 @@ SettingsDialog::checkShortcuts()
   }
 }
 
-bool
-SettingsDialog::qcfExists()
-{
-  QString filename = "QCFV2/QCF2%0.ttf";
-  for (int i = 1; i <= 604; i++) {
-    if (!m_downloadsDir.exists(
-          filename.arg(QString::number(i).rightJustified(3, '0'))))
-      return false;
-  }
-
-  return true;
-}
-
 void
 SettingsDialog::updateTheme(int themeIdx)
 {
@@ -235,7 +223,7 @@ SettingsDialog::updateReaderMode(int idx)
 void
 SettingsDialog::updateQuranFont(int qcfV)
 {
-  if (qcfV == 2 && !qcfExists()) {
+  if (qcfV == 2 && !FontManager::qcfExists()) {
     emit qcf2Missing();
     ui->cmbQCF->setCurrentIndex(0);
     return;

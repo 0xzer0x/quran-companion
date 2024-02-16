@@ -144,7 +144,7 @@ private slots:
 
 private:
   Ui::QuranReader* ui;
-  Verse* m_currVerse = Verse::current();
+  QSharedPointer<Verse> m_currVerse = Verse::current();
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QSharedPointer<QSettings> m_settings = Settings::settings;
   const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;

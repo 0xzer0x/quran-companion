@@ -1,10 +1,10 @@
 #include "verse.h"
 
-Verse*
+QSharedPointer<Verse>
 Verse::current()
 {
-  static Verse m_current = Verse();
-  return &m_current;
+  static QSharedPointer<Verse> current = QSharedPointer<Verse>::create();
+  return current;
 }
 
 QList<Verse>

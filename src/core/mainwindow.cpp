@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
   , m_process(new QProcess(this))
-  , m_shortcutHandler(ShortcutHandler::current())
+  , m_verseValidator(new QIntValidator(this))
 {
   ui->setupUi(this);
   loadIcons();
