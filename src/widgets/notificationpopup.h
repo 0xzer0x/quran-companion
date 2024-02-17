@@ -109,7 +109,7 @@ private:
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
   QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
-  QList<QSharedPointer<Translation>>& m_trList = Translation::translations;
+  QList<QSharedPointer<Translation>>& m_translations = Translation::translations;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

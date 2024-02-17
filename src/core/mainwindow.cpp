@@ -914,11 +914,11 @@ MainWindow::showVerseTafsir(Verse v)
   }
 
   if (m_tafsirDlg == nullptr) {
-    m_tafsirDlg = new TafsirDialog(this);
+    m_tafsirDlg = new ContentDialog(this);
   }
 
   m_tafsirDlg->setShownVerse(v);
-  m_tafsirDlg->loadVerseTafsir();
+  m_tafsirDlg->loadContent(ContentDialog::Tafsir);
   m_tafsirDlg->show();
 }
 

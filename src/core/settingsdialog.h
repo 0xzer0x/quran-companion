@@ -220,7 +220,7 @@ private:
   QSharedPointer<QSettings> const m_settings = Settings::settings;
   const QDir& m_downloadsDir = *DirManager::downloadsDir;
   const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
-  const QList<QSharedPointer<Translation>>& m_trList =
+  const QList<QSharedPointer<Translation>>& m_translations =
     Translation::translations;
   const QMap<QString, QString>& m_shortcutDescription =
     ShortcutHandler::shortcutsDescription;

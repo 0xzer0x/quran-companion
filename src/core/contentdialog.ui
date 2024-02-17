@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TafsirDialog</class>
- <widget class="QDialog" name="TafsirDialog">
+ <class>ContentDialog</class>
+ <widget class="QDialog" name="ContentDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Tafsir</string>
+   <string>Content</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -24,7 +24,38 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cmbTafsir">
+      <widget class="QComboBox" name="cmbType">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <item>
+        <property name="text">
+         <string>Tafsir</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Translation</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Thoughts</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cmbContent">
        <property name="currentText">
         <string notr="true"/>
        </property>
@@ -46,7 +77,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTextEdit" name="tedTafsir">
+    <widget class="QTextEdit" name="tedContent">
      <property name="font">
       <font>
        <family>PakType Naskh Basic</family>

@@ -59,9 +59,9 @@ set(PROJECT_SOURCES
     src/core/bookmarksdialog.h
     src/core/bookmarksdialog.cpp
     src/core/bookmarksdialog.ui
-    src/core/tafsirdialog.h
-    src/core/tafsirdialog.cpp
-    src/core/tafsirdialog.ui
+    src/core/contentdialog.h
+    src/core/contentdialog.cpp
+    src/core/contentdialog.ui
     src/core/khatmahdialog.h
     src/core/khatmahdialog.cpp
     src/core/khatmahdialog.ui

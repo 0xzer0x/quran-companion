@@ -71,7 +71,7 @@ QWidget#shortcutsTab {
   border: none;
 }
 
-QAbstractScrollArea#tedTafsir {
+QAbstractScrollArea#tedContent {
   border: 1px solid #222222;
   border-radius: 4px;
 }

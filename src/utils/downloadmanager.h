@@ -196,7 +196,7 @@ private:
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
   const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
-  const QList<QSharedPointer<Translation>>& m_trList =
+  const QList<QSharedPointer<Translation>>& m_translations =
     Translation::translations;
   /**
    * @brief generate download url for specified verse using the reciter download

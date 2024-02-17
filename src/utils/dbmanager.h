@@ -61,19 +61,12 @@ public:
    * @brief sets the active tafsir
    * @param tafsirName - DBManager::Tafsir entry
    */
-  void setCurrentTafsir(int tafsirIdx);
+  bool setCurrentTafsir(int tafsirIdx);
   /**
    * @brief sets the active translation
    * @param translationName - DBManager::Translation entry
    */
-  void setCurrentTranslation(int translationIdx);
-  /**
-   * @brief sets the currently active sqlite database file and opens
-   * corresponding connection based on the DBManager::Database type
-   * @param db - DBManager::Database entry
-   * @param filePath - path to the database file
-   */
-  void setOpenDatabase(Database db, QString filePath);
+  bool setCurrentTranslation(int translationIdx);
   /**
    * @brief gets the surah number and juz number of the first verse in the page,
    * used to display page header information
@@ -343,10 +336,18 @@ private:
   const QSharedPointer<QDir> m_downloadsDir = DirManager::downloadsDir;
   const QSharedPointer<QSettings> m_settings = Settings::settings;
   const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
-  const QList<QSharedPointer<Translation>>& m_translationsList =
+  const QList<QSharedPointer<Translation>>& m_translations =
     Translation::translations;
   const QString m_bookmarksFilepath =
     DirManager::configDir->absoluteFilePath("bookmarks.db");
+  /**
+   * @brief sets the currently active sqlite database file and opens
+   * corresponding connection based on the DBManager::Database type
+   * @param db - DBManager::Database entry
+   * @param filePath - path to the database file
+   */
+  void setOpenDatabase(Database db, QString path);
+  void updateOpenedDbFile(const QString& filepath);
   /**
    * @brief integer id of the current active khatmah
    */

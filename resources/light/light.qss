@@ -71,7 +71,7 @@ QWidget#searchTab {
   border: none;
 }
 
-QTextEdit#tedTafsir {
+QTextEdit#tedContent {
   border: 1px solid #e3e3e3;
   background-color: #fafafa;
   border-radius: 4px;

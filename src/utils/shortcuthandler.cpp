@@ -166,7 +166,7 @@ ShortcutHandler::setupConnections()
           &QShortcut::activated,
           this,
           &ShortcutHandler::openSettings);
-  connect(m_shortcuts.value("TafsirDialog"),
+  connect(m_shortcuts.value("ContentDialog"),
           &QShortcut::activated,
           this,
           &ShortcutHandler::openTafsir);

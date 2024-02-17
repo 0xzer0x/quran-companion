@@ -22,7 +22,7 @@
 #include "quranreader.h"
 #include "searchdialog.h"
 #include "settingsdialog.h"
-#include "tafsirdialog.h"
+#include "contentdialog.h"
 #include <QBoxLayout>
 #include <QClipboard>
 #include <QDesktopServices>
@@ -177,7 +177,7 @@ private slots:
    */
   void actionAdvancedCopyTriggered();
   /**
-   * @brief open the TafsirDialog for the current ::Verse
+   * @brief open the ContentDialog for the current ::Verse
    */
   void actionTafsirTriggered();
   /**
@@ -226,7 +226,7 @@ private slots:
    */
   void navigateToSurah(QModelIndex& index);
   /**
-   * @brief open TafsirDialog with the shown verse set to the given ::Verse
+   * @brief open ContentDialog with the shown verse set to the given ::Verse
    * @param v - ::Verse to show the tafsir of
    */
   void showVerseTafsir(Verse v);
@@ -366,9 +366,9 @@ private:
    */
   QPointer<VersePlayer> m_player;
   /**
-   * @brief pointer to TafsirDialog instance
+   * @brief pointer to ContentDialog instance
    */
-  QPointer<TafsirDialog> m_tafsirDlg;
+  QPointer<ContentDialog> m_tafsirDlg;
   /**
    * @brief pointer to SearchDialog instance
    */

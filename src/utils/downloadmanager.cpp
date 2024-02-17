@@ -96,7 +96,7 @@ DownloadManager::enqeueTask(QPair<int, int> info)
     "https://github.com/0xzer0x/quran-companion/raw/main/extras/";
   QString path;
   if (info.first)
-    path = "translations/" + m_trList.at(info.second)->filename();
+    path = "translations/" + m_translations.at(info.second)->filename();
   else
     path = "tafasir/" + m_tafasir.at(info.second)->filename();
   DownloadTask t;

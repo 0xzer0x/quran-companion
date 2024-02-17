@@ -38,7 +38,7 @@ DBManager::DBManager(QObject* parent)
 /* ---------------- Database handling ---------------- */
 
 void
-DBManager::setOpenDatabase(Database db, QString filePath)
+DBManager::setOpenDatabase(Database db, QString path)
 {
   if (m_currentDb == db)
     return;
@@ -74,36 +74,50 @@ DBManager::setOpenDatabase(Database db, QString filePath)
       break;
   }
 
-  m_openDBCon.setDatabaseName(filePath);
+  updateOpenedDbFile(path);
+}
+
+void
+DBManager::updateOpenedDbFile(const QString& filepath)
+{
+  m_openDBCon.setDatabaseName(filepath);
   if (!m_openDBCon.open())
     qFatal("Couldn't open Database!");
 }
 
-void
+bool
 DBManager::setCurrentTafsir(int tafsirIdx)
 {
   if (tafsirIdx < 0 || tafsirIdx >= m_tafasir.size())
-    return;
+    return false;
 
   m_currTafsir = m_tafasir[tafsirIdx];
   const QDir& baseDir =
     m_currTafsir->isExtra() ? *m_downloadsDir : *m_assetsDir;
   QString path = "tafasir/" + m_currTafsir->filename();
-  if (baseDir.exists(path))
-    m_tafsirDbPath.setFile(baseDir.filePath(path));
+  if (!baseDir.exists(path))
+    return false;
+
+  m_tafsirDbPath.setFile(baseDir.filePath(path));
+  updateOpenedDbFile(m_tafsirDbPath.absoluteFilePath());
+  return true;
 }
 
-void
+bool
 DBManager::setCurrentTranslation(int translationIdx)
 {
-  if (translationIdx < 0 || translationIdx >= m_translationsList.size())
-    return;
+  if (translationIdx < 0 || translationIdx >= m_translations.size())
+    return false;
 
-  m_currTrans = m_translationsList[translationIdx];
+  m_currTrans = m_translations[translationIdx];
   const QDir& baseDir = m_currTrans->isExtra() ? *m_downloadsDir : *m_assetsDir;
   QString path = "translations/" + m_currTrans->filename();
-  if (baseDir.exists(path))
-    m_transDbPath.setFile(baseDir.filePath(path));
+  if (!baseDir.exists(path))
+    return false;
+
+  m_transDbPath.setFile(baseDir.filePath(path));
+  updateOpenedDbFile(m_transDbPath.absoluteFilePath());
+  return true;
 }
 
 /* ---------------- Page-related methods ---------------- */

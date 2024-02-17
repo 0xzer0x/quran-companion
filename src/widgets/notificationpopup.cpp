@@ -93,7 +93,7 @@ NotificationPopup::completedDownload(DownloadType type,
   else if (type == DownloadManager::QCF)
     msg += tr("QCF V2");
   else if (type == DownloadManager::File)
-    msg += metainfo[0] ? m_trList.at(metainfo[1])->displayName()
+    msg += metainfo[0] ? m_translations.at(metainfo[1])->displayName()
                        : m_tafasir.at(metainfo[1])->displayName();
 
   this->notify(msg, success);
@@ -110,7 +110,7 @@ NotificationPopup::downloadError(DownloadType type, const QList<int>& metainfo)
   else if (type == DownloadManager::QCF)
     msg += tr("QCF V2");
   else if (type == DownloadManager::File)
-    msg += metainfo[0] ? m_trList.at(metainfo[1])->displayName()
+    msg += metainfo[0] ? m_translations.at(metainfo[1])->displayName()
                        : m_tafasir.at(metainfo[1])->displayName();
 
   this->notify(msg, fail);
