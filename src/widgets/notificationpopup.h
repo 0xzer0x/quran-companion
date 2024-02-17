@@ -13,6 +13,7 @@
 #include <QGraphicsOpacityEffect>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QPointer>
 #include <QPropertyAnimation>
 #include <QStyle>
 #include <QTimer>
@@ -119,10 +120,10 @@ private:
    * @param icon - NotificationPopup::Action entry
    */
   void setNotificationIcon(Action icon);
-  QLabel* m_iconWidget;
-  QLabel* m_textWidget;
-  QPropertyAnimation* m_fadeoutAnim;
-  QGraphicsOpacityEffect* m_opacityEffect;
+  QPointer<QLabel> m_iconWidget;
+  QPointer<QLabel> m_textWidget;
+  QPointer<QPropertyAnimation> m_fadeoutAnim;
+  QPointer<QGraphicsOpacityEffect> m_opacityEffect;
   Qt::DockWidgetArea m_dockArea;
   QPoint m_notificationPos;
   QTimer m_notificationPeriod;

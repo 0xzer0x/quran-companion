@@ -1,12 +1,13 @@
 #ifndef COPYDIALOG_H
 #define COPYDIALOG_H
 
-#include "../utils/dbmanager.h"
 #include "../types/verse.h"
+#include "../utils/dbmanager.h"
 #include <QClipboard>
 #include <QDialog>
 #include <QIntValidator>
 #include <QMessageBox>
+#include <QPointer>
 
 namespace Ui {
 class CopyDialog;
@@ -42,7 +43,7 @@ private:
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   void copyRange();
 
-  QIntValidator* m_verseValidator = new QIntValidator(this);
+  QPointer<QIntValidator> m_verseValidator;
 };
 
 #endif // COPYDIALOG_H

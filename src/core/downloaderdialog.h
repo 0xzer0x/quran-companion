@@ -117,6 +117,7 @@ protected:
   void closeEvent(QCloseEvent* event);
 
 private:
+  Ui::DownloaderDialog* ui;
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   const int m_languageCode = Settings::language;
   const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
@@ -164,35 +165,31 @@ private:
    */
   void removeFromDownloading(int reciter, int surah);
   /**
-   * @brief Pointer to access ui elements generated from .ui files.
-   */
-  Ui::DownloaderDialog* ui;
-  /**
    * @brief Pointer to the currently active DownloadProgressBar to update as
    * verses are downloaded.
    */
-  DownloadProgressBar* m_currentBar;
+  QPointer<DownloadProgressBar> m_currentBar;
   /**
    * @brief Pointer to DownloadManager instance.
    */
-  DownloadManager* m_downloaderPtr;
+  QPointer<DownloadManager> m_downloaderPtr;
   /**
    * @brief Pointer to QLabel which contains the state and information for the
    * currently active download.
    */
-  QLabel* m_currentLb;
+  QPointer<QLabel> m_currentLb;
   /**
    * @brief Pointer to QLabel which contains the download speed/state.
    */
-  QLabel* m_currDownSpeedLb;
+  QPointer<QLabel> m_currDownSpeedLb;
   /**
    * @brief QFrames for the currently active & queued download tasks.
    */
-  QList<QFrame*> m_frameLst;
+  QList<QPointer<QFrame>> m_frameLst;
   /**
    * @brief QFrames for the downloaded tasks.
    */
-  QList<QFrame*> m_finishedFrames;
+  QList<QPointer<QFrame>> m_finishedFrames;
   /**
    * @brief Model for the recitation download QTreeView.
    */

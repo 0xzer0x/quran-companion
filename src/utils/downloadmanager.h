@@ -15,6 +15,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QPointer>
 #include <QQueue>
 #include <QTime>
 #include <QUrl>
@@ -247,12 +248,12 @@ private:
   /**
    * @brief QNetworkReply for version info request
    */
-  QNetworkReply* m_versionReply;
+  QPointer<QNetworkReply> m_versionReply;
   /**
    * @brief QNetwrokAccessManager instance responsible for sending download
    * requests
    */
-  QNetworkAccessManager* m_netMan;
+  QPointer<QNetworkAccessManager> m_netMan;
   /**
    * @brief the currently active DownloadTask
    */

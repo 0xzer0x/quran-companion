@@ -11,6 +11,7 @@
 #include "../utils/settings.h"
 #include <QDialog>
 #include <QLabel>
+#include <QPointer>
 #include <QShortcut>
 #include <QStandardItem>
 #include <QStringListModel>
@@ -116,6 +117,7 @@ private slots:
   void surahSelected(const QModelIndex& index);
 
 private:
+  Ui::BookmarksDialog* ui;
   const int m_qcfVer = Settings::qcfVersion;
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   /**
@@ -139,10 +141,6 @@ private:
    */
   int m_shownSurah = 0;
   /**
-   * @brief pointer to access ui elements generated from .ui files.
-   */
-  Ui::BookmarksDialog* ui;
-  /**
    * @brief ::Verse QList for all bookmarked verses.
    */
   QList<Verse> m_allBookmarked;
@@ -153,7 +151,7 @@ private:
   /**
    * @brief QFrames for shown verses.
    */
-  QList<QFrame*> m_frames;
+  QList<QPointer<QFrame>> m_frames;
   /**
    * @brief model for surahs of bookmarked verses.
    */

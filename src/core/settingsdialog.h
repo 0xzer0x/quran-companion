@@ -18,6 +18,7 @@
 #include <QKeySequenceEdit>
 #include <QMediaDevices>
 #include <QMessageBox>
+#include <QPointer>
 #include <QProcess>
 #include <QSettings>
 #include <QShortcut>
@@ -211,6 +212,7 @@ protected:
   void closeEvent(QCloseEvent* event);
 
 private:
+  Ui::SettingsDialog* ui;
   const int m_qcfVer = Settings::qcfVersion;
   const int m_themeIdx = Settings::themeId;
   const ReaderMode m_readerMode = Settings::readerMode;
@@ -306,13 +308,9 @@ private:
    */
   bool m_fgHighlight = true;
   /**
-   * @brief Pointer to access ui elements generated from .ui files.
-   */
-  Ui::SettingsDialog* ui;
-  /**
    * @brief pointer to VersePlayer instance.
    */
-  VersePlayer* m_vPlayerPtr = nullptr;
+  QPointer<VersePlayer> m_vPlayerPtr;
   /**
    * @brief model used by the shortcuts QTableView
    */

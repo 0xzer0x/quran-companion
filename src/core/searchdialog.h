@@ -10,6 +10,7 @@
 #include "../utils/dbmanager.h"
 #include "../widgets/verseframe.h"
 #include <QDialog>
+#include <QPointer>
 #include <QScrollBar>
 #include <QSettings>
 #include <QShortcut>
@@ -95,6 +96,7 @@ private slots:
   void btnTransferClicked();
 
 private:
+  Ui::SearchDialog* ui;
   const QLocale::Language m_lang = Settings::language;
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   /**
@@ -113,14 +115,10 @@ private:
    */
   int m_startResult = 0;
   /**
-   * @brief Pointer to access ui elements generated from .ui files.
-   */
-  Ui::SearchDialog* ui;
-  /**
    * @brief QList for all visible HighlightFrame widgets containing search
    * results.
    */
-  QList<VerseFrame*> m_lbLst;
+  QList<QPointer<VerseFrame>> m_lbLst;
   /**
    * @brief ::Verse QList for the current search results.
    */

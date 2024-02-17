@@ -4,6 +4,7 @@
 CopyDialog::CopyDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::CopyDialog)
+  , m_verseValidator(new QIntValidator(this))
 {
   ui->setupUi(this);
   ui->cmbCopyFrom->setValidator(m_verseValidator);

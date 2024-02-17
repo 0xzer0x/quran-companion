@@ -71,6 +71,8 @@ private slots:
   void btnPrevClicked();
   /**
    * @brief tafsirChanged
+   *
+   * MODIFIED
    */
   void tafsirChanged();
 

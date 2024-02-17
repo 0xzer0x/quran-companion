@@ -13,8 +13,8 @@ using namespace fa;
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   : QTextBrowser(parent)
-  , m_highlighter{ new QTextCursor(document()) }
-  , m_highlightColor{ QBrush(qApp->palette().color(QPalette::Highlight)) }
+  , m_highlighter(new QTextCursor(document()))
+  , m_highlightColor(QBrush(qApp->palette().color(QPalette::Highlight)))
 {
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setTextInteractionFlags(Qt::TextInteractionFlag::LinksAccessibleByMouse);

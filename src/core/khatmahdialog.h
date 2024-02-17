@@ -6,6 +6,7 @@
 #include "../widgets/inputfield.h"
 #include <QDialog>
 #include <QLineEdit>
+#include <QPointer>
 #include <QSet>
 
 namespace Ui {
@@ -72,6 +73,7 @@ private slots:
   void setActiveKhatmah();
 
 private:
+  Ui::KhatmahDialog* ui;
   const QSharedPointer<Verse> m_currVerse = Verse::current();
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QSharedPointer<QSettings> m_settings = Settings::settings;
@@ -84,19 +86,15 @@ private:
    * @param id - id of khatmah to load
    * @return InputField* - pointer to the InputField of the loaded khatmah name
    */
-  InputField* loadKhatmah(const int id);
-  /**
-   * @brief pointer to access ui elements generated from .ui files.
-   */
-  Ui::KhatmahDialog* ui;
+  QPointer<InputField> loadKhatmah(const int id);
   /**
    * @brief pointer to the current active khatmah QFrame
    */
-  QFrame* m_currActive = nullptr;
+  QPointer<QFrame> m_currActive;
   /**
    * @brief QList of all QFrame(s) loaded for the different khatmah entries
    */
-  QList<QFrame*> m_frmLst;
+  QList<QPointer<QFrame>> m_frmLst;
   /**
    * @brief QList of all available khatmah id(s)
    */

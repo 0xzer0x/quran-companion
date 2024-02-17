@@ -3,6 +3,7 @@
 
 #include "../utils/dbmanager.h"
 #include <QGraphicsDropShadowEffect>
+#include <QPointer>
 #include <QPropertyAnimation>
 #include <QSettings>
 #include <QWidget>
@@ -28,12 +29,12 @@ protected:
   void focusOutEvent(QFocusEvent* event);
 
 private:
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   Ui::BetaqaViewer* ui;
+  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
 
   int m_surah = -1;
-  QGraphicsDropShadowEffect* m_shadowEffect = nullptr;
-  QPropertyAnimation* m_sizeAnim = nullptr;
+  QPointer<QGraphicsDropShadowEffect> m_shadowEffect;
+  QPointer<QPropertyAnimation> m_sizeAnim;
 };
 
 #endif // BETAQAVIEWER_H

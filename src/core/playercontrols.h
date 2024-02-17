@@ -97,8 +97,8 @@ private:
   /**
    * @brief pointer to VersePlayer instance
    */
-  VersePlayer* m_player = nullptr;
-  QuranReader* m_reader = nullptr;
+  QPointer<VersePlayer> m_player = nullptr;
+  QPointer<QuranReader> m_reader = nullptr;
 };
 
 #endif // PLAYERCONTROLS_H

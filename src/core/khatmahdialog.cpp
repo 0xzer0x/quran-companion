@@ -19,8 +19,7 @@ KhatmahDialog::KhatmahDialog(QWidget* parent)
           &KhatmahDialog::startNewKhatmah);
 }
 
-InputField*
-KhatmahDialog::loadKhatmah(const int id)
+QPointer<InputField> KhatmahDialog::loadKhatmah(const int id)
 {
   QList<int> vInfo(3);
   m_dbMgr->getKhatmahPos(id, vInfo);

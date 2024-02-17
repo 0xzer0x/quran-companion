@@ -194,22 +194,22 @@ private:
    * @brief QScrollArea used in single page mode to display verses &
    * translation
    */
-  QScrollArea* m_scrlVerseByVerse = nullptr;
+  QPointer<QScrollArea> m_scrlVerseByVerse = nullptr;
   /**
    * @brief pointer to currently active QuranPageBrowser instance, must be one
    * of the values in m_quranBrowsers array
    */
-  QuranPageBrowser* m_activeQuranBrowser = nullptr;
+  QPointer<QuranPageBrowser> m_activeQuranBrowser = nullptr;
   /**
    * @brief array of QuranPageBrowser instances used in different modes, index 0
    * is used in both modes
    */
-  QuranPageBrowser* m_quranBrowsers[2]{};
+  QPointer<QuranPageBrowser> m_quranBrowsers[2]{};
   /**
    * @brief QList of QFrame pointers to VerseFrame elements in the single page
    * mode side panel
    */
-  QList<QFrame*> m_verseFrameList;
+  QList<QPointer<QFrame>> m_verseFrameList;
   /**
    * @brief pointer to the currently active page ::Verse list
    */
@@ -222,8 +222,8 @@ private:
   /**
    * @brief pointer to the currently highlighted VerseFrame in the side panel
    */
-  VerseFrame* m_highlightedFrm = nullptr;
-  VersePlayer* m_player = nullptr;
+  QPointer<VerseFrame> m_highlightedFrm;
+  QPointer<VersePlayer> m_player;
   /**
    * @brief QFont used in the side panel translation
    */

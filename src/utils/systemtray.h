@@ -13,6 +13,7 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QObject>
+#include <QPointer>
 #include <QSystemTrayIcon>
 #include <QTimer>
 
@@ -91,11 +92,11 @@ private:
   /**
    * @brief system tray context menu
    */
-  QMenu* m_trayMenu;
+  QPointer<QMenu> m_trayMenu;
   /**
    * @brief QSystemTrayIcon instance
    */
-  QSystemTrayIcon* m_sysTray;
+  QPointer<QSystemTrayIcon> m_sysTray;
 };
 
 #endif // SYSTEMTRAY_H

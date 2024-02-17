@@ -11,6 +11,7 @@
 #include <QHBoxLayout>
 #include <QMenu>
 #include <QPainter>
+#include <QPointer>
 #include <QPushButton>
 #include <QScrollBar>
 #include <QSettings>
@@ -220,39 +221,39 @@ private:
   /**
    * @brief QAction for zoom-in functionality
    */
-  QAction* m_zoomIn;
+  QPointer<QAction> m_zoomIn;
   /**
    * @brief QAction for zoom-out functionality
    */
-  QAction* m_zoomOut;
+  QPointer<QAction> m_zoomOut;
   /**
    * @brief QAction for copy functionality
    */
-  QAction* m_copyAct;
+  QPointer<QAction> m_copyAct;
   /**
    * @brief QAction for verse selection functionality
    */
-  QAction* m_selectAct;
+  QPointer<QAction> m_selectAct;
   /**
    * @brief QAction for verse playback functionality
    */
-  QAction* m_playAct;
+  QPointer<QAction> m_playAct;
   /**
    * @brief QAction for showing tafsir functionality
    */
-  QAction* m_tafsirAct;
+  QPointer<QAction> m_tafsirAct;
   /**
    * @brief QAction for bookmark addition functionality
    */
-  QAction* m_actAddBookmark;
+  QPointer<QAction> m_actAddBookmark;
   /**
    * @brief QAction for bookmark removal functionality
    */
-  QAction* m_actRemBookmark;
+  QPointer<QAction> m_actRemBookmark;
   /**
    * @brief QTextCursor used in highlighting verses
    */
-  QTextCursor* m_highlighter;
+  QSharedPointer<QTextCursor> m_highlighter;
   /**
    * @brief page format properties used in inserting lines
    */

@@ -15,6 +15,7 @@
 #include <QDir>
 #include <QMediaPlayer>
 #include <QObject>
+#include <QPointer>
 
 /*!
  * @brief VersePlayer class is responsible for the playback of Quran verse
@@ -136,7 +137,7 @@ private:
   /**
    * @brief QAudioOutput used for playback
    */
-  QAudioOutput* m_output;
+  QPointer<QAudioOutput> m_output;
 };
 
 #endif // VERSEPLAYER_H
