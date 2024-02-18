@@ -152,6 +152,10 @@ private:
    */
   void loadVerseThoughts();
   /**
+   * MODIFIED
+   */
+  void saveVerseThoughts();
+  /**
    * @brief m_currMode
    *
    * MODIFIED

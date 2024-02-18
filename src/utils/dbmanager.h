@@ -314,6 +314,14 @@ public:
    * @return VerseType
    */
   VerseType getVerseType() const;
+  /**
+   * MODIFIED
+   */
+  void saveThoughts(QList<int> vInfo, const QString& text);
+  /**
+   * MODIFIED
+   */
+  QString getThoughts(QList<int> vInfo);
 
 public slots:
   /**
@@ -347,7 +355,10 @@ private:
    * @param filePath - path to the database file
    */
   void setOpenDatabase(Database db, QString path);
-  void updateOpenedDbFile(const QString& filepath);
+  /**
+   * MODIFIED
+   */
+  void updateOpenDbFile(const QString& filepath);
   /**
    * @brief integer id of the current active khatmah
    */
@@ -391,7 +402,9 @@ private:
    * @brief path to the QCF glyphs database file
    */
   QFileInfo m_glyphsDbPath;
-
+  /**
+   * MODIFIED
+   */
   QFileInfo m_betaqatDbPath;
   /**
    * @brief QList of sura names (Arabic if UI language is Arabic, Otherwise

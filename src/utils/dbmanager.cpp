@@ -74,11 +74,11 @@ DBManager::setOpenDatabase(Database db, QString path)
       break;
   }
 
-  updateOpenedDbFile(path);
+  updateOpenDbFile(path);
 }
 
 void
-DBManager::updateOpenedDbFile(const QString& filepath)
+DBManager::updateOpenDbFile(const QString& filepath)
 {
   m_openDBCon.setDatabaseName(filepath);
   if (!m_openDBCon.open())
@@ -99,7 +99,7 @@ DBManager::setCurrentTafsir(int tafsirIdx)
     return false;
 
   m_tafsirDbPath.setFile(baseDir.filePath(path));
-  updateOpenedDbFile(m_tafsirDbPath.absoluteFilePath());
+  updateOpenDbFile(m_tafsirDbPath.absoluteFilePath());
   return true;
 }
 
@@ -116,7 +116,7 @@ DBManager::setCurrentTranslation(int translationIdx)
     return false;
 
   m_transDbPath.setFile(baseDir.filePath(path));
-  updateOpenedDbFile(m_transDbPath.absoluteFilePath());
+  updateOpenDbFile(m_transDbPath.absoluteFilePath());
   return true;
 }
 
@@ -832,6 +832,48 @@ DBManager::getTranslation(const int sIdx, const int vIdx)
 
   dbQuery.next();
 
+  return dbQuery.value(0).toString();
+}
+
+void
+DBManager::saveThoughts(QList<int> vInfo, const QString& text)
+{
+  int id = getVerseId(vInfo[1], vInfo[2]);
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  QSqlQuery dbQuery(m_openDBCon);
+  dbQuery.exec("CREATE TABLE IF NOT EXISTS thoughts(id INTEGER PRIMARY KEY "
+               "UNIQUE,"
+               "page INTEGER, surah INTEGER, number INTEGER, text TEXT)");
+
+  dbQuery.prepare("REPLACE INTO thoughts(id, page, surah, number, text) "
+                  "VALUES(:i, :p, :s, :n, :t)");
+  dbQuery.bindValue(0, id);
+  dbQuery.bindValue(1, vInfo[0]);
+  dbQuery.bindValue(2, vInfo[1]);
+  dbQuery.bindValue(3, vInfo[2]);
+  dbQuery.bindValue(4, text);
+
+  if (!dbQuery.exec())
+    qCritical() << "SQL statement execution error:" << dbQuery.lastError();
+
+  m_openDBCon.commit();
+}
+
+QString
+DBManager::getThoughts(QList<int> vInfo)
+{
+  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  QSqlQuery dbQuery(m_openDBCon);
+  dbQuery.prepare(
+    "SELECT text FROM thoughts WHERE page=:p AND surah=:s AND number=:n");
+  dbQuery.bindValue(0, vInfo[0]);
+  dbQuery.bindValue(1, vInfo[1]);
+  dbQuery.bindValue(2, vInfo[2]);
+
+  if (!dbQuery.exec())
+    qCritical() << "SQL statement execution error:" << dbQuery.lastError();
+
+  dbQuery.next();
   return dbQuery.value(0).toString();
 }
 

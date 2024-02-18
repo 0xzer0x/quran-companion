@@ -108,8 +108,9 @@ ContentDialog::typeChanged()
   if (m_internalLoading)
     return;
 
-  m_currMode = (Mode)ui->cmbType->currentIndex();
-  loadContent(m_currMode);
+  if (m_currMode == Mode::Thoughts)
+    saveVerseThoughts();
+  loadContent((Mode)ui->cmbType->currentIndex());
 }
 
 void
@@ -151,7 +152,6 @@ void
 ContentDialog::loadContent(Mode mode)
 {
   m_internalLoading = true;
-
   setSideFont();
   ui->cmbType->setCurrentIndex((int)mode);
   updateContentComboBox(mode);
@@ -167,7 +167,6 @@ ContentDialog::loadContent(Mode mode)
       break;
   }
   m_currMode = mode;
-
   m_internalLoading = false;
 }
 
@@ -237,11 +236,24 @@ ContentDialog::loadVerseTranslation()
 void
 ContentDialog::loadVerseThoughts()
 {
+  ui->tedContent->setText(m_dbMgr->getThoughts(m_shownVerse.toList()));
+  ui->tedContent->setReadOnly(false);
+  ui->tedContent->setCursorWidth(1);
+}
+
+void
+ContentDialog::saveVerseThoughts()
+{
+  ui->tedContent->setCursorWidth(0);
+  ui->tedContent->setReadOnly(true);
+  m_dbMgr->saveThoughts(m_shownVerse.toList(), ui->tedContent->toPlainText());
 }
 
 void
 ContentDialog::closeEvent(QCloseEvent* event)
 {
+  if (m_currMode == Mode::Thoughts)
+    saveVerseThoughts();
   this->hide();
 }
 
