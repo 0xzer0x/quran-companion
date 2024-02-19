@@ -56,7 +56,7 @@ ContentDialog::showVerseTafsir(const Verse& v)
     reload = false;
   }
 
-  if (!Tafsir::tafsirExists(m_dbMgr->currTafsir())) {
+  if (!m_dbMgr->currTafsir()->isAvailable()) {
     int i = m_tafasir.indexOf(m_dbMgr->currTafsir());
     reload = true;
     emit missingTafsir(i);
@@ -77,7 +77,7 @@ ContentDialog::showVerseTranslation(const Verse& v)
     reload = false;
   }
 
-  if (!Translation::translationExists(m_dbMgr->currTranslation())) {
+  if (!m_dbMgr->currTranslation()->isAvailable()) {
     int i = m_translations.indexOf(m_dbMgr->currTranslation());
     reload = true;
     emit missingTranslation(i);
@@ -244,7 +244,7 @@ ContentDialog::cmbLoadTafasir()
 {
   for (int i = 0; i < m_tafasir.size(); i++) {
     const QSharedPointer<::Tafsir>& t = m_tafasir.at(i);
-    if (Tafsir::tafsirExists(t))
+    if (t->isAvailable())
       ui->cmbContent->addItem(t->displayName(), i);
   }
 
@@ -257,7 +257,7 @@ ContentDialog::cmbLoadTranslations()
 {
   for (int i = 0; i < m_translations.size(); i++) {
     const QSharedPointer<::Translation>& tr = m_translations[i];
-    if (Translation::translationExists(tr))
+    if (tr->isAvailable())
       ui->cmbContent->addItem(tr->displayName(), i);
   }
 

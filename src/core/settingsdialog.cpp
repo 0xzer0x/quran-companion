@@ -72,7 +72,7 @@ SettingsDialog::updateContentCombobox()
   ui->cmbTranslation->clear();
   for (int i = 0; i < m_translations.size(); i++) {
     const QSharedPointer<Translation>& tr = m_translations[i];
-    if (Translation::translationExists(tr))
+    if (tr->isAvailable())
       ui->cmbTranslation->addItem(tr->displayName(), i);
   }
 

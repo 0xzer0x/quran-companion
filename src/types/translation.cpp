@@ -33,41 +33,14 @@ Translation::populateTranslations()
 }
 
 Translation::Translation(QString display, QString filename, bool isExtra)
-  : m_displayName(display)
-  , m_filename(filename)
-  , m_isExtra(isExtra)
+  : Content(display, filename, isExtra)
 {
 }
 
 bool
-Translation::translationExists(int idx)
-{
-  const QSharedPointer<Translation>& tr = translations.at(idx);
-  return translationExists(tr);
-}
-
-bool
-Translation::translationExists(const QSharedPointer<Translation>& tr)
+Translation::isAvailable() const
 {
   const QDir& baseDir =
-    tr->isExtra() ? *DirManager::downloadsDir : *DirManager::assetsDir;
-  return baseDir.exists("translations/" + tr->filename());
-}
-
-const QString&
-Translation::displayName() const
-{
-  return m_displayName;
-}
-
-const QString&
-Translation::filename() const
-{
-  return m_filename;
-}
-
-const bool&
-Translation::isExtra() const
-{
-  return m_isExtra;
+    isExtra() ? *DirManager::downloadsDir : *DirManager::assetsDir;
+  return baseDir.exists("translations/" + filename());
 }

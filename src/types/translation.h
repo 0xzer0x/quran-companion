@@ -1,29 +1,19 @@
 #ifndef TRANSLATION_H
 #define TRANSLATION_H
 
+#include "content.h"
 #include <QList>
 #include <QSharedPointer>
 #include <QString>
 
-class Translation
+class Translation : public Content
 {
 public:
-  static QList<QSharedPointer<Translation>> translations;
   static void populateTranslations();
-
-  static bool translationExists(int idx);
-  static bool translationExists(const QSharedPointer<Translation>& tr);
+  static QList<QSharedPointer<Translation>> translations;
 
   explicit Translation(QString display, QString filename, bool isExtra);
-
-  const QString& displayName() const;
-  const QString& filename() const;
-  const bool& isExtra() const;
-
-private:
-  QString m_displayName;
-  QString m_filename;
-  bool m_isExtra;
+  bool isAvailable() const;
 };
 
 #endif // TRANSLATION_H

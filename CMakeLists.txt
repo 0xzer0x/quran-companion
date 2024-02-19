@@ -32,6 +32,8 @@ set(PROJECT_SOURCES
     src/types/verse.cpp
     src/types/reciter.h
     src/types/reciter.cpp
+    src/types/content.h
+    src/types/content.cpp
     src/types/tafsir.h
     src/types/tafsir.cpp
     src/types/translation.h

@@ -1,5 +1,6 @@
 #include "tafsir.h"
 #include "../utils/dirmanager.h"
+#include "content.h"
 #include <QApplication>
 #include <QDir>
 #include <QFile>
@@ -35,48 +36,21 @@ Tafsir::populateTafasir()
 }
 
 Tafsir::Tafsir(QString display, QString filename, bool isText, bool isExtra)
-  : m_displayName(display)
-  , m_filename(filename)
+  : Content(display, filename, isExtra)
   , m_isText(isText)
-  , m_isExtra(isExtra)
 {
 }
 
 bool
-Tafsir::tafsirExists(int idx)
-{
-  const QSharedPointer<Tafsir>& t = tafasir.at(idx);
-  return tafsirExists(t);
-}
-
-bool
-Tafsir::tafsirExists(const QSharedPointer<Tafsir>& t)
+Tafsir::isAvailable() const
 {
   const QDir& baseDir =
-    t->isExtra() ? *DirManager::downloadsDir : *DirManager::assetsDir;
-  return baseDir.exists("tafasir/" + t->filename());
-}
-
-const QString&
-Tafsir::displayName() const
-{
-  return m_displayName;
-}
-
-const QString&
-Tafsir::filename() const
-{
-  return m_filename;
+    isExtra() ? *DirManager::downloadsDir : *DirManager::assetsDir;
+  return baseDir.exists("tafasir/" + filename());
 }
 
 const bool
 Tafsir::isText() const
 {
   return m_isText;
-}
-
-const bool
-Tafsir::isExtra() const
-{
-  return m_isExtra;
 }
