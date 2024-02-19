@@ -12,10 +12,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Sql Multimedia Network
-                                              LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia
-                                                       Network LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Sql Multimedia Network
+                                     LinguistTools)
 
 if(WIN32)
   set(Vulkan_INCLUDE_DIR "$ENV{VULKAN_SDK}\\Include\\vulkan")
@@ -114,17 +112,11 @@ set(PROJECT_SOURCES
     resources.qrc
     qurancompanion.rc)
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-  qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
-else()
-  add_executable(quran-companion ${PROJECT_SOURCES})
-endif()
+qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
 target_link_libraries(
-  quran-companion
-  PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql
-          Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::Network
-          QtAwesome)
+  quran-companion PRIVATE Qt6::Widgets Qt6::Sql Qt6::Multimedia Qt6::Network
+                          QtAwesome)
 
 if(WIN32)
   set_target_properties(quran-companion PROPERTIES WIN32_EXECUTABLE TRUE)
