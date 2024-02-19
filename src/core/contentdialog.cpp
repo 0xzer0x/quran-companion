@@ -48,6 +48,56 @@ ContentDialog::setupConnections()
 }
 
 void
+ContentDialog::showVerseTafsir(const Verse& v)
+{
+  static bool reload = false;
+  if (reload) {
+    m_dbMgr->updateLoadedTafsir();
+    reload = false;
+  }
+
+  if (!Tafsir::tafsirExists(m_dbMgr->currTafsir())) {
+    int i = m_tafasir.indexOf(m_dbMgr->currTafsir());
+    reload = true;
+    emit missingTafsir(i);
+    return;
+  }
+
+  setShownVerse(v);
+  loadContent(Mode::Tafsir);
+  show();
+}
+
+void
+ContentDialog::showVerseTranslation(const Verse& v)
+{
+  static bool reload = false;
+  if (reload) {
+    m_dbMgr->updateLoadedTranslation();
+    reload = false;
+  }
+
+  if (!Translation::translationExists(m_dbMgr->currTranslation())) {
+    int i = m_translations.indexOf(m_dbMgr->currTranslation());
+    reload = true;
+    emit missingTranslation(i);
+    return;
+  }
+
+  setShownVerse(v);
+  loadContent(Mode::Translation);
+  show();
+}
+
+void
+ContentDialog::showVerseThoughts(const Verse& v)
+{
+  setShownVerse(v);
+  loadContent(Mode::Thoughts);
+  show();
+}
+
+void
 ContentDialog::setSideFont()
 {
   QFont sideFont =

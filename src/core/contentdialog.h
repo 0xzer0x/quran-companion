@@ -40,18 +40,15 @@ public:
    */
   explicit ContentDialog(QWidget* parent = nullptr);
   ~ContentDialog();
+
+public slots:
   /**
-   * @brief setter member for ContentDialog::m_shownVerse
-   * @param newShownVerse
+   * @brief open ContentDialog with the shown verse set to the given ::Verse
+   * @param v - ::Verse to show the tafsir of
    */
-  void setShownVerse(const Verse& newShownVerse);
-  /**
-   * @brief loadContent
-   * @param mode
-   *
-   * MODIFIED
-   */
-  void loadContent(Mode mode);
+  void showVerseTafsir(const Verse& v);
+  void showVerseTranslation(const Verse& v);
+  void showVerseThoughts(const Verse& v);
 
 protected:
   /** @brief Re-implementation of QWidget::closeEvent() in order to hide the
@@ -59,6 +56,10 @@ protected:
    * @param event
    */
   void closeEvent(QCloseEvent* event);
+
+signals:
+  void missingTafsir(int idx);
+  void missingTranslation(int idx);
 
 private slots:
   /**
@@ -93,16 +94,28 @@ private:
   const QList<QSharedPointer<::Translation>>& m_translations =
     Translation::translations;
   /**
-   * @brief connects signals and slots for different UI
-   * components and shortcuts.
-   */
-  void setupConnections();
-  /**
    * @brief setSideFont
    *
    * MODIFIED
    */
   void setSideFont();
+  /**
+   * @brief connects signals and slots for different UI
+   * components and shortcuts.
+   */
+  void setupConnections();
+  /**
+   * @brief setter member for ContentDialog::m_shownVerse
+   * @param newShownVerse
+   */
+  void setShownVerse(const Verse& newShownVerse);
+  /**
+   * @brief loadContent
+   * @param mode
+   *
+   * MODIFIED
+   */
+  void loadContent(Mode mode);
   /**
    * @brief updateContentComboBox
    *

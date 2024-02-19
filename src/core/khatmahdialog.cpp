@@ -22,7 +22,7 @@ KhatmahDialog::KhatmahDialog(QWidget* parent)
 QPointer<InputField> KhatmahDialog::loadKhatmah(const int id)
 {
   QList<int> vInfo(3);
-  m_dbMgr->getKhatmahPos(id, vInfo);
+    m_dbMgr->loadVerse(id, vInfo);
   QFrame* frame = new QFrame(ui->scrlDialogContent);
   // property used for styling
   frame->setProperty("khatmah", true);
@@ -150,7 +150,7 @@ KhatmahDialog::setActiveKhatmah()
   m_settings->setValue("Reader/Khatmah", id);
   m_dbMgr->saveActiveKhatmah(m_currVerse->toList());
   m_dbMgr->setActiveKhatmah(id.toInt());
-  m_dbMgr->getKhatmahPos(id.toInt(), vInfo);
+  m_dbMgr->loadVerse(id.toInt(), vInfo);
 
   newActive->findChild<QPushButton*>("activate")->setEnabled(false);
   newActive->findChild<QPushButton*>("remove")->setEnabled(false);

@@ -296,11 +296,13 @@ QuranPageBrowser::Action
 QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
 {
   QMenu lmbMenu(this);
-  lmbMenu.addAction(m_playAct);
-  lmbMenu.addAction(m_selectAct);
-  lmbMenu.addAction(m_tafsirAct);
+  lmbMenu.addAction(m_actPlay);
+  lmbMenu.addAction(m_actSelect);
+  lmbMenu.addAction(m_actTafsir);
+  lmbMenu.addAction(m_actTranslation);
+  lmbMenu.addAction(m_actThoughts);
   lmbMenu.addSeparator();
-  lmbMenu.addAction(m_copyAct);
+  lmbMenu.addAction(m_actCopy);
   if (favoriteVerse) {
     lmbMenu.addAction(m_actRemBookmark);
   } else {
@@ -309,19 +311,23 @@ QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
 
   QAction* chosen = lmbMenu.exec(QCursor::pos());
 
-  QuranPageBrowser::Action actionIdx = null;
-  if (chosen == m_playAct)
-    actionIdx = play;
-  else if (chosen == m_selectAct)
-    actionIdx = select;
-  else if (chosen == m_tafsirAct)
-    actionIdx = tafsir;
-  else if (chosen == m_copyAct)
-    actionIdx = copy;
+  QuranPageBrowser::Action actionIdx = Action::Null;
+  if (chosen == m_actPlay)
+    actionIdx = Action::Play;
+  else if (chosen == m_actSelect)
+    actionIdx = Action::Select;
+  else if (chosen == m_actTafsir)
+    actionIdx = Action::Tafsir;
+  else if (chosen == m_actTranslation)
+    actionIdx = Action::Translation;
+  else if (chosen == m_actThoughts)
+    actionIdx = Action::Thoughts;
+  else if (chosen == m_actCopy)
+    actionIdx = Action::Copy;
   else if (chosen == m_actAddBookmark)
-    actionIdx = addBookmark;
+    actionIdx = Action::AddBookmark;
   else if (chosen == m_actRemBookmark)
-    actionIdx = removeBookmark;
+    actionIdx = Action::RemoveBookmark;
 
   this->clearFocus();
   return actionIdx;
@@ -353,28 +359,33 @@ QuranPageBrowser::bestFitFontSize()
 void
 QuranPageBrowser::createActions()
 {
-  m_zoomIn = new QAction(tr("Zoom In"), this);
-  m_zoomOut = new QAction(tr("Zoom Out"), this);
-  m_copyAct = new QAction(tr("Copy Verse"), this);
-  m_selectAct = new QAction(tr("Select"), this);
-  m_playAct = new QAction(tr("Play"), this);
-  m_tafsirAct = new QAction(tr("Tafsir"), this);
+  m_actZoomIn = new QAction(tr("Zoom In"), this);
+  m_actZoomOut = new QAction(tr("Zoom Out"), this);
+  m_actCopy = new QAction(tr("Copy Verse"), this);
+  m_actSelect = new QAction(tr("Select"), this);
+  m_actPlay = new QAction(tr("Play"), this);
+  m_actTafsir = new QAction(tr("Tafsir"), this);
+  m_actTranslation = new QAction(tr("Translation"), this);
+  m_actThoughts = new QAction(tr("Thoughts"), this);
   m_actAddBookmark = new QAction(tr("Add Bookmark"), this);
   m_actRemBookmark = new QAction(tr("Remove Bookmark"), this);
-  m_zoomIn->setIcon(
+  m_actZoomIn->setIcon(
     StyleManager::awesome->icon(fa_solid, fa_magnifying_glass_plus));
-  m_zoomOut->setIcon(
+  m_actZoomOut->setIcon(
     StyleManager::awesome->icon(fa_solid, fa_magnifying_glass_minus));
-  m_playAct->setIcon(StyleManager::awesome->icon(fa_solid, fa_play));
-  m_selectAct->setIcon(StyleManager::awesome->icon(fa_solid, fa_hand_pointer));
-  m_tafsirAct->setIcon(StyleManager::awesome->icon(fa_solid, fa_book_open));
-  m_copyAct->setIcon(StyleManager::awesome->icon(fa_solid, fa_clipboard));
+  m_actPlay->setIcon(StyleManager::awesome->icon(fa_solid, fa_play));
+  m_actSelect->setIcon(StyleManager::awesome->icon(fa_solid, fa_hand_pointer));
+  m_actTafsir->setIcon(StyleManager::awesome->icon(fa_solid, fa_book_open));
+  m_actTranslation->setIcon(StyleManager::awesome->icon(fa_solid, fa_language));
+  m_actThoughts->setIcon(StyleManager::awesome->icon(fa_solid, fa_comment));
+  m_actCopy->setIcon(StyleManager::awesome->icon(fa_solid, fa_clipboard));
   m_actAddBookmark->setIcon(
     StyleManager::awesome->icon(fa_regular, fa_bookmark));
   m_actRemBookmark->setIcon(StyleManager::awesome->icon(fa_solid, fa_bookmark));
-  connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
   connect(
-    m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);
+    m_actZoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
+  connect(
+    m_actZoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);
 }
 
 #ifndef QT_NO_CONTEXTMENU
@@ -382,8 +393,8 @@ void
 QuranPageBrowser::contextMenuEvent(QContextMenuEvent* event)
 {
   QMenu menu(this);
-  menu.addAction(m_zoomIn);
-  menu.addAction(m_zoomOut);
+  menu.addAction(m_actZoomIn);
+  menu.addAction(m_actZoomOut);
 
   m_mousePos = event->pos();
   m_mouseGlobalPos = event->globalPos();

@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget* parent)
   ui->setupUi(this);
   loadIcons();
   loadVerse();
-  init();
+  loadComponents();
 
   if (m_settings->value("WindowState").isNull())
     m_settings->setValue("WindowState", saveState());
@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget* parent)
   setupShortcuts();
   setupConnections();
   setupSurahsDock();
-  setupMenubarToggle();
+  setupMenubarButton();
   this->show();
 
   m_popup->setDockArea(dockWidgetArea(ui->sideDock));
@@ -68,12 +68,54 @@ MainWindow::loadVerse()
   int id = m_settings->value("Reader/Khatmah").toInt();
   QList<int> vInfo = m_currVerse->toList();
   m_dbMgr->setActiveKhatmah(id);
-  if (!m_dbMgr->getKhatmahPos(id, vInfo)) {
+  if (!m_dbMgr->loadVerse(id, vInfo)) {
     QString name = id ? tr("Khatmah ") + QString::number(id) : tr("Default");
     m_dbMgr->addKhatmah(vInfo, name, id);
   }
 
   m_currVerse->update(vInfo);
+}
+
+void
+MainWindow::loadComponents()
+{
+  m_player = new VersePlayer(this, m_settings->value("Reciter", 0).toInt());
+  m_reader = new QuranReader(this, m_player);
+  m_playerControls = new PlayerControls(this, m_player, m_reader);
+  m_settingsDlg = new SettingsDialog(this, m_player);
+  m_popup = new NotificationPopup(this);
+  m_betaqaViewer = new BetaqaViewer(this);
+  m_verseDlg = new VerseDialog(this);
+  m_downManPtr = new DownloadManager(this);
+  m_cpyDlg = new CopyDialog(this);
+  m_systemTray = new SystemTray(this);
+  m_contentDlg = new ContentDialog(this);
+
+  QHBoxLayout* controls = new QHBoxLayout();
+  QFrame* controlsFrame = new QFrame(this);
+  controls->setAlignment(Qt::AlignCenter);
+  controls->setContentsMargins(0, 0, 0, 0);
+  controls->setSpacing(0);
+  controls->addStretch(1);
+  controls->addWidget(m_playerControls);
+  controls->addStretch(1);
+  controlsFrame->setLayout(controls);
+  ui->scrollAreaWidgetContents->layout()->addWidget(controlsFrame);
+  ui->scrollAreaWidgetContents->layout()->addWidget(m_reader);
+
+  ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
+
+  setVerseComboBoxRange(true);
+
+  for (int i = 1; i < 605; i++) {
+    ui->cmbPage->addItem(QString::number(i));
+  }
+
+  // sets without emitting signal
+  setCmbVerseIdx(m_currVerse->number() - 1);
+  setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse->page()) - 1);
+
+  ui->cmbPage->setCurrentIndex(m_currVerse->page() - 1);
 }
 
 void
@@ -412,53 +454,28 @@ MainWindow::setupConnections()
           &CopyDialog::copyVerseText);
   connect(m_reader,
           &QuranReader::showVerseTafsir,
-          this,
-          &MainWindow::showVerseTafsir);
+          m_contentDlg,
+          &ContentDialog::showVerseTafsir);
+  connect(m_reader,
+          &QuranReader::showVerseTranslation,
+          m_contentDlg,
+          &ContentDialog::showVerseTranslation);
+  connect(m_reader,
+          &QuranReader::showVerseThoughts,
+          m_contentDlg,
+          &ContentDialog::showVerseThoughts);
   connect(m_reader,
           &QuranReader::showBetaqa,
           m_betaqaViewer,
           &BetaqaViewer::showSurah);
-}
-
-void
-MainWindow::init()
-{
-  m_player = new VersePlayer(this, m_settings->value("Reciter", 0).toInt());
-  m_reader = new QuranReader(this, m_player);
-  m_playerControls = new PlayerControls(this, m_player, m_reader);
-  m_settingsDlg = new SettingsDialog(this, m_player);
-  m_popup = new NotificationPopup(this);
-  m_betaqaViewer = new BetaqaViewer(this);
-  m_verseDlg = new VerseDialog(this);
-  m_downManPtr = new DownloadManager(this);
-  m_cpyDlg = new CopyDialog(this);
-
-  QHBoxLayout* controls = new QHBoxLayout();
-  QFrame* controlsFrame = new QFrame(this);
-  controls->setAlignment(Qt::AlignCenter);
-  controls->setContentsMargins(0, 0, 0, 0);
-  controls->setSpacing(0);
-  controls->addStretch(1);
-  controls->addWidget(m_playerControls);
-  controls->addStretch(1);
-  controlsFrame->setLayout(controls);
-  ui->scrollAreaWidgetContents->layout()->addWidget(controlsFrame);
-  ui->scrollAreaWidgetContents->layout()->addWidget(m_reader);
-
-  ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
-  m_systemTray = new SystemTray(this);
-
-  setVerseComboBoxRange(true);
-
-  for (int i = 1; i < 605; i++) {
-    ui->cmbPage->addItem(QString::number(i));
-  }
-
-  // sets without emitting signal
-  setCmbVerseIdx(m_currVerse->number() - 1);
-  setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse->page()) - 1);
-
-  ui->cmbPage->setCurrentIndex(m_currVerse->page() - 1);
+  connect(m_contentDlg,
+          &ContentDialog::missingTafsir,
+          this,
+          &MainWindow::missingTafsir);
+  connect(m_contentDlg,
+          &ContentDialog::missingTranslation,
+          this,
+          &MainWindow::missingTranslation);
 }
 
 void
@@ -482,7 +499,7 @@ MainWindow::setupSurahsDock()
 }
 
 void
-MainWindow::setupMenubarToggle()
+MainWindow::setupMenubarButton()
 {
   QPushButton* toggleNav = new QPushButton(this);
   toggleNav->setObjectName("btnToggleNav");
@@ -713,6 +730,20 @@ MainWindow::missingTafsir(int idx)
 }
 
 void
+MainWindow::missingTranslation(int idx)
+{
+  QMessageBox::StandardButton btn = QMessageBox::question(
+    this,
+    tr("Files Missing"),
+    tr("The selected translation is missing, would you like to download it?"));
+
+  if (btn == QMessageBox::Yes) {
+    actionDMTriggered();
+    m_downloaderDlg->selectDownload(DownloadManager::File, { 1, idx });
+  }
+}
+
+void
 MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 {
   if (!m_settings->value("MissingFileWarning").toBool())
@@ -785,7 +816,7 @@ MainWindow::actionAdvancedCopyTriggered()
 void
 MainWindow::actionTafsirTriggered()
 {
-  showVerseTafsir(*m_currVerse);
+  m_contentDlg->showVerseTafsir(*m_currVerse);
 }
 
 void
@@ -893,33 +924,6 @@ void
 MainWindow::toggleNavDock()
 {
   ui->sideDock->toggleViewAction()->toggle();
-}
-
-void
-MainWindow::showVerseTafsir(Verse v)
-{
-  static bool reload = false;
-  if (reload) {
-    m_dbMgr->updateLoadedTafsir();
-    reload = false;
-  }
-
-  if (!Tafsir::tafsirExists(m_dbMgr->currTafsir())) {
-    int i;
-    for (i = 0; i < m_tafasir.size(); i++)
-      if (m_dbMgr->currTafsir() == m_tafasir[i])
-        break;
-    reload = true;
-    return missingTafsir(i);
-  }
-
-  if (m_tafsirDlg == nullptr) {
-    m_tafsirDlg = new ContentDialog(this);
-  }
-
-  m_tafsirDlg->setShownVerse(v);
-  m_tafsirDlg->loadContent(ContentDialog::Tafsir);
-  m_tafsirDlg->show();
 }
 
 void

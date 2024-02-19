@@ -99,8 +99,10 @@ signals:
   void currentVerseChanged();
   void currentSurahChanged();
   void showBetaqa(int surah);
-  void showVerseTafsir(const Verse& v);
   void copyVerseText(const Verse& v);
+  void showVerseTafsir(const Verse& v);
+  void showVerseTranslation(const Verse& v);
+  void showVerseThoughts(const Verse& v);
 
 private slots:
   /**

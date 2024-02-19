@@ -33,13 +33,15 @@ public:
    */
   enum Action
   {
-    null,          ///< no action (default)
-    play,          ///< select the verse and start playback
-    select,        ///< only select the verse
-    tafsir,        ///< show the tafsir for the verse
-    copy,          ///< copy the verse text to clipboard
-    addBookmark,   ///< add the verse to bookmarks
-    removeBookmark ///< remove the verse from bookmarks
+    Null,          ///< no action (default)
+    Play,          ///< select the verse and start playback
+    Select,        ///< only select the verse
+    Tafsir,        ///< show the tafsir for the verse
+    Translation,   ///< show the translation for the verse
+    Thoughts,      ///< show user thoughts for the verse
+    Copy,          ///< copy the verse text to clipboard
+    AddBookmark,   ///< add the verse to bookmarks
+    RemoveBookmark ///< remove the verse from bookmarks
   };
   /**
    * @brief class constructor
@@ -221,27 +223,39 @@ private:
   /**
    * @brief QAction for zoom-in functionality
    */
-  QPointer<QAction> m_zoomIn;
+  QPointer<QAction> m_actZoomIn;
   /**
    * @brief QAction for zoom-out functionality
    */
-  QPointer<QAction> m_zoomOut;
+  QPointer<QAction> m_actZoomOut;
   /**
    * @brief QAction for copy functionality
    */
-  QPointer<QAction> m_copyAct;
+  QPointer<QAction> m_actCopy;
   /**
    * @brief QAction for verse selection functionality
    */
-  QPointer<QAction> m_selectAct;
+  QPointer<QAction> m_actSelect;
   /**
    * @brief QAction for verse playback functionality
    */
-  QPointer<QAction> m_playAct;
+  QPointer<QAction> m_actPlay;
   /**
    * @brief QAction for showing tafsir functionality
    */
-  QPointer<QAction> m_tafsirAct;
+  QPointer<QAction> m_actTafsir;
+  /**
+   * @brief m_actTranslation
+   *
+   * MODIFIED
+   */
+  QPointer<QAction> m_actTranslation;
+  /**
+   * @brief m_actThoughts
+   *
+   * MODIFIED
+   */
+  QPointer<QAction> m_actThoughts;
   /**
    * @brief QAction for bookmark addition functionality
    */

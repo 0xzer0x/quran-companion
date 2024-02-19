@@ -409,26 +409,32 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
     senderBrowser->lmbVerseMenu(m_dbMgr->isBookmarked(v.toList()));
 
   switch (chosenAction) {
-    case QuranPageBrowser::play:
+    case QuranPageBrowser::Play:
       selectVerse(browerIdx, idx);
       highlightCurrentVerse();
       m_player->playCurrentVerse();
       break;
-    case QuranPageBrowser::select:
+    case QuranPageBrowser::Select:
       selectVerse(browerIdx, idx);
       m_player->loadActiveVerse();
       highlightCurrentVerse();
       break;
-    case QuranPageBrowser::tafsir:
+    case QuranPageBrowser::Tafsir:
       emit showVerseTafsir(v);
       break;
-    case QuranPageBrowser::copy:
+    case QuranPageBrowser::Translation:
+      emit showVerseTranslation(v);
+      break;
+    case QuranPageBrowser::Thoughts:
+      emit showVerseThoughts(v);
+      break;
+    case QuranPageBrowser::Copy:
       emit copyVerseText(v);
       break;
-    case QuranPageBrowser::addBookmark:
+    case QuranPageBrowser::AddBookmark:
       m_dbMgr->addBookmark(v.toList());
       break;
-    case QuranPageBrowser::removeBookmark:
+    case QuranPageBrowser::RemoveBookmark:
       if (m_dbMgr->removeBookmark(v.toList()))
         break;
     default:

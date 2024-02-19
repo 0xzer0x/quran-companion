@@ -15,6 +15,7 @@
 #include "../widgets/notificationpopup.h"
 #include "../widgets/versedialog.h"
 #include "bookmarksdialog.h"
+#include "contentdialog.h"
 #include "copydialog.h"
 #include "downloaderdialog.h"
 #include "khatmahdialog.h"
@@ -22,7 +23,6 @@
 #include "quranreader.h"
 #include "searchdialog.h"
 #include "settingsdialog.h"
-#include "contentdialog.h"
 #include <QBoxLayout>
 #include <QClipboard>
 #include <QDesktopServices>
@@ -142,6 +142,13 @@ private slots:
    */
   void missingTafsir(int idx);
   /**
+   * @brief missingTranslation
+   * @param idx
+   *
+   * MODIFIED
+   */
+  void missingTranslation(int idx);
+  /**
    * @brief move to the next verse as the playback of the current verse ends
    * @param status - the status of the current verse recitation media
    */
@@ -226,11 +233,6 @@ private slots:
    */
   void navigateToSurah(QModelIndex& index);
   /**
-   * @brief open ContentDialog with the shown verse set to the given ::Verse
-   * @param v - ::Verse to show the tafsir of
-   */
-  void showVerseTafsir(Verse v);
-  /**
    * @brief search for the surahs with the given argument when the text in the
    * side dock search box is changed
    * @param arg1 - QString of the new text in the search box
@@ -263,7 +265,7 @@ private:
   /**
    * @brief initalizes different parts used by the app
    */
-  void init();
+  void loadComponents();
   /**
    * @brief load icons for different UI elements
    */
@@ -290,7 +292,7 @@ private:
    * @brief set the QPushButton the menubar that toggles the navigation dock and
    * connect to the appropriate menubar action
    */
-  void setupMenubarToggle();
+  void setupMenubarButton();
   /**
    * @brief sync the surahs QListView in the navigation dock to match the
    * currently active ::Verse in the VersePlayer
@@ -368,7 +370,7 @@ private:
   /**
    * @brief pointer to ContentDialog instance
    */
-  QPointer<ContentDialog> m_tafsirDlg;
+  QPointer<ContentDialog> m_contentDlg;
   /**
    * @brief pointer to SearchDialog instance
    */

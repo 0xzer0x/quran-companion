@@ -46,30 +46,30 @@ DBManager::setOpenDatabase(Database db, QString path)
   m_currentDb = db;
   m_openDBCon.close();
   switch (db) {
-    case null:
+    case Null:
       break;
 
-    case quran:
+    case Quran:
       m_openDBCon = QSqlDatabase::database("QuranCon");
       break;
 
-    case glyphs:
+    case Glyphs:
       m_openDBCon = QSqlDatabase::database("GlyphsCon");
       break;
 
-    case bookmarks:
+    case Bookmarks:
       m_openDBCon = QSqlDatabase::database("BookmarksCon");
       break;
 
-    case tafsir:
+    case Tafsir:
       m_openDBCon = QSqlDatabase::database("TafsirCon");
       break;
 
-    case translation:
+    case Translation:
       m_openDBCon = QSqlDatabase::database("TranslationCon");
       break;
 
-    case betaqat:
+    case Betaqat:
       m_openDBCon = QSqlDatabase::database("BetaqatCon");
       break;
   }
@@ -109,9 +109,9 @@ DBManager::setCurrentTranslation(int translationIdx)
   if (translationIdx < 0 || translationIdx >= m_translations.size())
     return false;
 
-  m_currTrans = m_translations[translationIdx];
-  const QDir& baseDir = m_currTrans->isExtra() ? *m_downloadsDir : *m_assetsDir;
-  QString path = "translations/" + m_currTrans->filename();
+  m_currTr = m_translations[translationIdx];
+  const QDir& baseDir = m_currTr->isExtra() ? *m_downloadsDir : *m_assetsDir;
+  QString path = "translations/" + m_currTr->filename();
   if (!baseDir.exists(path))
     return false;
 
@@ -125,7 +125,7 @@ DBManager::setCurrentTranslation(int translationIdx)
 QPair<int, int>
 DBManager::getPageMetadata(const int page)
 {
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.prepare(
     "SELECT sura_no,jozz FROM verses_v1 WHERE page=:p ORDER BY id");
@@ -142,7 +142,7 @@ DBManager::getPageMetadata(const int page)
 QStringList
 DBManager::getPageLines(const int page)
 {
-  setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
+  setOpenDatabase(Database::Glyphs, m_glyphsDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   QString query = "SELECT %0 FROM pages WHERE page_no=%1";
@@ -162,7 +162,7 @@ QList<QList<int>>
 DBManager::getVerseInfoList(int page)
 {
   QList<QList<int>> viList;
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   QString query =
@@ -184,7 +184,7 @@ DBManager::getVerseInfoList(int page)
 int
 DBManager::getJuzStartPage(const int juz)
 {
-  setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
+  setOpenDatabase(Database::Glyphs, m_glyphsDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   QString query =
@@ -203,7 +203,7 @@ int
 DBManager::getJuzOfPage(const int page)
 {
   // returns the jozz number which the passed page belongs to
-  setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
+  setOpenDatabase(Database::Glyphs, m_glyphsDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   QString query =
@@ -223,7 +223,7 @@ DBManager::getJuzOfPage(const int page)
 QString
 DBManager::getSurahNameGlyph(const int sura)
 {
-  setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
+  setOpenDatabase(Database::Glyphs, m_glyphsDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   dbQuery.prepare("SELECT qcf_v1 FROM surah_glyphs WHERE surah=:i");
@@ -240,7 +240,7 @@ DBManager::getSurahNameGlyph(const int sura)
 QString
 DBManager::getJuzGlyph(const int juz)
 {
-  setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
+  setOpenDatabase(Database::Glyphs, m_glyphsDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   dbQuery.prepare("SELECT text FROM juz_glyphs WHERE juz=:j");
@@ -260,7 +260,7 @@ DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
   if (m_verseType != VerseType::qcf)
     return getVerseText(sIdx, vIdx);
 
-  setOpenDatabase(Database::glyphs, m_glyphsDbPath.filePath());
+  setOpenDatabase(Database::Glyphs, m_glyphsDbPath.filePath());
 
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -283,7 +283,7 @@ DBManager::getVerseGlyphs(const int sIdx, const int vIdx)
 QString
 DBManager::getSurahName(const int sIdx, bool ar)
 {
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   if (m_languageCode == QLocale::Arabic || ar)
@@ -303,7 +303,7 @@ DBManager::getSurahName(const int sIdx, bool ar)
 QString
 DBManager::getBetaqa(const int surah)
 {
-  setOpenDatabase(betaqat, m_betaqatDbPath.filePath());
+  setOpenDatabase(Betaqat, m_betaqatDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   if (m_languageCode == QLocale::Arabic)
@@ -323,7 +323,7 @@ DBManager::getBetaqa(const int surah)
 int
 DBManager::getVerseId(const int sIdx, const int vIdx)
 {
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.prepare("SELECT id FROM verses_v1 WHERE sura_no=:s AND aya_no=:v");
   dbQuery.bindValue(0, sIdx);
@@ -340,7 +340,7 @@ DBManager::getVerseId(const int sIdx, const int vIdx)
 QList<int>
 DBManager::getVerseById(const int id)
 {
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v1 WHERE id=:i");
   dbQuery.bindValue(0, id);
@@ -358,7 +358,7 @@ DBManager::getVerseById(const int id)
 int
 DBManager::getSurahVerseCount(const int surahIdx)
 {
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   dbQuery.prepare(
@@ -377,7 +377,7 @@ DBManager::getSurahVerseCount(const int surahIdx)
 int
 DBManager::getSurahStartPage(int surahIdx)
 {
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   dbQuery.prepare("SELECT page FROM verses_v1 WHERE sura_no=:sn AND aya_no=1");
@@ -404,7 +404,7 @@ DBManager::searchSurahs(QString searchText,
                         const bool whole)
 {
   QList<QList<int>> results;
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   QString q = "SELECT page,sura_no,aya_no FROM verses_v" +
@@ -440,7 +440,7 @@ QList<int>
 DBManager::searchSurahNames(QString text)
 {
   QList<int> results;
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
   QString q =
     "SELECT DISTINCT sura_no FROM verses_v1 WHERE (sura_name_ar like '%" +
@@ -464,9 +464,9 @@ DBManager::searchSurahNames(QString text)
 /* ---------------- Verse-related methods ---------------- */
 
 bool
-DBManager::getKhatmahPos(const int khatmahId, QList<int>& vInfo)
+DBManager::loadVerse(const int khatmahId, QList<int>& vInfo)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
 
   QString q = QString::asprintf(
@@ -487,7 +487,7 @@ DBManager::getKhatmahPos(const int khatmahId, QList<int>& vInfo)
 int
 DBManager::addKhatmah(QList<int> vInfo, const QString name, const int id)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.exec(
     "CREATE TABLE IF NOT EXISTS khatmah(id INTEGER PRIMARY KEY "
@@ -528,7 +528,7 @@ DBManager::addKhatmah(QList<int> vInfo, const QString name, const int id)
 bool
 DBManager::editKhatmahName(const int khatmahId, QString newName)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   QString q = "SELECT DISTINCT id FROM khatmah WHERE name='%0'";
   if (!dbQuery.exec(q.arg(newName))) {
@@ -553,7 +553,7 @@ DBManager::editKhatmahName(const int khatmahId, QString newName)
 void
 DBManager::removeKhatmah(const int id)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   if (!dbQuery.exec(QString::asprintf("DELETE FROM khatmah WHERE id=%i", id)))
     qDebug() << "Couldn't execute query: " << dbQuery.lastQuery();
@@ -562,7 +562,7 @@ DBManager::removeKhatmah(const int id)
 bool
 DBManager::saveActiveKhatmah(QList<int> vInfo)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   QString q = QString::asprintf(
     "UPDATE khatmah SET page=%i, surah=%i, number=%i WHERE id=%i",
@@ -583,7 +583,7 @@ DBManager::saveActiveKhatmah(QList<int> vInfo)
 QString
 DBManager::getVerseText(const int sIdx, const int vIdx)
 {
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
   if (m_verseType == VerseType::annotated)
     dbQuery.prepare("SELECT aya_text_annotated FROM verses_v1 WHERE sura_no=:s "
@@ -607,7 +607,7 @@ QList<int>
 DBManager::getAllKhatmah()
 {
   QList<int> res;
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   if (!dbQuery.exec("SELECT id FROM khatmah"))
     qCritical() << "Couldn't execute sql query: " << dbQuery.lastQuery();
@@ -621,7 +621,7 @@ DBManager::getAllKhatmah()
 QString
 DBManager::getKhatmahName(const int id)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   if (!dbQuery.exec("SELECT name FROM khatmah WHERE id=" + QString::number(id)))
     qCritical() << "Couldn't execute sql query: " << dbQuery.lastQuery();
@@ -633,7 +633,7 @@ DBManager::getKhatmahName(const int id)
 QList<int>
 DBManager::randomVerse()
 {
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   int id = QRandomGenerator::global()->bounded(1, 6237);
@@ -653,7 +653,7 @@ DBManager::randomVerse()
 int
 DBManager::getVersePage(const int& surahIdx, const int& verse)
 {
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   QString query = "SELECT page FROM verses_v%0 WHERE sura_no=%1 AND aya_no=%2";
@@ -675,7 +675,7 @@ DBManager::searchVerses(QString searchText,
                         const bool whole)
 {
   QList<QList<int>> results;
-  setOpenDatabase(Database::quran, m_quranDbPath.filePath());
+  setOpenDatabase(Database::Quran, m_quranDbPath.filePath());
   QSqlQuery dbQuery(m_openDBCon);
 
   QString q = "SELECT page,sura_no,aya_no FROM verses_v" +
@@ -709,7 +709,7 @@ QList<QList<int>>
 DBManager::bookmarkedVerses(int surahIdx)
 {
   QList<QList<int>> results;
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   QString q = "SELECT page,surah,number FROM favorites";
   if (surahIdx != -1)
@@ -731,7 +731,7 @@ DBManager::bookmarkedVerses(int surahIdx)
 bool
 DBManager::isBookmarked(QList<int> vInfo)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
 
   dbQuery.prepare(
@@ -753,7 +753,7 @@ DBManager::isBookmarked(QList<int> vInfo)
 bool
 DBManager::addBookmark(QList<int> vInfo)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.exec("CREATE TABLE IF NOT EXISTS favorites(id INTEGER PRIMARY KEY "
                "AUTOINCREMENT,"
@@ -778,7 +778,7 @@ DBManager::addBookmark(QList<int> vInfo)
 bool
 DBManager::removeBookmark(QList<int> vInfo)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.prepare(
     "DELETE FROM favorites WHERE page=:p AND surah=:s AND number=:n");
@@ -800,7 +800,7 @@ DBManager::removeBookmark(QList<int> vInfo)
 QString
 DBManager::getTafsir(const int sIdx, const int vIdx)
 {
-  setOpenDatabase(Database::tafsir, m_tafsirDbPath.filePath());
+  setOpenDatabase(Database::Tafsir, m_tafsirDbPath.filePath());
 
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -819,7 +819,7 @@ DBManager::getTafsir(const int sIdx, const int vIdx)
 QString
 DBManager::getTranslation(const int sIdx, const int vIdx)
 {
-  setOpenDatabase(Database::translation, m_transDbPath.filePath());
+  setOpenDatabase(Database::Translation, m_transDbPath.filePath());
 
   QSqlQuery dbQuery(m_openDBCon);
 
@@ -839,7 +839,7 @@ void
 DBManager::saveThoughts(QList<int> vInfo, const QString& text)
 {
   int id = getVerseId(vInfo[1], vInfo[2]);
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.exec("CREATE TABLE IF NOT EXISTS thoughts(id INTEGER PRIMARY KEY "
                "UNIQUE,"
@@ -862,7 +862,7 @@ DBManager::saveThoughts(QList<int> vInfo, const QString& text)
 QString
 DBManager::getThoughts(QList<int> vInfo)
 {
-  setOpenDatabase(Database::bookmarks, m_bookmarksFilepath);
+  setOpenDatabase(Database::Bookmarks, m_bookmarksFilepath);
   QSqlQuery dbQuery(m_openDBCon);
   dbQuery.prepare(
     "SELECT text FROM thoughts WHERE page=:p AND surah=:s AND number=:n");
@@ -919,4 +919,10 @@ QSharedPointer<Tafsir>
 DBManager::currTafsir() const
 {
   return m_currTafsir;
+}
+
+QSharedPointer<Translation>
+DBManager::currTranslation() const
+{
+  return m_currTr;
 }
