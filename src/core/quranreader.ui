@@ -138,7 +138,7 @@
         <property name="midLineWidth">
          <number>0</number>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
           <number>0</number>
          </property>
