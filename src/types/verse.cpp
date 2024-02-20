@@ -99,7 +99,7 @@ Verse::update(const QList<int>& vInfo)
 }
 
 Verse
-Verse::next()
+Verse::next(bool basmalah)
 {
   if (!m_number) {
     m_number = 1;
@@ -109,16 +109,16 @@ Verse::next()
   QList<int> vInfo =
     m_dbMgr->getVerseById(m_dbMgr->getVerseId(m_surah, m_number) + 1);
 
-  if (vInfo[2] == 1 && vInfo[1] != 9 && vInfo[1] != 1)
+  if (vInfo[2] == 1 && vInfo[1] != 9 && vInfo[1] != 1 && basmalah)
     vInfo[2] = 0;
 
   return Verse(vInfo);
 }
 
 Verse
-Verse::prev()
+Verse::prev(bool basmalah)
 {
-  if (m_number == 1 && m_surah != 9 && m_surah != 1) {
+  if (m_number == 1 && m_surah != 9 && m_surah != 1 && basmalah) {
     m_number = 0;
     return *this;
   }

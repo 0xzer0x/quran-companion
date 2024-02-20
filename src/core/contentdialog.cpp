@@ -12,6 +12,8 @@
 ContentDialog::ContentDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::ContentDialog)
+  , m_tafsir(m_settings->value("Reader/Tafsir").toInt())
+  , m_translation(m_settings->value("Reader/Translation").toInt())
 {
   setWindowIcon(StyleManager::awesome->icon(fa::fa_solid, fa::fa_book_open));
   ui->setupUi(this);
@@ -110,9 +112,6 @@ ContentDialog::setShownVerse(const Verse& newShownVerse)
 {
   m_shownVerse = newShownVerse;
 
-  if (!m_shownVerse.number())
-    m_shownVerse.setNumber(1);
-
   QString title = tr("Surah: ") + m_dbMgr->getSurahName(m_shownVerse.surah()) +
                   " - " + tr("Verse: ") +
                   QString::number(m_shownVerse.number());
@@ -138,18 +137,15 @@ ContentDialog::setShownVerse(const Verse& newShownVerse)
 void
 ContentDialog::btnNextClicked()
 {
-  setShownVerse(m_shownVerse.next());
-  loadVerseTafsir();
+  setShownVerse(m_shownVerse.next(false));
+  loadContent(m_currMode);
 }
 
 void
 ContentDialog::btnPrevClicked()
 {
-  if (m_shownVerse.number() == 1)
-    m_shownVerse.setNumber(0);
-
-  setShownVerse(m_shownVerse.prev());
-  loadVerseTafsir();
+  setShownVerse(m_shownVerse.prev(false));
+  loadContent(m_currMode);
 }
 
 void
@@ -184,18 +180,17 @@ ContentDialog::contentChanged()
 void
 ContentDialog::tafsirChanged()
 {
-  int tafsirIdx = ui->cmbContent->currentData().toInt();
-  m_settings->setValue("Reader/Tafsir", tafsirIdx);
-  if (m_dbMgr->setCurrentTafsir(tafsirIdx))
+  m_tafsir = ui->cmbContent->currentData().toInt();
+  m_settings->setValue("Reader/Tafsir", m_tafsir);
+  if (m_dbMgr->setCurrentTafsir(m_tafsir))
     loadVerseTafsir();
 }
 
 void
 ContentDialog::translationChanged()
 {
-  int trIdx = ui->cmbContent->currentData().toInt();
-  if (m_dbMgr->setCurrentTranslation(trIdx))
-    loadVerseTranslation();
+  m_translation = ui->cmbContent->currentData().toInt();
+  loadVerseTranslation();
 }
 
 void
@@ -248,8 +243,8 @@ ContentDialog::cmbLoadTafasir()
       ui->cmbContent->addItem(t->displayName(), i);
   }
 
-  int tafsirIdx = ui->cmbContent->findData(m_settings->value("Reader/Tafsir"));
-  ui->cmbContent->setCurrentIndex(tafsirIdx);
+  int idx = ui->cmbContent->findData(m_tafsir);
+  ui->cmbContent->setCurrentIndex(idx);
 }
 
 void
@@ -261,8 +256,8 @@ ContentDialog::cmbLoadTranslations()
       ui->cmbContent->addItem(tr->displayName(), i);
   }
 
-  int trIdx = ui->cmbContent->findData(m_settings->value("Reader/Translation"));
-  ui->cmbContent->setCurrentIndex(trIdx);
+  int idx = ui->cmbContent->findData(m_translation);
+  ui->cmbContent->setCurrentIndex(idx);
 }
 
 void
@@ -279,6 +274,7 @@ ContentDialog::loadVerseTafsir()
 void
 ContentDialog::loadVerseTranslation()
 {
+  m_dbMgr->setCurrentTranslation(m_translation);
   ui->tedContent->setText(
     m_dbMgr->getTranslation(m_shownVerse.surah(), m_shownVerse.number()));
 }

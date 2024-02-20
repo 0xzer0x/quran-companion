@@ -25,8 +25,8 @@ public:
   QList<int> toList() const;
   void update(const Verse& v);
   void update(const QList<int>& vInfo);
-  Verse next();
-  Verse prev();
+  Verse next(bool basmalah = true);
+  Verse prev(bool basmalah = true);
 
   Verse& operator=(const Verse& cp);
   Verse& operator=(const QList<int>& vInfo);

@@ -177,10 +177,6 @@ private:
   int m_tafsir;
   int m_translation;
   /**
-   * @brief m_internalLoading
-   */
-  bool m_internalLoading = false;
-  /**
    * @brief fixed font size for the verse text displayed above the tafsir.
    */
   int m_fontSZ;
@@ -188,6 +184,10 @@ private:
    * @brief ::Verse instance representing the shown verse.
    */
   Verse m_shownVerse;
+  /**
+   * @brief m_internalLoading
+   */
+  bool m_internalLoading = false;
 };
 
 #endif // CONTENTDIALOG_H

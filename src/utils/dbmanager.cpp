@@ -86,12 +86,14 @@ DBManager::updateOpenDbFile(const QString& filepath)
 }
 
 bool
-DBManager::setCurrentTafsir(int tafsirIdx)
+DBManager::setCurrentTafsir(int idx)
 {
-  if (tafsirIdx < 0 || tafsirIdx >= m_tafasir.size())
+  if (idx < 0 || idx >= m_tafasir.size())
     return false;
+  if (m_currTafsir == m_tafasir[idx])
+    return true;
 
-  m_currTafsir = m_tafasir[tafsirIdx];
+  m_currTafsir = m_tafasir[idx];
   const QDir& baseDir =
     m_currTafsir->isExtra() ? *m_downloadsDir : *m_assetsDir;
   QString path = "tafasir/" + m_currTafsir->filename();
@@ -104,12 +106,14 @@ DBManager::setCurrentTafsir(int tafsirIdx)
 }
 
 bool
-DBManager::setCurrentTranslation(int translationIdx)
+DBManager::setCurrentTranslation(int idx)
 {
-  if (translationIdx < 0 || translationIdx >= m_translations.size())
+  if (idx < 0 || idx >= m_translations.size())
     return false;
+  if (m_currTr == m_translations[idx])
+    return true;
 
-  m_currTr = m_translations[translationIdx];
+  m_currTr = m_translations[idx];
   const QDir& baseDir = m_currTr->isExtra() ? *m_downloadsDir : *m_assetsDir;
   QString path = "translations/" + m_currTr->filename();
   if (!baseDir.exists(path))

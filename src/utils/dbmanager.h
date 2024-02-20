@@ -61,12 +61,12 @@ public:
    * @brief sets the active tafsir
    * @param tafsirName - DBManager::Tafsir entry
    */
-  bool setCurrentTafsir(int tafsirIdx);
+  bool setCurrentTafsir(int idx);
   /**
    * @brief sets the active translation
    * @param translationName - DBManager::Translation entry
    */
-  bool setCurrentTranslation(int translationIdx);
+  bool setCurrentTranslation(int idx);
   /**
    * @brief gets the surah number and juz number of the first verse in the page,
    * used to display page header information

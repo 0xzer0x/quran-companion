@@ -217,6 +217,8 @@ QuranReader::addSideContent()
   if (m_dbMgr->getVerseType() == Settings::qcf)
     m_versesFont.setFamily(FontManager::pageFontname(m_currVerse->page()));
 
+  m_dbMgr->setCurrentTranslation(
+    m_settings->value("Reader/Translation").toInt());
   for (int i = m_activeVList->size() - 1; i >= 0; i--) {
     const Verse* vInfo = &(m_activeVList->at(i));
 
