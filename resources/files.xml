@@ -29,6 +29,7 @@
         <translation name="English - Clear Quran" file="en_khattab.db" extra="0" />
         <translation name="English - Sahih International" file="en_sahih.db" extra="1" />
         <translation name="English - Abdullah Yusuf Ali" file="en_yusuf.db" extra="1" />
+        <translation name="English - Pickthall" file="en_pickthall.db" extra="1" />
         <translation name="Español - Abdel Ghani Navio" file="es_navio.db" extra="1" />
         <translation name="Français - Hamidullah" file="fr_hamidullah.db" extra="1" />
         <translation name="Hausa - Gumi" file="ha_gumi.db" extra="1" />
