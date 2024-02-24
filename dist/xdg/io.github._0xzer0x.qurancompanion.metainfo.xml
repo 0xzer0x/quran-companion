@@ -6,6 +6,9 @@
   <metadata_license>MIT</metadata_license>
   <project_license>LGPL-3.0-or-later</project_license>
   <content_rating type="oars-1.1"></content_rating>
+  <developer id="0xzer0x">
+    <name>Youssef Fathy</name>
+  </developer>
   <description>
     <p>Quran Companion is a cross-platform Quran reader and player with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books and translations</p>
   </description>
@@ -16,22 +19,28 @@
   <url type="bugtracker">https://github.com/0xzer0x/quran-companion/issues</url>
   <screenshots>
     <screenshot type="default">
-      <image xml:lang="en">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/light.png</image>
+      <caption>The main application window in light theme.</caption>
+      <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/light.png</image>
     </screenshot>
     <screenshot>
-      <image xml:lang="en">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/dark.png</image>
+      <caption>The main application window in dark theme.</caption>
+      <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/dark.png</image>
     </screenshot>
     <screenshot>
-      <image xml:lang="en">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/sepia.png</image>
+      <caption>The main application window in sepia theme.</caption>
+      <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/sepia.png</image>
     </screenshot>
     <screenshot>
-      <image xml:lang="ar">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_light.png</image>
+      <caption>The main application window in light theme with Arabic UI.</caption>
+      <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_light.png</image>
     </screenshot>
     <screenshot>
-      <image xml:lang="ar">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_dark.png</image>
+      <caption>The main application window in dark theme with Arabic UI.</caption>
+      <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_dark.png</image>
     </screenshot>
     <screenshot>
-      <image xml:lang="ar">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_two-page.png</image>
+      <caption>The main application window in dark theme with Arabic UI and two page mode.</caption>
+      <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_two-page.png</image>
     </screenshot>
   </screenshots>
   <releases>
