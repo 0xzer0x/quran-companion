@@ -114,7 +114,30 @@ set(PROJECT_SOURCES
     resources.qrc
     qurancompanion.rc)
 
-qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
+qt_add_executable(
+  quran-companion
+  MANUAL_FINALIZATION
+  ${PROJECT_SOURCES}
+  src/utils/downloadjob.h
+  src/types/downloadtask.h
+  src/utils/surahjob.h
+  src/utils/surahjob.cpp
+  src/types/recitationtask.h
+  src/types/recitationtask.cpp
+  src/utils/taskdownloader.h
+  src/utils/taskdownloader.cpp
+  src/types/tafsirtask.h
+  src/types/tafsirtask.cpp
+  src/types/translationtask.h
+  src/types/translationtask.cpp
+  src/types/qcftask.h
+  src/types/qcftask.cpp
+  src/utils/contentjob.h
+  src/utils/contentjob.cpp
+  src/utils/qcfjob.h
+  src/utils/qcfjob.cpp
+  src/utils/jobmanager.h
+  src/utils/jobmanager.cpp)
 
 target_link_libraries(
   quran-companion PRIVATE Qt6::Widgets Qt6::Sql Qt6::Multimedia Qt6::Network
