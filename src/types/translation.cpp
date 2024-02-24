@@ -1,5 +1,5 @@
 #include "translation.h"
-#include "../utils/dirmanager.h"
+#include "utils/dirmanager.h"
 #include <QApplication>
 #include <QDir>
 #include <QFile>

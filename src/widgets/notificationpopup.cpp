@@ -4,7 +4,7 @@
  */
 
 #include "notificationpopup.h"
-#include "../utils/stylemanager.h"
+#include "utils/stylemanager.h"
 #include <QtAwesome.h>
 using namespace fa;
 
@@ -82,37 +82,18 @@ NotificationPopup::notify(QString message, NotificationPopup::Action icon)
 }
 
 void
-NotificationPopup::completedDownload(DownloadType type,
-                                     const QList<int>& metainfo)
+NotificationPopup::completedDownload(QPointer<DownloadJob> job)
 {
   setStyleSheet("");
-  QString msg = tr("Download Completed") + ": ";
-  if (type == DownloadManager::Recitation)
-    msg += m_recitersList.at(metainfo[0])->displayName() + " - " +
-           m_dbMgr->surahNameList().at(metainfo[1] - 1);
-  else if (type == DownloadManager::QCF)
-    msg += tr("QCF V2");
-  else if (type == DownloadManager::File)
-    msg += metainfo[0] ? m_translations.at(metainfo[1])->displayName()
-                       : m_tafasir.at(metainfo[1])->displayName();
-
+  QString msg = tr("Download Completed") + ": " + job->name();
   this->notify(msg, success);
 }
 
 void
-NotificationPopup::downloadError(DownloadType type, const QList<int>& metainfo)
+NotificationPopup::downloadError(QPointer<DownloadJob> job)
 {
   setStyleSheet("QFrame#Popup { background-color: #a50500 }");
-  QString msg = tr("Download Failed") + ": ";
-  if (type == DownloadManager::Recitation)
-    msg += m_recitersList.at(metainfo[0])->displayName() + " - " +
-           m_dbMgr->surahNameList().at(metainfo[1] - 1);
-  else if (type == DownloadManager::QCF)
-    msg += tr("QCF V2");
-  else if (type == DownloadManager::File)
-    msg += metainfo[0] ? m_translations.at(metainfo[1])->displayName()
-                       : m_tafasir.at(metainfo[1])->displayName();
-
+  QString msg = tr("Download Failed") + ": " + job->name();
   this->notify(msg, fail);
 }
 

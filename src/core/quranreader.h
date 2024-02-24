@@ -1,10 +1,10 @@
 #ifndef QURANREADER_H
 #define QURANREADER_H
 
-#include "../types/verse.h"
-#include "../utils/verseplayer.h"
-#include "../widgets/quranpagebrowser.h"
-#include "../widgets/verseframe.h"
+#include "types/verse.h"
+#include "utils/verseplayer.h"
+#include "widgets/quranpagebrowser.h"
+#include "widgets/verseframe.h"
 #include <QLabel>
 #include <QScrollArea>
 #include <QWidget>

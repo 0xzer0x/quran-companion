@@ -6,10 +6,10 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
-#include "../types/tafsir.h"
-#include "../types/translation.h"
-#include "../utils/dirmanager.h"
-#include "../utils/settings.h"
+#include "types/tafsir.h"
+#include "types/translation.h"
+#include "utils/dirmanager.h"
+#include "utils/settings.h"
 #include <QApplication>
 #include <QDebug>
 #include <QDir>

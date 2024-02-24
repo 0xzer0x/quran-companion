@@ -6,7 +6,7 @@
 #ifndef QURANPAGEBROWSER_H
 #define QURANPAGEBROWSER_H
 
-#include "../utils/dbmanager.h"
+#include "utils/dbmanager.h"
 #include <QContextMenuEvent>
 #include <QHBoxLayout>
 #include <QMenu>

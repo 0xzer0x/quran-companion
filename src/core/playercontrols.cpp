@@ -1,7 +1,7 @@
 #include "playercontrols.h"
-#include "../utils/shortcuthandler.h"
-#include "../utils/stylemanager.h"
 #include "ui_playercontrols.h"
+#include "utils/shortcuthandler.h"
+#include "utils/stylemanager.h"
 #include <QtAwesome.h>
 using namespace fa;
 

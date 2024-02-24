@@ -1,5 +1,5 @@
 #include "reciter.h"
-#include "../utils/dirmanager.h"
+#include "utils/dirmanager.h"
 #include <QApplication>
 #include <QFile>
 #include <QXmlStreamReader>

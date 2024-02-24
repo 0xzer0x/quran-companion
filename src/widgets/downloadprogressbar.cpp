@@ -4,29 +4,29 @@
  */
 
 #include "downloadprogressbar.h"
+#include <QApplication>
+#include <QPointer>
 #include <QStyle>
 
-DownloadProgressBar::DownloadProgressBar(QWidget* parent,
-                                         DownloadType type,
-                                         int max)
+DownloadProgressBar::DownloadProgressBar(QWidget* parent, Type type, int max)
   : QProgressBar(parent)
 {
   setStyling(downloading);
   setMaximum(max);
   setValue(0);
-  if (type == DownloadManager::File)
+  if (type == DownloadJob::TafsirFile || type == DownloadJob::TranslationFile)
     setFormat("%v / %m " + qApp->translate("DownloadManager", "KB"));
   else
     setFormat("%v / %m");
 }
 
 void
-DownloadProgressBar::updateProgress(qint64 downloaded, qint64 total)
+DownloadProgressBar::updateProgress(QPointer<DownloadJob> job)
 {
-  if (maximum() != total)
-    setMaximum(total);
+  if (maximum() != job->total())
+    setMaximum(job->total());
 
-  setValue(downloaded);
+  setValue(job->completed());
 }
 
 void

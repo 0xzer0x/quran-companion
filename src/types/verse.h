@@ -1,8 +1,8 @@
 #ifndef VERSE_H
 #define VERSE_H
 
-#include "../utils/dbmanager.h"
-#include "../utils/settings.h"
+#include "utils/dbmanager.h"
+#include "utils/settings.h"
 #include <QSharedPointer>
 
 /**

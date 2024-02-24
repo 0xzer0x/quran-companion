@@ -1,5 +1,5 @@
 #include "settings.h"
-#include "../utils/dirmanager.h"
+#include "utils/dirmanager.h"
 #include <QApplication>
 #include <QFont>
 #include <QLocale>

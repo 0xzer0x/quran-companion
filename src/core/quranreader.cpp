@@ -1,9 +1,9 @@
 #include "quranreader.h"
-#include "../utils/fontmanager.h"
-#include "../utils/shortcuthandler.h"
-#include "../utils/stylemanager.h"
-#include "../widgets/clickablelabel.h"
 #include "ui_quranreader.h"
+#include "utils/fontmanager.h"
+#include "utils/shortcuthandler.h"
+#include "utils/stylemanager.h"
+#include "widgets/clickablelabel.h"
 #include <QtAwesome.h>
 using namespace fa;
 

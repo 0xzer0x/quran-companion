@@ -4,7 +4,7 @@
  */
 
 #include "shortcuthandler.h"
-#include "../utils/settings.h"
+#include "utils/settings.h"
 #include <QApplication>
 #include <QFile>
 #include <QXmlStreamReader>

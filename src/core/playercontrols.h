@@ -1,9 +1,9 @@
 #ifndef PLAYERCONTROLS_H
 #define PLAYERCONTROLS_H
 
-#include "../types/verse.h"
-#include "../utils/verseplayer.h"
 #include "quranreader.h"
+#include "types/verse.h"
+#include "utils/verseplayer.h"
 #include <QWidget>
 
 namespace Ui {

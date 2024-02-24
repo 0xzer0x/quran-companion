@@ -4,8 +4,8 @@
  */
 
 #include "quranpagebrowser.h"
-#include "../utils/fontmanager.h"
-#include "../utils/stylemanager.h"
+#include "utils/fontmanager.h"
+#include "utils/stylemanager.h"
 #include <QApplication>
 #include <QRegularExpression>
 #include <QtAwesome.h>

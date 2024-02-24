@@ -26,6 +26,8 @@ endif()
 
 add_subdirectory(third_party/QtAwesome)
 
+include_directories(src)
+
 set(PROJECT_SOURCES
     src/main.cpp
     src/types/verse.h
@@ -47,27 +49,39 @@ set(PROJECT_SOURCES
     src/core/playercontrols.h
     src/core/playercontrols.cpp
     src/core/playercontrols.ui
-    src/core/searchdialog.h
-    src/core/searchdialog.cpp
-    src/core/searchdialog.ui
-    src/core/settingsdialog.cpp
-    src/core/settingsdialog.h
-    src/core/settingsdialog.ui
-    src/core/downloaderdialog.cpp
-    src/core/downloaderdialog.h
-    src/core/downloaderdialog.ui
-    src/core/bookmarksdialog.h
-    src/core/bookmarksdialog.cpp
-    src/core/bookmarksdialog.ui
-    src/core/contentdialog.h
-    src/core/contentdialog.cpp
-    src/core/contentdialog.ui
-    src/core/khatmahdialog.h
-    src/core/khatmahdialog.cpp
-    src/core/khatmahdialog.ui
-    src/core/copydialog.h
-    src/core/copydialog.cpp
-    src/core/copydialog.ui
+    src/dialogs/searchdialog.h
+    src/dialogs/searchdialog.cpp
+    src/dialogs/searchdialog.ui
+    src/dialogs/settingsdialog.cpp
+    src/dialogs/settingsdialog.h
+    src/dialogs/settingsdialog.ui
+    src/dialogs/downloaderdialog.cpp
+    src/dialogs/downloaderdialog.h
+    src/dialogs/downloaderdialog.ui
+    src/dialogs/bookmarksdialog.h
+    src/dialogs/bookmarksdialog.cpp
+    src/dialogs/bookmarksdialog.ui
+    src/dialogs/contentdialog.h
+    src/dialogs/contentdialog.cpp
+    src/dialogs/contentdialog.ui
+    src/dialogs/khatmahdialog.h
+    src/dialogs/khatmahdialog.cpp
+    src/dialogs/khatmahdialog.ui
+    src/dialogs/copydialog.h
+    src/dialogs/copydialog.cpp
+    src/dialogs/copydialog.ui
+    src/dialogs/aboutdialog.h
+    src/dialogs/aboutdialog.h
+    src/dialogs/aboutdialog.cpp
+    src/dialogs/aboutdialog.ui
+    src/dialogs/versedialog.h
+    src/dialogs/versedialog.cpp
+    src/dialogs/versedialog.ui
+    src/dialogs/aboutdialog.cpp
+    src/dialogs/aboutdialog.ui
+    src/dialogs/versedialog.h
+    src/dialogs/versedialog.cpp
+    src/dialogs/versedialog.ui
     src/utils/settings.h
     src/utils/settings.cpp
     src/utils/shortcuthandler.h
@@ -76,8 +90,6 @@ set(PROJECT_SOURCES
     src/utils/dbmanager.cpp
     src/utils/verseplayer.h
     src/utils/verseplayer.cpp
-    src/utils/downloadmanager.h
-    src/utils/downloadmanager.cpp
     src/utils/systemtray.h
     src/utils/systemtray.cpp
     src/utils/logger.h
@@ -88,6 +100,28 @@ set(PROJECT_SOURCES
     src/utils/stylemanager.cpp
     src/utils/fontmanager.h
     src/utils/fontmanager.cpp
+    src/interfaces/downloadjob.h
+    src/interfaces/downloadtask.h
+    src/downloader/surahjob.h
+    src/downloader/surahjob.cpp
+    src/downloader/recitationtask.h
+    src/downloader/recitationtask.cpp
+    src/downloader/taskdownloader.h
+    src/downloader/taskdownloader.cpp
+    src/downloader/tafsirtask.h
+    src/downloader/tafsirtask.cpp
+    src/downloader/translationtask.h
+    src/downloader/translationtask.cpp
+    src/downloader/qcftask.h
+    src/downloader/qcftask.cpp
+    src/downloader/contentjob.h
+    src/downloader/contentjob.cpp
+    src/downloader/qcfjob.h
+    src/downloader/qcfjob.cpp
+    src/downloader/jobmanager.h
+    src/downloader/jobmanager.cpp
+    src/utils/versionchecker.h
+    src/utils/versionchecker.cpp
     src/widgets/quranpagebrowser.h
     src/widgets/quranpagebrowser.cpp
     src/widgets/clickablelabel.cpp
@@ -102,42 +136,13 @@ set(PROJECT_SOURCES
     src/widgets/inputfield.cpp
     src/widgets/shortcutdelegate.h
     src/widgets/shortcutdelegate.cpp
-    src/widgets/aboutdialog.h
-    src/widgets/aboutdialog.cpp
-    src/widgets/aboutdialog.ui
     src/widgets/betaqaviewer.h
     src/widgets/betaqaviewer.cpp
     src/widgets/betaqaviewer.ui
-    src/widgets/versedialog.h
-    src/widgets/versedialog.cpp
-    src/widgets/versedialog.ui
     resources.qrc
     qurancompanion.rc)
 
-qt_add_executable(
-  quran-companion
-  MANUAL_FINALIZATION
-  ${PROJECT_SOURCES}
-  src/utils/downloadjob.h
-  src/types/downloadtask.h
-  src/utils/surahjob.h
-  src/utils/surahjob.cpp
-  src/types/recitationtask.h
-  src/types/recitationtask.cpp
-  src/utils/taskdownloader.h
-  src/utils/taskdownloader.cpp
-  src/types/tafsirtask.h
-  src/types/tafsirtask.cpp
-  src/types/translationtask.h
-  src/types/translationtask.cpp
-  src/types/qcftask.h
-  src/types/qcftask.cpp
-  src/utils/contentjob.h
-  src/utils/contentjob.cpp
-  src/utils/qcfjob.h
-  src/utils/qcfjob.cpp
-  src/utils/jobmanager.h
-  src/utils/jobmanager.cpp)
+qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
 target_link_libraries(
   quran-companion PRIVATE Qt6::Widgets Qt6::Sql Qt6::Multimedia Qt6::Network

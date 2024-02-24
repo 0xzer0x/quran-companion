@@ -6,9 +6,9 @@
 #ifndef VERSEPLAYER_H
 #define VERSEPLAYER_H
 
-#include "../types/reciter.h"
-#include "../types/verse.h"
 #include "dbmanager.h"
+#include "types/reciter.h"
+#include "types/verse.h"
 #include <QApplication>
 #include <QAudioDevice>
 #include <QAudioOutput>

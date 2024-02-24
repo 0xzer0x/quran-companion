@@ -1,7 +1,7 @@
 #ifndef BETAQAVIEWER_H
 #define BETAQAVIEWER_H
 
-#include "../utils/dbmanager.h"
+#include "utils/dbmanager.h"
 #include <QGraphicsDropShadowEffect>
 #include <QPointer>
 #include <QPropertyAnimation>

@@ -1,6 +1,6 @@
 #include "tafsir.h"
-#include "../utils/dirmanager.h"
 #include "content.h"
+#include "utils/dirmanager.h"
 #include <QApplication>
 #include <QDir>
 #include <QFile>

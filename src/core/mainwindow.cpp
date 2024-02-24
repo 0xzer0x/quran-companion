@@ -4,17 +4,16 @@
  */
 
 #include "mainwindow.h"
-#include "../utils/stylemanager.h"
-#include "../widgets/aboutdialog.h"
-#include "khatmahdialog.h"
+#include "dialogs/aboutdialog.h"
+#include "dialogs/khatmahdialog.h"
 #include "ui_mainwindow.h"
+#include "utils/stylemanager.h"
 #include <QtAwesome.h>
 using namespace fa;
 
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
-  , m_process(new QProcess(this))
   , m_verseValidator(new QIntValidator(this))
 {
   ui->setupUi(this);
@@ -86,10 +85,11 @@ MainWindow::loadComponents()
   m_popup = new NotificationPopup(this);
   m_betaqaViewer = new BetaqaViewer(this);
   m_verseDlg = new VerseDialog(this);
-  m_downManPtr = new DownloadManager(this);
   m_cpyDlg = new CopyDialog(this);
   m_systemTray = new SystemTray(this);
   m_contentDlg = new ContentDialog(this);
+  m_jobMgr = new JobManager(this);
+  m_versionChecker = new VersionChecker(this);
 
   QHBoxLayout* controls = new QHBoxLayout();
   QFrame* controlsFrame = new QFrame(this);
@@ -116,59 +116,6 @@ MainWindow::loadComponents()
   setCmbJuzIdx(m_dbMgr->getJuzOfPage(m_currVerse->page()) - 1);
 
   ui->cmbPage->setCurrentIndex(m_currVerse->page() - 1);
-}
-
-void
-MainWindow::checkForUpdates()
-{
-#if defined Q_OS_WIN
-  static QString updateTool = QApplication::applicationDirPath() +
-                              QDir::separator() + "QCMaintenanceTool.exe";
-  QFileInfo tool(updateTool);
-  if (tool.exists()) {
-    m_process->setWorkingDirectory(QApplication::applicationDirPath());
-    m_process->start(updateTool, QStringList("ch"));
-    return;
-  }
-#endif
-
-  m_downManPtr->getLatestVersion();
-}
-
-void
-MainWindow::updateProcessCallback()
-{
-  static QString updateTool = QApplication::applicationDirPath() +
-                              QDir::separator() + "QCMaintenanceTool.exe";
-
-  QString output = m_process->readAll();
-  QString displayText;
-
-  if (output.contains("There are currently no updates available.")) {
-    displayText = tr("There are currently no updates available.");
-
-    if (this->isVisible())
-      QMessageBox::information(this, tr("Update info"), displayText);
-    else
-      m_systemTray->notify(tr("Update info"), displayText);
-  }
-
-  else {
-    displayText = tr("Updates available, do you want to open the update tool?");
-    if (this->isVisible()) {
-      QMessageBox::StandardButton btn =
-        QMessageBox::question(this, tr("Updates info"), displayText);
-      if (btn == QMessageBox::Yes)
-        m_process->startDetached(updateTool);
-    }
-
-    else {
-      m_systemTray->notify(
-        tr("Update info"),
-        tr("Updates are available, use the maintainance tool to install "
-           "the latest updates."));
-    }
-  }
 }
 
 void
@@ -271,10 +218,6 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::actionAdvancedCopyTriggered);
-  connect(
-    ui->actionUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
-  connect(
-    m_process, &QProcess::finished, this, &MainWindow::updateProcessCallback);
   connect(ui->actionBookmarks,
           &QAction::triggered,
           this,
@@ -287,6 +230,10 @@ MainWindow::setupConnections()
           &QAction::triggered,
           this,
           &MainWindow::actionAboutTriggered);
+  connect(ui->actionUpdates,
+          &QAction::triggered,
+          this,
+          &MainWindow::actionUpdatesTriggered);
 
   // ########## page controls ########## //
   connect(ui->cmbPage,
@@ -338,8 +285,8 @@ MainWindow::setupConnections()
   connect(m_systemTray, &SystemTray::hideWindow, this, &MainWindow::hide);
   connect(m_systemTray,
           &SystemTray::checkForUpdates,
-          this,
-          &MainWindow::checkForUpdates);
+          m_versionChecker,
+          &VersionChecker::checkUpdates);
   connect(m_systemTray,
           &SystemTray::openAbout,
           this,
@@ -354,16 +301,16 @@ MainWindow::setupConnections()
           &QDockWidget::dockLocationChanged,
           m_popup,
           &NotificationPopup::setDockArea);
-  connect(m_downManPtr,
-          &DownloadManager::downloadCompleted,
+  connect(m_jobMgr,
+          &JobManager::jobCompleted,
           m_popup,
           &NotificationPopup::completedDownload);
-  connect(m_downManPtr,
-          &DownloadManager::downloadErrored,
+  connect(m_jobMgr,
+          &JobManager::jobFailed,
           m_popup,
           &NotificationPopup::downloadError);
-  connect(m_downManPtr,
-          &DownloadManager::latestVersionFound,
+  connect(m_versionChecker,
+          &VersionChecker::versionFound,
           m_popup,
           &NotificationPopup::checkUpdate);
   connect(m_cpyDlg,
@@ -702,6 +649,12 @@ MainWindow::addCurrentToBookmarks()
 }
 
 void
+MainWindow::actionUpdatesTriggered()
+{
+  m_versionChecker->checkUpdates();
+}
+
+void
 MainWindow::missingQCF()
 {
   QMessageBox::StandardButton btn = QMessageBox::question(
@@ -711,7 +664,7 @@ MainWindow::missingQCF()
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(DownloadManager::QCF);
+    m_downloaderDlg->selectDownload(DownloadJob::Qcf);
   }
 }
 
@@ -725,7 +678,7 @@ MainWindow::missingTafsir(int idx)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(DownloadManager::File, { 0, idx });
+    m_downloaderDlg->selectDownload(DownloadJob::TafsirFile, { 0, idx });
   }
 }
 
@@ -739,7 +692,7 @@ MainWindow::missingTranslation(int idx)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(DownloadManager::File, { 1, idx });
+    m_downloaderDlg->selectDownload(DownloadJob::TranslationFile, { 1, idx });
   }
 }
 
@@ -757,7 +710,7 @@ MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(DownloadManager::Recitation,
+    m_downloaderDlg->selectDownload(DownloadJob::Recitation,
                                     { reciterIdx, surah });
   }
 }
@@ -772,7 +725,7 @@ void
 MainWindow::actionDMTriggered()
 {
   if (m_downloaderDlg == nullptr)
-    m_downloaderDlg = new DownloaderDialog(this, m_downManPtr);
+    m_downloaderDlg = new DownloaderDialog(this, m_jobMgr);
 
   m_downloaderDlg->show();
 }

@@ -6,29 +6,27 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "../types/verse.h"
-#include "../utils/dbmanager.h"
-#include "../utils/shortcuthandler.h"
-#include "../utils/systemtray.h"
-#include "../utils/verseplayer.h"
-#include "../widgets/betaqaviewer.h"
-#include "../widgets/notificationpopup.h"
-#include "../widgets/versedialog.h"
-#include "bookmarksdialog.h"
-#include "contentdialog.h"
-#include "copydialog.h"
-#include "downloaderdialog.h"
-#include "khatmahdialog.h"
+#include "dialogs/bookmarksdialog.h"
+#include "dialogs/contentdialog.h"
+#include "dialogs/copydialog.h"
+#include "dialogs/downloaderdialog.h"
+#include "dialogs/khatmahdialog.h"
+#include "dialogs/searchdialog.h"
+#include "dialogs/settingsdialog.h"
+#include "dialogs/versedialog.h"
 #include "playercontrols.h"
 #include "quranreader.h"
-#include "searchdialog.h"
-#include "settingsdialog.h"
+#include "types/verse.h"
+#include "utils/dbmanager.h"
+#include "utils/shortcuthandler.h"
+#include "utils/systemtray.h"
+#include "utils/verseplayer.h"
+#include "utils/versionchecker.h"
+#include "widgets/betaqaviewer.h"
+#include "widgets/notificationpopup.h"
 #include <QBoxLayout>
-#include <QClipboard>
-#include <QDesktopServices>
 #include <QIntValidator>
 #include <QMainWindow>
-#include <QPropertyAnimation>
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QSettings>
@@ -71,16 +69,6 @@ public slots:
    * MODIFIED
    */
   void currentSurahChanged();
-  /**
-   * @brief check if there are updates using the maintainence tool if available,
-   * otherwise check latest version on github
-   */
-  void checkForUpdates();
-  /**
-   * @brief callback function that handles the output of the maintainence tool
-   * update check
-   */
-  void updateProcessCallback();
   /**
    * @brief save the current position and window state of the application to the
    * settings file
@@ -163,6 +151,10 @@ private slots:
    * @brief adds the current ::Verse to the bookmarks
    */
   void addCurrentToBookmarks();
+  /**
+   * @brief actionUpdatesTriggered
+   */
+  void actionUpdatesTriggered();
   /**
    * @brief open the SettingsDialog and connect settings change slots
    */
@@ -398,7 +390,7 @@ private:
   /**
    * @brief pointer to DownloadManager instance
    */
-  QPointer<DownloadManager> m_downManPtr;
+  QPointer<JobManager> m_jobMgr;
   /**
    * @brief pointer to the surah card (betaqa) widget
    */
@@ -411,7 +403,7 @@ private:
    * @brief pointer to the QProcess instance of the maintainence tool that
    * checks for updates
    */
-  QPointer<QProcess> m_process;
+  QPointer<VersionChecker> m_versionChecker;
   /**
    * @brief pointer to the validator for the editable verse combobox to ensure
    * the number entered is within the surah verse range

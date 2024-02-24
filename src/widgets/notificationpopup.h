@@ -6,8 +6,9 @@
 #ifndef NOTIFICATIONPOPUP_H
 #define NOTIFICATIONPOPUP_H
 
-#include "../utils/dbmanager.h"
-#include "../utils/downloadmanager.h"
+#include "interfaces/downloadjob.h"
+#include "types/reciter.h"
+#include "utils/dbmanager.h"
 #include <QApplication>
 #include <QDockWidget>
 #include <QGraphicsOpacityEffect>
@@ -18,7 +19,6 @@
 #include <QStyle>
 #include <QTimer>
 #include <QWidget>
-typedef DownloadManager::DownloadType DownloadType;
 
 /**
  * @brief NotificationPopup class represents an in-app popup for notifying the
@@ -79,13 +79,13 @@ public slots:
    * @param reciterIdx - ::Globals::recitersList index for the reciter
    * @param surah - the surah that was downloaded
    */
-  void completedDownload(DownloadType type, const QList<int>& metainfo);
+  void completedDownload(QPointer<DownloadJob> job);
   /**
    * @brief slot to show a notification on download error
    * @param reciterIdx - ::Globals::recitersList index for the reciter
    * @param surah - the surah that was downloaded
    */
-  void downloadError(DownloadType type, const QList<int>& metainfo);
+  void downloadError(QPointer<DownloadJob> job);
   /**
    * @brief slot to show a notification on bookmark addition
    */
@@ -109,7 +109,8 @@ private:
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
   QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
-  QList<QSharedPointer<Translation>>& m_translations = Translation::translations;
+  QList<QSharedPointer<Translation>>& m_translations =
+    Translation::translations;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
