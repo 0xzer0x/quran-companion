@@ -21,6 +21,7 @@ public:
   virtual int total() = 0;
   virtual Type type() = 0;
   virtual QString name() = 0;
+  virtual ~DownloadJob(){};
 
 signals:
   void aborted();

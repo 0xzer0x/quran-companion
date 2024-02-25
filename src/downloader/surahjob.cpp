@@ -6,6 +6,7 @@ SurahJob::SurahJob(int reciter, int surah)
   , m_surahCount(m_dbMgr->getSurahVerseCount(surah))
   , m_taskDlr(new TaskDownloader(this))
 {
+  connect(m_taskDlr, &TaskDownloader::fileFound, this, &SurahJob::taskFinished);
   connect(m_taskDlr, &TaskDownloader::completed, this, &SurahJob::taskFinished);
   connect(m_taskDlr, &TaskDownloader::taskError, this, &SurahJob::taskFailed);
   connect(m_taskDlr,
@@ -129,4 +130,7 @@ SurahJob::surah() const
   return m_surah;
 }
 
-SurahJob::~SurahJob() {}
+SurahJob::~SurahJob()
+{
+  delete m_taskDlr;
+}

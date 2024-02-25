@@ -12,6 +12,7 @@ class QcfJob : public DownloadJob
   Q_OBJECT
 public:
   QcfJob();
+  ~QcfJob();
 
   void start() override;
   void stop() override;

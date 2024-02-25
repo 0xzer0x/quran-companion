@@ -11,6 +11,8 @@ class TaskDownloader : public QObject
   Q_OBJECT
 public:
   explicit TaskDownloader(QObject* parent);
+  ~TaskDownloader();
+
   void process(DownloadTask* task, QNetworkAccessManager* manager);
   void cancel();
 

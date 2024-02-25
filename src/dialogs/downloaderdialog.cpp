@@ -361,8 +361,7 @@ DownloaderDialog::downloadCompleted(QPointer<DownloadJob> finished)
     SurahJob* sj = qobject_cast<SurahJob*>(finished);
     removeFromDownloading(sj->reciter(), sj->surah());
   }
-  if (finished->type() == DownloadJob::TafsirFile ||
-      finished->type() == DownloadJob::TranslationFile) {
+  if (m_currentBar->maximum() == 0) {
     m_currentBar->setValue(1);
     m_currentBar->setMaximum(1);
     m_currentBar->setFormat("1 / 1");

@@ -7,6 +7,7 @@ QcfJob::QcfJob()
   , m_isDownloading(false)
   , m_taskDlr(new TaskDownloader(this))
 {
+  connect(m_taskDlr, &TaskDownloader::fileFound, this, &QcfJob::taskFinished);
   connect(m_taskDlr, &TaskDownloader::completed, this, &QcfJob::taskFinished);
   connect(m_taskDlr, &TaskDownloader::taskError, this, &QcfJob::taskFailed);
   connect(m_taskDlr,
@@ -115,4 +116,9 @@ QString
 QcfJob::name()
 {
   return qApp->translate("SettingsDialog", "QCF V2");
+}
+
+QcfJob::~QcfJob()
+{
+  delete m_taskDlr;
 }

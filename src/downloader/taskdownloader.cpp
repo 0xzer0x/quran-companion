@@ -129,3 +129,8 @@ TaskDownloader::total() const
 {
   return m_total;
 }
+
+TaskDownloader::~TaskDownloader()
+{
+  delete m_task;
+}
