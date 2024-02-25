@@ -4,11 +4,12 @@
  */
 
 #include "systemtray.h"
+#include <QApplication>
 
 SystemTray::SystemTray(QObject* parent)
-  : QObject{ parent }
-  , m_sysTray{ new QSystemTrayIcon(this) }
-  , m_trayMenu{ new QMenu() }
+  : QObject(parent)
+  , m_sysTray(new QSystemTrayIcon(this))
+  , m_trayMenu(new QMenu())
 {
   addActions();
   setTooltip(qApp->translate("MainWindow", "Quran Companion"));

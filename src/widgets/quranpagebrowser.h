@@ -6,7 +6,6 @@
 #ifndef QURANPAGEBROWSER_H
 #define QURANPAGEBROWSER_H
 
-#include "utils/dbmanager.h"
 #include <QContextMenuEvent>
 #include <QHBoxLayout>
 #include <QMenu>
@@ -18,6 +17,9 @@
 #include <QShortcut>
 #include <QTextBrowser>
 #include <QTextCursor>
+#include <database/glyphsdb.h>
+#include <database/qurandb.h>
+#include <utils/settings.h>
 
 /**
  * @brief QuranPageBrowser class is a modified QTextBrowser for displaying a
@@ -144,7 +146,8 @@ protected:
 
 private:
   const int m_qcfVer = Settings::qcfVersion;
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
+  QSharedPointer<GlyphsDb> m_glyphsDb = GlyphsDb::current();
   QSharedPointer<QSettings> const m_settings = Settings::settings;
   /**
    * @brief utility for creating menu actions for interacting with the widget

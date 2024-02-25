@@ -6,9 +6,6 @@
 #ifndef VERSEPLAYER_H
 #define VERSEPLAYER_H
 
-#include "dbmanager.h"
-#include "types/reciter.h"
-#include "types/verse.h"
 #include <QApplication>
 #include <QAudioDevice>
 #include <QAudioOutput>
@@ -16,6 +13,8 @@
 #include <QMediaPlayer>
 #include <QObject>
 #include <QPointer>
+#include <types/reciter.h>
+#include <types/verse.h>
 
 /*!
  * @brief VersePlayer class is responsible for the playback of Quran verse
@@ -118,7 +117,6 @@ signals:
 
 private:
   QSharedPointer<Verse> m_activeVerse = Verse::current();
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QDir m_reciterDir = DirManager::downloadsDir->absoluteFilePath("recitations");
   const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
   /**

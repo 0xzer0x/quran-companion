@@ -107,7 +107,7 @@ Verse::next(bool basmalah)
   }
 
   QList<int> vInfo =
-    m_dbMgr->getVerseById(m_dbMgr->getVerseId(m_surah, m_number) + 1);
+    m_quranDb->verseById(m_quranDb->verseId(m_surah, m_number) + 1);
 
   if (vInfo[2] == 1 && vInfo[1] != 9 && vInfo[1] != 1 && basmalah)
     vInfo[2] = 0;
@@ -127,14 +127,14 @@ Verse::prev(bool basmalah)
     m_number = 1;
 
   QList<int> vInfo =
-    m_dbMgr->getVerseById(m_dbMgr->getVerseId(m_surah, m_number) - 1);
+    m_quranDb->verseById(m_quranDb->verseId(m_surah, m_number) - 1);
   return Verse(vInfo);
 }
 
 void
 Verse::updateSurahCount()
 {
-  m_surahCount = m_dbMgr->getSurahVerseCount(m_surah);
+  m_surahCount = m_quranDb->surahVerseCount(m_surah);
 }
 
 void

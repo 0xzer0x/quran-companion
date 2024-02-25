@@ -4,17 +4,17 @@
  */
 
 #include "downloaderdialog.h"
-#include "downloader/contentjob.h"
-#include "downloader/qcfjob.h"
-#include "downloader/surahjob.h"
 #include "ui_downloaderdialog.h"
-#include "utils/stylemanager.h"
+#include <downloader/contentjob.h>
+#include <downloader/qcfjob.h>
+#include <downloader/surahjob.h>
+#include <utils/stylemanager.h>
 
 DownloaderDialog::DownloaderDialog(QWidget* parent, JobManager* manager)
   : QDialog(parent)
   , ui(new Ui::DownloaderDialog)
   , m_jobMgr(manager)
-  , m_surahDisplayNames(m_dbMgr->surahNameList())
+  , m_surahDisplayNames(m_quranDb->surahNames())
 
 {
   ui->setupUi(this);

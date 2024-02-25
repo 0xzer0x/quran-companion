@@ -1,10 +1,10 @@
 #ifndef JOBMANAGER_H
 #define JOBMANAGER_H
 
-#include "interfaces/downloadjob.h"
 #include <QObject>
 #include <QQueue>
 #include <QSharedPointer>
+#include <interfaces/downloadjob.h>
 
 class JobManager : public QObject
 {

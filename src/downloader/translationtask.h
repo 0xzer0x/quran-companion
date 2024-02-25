@@ -1,9 +1,9 @@
 #ifndef TRANSLATIONTASK_H
 #define TRANSLATIONTASK_H
 
-#include "interfaces/downloadtask.h"
-#include "types/translation.h"
-#include "utils/dirmanager.h"
+#include <interfaces/downloadtask.h>
+#include <types/translation.h>
+#include <utils/dirmanager.h>
 
 class TranslationTask : public DownloadTask
 {

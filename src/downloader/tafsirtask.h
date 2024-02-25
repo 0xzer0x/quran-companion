@@ -1,9 +1,9 @@
 #ifndef TAFSIRTASK_H
 #define TAFSIRTASK_H
 
-#include "interfaces/downloadtask.h"
-#include "types/tafsir.h"
-#include "utils/dirmanager.h"
+#include <interfaces/downloadtask.h>
+#include <types/tafsir.h>
+#include <utils/dirmanager.h>
 
 class TafsirTask : public DownloadTask
 {

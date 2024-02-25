@@ -1,10 +1,10 @@
 #include "quranreader.h"
 #include "ui_quranreader.h"
-#include "utils/fontmanager.h"
-#include "utils/shortcuthandler.h"
-#include "utils/stylemanager.h"
-#include "widgets/clickablelabel.h"
 #include <QtAwesome.h>
+#include <utils/fontmanager.h>
+#include <utils/shortcuthandler.h>
+#include <utils/stylemanager.h>
+#include <widgets/clickablelabel.h>
 using namespace fa;
 
 QuranReader::QuranReader(QWidget* parent, VersePlayer* player)
@@ -162,7 +162,7 @@ QuranReader::updateVerseType()
     qvariant_cast<VerseType>(m_settings->value("Reader/VerseType"));
   m_versesFont.setFamily(FontManager::verseFontname(type, m_currVerse->page()));
   m_versesFont.setPointSize(m_settings->value("Reader/VerseFontSize").toInt());
-  m_dbMgr->setVerseType(type);
+  m_quranDb->setVerseType(type);
 }
 
 void
@@ -213,11 +213,11 @@ QuranReader::addSideContent()
   ClickableLabel* verselb;
   QLabel* contentLb;
   VerseFrame* verseContFrame;
-  QString prevLbContent, currLbContent;
-  if (m_dbMgr->getVerseType() == Settings::qcf)
+  QString prevLbContent, currLbContent, glyphs;
+  if (m_quranDb->verseType() == Settings::Qcf)
     m_versesFont.setFamily(FontManager::pageFontname(m_currVerse->page()));
 
-  m_dbMgr->setCurrentTranslation(
+  m_translationDb->setCurrentTranslation(
     m_settings->value("Reader/Translation").toInt());
   for (int i = m_activeVList->size() - 1; i >= 0; i--) {
     const Verse* vInfo = &(m_activeVList->at(i));
@@ -225,16 +225,20 @@ QuranReader::addSideContent()
     verseContFrame = new VerseFrame(m_scrlVerseByVerse->widget());
     verselb = new ClickableLabel(verseContFrame);
     contentLb = new QLabel(verseContFrame);
+    glyphs = m_quranDb->verseType() == Settings::Qcf
+               ? m_glyphsDb->getVerseGlyphs(vInfo->surah(), vInfo->number())
+               : m_quranDb->verseText(vInfo->surah(), vInfo->number());
 
     verseContFrame->setObjectName(
       QString("%0_%1").arg(vInfo->surah()).arg(vInfo->number()));
 
     verselb->setFont(m_versesFont);
-    verselb->setText(m_dbMgr->getVerseGlyphs(vInfo->surah(), vInfo->number()));
+    verselb->setText(glyphs);
     verselb->setAlignment(Qt::AlignCenter);
     verselb->setWordWrap(true);
 
-    currLbContent = m_dbMgr->getTranslation(vInfo->surah(), vInfo->number());
+    currLbContent =
+      m_translationDb->getTranslation(vInfo->surah(), vInfo->number());
 
     if (currLbContent == prevLbContent) {
       currLbContent = '-';
@@ -312,18 +316,18 @@ QuranReader::updatePageVerseInfoList()
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_vLists[0] =
-      Verse::fromList(m_dbMgr->getVerseInfoList(m_currVerse->page()));
+      Verse::fromList(m_quranDb->verseInfoList(m_currVerse->page()));
     if (m_readerMode == Settings::DoublePage)
       m_vLists[1] =
-        Verse::fromList(m_dbMgr->getVerseInfoList(m_currVerse->page() + 1));
+        Verse::fromList(m_quranDb->verseInfoList(m_currVerse->page() + 1));
 
     m_activeVList = &m_vLists[0];
 
   } else {
     m_vLists[0] =
-      Verse::fromList(m_dbMgr->getVerseInfoList(m_currVerse->page() - 1));
+      Verse::fromList(m_quranDb->verseInfoList(m_currVerse->page() - 1));
     m_vLists[1] =
-      Verse::fromList(m_dbMgr->getVerseInfoList(m_currVerse->page()));
+      Verse::fromList(m_quranDb->verseInfoList(m_currVerse->page()));
 
     m_activeVList = &m_vLists[1];
   }
@@ -389,7 +393,6 @@ QuranReader::setVerseToStartOfPage()
 {
   // set the current verse to the verse at the top of the page
   m_currVerse->update(m_activeVList->at(0));
-  m_player->loadActiveVerse();
 }
 
 void
@@ -408,7 +411,7 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
   Verse v(m_vLists[browerIdx].at(idx));
 
   QuranPageBrowser::Action chosenAction =
-    senderBrowser->lmbVerseMenu(m_dbMgr->isBookmarked(v.toList()));
+    senderBrowser->lmbVerseMenu(m_bookmarksDb->isBookmarked(v.toList()));
 
   switch (chosenAction) {
     case QuranPageBrowser::Play:
@@ -434,11 +437,10 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
       emit copyVerseText(v);
       break;
     case QuranPageBrowser::AddBookmark:
-      m_dbMgr->addBookmark(v.toList());
+      m_bookmarksDb->addBookmark(v.toList());
       break;
     case QuranPageBrowser::RemoveBookmark:
-      if (m_dbMgr->removeBookmark(v.toList()))
-        break;
+      m_bookmarksDb->removeBookmark(v.toList());
     default:
       break;
   }
@@ -553,7 +555,7 @@ void
 QuranReader::gotoSurah(int surahIdx)
 {
   // getting surah index
-  int page = m_dbMgr->getSurahStartPage(surahIdx);
+  int page = m_quranDb->surahStartPage(surahIdx);
   gotoPage(page, false);
 
   m_currVerse->setPage(page);

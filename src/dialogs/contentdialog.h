@@ -6,11 +6,16 @@
 #ifndef CONTENTDIALOG_H
 #define CONTENTDIALOG_H
 
-#include "types/verse.h"
-#include "utils/dbmanager.h"
 #include <QDialog>
 #include <QSettings>
 #include <QShortcut>
+#include <database/bookmarksdb.h>
+#include <database/glyphsdb.h>
+#include <database/tafsirdb.h>
+#include <database/translationdb.h>
+#include <types/tafsir.h>
+#include <types/translation.h>
+#include <types/verse.h>
 
 namespace Ui {
 class ContentDialog;
@@ -87,7 +92,11 @@ private slots:
 
 private:
   Ui::ContentDialog* ui;
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
+  QSharedPointer<GlyphsDb> m_glyphsDb = GlyphsDb::current();
+  QSharedPointer<BookmarksDb> m_bookmarkDb = BookmarksDb::current();
+  QSharedPointer<TafsirDb> m_tafsirDb = TafsirDb::current();
+  QSharedPointer<TranslationDb> m_translationDb = TranslationDb::current();
   const int m_qcfVer = Settings::qcfVersion;
   const QSharedPointer<QSettings> m_settings = Settings::settings;
   const QList<QSharedPointer<::Tafsir>>& m_tafasir = Tafsir::tafasir;

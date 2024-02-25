@@ -4,11 +4,11 @@
  */
 
 #include "quranpagebrowser.h"
-#include "utils/fontmanager.h"
-#include "utils/stylemanager.h"
 #include <QApplication>
 #include <QRegularExpression>
 #include <QtAwesome.h>
+#include <utils/fontmanager.h>
+#include <utils/stylemanager.h>
 using namespace fa;
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
@@ -101,7 +101,7 @@ QuranPageBrowser::surahFrame(int surah)
   QString frmText;
   frmText.append("ﰦ");
   frmText.append("ﮌ");
-  frmText.append(m_dbMgr->getSurahNameGlyph(surah));
+  frmText.append(m_glyphsDb->getSurahNameGlyph(surah));
 
   // draw on top of the image the surah name text
   QPainter p(&baseImage);
@@ -133,14 +133,14 @@ QuranPageBrowser::setHref(QTextCursor* cursor, int to, QString url)
 QString
 QuranPageBrowser::pageHeader(int page)
 {
-  m_headerData = m_dbMgr->getPageMetadata(page);
+  m_headerData = m_quranDb->pageMetadata(page);
 
   QString suraHeader, jozzHeader;
   suraHeader.append("سورة ");
-  suraHeader.append(m_dbMgr->getSurahName(m_headerData.first, true));
+  suraHeader.append(m_quranDb->surahName(m_headerData.first, true));
   suraHeader.append("$");
   jozzHeader.append("الجزء ");
-  jozzHeader.append(m_dbMgr->getJuzGlyph(m_headerData.second));
+  jozzHeader.append(m_glyphsDb->getJuzGlyph(m_headerData.second));
 
   return suraHeader + jozzHeader;
 }
@@ -161,7 +161,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
   QTextCursor textCursor(this->document());
 
   m_currPageHeader = this->pageHeader(m_page);
-  m_currPageLines = m_dbMgr->getPageLines(m_page);
+  m_currPageLines = m_glyphsDb->getPageLines(m_page);
 
   // automatic font adjustment check
   if (!forceCustomSize && m_settings->value("Reader/AdaptiveFont").toBool()) {

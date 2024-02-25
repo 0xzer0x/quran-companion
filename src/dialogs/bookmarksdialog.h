@@ -6,9 +6,6 @@
 #ifndef BOOKMARKSDIALOG_H
 #define BOOKMARKSDIALOG_H
 
-#include "types/verse.h"
-#include "utils/dbmanager.h"
-#include "utils/settings.h"
 #include <QDialog>
 #include <QLabel>
 #include <QPointer>
@@ -16,6 +13,10 @@
 #include <QStandardItem>
 #include <QStringListModel>
 #include <QVBoxLayout>
+#include <database/bookmarksdb.h>
+#include <database/glyphsdb.h>
+#include <types/verse.h>
+#include <utils/settings.h>
 
 namespace Ui {
 class BookmarksDialog;
@@ -119,7 +120,9 @@ private slots:
 private:
   Ui::BookmarksDialog* ui;
   const int m_qcfVer = Settings::qcfVersion;
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
+  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
+  QSharedPointer<GlyphsDb> m_glpyhsDb = GlyphsDb::current();
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

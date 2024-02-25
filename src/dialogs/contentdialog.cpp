@@ -4,10 +4,10 @@
  */
 
 #include "contentdialog.h"
-#include "types/tafsir.h"
 #include "ui_contentdialog.h"
-#include "utils/fontmanager.h"
-#include "utils/stylemanager.h"
+#include <types/tafsir.h>
+#include <utils/fontmanager.h>
+#include <utils/stylemanager.h>
 
 ContentDialog::ContentDialog(QWidget* parent)
   : QDialog(parent)
@@ -54,12 +54,12 @@ ContentDialog::showVerseTafsir(const Verse& v)
 {
   static bool reload = false;
   if (reload) {
-    m_dbMgr->updateLoadedTafsir();
+    m_tafsirDb->updateLoadedTafsir();
     reload = false;
   }
 
-  if (!m_dbMgr->currTafsir()->isAvailable()) {
-    int i = m_tafasir.indexOf(m_dbMgr->currTafsir());
+  if (!m_tafsirDb->currTafsir()->isAvailable()) {
+    int i = m_tafasir.indexOf(m_tafsirDb->currTafsir());
     reload = true;
     emit missingTafsir(i);
     return;
@@ -75,12 +75,12 @@ ContentDialog::showVerseTranslation(const Verse& v)
 {
   static bool reload = false;
   if (reload) {
-    m_dbMgr->updateLoadedTranslation();
+    m_translationDb->updateLoadedTranslation();
     reload = false;
   }
 
-  if (!m_dbMgr->currTranslation()->isAvailable()) {
-    int i = m_translations.indexOf(m_dbMgr->currTranslation());
+  if (!m_translationDb->currTranslation()->isAvailable()) {
+    int i = m_translations.indexOf(m_translationDb->currTranslation());
     reload = true;
     emit missingTranslation(i);
     return;
@@ -111,14 +111,18 @@ void
 ContentDialog::setShownVerse(const Verse& newShownVerse)
 {
   m_shownVerse = newShownVerse;
+  if (m_shownVerse.number() == 0)
+    m_shownVerse.setNumber(1);
 
-  QString title = tr("Surah: ") + m_dbMgr->getSurahName(m_shownVerse.surah()) +
+  QString title = tr("Surah: ") + m_quranDb->surahName(m_shownVerse.surah()) +
                   " - " + tr("Verse: ") +
                   QString::number(m_shownVerse.number());
   QString glyphs =
-    m_dbMgr->getVerseGlyphs(m_shownVerse.surah(), m_shownVerse.number());
+    m_quranDb->verseType() == Settings::Qcf
+      ? m_glyphsDb->getVerseGlyphs(m_shownVerse.surah(), m_shownVerse.number())
+      : m_quranDb->verseText(m_shownVerse.surah(), m_shownVerse.number());
   QString fontFamily =
-    FontManager::verseFontname(m_dbMgr->getVerseType(), m_shownVerse.page());
+    FontManager::verseFontname(m_quranDb->verseType(), m_shownVerse.page());
 
   ui->lbVerseInfo->setText(title);
   ui->lbVerseText->setWordWrap(true);
@@ -182,7 +186,7 @@ ContentDialog::tafsirChanged()
 {
   m_tafsir = ui->cmbContent->currentData().toInt();
   m_settings->setValue("Reader/Tafsir", m_tafsir);
-  if (m_dbMgr->setCurrentTafsir(m_tafsir))
+  if (m_tafsirDb->setCurrentTafsir(m_tafsir))
     loadVerseTafsir();
 }
 
@@ -263,26 +267,26 @@ ContentDialog::cmbLoadTranslations()
 void
 ContentDialog::loadVerseTafsir()
 {
-  if (m_dbMgr->currTafsir()->isText())
+  if (m_tafsirDb->currTafsir()->isText())
     ui->tedContent->setText(
-      m_dbMgr->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
+      m_tafsirDb->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
   else
     ui->tedContent->setHtml(
-      m_dbMgr->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
+      m_tafsirDb->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
 }
 
 void
 ContentDialog::loadVerseTranslation()
 {
-  m_dbMgr->setCurrentTranslation(m_translation);
-  ui->tedContent->setText(
-    m_dbMgr->getTranslation(m_shownVerse.surah(), m_shownVerse.number()));
+  m_translationDb->setCurrentTranslation(m_translation);
+  ui->tedContent->setText(m_translationDb->getTranslation(
+    m_shownVerse.surah(), m_shownVerse.number()));
 }
 
 void
 ContentDialog::loadVerseThoughts()
 {
-  ui->tedContent->setText(m_dbMgr->getThoughts(m_shownVerse.toList()));
+  ui->tedContent->setText(m_bookmarkDb->getThoughts(m_shownVerse.toList()));
   ui->tedContent->setReadOnly(false);
   ui->tedContent->setCursorWidth(1);
 }
@@ -292,7 +296,8 @@ ContentDialog::saveVerseThoughts()
 {
   ui->tedContent->setCursorWidth(0);
   ui->tedContent->setReadOnly(true);
-  m_dbMgr->saveThoughts(m_shownVerse.toList(), ui->tedContent->toPlainText());
+  m_bookmarkDb->saveThoughts(m_shownVerse.toList(),
+                             ui->tedContent->toPlainText());
 }
 
 void

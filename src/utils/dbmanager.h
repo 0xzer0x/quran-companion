@@ -384,7 +384,7 @@ private:
    *
    * MODIFIED
    */
-  VerseType m_verseType = Settings::qcf;
+  VerseType m_verseType = Settings::Qcf;
   /**
    * @brief the current active DBManager::Tafasir
    */

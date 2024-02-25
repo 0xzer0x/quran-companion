@@ -1,8 +1,8 @@
 #include "playercontrols.h"
 #include "ui_playercontrols.h"
-#include "utils/shortcuthandler.h"
-#include "utils/stylemanager.h"
 #include <QtAwesome.h>
+#include <utils/shortcuthandler.h>
+#include <utils/stylemanager.h>
 using namespace fa;
 
 PlayerControls::PlayerControls(QWidget* parent,

@@ -6,9 +6,6 @@
 #ifndef NOTIFICATIONPOPUP_H
 #define NOTIFICATIONPOPUP_H
 
-#include "interfaces/downloadjob.h"
-#include "types/reciter.h"
-#include "utils/dbmanager.h"
 #include <QApplication>
 #include <QDockWidget>
 #include <QGraphicsOpacityEffect>
@@ -19,6 +16,10 @@
 #include <QStyle>
 #include <QTimer>
 #include <QWidget>
+#include <interfaces/downloadjob.h>
+#include <types/reciter.h>
+#include <types/tafsir.h>
+#include <types/translation.h>
 
 /**
  * @brief NotificationPopup class represents an in-app popup for notifying the
@@ -106,7 +107,6 @@ public slots:
   void checkUpdate(QString appVer);
 
 private:
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
   QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
   QList<QSharedPointer<Translation>>& m_translations =

@@ -6,9 +6,6 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include "utils/settings.h"
-#include "utils/shortcuthandler.h"
-#include "utils/verseplayer.h"
 #include <QApplication>
 #include <QAudioDevice>
 #include <QColorDialog>
@@ -24,6 +21,11 @@
 #include <QShortcut>
 #include <QStandardItemModel>
 #include <QValidator>
+#include <types/tafsir.h>
+#include <types/translation.h>
+#include <utils/settings.h>
+#include <utils/shortcuthandler.h>
+#include <utils/verseplayer.h>
 typedef Settings::ReaderMode ReaderMode;
 
 namespace Ui {

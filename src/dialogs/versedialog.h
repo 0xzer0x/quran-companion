@@ -1,11 +1,11 @@
 #ifndef VERSEDIALOG_H
 #define VERSEDIALOG_H
 
-#include "types/verse.h"
-#include "utils/dbmanager.h"
-#include "utils/dirmanager.h"
 #include <QDateTime>
 #include <QDialog>
+#include <database/translationdb.h>
+#include <types/verse.h>
+#include <utils/dirmanager.h>
 
 namespace Ui {
 class VerseDialog;
@@ -35,7 +35,8 @@ protected:
 
 private:
   Ui::VerseDialog* ui;
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
+  QSharedPointer<TranslationDb> m_translationDb = TranslationDb::current();
   const QSharedPointer<QSettings> m_settings = Settings::settings;
   QFile m_timestampFile = DirManager::configDir->absoluteFilePath("votd.log");
   /**

@@ -4,7 +4,7 @@ SurahJob::SurahJob(int reciter, int surah)
   : m_reciter(reciter)
   , m_surah(surah)
   , m_completed(0)
-  , m_surahCount(m_dbMgr->getSurahVerseCount(surah))
+  , m_surahCount(m_quranDb->surahVerseCount(surah))
   , m_isDownloading(false)
   , m_taskDlr(this)
 {
@@ -118,7 +118,7 @@ QString
 SurahJob::name()
 {
   return m_reciters.at(m_reciter)->displayName() + " - " +
-         m_dbMgr->surahNameList().at(m_surah - 1);
+         m_quranDb->surahNames().at(m_surah - 1);
 }
 
 int

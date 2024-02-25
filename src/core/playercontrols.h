@@ -2,9 +2,9 @@
 #define PLAYERCONTROLS_H
 
 #include "quranreader.h"
-#include "types/verse.h"
-#include "utils/verseplayer.h"
 #include <QWidget>
+#include <types/verse.h>
+#include <utils/verseplayer.h>
 
 namespace Ui {
 class PlayerControls;
@@ -79,7 +79,6 @@ private slots:
 private:
   Ui::PlayerControls* ui;
   QSharedPointer<Verse> m_currVerse = Verse::current();
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QSharedPointer<QSettings> const m_settings = Settings::settings;
   const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
   /**

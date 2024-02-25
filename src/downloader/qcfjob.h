@@ -1,9 +1,9 @@
 #ifndef QCFJOB_H
 #define QCFJOB_H
 
-#include "downloader/qcftask.h"
-#include "interfaces/downloadjob.h"
 #include "taskdownloader.h"
+#include <downloader/qcftask.h>
+#include <interfaces/downloadjob.h>
 
 #include <QQueue>
 

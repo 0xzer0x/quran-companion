@@ -1,9 +1,9 @@
 #include "settings.h"
-#include "utils/dirmanager.h"
 #include <QApplication>
 #include <QFont>
 #include <QLocale>
 #include <QTranslator>
+#include <utils/dirmanager.h>
 
 int Settings::themeId = 0;
 bool Settings::darkMode = false;

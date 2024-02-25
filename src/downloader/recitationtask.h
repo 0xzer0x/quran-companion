@@ -1,10 +1,10 @@
 #ifndef RECITATIONTASK_H
 #define RECITATIONTASK_H
 
-#include "interfaces/downloadtask.h"
-#include "types/reciter.h"
-#include "utils/dbmanager.h"
-#include "utils/dirmanager.h"
+#include <database/qurandb.h>
+#include <interfaces/downloadtask.h>
+#include <types/reciter.h>
+#include <utils/dirmanager.h>
 
 class RecitationTask : public DownloadTask
 {
@@ -21,7 +21,7 @@ public:
   QFileInfo destination() const override;
 
 private:
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
   QSharedPointer<const QDir> m_downloadsDir = DirManager::downloadsDir;
   const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
   int m_reciter;

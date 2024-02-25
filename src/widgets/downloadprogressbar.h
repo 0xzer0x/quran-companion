@@ -6,8 +6,8 @@
 #ifndef DOWNLOADPROGRESSBAR_H
 #define DOWNLOADPROGRESSBAR_H
 
-#include "interfaces/downloadjob.h"
 #include <QProgressBar>
+#include <interfaces/downloadjob.h>
 typedef DownloadJob::Type Type;
 
 /**

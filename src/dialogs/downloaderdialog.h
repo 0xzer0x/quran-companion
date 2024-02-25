@@ -6,10 +6,6 @@
 #ifndef DOWNLOADERDIALOG_H
 #define DOWNLOADERDIALOG_H
 
-#include "downloader/jobmanager.h"
-#include "types/reciter.h"
-#include "utils/dbmanager.h"
-#include "widgets/downloadprogressbar.h"
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QDialog>
@@ -18,6 +14,13 @@
 #include <QShortcut>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <database/qurandb.h>
+#include <downloader/jobmanager.h>
+#include <types/reciter.h>
+#include <types/tafsir.h>
+#include <types/translation.h>
+#include <utils/settings.h>
+#include <widgets/downloadprogressbar.h>
 
 namespace Ui {
 class DownloaderDialog;
@@ -119,7 +122,7 @@ protected:
 
 private:
   Ui::DownloaderDialog* ui;
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
   const int m_languageCode = Settings::language;
   const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
   const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;

@@ -17,13 +17,13 @@ void
 CopyDialog::copyVerseText(const Verse v)
 {
   QClipboard* clip = QApplication::clipboard();
-  QString text = m_dbMgr->getVerseText(v.surah(), v.number());
+  QString text = m_quranDb->verseText(v.surah(), v.number());
   QString vNum = QString::number(v.number());
   text.remove(text.size() - 1, 1);
   text = text.trimmed();
   text = "{" + text + "}";
   text += ' ';
-  text += "[" + m_dbMgr->surahNameList().at(v.surah() - 1) + ":" + vNum + "]";
+  text += "[" + m_quranDb->surahNames().at(v.surah() - 1) + ":" + vNum + "]";
   clip->setText(text);
   emit verseCopied();
 }
@@ -43,13 +43,13 @@ CopyDialog::copyRange()
   QString final = "{ ";
   QClipboard* clip = QApplication::clipboard();
   for (int i = from; i <= to; i++) {
-    QString text = m_dbMgr->getVerseText(m_currVerse->surah(), i);
+    QString text = m_quranDb->verseText(m_currVerse->surah(), i);
     text.remove(text.size() - 1, 1);
     text += "(" + QString::number(i) + ") ";
     final.append(text);
   }
 
-  final += "} [" + m_dbMgr->surahNameList().at(m_currVerse->surah() - 1) + "]";
+  final += "} [" + m_quranDb->surahNames().at(m_currVerse->surah() - 1) + "]";
   clip->setText(final);
   emit rangeCopied();
 }
@@ -59,7 +59,7 @@ CopyDialog::show()
 {
   ui->cmbCopyFrom->clear();
   ui->cmbCopyTo->clear();
-  ui->lbCopySurahName->setText(m_dbMgr->getSurahName(m_currVerse->surah()));
+  ui->lbCopySurahName->setText(m_quranDb->surahName(m_currVerse->surah()));
 
   for (int i = 1; i <= m_currVerse->surahCount(); i++) {
     ui->cmbCopyFrom->addItem(QString::number(i));

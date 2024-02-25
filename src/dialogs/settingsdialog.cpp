@@ -5,9 +5,9 @@
 
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
-#include "utils/fontmanager.h"
-#include "utils/stylemanager.h"
-#include "widgets/shortcutdelegate.h"
+#include <utils/fontmanager.h>
+#include <utils/stylemanager.h>
+#include <widgets/shortcutdelegate.h>
 
 SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   : QDialog(parent)

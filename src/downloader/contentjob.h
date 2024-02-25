@@ -1,10 +1,10 @@
 #ifndef CONTENTJOB_H
 #define CONTENTJOB_H
 
-#include "interfaces/downloadjob.h"
 #include "taskdownloader.h"
-#include "types/tafsir.h"
-#include "types/translation.h"
+#include <interfaces/downloadjob.h>
+#include <types/tafsir.h>
+#include <types/translation.h>
 
 class ContentJob : public DownloadJob
 {

@@ -1,8 +1,8 @@
 #ifndef QCFTASK_H
 #define QCFTASK_H
 
-#include "interfaces/downloadtask.h"
-#include "utils/dirmanager.h"
+#include <interfaces/downloadtask.h>
+#include <utils/dirmanager.h>
 
 class QcfTask : public DownloadTask
 {

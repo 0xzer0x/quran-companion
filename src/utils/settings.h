@@ -10,9 +10,9 @@ class Settings
 public:
   enum VerseType
   {
-    qcf,
-    uthmanic,
-    annotated
+    Qcf,
+    Uthmanic,
+    Annotated
   };
   /**
    * @brief ReaderMode enum represents the available modes for the Quran reader

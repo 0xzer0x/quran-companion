@@ -47,7 +47,7 @@ VerseDialog::votdShown()
 void
 VerseDialog::genVerseOfTheDay()
 {
-  m_votd = m_dbMgr->randomVerse();
+  m_votd = m_quranDb->randomVerse();
 }
 
 void
@@ -82,11 +82,11 @@ void
 VerseDialog::updateLabels()
 {
   ui->lbVerse->setText(
-    "ﵩ " + m_dbMgr->getVerseText(m_votd.surah(), m_votd.number()) + " ﵨ");
+    "ﵩ " + m_quranDb->verseText(m_votd.surah(), m_votd.number()) + " ﵨ");
   ui->lbContent->setText(
-    m_dbMgr->getTranslation(m_votd.surah(), m_votd.number()));
+    m_translationDb->getTranslation(m_votd.surah(), m_votd.number()));
   ui->lbInfo->setText(qApp->translate("BookmarksDialog", "Surah: ") +
-                      m_dbMgr->getSurahName(m_votd.surah()) + " - " +
+                      m_quranDb->surahName(m_votd.surah()) + " - " +
                       qApp->translate("BookmarksDialog", "Verse: ") +
                       QString::number(m_votd.number()));
 }

@@ -1,10 +1,10 @@
 #ifndef TASKDOWNLOADER_H
 #define TASKDOWNLOADER_H
 
-#include "interfaces/downloadtask.h"
 #include <QNetworkReply>
 #include <QObject>
 #include <QTime>
+#include <interfaces/downloadtask.h>
 
 class TaskDownloader : public QObject
 {

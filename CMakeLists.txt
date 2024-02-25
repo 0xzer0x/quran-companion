@@ -86,8 +86,6 @@ set(PROJECT_SOURCES
     src/utils/settings.cpp
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
-    src/utils/dbmanager.h
-    src/utils/dbmanager.cpp
     src/utils/verseplayer.h
     src/utils/verseplayer.cpp
     src/utils/systemtray.h
@@ -100,8 +98,11 @@ set(PROJECT_SOURCES
     src/utils/stylemanager.cpp
     src/utils/fontmanager.h
     src/utils/fontmanager.cpp
+    src/utils/versionchecker.h
+    src/utils/versionchecker.cpp
     src/interfaces/downloadjob.h
     src/interfaces/downloadtask.h
+    src/interfaces/dbconnection.h
     src/downloader/surahjob.h
     src/downloader/surahjob.cpp
     src/downloader/recitationtask.h
@@ -120,8 +121,18 @@ set(PROJECT_SOURCES
     src/downloader/qcfjob.cpp
     src/downloader/jobmanager.h
     src/downloader/jobmanager.cpp
-    src/utils/versionchecker.h
-    src/utils/versionchecker.cpp
+    src/database/qurandb.h
+    src/database/qurandb.cpp
+    src/database/glyphsdb.h
+    src/database/glyphsdb.cpp
+    src/database/betaqatdb.h
+    src/database/betaqatdb.cpp
+    src/database/tafsirdb.h
+    src/database/tafsirdb.cpp
+    src/database/translationdb.h
+    src/database/translationdb.cpp
+    src/database/bookmarksdb.h
+    src/database/bookmarksdb.cpp
     src/widgets/quranpagebrowser.h
     src/widgets/quranpagebrowser.cpp
     src/widgets/clickablelabel.cpp

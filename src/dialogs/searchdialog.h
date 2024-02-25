@@ -6,9 +6,6 @@
 #ifndef SEARCHDIALOG_H
 #define SEARCHDIALOG_H
 
-#include "types/verse.h"
-#include "utils/dbmanager.h"
-#include "widgets/verseframe.h"
 #include <QDialog>
 #include <QPointer>
 #include <QScrollBar>
@@ -17,6 +14,9 @@
 #include <QSpinBox>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <database/glyphsdb.h>
+#include <types/verse.h>
+#include <widgets/verseframe.h>
 
 namespace Ui {
 class SearchDialog;
@@ -98,7 +98,8 @@ private slots:
 private:
   Ui::SearchDialog* ui;
   const QLocale::Language m_lang = Settings::language;
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
+  QSharedPointer<GlyphsDb> m_glyphsDb = GlyphsDb::current();
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

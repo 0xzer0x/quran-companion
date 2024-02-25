@@ -1,8 +1,8 @@
 #include "reciter.h"
-#include "utils/dirmanager.h"
 #include <QApplication>
 #include <QFile>
 #include <QXmlStreamReader>
+#include <utils/dirmanager.h>
 
 QList<QSharedPointer<Reciter>> Reciter::reciters;
 

@@ -1,13 +1,13 @@
 #ifndef KHATMAHDIALOG_H
 #define KHATMAHDIALOG_H
 
-#include "types/verse.h"
-#include "utils/dbmanager.h"
-#include "widgets/inputfield.h"
 #include <QDialog>
 #include <QLineEdit>
 #include <QPointer>
 #include <QSet>
+#include <database/bookmarksdb.h>
+#include <types/verse.h>
+#include <widgets/inputfield.h>
 
 namespace Ui {
 class KhatmahDialog;
@@ -75,7 +75,8 @@ private slots:
 private:
   Ui::KhatmahDialog* ui;
   const QSharedPointer<Verse> m_currVerse = Verse::current();
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
+  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
   QSharedPointer<QSettings> m_settings = Settings::settings;
   /**
    * @brief load all khatmah entries available

@@ -3,18 +3,18 @@
  * @brief Application entry point.
  */
 
-#include "core/mainwindow.h"
-#include "types/reciter.h"
-#include "types/tafsir.h"
-#include "types/translation.h"
-#include "utils/dirmanager.h"
-#include "utils/fontmanager.h"
-#include "utils/logger.h"
-#include "utils/settings.h"
-#include "utils/shortcuthandler.h"
-#include "utils/stylemanager.h"
 #include <QApplication>
 #include <QSplashScreen>
+#include <core/mainwindow.h>
+#include <types/reciter.h>
+#include <types/tafsir.h>
+#include <types/translation.h>
+#include <utils/dirmanager.h>
+#include <utils/fontmanager.h>
+#include <utils/logger.h>
+#include <utils/settings.h>
+#include <utils/shortcuthandler.h>
+#include <utils/stylemanager.h>
 
 /**
  * @brief application entry point

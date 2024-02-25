@@ -61,13 +61,13 @@ FontManager::verseFontname(Settings::VerseType type, int page)
 {
   QString fontname;
   switch (type) {
-    case Settings::qcf:
+  case Settings::Qcf:
       fontname = pageFontname(page);
       break;
-    case Settings::uthmanic:
+  case Settings::Uthmanic:
       fontname = "kfgqpc_hafs_uthmanic _script";
       break;
-    case Settings::annotated:
+  case Settings::Annotated:
       fontname = "Emine";
       break;
   }

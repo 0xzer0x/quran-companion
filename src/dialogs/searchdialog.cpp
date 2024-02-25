@@ -5,14 +5,14 @@
 
 #include "searchdialog.h"
 #include "ui_searchdialog.h"
-#include "utils/fontmanager.h"
-#include "utils/stylemanager.h"
-#include "widgets/clickablelabel.h"
+#include <utils/fontmanager.h>
+#include <utils/stylemanager.h>
+#include <widgets/clickablelabel.h>
 
 SearchDialog::SearchDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::SearchDialog)
-  , m_surahNames{ m_dbMgr->surahNameList() }
+  , m_surahNames(m_quranDb->surahNames())
 {
   setWindowIcon(
     StyleManager::awesome->icon(fa::fa_solid, fa::fa_magnifying_glass));
@@ -74,13 +74,13 @@ SearchDialog::getResults()
       ui->spnEndPage->setValue(range[0]);
     range[1] = ui->spnEndPage->value();
 
-    m_currResults = Verse::fromList(m_dbMgr->searchVerses(
+    m_currResults = Verse::fromList(m_quranDb->searchVerses(
       m_searchText, range, ui->chkWholeWord->isChecked()));
   } else {
     m_currResults =
-      Verse::fromList(m_dbMgr->searchSurahs(m_searchText,
-                                            m_selectedSurahMap.values(),
-                                            ui->chkWholeWord->isChecked()));
+      Verse::fromList(m_quranDb->searchSurahs(m_searchText,
+                                              m_selectedSurahMap.values(),
+                                              ui->chkWholeWord->isChecked()));
   }
   ui->lbResultCount->setText(QString::number(m_currResults.size()) +
                              tr(" Search results"));
@@ -114,7 +114,7 @@ SearchDialog::showResults()
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
     QString fontName =
-      FontManager::verseFontname(m_dbMgr->getVerseType(), v.page());
+      FontManager::verseFontname(m_quranDb->verseType(), v.page());
 
     VerseFrame* vFrame = new VerseFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);
@@ -122,6 +122,10 @@ SearchDialog::showResults()
 
     QString info = tr("Surah: ") + m_surahNames.at(v.surah() - 1) + " - " +
                    tr("Verse: ") + QString::number(v.number());
+    QString glyphs = m_quranDb->verseType() == Settings::Qcf
+                       ? m_glyphsDb->getVerseGlyphs(v.surah(), v.number())
+                       : m_quranDb->verseText(v.surah(), v.number());
+
     lbInfo->setText(info);
     lbInfo->setMaximumHeight(50);
     lbInfo->setAlignment(Qt::AlignLeft);
@@ -132,7 +136,7 @@ SearchDialog::showResults()
                          QString::number(v.surah()) + '-' +
                          QString::number(v.number()));
     clkLb->setFont(QFont(fontName, 15));
-    clkLb->setText(m_dbMgr->getVerseGlyphs(v.surah(), v.number()));
+    clkLb->setText(glyphs);
     clkLb->setAlignment(Qt::AlignLeft);
     clkLb->setWordWrap(true);
 

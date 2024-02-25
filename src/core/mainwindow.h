@@ -6,24 +6,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "dialogs/bookmarksdialog.h"
-#include "dialogs/contentdialog.h"
-#include "dialogs/copydialog.h"
-#include "dialogs/downloaderdialog.h"
-#include "dialogs/khatmahdialog.h"
-#include "dialogs/searchdialog.h"
-#include "dialogs/settingsdialog.h"
-#include "dialogs/versedialog.h"
 #include "playercontrols.h"
 #include "quranreader.h"
-#include "types/verse.h"
-#include "utils/dbmanager.h"
-#include "utils/shortcuthandler.h"
-#include "utils/systemtray.h"
-#include "utils/verseplayer.h"
-#include "utils/versionchecker.h"
-#include "widgets/betaqaviewer.h"
-#include "widgets/notificationpopup.h"
 #include <QBoxLayout>
 #include <QIntValidator>
 #include <QMainWindow>
@@ -32,6 +16,24 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QStringListModel>
+#include <database/bookmarksdb.h>
+#include <database/qurandb.h>
+#include <database/translationdb.h>
+#include <dialogs/bookmarksdialog.h>
+#include <dialogs/contentdialog.h>
+#include <dialogs/copydialog.h>
+#include <dialogs/downloaderdialog.h>
+#include <dialogs/khatmahdialog.h>
+#include <dialogs/searchdialog.h>
+#include <dialogs/settingsdialog.h>
+#include <dialogs/versedialog.h>
+#include <types/verse.h>
+#include <utils/shortcuthandler.h>
+#include <utils/systemtray.h>
+#include <utils/verseplayer.h>
+#include <utils/versionchecker.h>
+#include <widgets/betaqaviewer.h>
+#include <widgets/notificationpopup.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -248,7 +250,9 @@ private slots:
 private:
   Ui::MainWindow* ui;
   QSharedPointer<Verse> m_currVerse = Verse::current();
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
+  QSharedPointer<BookmarksDb> m_bookmarkDb = BookmarksDb::current();
+  QSharedPointer<TranslationDb> m_translationDb = TranslationDb::current();
   QSharedPointer<ShortcutHandler> m_shortcutHandler =
     ShortcutHandler::current();
   QSharedPointer<QSettings> m_settings = Settings::settings;

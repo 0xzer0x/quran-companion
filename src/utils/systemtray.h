@@ -6,7 +6,6 @@
 #ifndef SYSTEMTRAY_H
 #define SYSTEMTRAY_H
 
-#include "dbmanager.h"
 #include <QDateTime>
 #include <QDir>
 #include <QFile>
@@ -84,7 +83,6 @@ signals:
   void openAbout();
 
 private:
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   /**
    * @brief adds system tray actions and set their connections
    */

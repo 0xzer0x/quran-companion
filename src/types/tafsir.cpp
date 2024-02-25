@@ -1,10 +1,10 @@
 #include "tafsir.h"
 #include "content.h"
-#include "utils/dirmanager.h"
 #include <QApplication>
 #include <QDir>
 #include <QFile>
 #include <QXmlStreamReader>
+#include <utils/dirmanager.h>
 
 QList<QSharedPointer<Tafsir>> Tafsir::tafasir;
 

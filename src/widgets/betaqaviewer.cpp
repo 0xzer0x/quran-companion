@@ -37,7 +37,7 @@ void
 BetaqaViewer::showSurah(int surah)
 {
   if (surah != m_surah) {
-    ui->betaqaTextBrowser->setHtml(m_dbMgr->getBetaqa(surah));
+    ui->betaqaTextBrowser->setHtml(m_betaqatDb->getBetaqa(surah));
     m_surah = surah;
   }
 

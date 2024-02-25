@@ -1,9 +1,9 @@
 #include "translation.h"
-#include "utils/dirmanager.h"
 #include <QApplication>
 #include <QDir>
 #include <QFile>
 #include <QXmlStreamReader>
+#include <utils/dirmanager.h>
 
 QList<QSharedPointer<Translation>> Translation::translations;
 

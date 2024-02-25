@@ -4,8 +4,8 @@
  */
 
 #include "notificationpopup.h"
-#include "utils/stylemanager.h"
 #include <QtAwesome.h>
+#include <utils/stylemanager.h>
 using namespace fa;
 
 NotificationPopup::NotificationPopup(QWidget* parent)
@@ -81,14 +81,16 @@ NotificationPopup::notify(QString message, NotificationPopup::Action icon)
   m_notificationPeriod.start();
 }
 
-void NotificationPopup::completedDownload(QSharedPointer<DownloadJob> job)
+void
+NotificationPopup::completedDownload(QSharedPointer<DownloadJob> job)
 {
   setStyleSheet("");
   QString msg = tr("Download Completed") + ": " + job->name();
   this->notify(msg, success);
 }
 
-void NotificationPopup::downloadError(QSharedPointer<DownloadJob> job)
+void
+NotificationPopup::downloadError(QSharedPointer<DownloadJob> job)
 {
   setStyleSheet("QFrame#Popup { background-color: #a50500 }");
   QString msg = tr("Download Failed") + ": " + job->name();

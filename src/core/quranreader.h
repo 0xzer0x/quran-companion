@@ -1,13 +1,16 @@
 #ifndef QURANREADER_H
 #define QURANREADER_H
 
-#include "types/verse.h"
-#include "utils/verseplayer.h"
-#include "widgets/quranpagebrowser.h"
-#include "widgets/verseframe.h"
 #include <QLabel>
 #include <QScrollArea>
 #include <QWidget>
+#include <database/bookmarksdb.h>
+#include <database/tafsirdb.h>
+#include <database/translationdb.h>
+#include <types/verse.h>
+#include <utils/verseplayer.h>
+#include <widgets/quranpagebrowser.h>
+#include <widgets/verseframe.h>
 typedef Settings::ReaderMode ReaderMode;
 
 namespace Ui {
@@ -139,7 +142,11 @@ private slots:
 private:
   Ui::QuranReader* ui;
   QSharedPointer<Verse> m_currVerse = Verse::current();
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
+  QSharedPointer<GlyphsDb> m_glyphsDb = GlyphsDb::current();
+  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
+  QSharedPointer<TafsirDb> m_tafsirDb = TafsirDb::current();
+  QSharedPointer<TranslationDb> m_translationDb = TranslationDb::current();
   QSharedPointer<QSettings> m_settings = Settings::settings;
   const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
   const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;

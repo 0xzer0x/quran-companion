@@ -4,10 +4,10 @@
  */
 
 #include "shortcuthandler.h"
-#include "utils/settings.h"
 #include <QApplication>
 #include <QFile>
 #include <QXmlStreamReader>
+#include <utils/settings.h>
 
 QMap<QString, QString> ShortcutHandler::shortcutsDescription;
 

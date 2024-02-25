@@ -1,11 +1,11 @@
 #ifndef SURAHJOB_H
 #define SURAHJOB_H
 
-#include "interfaces/downloadjob.h"
 #include "recitationtask.h"
 #include "taskdownloader.h"
 #include <QQueue>
 #include <QTime>
+#include <interfaces/downloadjob.h>
 
 class SurahJob : public DownloadJob
 {
@@ -32,7 +32,7 @@ private slots:
   void taskFailed();
 
 private:
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
   QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
   TaskDownloader m_taskDlr;
   QQueue<RecitationTask> m_queue;

@@ -1,13 +1,12 @@
 #ifndef COPYDIALOG_H
 #define COPYDIALOG_H
 
-#include "types/verse.h"
-#include "utils/dbmanager.h"
 #include <QClipboard>
 #include <QDialog>
 #include <QIntValidator>
 #include <QMessageBox>
 #include <QPointer>
+#include <types/verse.h>
 
 namespace Ui {
 class CopyDialog;
@@ -40,7 +39,7 @@ protected:
 private:
   Ui::CopyDialog* ui;
   QSharedPointer<Verse> m_currVerse = Verse::current();
-  QSharedPointer<DBManager> m_dbMgr = DBManager::current();
+  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
   void copyRange();
 
   QPointer<QIntValidator> m_verseValidator;
