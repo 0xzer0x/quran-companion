@@ -27,11 +27,6 @@ TaskDownloader::process(DownloadTask* task, QNetworkAccessManager* manager)
                &TaskDownloader::taskProgress);
   }
 
-  if (m_task->destination().exists()) {
-    emit fileFound();
-    return;
-  }
-
   QNetworkRequest req(m_task->url());
   m_reply = manager->get(req);
   m_reply->ignoreSslErrors();
@@ -130,7 +125,4 @@ TaskDownloader::total() const
   return m_total;
 }
 
-TaskDownloader::~TaskDownloader()
-{
-  delete m_task;
-}
+TaskDownloader::~TaskDownloader() {}

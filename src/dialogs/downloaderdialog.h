@@ -70,14 +70,14 @@ public slots:
    * @param type - DownloadType of the download group
    * @param metainfo - QList of download group information
    */
-  void downloadCompleted(QPointer<DownloadJob> finished);
+  void downloadCompleted(QSharedPointer<DownloadJob> finished);
   /**
    * @brief Callback function to update UI elements when the current active
    * download group fails
    * @param type - DownloadType of the download group
    * @param metainfo - QList of download group information
    */
-  void topTaskDownloadError(QPointer<DownloadJob> failed);
+  void topTaskDownloadError(QSharedPointer<DownloadJob> failed);
   /**
    * @brief slot to update the displayed download speed in the currently active
    * download.
@@ -140,7 +140,7 @@ private:
    * @param info - download metainfo QPair used by DownloadType::Recitation and
    * DownloadType::File
    */
-  void addTaskProgress(QPointer<DownloadJob> job);
+  void addTaskProgress(QSharedPointer<DownloadJob> job);
   /**
    * @brief enqueue a surah to download
    * @param reciter - ::Globals::recitersList index for the reciter whose

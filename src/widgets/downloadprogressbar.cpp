@@ -20,8 +20,7 @@ DownloadProgressBar::DownloadProgressBar(QWidget* parent, Type type, int max)
     setFormat("%v / %m");
 }
 
-void
-DownloadProgressBar::updateProgress(QPointer<DownloadJob> job)
+void DownloadProgressBar::updateProgress(QSharedPointer<DownloadJob> job)
 {
   if (maximum() != job->total())
     setMaximum(job->total());

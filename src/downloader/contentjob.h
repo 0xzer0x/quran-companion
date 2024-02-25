@@ -28,7 +28,7 @@ private:
   QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
   QList<QSharedPointer<Translation>>& m_translations =
     Translation::translations;
-  QPointer<TaskDownloader> m_taskDlr;
+  TaskDownloader m_taskDlr;
   QNetworkAccessManager m_netMgr;
   DownloadTask* m_task;
   Type m_type;

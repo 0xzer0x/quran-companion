@@ -3,13 +3,15 @@
 SurahJob::SurahJob(int reciter, int surah)
   : m_reciter(reciter)
   , m_surah(surah)
+  , m_completed(0)
   , m_surahCount(m_dbMgr->getSurahVerseCount(surah))
-  , m_taskDlr(new TaskDownloader(this))
+  , m_isDownloading(false)
+  , m_taskDlr(this)
 {
-  connect(m_taskDlr, &TaskDownloader::fileFound, this, &SurahJob::taskFinished);
-  connect(m_taskDlr, &TaskDownloader::completed, this, &SurahJob::taskFinished);
-  connect(m_taskDlr, &TaskDownloader::taskError, this, &SurahJob::taskFailed);
-  connect(m_taskDlr,
+  connect(
+    &m_taskDlr, &TaskDownloader::completed, this, &SurahJob::taskFinished);
+  connect(&m_taskDlr, &TaskDownloader::taskError, this, &SurahJob::taskFailed);
+  connect(&m_taskDlr,
           &TaskDownloader::downloadSpeedUpdated,
           this,
           &DownloadJob::downloadSpeedUpdated);
@@ -36,6 +38,7 @@ SurahJob::processTasks()
     if (m_completed == m_surahCount) {
       emit DownloadJob::progressed();
       emit DownloadJob::finished();
+      m_isDownloading = false;
     }
 
     if (m_queue.isEmpty())
@@ -44,7 +47,7 @@ SurahJob::processTasks()
     m_active = m_queue.dequeue();
   }
 
-  m_taskDlr->process(&m_active, &m_netMgr);
+  m_taskDlr.process(&m_active, &m_netMgr);
 }
 
 void
@@ -73,7 +76,7 @@ SurahJob::stop()
 {
   if (!m_isDownloading)
     return;
-  m_taskDlr->cancel();
+  m_taskDlr.cancel();
   m_isDownloading = false;
   m_queue.clear();
   emit DownloadJob::aborted();
@@ -130,7 +133,4 @@ SurahJob::surah() const
   return m_surah;
 }
 
-SurahJob::~SurahJob()
-{
-  delete m_taskDlr;
-}
+SurahJob::~SurahJob() {}

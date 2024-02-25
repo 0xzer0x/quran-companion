@@ -34,7 +34,7 @@ private slots:
 private:
   QSharedPointer<DBManager> m_dbMgr = DBManager::current();
   QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
-  QPointer<TaskDownloader> m_taskDlr;
+  TaskDownloader m_taskDlr;
   QQueue<RecitationTask> m_queue;
   QNetworkAccessManager m_netMgr;
   RecitationTask m_active;

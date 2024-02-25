@@ -30,7 +30,7 @@ private slots:
   void taskFailed();
 
 private:
-  QPointer<TaskDownloader> m_taskDlr;
+  TaskDownloader m_taskDlr;
   QQueue<QcfTask> m_queue;
   QNetworkAccessManager m_netMgr;
   QcfTask m_active;

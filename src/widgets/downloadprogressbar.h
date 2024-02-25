@@ -36,7 +36,7 @@ public:
   };
 
 public slots:
-  void updateProgress(QPointer<DownloadJob> job);
+  void updateProgress(QSharedPointer<DownloadJob> job);
   void setStyling(State);
 };
 

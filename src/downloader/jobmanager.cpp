@@ -7,7 +7,7 @@ JobManager::JobManager(QObject* parent)
 }
 
 void
-JobManager::addJob(QPointer<DownloadJob> job)
+JobManager::addJob(QSharedPointer<DownloadJob> job)
 {
   m_queue.enqueue(job);
 }
@@ -29,6 +29,7 @@ JobManager::stop()
   m_isOn = false;
   if (!m_active.isNull())
     m_active->stop();
+  m_queue.clear();
   disconnectActive();
   emit jobAborted();
 }
@@ -48,18 +49,27 @@ JobManager::processJobs()
 void
 JobManager::connectActive()
 {
+  if (!m_active.isNull())
+    disconnectActive();
+
   if (m_active->type() == DownloadJob::TafsirFile ||
       m_active->type() == DownloadJob::TranslationFile)
-    connect(qobject_cast<ContentJob*>(m_active),
+    connect(qobject_cast<ContentJob*>(m_active.data()),
             &ContentJob::fileFound,
             this,
             &JobManager::handleFilesFound);
 
-  connect(m_active, &DownloadJob::failed, this, &JobManager::handleFailed);
-  connect(m_active, &DownloadJob::finished, this, &JobManager::handleCompleted);
   connect(
-    m_active, &DownloadJob::progressed, this, &JobManager::handleProgressed);
-  connect(m_active,
+    m_active.data(), &DownloadJob::failed, this, &JobManager::handleFailed);
+  connect(m_active.data(),
+          &DownloadJob::finished,
+          this,
+          &JobManager::handleCompleted);
+  connect(m_active.data(),
+          &DownloadJob::progressed,
+          this,
+          &JobManager::handleProgressed);
+  connect(m_active.data(),
           &DownloadJob::downloadSpeedUpdated,
           this,
           &JobManager::downloadSpeedUpdated);
@@ -70,17 +80,22 @@ JobManager::disconnectActive()
 {
   if (m_active->type() == DownloadJob::TafsirFile ||
       m_active->type() == DownloadJob::TranslationFile)
-    disconnect(qobject_cast<ContentJob*>(m_active),
+    disconnect(qobject_cast<ContentJob*>(m_active.data()),
                &ContentJob::fileFound,
                this,
                &JobManager::handleFilesFound);
 
-  disconnect(m_active, &DownloadJob::failed, this, &JobManager::handleFailed);
   disconnect(
-    m_active, &DownloadJob::finished, this, &JobManager::handleCompleted);
-  disconnect(
-    m_active, &DownloadJob::progressed, this, &JobManager::handleProgressed);
-  disconnect(m_active,
+    m_active.data(), &DownloadJob::failed, this, &JobManager::handleFailed);
+  disconnect(m_active.data(),
+             &DownloadJob::finished,
+             this,
+             &JobManager::handleCompleted);
+  disconnect(m_active.data(),
+             &DownloadJob::progressed,
+             this,
+             &JobManager::handleProgressed);
+  disconnect(m_active.data(),
              &DownloadJob::downloadSpeedUpdated,
              this,
              &JobManager::downloadSpeedUpdated);
@@ -96,24 +111,18 @@ void
 JobManager::handleFailed()
 {
   emit jobFailed(m_active);
-  disconnectActive();
-  processJobs();
 }
 
 void
 JobManager::handleCompleted()
 {
   emit jobCompleted(m_active);
-  disconnectActive();
-  processJobs();
 }
 
 void
 JobManager::handleFilesFound()
 {
   emit filesFound(m_active);
-  disconnectActive();
-  processJobs();
 }
 
 bool
@@ -122,14 +131,8 @@ JobManager::isOn() const
   return m_isOn;
 }
 
-QPointer<DownloadJob>
+QSharedPointer<DownloadJob>
 JobManager::active() const
 {
   return m_active;
-}
-
-JobManager::~JobManager()
-{
-  if (!m_queue.isEmpty())
-    qDeleteAll(m_queue);
 }

@@ -180,21 +180,21 @@ DownloaderDialog::addToQueue()
       enqueueSurah(parent, current + 1);
     // tafasir
     else if (i.data(Qt::UserRole).toString() == "tadb") {
-      ContentJob* job = new ContentJob(DownloadJob::TafsirFile,
-                                       i.data(Qt::UserRole + 1).toInt());
+      QSharedPointer<ContentJob> job = QSharedPointer<ContentJob>::create(
+        DownloadJob::TafsirFile, i.data(Qt::UserRole + 1).toInt());
       m_jobMgr->addJob(job);
       addTaskProgress(job);
     }
     // translation
     else if (i.data(Qt::UserRole).toString() == "trdb") {
-      ContentJob* job = new ContentJob(DownloadJob::TranslationFile,
-                                       i.data(Qt::UserRole + 1).toInt());
+      QSharedPointer<ContentJob> job = QSharedPointer<ContentJob>::create(
+        DownloadJob::TranslationFile, i.data(Qt::UserRole + 1).toInt());
       m_jobMgr->addJob(job);
       addTaskProgress(job);
     }
     // extras
     else if (i.data(Qt::UserRole).toString() == "qcf") {
-      QcfJob* job = new QcfJob();
+      QSharedPointer<QcfJob> job = QSharedPointer<QcfJob>::create();
       m_jobMgr->addJob(job);
       addTaskProgress(job);
     }
@@ -205,12 +205,12 @@ DownloaderDialog::addToQueue()
 }
 
 void
-DownloaderDialog::addTaskProgress(QPointer<DownloadJob> job)
+DownloaderDialog::addTaskProgress(QSharedPointer<DownloadJob> job)
 {
   int total = job->total();
   QString objName;
   if (job->type() == DownloadJob::Recitation) {
-    SurahJob* sJob = qobject_cast<SurahJob*>(job);
+    SurahJob* sJob = qobject_cast<SurahJob*>(job.data());
     QString reciter = m_reciters.at(sJob->reciter())->displayName();
     QString surahName = m_surahDisplayNames.at(sJob->surah() - 1);
     objName = reciter + tr(" // Surah: ") + surahName;
@@ -255,7 +255,8 @@ DownloaderDialog::enqueueSurah(int reciter, int surah)
   if (currentlyDownloading)
     return;
 
-  SurahJob* sj = new SurahJob(reciter, surah);
+  QSharedPointer<SurahJob> sj =
+    QSharedPointer<SurahJob>::create(reciter, surah);
   addToDownloading(reciter, surah);
   addTaskProgress(sj);
   m_jobMgr->addJob(sj);
@@ -347,7 +348,7 @@ DownloaderDialog::downloadAborted()
 }
 
 void
-DownloaderDialog::downloadCompleted(QPointer<DownloadJob> finished)
+DownloaderDialog::downloadCompleted(QSharedPointer<DownloadJob> finished)
 {
   m_currentBar->setStyling(DownloadProgressBar::completed);
   m_currentLb->setText(m_currentLb->parent()->objectName());
@@ -358,10 +359,11 @@ DownloaderDialog::downloadCompleted(QPointer<DownloadJob> finished)
              &DownloadProgressBar::updateProgress);
 
   if (finished->type() == DownloadJob::Recitation) {
-    SurahJob* sj = qobject_cast<SurahJob*>(finished);
+    QSharedPointer<SurahJob> sj = finished.dynamicCast<SurahJob>();
     removeFromDownloading(sj->reciter(), sj->surah());
   }
-  if (m_currentBar->maximum() == 0) {
+  if (finished->type() == DownloadJob::TafsirFile ||
+      finished->type() == DownloadJob::TranslationFile) {
     m_currentBar->setValue(1);
     m_currentBar->setMaximum(1);
     m_currentBar->setFormat("1 / 1");
@@ -369,10 +371,11 @@ DownloaderDialog::downloadCompleted(QPointer<DownloadJob> finished)
   m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
   setCurrentBar();
+  m_jobMgr->processJobs();
 }
 
 void
-DownloaderDialog::topTaskDownloadError(QPointer<DownloadJob> failed)
+DownloaderDialog::topTaskDownloadError(QSharedPointer<DownloadJob> failed)
 {
   m_currentBar->setStyling(DownloadProgressBar::aborted);
   m_currentLb->setText(m_currentLb->parent()->objectName());
@@ -383,12 +386,13 @@ DownloaderDialog::topTaskDownloadError(QPointer<DownloadJob> failed)
              &DownloadProgressBar::updateProgress);
 
   if (failed->type() == DownloadJob::Recitation) {
-    SurahJob* sj = qobject_cast<SurahJob*>(failed);
+    QSharedPointer<SurahJob> sj = failed.dynamicCast<SurahJob>();
     removeFromDownloading(sj->reciter(), sj->surah());
   }
   m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
   setCurrentBar();
+  m_jobMgr->processJobs();
 }
 
 void

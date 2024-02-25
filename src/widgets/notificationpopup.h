@@ -79,13 +79,13 @@ public slots:
    * @param reciterIdx - ::Globals::recitersList index for the reciter
    * @param surah - the surah that was downloaded
    */
-  void completedDownload(QPointer<DownloadJob> job);
+  void completedDownload(QSharedPointer<DownloadJob> job);
   /**
    * @brief slot to show a notification on download error
    * @param reciterIdx - ::Globals::recitersList index for the reciter
    * @param surah - the surah that was downloaded
    */
-  void downloadError(QPointer<DownloadJob> job);
+  void downloadError(QSharedPointer<DownloadJob> job);
   /**
    * @brief slot to show a notification on bookmark addition
    */

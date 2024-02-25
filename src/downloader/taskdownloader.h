@@ -24,7 +24,6 @@ signals:
   void progressed(qint64 bytes, qint64 total);
   void taskError();
   void completed();
-  void fileFound();
 
 private slots:
   void taskProgress(qint64 bytes, qint64 total);

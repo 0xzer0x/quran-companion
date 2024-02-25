@@ -3,43 +3,44 @@
 
 #include "interfaces/downloadjob.h"
 #include <QObject>
-#include <QPointer>
 #include <QQueue>
+#include <QSharedPointer>
 
 class JobManager : public QObject
 {
   Q_OBJECT
 public:
   explicit JobManager(QObject* parent);
-  ~JobManager();
 
   void start();
   void stop();
-  void addJob(QPointer<DownloadJob> job);
+  void addJob(QSharedPointer<DownloadJob> job);
 
   bool isOn() const;
-  QPointer<DownloadJob> active() const;
+  QSharedPointer<DownloadJob> active() const;
+
+public slots:
+  void processJobs();
 
 signals:
   void jobAborted();
-  void jobCompleted(QPointer<DownloadJob> job);
-  void jobFailed(QPointer<DownloadJob> job);
-  void jobProgressed(QPointer<DownloadJob> job);
+  void jobCompleted(QSharedPointer<DownloadJob> job);
+  void jobFailed(QSharedPointer<DownloadJob> job);
+  void jobProgressed(QSharedPointer<DownloadJob> job);
   void downloadSpeedUpdated(int speed, QString unit);
-  void filesFound(QPointer<DownloadJob> job);
+  void filesFound(QSharedPointer<DownloadJob> job);
 
 private slots:
   void handleProgressed();
   void handleFailed();
   void handleCompleted();
   void handleFilesFound();
-  void processJobs();
 
 private:
   void connectActive();
   void disconnectActive();
-  QQueue<QPointer<DownloadJob>> m_queue;
-  QPointer<DownloadJob> m_active;
+  QQueue<QSharedPointer<DownloadJob>> m_queue;
+  QSharedPointer<DownloadJob> m_active;
   bool m_isOn = false;
 };
 

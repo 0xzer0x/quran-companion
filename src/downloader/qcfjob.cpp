@@ -5,12 +5,11 @@ QcfJob::QcfJob()
   : m_completed(0)
   , m_active(0)
   , m_isDownloading(false)
-  , m_taskDlr(new TaskDownloader(this))
+  , m_taskDlr(this)
 {
-  connect(m_taskDlr, &TaskDownloader::fileFound, this, &QcfJob::taskFinished);
-  connect(m_taskDlr, &TaskDownloader::completed, this, &QcfJob::taskFinished);
-  connect(m_taskDlr, &TaskDownloader::taskError, this, &QcfJob::taskFailed);
-  connect(m_taskDlr,
+  connect(&m_taskDlr, &TaskDownloader::completed, this, &QcfJob::taskFinished);
+  connect(&m_taskDlr, &TaskDownloader::taskError, this, &QcfJob::taskFailed);
+  connect(&m_taskDlr,
           &TaskDownloader::downloadSpeedUpdated,
           this,
           &DownloadJob::downloadSpeedUpdated);
@@ -45,7 +44,7 @@ QcfJob::processTasks()
     m_active = m_queue.dequeue();
   }
 
-  m_taskDlr->process(&m_active, &m_netMgr);
+  m_taskDlr.process(&m_active, &m_netMgr);
 }
 
 void
@@ -82,7 +81,7 @@ QcfJob::stop()
 {
   if (!m_isDownloading)
     return;
-  m_taskDlr->cancel();
+  m_taskDlr.cancel();
   m_isDownloading = false;
   m_queue.clear();
   emit DownloadJob::aborted();
@@ -118,7 +117,4 @@ QcfJob::name()
   return qApp->translate("SettingsDialog", "QCF V2");
 }
 
-QcfJob::~QcfJob()
-{
-  delete m_taskDlr;
-}
+QcfJob::~QcfJob() {}
