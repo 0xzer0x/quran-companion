@@ -107,6 +107,8 @@ set(PROJECT_SOURCES
     src/utils/versionchecker.cpp
     src/utils/jsondataexporter.h
     src/utils/jsondataexporter.cpp
+    src/utils/jsondataimporter.h
+    src/utils/jsondataimporter.cpp
     src/downloader/surahjob.h
     src/downloader/surahjob.cpp
     src/downloader/recitationtask.h
