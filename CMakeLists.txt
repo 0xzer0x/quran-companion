@@ -82,6 +82,11 @@ set(PROJECT_SOURCES
     src/dialogs/versedialog.h
     src/dialogs/versedialog.cpp
     src/dialogs/versedialog.ui
+    src/interfaces/userdataimporter.h
+    src/interfaces/userdataexporter.h
+    src/interfaces/downloadjob.h
+    src/interfaces/downloadtask.h
+    src/interfaces/dbconnection.h
     src/utils/settings.h
     src/utils/settings.cpp
     src/utils/shortcuthandler.h
@@ -100,9 +105,8 @@ set(PROJECT_SOURCES
     src/utils/fontmanager.cpp
     src/utils/versionchecker.h
     src/utils/versionchecker.cpp
-    src/interfaces/downloadjob.h
-    src/interfaces/downloadtask.h
-    src/interfaces/dbconnection.h
+    src/utils/jsondataexporter.h
+    src/utils/jsondataexporter.cpp
     src/downloader/surahjob.h
     src/downloader/surahjob.cpp
     src/downloader/recitationtask.h

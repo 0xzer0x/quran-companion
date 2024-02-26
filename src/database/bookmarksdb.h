@@ -30,19 +30,19 @@ public:
    * @brief get all available khatmah ids
    * @return QList of khatmah id(s)
    */
-  QList<int> getAllKhatmah();
+  QList<int> getAllKhatmah() const;
   /**
    * @brief get the name of the khatmah with id given
    * @return QString containing the khatmah name
    */
-  QString getKhatmahName(const int id);
+  QString getKhatmahName(const int id) const;
   /**
    * @brief gets the last position saved for the khatmah with the id given and
    * stores the position in the ::Verse v
    * @return boolean indicating a successful operation (false in case of error
    * and in case id does not exist)
    */
-  bool loadVerse(const int khatmahId, QList<int>& vInfo);
+  bool loadVerse(const int khatmahId, QList<int>& vInfo) const;
   /**
    * @brief add a new khatmah/replace khatmah with given id with position of
    * ::Verse v
@@ -51,7 +51,7 @@ public:
    * @param id - id of khatmah to replace, -1 means do not replace (default: -1)
    * @return id of newly added khatmah or id parameter if defined
    */
-  int addKhatmah(QList<int> vInfo, const QString name, const int id = -1);
+  int addKhatmah(QList<int> vInfo, const QString name, const int id = -1) const;
   /**
    * @brief rename the khatmah with the given id to newName
    * @param khatmahId - id of khatmah to rename
@@ -64,20 +64,20 @@ public:
    * @brief remove the khatmah with the given id from database
    * @param id - id of khatmah to remove
    */
-  void removeKhatmah(const int id);
+  void removeKhatmah(const int id) const;
   /**
    * @brief gets a QList of ::Verse instances representing the bookmarked verse
    * within the given sura (default gets all)
    * @param surahIdx - sura number (-1 returns all bookmarks)
    * @return QList of bookmarked verses
    */
-  QList<QList<int>> bookmarkedVerses(int surahIdx = -1);
+  QList<QList<int>> bookmarkedVerses(int surahIdx = -1) const;
   /**
    * @brief checks whether the given ::Verse is bookmarked
    * @param vInfo - ::Verse instance to check
    * @return boolean
    */
-  bool isBookmarked(QList<int> vInfo);
+  bool isBookmarked(QList<int> vInfo) const;
   /**
    * @brief add the given ::Verse to bookmarks
    * @param vInfo - ::Verse instance to add
@@ -91,19 +91,23 @@ public:
    */
   bool removeBookmark(QList<int> vInfo);
   /**
-   * @brief setter for m_activeKhatmah
-   * @param id - id of the active khatmah
-   */
-  void setActiveKhatmah(const int id);
-  /**
    * MODIFIED
    */
   void saveThoughts(QList<int> vInfo, const QString& text);
   /**
    * MODIFIED
    */
-  QString getThoughts(QList<int> vInfo);
-
+  QString getThoughts(QList<int> vInfo) const;
+  /**
+   * @brief allThoughts
+   * @return
+   */
+  QList<QPair<QList<int>, QString>> allThoughts() const;
+  /**
+   * @brief setter for m_activeKhatmah
+   * @param id - id of the active khatmah
+   */
+  void setActiveKhatmah(const int id);
   int activeKhatmah() const;
 
 signals:

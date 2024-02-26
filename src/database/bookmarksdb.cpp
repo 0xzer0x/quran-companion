@@ -51,7 +51,7 @@ BookmarksDb::saveActiveKhatmah(QList<int> vInfo)
 }
 
 QList<int>
-BookmarksDb::getAllKhatmah()
+BookmarksDb::getAllKhatmah() const
 {
   QList<int> res;
   QSqlQuery dbQuery(*this);
@@ -65,7 +65,7 @@ BookmarksDb::getAllKhatmah()
 }
 
 QString
-BookmarksDb::getKhatmahName(const int id)
+BookmarksDb::getKhatmahName(const int id) const
 {
   QSqlQuery dbQuery(*this);
   if (!dbQuery.exec("SELECT name FROM khatmah WHERE id=" + QString::number(id)))
@@ -76,7 +76,7 @@ BookmarksDb::getKhatmahName(const int id)
 }
 
 bool
-BookmarksDb::loadVerse(const int khatmahId, QList<int>& vInfo)
+BookmarksDb::loadVerse(const int khatmahId, QList<int>& vInfo) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -96,7 +96,9 @@ BookmarksDb::loadVerse(const int khatmahId, QList<int>& vInfo)
 }
 
 int
-BookmarksDb::addKhatmah(QList<int> vInfo, const QString name, const int id)
+BookmarksDb::addKhatmah(QList<int> vInfo,
+                        const QString name,
+                        const int id) const
 {
   QSqlQuery dbQuery(*this);
   dbQuery.exec(
@@ -160,7 +162,7 @@ BookmarksDb::editKhatmahName(const int khatmahId, QString newName)
 }
 
 void
-BookmarksDb::removeKhatmah(const int id)
+BookmarksDb::removeKhatmah(const int id) const
 {
   QSqlQuery dbQuery(*this);
   if (!dbQuery.exec(QString::asprintf("DELETE FROM khatmah WHERE id=%i", id)))
@@ -168,7 +170,7 @@ BookmarksDb::removeKhatmah(const int id)
 }
 
 QList<QList<int>>
-BookmarksDb::bookmarkedVerses(int surahIdx)
+BookmarksDb::bookmarkedVerses(int surahIdx) const
 {
   QList<QList<int>> results;
   QSqlQuery dbQuery(*this);
@@ -190,7 +192,7 @@ BookmarksDb::bookmarkedVerses(int surahIdx)
 }
 
 bool
-BookmarksDb::isBookmarked(QList<int> vInfo)
+BookmarksDb::isBookmarked(QList<int> vInfo) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -277,7 +279,7 @@ BookmarksDb::saveThoughts(QList<int> vInfo, const QString& text)
 }
 
 QString
-BookmarksDb::getThoughts(QList<int> vInfo)
+BookmarksDb::getThoughts(QList<int> vInfo) const
 {
   QSqlQuery dbQuery(*this);
   dbQuery.prepare(
@@ -291,6 +293,24 @@ BookmarksDb::getThoughts(QList<int> vInfo)
 
   dbQuery.next();
   return dbQuery.value(0).toString();
+}
+
+QList<QPair<QList<int>, QString>>
+BookmarksDb::allThoughts() const
+{
+  QList<QPair<QList<int>, QString>> all;
+  QSqlQuery dbQuery(*this);
+  dbQuery.exec("SELECT page,surah,number,text FROM thoughts WHERE text!=''");
+  while (dbQuery.next()) {
+    QList<int> vInfo(3);
+    vInfo[0] = dbQuery.value(0).toInt();
+    vInfo[1] = dbQuery.value(1).toInt();
+    vInfo[2] = dbQuery.value(2).toInt();
+
+    all.append({ vInfo, dbQuery.value(3).toString() });
+  }
+
+  return all;
 }
 
 void
