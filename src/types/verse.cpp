@@ -19,10 +19,20 @@ Verse::surahVerseCount(int surah)
   return verseCount.at(surah - 1);
 }
 
+int
+Verse::id(int surah, int verse)
+{
+  int id = 0;
+  for (int i = 0; i < surah - 1; i++)
+    id += verseCount.at(i);
+  id += verse;
+  return id;
+}
+
 QSharedPointer<Verse>
 Verse::current()
 {
-  static QSharedPointer<Verse> current = QSharedPointer<Verse>::create();
+  static QSharedPointer<Verse> current = QSharedPointer<Verse>::create(1, 1, 1);
   return current;
 }
 
@@ -125,13 +135,12 @@ Verse::next(bool basmalah)
     return *this;
   }
 
-  QList<int> vInfo =
-    m_quranDb->verseById(m_quranDb->verseId(m_surah, m_number) + 1);
+  Verse v(m_quranDb->verseById(id(m_surah, m_number) + 1));
 
-  if (vInfo[2] == 1 && vInfo[1] != 9 && vInfo[1] != 1 && basmalah)
-    vInfo[2] = 0;
+  if (v.number() == 1 && v.surah() != 9 && v.surah() != 1 && basmalah)
+    v.setNumber(0);
 
-  return Verse(vInfo);
+  return v;
 }
 
 Verse
@@ -145,9 +154,7 @@ Verse::prev(bool basmalah)
   if (!m_number)
     m_number = 1;
 
-  QList<int> vInfo =
-    m_quranDb->verseById(m_quranDb->verseId(m_surah, m_number) - 1);
-  return Verse(vInfo);
+  return Verse(m_quranDb->verseById(id(m_surah, m_number) - 1));
 }
 
 void

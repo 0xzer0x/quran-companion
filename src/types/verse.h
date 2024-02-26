@@ -16,6 +16,7 @@ class Verse
 public:
   static const QList<int> verseCount;
   static const int surahVerseCount(int surah);
+  static int id(int surah, int verse);
   static QSharedPointer<Verse> current();
   static QList<Verse> fromList(QList<QList<int>> lst);
 

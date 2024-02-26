@@ -7,9 +7,9 @@ void
 JsonDataExporter::exportBookmarks()
 {
   QJsonArray bookmarks;
-  QList<QList<int>> all = m_bookmarksDb->bookmarkedVerses();
-  foreach (const QList<int>& vInfo, all) {
-    bookmarks.append(verseJson(vInfo));
+  QList<Verse> all = m_bookmarksDb->bookmarkedVerses();
+  foreach (const Verse& v, all) {
+    bookmarks.append(verseJson(v));
   }
 
   m_fileObj["bookmarks"] = bookmarks;
@@ -21,10 +21,10 @@ JsonDataExporter::exportKhatmah()
   QJsonArray khatmah;
   QList<int> ids = m_bookmarksDb->getAllKhatmah();
   foreach (const int id, ids) {
-    QList<int> vInfo(3);
-    m_bookmarksDb->loadVerse(id, vInfo);
+    Verse v;
+    m_bookmarksDb->loadVerse(id, v);
     QString name = m_bookmarksDb->getKhatmahName(id);
-    khatmah.append(khatmahJson({ name, vInfo }));
+    khatmah.append(khatmahJson({ name, v }));
   }
 
   m_fileObj["khatmah"] = khatmah;
@@ -34,8 +34,8 @@ void
 JsonDataExporter::exportThoughts()
 {
   QJsonArray thoughts;
-  QList<QPair<QList<int>, QString>> all = m_bookmarksDb->allThoughts();
-  for (const QPair<QList<int>, QString>& item : all) {
+  QList<QPair<Verse, QString>> all = m_bookmarksDb->allThoughts();
+  for (const QPair<Verse, QString>& item : all) {
     thoughts.append(thoughtJson(item));
   }
   m_fileObj["thoughts"] = thoughts;
@@ -52,17 +52,7 @@ JsonDataExporter::verseJson(const Verse& v)
 }
 
 QJsonObject
-JsonDataExporter::verseJson(const QList<int>& vInfo)
-{
-  QJsonObject obj;
-  obj["page"] = vInfo[0];
-  obj["surah"] = vInfo[1];
-  obj["number"] = vInfo[2];
-  return obj;
-}
-
-QJsonObject
-JsonDataExporter::khatmahJson(const QPair<QString, QList<int>>& entry)
+JsonDataExporter::khatmahJson(const QPair<QString, Verse>& entry)
 {
   QJsonObject obj;
   obj["name"] = entry.first;
@@ -71,7 +61,7 @@ JsonDataExporter::khatmahJson(const QPair<QString, QList<int>>& entry)
 }
 
 QJsonObject
-JsonDataExporter::thoughtJson(const QPair<QList<int>, QString>& entry)
+JsonDataExporter::thoughtJson(const QPair<Verse, QString>& entry)
 {
   QJsonObject obj;
   obj["verse"] = verseJson(entry.first);
@@ -91,6 +81,7 @@ JsonDataExporter::save()
   QFile jsonFile(m_file.absoluteFilePath());
   if (!jsonFile.open(QIODevice::WriteOnly)) {
     qWarning() << "Failed to open JSON file for writing";
+    emit UserDataExporter::error(IOError);
     return false;
   }
 

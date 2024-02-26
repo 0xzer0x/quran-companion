@@ -179,22 +179,6 @@ QuranDb::surahName(const int sIdx, bool ar)
   return dbQuery.value(0).toString();
 }
 
-int
-QuranDb::verseId(const int sIdx, const int vIdx)
-{
-  QSqlQuery dbQuery(*this);
-  dbQuery.prepare("SELECT id FROM verses_v1 WHERE sura_no=:s AND aya_no=:v");
-  dbQuery.bindValue(0, sIdx);
-  dbQuery.bindValue(1, vIdx);
-
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVerseId SQL statment exec";
-  }
-
-  dbQuery.next();
-  return dbQuery.value(0).toInt();
-}
-
 QList<int>
 QuranDb::verseById(const int id)
 {

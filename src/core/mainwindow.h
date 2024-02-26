@@ -251,7 +251,7 @@ private:
   Ui::MainWindow* ui;
   QSharedPointer<Verse> m_currVerse = Verse::current();
   QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QSharedPointer<BookmarksDb> m_bookmarkDb = BookmarksDb::current();
+  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
   QSharedPointer<TranslationDb> m_translationDb = TranslationDb::current();
   QSharedPointer<ShortcutHandler> m_shortcutHandler =
     ShortcutHandler::current();

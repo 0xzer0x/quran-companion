@@ -286,7 +286,7 @@ ContentDialog::loadVerseTranslation()
 void
 ContentDialog::loadVerseThoughts()
 {
-  ui->tedContent->setText(m_bookmarkDb->getThoughts(m_shownVerse.toList()));
+  ui->tedContent->setText(m_bookmarksDb->getThoughts(m_shownVerse));
   ui->tedContent->setReadOnly(false);
   ui->tedContent->setCursorWidth(1);
 }
@@ -296,8 +296,7 @@ ContentDialog::saveVerseThoughts()
 {
   ui->tedContent->setCursorWidth(0);
   ui->tedContent->setReadOnly(true);
-  m_bookmarkDb->saveThoughts(m_shownVerse.toList(),
-                             ui->tedContent->toPlainText());
+  m_bookmarksDb->saveThoughts(m_shownVerse, ui->tedContent->toPlainText());
 }
 
 void

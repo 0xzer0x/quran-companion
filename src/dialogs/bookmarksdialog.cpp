@@ -82,7 +82,7 @@ BookmarksDialog::loadBookmarks(int surah)
 {
   if (m_shownSurah != surah) {
     m_shownSurah = surah;
-    m_shownVerses = Verse::fromList(m_bookmarksDb->bookmarkedVerses(surah));
+    m_shownVerses = m_bookmarksDb->bookmarkedVerses(surah);
     if (m_shownSurah == -1)
       m_allBookmarked = m_shownVerses;
   }
@@ -227,7 +227,7 @@ BookmarksDialog::btnRemove()
   QStringList info = sender()->parent()->objectName().split('-');
   Verse verse{ info.at(0).toInt(), info.at(1).toInt(), info.at(2).toInt() };
 
-  if (m_bookmarksDb->removeBookmark(verse.toList())) {
+  if (m_bookmarksDb->removeBookmark(verse, true)) {
     QFrame* frm = qobject_cast<QFrame*>(sender()->parent());
     int idx = m_frames.indexOf(frm);
     if (idx != -1)

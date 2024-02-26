@@ -220,17 +220,17 @@ QuranReader::addSideContent()
   m_translationDb->setCurrentTranslation(
     m_settings->value("Reader/Translation").toInt());
   for (int i = m_activeVList->size() - 1; i >= 0; i--) {
-    const Verse* vInfo = &(m_activeVList->at(i));
+    const Verse* verse = &(m_activeVList->at(i));
 
     verseContFrame = new VerseFrame(m_scrlVerseByVerse->widget());
     verselb = new ClickableLabel(verseContFrame);
     contentLb = new QLabel(verseContFrame);
     glyphs = m_quranDb->verseType() == Settings::Qcf
-               ? m_glyphsDb->getVerseGlyphs(vInfo->surah(), vInfo->number())
-               : m_quranDb->verseText(vInfo->surah(), vInfo->number());
+               ? m_glyphsDb->getVerseGlyphs(verse->surah(), verse->number())
+               : m_quranDb->verseText(verse->surah(), verse->number());
 
     verseContFrame->setObjectName(
-      QString("%0_%1").arg(vInfo->surah()).arg(vInfo->number()));
+      QString("%0_%1").arg(verse->surah()).arg(verse->number()));
 
     verselb->setFont(m_versesFont);
     verselb->setText(glyphs);
@@ -238,7 +238,7 @@ QuranReader::addSideContent()
     verselb->setWordWrap(true);
 
     currLbContent =
-      m_translationDb->getTranslation(vInfo->surah(), vInfo->number());
+      m_translationDb->getTranslation(verse->surah(), verse->number());
 
     if (currLbContent == prevLbContent) {
       currLbContent = '-';
@@ -411,7 +411,7 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
   Verse v(m_vLists[browerIdx].at(idx));
 
   QuranPageBrowser::Action chosenAction =
-    senderBrowser->lmbVerseMenu(m_bookmarksDb->isBookmarked(v.toList()));
+    senderBrowser->lmbVerseMenu(m_bookmarksDb->isBookmarked(v));
 
   switch (chosenAction) {
     case QuranPageBrowser::Play:
@@ -437,10 +437,10 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
       emit copyVerseText(v);
       break;
     case QuranPageBrowser::AddBookmark:
-      m_bookmarksDb->addBookmark(v.toList());
+      m_bookmarksDb->addBookmark(v, false);
       break;
     case QuranPageBrowser::RemoveBookmark:
-      m_bookmarksDb->removeBookmark(v.toList());
+      m_bookmarksDb->removeBookmark(v, false);
     default:
       break;
   }

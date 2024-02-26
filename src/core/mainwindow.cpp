@@ -65,14 +65,14 @@ void
 MainWindow::loadVerse()
 {
   int id = m_settings->value("Reader/Khatmah").toInt();
-  QList<int> vInfo = m_currVerse->toList();
-  m_bookmarkDb->setActiveKhatmah(id);
-  if (!m_bookmarkDb->loadVerse(id, vInfo)) {
-    QString name = id ? tr("Khatmah ") + QString::number(id) : tr("Default");
-    m_bookmarkDb->addKhatmah(vInfo, name, id);
+  Verse v = *m_currVerse;
+  m_bookmarksDb->setActiveKhatmah(id);
+  if (!m_bookmarksDb->loadVerse(id, v)) {
+    QString name =
+      id ? tr("Khatmah") + " " + QString::number(id) : tr("Default");
+    m_bookmarksDb->addKhatmah(v, name, id);
   }
-
-  m_currVerse->update(vInfo);
+  m_currVerse->update(v);
 }
 
 void
@@ -317,11 +317,11 @@ MainWindow::setupConnections()
           &CopyDialog::verseCopied,
           m_popup,
           &NotificationPopup::copiedToClipboard);
-  connect(m_bookmarkDb.data(),
+  connect(m_bookmarksDb.data(),
           &BookmarksDb::bookmarkAdded,
           m_popup,
           &NotificationPopup::bookmarkAdded);
-  connect(m_bookmarkDb.data(),
+  connect(m_bookmarksDb.data(),
           &BookmarksDb::bookmarkRemoved,
           m_popup,
           &NotificationPopup::bookmarkRemoved);
@@ -643,9 +643,8 @@ MainWindow::updateTrayTooltip(QMediaPlayer::PlaybackState state)
 void
 MainWindow::addCurrentToBookmarks()
 {
-  QList<int> vInfo = m_currVerse->toList();
-  if (!m_bookmarkDb->isBookmarked(vInfo))
-    m_bookmarkDb->addBookmark(vInfo);
+  if (!m_bookmarksDb->isBookmarked(*m_currVerse))
+    m_bookmarksDb->addBookmark(*m_currVerse, false);
 }
 
 void
@@ -755,7 +754,7 @@ MainWindow::actionKhatmahTriggered()
             &QuranReader::navigateToVerse);
   }
 
-  m_bookmarkDb->saveActiveKhatmah(m_currVerse->toList());
+  m_bookmarksDb->saveActiveKhatmah(*m_currVerse);
   m_khatmahDlg->show();
 }
 
@@ -895,7 +894,7 @@ MainWindow::saveReaderState()
   m_settings->setValue("Reciter", m_playerControls->currentReciter());
   m_settings->sync();
 
-  m_bookmarkDb->saveActiveKhatmah(m_currVerse->toList());
+  m_bookmarksDb->saveActiveKhatmah(*m_currVerse);
 }
 
 void

@@ -1,5 +1,7 @@
 #include "recitationtask.h"
 
+#include <types/verse.h>
+
 RecitationTask::RecitationTask()
   : m_reciter(-1)
   , m_surah(-1)
@@ -43,7 +45,7 @@ RecitationTask::url() const
   const Reciter& r = *m_reciters.at(m_reciter);
   QString url = r.baseUrl();
   if (r.useId())
-    url.append(QString::number(m_quranDb->verseId(m_surah, m_verse)) + ".mp3");
+    url.append(QString::number(Verse::id(m_surah, m_verse)) + ".mp3");
   else
     url.append(QString::number(m_surah).rightJustified(3, '0') +
                QString::number(m_verse).rightJustified(3, '0') + ".mp3");

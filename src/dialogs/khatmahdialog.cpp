@@ -23,8 +23,8 @@ KhatmahDialog::KhatmahDialog(QWidget* parent)
 QPointer<InputField>
 KhatmahDialog::loadKhatmah(const int id)
 {
-  QList<int> vInfo(3);
-  m_bookmarksDb->loadVerse(id, vInfo);
+  Verse v;
+  m_bookmarksDb->loadVerse(id, v);
   QFrame* frame = new QFrame(ui->scrlDialogContent);
   // property used for styling
   frame->setProperty("khatmah", true);
@@ -56,8 +56,8 @@ KhatmahDialog::loadKhatmah(const int id)
     remove->setDisabled(true);
   }
 
-  QString info = tr("Surah: ") + m_quranDb->surahNames().at(vInfo[1] - 1) +
-                 " - " + tr("Verse: ") + QString::number(vInfo[2]);
+  QString info = tr("Surah: ") + m_quranDb->surahNames().at(v.surah() - 1) +
+                 " - " + tr("Verse: ") + QString::number(v.number());
   lbPosition->setText(info);
 
   activate->setFocusPolicy(Qt::NoFocus);
@@ -145,14 +145,14 @@ KhatmahDialog::removeKhatmah()
 void
 KhatmahDialog::setActiveKhatmah()
 {
-  QList<int> vInfo(3);
+  Verse v;
   QFrame* newActive = qobject_cast<QFrame*>(sender()->parent());
   QVariant id = newActive->objectName();
 
   m_settings->setValue("Reader/Khatmah", id);
-  m_bookmarksDb->saveActiveKhatmah(m_currVerse->toList());
+  m_bookmarksDb->saveActiveKhatmah(*m_currVerse);
   m_bookmarksDb->setActiveKhatmah(id.toInt());
-  m_bookmarksDb->loadVerse(id.toInt(), vInfo);
+  m_bookmarksDb->loadVerse(id.toInt(), v);
 
   newActive->findChild<QPushButton*>("activate")->setEnabled(false);
   newActive->findChild<QPushButton*>("remove")->setEnabled(false);
@@ -161,7 +161,7 @@ KhatmahDialog::setActiveKhatmah()
   m_currActive = newActive;
 
   ui->lbCurrKhatmah->setText(m_bookmarksDb->getKhatmahName(id.toInt()));
-  emit navigateToVerse(vInfo);
+  emit navigateToVerse(v);
 }
 
 void

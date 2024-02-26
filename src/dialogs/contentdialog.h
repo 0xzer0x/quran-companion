@@ -94,7 +94,7 @@ private:
   Ui::ContentDialog* ui;
   QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
   QSharedPointer<GlyphsDb> m_glyphsDb = GlyphsDb::current();
-  QSharedPointer<BookmarksDb> m_bookmarkDb = BookmarksDb::current();
+  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
   QSharedPointer<TafsirDb> m_tafsirDb = TafsirDb::current();
   QSharedPointer<TranslationDb> m_translationDb = TranslationDb::current();
   const int m_qcfVer = Settings::qcfVersion;

@@ -71,13 +71,6 @@ public:
    */
   QString surahName(const int sIdx, bool ar = false);
   /**
-   * @brief gets the corresponding id for the verse in the database
-   * @param sIdx - sura number
-   * @param vIdx - verse number
-   * @return id of the verse
-   */
-  int verseId(const int sIdx, const int vIdx);
-  /**
    * @brief get the verse with the corresponding id and return it as a ::Verse
    * instance
    * @param id - verse id

@@ -11,18 +11,17 @@ class JsonDataExporter : public UserDataExporter
 {
 public:
   JsonDataExporter();
-  void setFile(QString path);
   void exportBookmarks();
   void exportKhatmah();
   void exportThoughts();
+  void setFile(QString path);
   bool save();
 
 private:
   QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
   QJsonObject verseJson(const Verse& v);
-  QJsonObject verseJson(const QList<int>& vInfo);
-  QJsonObject khatmahJson(const QPair<QString, QList<int>>& entry);
-  QJsonObject thoughtJson(const QPair<QList<int>, QString>& entry);
+  QJsonObject khatmahJson(const QPair<QString, Verse>& entry);
+  QJsonObject thoughtJson(const QPair<Verse, QString>& entry);
   QJsonObject m_fileObj;
   QFileInfo m_file;
 };

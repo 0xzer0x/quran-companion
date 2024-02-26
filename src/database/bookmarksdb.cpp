@@ -14,6 +14,18 @@ BookmarksDb::BookmarksDb()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "BookmarksCon"))
 {
   BookmarksDb::open();
+  QSqlQuery dbQuery(*this);
+  dbQuery.exec(
+    "CREATE TABLE IF NOT EXISTS khatmah(id INTEGER PRIMARY KEY "
+    "AUTOINCREMENT, name TEXT, page INTEGER, surah INTEGER, number INTEGER)");
+
+  dbQuery.exec("CREATE TABLE IF NOT EXISTS favorites(id INTEGER PRIMARY KEY "
+               "AUTOINCREMENT,"
+               "page INTEGER, surah INTEGER, number INTEGER)");
+
+  dbQuery.exec("CREATE TABLE IF NOT EXISTS thoughts(id INTEGER PRIMARY KEY "
+               "UNIQUE,"
+               "page INTEGER, surah INTEGER, number INTEGER, text TEXT)");
 }
 
 void
@@ -31,14 +43,14 @@ BookmarksDb::type()
 }
 
 bool
-BookmarksDb::saveActiveKhatmah(QList<int> vInfo)
+BookmarksDb::saveActiveKhatmah(const Verse& verse)
 {
   QSqlQuery dbQuery(*this);
   QString q = QString::asprintf(
     "UPDATE khatmah SET page=%i, surah=%i, number=%i WHERE id=%i",
-    vInfo[0],
-    vInfo[1],
-    vInfo[2],
+    verse.page(),
+    verse.surah(),
+    verse.number(),
     m_activeKhatmah);
   if (!dbQuery.exec(q)) {
     qCritical() << "Couldn't save position in mushaf";
@@ -76,7 +88,7 @@ BookmarksDb::getKhatmahName(const int id) const
 }
 
 bool
-BookmarksDb::loadVerse(const int khatmahId, QList<int>& vInfo) const
+BookmarksDb::loadVerse(const int khatmahId, Verse& verse) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -89,38 +101,35 @@ BookmarksDb::loadVerse(const int khatmahId, QList<int>& vInfo) const
   if (!dbQuery.next())
     return false;
 
-  vInfo[0] = dbQuery.value(0).toInt();
-  vInfo[1] = dbQuery.value(1).toInt();
-  vInfo[2] = dbQuery.value(2).toInt();
+  verse.setPage(dbQuery.value(0).toInt());
+  verse.setSurah(dbQuery.value(1).toInt());
+  verse.setNumber(dbQuery.value(2).toInt());
   return true;
 }
 
 int
-BookmarksDb::addKhatmah(QList<int> vInfo,
+BookmarksDb::addKhatmah(const Verse& verse,
                         const QString name,
                         const int id) const
 {
   QSqlQuery dbQuery(*this);
-  dbQuery.exec(
-    "CREATE TABLE IF NOT EXISTS khatmah(id INTEGER PRIMARY KEY "
-    "AUTOINCREMENT, name TEXT, page INTEGER, surah INTEGER, number INTEGER)");
   QString q;
   if (id == -1) {
     q = "INSERT INTO khatmah(name, page, surah, number) VALUES ('%0', %1, %2, "
         "%3)";
     dbQuery.prepare(q.arg(name,
-                          QString::number(vInfo[0]),
-                          QString::number(vInfo[1]),
-                          QString::number(vInfo[2])));
+                          QString::number(verse.page()),
+                          QString::number(verse.surah()),
+                          QString::number(verse.number())));
   } else {
     q = "REPLACE INTO khatmah VALUES "
         "(%0, "
         "'%1', %2, %3, %4)";
     dbQuery.prepare(q.arg(QString::number(id),
                           name,
-                          QString::number(vInfo[0]),
-                          QString::number(vInfo[1]),
-                          QString::number(vInfo[2])));
+                          QString::number(verse.page()),
+                          QString::number(verse.surah()),
+                          QString::number(verse.number())));
   }
 
   if (!dbQuery.exec()) {
@@ -169,10 +178,10 @@ BookmarksDb::removeKhatmah(const int id) const
     qDebug() << "Couldn't execute query: " << dbQuery.lastQuery();
 }
 
-QList<QList<int>>
+QList<Verse>
 BookmarksDb::bookmarkedVerses(int surahIdx) const
 {
-  QList<QList<int>> results;
+  QList<Verse> results;
   QSqlQuery dbQuery(*this);
   QString q = "SELECT page,surah,number FROM favorites";
   if (surahIdx != -1)
@@ -183,24 +192,24 @@ BookmarksDb::bookmarkedVerses(int surahIdx) const
     qCritical() << "Couldn't execute bookmarkedVerses SELECT query";
 
   while (dbQuery.next()) {
-    results.append({ dbQuery.value(0).toInt(),
-                     dbQuery.value(1).toInt(),
-                     dbQuery.value(2).toInt() });
+    results.append(Verse(dbQuery.value(0).toInt(),
+                         dbQuery.value(1).toInt(),
+                         dbQuery.value(2).toInt()));
   }
 
   return results;
 }
 
 bool
-BookmarksDb::isBookmarked(QList<int> vInfo) const
+BookmarksDb::isBookmarked(const Verse& verse) const
 {
   QSqlQuery dbQuery(*this);
 
   dbQuery.prepare(
     "SELECT page FROM favorites WHERE page=:p AND surah=:s AND number=:n");
-  dbQuery.bindValue(0, vInfo[0]);
-  dbQuery.bindValue(1, vInfo[1]);
-  dbQuery.bindValue(2, vInfo[2]);
+  dbQuery.bindValue(0, verse.page());
+  dbQuery.bindValue(1, verse.surah());
+  dbQuery.bindValue(2, verse.number());
 
   if (!dbQuery.exec()) {
     qWarning() << "Couldn't check if verse is bookmarked";
@@ -213,18 +222,15 @@ BookmarksDb::isBookmarked(QList<int> vInfo) const
 }
 
 bool
-BookmarksDb::addBookmark(QList<int> vInfo)
+BookmarksDb::addBookmark(const Verse& verse, bool silent)
 {
   QSqlQuery dbQuery(*this);
-  dbQuery.exec("CREATE TABLE IF NOT EXISTS favorites(id INTEGER PRIMARY KEY "
-               "AUTOINCREMENT,"
-               "page INTEGER, surah INTEGER, number INTEGER)");
 
   dbQuery.prepare(
     "INSERT INTO favorites(page, surah, number) VALUES (:p, :s, :n)");
-  dbQuery.bindValue(0, vInfo[0]);
-  dbQuery.bindValue(1, vInfo[1]);
-  dbQuery.bindValue(2, vInfo[2]);
+  dbQuery.bindValue(0, verse.page());
+  dbQuery.bindValue(1, verse.surah());
+  dbQuery.bindValue(2, verse.number());
 
   if (!dbQuery.exec()) {
     qWarning() << "Couldn't add verse to bookmarks db";
@@ -232,44 +238,42 @@ BookmarksDb::addBookmark(QList<int> vInfo)
   }
 
   commit();
-  emit bookmarkAdded();
+  if (!silent)
+    emit bookmarkAdded();
   return true;
 }
 
 bool
-BookmarksDb::removeBookmark(QList<int> vInfo)
+BookmarksDb::removeBookmark(const Verse& verse, bool silent)
 {
   QSqlQuery dbQuery(*this);
   dbQuery.prepare(
     "DELETE FROM favorites WHERE page=:p AND surah=:s AND number=:n");
-  dbQuery.bindValue(0, vInfo[0]);
-  dbQuery.bindValue(1, vInfo[1]);
-  dbQuery.bindValue(2, vInfo[2]);
+  dbQuery.bindValue(0, verse.page());
+  dbQuery.bindValue(1, verse.surah());
+  dbQuery.bindValue(2, verse.number());
 
   if (!dbQuery.exec()) {
     qWarning() << "Couldn't remove verse from bookmarks";
     return false;
   }
 
-  emit bookmarkRemoved();
+  if (!silent)
+    emit bookmarkRemoved();
   return true;
 }
 
 void
-BookmarksDb::saveThoughts(QList<int> vInfo, const QString& text)
+BookmarksDb::saveThoughts(Verse& verse, const QString& text)
 {
-  int id = m_quranDb->verseId(vInfo[1], vInfo[2]);
+  int id = Verse::id(verse.surah(), verse.number());
   QSqlQuery dbQuery(*this);
-  dbQuery.exec("CREATE TABLE IF NOT EXISTS thoughts(id INTEGER PRIMARY KEY "
-               "UNIQUE,"
-               "page INTEGER, surah INTEGER, number INTEGER, text TEXT)");
-
   dbQuery.prepare("REPLACE INTO thoughts(id, page, surah, number, text) "
                   "VALUES(:i, :p, :s, :n, :t)");
   dbQuery.bindValue(0, id);
-  dbQuery.bindValue(1, vInfo[0]);
-  dbQuery.bindValue(2, vInfo[1]);
-  dbQuery.bindValue(3, vInfo[2]);
+  dbQuery.bindValue(1, verse.page());
+  dbQuery.bindValue(2, verse.surah());
+  dbQuery.bindValue(3, verse.number());
   dbQuery.bindValue(4, text);
 
   if (!dbQuery.exec())
@@ -279,14 +283,14 @@ BookmarksDb::saveThoughts(QList<int> vInfo, const QString& text)
 }
 
 QString
-BookmarksDb::getThoughts(QList<int> vInfo) const
+BookmarksDb::getThoughts(const Verse& verse) const
 {
   QSqlQuery dbQuery(*this);
   dbQuery.prepare(
     "SELECT text FROM thoughts WHERE page=:p AND surah=:s AND number=:n");
-  dbQuery.bindValue(0, vInfo[0]);
-  dbQuery.bindValue(1, vInfo[1]);
-  dbQuery.bindValue(2, vInfo[2]);
+  dbQuery.bindValue(0, verse.page());
+  dbQuery.bindValue(1, verse.surah());
+  dbQuery.bindValue(2, verse.number());
 
   if (!dbQuery.exec())
     qCritical() << "SQL statement execution error:" << dbQuery.lastError();
@@ -295,19 +299,18 @@ BookmarksDb::getThoughts(QList<int> vInfo) const
   return dbQuery.value(0).toString();
 }
 
-QList<QPair<QList<int>, QString>>
+QList<QPair<Verse, QString>>
 BookmarksDb::allThoughts() const
 {
-  QList<QPair<QList<int>, QString>> all;
+  QList<QPair<Verse, QString>> all;
   QSqlQuery dbQuery(*this);
   dbQuery.exec("SELECT page,surah,number,text FROM thoughts WHERE text!=''");
   while (dbQuery.next()) {
-    QList<int> vInfo(3);
-    vInfo[0] = dbQuery.value(0).toInt();
-    vInfo[1] = dbQuery.value(1).toInt();
-    vInfo[2] = dbQuery.value(2).toInt();
+    const Verse verse(dbQuery.value(0).toInt(),
+                      dbQuery.value(1).toInt(),
+                      dbQuery.value(2).toInt());
 
-    all.append({ vInfo, dbQuery.value(3).toString() });
+    all.append({ verse, dbQuery.value(3).toString() });
   }
 
   return all;
