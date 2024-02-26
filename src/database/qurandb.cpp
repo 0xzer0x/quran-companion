@@ -145,24 +145,6 @@ QuranDb::verseText(const int sIdx, const int vIdx)
 }
 
 int
-QuranDb::surahVerseCount(const int surahIdx)
-{
-  QSqlQuery dbQuery(*this);
-
-  dbQuery.prepare(
-    "SELECT aya_no FROM verses_v1 WHERE sura_no=:idx ORDER BY aya_no DESC");
-  dbQuery.bindValue(0, surahIdx);
-
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getSurahVerseCount SQL statment exec";
-    return -1;
-  }
-
-  dbQuery.next();
-  return dbQuery.value(0).toInt();
-}
-
-int
 QuranDb::surahStartPage(int surahIdx)
 {
   QSqlQuery dbQuery(*this);

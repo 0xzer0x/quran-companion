@@ -1,10 +1,11 @@
 #include "surahjob.h"
+#include <types/verse.h>
 
 SurahJob::SurahJob(int reciter, int surah)
   : m_reciter(reciter)
   , m_surah(surah)
   , m_completed(0)
-  , m_surahCount(m_quranDb->surahVerseCount(surah))
+  , m_surahCount(Verse::surahVerseCount(surah))
   , m_isDownloading(false)
   , m_taskDlr(this)
 {

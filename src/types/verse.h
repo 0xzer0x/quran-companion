@@ -14,6 +14,8 @@
 class Verse
 {
 public:
+  static const QList<int> verseCount;
+  static const int surahVerseCount(int surah);
   static QSharedPointer<Verse> current();
   static QList<Verse> fromList(QList<QList<int>> lst);
 
@@ -46,7 +48,6 @@ public:
 private:
   const QSharedPointer<QSettings> m_settings = Settings::settings;
   QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  void updateSurahCount();
 
   int m_page = -1;      ///< verse page
   int m_surah = -1;     ///< verse surah number

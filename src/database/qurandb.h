@@ -14,7 +14,7 @@ class QuranDb
   , QSqlDatabase
 {
 public:
-    static QSharedPointer<QuranDb> current();
+  static QSharedPointer<QuranDb> current();
   QuranDb();
   void open();
   Type type();
@@ -57,12 +57,6 @@ public:
    * @return QString of the verse text
    */
   QString verseText(const int sIdx, const int vIdx);
-  /**
-   * @brief gets the number of the last verse in the surah passed
-   * @param surahIdx - surah number (1-114)
-   * @return number of verses in the sura
-   */
-  int surahVerseCount(const int surahIdx);
   /**
    * @brief gets the page where the surah begins
    * @param surahIdx - sura number
