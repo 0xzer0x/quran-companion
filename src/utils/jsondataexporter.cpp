@@ -81,7 +81,8 @@ JsonDataExporter::save()
   QFile jsonFile(m_file.absoluteFilePath());
   if (!jsonFile.open(QIODevice::WriteOnly)) {
     qWarning() << "Failed to open JSON file for writing";
-    emit UserDataExporter::error(IOError);
+    emit UserDataExporter::error(
+      IOError, "Failed to open json file: " + m_file.absoluteFilePath());
     return false;
   }
 

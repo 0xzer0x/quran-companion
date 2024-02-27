@@ -19,7 +19,7 @@ public:
   virtual bool save() = 0;
 
 signals:
-  void error(Error err);
+  void error(Error err, QString msg);
 };
 
 #endif // USERDATAEXPORTER_H

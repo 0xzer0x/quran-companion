@@ -45,11 +45,11 @@ bool
 JsonDataImporter::validArray(QString key)
 {
   if (!m_fileObj.contains(key)) {
-    emit UserDataImporter::error(MissingKeyError);
+    emit UserDataImporter::error(MissingKeyError, "Missing key: " + key);
     return false;
   }
   if (!m_fileObj.value(key).isArray()) {
-    emit UserDataImporter::error(InvalidValueError);
+    emit UserDataImporter::error(InvalidValueError, "Invalid array: " + key);
     return false;
   }
   return true;
@@ -60,7 +60,7 @@ JsonDataImporter::validVerse(const QJsonObject& obj)
 {
   if (!obj.contains("page") || !obj.contains("surah") ||
       !obj.contains("number")) {
-    emit UserDataImporter::error(MissingKeyError);
+    emit UserDataImporter::error(MissingKeyError, "Missing verse key");
     return false;
   }
 
@@ -68,7 +68,7 @@ JsonDataImporter::validVerse(const QJsonObject& obj)
       number = obj.value("number").toInt();
   if (page < 1 || page > 604 || surah < 1 || surah > 114 || number < 1 ||
       number > 286) {
-    emit UserDataImporter::error(InvalidValueError);
+    emit UserDataImporter::error(InvalidValueError, "Invalid verse values");
     return false;
   }
 
@@ -79,13 +79,13 @@ bool
 JsonDataImporter::validKhatmah(const QJsonObject& obj)
 {
   if (!obj.contains("name") || !obj.contains("verse")) {
-    emit UserDataImporter::error(MissingKeyError);
+    emit UserDataImporter::error(MissingKeyError, "Missing khatmah keys");
     return false;
   }
 
   if (!obj.value("name").isString() ||
       !validVerse(obj.value("verse").toObject())) {
-    emit UserDataImporter::error(InvalidValueError);
+    emit UserDataImporter::error(InvalidValueError, "Invalid khatmah values");
     return false;
   }
 
@@ -96,13 +96,13 @@ bool
 JsonDataImporter::validThought(const QJsonObject& obj)
 {
   if (!obj.contains("text") || !obj.contains("verse")) {
-    emit UserDataImporter::error(MissingKeyError);
+    emit UserDataImporter::error(MissingKeyError, "Missing thought keys");
     return false;
   }
 
   if (!obj.value("text").isString() ||
       !validVerse(obj.value("verse").toObject())) {
-    emit UserDataImporter::error(InvalidValueError);
+    emit UserDataImporter::error(InvalidValueError, "Invalid thought values");
     return false;
   }
 
@@ -151,16 +151,17 @@ JsonDataImporter::thoughtFromJson(const QJsonObject& obj)
 void
 JsonDataImporter::setFile(QString path)
 {
-  m_filepath = path;
+  m_file.setFile(path);
 }
 
 bool
 JsonDataImporter::read()
 {
-  QFile jsonFile(m_filepath);
+  QFile jsonFile(m_file.absoluteFilePath());
   if (!jsonFile.open(QIODevice::ReadOnly)) {
     qWarning() << "Failed to open json file during import";
-    emit UserDataImporter::error(IOError);
+    emit UserDataImporter::error(
+      IOError, "Failed to open json file: " + m_file.absoluteFilePath());
     return false;
   }
 
@@ -168,7 +169,8 @@ JsonDataImporter::read()
   QJsonDocument document = QJsonDocument::fromJson(jsonFile.readAll(), err);
   if (document.isNull()) {
     qWarning() << "Failed to parse json file";
-    emit UserDataImporter::error(ParseError);
+    emit UserDataImporter::error(
+      ParseError, "Failed to parse json file: " + m_file.absoluteFilePath());
     if (err)
       qWarning() << "Error string:" << err->errorString();
     return false;
@@ -176,4 +178,10 @@ JsonDataImporter::read()
 
   m_fileObj = document.object();
   return true;
+}
+
+bool
+JsonDataImporter::fileContains(QString key)
+{
+  return m_fileObj.contains(key);
 }

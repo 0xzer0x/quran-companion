@@ -11,11 +11,12 @@ class JsonDataImporter : public UserDataImporter
 {
 public:
   JsonDataImporter();
-  void importBookmarks();
-  void importKhatmah();
-  void importThoughts();
-  void setFile(QString path);
-  bool read();
+  void importBookmarks() override;
+  void importKhatmah() override;
+  void importThoughts() override;
+  void setFile(QString path) override;
+  bool fileContains(QString key) override;
+  bool read() override;
 
 private:
   QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
@@ -26,7 +27,7 @@ private:
   Verse verseFromJson(const QJsonObject& obj);
   QPair<QString, Verse> khatmahFromJson(const QJsonObject& obj);
   QPair<Verse, QString> thoughtFromJson(const QJsonObject& obj);
-  QString m_filepath;
+  QFileInfo m_file;
   QJsonObject m_fileObj;
 };
 

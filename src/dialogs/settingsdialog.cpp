@@ -13,6 +13,7 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   : QDialog(parent)
   , ui(new Ui::SettingsDialog)
   , m_vPlayerPtr(vPlayerPtr)
+  , m_selectorDlg(new FileSelector(this))
 {
   ui->setupUi(this);
   ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 72));
@@ -22,9 +23,11 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
   ui->tableViewShortcuts->setItemDelegate(new ShortcutDelegate);
 
+  m_importExportDlg =
+    new ImportExportDialog(this, &m_jsonImporter, &m_jsonExporter);
+
   fillLanguageCombobox();
   setCurrentSettingsAsRef();
-  // connectors
   setupConnections();
 }
 
@@ -35,6 +38,14 @@ SettingsDialog::setupConnections()
           &QDialogButtonBox::clicked,
           this,
           &SettingsDialog::btnBoxAction);
+  connect(ui->btnImport,
+          &QPushButton::clicked,
+          this,
+          &SettingsDialog::importUserData);
+  connect(ui->btnExport,
+          &QPushButton::clicked,
+          this,
+          &SettingsDialog::exportUserData);
 }
 
 void
@@ -378,6 +389,22 @@ SettingsDialog::btnBoxAction(QAbstractButton* btn)
     applyAllChanges();
     this->accept();
   }
+}
+
+void
+SettingsDialog::importUserData()
+{
+  QString path = m_selectorDlg->selectJson(FileSelector::Read);
+  if (!path.isEmpty())
+    m_importExportDlg->selectImports(path);
+}
+
+void
+SettingsDialog::exportUserData()
+{
+  QString path = m_selectorDlg->selectJson(FileSelector::Write);
+  if (!path.isEmpty())
+    m_importExportDlg->selectExports(path);
 }
 
 void

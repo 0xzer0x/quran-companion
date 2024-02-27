@@ -82,6 +82,11 @@ set(PROJECT_SOURCES
     src/dialogs/versedialog.h
     src/dialogs/versedialog.cpp
     src/dialogs/versedialog.ui
+    src/dialogs/fileselector.h
+    src/dialogs/fileselector.cpp
+    src/dialogs/importexportdialog.h
+    src/dialogs/importexportdialog.cpp
+    src/dialogs/importexportdialog.ui
     src/interfaces/userdataimporter.h
     src/interfaces/userdataexporter.h
     src/interfaces/downloadjob.h

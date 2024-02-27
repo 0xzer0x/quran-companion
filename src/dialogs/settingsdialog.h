@@ -6,6 +6,8 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
+#include "fileselector.h"
+#include "importexportdialog.h"
 #include <QApplication>
 #include <QAudioDevice>
 #include <QColorDialog>
@@ -23,6 +25,8 @@
 #include <QValidator>
 #include <types/tafsir.h>
 #include <types/translation.h>
+#include <utils/jsondataexporter.h>
+#include <utils/jsondataimporter.h>
 #include <utils/settings.h>
 #include <utils/shortcuthandler.h>
 #include <utils/verseplayer.h>
@@ -39,7 +43,6 @@ class SettingsDialog;
 class SettingsDialog : public QDialog
 {
   Q_OBJECT
-
 public:
   /**
    * @brief Class constructor
@@ -213,6 +216,10 @@ protected:
    */
   void closeEvent(QCloseEvent* event);
 
+private slots:
+  void importUserData();
+  void exportUserData();
+
 private:
   Ui::SettingsDialog* ui;
   const int m_qcfVer = Settings::qcfVersion;
@@ -313,6 +320,10 @@ private:
    * @brief pointer to VersePlayer instance.
    */
   QPointer<VersePlayer> m_vPlayerPtr;
+  QPointer<FileSelector> m_selectorDlg;
+  QPointer<ImportExportDialog> m_importExportDlg;
+  JsonDataImporter m_jsonImporter;
+  JsonDataExporter m_jsonExporter;
   /**
    * @brief model used by the shortcuts QTableView
    */
