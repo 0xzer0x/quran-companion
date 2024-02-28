@@ -16,8 +16,14 @@
     <height>176</height>
    </size>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>417</width>
+    <height>246</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Data Selection</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
    <item>

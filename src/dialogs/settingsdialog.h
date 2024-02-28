@@ -216,10 +216,6 @@ protected:
    */
   void closeEvent(QCloseEvent* event);
 
-private slots:
-  void importUserData();
-  void exportUserData();
-
 private:
   Ui::SettingsDialog* ui;
   const int m_qcfVer = Settings::qcfVersion;
@@ -320,10 +316,6 @@ private:
    * @brief pointer to VersePlayer instance.
    */
   QPointer<VersePlayer> m_vPlayerPtr;
-  QPointer<FileSelector> m_selectorDlg;
-  QPointer<ImportExportDialog> m_importExportDlg;
-  JsonDataImporter m_jsonImporter;
-  JsonDataExporter m_jsonExporter;
   /**
    * @brief model used by the shortcuts QTableView
    */

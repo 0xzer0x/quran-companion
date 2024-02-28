@@ -3,9 +3,10 @@
 
 #include <QMessageBox>
 
-ImportExportDialog::ImportExportDialog(QWidget* parent,
-                                       QPointer<UserDataImporter> importer,
-                                       QPointer<UserDataExporter> exporter)
+ImportExportDialog::ImportExportDialog(
+  QWidget* parent,
+  QSharedPointer<UserDataImporter> importer,
+  QSharedPointer<UserDataExporter> exporter)
   : ui(new Ui::ImportExportDialog)
   , m_importer(importer)
   , m_exporter(exporter)
@@ -16,11 +17,11 @@ ImportExportDialog::ImportExportDialog(QWidget* parent,
           &QDialogButtonBox::clicked,
           this,
           &ImportExportDialog::dialogButtonClicked);
-  connect(m_importer,
+  connect(m_importer.data(),
           &UserDataImporter::error,
           this,
           &ImportExportDialog::importError);
-  connect(m_exporter,
+  connect(m_exporter.data(),
           &UserDataExporter::error,
           this,
           &ImportExportDialog::exportError);
@@ -93,14 +94,16 @@ ImportExportDialog::exportSelected() const
   m_exporter->save();
 }
 
-void ImportExportDialog::setExporter(QPointer<UserDataExporter> newExporter)
+void
+ImportExportDialog::setExporter(QSharedPointer<UserDataExporter> newExporter)
 {
-    m_exporter = newExporter;
+  m_exporter = newExporter;
 }
 
-void ImportExportDialog::setImporter(QPointer<UserDataImporter> newImporter)
+void
+ImportExportDialog::setImporter(QSharedPointer<UserDataImporter> newImporter)
 {
-    m_importer = newImporter;
+  m_importer = newImporter;
 }
 
 void

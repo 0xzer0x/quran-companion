@@ -10,6 +10,7 @@
 #include <dialogs/khatmahdialog.h>
 #include <utils/stylemanager.h>
 using namespace fa;
+using std::make_pair;
 
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
@@ -59,6 +60,10 @@ MainWindow::loadIcons()
     StyleManager::awesome->icon(fa_solid, fa_columns));
   ui->actionUpdates->setIcon(
     StyleManager::awesome->icon(fa_solid, fa_arrow_rotate_right));
+  ui->actionImport->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_file_arrow_down));
+  ui->actionExport->setIcon(
+    StyleManager::awesome->icon(fa_solid, fa_file_arrow_up));
 }
 
 void
@@ -90,6 +95,11 @@ MainWindow::loadComponents()
   m_contentDlg = new ContentDialog(this);
   m_jobMgr = new JobManager(this);
   m_versionChecker = new VersionChecker(this);
+  m_selectorDlg = new FileSelector(this);
+  m_importExportDlg =
+    new ImportExportDialog(this,
+                           QSharedPointer<JsonDataImporter>::create(),
+                           QSharedPointer<JsonDataExporter>::create());
 
   QHBoxLayout* controls = new QHBoxLayout();
   QFrame* controlsFrame = new QFrame(this);
@@ -119,122 +129,133 @@ MainWindow::loadComponents()
 }
 
 void
-MainWindow::setupShortcuts()
+MainWindow::setupConnections()
 {
-  m_shortcutHandler->createShortcuts(this);
-
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::toggleMenubar,
-          this,
-          &MainWindow::toggleMenubar);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::toggleNavDock,
-          this,
-          &MainWindow::toggleNavDock);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::bookmarkCurrent,
-          this,
-          &MainWindow::addCurrentToBookmarks);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::openDownloads,
-          this,
-          &MainWindow::actionDMTriggered);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::openBookmarks,
-          this,
-          &MainWindow::actionBookmarksTriggered);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::openKhatmah,
-          this,
-          &MainWindow::actionKhatmahTriggered);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::openSearch,
-          this,
-          &MainWindow::actionSearchTriggered);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::openSettings,
-          this,
-          &MainWindow::actionPrefTriggered);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::openTafsir,
-          this,
-          &MainWindow::actionTafsirTriggered);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::openAdvancedCopy,
-          this,
-          &MainWindow::actionAdvancedCopyTriggered);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::nextVerse,
-          this,
-          &MainWindow::nextVerse);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::prevVerse,
-          this,
-          &MainWindow::prevVerse);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::nextSurah,
-          this,
-          &MainWindow::nextSurah);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::prevSurah,
-          this,
-          &MainWindow::prevSurah);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::nextJuz,
-          this,
-          &MainWindow::nextJuz);
-  connect(m_shortcutHandler.data(),
-          &ShortcutHandler::prevJuz,
-          this,
-          &MainWindow::prevJuz);
+  connectMenubar();
+  connectTray();
+  connectReader();
+  connectPlayer();
+  connectControls();
+  connectSettings();
+  connectNotifiers();
 }
 
 void
-MainWindow::setupConnections()
+MainWindow::setupShortcuts()
 {
-  // ########## Menubar ########## //
-  connect(ui->actionExit, &QAction::triggered, this, &QApplication::exit);
-  connect(ui->actionPereferences,
-          &QAction::triggered,
+  m_shortcutHandler->createShortcuts(this);
+  for (const auto& connection : {
+         make_pair(&ShortcutHandler::toggleMenubar, &MainWindow::toggleMenubar),
+         make_pair(&ShortcutHandler::toggleNavDock, &MainWindow::toggleNavDock),
+         make_pair(&ShortcutHandler::nextVerse, &MainWindow::nextVerse),
+         make_pair(&ShortcutHandler::prevVerse, &MainWindow::prevVerse),
+         make_pair(&ShortcutHandler::nextSurah, &MainWindow::nextSurah),
+         make_pair(&ShortcutHandler::prevSurah, &MainWindow::prevSurah),
+         make_pair(&ShortcutHandler::nextJuz, &MainWindow::nextJuz),
+         make_pair(&ShortcutHandler::prevJuz, &MainWindow::prevJuz),
+         make_pair(&ShortcutHandler::bookmarkCurrent,
+                   &MainWindow::bookmarkCurrent),
+         make_pair(&ShortcutHandler::openDownloads,
+                   &MainWindow::actionDMTriggered),
+         make_pair(&ShortcutHandler::openBookmarks,
+                   &MainWindow::actionBookmarksTriggered),
+         make_pair(&ShortcutHandler::openKhatmah,
+                   &MainWindow::actionKhatmahTriggered),
+         make_pair(&ShortcutHandler::openSearch,
+                   &MainWindow::actionSearchTriggered),
+         make_pair(&ShortcutHandler::openSettings,
+                   &MainWindow::actionPrefTriggered),
+         make_pair(&ShortcutHandler::openContent,
+                   &MainWindow::actionTafsirTriggered),
+         make_pair(&ShortcutHandler::openAdvancedCopy,
+                   &MainWindow::actionAdvancedCopyTriggered),
+       }) {
+    connect(
+      m_shortcutHandler.data(), connection.first, this, connection.second);
+  }
+}
+
+void
+MainWindow::connectPlayer()
+{
+  connect(m_player,
+          &VersePlayer::missingVerseFile,
           this,
-          &MainWindow::actionPrefTriggered);
-  connect(ui->actionDownloadManager,
-          &QAction::triggered,
+          &MainWindow::missingRecitationFileWarn);
+  connect(m_player,
+          &QMediaPlayer::playbackStateChanged,
           this,
-          &MainWindow::actionDMTriggered);
-  connect(ui->actionFind,
-          &QAction::triggered,
+          &MainWindow::updateTrayTooltip);
+  connect(m_player,
+          &QMediaPlayer::mediaStatusChanged,
           this,
-          &MainWindow::actionSearchTriggered);
-  connect(ui->actionTafsir,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionTafsirTriggered);
-  connect(ui->actionVOTD,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionVotdTriggered);
-  connect(ui->actionAdvancedCopy,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionAdvancedCopyTriggered);
-  connect(ui->actionBookmarks,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionBookmarksTriggered);
-  connect(ui->actionKhatmah,
-          &QAction::triggered,
-          this,
-          &MainWindow::actionKhatmahTriggered);
-  connect(ui->actionAboutQC,
-          &QAction::triggered,
+          &MainWindow::mediaStatusChanged);
+}
+
+void
+MainWindow::connectTray()
+{
+  connect(m_systemTray, &SystemTray::exit, this, &QApplication::exit);
+  connect(m_systemTray,
+          &SystemTray::togglePlayback,
+          m_playerControls,
+          &PlayerControls::togglePlayback);
+  connect(m_systemTray, &SystemTray::showWindow, this, &MainWindow::show);
+  connect(m_systemTray, &SystemTray::hideWindow, this, &MainWindow::hide);
+  connect(m_systemTray,
+          &SystemTray::checkForUpdates,
+          m_versionChecker,
+          &VersionChecker::checkUpdates);
+  connect(m_systemTray,
+          &SystemTray::openAbout,
           this,
           &MainWindow::actionAboutTriggered);
-  connect(ui->actionUpdates,
-          &QAction::triggered,
+  connect(m_systemTray,
+          &SystemTray::openPrefs,
           this,
-          &MainWindow::actionUpdatesTriggered);
+          &MainWindow::actionPrefTriggered);
+}
 
+void
+MainWindow::connectReader()
+{
+  connect(m_verseDlg,
+          &VerseDialog::navigateToVerse,
+          m_reader,
+          &QuranReader::navigateToVerse);
+  connect(m_reader,
+          &QuranReader::copyVerseText,
+          m_cpyDlg,
+          &CopyDialog::copyVerseText);
+  connect(m_reader,
+          &QuranReader::showVerseTafsir,
+          m_contentDlg,
+          &ContentDialog::showVerseTafsir);
+  connect(m_reader,
+          &QuranReader::showVerseTranslation,
+          m_contentDlg,
+          &ContentDialog::showVerseTranslation);
+  connect(m_reader,
+          &QuranReader::showVerseThoughts,
+          m_contentDlg,
+          &ContentDialog::showVerseThoughts);
+  connect(m_reader,
+          &QuranReader::showBetaqa,
+          m_betaqaViewer,
+          &BetaqaViewer::showSurah);
+  connect(m_contentDlg,
+          &ContentDialog::missingTafsir,
+          this,
+          &MainWindow::missingTafsir);
+  connect(m_contentDlg,
+          &ContentDialog::missingTranslation,
+          this,
+          &MainWindow::missingTranslation);
+}
+
+void
+MainWindow::connectControls()
+{
   // ########## page controls ########## //
   connect(ui->cmbPage,
           &QComboBox::currentIndexChanged,
@@ -264,7 +285,6 @@ MainWindow::setupConnections()
           &PlayerControls::currentSurahChanged,
           this,
           &MainWindow::currentSurahChanged);
-
   // ########## navigation dock ########## //
   connect(ui->lineEditSearchSurah,
           &QLineEdit::textChanged,
@@ -274,60 +294,11 @@ MainWindow::setupConnections()
           &QListView::clicked,
           this,
           &MainWindow::listSurahNameClicked);
+}
 
-  // ########## system tray ########## //
-  connect(m_systemTray, &SystemTray::exit, this, &QApplication::exit);
-  connect(m_systemTray,
-          &SystemTray::togglePlayback,
-          m_playerControls,
-          &PlayerControls::togglePlayback);
-  connect(m_systemTray, &SystemTray::showWindow, this, &MainWindow::show);
-  connect(m_systemTray, &SystemTray::hideWindow, this, &MainWindow::hide);
-  connect(m_systemTray,
-          &SystemTray::checkForUpdates,
-          m_versionChecker,
-          &VersionChecker::checkUpdates);
-  connect(m_systemTray,
-          &SystemTray::openAbout,
-          this,
-          &MainWindow::actionAboutTriggered);
-  connect(m_systemTray,
-          &SystemTray::openPrefs,
-          this,
-          &MainWindow::actionPrefTriggered);
-
-  // ########## Notification Popup ########## //
-  connect(ui->sideDock,
-          &QDockWidget::dockLocationChanged,
-          m_popup,
-          &NotificationPopup::setDockArea);
-  connect(m_jobMgr,
-          &JobManager::jobCompleted,
-          m_popup,
-          &NotificationPopup::completedDownload);
-  connect(m_jobMgr,
-          &JobManager::jobFailed,
-          m_popup,
-          &NotificationPopup::downloadError);
-  connect(m_versionChecker,
-          &VersionChecker::versionFound,
-          m_popup,
-          &NotificationPopup::checkUpdate);
-  connect(m_cpyDlg,
-          &CopyDialog::verseCopied,
-          m_popup,
-          &NotificationPopup::copiedToClipboard);
-  connect(m_bookmarksDb.data(),
-          &BookmarksDb::bookmarkAdded,
-          m_popup,
-          &NotificationPopup::bookmarkAdded);
-  connect(m_bookmarksDb.data(),
-          &BookmarksDb::bookmarkRemoved,
-          m_popup,
-          &NotificationPopup::bookmarkRemoved);
-
-  // ########## Settings Dialog ########## //
-  // Restart signal
+void
+MainWindow::connectSettings()
+{
   connect(
     m_settingsDlg, &SettingsDialog::restartApp, this, &MainWindow::restartApp);
   // qcf2 missing files warning
@@ -373,56 +344,46 @@ MainWindow::setupConnections()
           &SettingsDialog::shortcutChanged,
           m_shortcutHandler.data(),
           &ShortcutHandler::shortcutChanged);
+}
 
-  connect(m_player,
-          &VersePlayer::missingVerseFile,
-          this,
-          &MainWindow::missingRecitationFileWarn);
-  connect(m_player,
-          &QMediaPlayer::playbackStateChanged,
-          this,
-          &MainWindow::updateTrayTooltip);
-  connect(m_player,
-          &QMediaPlayer::mediaStatusChanged,
-          this,
-          &MainWindow::mediaStatusChanged);
-
+void
+MainWindow::connectMenubar()
+{
+  connect(ui->actionExit, &QAction::triggered, this, &QApplication::exit);
   connect(ui->actionReaderViewToggle,
           &QAction::triggered,
           m_reader,
           &QuranReader::toggleReaderView);
-  connect(m_verseDlg,
-          &VerseDialog::navigateToVerse,
-          m_reader,
-          &QuranReader::navigateToVerse);
-  connect(m_reader,
-          &QuranReader::copyVerseText,
-          m_cpyDlg,
-          &CopyDialog::copyVerseText);
-  connect(m_reader,
-          &QuranReader::showVerseTafsir,
-          m_contentDlg,
-          &ContentDialog::showVerseTafsir);
-  connect(m_reader,
-          &QuranReader::showVerseTranslation,
-          m_contentDlg,
-          &ContentDialog::showVerseTranslation);
-  connect(m_reader,
-          &QuranReader::showVerseThoughts,
-          m_contentDlg,
-          &ContentDialog::showVerseThoughts);
-  connect(m_reader,
-          &QuranReader::showBetaqa,
-          m_betaqaViewer,
-          &BetaqaViewer::showSurah);
-  connect(m_contentDlg,
-          &ContentDialog::missingTafsir,
-          this,
-          &MainWindow::missingTafsir);
-  connect(m_contentDlg,
-          &ContentDialog::missingTranslation,
-          this,
-          &MainWindow::missingTranslation);
+  for (const auto& connection : {
+         make_pair(ui->actionPereferences, &MainWindow::actionPrefTriggered),
+         make_pair(ui->actionDownloadManager, &MainWindow::actionDMTriggered),
+         make_pair(ui->actionFind, &MainWindow::actionSearchTriggered),
+         make_pair(ui->actionTafsir, &MainWindow::actionTafsirTriggered),
+         make_pair(ui->actionVOTD, &MainWindow::actionVotdTriggered),
+         make_pair(ui->actionBookmarks, &MainWindow::actionBookmarksTriggered),
+         make_pair(ui->actionKhatmah, &MainWindow::actionKhatmahTriggered),
+         make_pair(ui->actionAboutQC, &MainWindow::actionAboutTriggered),
+         make_pair(ui->actionUpdates, &MainWindow::actionUpdatesTriggered),
+         make_pair(ui->actionImport, &MainWindow::importUserData),
+         make_pair(ui->actionExport, &MainWindow::exportUserData),
+         make_pair(ui->actionAdvancedCopy,
+                   &MainWindow::actionAdvancedCopyTriggered),
+       }) {
+    connect(connection.first, &QAction::triggered, this, connection.second);
+  }
+}
+
+void
+MainWindow::connectNotifiers()
+{
+  m_popup->registerSender((NotificationSender*)(m_jobMgr->notifier()));
+  m_popup->registerSender((NotificationSender*)(m_versionChecker->notifier()));
+  m_popup->registerSender((NotificationSender*)(m_cpyDlg->notifier()));
+  m_popup->registerSender((NotificationSender*)(m_bookmarksDb->notifier()));
+  connect(ui->sideDock,
+          &QDockWidget::dockLocationChanged,
+          m_popup,
+          &NotificationPopup::setDockArea);
 }
 
 void
@@ -641,7 +602,7 @@ MainWindow::updateTrayTooltip(QMediaPlayer::PlaybackState state)
 }
 
 void
-MainWindow::addCurrentToBookmarks()
+MainWindow::bookmarkCurrent()
 {
   if (!m_bookmarksDb->isBookmarked(*m_currVerse))
     m_bookmarksDb->addBookmark(*m_currVerse, false);
@@ -876,6 +837,22 @@ void
 MainWindow::toggleNavDock()
 {
   ui->sideDock->toggleViewAction()->toggle();
+}
+
+void
+MainWindow::importUserData()
+{
+  QString path = m_selectorDlg->selectJson(FileSelector::Read);
+  if (!path.isEmpty())
+    m_importExportDlg->selectImports(path);
+}
+
+void
+MainWindow::exportUserData()
+{
+  QString path = m_selectorDlg->selectJson(FileSelector::Write);
+  if (!path.isEmpty())
+    m_importExportDlg->selectExports(path);
 }
 
 void

@@ -152,7 +152,7 @@ private slots:
   /**
    * @brief adds the current ::Verse to the bookmarks
    */
-  void addCurrentToBookmarks();
+  void bookmarkCurrent();
   /**
    * @brief actionUpdatesTriggered
    */
@@ -246,6 +246,8 @@ private slots:
    * @brief toggles visiblity of the navigation dock
    */
   void toggleNavDock();
+  void importUserData();
+  void exportUserData();
 
 private:
   Ui::MainWindow* ui;
@@ -279,6 +281,13 @@ private:
    * shortcuts
    */
   void setupConnections();
+  void connectPlayer();
+  void connectTray();
+  void connectReader();
+  void connectControls();
+  void connectSettings();
+  void connectMenubar();
+  void connectNotifiers();
   /**
    * @brief initialize the surahs QListView in the side dock and select the
    * current verse's surah
@@ -403,6 +412,9 @@ private:
    * @brief pointer to the votd dialog
    */
   QPointer<VerseDialog> m_verseDlg;
+  QPointer<FileSelector> m_selectorDlg;
+  QPointer<ImportExportDialog> m_importExportDlg;
+
   /**
    * @brief pointer to the QProcess instance of the maintainence tool that
    * checks for updates

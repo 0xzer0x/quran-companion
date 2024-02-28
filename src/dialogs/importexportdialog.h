@@ -21,15 +21,15 @@ public:
     Export
   };
   explicit ImportExportDialog(QWidget* parent,
-                              QPointer<UserDataImporter> importer,
-                              QPointer<UserDataExporter> exporter);
+                              QSharedPointer<UserDataImporter> importer,
+                              QSharedPointer<UserDataExporter> exporter);
   ~ImportExportDialog();
 
   void selectImports(QString filepath);
   void selectExports(QString filepath);
 
-  void setImporter(QPointer<UserDataImporter> newImporter);
-  void setExporter(QPointer<UserDataExporter> newExporter);
+  void setImporter(QSharedPointer<UserDataImporter> newImporter);
+  void setExporter(QSharedPointer<UserDataExporter> newExporter);
 
 private slots:
   void dialogButtonClicked(QAbstractButton* btn);
@@ -43,8 +43,8 @@ private:
   void setCheckedExports();
   void importSelected() const;
   void exportSelected() const;
-  QPointer<UserDataImporter> m_importer;
-  QPointer<UserDataExporter> m_exporter;
+  QSharedPointer<UserDataImporter> m_importer;
+  QSharedPointer<UserDataExporter> m_exporter;
   Mode m_mode;
 };
 
