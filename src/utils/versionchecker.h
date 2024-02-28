@@ -7,30 +7,31 @@
 #include <QObject>
 #include <QPointer>
 #include <QProcess>
+#include <interfaces/notificationsender.h>
+#include <notifiers/updatenotifier.h>
 
 class VersionChecker : public QObject
 {
   Q_OBJECT
 public:
   explicit VersionChecker(QObject* parent = nullptr);
+  const UpdateNotifier* notifier() const;
 
 public slots:
   void checkUpdates();
-
-signals:
-  void versionFound(QString version);
 
 private slots:
   void handleToolOutput();
   void handleReply(QPointer<QNetworkReply> reply);
 
 private:
-  void getLatestVersion();
   bool toolExists();
-  QNetworkAccessManager m_netMgr;
-  QString m_updateTool;
+  void getLatestVersion();
   QProcess m_runner;
+  QString m_updateTool;
   QNetworkRequest m_versionReq;
+  QNetworkAccessManager m_netMgr;
+  UpdateNotifier m_notifier;
 };
 
 #endif // VERSIONCHECKER_H

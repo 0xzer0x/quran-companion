@@ -3,6 +3,7 @@
 
 JobManager::JobManager(QObject* parent)
   : QObject(parent)
+  , m_notifier(this)
 {
 }
 
@@ -110,12 +111,14 @@ JobManager::handleProgressed()
 void
 JobManager::handleFailed()
 {
+  m_notifier.notifyFailed(m_active.data());
   emit jobFailed(m_active);
 }
 
 void
 JobManager::handleCompleted()
 {
+  m_notifier.notifyCompleted(m_active.data());
   emit jobCompleted(m_active);
 }
 
@@ -135,4 +138,10 @@ QSharedPointer<DownloadJob>
 JobManager::active() const
 {
   return m_active;
+}
+
+const JobNotifier*
+JobManager::notifier() const
+{
+  return &m_notifier;
 }

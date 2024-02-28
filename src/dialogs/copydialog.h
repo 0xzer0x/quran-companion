@@ -6,6 +6,7 @@
 #include <QIntValidator>
 #include <QMessageBox>
 #include <QPointer>
+#include <notifiers/copynotifier.h>
 #include <types/verse.h>
 
 namespace Ui {
@@ -15,12 +16,12 @@ class CopyDialog;
 class CopyDialog : public QDialog
 {
   Q_OBJECT
-
 public:
   explicit CopyDialog(QWidget* parent);
   ~CopyDialog();
 
   void show();
+  const CopyNotifier* notifier() const;
 
 public slots:
   /**
@@ -29,20 +30,18 @@ public slots:
    */
   void copyVerseText(const Verse v);
 
-signals:
-  void verseCopied();
-  void rangeCopied();
-
 protected:
   void closeEvent(QCloseEvent* event);
+
+private slots:
+  void copyRange();
 
 private:
   Ui::CopyDialog* ui;
   QSharedPointer<Verse> m_currVerse = Verse::current();
   QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  void copyRange();
-
   QPointer<QIntValidator> m_verseValidator;
+  CopyNotifier m_notifier;
 };
 
 #endif // COPYDIALOG_H

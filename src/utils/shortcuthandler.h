@@ -64,7 +64,7 @@ signals:
   void openDownloads();
   void openSearch();
   void openSettings();
-  void openTafsir();
+  void openContent();
   void openAdvancedCopy();
 
 private:

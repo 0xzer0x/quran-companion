@@ -12,6 +12,7 @@ BookmarksDb::current()
 
 BookmarksDb::BookmarksDb()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "BookmarksCon"))
+  , m_notifier(this)
 {
   BookmarksDb::open();
   QSqlQuery dbQuery(*this);
@@ -239,7 +240,7 @@ BookmarksDb::addBookmark(const Verse& verse, bool silent)
 
   commit();
   if (!silent)
-    emit bookmarkAdded();
+    m_notifier.notifyAdded();
   return true;
 }
 
@@ -259,7 +260,7 @@ BookmarksDb::removeBookmark(const Verse& verse, bool silent)
   }
 
   if (!silent)
-    emit bookmarkRemoved();
+    m_notifier.notifyRemoved();
   return true;
 }
 
@@ -326,4 +327,10 @@ int
 BookmarksDb::activeKhatmah() const
 {
   return m_activeKhatmah;
+}
+
+const BookmarksNotifier*
+BookmarksDb::notifier() const
+{
+  return &m_notifier;
 }

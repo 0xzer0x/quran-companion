@@ -5,6 +5,7 @@
 
 VersionChecker::VersionChecker(QObject* parent)
   : QObject(parent)
+  , m_notifier(this)
   , m_updateTool(QApplication::applicationDirPath() + QDir::separator() +
                  "QCMaintenanceTool.exe")
 {
@@ -54,8 +55,14 @@ VersionChecker::handleReply(QPointer<QNetworkReply> reply)
 {
   int status =
     reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-  if (status == 200)
-    emit versionFound(reply->readAll().trimmed());
+  if (status != 200)
+    return;
+
+  QString version(reply->readAll().trimmed());
+  if (qApp->applicationVersion() == version)
+    m_notifier.notifyLatest();
+  else
+    m_notifier.notifyUpdate(version);
 }
 
 void
@@ -69,4 +76,10 @@ bool
 VersionChecker::toolExists()
 {
   return QFileInfo::exists(m_updateTool);
+}
+
+const UpdateNotifier*
+VersionChecker::notifier() const
+{
+  return &m_notifier;
 }

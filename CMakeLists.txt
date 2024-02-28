@@ -92,6 +92,15 @@ set(PROJECT_SOURCES
     src/interfaces/downloadjob.h
     src/interfaces/downloadtask.h
     src/interfaces/dbconnection.h
+    src/interfaces/notificationsender.h
+    src/notifiers/bookmarksnotifier.h
+    src/notifiers/bookmarksnotifier.cpp
+    src/notifiers/updatenotifier.h
+    src/notifiers/updatenotifier.cpp
+    src/notifiers/copynotifier.h
+    src/notifiers/copynotifier.cpp
+    src/notifiers/jobnotifier.h
+    src/notifiers/jobnotifier.cpp
     src/utils/settings.h
     src/utils/settings.cpp
     src/utils/shortcuthandler.h

@@ -5,6 +5,7 @@
 #include <QQueue>
 #include <QSharedPointer>
 #include <interfaces/downloadjob.h>
+#include <notifiers/jobnotifier.h>
 
 class JobManager : public QObject
 {
@@ -18,6 +19,7 @@ public:
 
   bool isOn() const;
   QSharedPointer<DownloadJob> active() const;
+  const JobNotifier* notifier() const;
 
 public slots:
   void processJobs();
@@ -41,6 +43,7 @@ private:
   void disconnectActive();
   QQueue<QSharedPointer<DownloadJob>> m_queue;
   QSharedPointer<DownloadJob> m_active;
+  JobNotifier m_notifier;
   bool m_isOn = false;
 };
 

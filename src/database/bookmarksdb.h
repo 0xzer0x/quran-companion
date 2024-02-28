@@ -7,6 +7,7 @@
 #include <QSqlDatabase>
 #include <database/qurandb.h>
 #include <interfaces/dbconnection.h>
+#include <notifiers/bookmarksnotifier.h>
 #include <types/verse.h>
 #include <utils/dirmanager.h>
 #include <utils/settings.h>
@@ -15,7 +16,6 @@ class BookmarksDb
   : public DbConnection
   , QSqlDatabase
 {
-  Q_OBJECT
 public:
   static QSharedPointer<BookmarksDb> current();
   BookmarksDb();
@@ -112,15 +112,13 @@ public:
    */
   void setActiveKhatmah(const int id);
   int activeKhatmah() const;
-
-signals:
-  void bookmarkAdded();
-  void bookmarkRemoved();
+  const BookmarksNotifier* notifier() const;
 
 private:
   const QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
   const QSharedPointer<QSettings> m_settings = Settings::settings;
   const QSharedPointer<QDir> m_configDir = DirManager::configDir;
+  BookmarksNotifier m_notifier;
   /**
    * @brief integer id of the current active khatmah
    */

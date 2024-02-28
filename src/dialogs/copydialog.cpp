@@ -5,6 +5,7 @@ CopyDialog::CopyDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::CopyDialog)
   , m_verseValidator(new QIntValidator(this))
+  , m_notifier(this)
 {
   ui->setupUi(this);
   ui->cmbCopyFrom->setValidator(m_verseValidator);
@@ -25,7 +26,7 @@ CopyDialog::copyVerseText(const Verse v)
   text += ' ';
   text += "[" + m_quranDb->surahNames().at(v.surah() - 1) + ":" + vNum + "]";
   clip->setText(text);
-  emit verseCopied();
+  m_notifier.copied();
 }
 
 void
@@ -51,7 +52,7 @@ CopyDialog::copyRange()
 
   final += "} [" + m_quranDb->surahNames().at(m_currVerse->surah() - 1) + "]";
   clip->setText(final);
-  emit rangeCopied();
+  m_notifier.copied();
 }
 
 void
@@ -72,6 +73,12 @@ CopyDialog::show()
   m_verseValidator->setTop(m_currVerse->surahCount());
 
   QDialog::show();
+}
+
+const CopyNotifier*
+CopyDialog::notifier() const
+{
+  return &m_notifier;
 }
 
 void

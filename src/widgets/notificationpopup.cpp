@@ -58,83 +58,25 @@ NotificationPopup::setupConnections()
 }
 
 void
+NotificationPopup::registerSender(NotificationSender* sender)
+{
+  connect(
+    sender, &NotificationSender::notify, this, &NotificationPopup::notify);
+}
+
+void
+NotificationPopup::setStyle(NotificationType type)
+{
+  if (type == NotificationSender::fail)
+    setStyleSheet("QFrame#Popup { background-color: #a50500 }");
+  else
+    setStyleSheet("");
+}
+
+void
 NotificationPopup::setDockArea(Qt::DockWidgetArea dockPos)
 {
   m_dockArea = dockPos;
-}
-
-void
-NotificationPopup::notify(QString message, NotificationPopup::Action icon)
-{
-  QFontMetrics fm(m_textWidget->fontMetrics());
-  m_textWidget->setText(message);
-  setNotificationIcon(icon);
-
-  resize(fm.size(Qt::TextSingleLine, message).width() + 50, 40);
-  adjustLocation();
-  move(m_notificationPos);
-  this->show();
-
-  if (m_fadeoutAnim->state() == QAbstractAnimation::Running)
-    m_fadeoutAnim->stop();
-  m_opacityEffect->setOpacity(1);
-  m_notificationPeriod.start();
-}
-
-void
-NotificationPopup::completedDownload(QSharedPointer<DownloadJob> job)
-{
-  setStyleSheet("");
-  QString msg = tr("Download Completed") + ": " + job->name();
-  this->notify(msg, success);
-}
-
-void
-NotificationPopup::downloadError(QSharedPointer<DownloadJob> job)
-{
-  setStyleSheet("QFrame#Popup { background-color: #a50500 }");
-  QString msg = tr("Download Failed") + ": " + job->name();
-  this->notify(msg, fail);
-}
-
-void
-NotificationPopup::bookmarkAdded()
-{
-  setStyleSheet("");
-  QString msg = tr("Verse added to bookmarks");
-  this->notify(msg, bookmarkAdd);
-}
-
-void
-NotificationPopup::bookmarkRemoved()
-{
-  setStyleSheet("");
-  QString msg = tr("Verse removed from bookmarks");
-  this->notify(msg, bookmarkRemove);
-}
-
-void
-NotificationPopup::copiedToClipboard()
-{
-  setStyleSheet("");
-  QString msg = tr("Verse text copied to clipboard");
-  this->notify(msg, copiedText);
-}
-
-void
-NotificationPopup::checkUpdate(QString appVer)
-{
-  if (appVer.isEmpty())
-    return;
-
-  QString msg;
-  if (qApp->applicationVersion() == appVer) {
-    msg = tr("You are running the latest version");
-    this->notify(msg, success);
-  } else {
-    msg = tr("Update available") + ": " + appVer;
-    this->notify(msg, updateInfo);
-  }
 }
 
 void
@@ -156,37 +98,55 @@ NotificationPopup::adjustLocation()
 }
 
 void
-NotificationPopup::setNotificationIcon(Action icon)
+NotificationPopup::setNotificationIcon(NotificationType type)
 {
   QString ico;
   int faStyle = fa_solid;
-  switch (icon) {
-    case NotificationPopup::info:
+  switch (type) {
+    case NotificationSender::info:
       ico = fa_info_circle;
       break;
-    case NotificationPopup::success:
+    case NotificationSender::success:
       ico = fa_check_circle;
       break;
-    case NotificationPopup::fail:
+    case NotificationSender::fail:
       ico = fa_xmark_circle;
       break;
-    case NotificationPopup::bookmarkAdd:
+    case NotificationSender::bookmarkAdd:
       ico = fa_bookmark;
       break;
-    case NotificationPopup::bookmarkRemove:
+    case NotificationSender::bookmarkRemove:
       ico = fa_bookmark;
       faStyle = fa_regular;
       break;
-    case NotificationPopup::copiedText:
+    case NotificationSender::copiedText:
       ico = fa_clipboard;
       break;
-    case NotificationPopup::updateInfo:
+    case NotificationSender::updateInfo:
       ico = fa_circle_up;
       break;
   }
 
   m_iconWidget->setFont(StyleManager::awesome->font(faStyle, 18));
   m_iconWidget->setText(ico);
+}
+
+void
+NotificationPopup::notify(NotificationType type, QString message)
+{
+  QFontMetrics fm(m_textWidget->fontMetrics());
+  m_textWidget->setText(message);
+  setNotificationIcon(type);
+
+  resize(fm.size(Qt::TextSingleLine, message).width() + 50, 40);
+  adjustLocation();
+  move(m_notificationPos);
+  this->show();
+
+  if (m_fadeoutAnim->state() == QAbstractAnimation::Running)
+    m_fadeoutAnim->stop();
+  m_opacityEffect->setOpacity(1);
+  m_notificationPeriod.start();
 }
 
 QPoint
