@@ -145,7 +145,8 @@ MainWindow::setupShortcuts()
   m_shortcutHandler.createShortcuts(this);
   connect(
     &m_shortcutHandler, &ShortcutHandler::togglePlayerControls, this, [this]() {
-      actionPlayerControlsToggled(!m_playerControls->isVisible());
+      ui->actionPlayerControls->setChecked(
+        !ui->actionPlayerControls->isChecked());
     });
 
   for (const auto& connection : {
