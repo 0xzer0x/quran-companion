@@ -18,7 +18,7 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, JobManager* manager)
   , m_quranDb(QuranDb::getInstance())
   , m_reciters(Reciter::reciters)
   , m_tafasir(Tafsir::tafasir)
-    , m_translations(Translation::translations)
+  , m_translations(Translation::translations)
 
 {
   ui->setupUi(this);
@@ -127,7 +127,7 @@ DownloaderDialog::populateTreeModel()
   m_treeModel.invisibleRootItem()->appendRow(translation);
   // -- translations
   for (int i = 0; i < m_translations.size(); i++) {
-      const Translation& tr = m_translations.at(i);
+    const Translation& tr = m_translations.at(i);
     if (!tr.isExtra())
       continue;
     QStandardItem* item = new QStandardItem(tr.displayName());
@@ -229,7 +229,7 @@ DownloaderDialog::addTaskProgress(QSharedPointer<DownloadJob> job)
   prgFrm->setObjectName(objName);
 
   QBoxLayout* downInfo;
-  if (m_lang == QLocale::Arabic)
+  if (m_config.language() == QLocale::Arabic)
     downInfo = new QBoxLayout(QBoxLayout::RightToLeft, prgFrm);
   else
     downInfo = new QHBoxLayout(prgFrm);

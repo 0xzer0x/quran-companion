@@ -539,7 +539,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Player Controls</string>
+    <string>Player controls</string>
    </property>
   </action>
  </widget>

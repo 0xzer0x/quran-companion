@@ -687,7 +687,7 @@
     </message>
     <message>
         <location filename="../../src/core/mainwindow.ui" line="542"/>
-        <source>Player Controls</source>
+        <source>Player controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
