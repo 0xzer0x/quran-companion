@@ -678,17 +678,17 @@
     <message>
       <location filename="../../src/core/mainwindow.ui" line="526"/>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>استيراد</translation>
     </message>
     <message>
       <location filename="../../src/core/mainwindow.ui" line="531"/>
       <source>Export</source>
-      <translation type="unfinished">Export</translation>
+      <translation>تصدير</translation>
     </message>
     <message>
       <location filename="../../src/core/mainwindow.ui" line="542"/>
       <source>Player controls</source>
-      <translation type="unfinished">Player controls</translation>
+      <translation>التحكم بالمشغل</translation>
     </message>
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="75"/>
@@ -725,7 +725,7 @@
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="660"/>
       <source>The selected translation is missing, would you like to download it?</source>
-      <translation type="unfinished">The selected translation is missing, would you like to download it?</translation>
+      <translation>الترجمة المحددة مفقود، هل ترغب في تحميله؟</translation>
     </message>
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="676"/>
@@ -891,12 +891,12 @@
     <message>
       <location filename="../../src/notifiers/bookmarksnotifier.cpp" line="11"/>
       <source>Verse added to bookmarks</source>
-      <translation type="unfinished">Verse added to bookmarks</translation>
+      <translation>تم إضافة علامة</translation>
     </message>
     <message>
       <location filename="../../src/notifiers/bookmarksnotifier.cpp" line="18"/>
       <source>Verse removed from bookmarks</source>
-      <translation type="unfinished">Verse removed from bookmarks</translation>
+      <translation>تم إزالة العلامة</translation>
     </message>
   </context>
   <context>
@@ -904,7 +904,7 @@
     <message>
       <location filename="../../src/dialogs/contentdialog.ui" line="14"/>
       <source>Content</source>
-      <translation type="unfinished">Content</translation>
+      <translation>المحتوى</translation>
     </message>
     <message>
       <location filename="../../src/dialogs/contentdialog.ui" line="42"/>
@@ -919,7 +919,7 @@
     <message>
       <location filename="../../src/dialogs/contentdialog.ui" line="52"/>
       <source>Thoughts</source>
-      <translation type="unfinished">Thoughts</translation>
+      <translation>خواطر</translation>
     </message>
     <message>
       <location filename="../../src/dialogs/contentdialog.ui" line="146"/>
@@ -990,7 +990,7 @@
     <message>
       <location filename="../../src/notifiers/copynotifier.cpp" line="11"/>
       <source>Verse text copied to clipboard</source>
-      <translation type="unfinished">Verse text copied to clipboard</translation>
+      <translation>تم نسخ نص الآية إلى الحافظة</translation>
     </message>
   </context>
   <context>
@@ -1090,7 +1090,7 @@
     <message>
       <location filename="../../src/dialogs/importexportdialog.ui" line="26"/>
       <source>Data Selection</source>
-      <translation type="unfinished">Data Selection</translation>
+      <translation>اختيار البيانات</translation>
     </message>
     <message>
       <location filename="../../src/dialogs/importexportdialog.ui" line="35"/>
@@ -1105,23 +1105,23 @@
     <message>
       <location filename="../../src/dialogs/importexportdialog.ui" line="101"/>
       <source>Thoughts</source>
-      <translation type="unfinished">Thoughts</translation>
+      <translation>خواطر</translation>
     </message>
     <message>
       <location filename="../../src/dialogs/importexportdialog.cpp" line="128"/>
       <source>The following error occured during import</source>
-      <translation type="unfinished">The following error occured during import</translation>
+      <translation>حدث الخطأ التالي أثناء الاستيراد</translation>
     </message>
     <message>
       <location filename="../../src/dialogs/importexportdialog.cpp" line="129"/>
       <location filename="../../src/dialogs/importexportdialog.cpp" line="137"/>
       <source>Error</source>
-      <translation type="unfinished">Error</translation>
+      <translation>خطأ</translation>
     </message>
     <message>
       <location filename="../../src/dialogs/importexportdialog.cpp" line="136"/>
       <source>The following error occured during export</source>
-      <translation type="unfinished">The following error occured during export</translation>
+      <translation>حدث الخطأ التالي أثناء التصدير</translation>
     </message>
   </context>
   <context>
@@ -1198,12 +1198,12 @@
     <message>
       <location filename="../../src/dialogs/fileselector.cpp" line="29"/>
       <source>Open File</source>
-      <translation type="unfinished">Open File</translation>
+      <translation>فتح ملف</translation>
     </message>
     <message>
       <location filename="../../src/dialogs/fileselector.cpp" line="32"/>
       <source>Save File</source>
-      <translation type="unfinished">Save File</translation>
+      <translation>حفظ الملف</translation>
     </message>
   </context>
   <context>
@@ -1246,7 +1246,7 @@
     <message>
       <location filename="../../src/widgets/quranpagebrowser.cpp" line="375"/>
       <source>Thoughts</source>
-      <translation type="unfinished">Thoughts</translation>
+      <translation>خواطر</translation>
     </message>
     <message>
       <location filename="../../src/widgets/quranpagebrowser.cpp" line="376"/>
@@ -1416,12 +1416,12 @@
     <message>
       <location filename="../../src/notifiers/updatenotifier.cpp" line="8"/>
       <source>Update available</source>
-      <translation type="unfinished">Update available</translation>
+      <translation>تحديث متاح</translation>
     </message>
     <message>
       <location filename="../../src/notifiers/updatenotifier.cpp" line="15"/>
       <source>You are running the latest version</source>
-      <translation type="unfinished">You are running the latest version</translation>
+      <translation>لديك أحدث إصدار</translation>
     </message>
   </context>
   <context>
@@ -1437,22 +1437,22 @@
     <message>
       <location filename="../../src/utils/versionchecker.cpp" line="42"/>
       <source>There are currently no updates available.</source>
-      <translation type="unfinished">There are currently no updates available.</translation>
+      <translation>لا يوجد تحديثات متوفرة حاليا.</translation>
     </message>
     <message>
       <location filename="../../src/utils/versionchecker.cpp" line="43"/>
       <source>Update info</source>
-      <translation type="unfinished">Update info</translation>
+      <translation>معلومات التحديث</translation>
     </message>
     <message>
       <location filename="../../src/utils/versionchecker.cpp" line="45"/>
       <source>Updates available, do you want to open the update tool?</source>
-      <translation type="unfinished">Updates available, do you want to open the update tool?</translation>
+      <translation>هناك تحديثات متاحة، هل تود تشغيل مدير التحديثات؟</translation>
     </message>
     <message>
       <location filename="../../src/utils/versionchecker.cpp" line="47"/>
       <source>Updates info</source>
-      <translation type="unfinished">Updates info</translation>
+      <translation>معلومات التحديث</translation>
     </message>
   </context>
 </TS>
