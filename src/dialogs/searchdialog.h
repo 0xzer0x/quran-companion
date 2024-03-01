@@ -97,9 +97,9 @@ private slots:
 
 private:
   Ui::SearchDialog* ui;
-  const QLocale::Language m_lang = Settings::language;
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QSharedPointer<GlyphsDb> m_glyphsDb = GlyphsDb::current();
+  const Configuration& m_config;
+  const QuranDb& m_quranDb;
+  const GlyphsDb& m_glyphsDb;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
@@ -132,11 +132,6 @@ private:
    * @brief Current search text.
    */
   QString m_searchText;
-  /**
-   * @brief QStringList for the surah names which are displayed above search
-   * results and in the QListView.
-   */
-  QStringList m_surahNames;
   /**
    * @brief Model for the QListView that shows all surahs to select from.
    */

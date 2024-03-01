@@ -190,13 +190,20 @@ private slots:
    */
   void actionSearchTriggered();
   /**
+   * @brief actionPlayerControlsToggled
+   * @param checked
+   *
+   * MODIFIED
+   */
+  void actionPlayerControlsToggled(bool checked);
+  /**
    * @brief open the about messagebox for the application
    */
   void actionAboutTriggered();
   /**
    * @brief open the about messagebox for Qt
    */
-  void on_actionAboutQt_triggered();
+  void actionAboutQttriggered();
   /**
    * @brief move to the next ::Verse relative to m_currVerse
    */
@@ -251,15 +258,14 @@ private slots:
 
 private:
   Ui::MainWindow* ui;
-  QSharedPointer<Verse> m_currVerse = Verse::current();
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
-  QSharedPointer<TranslationDb> m_translationDb = TranslationDb::current();
-  QSharedPointer<ShortcutHandler> m_shortcutHandler =
-    ShortcutHandler::current();
-  QSharedPointer<QSettings> m_settings = Settings::settings;
-  const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
-  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
+  Verse& m_currVerse;
+  Configuration& m_config;
+  ShortcutHandler& m_shortcutHandler;
+  BookmarksDb& m_bookmarksDb;
+  const QuranDb& m_quranDb;
+  const TranslationDb& m_translationDb;
+  const QList<Reciter>& m_reciters;
+  const QList<Tafsir>& m_tafasir;
   /**
    * @brief initalizes different parts used by the app
    */

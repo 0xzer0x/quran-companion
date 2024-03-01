@@ -30,7 +30,7 @@ protected:
 
 private:
   Ui::BetaqaViewer* ui;
-  QSharedPointer<BetaqatDb> m_betaqatDb = BetaqatDb::current();
+  BetaqatDb& m_betaqatDb;
 
   int m_surah = -1;
   QPointer<QGraphicsDropShadowEffect> m_shadowEffect;

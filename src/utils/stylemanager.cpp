@@ -1,12 +1,20 @@
 #include "stylemanager.h"
-#include "settings.h"
 #include <QApplication>
 #include <QPalette>
 #include <QStyleFactory>
 #include <QXmlStreamReader>
 
-QDir StyleManager::themeResources;
-QSharedPointer<fa::QtAwesome> StyleManager::awesome;
+StyleManager&
+StyleManager::getInstance()
+{
+  static StyleManager stylemanager;
+  return stylemanager;
+}
+
+StyleManager::StyleManager()
+  : m_config(Configuration::getInstance())
+{
+}
 
 void
 StyleManager::loadTheme()
@@ -15,26 +23,23 @@ StyleManager::loadTheme()
 
   QPalette themeColors;
   QFile styles, palette;
-  switch (Settings::themeId) {
+  switch (m_config.themeId()) {
     case 0:
-      themeResources.setPath(":/resources/light/");
-      styles.setFileName(themeResources.filePath("light.qss"));
-      palette.setFileName(themeResources.filePath("light.xml"));
-      Settings::darkMode = false;
+      m_themeResources.setPath(":/resources/light/");
+      styles.setFileName(m_themeResources.filePath("light.qss"));
+      palette.setFileName(m_themeResources.filePath("light.xml"));
       break;
 
     case 1:
-      themeResources.setPath(":/resources/light/");
-      styles.setFileName(themeResources.filePath("sepia.qss"));
-      palette.setFileName(themeResources.filePath("sepia.xml"));
-      Settings::darkMode = false;
+      m_themeResources.setPath(":/resources/light/");
+      styles.setFileName(m_themeResources.filePath("sepia.qss"));
+      palette.setFileName(m_themeResources.filePath("sepia.xml"));
       break;
 
     case 2:
-      themeResources.setPath(":/resources/dark/");
-      styles.setFileName(themeResources.filePath("dark.qss"));
-      palette.setFileName(themeResources.filePath("dark.xml"));
-      Settings::darkMode = true;
+      m_themeResources.setPath(":/resources/dark/");
+      styles.setFileName(m_themeResources.filePath("dark.qss"));
+      palette.setFileName(m_themeResources.filePath("dark.xml"));
       break;
   }
 
@@ -75,6 +80,18 @@ StyleManager::loadTheme()
     styles.close();
   }
 
-  awesome = QSharedPointer<fa::QtAwesome>::create();
-  awesome->initFontAwesome();
+  m_awesome = new fa::QtAwesome(qApp);
+  m_awesome->initFontAwesome();
+}
+
+fa::QtAwesome&
+StyleManager::awesome()
+{
+  return *m_awesome;
+}
+
+const QDir&
+StyleManager::themeResources() const
+{
+  return m_themeResources;
 }

@@ -70,13 +70,9 @@ private slots:
    * @param message - QString of message to show
    * @param icon - NotificationPopup::Action entry
    */
-    void notify(NotificationType icon, QString message);
+  void notify(NotificationType icon, QString message);
 
 private:
-  QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
-  QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
-  QList<QSharedPointer<Translation>>& m_translations =
-    Translation::translations;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

@@ -2,17 +2,19 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
-QSharedPointer<BookmarksDb>
-BookmarksDb::current()
+BookmarksDb&
+BookmarksDb::getInstance()
 {
-  static QSharedPointer<BookmarksDb> bookmarkDb =
-    QSharedPointer<BookmarksDb>::create();
+  static BookmarksDb bookmarkDb;
   return bookmarkDb;
 }
 
 BookmarksDb::BookmarksDb()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "BookmarksCon"))
   , m_notifier(this)
+  , m_config(Configuration::getInstance())
+  , m_configDir(DirManager::getInstance().configDir())
+  , m_quranDb(QuranDb::getInstance())
 {
   BookmarksDb::open();
   QSqlQuery dbQuery(*this);
@@ -32,7 +34,7 @@ BookmarksDb::BookmarksDb()
 void
 BookmarksDb::open()
 {
-  setDatabaseName(m_configDir->absoluteFilePath("bookmarks.db"));
+  setDatabaseName(m_configDir.absoluteFilePath("bookmarks.db"));
   if (!QSqlDatabase::open())
     qFatal("Error opening bookmarks db");
 }

@@ -1,15 +1,18 @@
 #include "tafsirdb.h"
 #include <QSqlQuery>
 
-QSharedPointer<TafsirDb>
-TafsirDb::current()
+TafsirDb&
+TafsirDb::getInstance()
 {
-  static QSharedPointer<TafsirDb> tafsirDb = QSharedPointer<TafsirDb>::create();
-  return tafsirDb;
+  static TafsirDb tadb;
+  return tadb;
 }
 
 TafsirDb::TafsirDb()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "TafsirCon"))
+  , m_config(Configuration::getInstance())
+  , m_dirMgr(DirManager::getInstance())
+  , m_tafasir(Tafsir::tafasir)
 {
   updateLoadedTafsir();
 }
@@ -31,7 +34,7 @@ TafsirDb::type()
 void
 TafsirDb::updateLoadedTafsir()
 {
-  int curr = m_settings->value("Reader/Tafsir").toInt();
+  int curr = m_config.settings().value("Reader/Tafsir").toInt();
   setCurrentTafsir(curr);
 }
 
@@ -40,12 +43,12 @@ TafsirDb::setCurrentTafsir(int idx)
 {
   if (idx < 0 || idx >= m_tafasir.size())
     return false;
-  if (m_currTafsir == m_tafasir[idx])
+  if (m_currTafsir == &m_tafasir[idx])
     return true;
 
-  m_currTafsir = m_tafasir[idx];
+  m_currTafsir = &m_tafasir[idx];
   const QDir& baseDir =
-    m_currTafsir->isExtra() ? *m_downloadsDir : *m_assetsDir;
+    m_currTafsir->isExtra() ? m_dirMgr.downloadsDir() : m_dirMgr.assetsDir();
   QString path = "tafasir/" + m_currTafsir->filename();
   if (!baseDir.exists(path))
     return false;
@@ -72,7 +75,7 @@ TafsirDb::getTafsir(const int sIdx, const int vIdx)
   return dbQuery.value(0).toString();
 }
 
-QSharedPointer<Tafsir>
+const Tafsir*
 TafsirDb::currTafsir() const
 {
   return m_currTafsir;

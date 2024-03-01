@@ -101,8 +101,8 @@ set(PROJECT_SOURCES
     src/notifiers/copynotifier.cpp
     src/notifiers/jobnotifier.h
     src/notifiers/jobnotifier.cpp
-    src/utils/settings.h
-    src/utils/settings.cpp
+    src/utils/configuration.h
+    src/utils/configuration.cpp
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
     src/utils/verseplayer.h

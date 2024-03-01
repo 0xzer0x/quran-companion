@@ -12,24 +12,26 @@
 SearchDialog::SearchDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::SearchDialog)
-  , m_surahNames(m_quranDb->surahNames())
+  , m_config(Configuration::getInstance())
+  , m_quranDb(QuranDb::getInstance())
+  , m_glyphsDb(GlyphsDb::getInstance())
 {
-  setWindowIcon(
-    StyleManager::awesome->icon(fa::fa_solid, fa::fa_magnifying_glass));
+  setWindowIcon(StyleManager::getInstance().awesome().icon(
+    fa::fa_solid, fa::fa_magnifying_glass));
   ui->setupUi(this);
   ui->frmNavBtns->setLayoutDirection(Qt::LeftToRight);
-  ui->btnNext->setIcon(
-    StyleManager::awesome->icon(fa::fa_solid, fa::fa_arrow_left));
-  ui->btnPrev->setIcon(
-    StyleManager::awesome->icon(fa::fa_solid, fa::fa_arrow_right));
+  ui->btnNext->setIcon(StyleManager::getInstance().awesome().icon(
+    fa::fa_solid, fa::fa_arrow_left));
+  ui->btnPrev->setIcon(StyleManager::getInstance().awesome().icon(
+    fa::fa_solid, fa::fa_arrow_right));
   ui->btnNext->setDisabled(true);
   ui->btnPrev->setDisabled(true);
 
-  ui->btnTransfer->setIcon(
-    StyleManager::awesome->icon(fa::fa_solid, fa::fa_arrow_right_arrow_left));
+  ui->btnTransfer->setIcon(StyleManager::getInstance().awesome().icon(
+    fa::fa_solid, fa::fa_arrow_right_arrow_left));
   ui->listViewAllSurahs->setModel(&m_modelAllSurahs);
   ui->listViewSelected->setModel(&m_modelSelectedSurahs);
-  if (m_lang == QLocale::Arabic)
+  if (m_config.language() == QLocale::Arabic)
     ui->searchTabWidget->setObjectName("rtlTabWidget");
 
   fillListView();
@@ -74,13 +76,13 @@ SearchDialog::getResults()
       ui->spnEndPage->setValue(range[0]);
     range[1] = ui->spnEndPage->value();
 
-    m_currResults = Verse::fromList(m_quranDb->searchVerses(
+    m_currResults = Verse::fromList(m_quranDb.searchVerses(
       m_searchText, range, ui->chkWholeWord->isChecked()));
   } else {
     m_currResults =
-      Verse::fromList(m_quranDb->searchSurahs(m_searchText,
-                                              m_selectedSurahMap.values(),
-                                              ui->chkWholeWord->isChecked()));
+      Verse::fromList(m_quranDb.searchSurahs(m_searchText,
+                                             m_selectedSurahMap.values(),
+                                             ui->chkWholeWord->isChecked()));
   }
   ui->lbResultCount->setText(QString::number(m_currResults.size()) +
                              tr(" Search results"));
@@ -114,17 +116,17 @@ SearchDialog::showResults()
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
     QString fontName =
-      FontManager::verseFontname(m_quranDb->verseType(), v.page());
+      FontManager::getInstance().verseFontname(m_quranDb.verseType(), v.page());
 
     VerseFrame* vFrame = new VerseFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);
     ClickableLabel* clkLb = new ClickableLabel(vFrame);
 
-    QString info = tr("Surah: ") + m_surahNames.at(v.surah() - 1) + " - " +
-                   tr("Verse: ") + QString::number(v.number());
-    QString glyphs = m_quranDb->verseType() == Settings::Qcf
-                       ? m_glyphsDb->getVerseGlyphs(v.surah(), v.number())
-                       : m_quranDb->verseText(v.surah(), v.number());
+    QString info = tr("Surah: ") + m_quranDb.surahNames().at(v.surah() - 1) +
+                   " - " + tr("Verse: ") + QString::number(v.number());
+    QString glyphs = m_quranDb.verseType() == Configuration::Qcf
+                       ? m_glyphsDb.getVerseGlyphs(v.surah(), v.number())
+                       : m_quranDb.verseText(v.surah(), v.number());
 
     lbInfo->setText(info);
     lbInfo->setMaximumHeight(50);
@@ -184,7 +186,7 @@ void
 SearchDialog::fillListView()
 {
   for (int i = 1; i <= 114; i++) {
-    QStandardItem* surah = new QStandardItem(m_surahNames.at(i - 1));
+    QStandardItem* surah = new QStandardItem(m_quranDb.surahNames().at(i - 1));
     m_modelAllSurahs.invisibleRootItem()->appendRow(surah);
   }
 }
@@ -202,7 +204,7 @@ SearchDialog::btnTransferClicked()
     if (m_selectedSurahMap.contains(midx.data().toString()))
       continue;
     // KEY: visible surah name - VALUE: surah number
-    int sIdx = m_surahNames.indexOf(midx.data().toString());
+    int sIdx = m_quranDb.surahNames().indexOf(midx.data().toString());
     m_selectedSurahMap.insert(midx.data().toString(), sIdx + 1);
     m_modelSelectedSurahs.appendRow(
       new QStandardItem(midx.data().toString())); // add surah to selected view

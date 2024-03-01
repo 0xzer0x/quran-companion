@@ -4,7 +4,7 @@
 #include <QXmlStreamReader>
 #include <utils/dirmanager.h>
 
-QList<QSharedPointer<Reciter>> Reciter::reciters;
+QList<Reciter> Reciter::reciters;
 
 void
 Reciter::populateReciters()
@@ -22,12 +22,13 @@ Reciter::populateReciters()
         QString displayName = qApp->translate(
           "MainWindow", reader.attributes().value("display").toLatin1());
         QString baseUrl = reader.attributes().value("url").toString();
-        QString basmallahPath = DirManager::basmallahDir->absoluteFilePath(
-          reader.attributes().value("basmallah").toString());
+        QString basmallahPath =
+          DirManager::getInstance().basmallahDir().absoluteFilePath(
+            reader.attributes().value("basmallah").toString());
         bool useId = reader.attributes().value("useid").toInt();
 
-        reciters.append(QSharedPointer<Reciter>::create(
-          baseDirName, displayName, basmallahPath, baseUrl, useId));
+        reciters.append(
+          Reciter(baseDirName, displayName, basmallahPath, baseUrl, useId));
       }
     }
   }
@@ -36,12 +37,12 @@ Reciter::populateReciters()
   reciters.squeeze();
 
   // create reciters directories
-  DirManager::downloadsDir->cd("recitations");
-  foreach (const QSharedPointer<Reciter>& r, reciters) {
-    if (!DirManager::downloadsDir->exists(r->baseDirName()))
-      DirManager::downloadsDir->mkdir(r->baseDirName());
+  QString temp = "recitations/%0";
+  foreach (const Reciter& r, reciters) {
+    QString path = temp.arg(r.baseDirName());
+    if (!DirManager::getInstance().downloadsDir().exists(path))
+      DirManager::getInstance().downloadsDir().mkdir(path);
   }
-  DirManager::downloadsDir->cdUp();
 }
 
 Reciter::Reciter(QString dir,

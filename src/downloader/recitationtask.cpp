@@ -42,7 +42,7 @@ RecitationTask::operator=(RecitationTask other)
 QUrl
 RecitationTask::url() const
 {
-  const Reciter& r = *m_reciters.at(m_reciter);
+  const Reciter& r = m_reciters.at(m_reciter);
   QString url = r.baseUrl();
   if (r.useId())
     url.append(QString::number(Verse::id(m_surah, m_verse)) + ".mp3");
@@ -57,8 +57,8 @@ QFileInfo
 RecitationTask::destination() const
 {
   static const QString path = "recitations/%0/%1.mp3";
-  return QFileInfo(m_downloadsDir->absoluteFilePath(
-    path.arg(m_reciters.at(m_reciter)->baseDirName(),
+  return QFileInfo(m_downloadsDir.absoluteFilePath(
+      path.arg(m_reciters.at(m_reciter).baseDirName(),
              QString::number(m_surah).rightJustified(3, '0') +
                QString::number(m_verse).rightJustified(3, '0'))));
 }

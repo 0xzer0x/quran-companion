@@ -21,9 +21,9 @@ public:
   QFileInfo destination() const override;
 
 private:
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QSharedPointer<const QDir> m_downloadsDir = DirManager::downloadsDir;
-  const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
+  const QuranDb& m_quranDb = QuranDb::getInstance();
+  const QDir& m_downloadsDir = DirManager::getInstance().downloadsDir();
+  const QList<Reciter>& m_reciters = Reciter::reciters;
   int m_reciter;
   int m_surah;
   int m_verse;

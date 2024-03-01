@@ -1,15 +1,17 @@
 #include "glyphsdb.h"
 #include <QSqlQuery>
 
-QSharedPointer<GlyphsDb>
-GlyphsDb::current()
+GlyphsDb&
+GlyphsDb::getInstance()
 {
-  static QSharedPointer<GlyphsDb> glyphsDb = QSharedPointer<GlyphsDb>::create();
-  return glyphsDb;
+  static GlyphsDb gdb;
+  return gdb;
 }
 
 GlyphsDb::GlyphsDb()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "GlyphsCon"))
+  , m_config(Configuration::getInstance())
+  , m_assetsDir(DirManager::getInstance().assetsDir())
 {
   GlyphsDb::open();
 }
@@ -17,7 +19,7 @@ GlyphsDb::GlyphsDb()
 void
 GlyphsDb::open()
 {
-  setDatabaseName(m_assetsDir->absoluteFilePath("glyphs.db"));
+  setDatabaseName(m_assetsDir.absoluteFilePath("glyphs.db"));
   if (!QSqlDatabase::open())
     qFatal("Error opening glyphs db");
 }
@@ -29,12 +31,13 @@ GlyphsDb::type()
 }
 
 QStringList
-GlyphsDb::getPageLines(const int page)
+GlyphsDb::getPageLines(const int page) const
 {
   QSqlQuery dbQuery(*this);
 
   QString query = "SELECT %0 FROM pages WHERE page_no=%1";
-  query = query.arg("qcf_v" + QString::number(m_qcfVer), QString::number(page));
+  query = query.arg("qcf_v" + QString::number(m_config.qcfVersion()),
+                    QString::number(page));
 
   dbQuery.prepare(query);
   if (!dbQuery.exec())
@@ -47,7 +50,7 @@ GlyphsDb::getPageLines(const int page)
 }
 
 QString
-GlyphsDb::getSurahNameGlyph(const int sura)
+GlyphsDb::getSurahNameGlyph(const int sura) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -63,7 +66,7 @@ GlyphsDb::getSurahNameGlyph(const int sura)
 }
 
 QString
-GlyphsDb::getJuzGlyph(const int juz)
+GlyphsDb::getJuzGlyph(const int juz) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -79,12 +82,12 @@ GlyphsDb::getJuzGlyph(const int juz)
 }
 
 QString
-GlyphsDb::getVerseGlyphs(const int sIdx, const int vIdx)
+GlyphsDb::getVerseGlyphs(const int sIdx, const int vIdx) const
 {
   QSqlQuery dbQuery(*this);
 
   QString query = "SELECT %0 FROM ayah_glyphs WHERE surah=%1 AND ayah=%2";
-  query = query.arg("qcf_v" + QString::number(m_qcfVer),
+  query = query.arg("qcf_v" + QString::number(m_config.qcfVersion()),
                     QString::number(sIdx),
                     QString::number(vIdx));
 

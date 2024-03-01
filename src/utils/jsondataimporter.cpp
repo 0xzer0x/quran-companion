@@ -12,8 +12,8 @@ JsonDataImporter::importBookmarks()
   QJsonArray arr = m_fileObj.value("bookmarks").toArray();
   foreach (const QJsonValue& item, arr) {
     Verse bookmark = verseFromJson(item.toObject());
-    if (!m_bookmarksDb->isBookmarked(bookmark))
-      m_bookmarksDb->addBookmark(bookmark, true);
+      if (!m_bookmarksDb.isBookmarked(bookmark))
+        m_bookmarksDb.addBookmark(bookmark, true);
   }
 }
 
@@ -25,7 +25,7 @@ JsonDataImporter::importKhatmah()
   QJsonArray arr = m_fileObj.value("khatmah").toArray();
   foreach (const QJsonValue& item, arr) {
     QPair<QString, Verse> khatmah = khatmahFromJson(item.toObject());
-    m_bookmarksDb->addKhatmah(khatmah.second, khatmah.first);
+      m_bookmarksDb.addKhatmah(khatmah.second, khatmah.first);
   }
 }
 
@@ -37,7 +37,7 @@ JsonDataImporter::importThoughts()
   QJsonArray arr = m_fileObj.value("thoughts").toArray();
   foreach (const QJsonValue& item, arr) {
     QPair<Verse, QString> thought = thoughtFromJson(item.toObject());
-    m_bookmarksDb->saveThoughts(thought.first, thought.second);
+      m_bookmarksDb.saveThoughts(thought.first, thought.second);
   }
 }
 

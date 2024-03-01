@@ -9,10 +9,10 @@
 #include <types/reciter.h>
 #include <types/tafsir.h>
 #include <types/translation.h>
+#include <utils/configuration.h>
 #include <utils/dirmanager.h>
 #include <utils/fontmanager.h>
 #include <utils/logger.h>
-#include <utils/settings.h>
 #include <utils/shortcuthandler.h>
 #include <utils/stylemanager.h>
 
@@ -33,16 +33,14 @@ main(int argc, char* argv[])
   QSplashScreen splash(QPixmap(":/resources/splash.png"));
   splash.show();
 
-  DirManager::setup();
-  Logger::startLogger(DirManager::configDir->absolutePath());
+  Logger::startLogger(DirManager::getInstance().configDir().absolutePath());
   Logger::attach();
 
-  Settings::setup();
-  ShortcutHandler::populateDescriptionMap();
-  StyleManager::loadTheme();
-  FontManager::loadUiFonts();
-  FontManager::loadQcf();
-  Settings::loadQmFiles();
+  Configuration::getInstance().checkGroups();
+  Configuration::getInstance().loadUiTranslation();
+  ShortcutHandler::getInstance().populateDescriptionMap();
+  StyleManager::getInstance().loadTheme();
+  FontManager::getInstance().loadFonts();
 
   Tafsir::populateTafasir();
   Translation::populateTranslations();

@@ -19,7 +19,7 @@
 #include <types/reciter.h>
 #include <types/tafsir.h>
 #include <types/translation.h>
-#include <utils/settings.h>
+#include <utils/configuration.h>
 #include <widgets/downloadprogressbar.h>
 
 namespace Ui {
@@ -122,11 +122,11 @@ protected:
 
 private:
   Ui::DownloaderDialog* ui;
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  const int m_languageCode = Settings::language;
-  const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
-  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
-  const QList<QSharedPointer<Translation>>& m_tr = Translation::translations;
+  const Configuration& m_config;
+  const QuranDb& m_quranDb;
+  const QList<Reciter>& m_reciters;
+  const QList<Tafsir>& m_tafasir;
+  const QList<Translation>& m_translations;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

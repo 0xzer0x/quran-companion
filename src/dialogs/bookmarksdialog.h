@@ -16,7 +16,7 @@
 #include <database/bookmarksdb.h>
 #include <database/glyphsdb.h>
 #include <types/verse.h>
-#include <utils/settings.h>
+#include <utils/configuration.h>
 
 namespace Ui {
 class BookmarksDialog;
@@ -119,10 +119,10 @@ private slots:
 
 private:
   Ui::BookmarksDialog* ui;
-  const int m_qcfVer = Settings::qcfVersion;
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
-  QSharedPointer<GlyphsDb> m_glpyhsDb = GlyphsDb::current();
+  const Configuration& m_config;
+  const GlyphsDb& m_glpyhsDb;
+  const QuranDb& m_quranDb;
+  BookmarksDb& m_bookmarksDb;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

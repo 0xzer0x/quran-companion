@@ -10,6 +10,7 @@ BetaqaViewer::BetaqaViewer(QWidget* parent)
   , ui(new Ui::BetaqaViewer)
   , m_shadowEffect(new QGraphicsDropShadowEffect(this))
   , m_sizeAnim(new QPropertyAnimation(this, "size"))
+  , m_betaqatDb(BetaqatDb::getInstance())
 {
   this->hide();
   ui->setupUi(this);
@@ -37,7 +38,7 @@ void
 BetaqaViewer::showSurah(int surah)
 {
   if (surah != m_surah) {
-    ui->betaqaTextBrowser->setHtml(m_betaqatDb->getBetaqa(surah));
+    ui->betaqaTextBrowser->setHtml(m_betaqatDb.getBetaqa(surah));
     m_surah = surah;
   }
 

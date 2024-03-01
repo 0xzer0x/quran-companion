@@ -7,7 +7,7 @@ void
 JsonDataExporter::exportBookmarks()
 {
   QJsonArray bookmarks;
-  QList<Verse> all = m_bookmarksDb->bookmarkedVerses();
+    QList<Verse> all = m_bookmarksDb.bookmarkedVerses();
   foreach (const Verse& v, all) {
     bookmarks.append(verseJson(v));
   }
@@ -19,11 +19,11 @@ void
 JsonDataExporter::exportKhatmah()
 {
   QJsonArray khatmah;
-  QList<int> ids = m_bookmarksDb->getAllKhatmah();
+    QList<int> ids = m_bookmarksDb.getAllKhatmah();
   foreach (const int id, ids) {
     Verse v;
-    m_bookmarksDb->loadVerse(id, v);
-    QString name = m_bookmarksDb->getKhatmahName(id);
+      m_bookmarksDb.loadVerse(id, v);
+    QString name = m_bookmarksDb.getKhatmahName(id);
     khatmah.append(khatmahJson({ name, v }));
   }
 
@@ -34,7 +34,7 @@ void
 JsonDataExporter::exportThoughts()
 {
   QJsonArray thoughts;
-  QList<QPair<Verse, QString>> all = m_bookmarksDb->allThoughts();
+    QList<QPair<Verse, QString>> all = m_bookmarksDb.allThoughts();
   for (const QPair<Verse, QString>& item : all) {
     thoughts.append(thoughtJson(item));
   }

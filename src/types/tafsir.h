@@ -10,7 +10,10 @@ class Tafsir : public Content
 {
 public:
   static void populateTafasir();
-  static QList<QSharedPointer<Tafsir>> tafasir;
+  static QList<Tafsir> tafasir;
+
+  bool operator==(const Tafsir& v2) const;
+  bool operator!=(const Tafsir& v2) const;
 
   explicit Tafsir(QString display, QString filename, bool isText, bool isExtra);
   const bool isText() const;

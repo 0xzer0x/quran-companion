@@ -13,11 +13,17 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   : QDialog(parent)
   , ui(new Ui::SettingsDialog)
   , m_vPlayerPtr(vPlayerPtr)
+  , m_config(Configuration::getInstance())
+  , m_downloadsDir(DirManager::getInstance().downloadsDir())
+  , m_shortcutDescription(ShortcutHandler::getInstance().shortcutsDescription())
+  , m_tafasir(Tafsir::tafasir)
+  , m_translations(Translation::translations)
 {
   ui->setupUi(this);
   ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 72));
   ui->cmbSideFontSz->setValidator(new QIntValidator(10, 72));
-  setWindowIcon(StyleManager::awesome->icon(fa::fa_solid, fa::fa_gear));
+  setWindowIcon(
+    StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_gear));
   ui->tableViewShortcuts->setModel(&m_shortcutsModel);
   ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
   ui->tableViewShortcuts->setItemDelegate(new ShortcutDelegate);
@@ -48,7 +54,7 @@ SettingsDialog::populateShortcutsModel()
     QStandardItem *desc = new QStandardItem(), *keySeq = new QStandardItem();
     desc->setData(key, Qt::UserRole);
     desc->setText(tr(m_shortcutDescription.value(key).toStdString().c_str()));
-    keySeq->setText(m_settings->value("Shortcuts/" + key).toString());
+    keySeq->setText(m_config.settings().value("Shortcuts/" + key).toString());
 
     QList<QStandardItem*> row;
     row.append(desc);
@@ -70,32 +76,34 @@ SettingsDialog::updateContentCombobox()
 {
   ui->cmbTranslation->clear();
   for (int i = 0; i < m_translations.size(); i++) {
-    const QSharedPointer<Translation>& tr = m_translations[i];
-    if (tr->isAvailable())
-      ui->cmbTranslation->addItem(tr->displayName(), i);
+    const Translation& tr = m_translations[i];
+    if (tr.isAvailable())
+      ui->cmbTranslation->addItem(tr.displayName(), i);
   }
 
-  m_translation =
-    ui->cmbTranslation->findData(m_settings->value("Reader/Translation"));
+  m_translation = ui->cmbTranslation->findData(
+    m_config.settings().value("Reader/Translation"));
   ui->cmbTranslation->setCurrentIndex(m_translation);
 }
 
 void
 SettingsDialog::setCurrentSettingsAsRef()
 {
-  m_votd = m_settings->value("VOTD").toBool();
-  m_fgHighlight = m_settings->value("Reader/FGHighlight").toBool();
-  m_missingFileWarning = m_settings->value("MissingFileWarning").toBool();
+  m_votd = m_config.settings().value("VOTD").toBool();
+  m_fgHighlight = m_config.settings().value("Reader/FGHighlight").toBool();
+  m_missingFileWarning =
+    m_config.settings().value("MissingFileWarning").toBool();
 
-  m_adaptive = m_settings->value("Reader/AdaptiveFont").toBool();
+  m_adaptive = m_config.settings().value("Reader/AdaptiveFont").toBool();
   m_quranFontSize =
-    m_settings->value("Reader/QCF" + QString::number(m_qcfVer) + "Size")
+    m_config.settings()
+      .value("Reader/QCF" + QString::number(m_config.qcfVersion()) + "Size")
       .toInt();
   m_sideFont =
-    qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
+    qvariant_cast<QFont>(m_config.settings().value("Reader/SideContentFont"));
 
-  m_verseType = m_settings->value("Reader/VerseType").toInt();
-  m_verseFontSize = m_settings->value("Reader/VerseFontSize").toInt();
+  m_verseType = m_config.settings().value("Reader/VerseType").toInt();
+  m_verseFontSize = m_config.settings().value("Reader/VerseFontSize").toInt();
 
   m_audioDevices = QMediaDevices::audioOutputs();
   ui->cmbAudioDevices->clear();
@@ -107,10 +115,10 @@ SettingsDialog::setCurrentSettingsAsRef()
 
   // set ui elements to current settings
   ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
-  ui->cmbLang->setCurrentIndex(ui->cmbLang->findData(m_languageCode));
-  ui->cmbTheme->setCurrentIndex(m_themeIdx);
-  ui->cmbReaderMode->setCurrentIndex(m_readerMode);
-  ui->cmbQCF->setCurrentIndex(m_qcfVer - 1);
+  ui->cmbLang->setCurrentIndex(ui->cmbLang->findData(m_config.language()));
+  ui->cmbTheme->setCurrentIndex(m_config.themeId());
+  ui->cmbReaderMode->setCurrentIndex(m_config.readerMode());
+  ui->cmbQCF->setCurrentIndex(m_config.qcfVersion() - 1);
   ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
   ui->fntCmbSide->setCurrentFont(m_sideFont);
   ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
@@ -135,7 +143,7 @@ SettingsDialog::checkShortcuts()
     const QString& key =
       m_shortcutsModel.item(row, 0)->data(Qt::UserRole).toString();
     const QString& keySequence = m_shortcutsModel.item(row, 1)->text();
-    if (m_settings->value("Shortcuts/" + key).toString() != keySequence)
+    if (m_config.settings().value("Shortcuts/" + key).toString() != keySequence)
       updateShortcut(key, keySequence);
   }
 }
@@ -143,7 +151,7 @@ SettingsDialog::checkShortcuts()
 void
 SettingsDialog::updateTheme(int themeIdx)
 {
-  m_settings->setValue("Theme", themeIdx);
+  m_config.settings().setValue("Theme", themeIdx);
   if (m_restartReq)
     return;
 
@@ -158,7 +166,7 @@ SettingsDialog::updateTheme(int themeIdx)
 void
 SettingsDialog::updateLang(QLocale::Language lang)
 {
-  m_settings->setValue("Language", lang);
+  m_config.settings().setValue("Language", lang);
   if (m_restartReq)
     return;
 
@@ -173,19 +181,19 @@ SettingsDialog::updateLang(QLocale::Language lang)
 void
 SettingsDialog::updateDailyVerse(bool on)
 {
-  m_settings->setValue("VOTD", on);
+  m_config.settings().setValue("VOTD", on);
 }
 
 void
 SettingsDialog::updateFileWarning(bool on)
 {
-  m_settings->setValue("MissingFileWarning", on);
+  m_config.settings().setValue("MissingFileWarning", on);
 }
 
 void
 SettingsDialog::updateTranslation(int idx)
 {
-  m_settings->setValue("Reader/Translation", idx);
+  m_config.settings().setValue("Reader/Translation", idx);
   emit translationChanged();
 
   m_renderSideContent = true;
@@ -194,7 +202,7 @@ SettingsDialog::updateTranslation(int idx)
 void
 SettingsDialog::updateReaderMode(int idx)
 {
-  m_settings->setValue("Reader/Mode", idx);
+  m_config.settings().setValue("Reader/Mode", idx);
   if (m_restartReq)
     return;
 
@@ -207,13 +215,13 @@ SettingsDialog::updateReaderMode(int idx)
 void
 SettingsDialog::updateQuranFont(int qcfV)
 {
-  if (qcfV == 2 && !FontManager::qcfExists()) {
+  if (qcfV == 2 && !FontManager::getInstance().getInstance().qcfExists()) {
     emit qcf2Missing();
     ui->cmbQCF->setCurrentIndex(0);
     return;
   }
 
-  m_settings->setValue("Reader/QCF", qcfV);
+  m_config.settings().setValue("Reader/QCF", qcfV);
   if (m_restartReq)
     return;
 
@@ -228,13 +236,14 @@ SettingsDialog::updateQuranFont(int qcfV)
 void
 SettingsDialog::updateAdaptiveFont(bool on)
 {
-  m_settings->setValue("Reader/AdaptiveFont", on);
+  m_config.settings().setValue("Reader/AdaptiveFont", on);
 }
 
 void
 SettingsDialog::updateQuranFontSize(QString size)
 {
-  m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size", size);
+  m_config.settings().setValue(
+    "Reader/QCF" + QString::number(m_config.qcfVersion()) + "Size", size);
   emit quranFontChanged();
   m_renderQuranPage = true;
 }
@@ -242,7 +251,7 @@ SettingsDialog::updateQuranFontSize(QString size)
 void
 SettingsDialog::updateFgHighlight(bool on)
 {
-  m_settings->setValue("Reader/FGHighlight", on);
+  m_config.settings().setValue("Reader/FGHighlight", on);
   emit highlightLayerChanged();
 }
 
@@ -252,7 +261,7 @@ SettingsDialog::updateSideFont(QFont fnt)
   fnt.setPointSize(m_sideFont.pointSize());
   m_sideFont = fnt;
 
-  m_settings->setValue("Reader/SideContentFont", m_sideFont);
+  m_config.settings().setValue("Reader/SideContentFont", m_sideFont);
   emit sideFontChanged();
   m_renderSideContent = true;
 }
@@ -261,7 +270,7 @@ void
 SettingsDialog::updateSideFontSize(QString size)
 {
   m_sideFont.setPointSize(size.toInt());
-  m_settings->setValue("Reader/SideContentFont", m_sideFont);
+  m_config.settings().setValue("Reader/SideContentFont", m_sideFont);
   emit sideFontChanged();
   m_renderSideContent = true;
 }
@@ -269,7 +278,7 @@ SettingsDialog::updateSideFontSize(QString size)
 void
 SettingsDialog::updateVerseType(int vt)
 {
-  m_settings->setValue("Reader/VerseType", vt);
+  m_config.settings().setValue("Reader/VerseType", vt);
   emit verseTypeChanged();
   m_renderSideContent = true;
 }
@@ -277,7 +286,7 @@ SettingsDialog::updateVerseType(int vt)
 void
 SettingsDialog::updateVerseFontsize(QString size)
 {
-  m_settings->setValue("Reader/VerseFontSize", size);
+  m_config.settings().setValue("Reader/VerseFontSize", size);
   emit verseTypeChanged();
   m_renderSideContent = true;
 }
@@ -285,7 +294,7 @@ SettingsDialog::updateVerseFontsize(QString size)
 void
 SettingsDialog::updateShortcut(QString key, QString keySequence)
 {
-  m_settings->setValue("Shortcuts/" + key, keySequence);
+  m_config.settings().setValue("Shortcuts/" + key, keySequence);
   emit shortcutChanged(key);
 }
 
@@ -294,11 +303,11 @@ SettingsDialog::applyAllChanges()
 {
   QLocale::Language chosenLang =
     qvariant_cast<QLocale::Language>(ui->cmbLang->currentData());
-  if (chosenLang != m_languageCode) {
+  if (chosenLang != m_config.language()) {
     updateLang(chosenLang);
   }
 
-  if (ui->cmbTheme->currentIndex() != m_themeIdx)
+  if (ui->cmbTheme->currentIndex() != m_config.themeId())
     updateTheme(ui->cmbTheme->currentIndex());
 
   if (ui->chkDailyVerse->isChecked() != m_votd)
@@ -313,7 +322,7 @@ SettingsDialog::applyAllChanges()
   if (ui->cmbTranslation->currentIndex() != m_translation)
     updateTranslation(ui->cmbTranslation->currentData().toInt());
 
-  if (ui->cmbQCF->currentIndex() + 1 != m_qcfVer)
+  if (ui->cmbQCF->currentIndex() + 1 != m_config.qcfVersion())
     updateQuranFont(ui->cmbQCF->currentIndex() + 1);
 
   if (ui->cmbVerseText->currentIndex() != m_verseType)
@@ -325,7 +334,7 @@ SettingsDialog::applyAllChanges()
   if (ui->chkAdaptive->isChecked() != m_adaptive)
     updateAdaptiveFont(ui->chkAdaptive->isChecked());
 
-  if (ui->cmbReaderMode->currentIndex() != m_readerMode)
+  if (ui->cmbReaderMode->currentIndex() != m_config.readerMode())
     updateReaderMode(ui->cmbReaderMode->currentIndex());
 
   bool forceManualFont = false;

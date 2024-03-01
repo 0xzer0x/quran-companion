@@ -39,7 +39,7 @@ public:
    * @param v - ::Verse to get the filename of
    * @return QString of the filename
    */
-  QString constructVerseFilename(const QSharedPointer<Verse> v);
+  QString constructVerseFilename(const Verse& v);
   /**
    * @brief load the verse mp3 from the current reciter directory and set the
    * m_verseFile variable
@@ -116,9 +116,9 @@ signals:
   void missingVerseFile(int reciterIdx, int surah);
 
 private:
-  QSharedPointer<Verse> m_activeVerse = Verse::current();
-  QDir m_reciterDir = DirManager::downloadsDir->absoluteFilePath("recitations");
-  const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
+  Verse& m_activeVerse;
+  QDir m_reciterDir;
+  const QList<Reciter>& m_reciters;
   /**
    * @brief boolean indicating whether the player is on or off, 'on' implies
    * that playback should continue in case of verse change

@@ -9,10 +9,10 @@
 using namespace fa;
 
 NotificationPopup::NotificationPopup(QWidget* parent)
-  : QFrame{ parent }
-  , m_iconWidget{ new QLabel(this) }
-  , m_textWidget{ new QLabel(this) }
-  , m_opacityEffect{ new QGraphicsOpacityEffect(this) }
+  : QFrame(parent)
+  , m_iconWidget(new QLabel(this))
+  , m_textWidget(new QLabel(this))
+  , m_opacityEffect(new QGraphicsOpacityEffect(this))
 {
   setObjectName("Popup");
   this->setGraphicsEffect(m_opacityEffect);
@@ -127,7 +127,8 @@ NotificationPopup::setNotificationIcon(NotificationType type)
       break;
   }
 
-  m_iconWidget->setFont(StyleManager::awesome->font(faStyle, 18));
+  m_iconWidget->setFont(
+    StyleManager::getInstance().awesome().font(faStyle, 18));
   m_iconWidget->setText(ico);
 }
 

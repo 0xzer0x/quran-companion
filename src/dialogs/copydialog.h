@@ -38,8 +38,8 @@ private slots:
 
 private:
   Ui::CopyDialog* ui;
-  QSharedPointer<Verse> m_currVerse = Verse::current();
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
+  const QuranDb& m_quranDb;
+  const Verse& m_currVerse;
   QPointer<QIntValidator> m_verseValidator;
   CopyNotifier m_notifier;
 };

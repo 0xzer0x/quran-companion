@@ -9,16 +9,15 @@
 #include <interfaces/dbconnection.h>
 #include <notifiers/bookmarksnotifier.h>
 #include <types/verse.h>
+#include <utils/configuration.h>
 #include <utils/dirmanager.h>
-#include <utils/settings.h>
 
 class BookmarksDb
   : public DbConnection
   , QSqlDatabase
 {
 public:
-  static QSharedPointer<BookmarksDb> current();
-  BookmarksDb();
+  static BookmarksDb& getInstance();
   void open();
   Type type();
   /**
@@ -115,9 +114,10 @@ public:
   const BookmarksNotifier* notifier() const;
 
 private:
-  const QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  const QSharedPointer<QSettings> m_settings = Settings::settings;
-  const QSharedPointer<QDir> m_configDir = DirManager::configDir;
+  BookmarksDb();
+  const QuranDb& m_quranDb;
+  const Configuration& m_config;
+  const QDir& m_configDir;
   BookmarksNotifier m_notifier;
   /**
    * @brief integer id of the current active khatmah

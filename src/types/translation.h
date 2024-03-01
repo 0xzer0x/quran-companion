@@ -10,7 +10,10 @@ class Translation : public Content
 {
 public:
   static void populateTranslations();
-  static QList<QSharedPointer<Translation>> translations;
+  static QList<Translation> translations;
+
+  bool operator==(const Translation& v2) const;
+  bool operator!=(const Translation& v2) const;
 
   explicit Translation(QString display, QString filename, bool isExtra);
   bool isAvailable() const;

@@ -35,10 +35,10 @@ protected:
 
 private:
   Ui::VerseDialog* ui;
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QSharedPointer<TranslationDb> m_translationDb = TranslationDb::current();
-  const QSharedPointer<QSettings> m_settings = Settings::settings;
-  QFile m_timestampFile = DirManager::configDir->absoluteFilePath("votd.log");
+  Configuration& m_config;
+  const QuranDb& m_quranDb;
+  const TranslationDb& m_translationDb;
+  QFile m_timestampFile;
   /**
    * @brief generate the verse of the day and set the votd html
    */

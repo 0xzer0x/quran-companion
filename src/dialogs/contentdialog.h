@@ -92,16 +92,14 @@ private slots:
 
 private:
   Ui::ContentDialog* ui;
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QSharedPointer<GlyphsDb> m_glyphsDb = GlyphsDb::current();
-  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
-  QSharedPointer<TafsirDb> m_tafsirDb = TafsirDb::current();
-  QSharedPointer<TranslationDb> m_translationDb = TranslationDb::current();
-  const int m_qcfVer = Settings::qcfVersion;
-  const QSharedPointer<QSettings> m_settings = Settings::settings;
-  const QList<QSharedPointer<::Tafsir>>& m_tafasir = Tafsir::tafasir;
-  const QList<QSharedPointer<::Translation>>& m_translations =
-    Translation::translations;
+  Configuration& m_config;
+  TafsirDb& m_tafsirDb;
+  TranslationDb& m_translationDb;
+  BookmarksDb& m_bookmarksDb;
+  const QuranDb& m_quranDb;
+  const GlyphsDb& m_glyphsDb;
+  const QList<::Tafsir>& m_tafasir;
+  const QList<::Translation>& m_translations;
   /**
    * @brief setSideFont
    *
@@ -182,7 +180,7 @@ private:
    *
    * MODIFIED
    */
-  Mode m_currMode = Mode::Tafsir;
+  Mode m_currMode;
   int m_tafsir;
   int m_translation;
   /**
@@ -196,7 +194,7 @@ private:
   /**
    * @brief m_internalLoading
    */
-  bool m_internalLoading = false;
+  bool m_internalLoading;
 };
 
 #endif // CONTENTDIALOG_H

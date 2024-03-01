@@ -6,7 +6,7 @@
 #include <QXmlStreamReader>
 #include <utils/dirmanager.h>
 
-QList<QSharedPointer<Tafsir>> Tafsir::tafasir;
+QList<Tafsir> Tafsir::tafasir;
 
 void
 Tafsir::populateTafasir()
@@ -25,8 +25,7 @@ Tafsir::populateTafasir()
         QString file = reader.attributes().value("file").toString();
         bool isText = reader.attributes().value("text").toInt();
         bool isExtra = reader.attributes().value("extra").toInt();
-        tafasir.append(
-          QSharedPointer<Tafsir>::create(name, file, isText, isExtra));
+        tafasir.append(Tafsir(name, file, isText, isExtra));
       }
     }
   }
@@ -42,10 +41,22 @@ Tafsir::Tafsir(QString display, QString filename, bool isText, bool isExtra)
 }
 
 bool
+Tafsir::operator==(const Tafsir& v2) const
+{
+  return this->filename() == v2.filename();
+}
+
+bool
+Tafsir::operator!=(const Tafsir& v2) const
+{
+  return this->filename() != v2.filename();
+}
+
+bool
 Tafsir::isAvailable() const
 {
-  const QDir& baseDir =
-    isExtra() ? *DirManager::downloadsDir : *DirManager::assetsDir;
+  const QDir& baseDir = isExtra() ? DirManager::getInstance().downloadsDir()
+                                  : DirManager::getInstance().assetsDir();
   return baseDir.exists("tafasir/" + filename());
 }
 

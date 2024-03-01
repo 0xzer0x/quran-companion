@@ -17,7 +17,7 @@ public:
   QFileInfo destination() const override;
 
 private:
-  QSharedPointer<const QDir> m_downloadsDir = DirManager::downloadsDir;
+  const QDir& m_downloadsDir = DirManager::getInstance().downloadsDir();
   int m_page;
 };
 

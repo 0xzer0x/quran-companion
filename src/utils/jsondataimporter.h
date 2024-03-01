@@ -19,7 +19,7 @@ public:
   bool read() override;
 
 private:
-  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
+  BookmarksDb& m_bookmarksDb = BookmarksDb::getInstance();
   bool validArray(const QString key);
   bool validVerse(const QJsonObject& obj);
   bool validKhatmah(const QJsonObject& obj);

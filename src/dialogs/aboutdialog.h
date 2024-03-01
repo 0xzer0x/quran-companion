@@ -2,7 +2,8 @@
 #define ABOUTDIALOG_H
 
 #include <QDialog>
-#include <utils/settings.h>
+#include <QLocale>
+#include <utils/configuration.h>
 
 namespace Ui {
 class AboutDialog;
@@ -18,7 +19,7 @@ public:
 
 private:
   Ui::AboutDialog* ui;
-  QLocale::Language m_lang = Settings::language;
+  const Configuration& m_config;
 };
 
 #endif // ABOUTDIALOG_H

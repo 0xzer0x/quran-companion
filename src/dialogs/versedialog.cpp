@@ -4,16 +4,21 @@
 VerseDialog::VerseDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::VerseDialog)
+  , m_config(Configuration::getInstance())
+  , m_quranDb(QuranDb::getInstance())
+  , m_translationDb(TranslationDb::getInstance())
+  , m_timestampFile(
+      DirManager::getInstance().configDir().absoluteFilePath("votd.log"))
 {
   ui->setupUi(this);
 
   QFont sideFont =
-    qvariant_cast<QFont>(m_settings->value("Reader/SideContentFont"));
+    qvariant_cast<QFont>(m_config.settings().value("Reader/SideContentFont"));
   ui->lbContent->setFont(sideFont);
   ui->lbInfo->setFont(sideFont);
   ui->lbVerse->setFont(QFont("kfgqpc_hafs_uthmanic _script", 20));
 
-  if (m_settings->value("VOTD").toBool())
+  if (m_config.settings().value("VOTD").toBool())
     showVOTD(true);
 }
 
@@ -47,7 +52,7 @@ VerseDialog::votdShown()
 void
 VerseDialog::genVerseOfTheDay()
 {
-  m_votd = m_quranDb->randomVerse();
+  m_votd = m_quranDb.randomVerse();
 }
 
 void
@@ -82,11 +87,11 @@ void
 VerseDialog::updateLabels()
 {
   ui->lbVerse->setText(
-    "ﵩ " + m_quranDb->verseText(m_votd.surah(), m_votd.number()) + " ﵨ");
+    "ﵩ " + m_quranDb.verseText(m_votd.surah(), m_votd.number()) + " ﵨ");
   ui->lbContent->setText(
-    m_translationDb->getTranslation(m_votd.surah(), m_votd.number()));
+    m_translationDb.getTranslation(m_votd.surah(), m_votd.number()));
   ui->lbInfo->setText(qApp->translate("BookmarksDialog", "Surah: ") +
-                      m_quranDb->surahName(m_votd.surah()) + " - " +
+                      m_quranDb.surahName(m_votd.surah()) + " - " +
                       qApp->translate("BookmarksDialog", "Verse: ") +
                       QString::number(m_votd.number()));
 }

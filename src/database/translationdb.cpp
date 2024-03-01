@@ -1,16 +1,18 @@
 #include "translationdb.h"
 #include <QSqlQuery>
 
-QSharedPointer<TranslationDb>
-TranslationDb::current()
+TranslationDb&
+TranslationDb::getInstance()
 {
-  static QSharedPointer<TranslationDb> translationDb =
-    QSharedPointer<TranslationDb>::create();
-  return translationDb;
+  static TranslationDb tdb;
+  return tdb;
 }
 
 TranslationDb::TranslationDb()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "TranslationCon"))
+  , m_dirMgr(DirManager::getInstance())
+  , m_config(Configuration::getInstance())
+  , m_translations(Translation::translations)
 {
 }
 
@@ -31,7 +33,7 @@ TranslationDb::type()
 void
 TranslationDb::updateLoadedTranslation()
 {
-  int curr = m_settings->value("Reader/Translation").toInt();
+  int curr = m_config.settings().value("Reader/Translation").toInt();
   setCurrentTranslation(curr);
 }
 
@@ -40,11 +42,13 @@ TranslationDb::setCurrentTranslation(int idx)
 {
   if (idx < 0 || idx >= m_translations.size())
     return false;
-  if (m_currTr == m_translations[idx])
+  if (m_currTr == &m_translations[idx])
     return true;
 
-  m_currTr = m_translations[idx];
-  const QDir& baseDir = m_currTr->isExtra() ? *m_downloadsDir : *m_assetsDir;
+  m_currTr = &m_translations[idx];
+  const QDir& baseDir = m_currTr->isExtra()
+                          ? DirManager::getInstance().downloadsDir()
+                          : DirManager::getInstance().assetsDir();
   QString path = "translations/" + m_currTr->filename();
   if (!baseDir.exists(path))
     return false;
@@ -55,7 +59,7 @@ TranslationDb::setCurrentTranslation(int idx)
 }
 
 QString
-TranslationDb::getTranslation(const int sIdx, const int vIdx)
+TranslationDb::getTranslation(const int sIdx, const int vIdx) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -71,7 +75,7 @@ TranslationDb::getTranslation(const int sIdx, const int vIdx)
   return dbQuery.value(0).toString();
 }
 
-QSharedPointer<Translation>
+const Translation*
 TranslationDb::currTranslation() const
 {
   return m_currTr;

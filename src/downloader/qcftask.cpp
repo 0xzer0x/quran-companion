@@ -33,6 +33,6 @@ QcfTask::url() const
 QFileInfo
 QcfTask::destination() const
 {
-  return QFileInfo(m_downloadsDir->absoluteFilePath(
+    return QFileInfo(m_downloadsDir.absoluteFilePath(
     "QCFV2/QCF2" + QString::number(m_page).rightJustified(3, '0') + ".ttf"));
 }

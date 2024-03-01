@@ -70,7 +70,7 @@
          <height>933</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QVBoxLayout" name="scrollLayout">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -114,6 +114,7 @@
     <addaction name="actionVOTD"/>
     <addaction name="separator"/>
     <addaction name="actionReaderViewToggle"/>
+    <addaction name="actionPlayerControls"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -528,6 +529,17 @@
   <action name="actionExport">
    <property name="text">
     <string>Export</string>
+   </property>
+  </action>
+  <action name="actionPlayerControls">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Player Controls</string>
    </property>
   </action>
  </widget>

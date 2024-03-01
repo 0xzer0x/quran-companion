@@ -2,12 +2,13 @@
 #define TAFSIRDB_H
 
 #include <QDir>
+#include <QPointer>
 #include <QSharedPointer>
 #include <QSqlDatabase>
 #include <interfaces/dbconnection.h>
 #include <types/tafsir.h>
+#include <utils/configuration.h>
 #include <utils/dirmanager.h>
-#include <utils/settings.h>
 
 class TafsirDb
   : public DbConnection
@@ -15,8 +16,7 @@ class TafsirDb
 
 {
 public:
-    static QSharedPointer<TafsirDb> current();
-  TafsirDb();
+  static TafsirDb& getInstance();
   void open();
   Type type();
   /**
@@ -40,17 +40,17 @@ public:
    * @brief getter for m_currTafsir
    * @return the currently set DBManager::Tafasir
    */
-  QSharedPointer<::Tafsir> currTafsir() const;
+  const ::Tafsir* currTafsir() const;
 
 private:
-  const QSharedPointer<QSettings> m_settings = Settings::settings;
-  const QSharedPointer<QDir> m_assetsDir = DirManager::assetsDir;
-  const QSharedPointer<QDir> m_downloadsDir = DirManager::downloadsDir;
-  const QList<QSharedPointer<::Tafsir>>& m_tafasir = Tafsir::tafasir;
+  TafsirDb();
+  Configuration& m_config;
+  const DirManager& m_dirMgr;
+  const QList<::Tafsir>& m_tafasir;
   /**
    * @brief the current active DBManager::Tafasir
    */
-  QSharedPointer<::Tafsir> m_currTafsir;
+  const ::Tafsir* m_currTafsir;
   /**
    * @brief path to the currently active tafsir database file
    */

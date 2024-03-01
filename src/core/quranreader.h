@@ -11,7 +11,7 @@
 #include <utils/verseplayer.h>
 #include <widgets/quranpagebrowser.h>
 #include <widgets/verseframe.h>
-typedef Settings::ReaderMode ReaderMode;
+typedef Configuration::ReaderMode ReaderMode;
 
 namespace Ui {
 class QuranReader;
@@ -141,16 +141,14 @@ private slots:
 
 private:
   Ui::QuranReader* ui;
-  QSharedPointer<Verse> m_currVerse = Verse::current();
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QSharedPointer<GlyphsDb> m_glyphsDb = GlyphsDb::current();
-  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
-  QSharedPointer<TafsirDb> m_tafsirDb = TafsirDb::current();
-  QSharedPointer<TranslationDb> m_translationDb = TranslationDb::current();
-  QSharedPointer<QSettings> m_settings = Settings::settings;
-  const QList<QSharedPointer<Reciter>>& m_recitersList = Reciter::reciters;
-  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
-  const ReaderMode& m_readerMode = Settings::readerMode;
+  Verse& m_currVerse;
+  Configuration& m_config;
+  TafsirDb& m_tafsirDb;
+  TranslationDb& m_translationDb;
+  BookmarksDb& m_bookmarksDb;
+  QuranDb& m_quranDb;
+  const GlyphsDb& m_glyphsDb;
+  const QList<Tafsir>& m_tafasir;
   void setupConnections();
   /**
    * @brief load icons for different UI elements

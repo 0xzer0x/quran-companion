@@ -64,10 +64,6 @@ private slots:
    */
   void volumeSliderValueChanged(int position);
   /**
-   * @brief toggle the visibility of the player controls in the main window
-   */
-  void toggleVisibility();
-  /**
    * @brief utility to increment the VersePlayer playback volume by steps of 5
    */
   void incrementVolume();
@@ -78,9 +74,9 @@ private slots:
 
 private:
   Ui::PlayerControls* ui;
-  QSharedPointer<Verse> m_currVerse = Verse::current();
-  QSharedPointer<QSettings> const m_settings = Settings::settings;
-  const QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
+  const Verse& m_currVerse;
+  Configuration& m_config;
+  const QList<Reciter>& m_reciters;
   /**
    * @brief load icons for different UI elements
    */
@@ -96,8 +92,8 @@ private:
   /**
    * @brief pointer to VersePlayer instance
    */
-  QPointer<VersePlayer> m_player = nullptr;
-  QPointer<QuranReader> m_reader = nullptr;
+  QPointer<VersePlayer> m_player;
+  QPointer<QuranReader> m_reader;
 };
 
 #endif // PLAYERCONTROLS_H

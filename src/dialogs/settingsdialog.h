@@ -25,12 +25,12 @@
 #include <QValidator>
 #include <types/tafsir.h>
 #include <types/translation.h>
+#include <utils/configuration.h>
 #include <utils/jsondataexporter.h>
 #include <utils/jsondataimporter.h>
-#include <utils/settings.h>
 #include <utils/shortcuthandler.h>
 #include <utils/verseplayer.h>
-typedef Settings::ReaderMode ReaderMode;
+typedef Configuration::ReaderMode ReaderMode;
 
 namespace Ui {
 class SettingsDialog;
@@ -218,17 +218,11 @@ protected:
 
 private:
   Ui::SettingsDialog* ui;
-  const int m_qcfVer = Settings::qcfVersion;
-  const int m_themeIdx = Settings::themeId;
-  const ReaderMode m_readerMode = Settings::readerMode;
-  const QLocale::Language m_languageCode = Settings::language;
-  QSharedPointer<QSettings> const m_settings = Settings::settings;
-  const QDir& m_downloadsDir = *DirManager::downloadsDir;
-  const QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
-  const QList<QSharedPointer<Translation>>& m_translations =
-    Translation::translations;
-  const QMap<QString, QString>& m_shortcutDescription =
-    ShortcutHandler::shortcutsDescription;
+  Configuration& m_config;
+  const QDir& m_downloadsDir;
+  const QList<Tafsir>& m_tafasir;
+  const QList<Translation>& m_translations;
+  const QMap<QString, QString>& m_shortcutDescription;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

@@ -27,13 +27,13 @@ TafsirTask::url() const
 {
   return QUrl::fromEncoded(
     ("https://github.com/0xzer0x/quran-companion/raw/main/extras/tafasir/" +
-     m_tafasir.at(m_idx)->filename())
+         m_tafasir.at(m_idx).filename())
       .toLatin1());
 }
 
 QFileInfo
 TafsirTask::destination() const
 {
-  return QFileInfo(m_downloadsDir->absoluteFilePath(
-    "tafasir/" + m_tafasir.at(m_idx)->filename()));
+    return QFileInfo(m_downloadsDir.absoluteFilePath(
+        "tafasir/" + m_tafasir.at(m_idx).filename()));
 }

@@ -32,8 +32,8 @@ private slots:
   void taskFailed();
 
 private:
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QList<QSharedPointer<Reciter>>& m_reciters = Reciter::reciters;
+  const QuranDb& m_quranDb;
+  QList<Reciter>& m_reciters;
   TaskDownloader m_taskDlr;
   QQueue<RecitationTask> m_queue;
   QNetworkAccessManager m_netMgr;

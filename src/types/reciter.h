@@ -12,8 +12,8 @@
 class Reciter
 {
 public:
-  static QList<QSharedPointer<Reciter>> reciters;
-    static void populateReciters();
+  static QList<Reciter> reciters;
+  static void populateReciters();
 
   explicit Reciter(QString dir,
                    QString display,

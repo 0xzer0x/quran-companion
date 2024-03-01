@@ -6,7 +6,7 @@ FileSelector::FileSelector(QWidget* parent)
   : QFileDialog(parent)
 {
   setFileMode(QFileDialog::AnyFile);
-  setDirectory(DirManager::downloadsDir->absolutePath());
+  setDirectory(DirManager::getInstance().downloadsDir().absolutePath());
 }
 
 QString

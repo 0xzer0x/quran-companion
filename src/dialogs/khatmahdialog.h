@@ -74,10 +74,10 @@ private slots:
 
 private:
   Ui::KhatmahDialog* ui;
-  const QSharedPointer<Verse> m_currVerse = Verse::current();
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
-  QSharedPointer<QSettings> m_settings = Settings::settings;
+  const Verse& m_currVerse;
+  QuranDb& m_quranDb;
+  BookmarksDb& m_bookmarksDb;
+  Configuration& m_config;
   /**
    * @brief load all khatmah entries available
    */

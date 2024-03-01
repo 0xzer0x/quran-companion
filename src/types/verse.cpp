@@ -29,10 +29,10 @@ Verse::id(int surah, int verse)
   return id;
 }
 
-QSharedPointer<Verse>
-Verse::current()
+Verse&
+Verse::getCurrent()
 {
-  static QSharedPointer<Verse> current = QSharedPointer<Verse>::create(1, 1, 1);
+  static Verse current(1, 1, 1);
   return current;
 }
 
@@ -135,7 +135,7 @@ Verse::next(bool basmalah)
     return *this;
   }
 
-  Verse v(m_quranDb->verseById(id(m_surah, m_number) + 1));
+  Verse v(m_quranDb.verseById(id(m_surah, m_number) + 1));
 
   if (v.number() == 1 && v.surah() != 9 && v.surah() != 1 && basmalah)
     v.setNumber(0);
@@ -154,7 +154,7 @@ Verse::prev(bool basmalah)
   if (!m_number)
     m_number = 1;
 
-  return Verse(m_quranDb->verseById(id(m_surah, m_number) - 1));
+  return Verse(m_quranDb.verseById(id(m_surah, m_number) - 1));
 }
 
 void

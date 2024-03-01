@@ -1,16 +1,17 @@
 #include "betaqatdb.h"
 #include <QSqlQuery>
 
-QSharedPointer<BetaqatDb>
-BetaqatDb::current()
+BetaqatDb&
+BetaqatDb::getInstance()
 {
-  static QSharedPointer<BetaqatDb> betaqatDb =
-    QSharedPointer<BetaqatDb>::create();
-  return betaqatDb;
+  static BetaqatDb bdb;
+  return bdb;
 }
 
 BetaqatDb::BetaqatDb()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "BetaqatCon"))
+  , m_assetsDir(DirManager::getInstance().assetsDir())
+  , m_config(Configuration::getInstance())
 {
   BetaqatDb::open();
 }
@@ -18,7 +19,7 @@ BetaqatDb::BetaqatDb()
 void
 BetaqatDb::open()
 {
-  setDatabaseName(m_assetsDir->absoluteFilePath("betaqat.db"));
+  setDatabaseName(m_assetsDir.absoluteFilePath("betaqat.db"));
   if (!QSqlDatabase::open())
     qFatal("Error opening betaqat db");
 }
@@ -34,7 +35,7 @@ BetaqatDb::getBetaqa(const int surah)
 {
   QSqlQuery dbQuery(*this);
 
-  if (m_languageCode == QLocale::Arabic)
+  if (m_config.language() == QLocale::Arabic)
     dbQuery.prepare("SELECT text FROM content WHERE sura=:i");
   else
     dbQuery.prepare("SELECT text_en FROM content WHERE sura=:i");

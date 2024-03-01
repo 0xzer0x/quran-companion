@@ -18,7 +18,7 @@ public:
   bool save();
 
 private:
-  QSharedPointer<BookmarksDb> m_bookmarksDb = BookmarksDb::current();
+  BookmarksDb& m_bookmarksDb = BookmarksDb::getInstance();
   QJsonObject verseJson(const Verse& v);
   QJsonObject khatmahJson(const QPair<QString, Verse>& entry);
   QJsonObject thoughtJson(const QPair<Verse, QString>& entry);

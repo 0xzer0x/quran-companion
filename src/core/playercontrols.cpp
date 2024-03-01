@@ -12,45 +12,46 @@ PlayerControls::PlayerControls(QWidget* parent,
   , ui(new Ui::PlayerControls)
   , m_player(player)
   , m_reader(reader)
+  , m_currVerse(Verse::getCurrent())
+  , m_config(Configuration::getInstance())
+  , m_reciters(Reciter::reciters)
 {
   ui->setupUi(this);
   loadIcons();
   setupConnections();
 
-  foreach (const QSharedPointer<Reciter>& r, m_reciters)
-    ui->cmbReciter->addItem(r->displayName());
+  foreach (const Reciter& r, m_reciters)
+    ui->cmbReciter->addItem(r.displayName());
 
-  ui->cmbReciter->setCurrentIndex(m_settings->value("Reciter", 0).toInt());
+  ui->cmbReciter->setCurrentIndex(
+    m_config.settings().value("Reciter", 0).toInt());
 }
 
 void
 PlayerControls::loadIcons()
 {
-  ui->btnPlay->setIcon(StyleManager::awesome->icon(fa_solid, fa_play));
-  ui->btnPause->setIcon(StyleManager::awesome->icon(fa_solid, fa_pause));
-  ui->btnStop->setIcon(StyleManager::awesome->icon(fa_solid, fa_stop));
+  fa::QtAwesome& awesome = StyleManager::getInstance().awesome();
+  ui->btnPlay->setIcon(awesome.icon(fa_solid, fa_play));
+  ui->btnPause->setIcon(awesome.icon(fa_solid, fa_pause));
+  ui->btnStop->setIcon(awesome.icon(fa_solid, fa_stop));
 
   ui->lbSpeaker->setText(QString(fa_volume_high));
-  ui->lbSpeaker->setFont(StyleManager::awesome->font(fa_solid, 16));
+  ui->lbSpeaker->setFont(awesome.font(fa_solid, 16));
 }
 
 void
 PlayerControls::setupConnections()
 {
-  QSharedPointer<ShortcutHandler> handler = ShortcutHandler::current();
-  connect(handler.data(),
-          &ShortcutHandler::togglePlayerControls,
-          this,
-          &PlayerControls::toggleVisibility);
-  connect(handler.data(),
+  const ShortcutHandler& handler = ShortcutHandler::getInstance();
+  connect(&handler,
           &ShortcutHandler::togglePlayback,
           this,
           &PlayerControls::togglePlayback);
-  connect(handler.data(),
+  connect(&handler,
           &ShortcutHandler::incrementVolume,
           this,
           &PlayerControls::incrementVolume);
-  connect(handler.data(),
+  connect(&handler,
           &ShortcutHandler::decrementVolume,
           this,
           &PlayerControls::decrementVolume);
@@ -159,12 +160,6 @@ PlayerControls::volumeSliderValueChanged(int position)
     m_volume = linearVolume;
     m_player->setPlayerVolume(m_volume);
   }
-}
-
-void
-PlayerControls::toggleVisibility()
-{
-  setVisible(!isVisible());
 }
 
 void

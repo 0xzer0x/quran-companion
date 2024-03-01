@@ -2,15 +2,17 @@
 #include <QRandomGenerator>
 #include <QSqlError>
 
-QSharedPointer<QuranDb>
-QuranDb::current()
+QuranDb&
+QuranDb::getInstance()
 {
-  static QSharedPointer<QuranDb> quranDb = QSharedPointer<QuranDb>::create();
-  return quranDb;
+  static QuranDb qdb;
+  return qdb;
 }
 
 QuranDb::QuranDb()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "QuranCon"))
+  , m_assetsDir(DirManager::getInstance().assetsDir())
+  , m_config(Configuration::getInstance())
 {
   QuranDb::open();
   for (int i = 1; i <= 114; i++)
@@ -20,7 +22,7 @@ QuranDb::QuranDb()
 void
 QuranDb::open()
 {
-  setDatabaseName(m_assetsDir->absoluteFilePath("quran.db"));
+  setDatabaseName(m_assetsDir.absoluteFilePath("quran.db"));
   if (!QSqlDatabase::open())
     qFatal("Error opening quran db");
 }
@@ -32,7 +34,7 @@ QuranDb::type()
 }
 
 QPair<int, int>
-QuranDb::pageMetadata(const int page)
+QuranDb::pageMetadata(const int page) const
 {
   QSqlQuery dbQuery(*this);
   dbQuery.prepare(
@@ -48,12 +50,12 @@ QuranDb::pageMetadata(const int page)
 }
 
 int
-QuranDb::getVersePage(const int& surahIdx, const int& verse)
+QuranDb::getVersePage(const int& surahIdx, const int& verse) const
 {
   QSqlQuery dbQuery(*this);
 
   QString query = "SELECT page FROM verses_v%0 WHERE sura_no=%1 AND aya_no=%2";
-  dbQuery.prepare(query.arg(QString::number(m_qcfVer),
+  dbQuery.prepare(query.arg(QString::number(m_config.qcfVersion()),
                             QString::number(surahIdx),
                             QString::number(verse)));
 
@@ -66,7 +68,7 @@ QuranDb::getVersePage(const int& surahIdx, const int& verse)
 }
 
 int
-QuranDb::getJuzStartPage(const int juz)
+QuranDb::getJuzStartPage(const int juz) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -84,7 +86,7 @@ QuranDb::getJuzStartPage(const int juz)
 }
 
 int
-QuranDb::getJuzOfPage(const int page)
+QuranDb::getJuzOfPage(const int page) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -101,14 +103,15 @@ QuranDb::getJuzOfPage(const int page)
 }
 
 QList<QList<int>>
-QuranDb::verseInfoList(const int page)
+QuranDb::verseInfoList(const int page) const
 {
   QList<QList<int>> viList;
   QSqlQuery dbQuery(*this);
 
   QString query =
     "SELECT sura_no,aya_no FROM verses_v%0 WHERE page=%1 ORDER BY id";
-  dbQuery.prepare(query.arg(QString::number(m_qcfVer), QString::number(page)));
+  dbQuery.prepare(
+    query.arg(QString::number(m_config.qcfVersion()), QString::number(page)));
 
   if (!dbQuery.exec()) {
     qCritical() << "Error occurred during getVerseInfoList SQL statment exec";
@@ -123,7 +126,7 @@ QuranDb::verseInfoList(const int page)
 }
 
 QString
-QuranDb::verseText(const int sIdx, const int vIdx)
+QuranDb::verseText(const int sIdx, const int vIdx) const
 {
   QSqlQuery dbQuery(*this);
   if (m_verseType == VerseType::Annotated)
@@ -145,7 +148,7 @@ QuranDb::verseText(const int sIdx, const int vIdx)
 }
 
 int
-QuranDb::surahStartPage(int surahIdx)
+QuranDb::surahStartPage(int surahIdx) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -161,11 +164,11 @@ QuranDb::surahStartPage(int surahIdx)
 }
 
 QString
-QuranDb::surahName(const int sIdx, bool ar)
+QuranDb::surahName(const int sIdx, bool ar) const
 {
   QSqlQuery dbQuery(*this);
 
-  if (m_languageCode == QLocale::Arabic || ar)
+  if (m_config.language() == QLocale::Arabic || ar)
     dbQuery.prepare("SELECT sura_name_ar FROM verses_v1 WHERE sura_no=:i");
   else
     dbQuery.prepare("SELECT sura_name_en FROM verses_v1 WHERE sura_no=:i");
@@ -180,7 +183,7 @@ QuranDb::surahName(const int sIdx, bool ar)
 }
 
 QList<int>
-QuranDb::verseById(const int id)
+QuranDb::verseById(const int id) const
 {
   QSqlQuery dbQuery(*this);
   dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v1 WHERE id=:i");
@@ -197,12 +200,12 @@ QuranDb::verseById(const int id)
 }
 
 int
-QuranDb::versePage(const int& surahIdx, const int& verse)
+QuranDb::versePage(const int& surahIdx, const int& verse) const
 {
   QSqlQuery dbQuery(*this);
 
   QString query = "SELECT page FROM verses_v%0 WHERE sura_no=%1 AND aya_no=%2";
-  dbQuery.prepare(query.arg(QString::number(m_qcfVer),
+  dbQuery.prepare(query.arg(QString::number(m_config.qcfVersion()),
                             QString::number(surahIdx),
                             QString::number(verse)));
 
@@ -215,7 +218,7 @@ QuranDb::versePage(const int& surahIdx, const int& verse)
 }
 
 QList<int>
-QuranDb::searchSurahNames(QString text)
+QuranDb::searchSurahNames(QString text) const
 {
   QList<int> results;
   QSqlQuery dbQuery(*this);
@@ -241,13 +244,13 @@ QuranDb::searchSurahNames(QString text)
 QList<QList<int>>
 QuranDb::searchSurahs(QString searchText,
                       const QList<int> surahs,
-                      const bool whole)
+                      const bool whole) const
 {
   QList<QList<int>> results;
   QSqlQuery dbQuery(*this);
 
   QString q = "SELECT page,sura_no,aya_no FROM verses_v" +
-              QString::number(m_qcfVer) + " WHERE (";
+              QString::number(m_config.qcfVersion()) + " WHERE (";
   for (int i = 0; i < surahs.size(); i++) {
     q.append("sura_no=" + QString::number(surahs.at(i)) + ' ');
     if (i != surahs.size() - 1)
@@ -276,13 +279,15 @@ QuranDb::searchSurahs(QString searchText,
 }
 
 QList<QList<int>>
-QuranDb::searchVerses(QString searchText, const int range[], const bool whole)
+QuranDb::searchVerses(QString searchText,
+                      const int range[],
+                      const bool whole) const
 {
   QList<QList<int>> results;
   QSqlQuery dbQuery(*this);
 
   QString q = "SELECT page,sura_no,aya_no FROM verses_v" +
-              QString::number(m_qcfVer) +
+              QString::number(m_config.qcfVersion()) +
               " WHERE (page >= " + QString::number(range[0]) +
               " AND page <= " + QString::number(range[1]) + ")";
 
@@ -309,13 +314,13 @@ QuranDb::searchVerses(QString searchText, const int range[], const bool whole)
 }
 
 QList<int>
-QuranDb::randomVerse()
+QuranDb::randomVerse() const
 {
   QSqlQuery dbQuery(*this);
 
   int id = QRandomGenerator::global()->bounded(1, 6237);
   dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v" +
-                  QString::number(m_qcfVer) +
+                  QString::number(m_config.qcfVersion()) +
                   " WHERE id=" + QString::number(id));
 
   if (!dbQuery.exec()) {

@@ -4,6 +4,7 @@
 AboutDialog::AboutDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::AboutDialog)
+  , m_config(Configuration::getInstance())
 {
   ui->setupUi(this);
   QFont bolded = qApp->font();
@@ -26,7 +27,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     ui->lbContribTranslation->text().arg(tr("Contribute to translations")));
 
   connect(ui->btnBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-  if (m_lang == QLocale::Arabic)
+  if (m_config.language() == QLocale::Arabic)
     ui->aboutTabWidget->setObjectName("rtlTabWidget");
 }
 

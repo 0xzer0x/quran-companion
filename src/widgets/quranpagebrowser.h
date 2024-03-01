@@ -19,7 +19,8 @@
 #include <QTextCursor>
 #include <database/glyphsdb.h>
 #include <database/qurandb.h>
-#include <utils/settings.h>
+#include <utils/configuration.h>
+#include <utils/stylemanager.h>
 
 /**
  * @brief QuranPageBrowser class is a modified QTextBrowser for displaying a
@@ -145,10 +146,10 @@ protected:
 #endif
 
 private:
-  const int m_qcfVer = Settings::qcfVersion;
-  QSharedPointer<QuranDb> m_quranDb = QuranDb::current();
-  QSharedPointer<GlyphsDb> m_glyphsDb = GlyphsDb::current();
-  QSharedPointer<QSettings> const m_settings = Settings::settings;
+  Configuration& m_config;
+  StyleManager& m_styleMgr;
+  const QuranDb& m_quranDb;
+  const GlyphsDb& m_glyphsDb;
   /**
    * @brief utility for creating menu actions for interacting with the widget
    */

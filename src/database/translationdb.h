@@ -3,12 +3,13 @@
 
 #include <QDir>
 #include <QObject>
+#include <QPointer>
 #include <QSharedPointer>
 #include <QSqlDatabase>
 #include <interfaces/dbconnection.h>
 #include <types/translation.h>
+#include <utils/configuration.h>
 #include <utils/dirmanager.h>
-#include <utils/settings.h>
 
 class TranslationDb
   : public DbConnection
@@ -16,8 +17,7 @@ class TranslationDb
 {
   Q_OBJECT
 public:
-  static QSharedPointer<TranslationDb> current();
-  TranslationDb();
+  static TranslationDb& getInstance();
   void open();
   Type type();
   /**
@@ -32,14 +32,14 @@ public:
    * @param vIdx - verse number
    * @return QString containing the verse translation
    */
-  QString getTranslation(const int sIdx, const int vIdx);
+  QString getTranslation(const int sIdx, const int vIdx) const;
   /**
    * @brief currTranslation
    * @return
    *
    * MODIFIED
    */
-  QSharedPointer<::Translation> currTranslation() const;
+  const ::Translation* currTranslation() const;
 
 public slots:
   /**
@@ -48,15 +48,14 @@ public slots:
   void updateLoadedTranslation();
 
 private:
-  const QSharedPointer<QDir> m_assetsDir = DirManager::assetsDir;
-  const QSharedPointer<QDir> m_downloadsDir = DirManager::downloadsDir;
-  const QSharedPointer<QSettings> m_settings = Settings::settings;
-  const QList<QSharedPointer<::Translation>>& m_translations =
-    Translation::translations;
+  TranslationDb();
+  Configuration& m_config;
+  const DirManager& m_dirMgr;
+  const QList<::Translation>& m_translations;
   /**
    * @brief the current active DBManager::Translation
    */
-  QSharedPointer<::Translation> m_currTr;
+  const ::Translation* m_currTr;
   /**
    * @brief path to the currently active translation database file
    */

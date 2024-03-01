@@ -7,10 +7,19 @@
 #include <QApplication>
 #include <QFile>
 #include <QXmlStreamReader>
-#include <utils/settings.h>
 using std::make_pair;
 
-QMap<QString, QString> ShortcutHandler::shortcutsDescription;
+ShortcutHandler&
+ShortcutHandler::getInstance()
+{
+  static ShortcutHandler handler;
+  return handler;
+}
+
+ShortcutHandler::ShortcutHandler()
+  : m_config(Configuration::getInstance())
+{
+}
 
 void
 ShortcutHandler::populateDescriptionMap()
@@ -19,7 +28,7 @@ ShortcutHandler::populateDescriptionMap()
   if (!shortcuts.open(QIODevice::ReadOnly))
     qCritical("Couldn't Open Shortcuts XML");
 
-  Settings::settings->beginGroup("Shortcuts");
+  m_config.settings().beginGroup("Shortcuts");
   QXmlStreamReader reader(&shortcuts);
   while (!reader.atEnd() && !reader.hasError()) {
     QXmlStreamReader::TokenType token = reader.readNext();
@@ -31,36 +40,23 @@ ShortcutHandler::populateDescriptionMap()
           qApp->translate("SettingsDialog",
                           reader.attributes().value("description").toLatin1());
 
-        shortcutsDescription.insert(key, desc);
-        if (!Settings::settings->contains(key))
-          Settings::settings->setValue(key, defBind);
+        m_shortcutsDescription.insert(key, desc);
+        if (!m_config.settings().contains(key))
+          m_config.settings().setValue(key, defBind);
       }
     }
   }
 
-  Settings::settings->endGroup();
+  m_config.settings().endGroup();
   shortcuts.close();
-}
-
-QSharedPointer<ShortcutHandler>
-ShortcutHandler::current()
-{
-  static QSharedPointer<ShortcutHandler> handler =
-    QSharedPointer<ShortcutHandler>::create();
-  return handler;
-}
-
-ShortcutHandler::ShortcutHandler(QObject* parent)
-  : QObject(parent)
-{
 }
 
 void
 ShortcutHandler::createShortcuts(QObject* context)
 {
-  foreach (const QString& key, shortcutsDescription.keys()) {
+  foreach (const QString& key, m_shortcutsDescription.keys()) {
     QKeySequence seq = qvariant_cast<QKeySequence>(
-      Settings::settings->value("Shortcuts/" + key));
+      m_config.settings().value("Shortcuts/" + key));
     m_shortcuts.insert(key, new QShortcut(seq, context));
   }
   m_shortcuts.value("TogglePlayback")->setContext(Qt::ApplicationShortcut);
@@ -114,6 +110,11 @@ ShortcutHandler::setupConnections()
 void
 ShortcutHandler::shortcutChanged(QString key)
 {
-  m_shortcuts.value(key)->setKey(
-    qvariant_cast<QKeySequence>(Settings::settings->value("Shortcuts/" + key)));
+  m_shortcuts.value(key)->setKey(qvariant_cast<QKeySequence>(
+    m_config.settings().value("Shortcuts/" + key)));
+}
+
+const QMap<QString, QString> &ShortcutHandler::shortcutsDescription() const
+{
+  return m_shortcutsDescription;
 }

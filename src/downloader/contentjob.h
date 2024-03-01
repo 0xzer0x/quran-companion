@@ -25,9 +25,8 @@ signals:
   void fileFound();
 
 private:
-  QList<QSharedPointer<Tafsir>>& m_tafasir = Tafsir::tafasir;
-  QList<QSharedPointer<Translation>>& m_translations =
-    Translation::translations;
+  QList<Tafsir>& m_tafasir;
+  QList<Translation>& m_translations;
   TaskDownloader m_taskDlr;
   QNetworkAccessManager m_netMgr;
   DownloadTask* m_task;

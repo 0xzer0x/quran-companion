@@ -5,6 +5,8 @@
 ContentJob::ContentJob(Type type, int idx)
   : m_idx(idx)
   , m_type(type)
+  , m_tafasir(Tafsir::tafasir)
+  , m_translations(Translation::translations)
   , m_isDownloading(false)
   , m_taskDlr(this)
 {
@@ -73,8 +75,8 @@ QString
 ContentJob::name()
 {
   return m_type == DownloadJob::TafsirFile
-           ? m_tafasir.at(m_idx)->displayName()
-           : m_translations.at(m_idx)->displayName();
+           ? m_tafasir.at(m_idx).displayName()
+           : m_translations.at(m_idx).displayName();
 }
 
 ContentJob::~ContentJob()

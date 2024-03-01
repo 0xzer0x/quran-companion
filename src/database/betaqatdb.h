@@ -4,16 +4,15 @@
 #include <QDir>
 #include <QSqlDatabase>
 #include <interfaces/dbconnection.h>
+#include <utils/configuration.h>
 #include <utils/dirmanager.h>
-#include <utils/settings.h>
 
 class BetaqatDb
   : public DbConnection
   , QSqlDatabase
 {
 public:
-  static QSharedPointer<BetaqatDb> current();
-  BetaqatDb();
+  static BetaqatDb& getInstance();
   void open();
   Type type();
   /**
@@ -24,8 +23,9 @@ public:
   QString getBetaqa(const int surah);
 
 private:
-  const QLocale::Language m_languageCode = Settings::language;
-  const QSharedPointer<QDir> m_assetsDir = DirManager::assetsDir;
+  BetaqatDb();
+  const Configuration& m_config;
+  const QDir& m_assetsDir;
 };
 
 #endif // BETAQATDB_H

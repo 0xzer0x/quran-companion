@@ -18,8 +18,8 @@ public:
   QFileInfo destination() const override;
 
 private:
-  QSharedPointer<const QDir> m_downloadsDir = DirManager::downloadsDir;
-  const QList<QSharedPointer<Translation>>& m_translations =
+  const QDir& m_downloadsDir = DirManager::getInstance().downloadsDir();
+  const QList<Translation>& m_translations =
     Translation::translations;
   int m_idx;
 };

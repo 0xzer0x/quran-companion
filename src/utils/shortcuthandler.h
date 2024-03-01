@@ -6,6 +6,7 @@
 #ifndef SHORTCUTHANDLER_H
 #define SHORTCUTHANDLER_H
 
+#include "configuration.h"
 #include <QHash>
 #include <QKeySequence>
 #include <QMap>
@@ -22,16 +23,11 @@ class ShortcutHandler : public QObject
 {
   Q_OBJECT
 public:
-  static QMap<QString, QString> shortcutsDescription;
-  static void populateDescriptionMap();
-  static QSharedPointer<ShortcutHandler> current();
-  /**
-   * @brief class constructor
-   * @param parent - pointer to parent widget that will recieve the shortcut
-   * events
-   */
-  explicit ShortcutHandler(QObject* parent = nullptr);
+  static ShortcutHandler& getInstance();
+  void populateDescriptionMap();
   void createShortcuts(QObject* context);
+
+  const QMap<QString, QString>& shortcutsDescription() const;
 
 public slots:
   /**
@@ -68,6 +64,13 @@ signals:
   void openAdvancedCopy();
 
 private:
+  Configuration& m_config;
+  /**
+   * @brief class constructor
+   * @param parent - pointer to parent widget that will recieve the shortcut
+   * events
+   */
+  ShortcutHandler();
   /**
    * @brief connect different QShortcut signals to their
    * corresponding signal in ShortcutHandler
@@ -78,6 +81,7 @@ private:
    * settings name
    */
   QHash<QString, QShortcut*> m_shortcuts;
+  QMap<QString, QString> m_shortcutsDescription;
 };
 
 #endif // SHORTCUTHANDLER_H

@@ -14,13 +14,19 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, JobManager* manager)
   : QDialog(parent)
   , ui(new Ui::DownloaderDialog)
   , m_jobMgr(manager)
-  , m_surahDisplayNames(m_quranDb->surahNames())
+  , m_config(Configuration::getInstance())
+  , m_quranDb(QuranDb::getInstance())
+  , m_reciters(Reciter::reciters)
+  , m_tafasir(Tafsir::tafasir)
+    , m_translations(Translation::translations)
 
 {
   ui->setupUi(this);
-  setWindowIcon(StyleManager::awesome->icon(fa::fa_solid, fa::fa_download));
+  setWindowIcon(
+    StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_download));
 
   // treeview setup
+  m_surahDisplayNames = m_quranDb.surahNames();
   QStringList headers;
   headers.append(tr("Name"));
   headers.append(tr("Number"));
@@ -82,9 +88,9 @@ void
 DownloaderDialog::populateTreeModel()
 {
   // add reciters
-  for (const QSharedPointer<Reciter>& reciter : m_reciters) {
-    QStandardItem* item = new QStandardItem(reciter->displayName());
-    item->setToolTip(reciter->displayName());
+  for (const Reciter& reciter : m_reciters) {
+    QStandardItem* item = new QStandardItem(reciter.displayName());
+    item->setToolTip(reciter.displayName());
     m_treeModel.invisibleRootItem()->appendRow(item);
 
     for (int j = 1; j <= 114; j++) {
@@ -105,10 +111,10 @@ DownloaderDialog::populateTreeModel()
   m_treeModel.invisibleRootItem()->appendRow(tafsir);
   // -- tafasir
   for (int i = 0; i < m_tafasir.size(); i++) {
-    const QSharedPointer<Tafsir>& t = m_tafasir.at(i);
-    if (!t->isExtra())
+    const Tafsir& t = m_tafasir.at(i);
+    if (!t.isExtra())
       continue;
-    QStandardItem* item = new QStandardItem(t->displayName());
+    QStandardItem* item = new QStandardItem(t.displayName());
     item->setData("tadb", Qt::UserRole);
     item->setData(i, Qt::UserRole + 1);
     tafsir->appendRow(item);
@@ -120,11 +126,11 @@ DownloaderDialog::populateTreeModel()
   tafsir->setData("translation", Qt::UserRole);
   m_treeModel.invisibleRootItem()->appendRow(translation);
   // -- translations
-  for (int i = 0; i < m_tr.size(); i++) {
-    const QSharedPointer<Translation>& tr = m_tr.at(i);
-    if (!tr->isExtra())
+  for (int i = 0; i < m_translations.size(); i++) {
+      const Translation& tr = m_translations.at(i);
+    if (!tr.isExtra())
       continue;
-    QStandardItem* item = new QStandardItem(tr->displayName());
+    QStandardItem* item = new QStandardItem(tr.displayName());
     item->setData("trdb", Qt::UserRole);
     item->setData(i, Qt::UserRole + 1);
     translation->appendRow(item);
@@ -211,7 +217,7 @@ DownloaderDialog::addTaskProgress(QSharedPointer<DownloadJob> job)
   QString objName;
   if (job->type() == DownloadJob::Recitation) {
     SurahJob* sJob = qobject_cast<SurahJob*>(job.data());
-    QString reciter = m_reciters.at(sJob->reciter())->displayName();
+    QString reciter = m_reciters.at(sJob->reciter()).displayName();
     QString surahName = m_surahDisplayNames.at(sJob->surah() - 1);
     objName = reciter + tr(" // Surah: ") + surahName;
   } else {
@@ -223,7 +229,7 @@ DownloaderDialog::addTaskProgress(QSharedPointer<DownloadJob> job)
   prgFrm->setObjectName(objName);
 
   QBoxLayout* downInfo;
-  if (m_languageCode == QLocale::Arabic)
+  if (m_lang == QLocale::Arabic)
     downInfo = new QBoxLayout(QBoxLayout::RightToLeft, prgFrm);
   else
     downInfo = new QHBoxLayout(prgFrm);
@@ -398,7 +404,8 @@ DownloaderDialog::topTaskDownloadError(QSharedPointer<DownloadJob> failed)
 void
 DownloaderDialog::openDownloadsDir()
 {
-  QUrl url = QUrl::fromLocalFile(DirManager::downloadsDir->absolutePath());
+  QUrl url = QUrl::fromLocalFile(
+    DirManager::getInstance().downloadsDir().absolutePath());
   QDesktopServices::openUrl(url);
 }
 
