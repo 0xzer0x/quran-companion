@@ -687,8 +687,8 @@
     </message>
     <message>
       <location filename="../../src/core/mainwindow.ui" line="542"/>
-      <source>Player Controls</source>
-      <translation type="unfinished">Player Controls</translation>
+      <source>Player controls</source>
+      <translation type="unfinished">Player controls</translation>
     </message>
     <message>
       <location filename="../../src/core/mainwindow.cpp" line="75"/>
