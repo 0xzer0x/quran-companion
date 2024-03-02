@@ -242,6 +242,7 @@ DownloaderDialog::addTaskProgress(QSharedPointer<DownloadJob> job)
   downSpeed->setAlignment(Qt::AlignRight);
 
   downInfo->addWidget(lbTitle);
+  downInfo->addStretch(1);
   downInfo->addWidget(downSpeed);
   prgFrm->layout()->addItem(downInfo);
 
