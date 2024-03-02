@@ -32,9 +32,10 @@ ImportExportDialog::selectImports(QString filepath)
 {
   m_mode = Mode::Import;
   m_importer->setFile(filepath);
-  if (m_importer->read())
+  if (m_importer->read()) {
     setCheckedImports();
-  open();
+    open();
+  }
 }
 
 void
