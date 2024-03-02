@@ -779,8 +779,10 @@ void
 MainWindow::actionPlayerControlsToggled(bool checked)
 {
   m_playerControls->setVisible(checked);
-  if (m_config.settings().value("Reader/AdaptiveFont").toBool())
+  if (m_config.settings().value("Reader/AdaptiveFont").toBool()) {
     m_reader->redrawQuranPage();
+    m_reader->highlightCurrentVerse();
+  }
 }
 
 void
