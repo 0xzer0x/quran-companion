@@ -1,4 +1,5 @@
 #include "bookmarksnotifier.h"
+#include <QApplication>
 
 BookmarksNotifier::BookmarksNotifier(QObject* parent)
 {
@@ -8,13 +9,15 @@ BookmarksNotifier::BookmarksNotifier(QObject* parent)
 void
 BookmarksNotifier::notifyAdded()
 {
-  QString msg = tr("Verse added to bookmarks");
+  QString msg =
+    qApp->translate("BookmarksNotifier", "Verse added to bookmarks");
   emit notify(bookmarkAdd, msg);
 }
 
 void
 BookmarksNotifier::notifyRemoved()
 {
-  QString msg = tr("Verse removed from bookmarks");
+  QString msg =
+    qApp->translate("BookmarksNotifier", "Verse removed from bookmarks");
   emit notify(bookmarkRemove, msg);
 }
