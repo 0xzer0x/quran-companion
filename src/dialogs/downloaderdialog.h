@@ -146,7 +146,7 @@ private:
   void addTaskProgress(QSharedPointer<DownloadJob> job);
   /**
    * @brief enqueue a surah to download
-   * @param reciter - ::Globals::recitersList index for the reciter whose
+   * @param reciter - ::Reciter::reciters index for the reciter whose
    * recitations are being downloaded
    * @param surah - number of surah to download
    */
@@ -154,7 +154,7 @@ private:
   /**
    * @brief Adds the combination of reciter & surah to the currently active
    * downloads QHash.
-   * @param reciter - ::Globals::recitersList index for the reciter whose
+   * @param reciter - ::Reciter::reciters index for the reciter whose
    * recitations are being downloaded
    * @param surah - surah number
    */
@@ -162,7 +162,7 @@ private:
   /**
    * @brief Removes the surah from the reciters currently active
    * downloads.
-   * @param reciter - ::Globals::recitersList index for the reciter whose
+   * @param reciter - ::Reciter::reciters index for the reciter whose
    * recitations are being downloaded
    * @param surah - surah number
    */

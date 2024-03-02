@@ -74,19 +74,19 @@ signals:
    * @fn void navigateToVerse(Verse v)
    * @brief Emitted when 'go to verse' button is clicked to signal the
    * navigation and selection of a verse.
-   * @param v - ::Verse to navigate to
+   * @param v - Verse to navigate to
    */
   void navigateToVerse(const Verse& v);
 
 public slots:
   /**
-   * @brief generates ::Verse object from the name of the Frame containing the
+   * @brief generates Verse object from the name of the Frame containing the
    * navigation buttons. Then emits BookmarksDialog::navigateToVerse(Verse).
    */
   void btnGoToVerse();
   /**
-   * @brief generates ::Verse object from the name of the Frame containing the
-   * navigation buttons then deletes the corresponding ::Verse from the
+   * @brief generates Verse object from the name of the Frame containing the
+   * navigation buttons then deletes the corresponding Verse from the
    * bookmarks database.
    * @details After removing the bookmark from the database, the corresponding
    * frame is removed. If there are no more bookmarks in this surah, the default
@@ -144,11 +144,11 @@ private:
    */
   int m_shownSurah = 0;
   /**
-   * @brief ::Verse QList for all bookmarked verses.
+   * @brief Verse QList for all bookmarked verses.
    */
   QList<Verse> m_allBookmarked;
   /**
-   * @brief ::Verse QList for the shown verses (all or for a specific surah).
+   * @brief Verse QList for the shown verses (all or for a specific surah).
    */
   QList<Verse> m_shownVerses;
   /**

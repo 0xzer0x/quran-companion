@@ -74,8 +74,17 @@ private slots:
 
 private:
   Ui::PlayerControls* ui;
+  /**
+   * @brief reference to the shared current verse instance
+   */
   const Verse& m_currVerse;
+  /**
+   * @brief reference to the singleton Configuration instance
+   */
   Configuration& m_config;
+  /**
+   * @brief reference to the static QList of available reciters
+   */
   const QList<Reciter>& m_reciters;
   /**
    * @brief load icons for different UI elements
@@ -93,6 +102,9 @@ private:
    * @brief pointer to VersePlayer instance
    */
   QPointer<VersePlayer> m_player;
+  /**
+   * @brief pointer to the QuranReader instance
+   */
   QPointer<QuranReader> m_reader;
 };
 

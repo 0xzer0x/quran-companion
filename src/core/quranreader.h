@@ -22,12 +22,17 @@ class QuranReader : public QWidget
   Q_OBJECT
 
 public:
+  /**
+   * @brief class constructor
+   * @param parent - pointer to parent widget
+   * @param player - pointer to VersePlayer instance
+   */
   explicit QuranReader(QWidget* parent, VersePlayer* player);
   ~QuranReader();
 
 public slots:
   /**
-   * @brief highlight the currently active ::Verse m_currVerse in the
+   * @brief highlight the currently active Verse m_currVerse in the
    * active QuranPageBrowser and the side panel depending on the ::ReaderMode
    */
   void highlightCurrentVerse();
@@ -92,9 +97,7 @@ public slots:
    */
   void setVerseToStartOfPage();
   /**
-   * @brief updatePageFontSize
-   *
-   * MODIFIED
+   * @brief slot for updating the page font size of all quran pages
    */
   void updatePageFontSize();
 
@@ -112,7 +115,7 @@ private slots:
    * @brief callback function for clicking verses in the QuranPageBrowser that
    * takes actions based on the chosen option in the menu
    * @param hrefUrl - "#idx" where idx is the verse index relative to the start
-   * of the page (=index in the page ::Verse QList)
+   * of the page (=index in the page Verse QList)
    */
   void verseAnchorClicked(const QUrl& hrefUrl);
   /**
@@ -141,14 +144,42 @@ private slots:
 
 private:
   Ui::QuranReader* ui;
+  /**
+   * @brief reference to the shared current verse instance
+   */
   Verse& m_currVerse;
+  /**
+   * @brief reference to the singleton Configuration instance
+   */
   Configuration& m_config;
+  /**
+   * @brief reference to the singleton TafsirDb instance
+   */
   TafsirDb& m_tafsirDb;
+  /**
+   * @brief reference to the singleton TranslationDb instance
+   */
   TranslationDb& m_translationDb;
+  /**
+   * @brief reference to the singleton BookmarksDb instance
+   */
   BookmarksDb& m_bookmarksDb;
+  /**
+   * @brief reference to the singleton QuranDb instance
+   */
   QuranDb& m_quranDb;
+  /**
+   * @brief reference to the singleton GlyphsDb instance
+   */
   const GlyphsDb& m_glyphsDb;
+  /**
+   * @brief reference to the static QList of available tafasir
+   */
   const QList<Tafsir>& m_tafasir;
+  /**
+   * @brief connects signals and slots for different UI components and
+   * shortcuts
+   */
   void setupConnections();
   /**
    * @brief load icons for different UI elements
@@ -193,7 +224,7 @@ private:
    */
   void selectVerse(int browserIdx, int IdxInPage);
   /**
-   * @brief updates the list that contains::Verse instances for verses in the
+   * @brief updates the list that containsVerse instances for verses in the
    * current page
    */
   void updatePageVerseInfoList();
@@ -201,28 +232,28 @@ private:
    * @brief QScrollArea used in single page mode to display verses &
    * translation
    */
-  QPointer<QScrollArea> m_scrlVerseByVerse = nullptr;
+  QPointer<QScrollArea> m_scrlVerseByVerse;
   /**
    * @brief pointer to currently active QuranPageBrowser instance, must be one
    * of the values in m_quranBrowsers array
    */
-  QPointer<QuranPageBrowser> m_activeQuranBrowser = nullptr;
+  QPointer<QuranPageBrowser> m_activeQuranBrowser;
   /**
    * @brief array of QuranPageBrowser instances used in different modes, index 0
    * is used in both modes
    */
-  QPointer<QuranPageBrowser> m_quranBrowsers[2]{};
+  QPointer<QuranPageBrowser> m_quranBrowsers[2];
   /**
    * @brief QList of QFrame pointers to VerseFrame elements in the single page
    * mode side panel
    */
   QList<QPointer<QFrame>> m_verseFrameList;
   /**
-   * @brief pointer to the currently active page ::Verse list
+   * @brief pointer to the currently active page Verse list
    */
   const QList<Verse>* m_activeVList;
   /**
-   * @brief array of 2 QLists of ::Verse instances for the verses in the
+   * @brief array of 2 QLists of Verse instances for the verses in the
    * displayed page(s), index 0 is used in both reader modes
    */
   QList<Verse> m_vLists[2];
@@ -230,6 +261,9 @@ private:
    * @brief pointer to the currently highlighted VerseFrame in the side panel
    */
   QPointer<VerseFrame> m_highlightedFrm;
+  /**
+   * @brief pointer to the VersePlayer instance
+   */
   QPointer<VersePlayer> m_player;
   /**
    * @brief QFont used in the side panel translation

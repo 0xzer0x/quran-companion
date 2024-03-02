@@ -43,8 +43,9 @@ QT_END_NAMESPACE
 
 /**
  * @class MainWindow
- * @brief MainWindow class is responsible for the reader interface, audio
- * controls, navigation, and opening other dialogs
+ * @brief MainWindow class is the driver class the connects all the other
+ * components and is responsible for the navigation dock and menubar
+ * functionality
  */
 class MainWindow : public QMainWindow
 {
@@ -60,15 +61,13 @@ public:
 
 public slots:
   /**
-   * @brief currentVerseChanged
-   *
-   * MODIFIED
+   * @brief slot for adjusting UI elements to reflect the current verse
+   * information
    */
   void currentVerseChanged();
   /**
-   * @brief currentSurahChanged
-   *
-   * MODIFIED
+   * @brief slot for reseting the verses combobox and
+   * highlighting the active surah in the navigation dock
    */
   void currentSurahChanged();
   /**
@@ -118,7 +117,7 @@ private slots:
   /**
    * @brief display warning message box in case that recitation files are
    * missing
-   * @param reciterIdx - ::Globals::recitersList index for the reciter
+   * @param reciterIdx - ::Reciter::reciters index for the reciter
    * @param surah
    */
   void missingRecitationFileWarn(int reciterIdx, int surah);
@@ -128,14 +127,12 @@ private slots:
   void missingQCF();
   /**
    * @brief display a warning messagebox when a tafsir db file is not found
-   * @param idx - index of tafsir in Globals::tafasirList
+   * @param idx - index of tafsir in Tafsir::tafasir
    */
   void missingTafsir(int idx);
   /**
-   * @brief missingTranslation
-   * @param idx
-   *
-   * MODIFIED
+   * @brief display a warning messagebox when a translation db file is not found
+   * @param idx - index of translation in Translation::translations
    */
   void missingTranslation(int idx);
   /**
@@ -150,7 +147,7 @@ private slots:
    */
   void updateTrayTooltip(QMediaPlayer::PlaybackState state);
   /**
-   * @brief adds the current ::Verse to the bookmarks
+   * @brief adds the current Verse to the bookmarks
    */
   void bookmarkCurrent();
   /**
@@ -178,7 +175,7 @@ private slots:
    */
   void actionAdvancedCopyTriggered();
   /**
-   * @brief open the ContentDialog for the current ::Verse
+   * @brief open the ContentDialog for the current Verse
    */
   void actionTafsirTriggered();
   /**
@@ -190,10 +187,9 @@ private slots:
    */
   void actionSearchTriggered();
   /**
-   * @brief actionPlayerControlsToggled
-   * @param checked
-   *
-   * MODIFIED
+   * @brief callback for the checkbox to toggle the visibility of the player
+   * controls
+   * @param checked - boolean representing check state of ui checkbox
    */
   void actionPlayerControlsToggled(bool checked);
   /**
@@ -205,11 +201,11 @@ private slots:
    */
   void actionAboutQttriggered();
   /**
-   * @brief move to the next ::Verse relative to m_currVerse
+   * @brief move to the next Verse relative to m_currVerse
    */
   void nextVerse();
   /**
-   * @brief move to the previous ::Verse relative to m_currVerse
+   * @brief move to the previous Verse relative to m_currVerse
    */
   void prevVerse();
   /**
@@ -253,18 +249,48 @@ private slots:
    * @brief toggles visiblity of the navigation dock
    */
   void toggleNavDock();
+  /**
+   * @brief callback function for importing user data from file
+   */
   void importUserData();
+  /**
+   * @brief callback function for exporting user data to file
+   */
   void exportUserData();
 
 private:
   Ui::MainWindow* ui;
+  /**
+   * @brief reference to the shared current verse instance
+   */
   Verse& m_currVerse;
+  /**
+   * @brief reference to the singleton Configuration instance
+   */
   Configuration& m_config;
+  /**
+   * @brief reference to the singleton ShortcutHandler instance
+   */
   ShortcutHandler& m_shortcutHandler;
+  /**
+   * @brief reference to the singleton BookmarksDb instance
+   */
   BookmarksDb& m_bookmarksDb;
+  /**
+   * @brief reference to the singleton QuranDb instance
+   */
   const QuranDb& m_quranDb;
+  /**
+   * @brief reference to the singleton TranslationDb instance
+   */
   const TranslationDb& m_translationDb;
+  /**
+   * @brief reference to the static QList of available reciters
+   */
   const QList<Reciter>& m_reciters;
+  /**
+   * @brief reference to the static QList of available tafasir
+   */
   const QList<Tafsir>& m_tafasir;
   /**
    * @brief initalizes different parts used by the app
@@ -275,7 +301,7 @@ private:
    */
   void loadIcons();
   /**
-   * @brief set the current ::Verse from settings
+   * @brief set the current Verse from settings
    */
   void loadVerse();
   /**
@@ -287,12 +313,36 @@ private:
    * shortcuts
    */
   void setupConnections();
+  /**
+   * @brief connect VersePlayer signals to their corresponding slots in
+   * MainWindow
+   */
   void connectPlayer();
+  /**
+   * @brief connect SystemTray signals to their corresponding slots in
+   * MainWindow
+   */
   void connectTray();
+  /**
+   * @brief connect QuranReader specific signals to their corresponding slots
+   */
   void connectReader();
+  /**
+   * @brief connect Controls/Navigation specific signals to their corresponding
+   * slots
+   */
   void connectControls();
+  /**
+   * @brief connect SettingsDialog signals to their corresponding slots
+   */
   void connectSettings();
+  /**
+   * @brief connect menubar actions to their corresponding slots
+   */
   void connectMenubar();
+  /**
+   * @brief register the different notifiers to the NotificationPopup widget
+   */
   void connectNotifiers();
   /**
    * @brief initialize the surahs QListView in the side dock and select the
@@ -306,7 +356,7 @@ private:
   void setupMenubarButton();
   /**
    * @brief sync the surahs QListView in the navigation dock to match the
-   * currently active ::Verse in the VersePlayer
+   * currently active Verse in the VersePlayer
    * @return QModelIndex of the currently selected surah
    */
   QModelIndex syncSelectedSurah();
@@ -418,12 +468,19 @@ private:
    * @brief pointer to the votd dialog
    */
   QPointer<VerseDialog> m_verseDlg;
+  /**
+   * @brief pointer to the FileSelector dialog used for selecting files for
+   * import/export
+   */
   QPointer<FileSelector> m_selectorDlg;
+  /**
+   * @brief pointer to dialog used for selecting which user data parts to
+   * import/export
+   */
   QPointer<ImportExportDialog> m_importExportDlg;
 
   /**
-   * @brief pointer to the QProcess instance of the maintainence tool that
-   * checks for updates
+   * @brief pointer to VersionChecker instance
    */
   QPointer<VersionChecker> m_versionChecker;
   /**

@@ -38,7 +38,7 @@ signals:
   /**
    * @fn void navigateToVerse(Verse v)
    * @brief Emitted when changing the active khatmah
-   * @param v - ::Verse to navigate to
+   * @param v - Verse to navigate to
    */
   void navigateToVerse(const Verse& v);
 

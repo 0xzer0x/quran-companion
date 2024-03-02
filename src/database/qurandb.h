@@ -44,9 +44,9 @@ public:
    */
   int getJuzOfPage(const int page) const;
   /**
-   * @brief gets a QList of ::Verse instances for the page verses
+   * @brief gets a QList of Verse instances for the page verses
    * @param page - Quran page number
-   * @return QList of ::Verse instances
+   * @return QList of Verse instances
    */
   QList<QList<int>> verseInfoList(const int page) const;
   /**
@@ -70,10 +70,10 @@ public:
    */
   QString surahName(const int sIdx, bool ar = false) const;
   /**
-   * @brief get the verse with the corresponding id and return it as a ::Verse
+   * @brief get the verse with the corresponding id and return it as a Verse
    * instance
    * @param id - verse id
-   * @return ::Verse instance
+   * @return Verse instance
    */
   QList<int> verseById(const int id) const;
   /**
@@ -95,7 +95,7 @@ public:
    * @param searchText - text to search for
    * @param surahs - QList of surah numbers to search in
    * @param whole - boolean value to search for whole words only
-   * @return QList of ::Verse instances representing the search results
+   * @return QList of Verse instances representing the search results
    */
   QList<QList<int>> searchSurahs(QString searchText,
                                  const QList<int> surahs,
@@ -105,14 +105,14 @@ public:
    * @param searchText - text to search for
    * @param range - array of start & end page numbers
    * @param whole - boolean value to indicate search for whole words only
-   * @return QList of ::Verse instances representing the search results
+   * @return QList of Verse instances representing the search results
    */
   QList<QList<int>> searchVerses(QString searchText,
                                  const int range[2] = new int[2]{ 1, 604 },
                                  const bool whole = false) const;
   /**
    * @brief gets a random verse from the Quran
-   * @return QPair of ::Verse instance and verse text
+   * @return QPair of Verse instance and verse text
    */
   QList<int> randomVerse() const;
   /**

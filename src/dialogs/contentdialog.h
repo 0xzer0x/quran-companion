@@ -48,8 +48,8 @@ public:
 
 public slots:
   /**
-   * @brief open ContentDialog with the shown verse set to the given ::Verse
-   * @param v - ::Verse to show the tafsir of
+   * @brief open ContentDialog with the shown verse set to the given Verse
+   * @param v - Verse to show the tafsir of
    */
   void showVerseTafsir(const Verse& v);
   void showVerseTranslation(const Verse& v);
@@ -188,7 +188,7 @@ private:
    */
   int m_fontSZ;
   /**
-   * @brief ::Verse instance representing the shown verse.
+   * @brief Verse instance representing the shown verse.
    */
   Verse m_shownVerse;
   /**

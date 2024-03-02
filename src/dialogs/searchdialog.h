@@ -49,7 +49,7 @@ public slots:
   void getResults();
   /**
    * @brief Slot that is called when one of the result verse labels is clicked.
-   * Extracts a ::Verse from the emitting object name and emits
+   * Extracts a Verse from the emitting object name and emits
    * SearchDialog::navigateToVerse(Verse) signal.
    */
   void verseClicked();
@@ -73,7 +73,7 @@ signals:
    * @fn void navigateToVerse(Verse v)
    * @brief Emitted when a search result is clicked to signal the
    * navigation and selection of that verse.
-   * @param v - ::Verse to navigate to
+   * @param v - Verse to navigate to
    */
   void navigateToVerse(const Verse& v);
 
@@ -121,7 +121,7 @@ private:
    */
   QList<QPointer<VerseFrame>> m_lbLst;
   /**
-   * @brief ::Verse QList for the current search results.
+   * @brief Verse QList for the current search results.
    */
   QList<Verse> m_currResults;
   /**
