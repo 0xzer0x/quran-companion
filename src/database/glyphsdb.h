@@ -8,13 +8,28 @@
 #include <utils/configuration.h>
 #include <utils/dirmanager.h>
 
+/**
+ * @class GlyphsDb
+ * @brief The GlyphsDb class represents a connection to the glyphs db file
+ */
 class GlyphsDb
   : public DbConnection
   , QSqlDatabase
 {
 public:
+  /**
+   * @brief get a reference to the single class instance
+   * @return reference to the static class instance
+   */
   static GlyphsDb& getInstance();
+  /**
+   * @brief sets and opens the sqlite database file
+   */
   void open();
+  /**
+   * @brief getter for the type of the connection
+   * @return - DbConnection::Glyphs
+   */
   Type type();
   /**
    * @brief get Quran page QCF glyphs separated as lines
@@ -45,7 +60,13 @@ public:
 
 private:
   GlyphsDb();
+  /**
+   * @brief reference to the singleton Configuration instance
+   */
   Configuration& m_config;
+  /**
+   * @brief reference to the app assets directory
+   */
   const QDir& m_assetsDir;
 };
 

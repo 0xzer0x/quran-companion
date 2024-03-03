@@ -7,6 +7,10 @@
 #include <utils/configuration.h>
 #include <utils/dirmanager.h>
 
+/**
+ * @class BetaqatDb
+ * @brief The BetaqatDb class represents a connection to the betaqat db file
+ */
 class BetaqatDb
   : public DbConnection
   , QSqlDatabase

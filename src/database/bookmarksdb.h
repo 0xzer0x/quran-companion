@@ -12,6 +12,11 @@
 #include <utils/configuration.h>
 #include <utils/dirmanager.h>
 
+/**
+ * @class BookmarksDb
+ * @brief The BookmarksDb class represents a connection to the bookmarks db file
+ * used for storing user data (bookmarks,khatmah,thoughts)
+ */
 class BookmarksDb
   : public DbConnection
   , QSqlDatabase

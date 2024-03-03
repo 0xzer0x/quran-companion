@@ -25,8 +25,7 @@ class BookmarksDialog;
 /**
  * @brief BookmarksDialog is the interface for interacting with saved bookmarks.
  * @details Bookmarks allow the user to save a verse for easier & faster
- * access. Bookmarks are represented as entries in a sqlite database. Thus, a
- * DBManager instance is required to create an instance of BookmarksDialog.
+ * access. Bookmarks are represented as entries in a sqlite database.
  */
 class BookmarksDialog : public QDialog
 {
@@ -119,9 +118,21 @@ private slots:
 
 private:
   Ui::BookmarksDialog* ui;
+  /**
+   * @brief reference to the singleton Configuration instance
+   */
   const Configuration& m_config;
+  /**
+   * @brief reference to the singleton GlyphsDb instance
+   */
   const GlyphsDb& m_glpyhsDb;
+  /**
+   * @brief reference to the singleton QuranDb instance
+   */
   const QuranDb& m_quranDb;
+  /**
+   * @brief reference to the singleton BookmarksDb instance
+   */
   BookmarksDb& m_bookmarksDb;
   /**
    * @brief connects signals and slots for different UI

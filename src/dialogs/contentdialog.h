@@ -22,11 +22,8 @@ class ContentDialog;
 }
 
 /**
- * @brief ContentDialog interface for reading Quran tafsir.
- * @details Tafsir is shown for a single verse at a time. Navigation between
- * verses is independant of the main Quran reader navigation for easier
- * navigation. Tafsir is displayed using the side content font set in the
- * Settings::settings.
+ * @brief ContentDialog is used to display any additional content (tafsir,
+ * translation, thoughts).
  */
 class ContentDialog : public QDialog
 {
@@ -48,11 +45,22 @@ public:
 
 public slots:
   /**
-   * @brief open ContentDialog with the shown verse set to the given Verse
+   * @brief open ContentDialog with the shown verse set to the given Verse in
+   * Mode::Tafsir
    * @param v - Verse to show the tafsir of
    */
   void showVerseTafsir(const Verse& v);
+  /**
+   * @brief open ContentDialog with the shown verse set to the given Verse in
+   * Mode::Translation
+   * @param v - Verse to show the translation of
+   */
   void showVerseTranslation(const Verse& v);
+  /**
+   * @brief open ContentDialog with the shown verse set to the given Verse in
+   * Mode::Thoughts
+   * @param v - Verse to show the thoughts of
+   */
   void showVerseThoughts(const Verse& v);
 
 protected:
@@ -68,120 +76,133 @@ signals:
 
 private slots:
   /**
-   * @brief contentChanged
-   *
-   * MODIFIED
+   * @brief callback for calling the appropriate method when the selected item
+   * in the secondary combobox changes
    */
   void contentChanged();
   /**
-   * @brief typeChanged
-   *
-   * MODIFIED
+   * @brief callback for changing the ContentDialog::Mode when the selected mode
+   * in the primary combobox changes
    */
   void typeChanged();
   /**
-   * @brief increment the ContentDialog::m_shownVerse and load the new verse
+   * @brief increment the m_shownVerse and load the new verse
    * tafsir.
    */
   void btnNextClicked();
   /**
-   * @brief decrement the ContentDialog::m_shownVerse and load the new verse
+   * @brief decrement the m_shownVerse and load the new verse
    * tafsir.
    */
   void btnPrevClicked();
 
 private:
   Ui::ContentDialog* ui;
+  /**
+   * @brief reference to the singleton Configuration instance
+   */
   Configuration& m_config;
+  /**
+   * @brief reference to the singleton TafsirDb instance
+   */
   TafsirDb& m_tafsirDb;
+  /**
+   * @brief reference to the singleton TranslationDb instance
+   */
   TranslationDb& m_translationDb;
+  /**
+   * @brief reference to the singleton BookmarksDb instance
+   */
   BookmarksDb& m_bookmarksDb;
+  /**
+   * @brief reference to the singleton QuranDb instance
+   */
   const QuranDb& m_quranDb;
+  /**
+   * @brief reference to the singleton GlyphsDb instance
+   */
   const GlyphsDb& m_glyphsDb;
+  /**
+   * @brief reference to the static QList of available tafasir
+   */
   const QList<::Tafsir>& m_tafasir;
+  /**
+   * @brief reference to the static QList of available translations
+   */
   const QList<::Translation>& m_translations;
   /**
-   * @brief setSideFont
-   *
-   * MODIFIED
+   * @brief loads the QFont selected for the side content
    */
-  void setSideFont();
+  void loadSideFont();
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.
    */
   void setupConnections();
   /**
-   * @brief setter member for ContentDialog::m_shownVerse
+   * @brief setter member for m_shownVerse
    * @param newShownVerse
    */
   void setShownVerse(const Verse& newShownVerse);
   /**
-   * @brief loadContent
-   * @param mode
-   *
-   * MODIFIED
+   * @brief loads the content of Mode given for the currently set Verse
+   * @param mode - Mode of the content shown
    */
   void loadContent(Mode mode);
   /**
-   * @brief updateContentComboBox
-   *
-   * MODIFIED
+   * @brief updates the second combobox according to the given Mode
    */
   void updateContentComboBox(Mode mode);
   /**
-   * @brief cmbLoadTafasir
-   *
-   * MODIFIED
+   * @brief load all available tafasir in the secondary combobox
    */
   void cmbLoadTafasir();
   /**
-   * @brief cmbLoadTranslations
-   *
-   * MODIFIED
+   * @brief load all available translations in the secondary combobox
    */
   void cmbLoadTranslations();
   /**
-   * @brief tafsirChanged
-   *
-   * MODIFIED
+   * @brief callback function for changing the selected tafsir in the secondary
+   * combobox
    */
   void tafsirChanged();
   /**
-   * @brief translationChanged
-   *
-   * MODIFIED
+   * @brief callback function for changing the selected translation in the
+   * secondary combobox
    */
   void translationChanged();
   /**
-   * @brief loads the info and tafsir of ContentDialog::m_shownVerse
-   *
-   * MODIFIED
+   * @brief loads the tafsir for the currently shown verse in the QTextEdit
+   * widget
    */
   void loadVerseTafsir();
   /**
-   * @brief loadVerseTranslation
-   *
-   * MODIFIED
+   * @brief loads the selected translation for the currently shown verse in the
+   * QTextEdit widget
    */
   void loadVerseTranslation();
   /**
-   * @brief loadVerseThoughts
-   *
-   * MODIFIED
+   * @brief loads the user stored thoughts for the currently shown verse in the
+   * QTextEdit widget and enables editing
    */
   void loadVerseThoughts();
   /**
-   * MODIFIED
+   * @brief saves the user stored thoughts for the currently shown verse in the
+   * QTextEdit widget and disables editing
    */
   void saveVerseThoughts();
   /**
-   * @brief m_currMode
-   *
-   * MODIFIED
+   * @brief the current Mode of the ContentDialog
    */
   Mode m_currMode;
+  /**
+   * @brief index of the currently shown Tafsir in Tafsir::tafasir
+   */
   int m_tafsir;
+  /**
+   * @brief index of the currently shown Translation in
+   * Translation::translations
+   */
   int m_translation;
   /**
    * @brief fixed font size for the verse text displayed above the tafsir.
@@ -192,7 +213,8 @@ private:
    */
   Verse m_shownVerse;
   /**
-   * @brief m_internalLoading
+   * @brief boolean to indicate internal loading of content in the secondary
+   * combobox
    */
   bool m_internalLoading;
 };

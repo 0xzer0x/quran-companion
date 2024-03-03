@@ -7,15 +7,29 @@
 #include <interfaces/dbconnection.h>
 #include <utils/configuration.h>
 #include <utils/dirmanager.h>
-typedef Configuration::VerseType VerseType;
 
+/**
+ * @class QuranDb
+ * @brief The QuranDb class represents a connection to the quran db file
+ */
 class QuranDb
   : public DbConnection
   , QSqlDatabase
 {
 public:
+  /**
+   * @brief get a reference to the single class instance
+   * @return reference to the static class instance
+   */
   static QuranDb& getInstance();
+  /**
+   * @brief sets and opens the sqlite database file
+   */
   void open();
+  /**
+   * @brief getter for the type of the connection
+   * @return - DbConnection::Quran
+   */
   Type type();
   /**
    * @brief gets the surah number and juz number of the first verse in the page,
@@ -116,16 +130,6 @@ public:
    */
   QList<int> randomVerse() const;
   /**
-   * @brief setVerseType
-   * @param newVerseType
-   */
-  void setVerseType(VerseType newVerseType);
-  /**
-   * @brief verseType
-   * @return
-   */
-  VerseType verseType() const;
-  /**
    * @brief surahNames
    * @return
    */
@@ -133,9 +137,14 @@ public:
 
 private:
   QuranDb();
+  /**
+   * @brief reference to the singleton Configuration instance
+   */
   Configuration& m_config;
+  /**
+   * @brief reference to the app assets directory
+   */
   const QDir& m_assetsDir;
-  VerseType m_verseType;
   /**
    * @brief QList of sura names (Arabic if UI language is Arabic, Otherwise
    * English)

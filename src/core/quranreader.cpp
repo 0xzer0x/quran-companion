@@ -164,13 +164,13 @@ QuranReader::updateSideFont()
 void
 QuranReader::updateVerseType()
 {
-  VerseType type =
-    qvariant_cast<VerseType>(m_config.settings().value("Reader/VerseType"));
+  Configuration::VerseType type = qvariant_cast<Configuration::VerseType>(
+    m_config.settings().value("Reader/VerseType"));
   m_versesFont.setFamily(
     FontManager::getInstance().verseFontname(type, m_currVerse.page()));
   m_versesFont.setPointSize(
     m_config.settings().value("Reader/VerseFontSize").toInt());
-  m_quranDb.setVerseType(type);
+  m_config.setVerseType(type);
 }
 
 void
@@ -223,7 +223,7 @@ QuranReader::addSideContent()
   QLabel* contentLb;
   VerseFrame* verseContFrame;
   QString prevLbContent, currLbContent, glyphs;
-  if (m_quranDb.verseType() == Configuration::Qcf)
+  if (m_config.verseType() == Configuration::Qcf)
     m_versesFont.setFamily(
       FontManager::getInstance().pageFontname(m_currVerse.page()));
 
@@ -235,7 +235,7 @@ QuranReader::addSideContent()
     verseContFrame = new VerseFrame(m_scrlVerseByVerse->widget());
     verselb = new ClickableLabel(verseContFrame);
     contentLb = new QLabel(verseContFrame);
-    glyphs = m_quranDb.verseType() == Configuration::Qcf
+    glyphs = m_config.verseType() == Configuration::Qcf
                ? m_glyphsDb.getVerseGlyphs(verse->surah(), verse->number())
                : m_quranDb.verseText(verse->surah(), verse->number());
 

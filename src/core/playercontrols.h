@@ -10,6 +10,11 @@ namespace Ui {
 class PlayerControls;
 }
 
+/**
+ * @class PlayerControls
+ * @brief PlayerControls class provides a widget for controlling the
+ * playback of audio verses from the Quran.
+ */
 class PlayerControls : public QWidget
 {
   Q_OBJECT

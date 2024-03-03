@@ -129,7 +129,7 @@ QString
 QuranDb::verseText(const int sIdx, const int vIdx) const
 {
   QSqlQuery dbQuery(*this);
-  if (m_verseType == VerseType::Annotated)
+  if (m_config.verseType() == Configuration::Annotated)
     dbQuery.prepare("SELECT aya_text_annotated FROM verses_v1 WHERE sura_no=:s "
                     "AND aya_no=:v");
   else
@@ -330,18 +330,6 @@ QuranDb::randomVerse() const
   return { dbQuery.value(0).toInt(),
            dbQuery.value(1).toInt(),
            dbQuery.value(2).toInt() };
-}
-
-void
-QuranDb::setVerseType(VerseType newVerseType)
-{
-  m_verseType = newVerseType;
-}
-
-VerseType
-QuranDb::verseType() const
-{
-  return m_verseType;
 }
 
 QStringList

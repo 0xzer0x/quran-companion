@@ -39,10 +39,10 @@ class DownloaderDialog : public QDialog
 
 public:
   /**
-   * @brief Class constructor
+   * @brief class contructor
    * @param parent - pointer to parent widget
-   * @param downloader - pointer to a DownloadManager instance
-   * @param dbMan - pointer to DBManager instance
+   * @param manager - pointer to the JobManager instance used for managing
+   * DownloadJob(s)
    */
   explicit DownloaderDialog(QWidget* parent = nullptr,
                             JobManager* manager = nullptr);
@@ -50,22 +50,18 @@ public:
 
 public slots:
   /**
-   * @brief Adds the currently selected surahs in the QTreeView to the
+   * @brief Adds the currently selected jobs in the QTreeView to the
    * DownloadManager download queue.
-   * @details Adding surah to download queue is done through getting the surah
-   * length through the database instance, then adding download tasks for every
-   * verse in the surah selected.
    */
   void addToQueue();
   /**
-   * @brief Sets the currently active download
-   * task progress bar in order to update displayed info.
+   * @brief Sets the currently active download task progress bar in order to
+   * update displayed info.
    * @details This is typically the first incomplete bar in the dialog.
    */
   void setCurrentBar();
   /**
-   * @brief slot to delete all download tasks /
-   * progress bars from dialog
+   * @brief slot to delete all download tasks/progress bars from dialog
    */
   void downloadAborted();
   /**

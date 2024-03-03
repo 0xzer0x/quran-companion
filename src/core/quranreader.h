@@ -17,6 +17,11 @@ namespace Ui {
 class QuranReader;
 }
 
+/**
+ * @class QuranReader
+ * @brief The QuranReader class is responsible for displaying the Quran page(s)
+ * and the side content
+ */
 class QuranReader : public QWidget
 {
   Q_OBJECT

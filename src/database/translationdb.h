@@ -11,14 +11,30 @@
 #include <utils/configuration.h>
 #include <utils/dirmanager.h>
 
+/**
+ * @class TranslationDb
+ * @brief The TranslationDb class represents a connection to the currently
+ * selected translation db
+ */
 class TranslationDb
   : public DbConnection
   , QSqlDatabase
 {
   Q_OBJECT
 public:
+  /**
+   * @brief get a reference to the single class instance
+   * @return reference to the static class instance
+   */
   static TranslationDb& getInstance();
+  /**
+   * @brief sets and opens the sqlite database file
+   */
   void open();
+  /**
+   * @brief getter for the type of the connection
+   * @return - DbConnection::Translation
+   */
   Type type();
   /**
    * @brief sets the active translation
@@ -34,10 +50,8 @@ public:
    */
   QString getTranslation(const int sIdx, const int vIdx) const;
   /**
-   * @brief currTranslation
-   * @return
-   *
-   * MODIFIED
+   * @brief getter for m_currTr
+   * @return pointer to the currently selected translation
    */
   const ::Translation* currTranslation() const;
 
@@ -49,8 +63,17 @@ public slots:
 
 private:
   TranslationDb();
+  /**
+   * @brief reference to the singleton Configuration instance
+   */
   Configuration& m_config;
+  /**
+   * @brief reference to the singleton DirManager instance
+   */
   const DirManager& m_dirMgr;
+  /**
+   * @brief reference to the static QList of available translations
+   */
   const QList<::Translation>& m_translations;
   /**
    * @brief the current active DBManager::Translation
