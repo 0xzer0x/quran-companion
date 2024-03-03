@@ -116,7 +116,7 @@ SearchDialog::showResults()
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
     QString fontName =
-      FontManager::getInstance().verseFontname(m_quranDb.verseType(), v.page());
+      FontManager::getInstance().verseFontname(m_config.verseType(), v.page());
 
     VerseFrame* vFrame = new VerseFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);
@@ -124,7 +124,7 @@ SearchDialog::showResults()
 
     QString info = tr("Surah: ") + m_quranDb.surahNames().at(v.surah() - 1) +
                    " - " + tr("Verse: ") + QString::number(v.number());
-    QString glyphs = m_quranDb.verseType() == Configuration::Qcf
+    QString glyphs = m_config.verseType() == Configuration::Qcf
                        ? m_glyphsDb.getVerseGlyphs(v.surah(), v.number())
                        : m_quranDb.verseText(v.surah(), v.number());
 

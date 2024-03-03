@@ -111,7 +111,7 @@ ContentDialog::showVerseThoughts(const Verse& v)
 }
 
 void
-ContentDialog::setSideFont()
+ContentDialog::loadSideFont()
 {
   QFont sideFont =
     qvariant_cast<QFont>(m_config.settings().value("Reader/SideContentFont"));
@@ -129,11 +129,11 @@ ContentDialog::setShownVerse(const Verse& newShownVerse)
                   " - " + tr("Verse: ") +
                   QString::number(m_shownVerse.number());
   QString glyphs =
-    m_quranDb.verseType() == Configuration::Qcf
+    m_config.verseType() == Configuration::Qcf
       ? m_glyphsDb.getVerseGlyphs(m_shownVerse.surah(), m_shownVerse.number())
       : m_quranDb.verseText(m_shownVerse.surah(), m_shownVerse.number());
   QString fontFamily = FontManager::getInstance().getInstance().verseFontname(
-    m_quranDb.verseType(), m_shownVerse.page());
+    m_config.verseType(), m_shownVerse.page());
 
   ui->lbVerseInfo->setText(title);
   ui->lbVerseText->setWordWrap(true);
@@ -212,7 +212,7 @@ void
 ContentDialog::loadContent(Mode mode)
 {
   m_internalLoading = true;
-  setSideFont();
+  loadSideFont();
   ui->cmbType->setCurrentIndex((int)mode);
   updateContentComboBox(mode);
   switch (mode) {
@@ -253,9 +253,8 @@ void
 ContentDialog::cmbLoadTafasir()
 {
   for (int i = 0; i < m_tafasir.size(); i++) {
-    const ::Tafsir& t = m_tafasir.at(i);
-    if (t.isAvailable())
-      ui->cmbContent->addItem(t.displayName(), i);
+    if (m_tafasir.at(i).isAvailable())
+      ui->cmbContent->addItem(m_tafasir.at(i).displayName(), i);
   }
 
   int idx = ui->cmbContent->findData(m_tafsir);
@@ -266,9 +265,8 @@ void
 ContentDialog::cmbLoadTranslations()
 {
   for (int i = 0; i < m_translations.size(); i++) {
-    const ::Translation& tr = m_translations[i];
-    if (tr.isAvailable())
-      ui->cmbContent->addItem(tr.displayName(), i);
+    if (m_translations.at(i).isAvailable())
+      ui->cmbContent->addItem(m_translations.at(i).displayName(), i);
   }
 
   int idx = ui->cmbContent->findData(m_translation);

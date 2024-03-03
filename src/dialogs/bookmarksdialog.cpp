@@ -112,7 +112,7 @@ BookmarksDialog::loadBookmarks(int surah)
   for (int i = m_startIdx; i < end; i++) {
     const Verse& verse = m_shownVerses.at(i);
     QString fontName = FontManager::getInstance().verseFontname(
-      m_quranDb.verseType(), verse.page());
+      m_config.verseType(), verse.page());
 
     QFrame* frame = new QFrame(ui->scrlBookmarks);
     frame->setProperty("bookmark", true);
@@ -139,7 +139,7 @@ BookmarksDialog::loadBookmarks(int surah)
                    m_quranDb.surahNames().at(verse.surah() - 1) + " - " +
                    tr("Verse: ") + QString::number(verse.number());
     QString glyphs =
-      m_quranDb.verseType() == Configuration::Qcf
+      m_config.verseType() == Configuration::Qcf
         ? m_glpyhsDb.getVerseGlyphs(verse.surah(), verse.number())
         : m_quranDb.verseText(verse.surah(), verse.number());
 

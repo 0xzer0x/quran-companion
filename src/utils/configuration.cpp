@@ -123,3 +123,15 @@ Configuration::readerMode() const
 {
   return m_readerMode;
 }
+
+Configuration::VerseType
+Configuration::verseType() const
+{
+  return m_verseType;
+}
+
+void
+Configuration::setVerseType(VerseType newVerseType)
+{
+  m_verseType = newVerseType;
+}

@@ -37,6 +37,8 @@ public:
   int qcfVersion() const;
   QLocale::Language language() const;
   ReaderMode readerMode() const;
+  VerseType verseType() const;
+  void setVerseType(VerseType newVerseType);
 
 private:
   Configuration();
@@ -46,6 +48,7 @@ private:
   QLocale::Language m_language;
   QSettings m_settings;
   ReaderMode m_readerMode;
+  VerseType m_verseType;
 };
 
 #endif // CONFIGURATION_H

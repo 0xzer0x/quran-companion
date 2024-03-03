@@ -60,14 +60,15 @@ CopyDialog::copyRange()
 void
 CopyDialog::show()
 {
-  ui->cmbCopyFrom->clear();
-  ui->cmbCopyTo->clear();
   ui->lbCopySurahName->setText(m_quranDb.surahName(m_currVerse.surah()));
 
+  ui->cmbCopyFrom->clear();
+  ui->cmbCopyTo->clear();
   for (int i = 1; i <= m_currVerse.surahCount(); i++) {
     ui->cmbCopyFrom->addItem(QString::number(i));
     ui->cmbCopyTo->addItem(QString::number(i));
   }
+
   int idx = m_currVerse.number() ? m_currVerse.number() - 1 : 0;
   ui->cmbCopyFrom->setCurrentIndex(idx);
   ui->cmbCopyTo->setCurrentIndex(idx);
