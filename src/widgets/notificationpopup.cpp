@@ -138,6 +138,7 @@ NotificationPopup::notify(NotificationType type, QString message)
   QFontMetrics fm(m_textWidget->fontMetrics());
   m_textWidget->setText(message);
   setNotificationIcon(type);
+  setStyle(type);
 
   resize(fm.size(Qt::TextSingleLine, message).width() + 50, 40);
   adjustLocation();
