@@ -6,7 +6,7 @@
   <metadata_license>MIT</metadata_license>
   <project_license>LGPL-3.0-or-later</project_license>
   <content_rating type="oars-1.1"></content_rating>
-  <developer id="0xzer0x">
+  <developer id="io.github._0xzer0x">
     <name>Youssef Fathy</name>
   </developer>
   <description>
@@ -44,6 +44,19 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release date="2024-03-05" version="1.2.4">
+      <description>
+        <ul>
+          <li>Bugfixes</li>
+          <li>Added Pickthall - English translation</li>
+          <li>Disabled Auto-play when navigating to a Surah</li>
+          <li>Added Thoughts feature</li>
+          <li>Changed tafsir dialog to display all available content types (tafsir, translation, thoughts)</li>
+          <li>Move tafsir setting to content dialog</li>
+          <li>Added user data import/export functionality</li>
+        </ul>
+      </description>
+    </release>
     <release date="2024-01-25" version="1.2.3">
       <description>
         <ul>
