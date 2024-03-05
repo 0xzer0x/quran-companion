@@ -48,15 +48,15 @@ layout:
 plugs: # plugs for theming
   gtk-3-themes:
     interface: content
-    target: $SNAP/data-dir/themes
+    target: $SNAP/share/themes
     default-provider: gtk-common-themes:gtk-3-themes
   icon-themes:
     interface: content
-    target: $SNAP/data-dir/icons
+    target: $SNAP/share/icons
     default-provider: gtk-common-themes:icon-themes
   sound-themes:
     interface: content
-    target: $SNAP/data-dir/sounds
+    target: $SNAP/share/sounds
     default-provider: gtk-common-themes:sounds-themes
 
 parts:
