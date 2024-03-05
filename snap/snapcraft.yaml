@@ -133,6 +133,8 @@ parts:
       - libopengl0
       - libgtk-3-0
       - libgtk-3-common
+      - libgdk-pixbuf-2.0-0
+      - libgdk-pixbuf2.0-common
       - libglib2.0-0
       - libx11-6
       - libx11-xcb1
