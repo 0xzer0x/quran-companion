@@ -26,9 +26,11 @@ apps:
     environment:
       LD_LIBRARY_PATH: "$SNAP/opt/qt6/6.6.1/gcc_64/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$LD_LIBRARY_PATH"
       PULSE_RUNTIME_PATH: "$XDG_RUNTIME_DIR/../pulse"
+      XDG_DATA_DIRS: "$SNAP/usr/share:$XDG_DATA_DIRS"
       QT_QPA_PLATFORMTHEME: gtk3
     plugs:
       - audio-playback
+      - gsettings
       - desktop
       - wayland
       - x11
@@ -44,20 +46,8 @@ layout:
     symlink: $SNAP/graphics/usr/share/X11/locale
   /usr/share/X11/xkb:
     symlink: $SNAP/usr/share/X11/xkb
-
-plugs: # plugs for theming
-  gtk-3-themes:
-    interface: content
-    target: $SNAP/share/themes
-    default-provider: gtk-common-themes:gtk-3-themes
-  icon-themes:
-    interface: content
-    target: $SNAP/share/icons
-    default-provider: gtk-common-themes:icon-themes
-  sound-themes:
-    interface: content
-    target: $SNAP/share/sounds
-    default-provider: gtk-common-themes:sounds-themes
+  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gdk-pixbuf-2.0:
+    symlink: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gdk-pixbuf-2.0
 
 parts:
   qt:
@@ -159,3 +149,38 @@ parts:
       - libwayland-client0
       - libwayland-cursor0
       - hicolor-icon-theme
+      - adwaita-icon-theme
+      - shared-mime-info
+      - xdg-user-dirs
+
+  icons:
+    plugin: nil
+    after:
+      - quran-companion
+    build-packages:
+      - build-essential
+      - dpkg-dev
+      - gtk-update-icon-cache
+      - libglib2.0-bin
+      - libgtk-3-0
+    stage-packages:
+      - libc-bin
+      - libgdk-pixbuf-2.0-0
+      - libgdk-pixbuf2.0-0
+      - libgdk-pixbuf2.0-common
+      - libpng-tools
+      - libpng16-16
+      - libnvidia-egl-wayland1
+      - libxkbcommon0
+      - shared-mime-info
+      - xdg-user-dirs
+    override-prime: |
+      craftctl default
+      usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/gdk-pixbuf-query-loaders --update-cache
+      update-mime-database usr/share/mime
+      glib-compile-schemas usr/share/glib-2.0/schemas
+      for theme in usr/share/icons/*; do
+        if [ -f "$theme/index.theme" ] && [ ! -f "$theme/icon-theme.cache" ]; then
+          update-icon-caches "$theme"
+        fi
+      done
