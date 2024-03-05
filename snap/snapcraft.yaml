@@ -132,6 +132,7 @@ parts:
       - libegl1
       - libopengl0
       - libgtk-3-0
+      - libgtk-3-common
       - libglib2.0-0
       - libx11-6
       - libx11-xcb1
@@ -155,3 +156,4 @@ parts:
       - libwayland-egl1
       - libwayland-client0
       - libwayland-cursor0
+      - hicolor-icon-theme
