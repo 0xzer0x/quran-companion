@@ -36,8 +36,13 @@ public:
   };
 
 public slots:
-  void updateProgress(QSharedPointer<DownloadJob> job);
   void setStyling(State);
+  void updateProgress(QSharedPointer<DownloadJob> job);
+  void finished();
+  void failed();
+
+private:
+  Type m_type;
 };
 
 #endif // DOWNLOADPROGRESSBAR_H

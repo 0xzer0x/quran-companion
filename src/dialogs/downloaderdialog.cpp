@@ -369,12 +369,8 @@ DownloaderDialog::downloadCompleted(QSharedPointer<DownloadJob> finished)
     QSharedPointer<SurahJob> sj = finished.dynamicCast<SurahJob>();
     removeFromDownloading(sj->reciter(), sj->surah());
   }
-  if (finished->type() == DownloadJob::TafsirFile ||
-      finished->type() == DownloadJob::TranslationFile) {
-    m_currentBar->setValue(1);
-    m_currentBar->setMaximum(1);
-    m_currentBar->setFormat("1 / 1");
-  }
+
+  m_currentBar->finished();
   m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
   setCurrentBar();
@@ -396,6 +392,8 @@ DownloaderDialog::topTaskDownloadError(QSharedPointer<DownloadJob> failed)
     QSharedPointer<SurahJob> sj = failed.dynamicCast<SurahJob>();
     removeFromDownloading(sj->reciter(), sj->surah());
   }
+
+  m_currentBar->failed();
   m_finishedFrames.append(m_frameLst.front());
   m_frameLst.pop_front();
   setCurrentBar();

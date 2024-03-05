@@ -10,22 +10,47 @@
 
 DownloadProgressBar::DownloadProgressBar(QWidget* parent, Type type, int max)
   : QProgressBar(parent)
+  , m_type(type)
 {
   setStyling(downloading);
   setMaximum(max);
   setValue(0);
-  if (type == DownloadJob::TafsirFile || type == DownloadJob::TranslationFile)
+  if (m_type == DownloadJob::TafsirFile ||
+      m_type == DownloadJob::TranslationFile)
     setFormat("%v / %m " + qApp->translate("DownloadManager", "KB"));
   else
     setFormat("%v / %m");
 }
 
-void DownloadProgressBar::updateProgress(QSharedPointer<DownloadJob> job)
+void
+DownloadProgressBar::updateProgress(QSharedPointer<DownloadJob> job)
 {
   if (maximum() != job->total())
     setMaximum(job->total());
 
   setValue(job->completed());
+}
+
+void
+DownloadProgressBar::finished()
+{
+  if (m_type == DownloadJob::TafsirFile ||
+      m_type == DownloadJob::TranslationFile) {
+    setValue(1);
+    setMaximum(1);
+  }
+  setFormat("%v / %m");
+}
+
+void
+DownloadProgressBar::failed()
+{
+  if (m_type == DownloadJob::TafsirFile ||
+      m_type == DownloadJob::TranslationFile) {
+    setValue(0);
+    setMaximum(1);
+  }
+  setFormat("%v / %m");
 }
 
 void
