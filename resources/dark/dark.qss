@@ -71,14 +71,14 @@ QWidget#shortcutsTab {
   border: none;
 }
 
-QAbstractScrollArea#tedTafsir {
+QAbstractScrollArea#tedContent {
   border: 1px solid #222222;
   border-radius: 4px;
 }
 
 /* --------- Player Styles --------- */
 
-QFrame#framePlayer {
+QWidget#PlayerControls QFrame#playerFrame {
   background-color: #202020;
   border-radius: 8px;
 }

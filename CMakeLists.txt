@@ -12,10 +12,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Sql Multimedia Network
-                                              LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Multimedia
-                                                       Network LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Sql Multimedia Network
+                                     LinguistTools)
 
 if(WIN32)
   set(Vulkan_INCLUDE_DIR "$ENV{VULKAN_SDK}\\Include\\vulkan")
@@ -28,34 +26,133 @@ endif()
 
 add_subdirectory(third_party/QtAwesome)
 
+include_directories(src)
+
 set(PROJECT_SOURCES
     src/main.cpp
-    src/globals.h
-    src/globals.cpp
+    src/types/verse.h
+    src/types/verse.cpp
+    src/types/reciter.h
+    src/types/reciter.cpp
+    src/types/content.h
+    src/types/content.cpp
+    src/types/tafsir.h
+    src/types/tafsir.cpp
+    src/types/translation.h
+    src/types/translation.cpp
     src/core/mainwindow.cpp
     src/core/mainwindow.h
     src/core/mainwindow.ui
-    src/core/searchdialog.h
-    src/core/searchdialog.cpp
-    src/core/searchdialog.ui
-    src/core/settingsdialog.cpp
-    src/core/settingsdialog.h
-    src/core/settingsdialog.ui
-    src/core/downloaderdialog.cpp
-    src/core/downloaderdialog.h
-    src/core/downloaderdialog.ui
-    src/core/bookmarksdialog.h
-    src/core/bookmarksdialog.cpp
-    src/core/bookmarksdialog.ui
-    src/core/tafsirdialog.h
-    src/core/tafsirdialog.cpp
-    src/core/tafsirdialog.ui
-    src/core/khatmahdialog.h
-    src/core/khatmahdialog.cpp
-    src/core/khatmahdialog.ui
-    src/core/copydialog.h
-    src/core/copydialog.cpp
-    src/core/copydialog.ui
+    src/core/quranreader.h
+    src/core/quranreader.cpp
+    src/core/quranreader.ui
+    src/core/playercontrols.h
+    src/core/playercontrols.cpp
+    src/core/playercontrols.ui
+    src/dialogs/searchdialog.h
+    src/dialogs/searchdialog.cpp
+    src/dialogs/searchdialog.ui
+    src/dialogs/settingsdialog.cpp
+    src/dialogs/settingsdialog.h
+    src/dialogs/settingsdialog.ui
+    src/dialogs/downloaderdialog.cpp
+    src/dialogs/downloaderdialog.h
+    src/dialogs/downloaderdialog.ui
+    src/dialogs/bookmarksdialog.h
+    src/dialogs/bookmarksdialog.cpp
+    src/dialogs/bookmarksdialog.ui
+    src/dialogs/contentdialog.h
+    src/dialogs/contentdialog.cpp
+    src/dialogs/contentdialog.ui
+    src/dialogs/khatmahdialog.h
+    src/dialogs/khatmahdialog.cpp
+    src/dialogs/khatmahdialog.ui
+    src/dialogs/copydialog.h
+    src/dialogs/copydialog.cpp
+    src/dialogs/copydialog.ui
+    src/dialogs/aboutdialog.h
+    src/dialogs/aboutdialog.h
+    src/dialogs/aboutdialog.cpp
+    src/dialogs/aboutdialog.ui
+    src/dialogs/versedialog.h
+    src/dialogs/versedialog.cpp
+    src/dialogs/versedialog.ui
+    src/dialogs/aboutdialog.cpp
+    src/dialogs/aboutdialog.ui
+    src/dialogs/versedialog.h
+    src/dialogs/versedialog.cpp
+    src/dialogs/versedialog.ui
+    src/dialogs/fileselector.h
+    src/dialogs/fileselector.cpp
+    src/dialogs/importexportdialog.h
+    src/dialogs/importexportdialog.cpp
+    src/dialogs/importexportdialog.ui
+    src/interfaces/userdataimporter.h
+    src/interfaces/userdataexporter.h
+    src/interfaces/downloadjob.h
+    src/interfaces/downloadtask.h
+    src/interfaces/dbconnection.h
+    src/interfaces/notificationsender.h
+    src/notifiers/bookmarksnotifier.h
+    src/notifiers/bookmarksnotifier.cpp
+    src/notifiers/updatenotifier.h
+    src/notifiers/updatenotifier.cpp
+    src/notifiers/copynotifier.h
+    src/notifiers/copynotifier.cpp
+    src/notifiers/jobnotifier.h
+    src/notifiers/jobnotifier.cpp
+    src/utils/configuration.h
+    src/utils/configuration.cpp
+    src/utils/shortcuthandler.h
+    src/utils/shortcuthandler.cpp
+    src/utils/verseplayer.h
+    src/utils/verseplayer.cpp
+    src/utils/systemtray.h
+    src/utils/systemtray.cpp
+    src/utils/logger.h
+    src/utils/logger.cpp
+    src/utils/dirmanager.h
+    src/utils/dirmanager.cpp
+    src/utils/stylemanager.h
+    src/utils/stylemanager.cpp
+    src/utils/fontmanager.h
+    src/utils/fontmanager.cpp
+    src/utils/versionchecker.h
+    src/utils/versionchecker.cpp
+    src/utils/jsondataexporter.h
+    src/utils/jsondataexporter.cpp
+    src/utils/jsondataimporter.h
+    src/utils/jsondataimporter.cpp
+    src/downloader/surahjob.h
+    src/downloader/surahjob.cpp
+    src/downloader/recitationtask.h
+    src/downloader/recitationtask.cpp
+    src/downloader/taskdownloader.h
+    src/downloader/taskdownloader.cpp
+    src/downloader/tafsirtask.h
+    src/downloader/tafsirtask.cpp
+    src/downloader/translationtask.h
+    src/downloader/translationtask.cpp
+    src/downloader/qcftask.h
+    src/downloader/qcftask.cpp
+    src/downloader/contentjob.h
+    src/downloader/contentjob.cpp
+    src/downloader/qcfjob.h
+    src/downloader/qcfjob.cpp
+    src/downloader/jobmanager.h
+    src/downloader/jobmanager.cpp
+    src/database/qurandb.h
+    src/database/qurandb.cpp
+    src/database/glyphsdb.h
+    src/database/glyphsdb.cpp
+    src/database/betaqatdb.h
+    src/database/betaqatdb.cpp
+    src/database/tafsirdb.h
+    src/database/tafsirdb.cpp
+    src/database/translationdb.h
+    src/database/translationdb.cpp
+    src/database/bookmarksdb.h
+    src/database/bookmarksdb.cpp
     src/widgets/quranpagebrowser.h
     src/widgets/quranpagebrowser.cpp
     src/widgets/clickablelabel.cpp
@@ -70,41 +167,17 @@ set(PROJECT_SOURCES
     src/widgets/inputfield.cpp
     src/widgets/shortcutdelegate.h
     src/widgets/shortcutdelegate.cpp
-    src/widgets/aboutdialog.h
-    src/widgets/aboutdialog.cpp
-    src/widgets/aboutdialog.ui
     src/widgets/betaqaviewer.h
     src/widgets/betaqaviewer.cpp
     src/widgets/betaqaviewer.ui
-    src/widgets/versedialog.h
-    src/widgets/versedialog.cpp
-    src/widgets/versedialog.ui
-    src/utils/shortcuthandler.h
-    src/utils/shortcuthandler.cpp
-    src/utils/dbmanager.h
-    src/utils/dbmanager.cpp
-    src/utils/verseplayer.h
-    src/utils/verseplayer.cpp
-    src/utils/downloadmanager.h
-    src/utils/downloadmanager.cpp
-    src/utils/notificationmanager.h
-    src/utils/notificationmanager.cpp
-    src/utils/logger.h
-    src/utils/logger.cpp
     resources.qrc
     qurancompanion.rc)
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-  qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
-else()
-  add_executable(quran-companion ${PROJECT_SOURCES})
-endif()
+qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
 target_link_libraries(
-  quran-companion
-  PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql
-          Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::Network
-          QtAwesome)
+  quran-companion PRIVATE Qt6::Widgets Qt6::Sql Qt6::Multimedia Qt6::Network
+                          QtAwesome)
 
 if(WIN32)
   set_target_properties(quran-companion PROPERTIES WIN32_EXECUTABLE TRUE)

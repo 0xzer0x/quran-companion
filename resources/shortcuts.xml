@@ -23,7 +23,7 @@
     <shortcut key="KhatmahDialog" default="K" description="Open the khatmah dialog" />
     <shortcut key="SearchDialog" default="F" description="Open the search dialog" />
     <shortcut key="SettingsDialog" default="P" description="Open the preferences dialog" />
-    <shortcut key="TafsirDialog" default="T"
+    <shortcut key="ContentDialog" default="T"
         description="Open the tafsir for the current active verse" />
     <shortcut key="DownloaderDialog" default="D" description="Open the download manager dialog" />
     <shortcut key="CopyDialog" default="'" description="Open the advanced copy dialog" />

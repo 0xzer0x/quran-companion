@@ -12,7 +12,7 @@
         <tafsir name="Al-Jalalayn" file="jalalayn.db" text="0" extra="1" />
         <tafsir name="Ea&apos;rab" file="e3rab.db" text="0" extra="1" />
         <tafsir name="Ibn-Ashoor" file="tanweer.db" text="0" extra="1" />
-        <tafsir name="Ibn-Juzayy" file="juzayy.db" text="0" extra="1" />
+        <tafsir name="Ibn-Juzayy" file="tasheel.db" text="0" extra="1" />
         <tafsir name="Ibn-Katheer" file="katheer.db" text="0" extra="1" />
         <tafsir name="Ibn-Katheer - English" file="katheer_en.db" text="0" extra="1" />
         <tafsir name="Al-Jalalayn - English" file="jalalayn_en.db" text="0" extra="1" />
@@ -29,6 +29,7 @@
         <translation name="English - Clear Quran" file="en_khattab.db" extra="0" />
         <translation name="English - Sahih International" file="en_sahih.db" extra="1" />
         <translation name="English - Abdullah Yusuf Ali" file="en_yusuf.db" extra="1" />
+        <translation name="English - Pickthall" file="en_pickthall.db" extra="1" />
         <translation name="Español - Abdel Ghani Navio" file="es_navio.db" extra="1" />
         <translation name="Français - Hamidullah" file="fr_hamidullah.db" extra="1" />
         <translation name="Hausa - Gumi" file="ha_gumi.db" extra="1" />

@@ -6,12 +6,18 @@
 #include "quranpagebrowser.h"
 #include <QApplication>
 #include <QRegularExpression>
+#include <QtAwesome.h>
+#include <utils/fontmanager.h>
 using namespace fa;
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   : QTextBrowser(parent)
-  , m_highlighter{ new QTextCursor(document()) }
-  , m_highlightColor{ QBrush(qApp->palette().color(QPalette::Highlight)) }
+  , m_highlighter(new QTextCursor(document()))
+  , m_highlightColor(QBrush(qApp->palette().color(QPalette::Highlight)))
+  , m_config(Configuration::getInstance())
+  , m_styleMgr(StyleManager::getInstance())
+  , m_quranDb(QuranDb::getInstance())
+  , m_glyphsDb(GlyphsDb::getInstance())
 {
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setTextInteractionFlags(Qt::TextInteractionFlag::LinksAccessibleByMouse);
@@ -19,7 +25,7 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   createActions();
   updateFontSize();
 
-  m_pageFont = Globals::pageFontname(initPage);
+  m_pageFont = FontManager::getInstance().getInstance().pageFontname(initPage);
   m_pageFormat.setAlignment(Qt::AlignCenter);
   m_pageFormat.setNonBreakableLines(true);
   m_pageFormat.setLayoutDirection(Qt::RightToLeft);
@@ -41,7 +47,8 @@ void
 QuranPageBrowser::updateFontSize()
 {
   m_fontSize =
-    m_settings->value("Reader/QCF" + QString::number(m_qcfVer) + "Size", 22)
+    m_config.settings()
+      .value("Reader/QCF" + QString::number(m_config.qcfVersion()) + "Size", 22)
       .toInt();
   highlightVerse(m_highlightedIdx);
 }
@@ -98,7 +105,7 @@ QuranPageBrowser::surahFrame(int surah)
   QString frmText;
   frmText.append("ﰦ");
   frmText.append("ﮌ");
-  frmText.append(m_dbMgr->getSurahNameGlyph(surah));
+  frmText.append(m_glyphsDb.getSurahNameGlyph(surah));
 
   // draw on top of the image the surah name text
   QPainter p(&baseImage);
@@ -106,7 +113,7 @@ QuranPageBrowser::surahFrame(int surah)
   p.setFont(QFont("QCF_BSML", 77));
   p.drawText(baseImage.rect(), Qt::AlignCenter, frmText);
 
-  if (m_darkMode)
+  if (m_config.darkMode())
     baseImage.invertPixels();
 
   return baseImage;
@@ -130,14 +137,14 @@ QuranPageBrowser::setHref(QTextCursor* cursor, int to, QString url)
 QString
 QuranPageBrowser::pageHeader(int page)
 {
-  m_headerData = m_dbMgr->getPageMetadata(page);
+  m_headerData = m_quranDb.pageMetadata(page);
 
   QString suraHeader, jozzHeader;
   suraHeader.append("سورة ");
-  suraHeader.append(m_dbMgr->getSurahName(m_headerData.first, true));
+  suraHeader.append(m_quranDb.surahName(m_headerData.first, true));
   suraHeader.append("$");
   jozzHeader.append("الجزء ");
-  jozzHeader.append(m_dbMgr->getJuzGlyph(m_headerData.second));
+  jozzHeader.append(m_glyphsDb.getJuzGlyph(m_headerData.second));
 
   return suraHeader + jozzHeader;
 }
@@ -154,17 +161,19 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
     m_verseCoordinates.clear();
   this->document()->clear();
 
-  m_pageFont = Globals::pageFontname(pageNo);
+  m_pageFont = FontManager::getInstance().pageFontname(pageNo);
   QTextCursor textCursor(this->document());
 
   m_currPageHeader = this->pageHeader(m_page);
-  m_currPageLines = m_dbMgr->getPageLines(m_page);
+  m_currPageLines = m_glyphsDb.getPageLines(m_page);
 
   // automatic font adjustment check
-  if (!forceCustomSize && m_settings->value("Reader/AdaptiveFont").toBool()) {
+  if (!forceCustomSize &&
+      m_config.settings().value("Reader/AdaptiveFont").toBool()) {
     m_fontSize = this->bestFitFontSize();
-    m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
-                         m_fontSize);
+    m_config.settings().setValue(
+      "Reader/QCF" + QString::number(m_config.qcfVersion()) + "Size",
+      m_fontSize);
   }
 
   m_pageLineSize = this->calcPageLineSize(m_currPageLines);
@@ -175,7 +184,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
       QBrush(qApp->palette().color(QPalette::PlaceholderText)));
 
     // smaller header font size for long juz > 10
-    if (m_qcfVer == 1 && pageNo >= 202)
+    if (m_config.qcfVersion() == 1 && pageNo >= 202)
       m_headerTextFormat.setFontPointSize(std::max(4, m_fontSize - 8));
     else
       m_headerTextFormat.setFontPointSize(m_fontSize - 6);
@@ -185,8 +194,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
     setHref(&textCursor, 1, "#F" + QString::number(m_headerData.first));
   }
 
-  this->parentWidget()->setMinimumWidth(m_pageLineSize.width() + 70);
-  this->setMinimumWidth(m_pageLineSize.width() + 70);
+  parentWidget()->setMinimumWidth(m_pageLineSize.width() + 70);
 
   // page lines drawing
   int counter = 0, prevAnchor = pageNo < 3 ? 0 : m_currPageHeader.size() + 1;
@@ -209,7 +217,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
       prevAnchor += 2;
     } else if (l.contains("bsml")) {
       QImage bsml(":/resources/basmalah.png");
-      if (m_darkMode)
+      if (m_config.darkMode())
         bsml.invertPixels();
 
       textCursor.insertBlock(m_pageFormat, m_bodyTextFormat);
@@ -279,7 +287,7 @@ QuranPageBrowser::resetHighlight()
 {
   QTextCharFormat tcf;
   if (m_fgHighlight)
-    tcf.setForeground(m_darkMode ? Qt::white : Qt::black);
+    tcf.setForeground(m_config.darkMode() ? Qt::white : Qt::black);
   else
     tcf.setBackground(Qt::transparent);
 
@@ -293,11 +301,13 @@ QuranPageBrowser::Action
 QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
 {
   QMenu lmbMenu(this);
-  lmbMenu.addAction(m_playAct);
-  lmbMenu.addAction(m_selectAct);
-  lmbMenu.addAction(m_tafsirAct);
+  lmbMenu.addAction(m_actPlay);
+  lmbMenu.addAction(m_actSelect);
+  lmbMenu.addAction(m_actTafsir);
+  lmbMenu.addAction(m_actTranslation);
+  lmbMenu.addAction(m_actThoughts);
   lmbMenu.addSeparator();
-  lmbMenu.addAction(m_copyAct);
+  lmbMenu.addAction(m_actCopy);
   if (favoriteVerse) {
     lmbMenu.addAction(m_actRemBookmark);
   } else {
@@ -306,19 +316,23 @@ QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
 
   QAction* chosen = lmbMenu.exec(QCursor::pos());
 
-  QuranPageBrowser::Action actionIdx = null;
-  if (chosen == m_playAct)
-    actionIdx = play;
-  else if (chosen == m_selectAct)
-    actionIdx = select;
-  else if (chosen == m_tafsirAct)
-    actionIdx = tafsir;
-  else if (chosen == m_copyAct)
-    actionIdx = copy;
+  QuranPageBrowser::Action actionIdx = Action::Null;
+  if (chosen == m_actPlay)
+    actionIdx = Action::Play;
+  else if (chosen == m_actSelect)
+    actionIdx = Action::Select;
+  else if (chosen == m_actTafsir)
+    actionIdx = Action::Tafsir;
+  else if (chosen == m_actTranslation)
+    actionIdx = Action::Translation;
+  else if (chosen == m_actThoughts)
+    actionIdx = Action::Thoughts;
+  else if (chosen == m_actCopy)
+    actionIdx = Action::Copy;
   else if (chosen == m_actAddBookmark)
-    actionIdx = addBookmark;
+    actionIdx = Action::AddBookmark;
   else if (chosen == m_actRemBookmark)
-    actionIdx = removeBookmark;
+    actionIdx = Action::RemoveBookmark;
 
   this->clearFocus();
   return actionIdx;
@@ -350,25 +364,32 @@ QuranPageBrowser::bestFitFontSize()
 void
 QuranPageBrowser::createActions()
 {
-  m_zoomIn = new QAction(tr("Zoom In"), this);
-  m_zoomOut = new QAction(tr("Zoom Out"), this);
-  m_copyAct = new QAction(tr("Copy Verse"), this);
-  m_selectAct = new QAction(tr("Select"), this);
-  m_playAct = new QAction(tr("Play"), this);
-  m_tafsirAct = new QAction(tr("Tafsir"), this);
+  m_actZoomIn = new QAction(tr("Zoom In"), this);
+  m_actZoomOut = new QAction(tr("Zoom Out"), this);
+  m_actCopy = new QAction(tr("Copy Verse"), this);
+  m_actSelect = new QAction(tr("Select"), this);
+  m_actPlay = new QAction(tr("Play"), this);
+  m_actTafsir = new QAction(tr("Tafsir"), this);
+  m_actTranslation = new QAction(tr("Translation"), this);
+  m_actThoughts = new QAction(tr("Thoughts"), this);
   m_actAddBookmark = new QAction(tr("Add Bookmark"), this);
   m_actRemBookmark = new QAction(tr("Remove Bookmark"), this);
-  m_zoomIn->setIcon(m_fa->icon(fa_solid, fa_magnifying_glass_plus));
-  m_zoomOut->setIcon(m_fa->icon(fa_solid, fa_magnifying_glass_minus));
-  m_playAct->setIcon(m_fa->icon(fa_solid, fa_play));
-  m_selectAct->setIcon(m_fa->icon(fa_solid, fa_hand_pointer));
-  m_tafsirAct->setIcon(m_fa->icon(fa_solid, fa_book_open));
-  m_copyAct->setIcon(m_fa->icon(fa_solid, fa_clipboard));
-  m_actAddBookmark->setIcon(m_fa->icon(fa_regular, fa_bookmark));
-  m_actRemBookmark->setIcon(m_fa->icon(fa_solid, fa_bookmark));
-  connect(m_zoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
+  m_actZoomIn->setIcon(
+    m_styleMgr.awesome().icon(fa_solid, fa_magnifying_glass_plus));
+  m_actZoomOut->setIcon(
+    m_styleMgr.awesome().icon(fa_solid, fa_magnifying_glass_minus));
+  m_actPlay->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_play));
+  m_actSelect->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_hand_pointer));
+  m_actTafsir->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_book_open));
+  m_actTranslation->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_language));
+  m_actThoughts->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_comment));
+  m_actCopy->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_clipboard));
+  m_actAddBookmark->setIcon(m_styleMgr.awesome().icon(fa_regular, fa_bookmark));
+  m_actRemBookmark->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_bookmark));
   connect(
-    m_zoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);
+    m_actZoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);
+  connect(
+    m_actZoomOut, &QAction::triggered, this, &QuranPageBrowser::actionZoomOut);
 }
 
 #ifndef QT_NO_CONTEXTMENU
@@ -376,8 +397,8 @@ void
 QuranPageBrowser::contextMenuEvent(QContextMenuEvent* event)
 {
   QMenu menu(this);
-  menu.addAction(m_zoomIn);
-  menu.addAction(m_zoomOut);
+  menu.addAction(m_actZoomIn);
+  menu.addAction(m_actZoomOut);
 
   m_mousePos = event->pos();
   m_mouseGlobalPos = event->globalPos();
@@ -389,8 +410,8 @@ void
 QuranPageBrowser::actionZoomIn()
 {
   m_fontSize++;
-  m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
-                       m_fontSize);
+  m_config.settings().setValue(
+    "Reader/QCF" + QString::number(m_config.qcfVersion()) + "Size", m_fontSize);
   constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
 }
@@ -399,8 +420,8 @@ void
 QuranPageBrowser::actionZoomOut()
 {
   m_fontSize--;
-  m_settings->setValue("Reader/QCF" + QString::number(m_qcfVer) + "Size",
-                       m_fontSize);
+  m_config.settings().setValue(
+    "Reader/QCF" + QString::number(m_config.qcfVersion()) + "Size", m_fontSize);
   constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
 }
@@ -410,7 +431,7 @@ QuranPageBrowser::updateHighlightLayer()
 {
   int old = m_highlightedIdx;
   resetHighlight();
-  m_fgHighlight = m_settings->value("Reader/FGHighlight").toBool();
+  m_fgHighlight = m_config.settings().value("Reader/FGHighlight").toBool();
 
   QColor hc = m_highlightColor.color();
   if (m_fgHighlight)

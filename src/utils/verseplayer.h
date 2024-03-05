@@ -6,14 +6,15 @@
 #ifndef VERSEPLAYER_H
 #define VERSEPLAYER_H
 
-#include "../globals.h"
-#include "dbmanager.h"
 #include <QApplication>
 #include <QAudioDevice>
 #include <QAudioOutput>
 #include <QDir>
 #include <QMediaPlayer>
 #include <QObject>
+#include <QPointer>
+#include <types/reciter.h>
+#include <types/verse.h>
 
 /*!
  * @brief VersePlayer class is responsible for the playback of Quran verse
@@ -30,9 +31,7 @@ public:
    * @param initVerse - inital ::Verse to load recitation for
    * @param reciterIdx - ::Globals::recitersList index for the reciter
    */
-  explicit VersePlayer(QObject* parent = nullptr,
-                       Verse initVerse = Verse{},
-                       int reciterIdx = 0);
+  explicit VersePlayer(QObject* parent, int reciterIdx);
 
   /**
    * @brief construct the verse filename for the ::Verse given using the
@@ -40,12 +39,7 @@ public:
    * @param v - ::Verse to get the filename of
    * @return QString of the filename
    */
-  QString constructVerseFilename(Verse v);
-  /**
-   * @brief setter for the m_activeVerse attribute
-   * @param newVerse - ::Verse instance
-   */
-  void setVerse(Verse& newVerse);
+  QString constructVerseFilename(const Verse& v);
   /**
    * @brief load the verse mp3 from the current reciter directory and set the
    * m_verseFile variable
@@ -69,11 +63,6 @@ public:
    * @return QString containing the verse filename
    */
   QString verseFilename() const;
-  /**
-   * @brief getter for m_activeVerse
-   * @return ::Verse instance
-   */
-  Verse activeVerse() const;
   /**
    * @brief getter for m_output, used for controlling audio output device
    * @return pointer to the used QAudioOutput object
@@ -127,9 +116,9 @@ signals:
   void missingVerseFile(int reciterIdx, int surah);
 
 private:
-  QDir m_reciterDir = Globals::downloadsDir.absoluteFilePath("recitations");
-  const QList<Reciter>& m_recitersList = Globals::recitersList;
-  DBManager* m_dbMgr = qobject_cast<DBManager*>(Globals::databaseManager);
+  Verse& m_activeVerse;
+  QDir m_reciterDir;
+  const QList<Reciter>& m_reciters;
   /**
    * @brief boolean indicating whether the player is on or off, 'on' implies
    * that playback should continue in case of verse change
@@ -140,17 +129,13 @@ private:
    */
   int m_reciter = 0;
   /**
-   * @brief ::Verse instance representing the current verse being played
-   */
-  Verse m_activeVerse;
-  /**
    * @brief current verse mp3 filename
    */
   QString m_verseFile;
   /**
    * @brief QAudioOutput used for playback
    */
-  QAudioOutput* m_output;
+  QPointer<QAudioOutput> m_output;
 };
 
 #endif // VERSEPLAYER_H

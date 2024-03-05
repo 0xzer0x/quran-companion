@@ -6,16 +6,21 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
-#include "../globals.h"
+#include "types/tafsir.h"
+#include "types/translation.h"
+#include "utils/dirmanager.h"
+#include "utils/settings.h"
 #include <QApplication>
 #include <QDebug>
 #include <QDir>
 #include <QObject>
 #include <QRandomGenerator>
 #include <QSettings>
+#include <QSharedPointer>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
+typedef Settings::VerseType VerseType;
 
 /**
  * @brief DBManager is as an interface for preforming queries to
@@ -26,19 +31,20 @@ class DBManager : public QObject
   Q_OBJECT
 
 public:
+  static QSharedPointer<DBManager> current();
   /**
    * @brief Database enum holds different values representing database files
    * used in different member functions.
    */
   enum Database
   {
-    null,   ///< default value
-    quran,  ///< (quran.db) main Quran database file
-    glyphs, ///< (glyphs.db) QCF glyphs database
-    betaqat,
-    bookmarks,  ///< (bookmarks.db) bookmarked verses and khatmah database
-    tafsir,     ///< currently selected tafsir database file
-    translation ///< currently selected translation database file
+    Null,   ///< default value
+    Quran,  ///< (quran.db) main Quran database file
+    Glyphs, ///< (glyphs.db) QCF glyphs database
+    Betaqat,
+    Bookmarks,  ///< (bookmarks.db) bookmarked verses and khatmah database
+    Tafsir,     ///< currently selected tafsir database file
+    Translation ///< currently selected translation database file
   };
 
   /**
@@ -55,19 +61,12 @@ public:
    * @brief sets the active tafsir
    * @param tafsirName - DBManager::Tafsir entry
    */
-  void setCurrentTafsir(int tafsirIdx);
+  bool setCurrentTafsir(int idx);
   /**
    * @brief sets the active translation
    * @param translationName - DBManager::Translation entry
    */
-  void setCurrentTranslation(int translationIdx);
-  /**
-   * @brief sets the currently active sqlite database file and opens
-   * corresponding connection based on the DBManager::Database type
-   * @param db - DBManager::Database entry
-   * @param filePath - path to the database file
-   */
-  void setOpenDatabase(Database db, QString filePath);
+  bool setCurrentTranslation(int idx);
   /**
    * @brief gets the surah number and juz number of the first verse in the page,
    * used to display page header information
@@ -86,7 +85,7 @@ public:
    * @param page - Quran page number
    * @return QList of ::Verse instances
    */
-  QList<Verse> getVerseInfoList(const int page);
+  QList<QList<int>> getVerseInfoList(const int page);
   /**
    * @brief gets the surah name glyph for the QCF_BSML font, used to render
    * surah frame in Quran page
@@ -119,7 +118,7 @@ public:
    * active khatmah
    * @param v - ::Verse reached in khatmah
    */
-  bool saveActiveKhatmah(const Verse& v);
+  bool saveActiveKhatmah(QList<int> vInfo);
   /**
    * @brief get all available khatmah ids
    * @return QList of khatmah id(s)
@@ -136,7 +135,7 @@ public:
    * @return boolean indicating a successful operation (false in case of error
    * and in case id does not exist)
    */
-  bool getKhatmahPos(const int khatmahId, Verse& v);
+  bool loadVerse(const int khatmahId, QList<int>& vInfo);
   /**
    * @brief add a new khatmah/replace khatmah with given id with position of
    * ::Verse v
@@ -145,7 +144,7 @@ public:
    * @param id - id of khatmah to replace, -1 means do not replace (default: -1)
    * @return id of newly added khatmah or id parameter if defined
    */
-  int addKhatmah(const Verse& v, const QString name, const int id = -1);
+  int addKhatmah(QList<int> vInfo, const QString name, const int id = -1);
   /**
    * @brief rename the khatmah with the given id to newName
    * @param khatmahId - id of khatmah to rename
@@ -197,7 +196,7 @@ public:
    * @param id - verse id
    * @return ::Verse instance
    */
-  Verse getVerseById(const int id);
+  QList<int> getVerseById(const int id);
   /**
    * @brief gets the page where the verse is found
    * @param surahIdx - sura number
@@ -231,9 +230,9 @@ public:
    * @param whole - boolean value to search for whole words only
    * @return QList of ::Verse instances representing the search results
    */
-  QList<Verse> searchSurahs(QString searchText,
-                            const QList<int> surahs,
-                            const bool whole = false);
+  QList<QList<int>> searchSurahs(QString searchText,
+                                 const QList<int> surahs,
+                                 const bool whole = false);
   /**
    * @brief search a range of pages for the given search text
    * @param searchText - text to search for
@@ -241,9 +240,9 @@ public:
    * @param whole - boolean value to indicate search for whole words only
    * @return QList of ::Verse instances representing the search results
    */
-  QList<Verse> searchVerses(QString searchText,
-                            const int range[2] = new int[2]{ 1, 604 },
-                            const bool whole = false);
+  QList<QList<int>> searchVerses(QString searchText,
+                                 const int range[2] = new int[2]{ 1, 604 },
+                                 const bool whole = false);
   /**
    * @brief gets the tafsir content for the given verse using the active
    * DBManager::Tafsir
@@ -264,42 +263,32 @@ public:
    * @brief gets a random verse from the Quran
    * @return QPair of ::Verse instance and verse text
    */
-  Verse randomVerse();
+  QList<int> randomVerse();
   /**
    * @brief gets a QList of ::Verse instances representing the bookmarked verse
    * within the given sura (default gets all)
    * @param surahIdx - sura number (-1 returns all bookmarks)
    * @return QList of bookmarked verses
    */
-  QList<Verse> bookmarkedVerses(int surahIdx = -1);
+  QList<QList<int>> bookmarkedVerses(int surahIdx = -1);
   /**
    * @brief checks whether the given ::Verse is bookmarked
-   * @param v - ::Verse instance to check
+   * @param vInfo - ::Verse instance to check
    * @return boolean
    */
-  bool isBookmarked(Verse v);
+  bool isBookmarked(QList<int> vInfo);
   /**
    * @brief add the given ::Verse to bookmarks
-   * @param v - ::Verse instance to add
+   * @param vInfo - ::Verse instance to add
    * @return boolean
    */
-  bool addBookmark(Verse v);
+  bool addBookmark(QList<int> vInfo);
   /**
    * @brief remove the given ::Verse from bookmarks
-   * @param v - ::Verse instance to remove
+   * @param vInfo - ::Verse instance to remove
    * @return boolean indicating successful removal
    */
-  bool removeBookmark(Verse v);
-  /**
-   * @brief getter for m_currTafsir
-   * @return the currently set DBManager::Tafasir
-   */
-  const Tafsir* currTafsir() const;
-  /**
-   * @brief getter for m_activeKhatmah
-   * @return the currently active khatmah id
-   */
-  const int activeKhatmah() const;
+  bool removeBookmark(QList<int> vInfo);
   /**
    * @brief setter for m_activeKhatmah
    * @param id - id of the active khatmah
@@ -311,21 +300,72 @@ public:
    */
   void setVerseType(VerseType newVerseType);
   /**
+   * MODIFIED
+   */
+  void saveThoughts(QList<int> vInfo, const QString& text);
+  /**
+   * MODIFIED
+   */
+  QString getThoughts(QList<int> vInfo);
+  /**
+   * @brief getter for m_activeKhatmah
+   * @return the currently active khatmah id
+   */
+  const int activeKhatmah() const;
+  /**
    * @brief getter for m_verseType
    * @return VerseType
    */
   VerseType getVerseType() const;
+  /**
+   * @brief getter for m_currTafsir
+   * @return the currently set DBManager::Tafasir
+   */
+  QSharedPointer<::Tafsir> currTafsir() const;
+  /**
+   * @brief currTranslation
+   * @return
+   *
+   * MODIFIED
+   */
+  QSharedPointer<::Translation> currTranslation() const;
+
+public slots:
+  /**
+   * @brief set tafsir to the one in the settings, update the selected db
+   */
+  void updateLoadedTafsir();
+  /**
+   * @brief set translation to the one in the settings, update the selected db
+   */
+  void updateLoadedTranslation();
+
+signals:
+  void bookmarkAdded();
+  void bookmarkRemoved();
 
 private:
-  const QDir& m_assetsDir = Globals::assetsDir;
-  const QDir& m_downloadsDir = Globals::downloadsDir;
-  const int m_qcfVer = Globals::qcfVersion;
-  const QSettings* m_settings = Globals::settings;
-  const QLocale::Language m_languageCode = Globals::language;
-  const QList<Tafsir>& m_tafasirList = Globals::tafasirList;
-  const QList<Translation>& m_translationsList = Globals::translationsList;
+  const int m_qcfVer = Settings::qcfVersion;
+  const QLocale::Language m_languageCode = Settings::language;
+  const QSharedPointer<QDir> m_assetsDir = DirManager::assetsDir;
+  const QSharedPointer<QDir> m_downloadsDir = DirManager::downloadsDir;
+  const QSharedPointer<QSettings> m_settings = Settings::settings;
+  const QList<QSharedPointer<::Tafsir>>& m_tafasir = Tafsir::tafasir;
+  const QList<QSharedPointer<::Translation>>& m_translations =
+    Translation::translations;
   const QString m_bookmarksFilepath =
-    Globals::configDir.absoluteFilePath("bookmarks.db");
+    DirManager::configDir->absoluteFilePath("bookmarks.db");
+  /**
+   * @brief sets the currently active sqlite database file and opens
+   * corresponding connection based on the DBManager::Database type
+   * @param db - DBManager::Database entry
+   * @param filePath - path to the database file
+   */
+  void setOpenDatabase(Database db, QString path);
+  /**
+   * MODIFIED
+   */
+  void updateOpenDbFile(const QString& filepath);
   /**
    * @brief integer id of the current active khatmah
    */
@@ -333,22 +373,26 @@ private:
   /**
    * @brief the currently active database type
    */
-  Database m_currentDb = null;
+  Database m_currentDb = Null;
   /**
    * @brief QSqlDatabase instance to interact with the different sqlite
    * databases
    */
   QSqlDatabase m_openDBCon;
-
-  VerseType m_verseType = VerseType::qcf;
+  /**
+   * @brief m_verseType
+   *
+   * MODIFIED
+   */
+  VerseType m_verseType = Settings::Qcf;
   /**
    * @brief the current active DBManager::Tafasir
    */
-  const Tafsir* m_currTafsir = nullptr;
+  QSharedPointer<::Tafsir> m_currTafsir;
   /**
    * @brief the current active DBManager::Translation
    */
-  const Translation* m_currTrans = nullptr;
+  QSharedPointer<::Translation> m_currTr;
   /**
    * @brief path to the currently active tafsir database file
    */
@@ -365,7 +409,9 @@ private:
    * @brief path to the QCF glyphs database file
    */
   QFileInfo m_glyphsDbPath;
-
+  /**
+   * MODIFIED
+   */
   QFileInfo m_betaqatDbPath;
   /**
    * @brief QList of sura names (Arabic if UI language is Arabic, Otherwise
