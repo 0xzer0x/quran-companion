@@ -13,10 +13,11 @@ Configuration::getInstance()
 }
 
 Configuration::Configuration()
-  : m_settings(
-      DirManager::getInstance().configDir().filePath("qurancompanion.conf"),
-      QSettings::IniFormat)
+  : m_settings(DirManager::getInstance().configDir().absoluteFilePath(
+                 "qurancompanion.conf"),
+               QSettings::IniFormat)
 {
+  checkGroups();
   m_themeId = m_settings.value("Theme").toInt();
   m_qcfVersion = m_settings.value("Reader/QCF").toInt();
   m_language = qvariant_cast<QLocale::Language>(m_settings.value("Language"));

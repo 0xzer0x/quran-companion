@@ -194,7 +194,6 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
     setHref(&textCursor, 1, "#F" + QString::number(m_headerData.first));
   }
 
-  qDebug() << "PARENT SIZE: " << parentWidget()->height();
   parentWidget()->setMinimumWidth(m_pageLineSize.width() + 70);
 
   // page lines drawing

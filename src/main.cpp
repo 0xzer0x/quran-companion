@@ -36,7 +36,6 @@ main(int argc, char* argv[])
   Logger::startLogger(DirManager::getInstance().configDir().absolutePath());
   Logger::attach();
 
-  Configuration::getInstance().checkGroups();
   Configuration::getInstance().loadUiTranslation();
   ShortcutHandler::getInstance().populateDescriptionMap();
   StyleManager::getInstance().loadTheme();
