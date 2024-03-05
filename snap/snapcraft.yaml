@@ -1,6 +1,6 @@
 name: quran-companion
 base: core22
-version: '1.2.4'
+version: "1.2.4"
 title: Quran Companion
 website: https://github.com/0xzer0x/quran-companion
 source-code: https://github.com/0xzer0x/quran-companion
@@ -44,6 +44,20 @@ layout:
     symlink: $SNAP/graphics/usr/share/X11/locale
   /usr/share/X11/xkb:
     symlink: $SNAP/usr/share/X11/xkb
+
+plugs: # plugs for theming
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes:gtk-3-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes:icon-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes:sounds-themes
 
 parts:
   qt:
