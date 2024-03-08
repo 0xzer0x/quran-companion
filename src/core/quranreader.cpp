@@ -427,11 +427,10 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
     case QuranPageBrowser::Play:
       selectVerse(browerIdx, idx);
       highlightCurrentVerse();
-      m_player->playCurrentVerse();
+      m_player->play();
       break;
     case QuranPageBrowser::Select:
       selectVerse(browerIdx, idx);
-      m_player->loadActiveVerse();
       highlightCurrentVerse();
       break;
     case QuranPageBrowser::Tafsir:
@@ -473,7 +472,6 @@ QuranReader::verseClicked()
     emit currentSurahChanged();
   }
 
-  m_player->loadActiveVerse();
   highlightCurrentVerse();
   m_player->play();
 }
