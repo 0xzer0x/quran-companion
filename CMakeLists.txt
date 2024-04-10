@@ -5,8 +5,7 @@ project(
   LANGUAGES CXX
   VERSION 1.2.4
   DESCRIPTION "Quran reader and player"
-  HOMEPAGE_URL "https://0xzer0x.github.io/projects/quran-companion/"
-)
+  HOMEPAGE_URL "https://0xzer0x.github.io/projects/quran-companion/")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -203,12 +202,12 @@ install(DIRECTORY assets TYPE BIN)
 install(DIRECTORY bismillah TYPE BIN)
 
 message(STATUS "Copying application assets to build tree")
-if (APPLE)
-    file(INSTALL assets DESTINATION "${MACOSX_PACKAGE_LOCATION}/Contents/MacOS")
-    file(INSTALL bismillah DESTINATION "${MACOSX_PACKAGE_LOCATION}/Contents/MacOS")
+if(APPLE)
+  file(INSTALL assets DESTINATION "quran-companion.app/Contents/MacOS")
+  file(INSTALL bismillah DESTINATION "quran-companion.app/Contents/MacOS")
 else()
-    file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
-    file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
+  file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
+  file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
 endif()
 
 list(APPEND SUPPORTED_LANGUAGES ar tr)
