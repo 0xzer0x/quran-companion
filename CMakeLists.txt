@@ -2,8 +2,11 @@ cmake_minimum_required(VERSION 3.22)
 
 project(
   quran-companion
-  VERSION 1.0
-  LANGUAGES CXX)
+  LANGUAGES CXX
+  VERSION 1.2.4
+  DESCRIPTION "Quran reader and player"
+  HOMEPAGE_URL "https://0xzer0x.github.io/projects/quran-companion/"
+)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -184,7 +187,7 @@ if(WIN32)
 elseif(APPLE)
   set_target_properties(
     quran-companion
-    PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER com.zer0x.qurancompanion
+    PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER io.github._zer0x.qurancompanion
                MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
                MACOSX_BUNDLE_SHORT_VERSION_STRING
                ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -195,12 +198,18 @@ install(
   TARGETS quran-companion
   BUNDLE DESTINATION .
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
 install(DIRECTORY assets TYPE BIN)
 install(DIRECTORY bismillah TYPE BIN)
 
 message(STATUS "Copying application assets to build tree")
-file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
-file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
+if (APPLE)
+    file(INSTALL assets DESTINATION "${MACOSX_PACKAGE_LOCATION}/Contents/MacOS")
+    file(INSTALL bismillah DESTINATION "${MACOSX_PACKAGE_LOCATION}/Contents/MacOS")
+else()
+    file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
+    file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
+endif()
 
 list(APPEND SUPPORTED_LANGUAGES ar tr)
 foreach(lang IN LISTS SUPPORTED_LANGUAGES)
