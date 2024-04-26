@@ -88,14 +88,17 @@ void
 DownloaderDialog::populateTreeModel()
 {
   // add reciters
+  QStandardItem* recitations = new QStandardItem(tr("Recitations"));
   for (const Reciter& reciter : m_reciters) {
     QStandardItem* item = new QStandardItem(reciter.displayName());
     item->setToolTip(reciter.displayName());
-    m_treeModel.invisibleRootItem()->appendRow(item);
+    item->setData("reciter", Qt::UserRole);
+    recitations->appendRow(item);
 
     for (int j = 1; j <= 114; j++) {
       QStandardItem* suraItem =
         new QStandardItem(m_surahDisplayNames.at(j - 1));
+      suraItem->setData("surah", Qt::UserRole);
 
       QList<QStandardItem*> rw;
       rw.append(suraItem);
@@ -104,6 +107,8 @@ DownloaderDialog::populateTreeModel()
       item->appendRow(rw);
     }
   }
+  m_treeModel.invisibleRootItem()->appendRow(recitations);
+
   // tafsir submenu
   QStandardItem* tafsir =
     new QStandardItem(qApp->translate("SettingsDialog", "Tafsir"));
@@ -174,15 +179,14 @@ DownloaderDialog::addToQueue()
   foreach (const QModelIndex& i, selected) {
     int parent = i.parent().row();
     int current = i.row();
-    bool toplevel = parent < 0;
 
     // recitation (reciter selected)
-    if (toplevel && current < recitersnum) {
+    if (i.data(Qt::UserRole).toString() == "reciter") {
       for (int surah = 1; surah <= 114; surah++)
         enqueueSurah(current, surah);
     }
     // recitation (surah index selected)
-    else if (!toplevel && parent < recitersnum)
+    else if (i.data(Qt::UserRole).toString() == "surah")
       enqueueSurah(parent, current + 1);
     // tafasir
     else if (i.data(Qt::UserRole).toString() == "tadb") {

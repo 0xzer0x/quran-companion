@@ -79,7 +79,7 @@ Configuration::loadUiTranslation()
 
   if (translation->load(":/i18n/qc_" + code + ".qm")) {
     qInfo() << translation->language() << "translation loaded";
-    qInfo() << "base translation:" << qtBase->load(":/base/" + code + ".qm");
+    qInfo() << "base translation:" << qtBase->load(":/qtbase/" + code + ".qm");
     qApp->installTranslator(translation);
     qApp->installTranslator(qtBase);
   } else {
