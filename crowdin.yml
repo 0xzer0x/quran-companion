@@ -1,8 +1,8 @@
 commit_message: Update %language% translation
 append_commit_message: false
 files:
-  - source: /dist/translations/qc_template.ts
-    translation: /dist/translations/qc_%two_letters_code%.ts
+  - source: /dist/translations/template.ts
+    translation: /dist/translations/out/qc_%two_letters_code%.ts
 export_languages:
   - ar
   - tr

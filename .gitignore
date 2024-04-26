@@ -9,7 +9,7 @@ docs/*
 dist/windows/*
 CMakeLists.txt.*
 compile_commands.json
-!qc_template.ts
+!template.ts
 !reciters.sh
 !shortcuts.sh
 !update_translations.sh

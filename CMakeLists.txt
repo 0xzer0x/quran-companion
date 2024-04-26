@@ -190,7 +190,7 @@ elseif(APPLE)
     PROPERTIES
       MACOSX_BUNDLE_ICON_FILE "logo.icns"
       MACOSX_BUNDLE_BUNDLE_NAME "Quran Companion"
-      MACOSX_BUNDLE_GUI_IDENTIFIER "io.github._zer0x.qurancompanion"
+      MACOSX_BUNDLE_GUI_IDENTIFIER "io.github._0xzer0x.qurancompanion"
       MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
       MACOSX_BUNDLE_SHORT_VERSION_STRING
       ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -223,10 +223,10 @@ endif()
 list(APPEND SUPPORTED_LANGUAGES ar tr)
 foreach(lang IN LISTS SUPPORTED_LANGUAGES)
   message(STATUS "Adding ${lang} translation file to QC_TS")
-  list(APPEND QC_TS "dist/translations/qc_${lang}.ts")
+  list(APPEND QC_TS "dist/translations/out/qc_${lang}.ts")
 
   message(STATUS "Copying ${lang} qt translations to build tree")
-  configure_file("dist/translations/qtbase_${lang}.qm"
+  configure_file("dist/translations/qtbase/${lang}.qm"
                  "${CMAKE_BINARY_DIR}/${lang}.qm" COPYONLY)
 
   message(STATUS "Adding ${lang} qtbase qm file to QTBASE_QM")
@@ -239,7 +239,7 @@ qt_add_resources(
   quran-companion
   "qttranslations"
   PREFIX
-  "/base"
+  "/qtbase"
   BASE
   ${CMAKE_BINARY_DIR}
   FILES
