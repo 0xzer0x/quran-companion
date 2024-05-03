@@ -8,7 +8,7 @@ env:
   BUILD_TYPE: Release
 jobs:
   dmg:
-    runs-on: macos-latest
+    runs-on: macos-12
     permissions:
       contents: write
     steps:
