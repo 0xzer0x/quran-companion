@@ -60,7 +60,6 @@
           <li><a href="#build">Build</a>
             <ul>
             <li><a href="#windows-1">Windows</a></li>
-            <li><a href="#macos-1">MacOS</a></li>
             <li><a href="#linux-1">Linux</a></li>
             </ul>
           </li>
