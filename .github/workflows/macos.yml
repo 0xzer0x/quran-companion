@@ -61,4 +61,4 @@ jobs:
           name: "v${{env.APP_VER}}"
           tag: "v${{env.APP_VER}}"
           bodyFile: CHANGELOG.md
-          artifacts: "Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
+          artifacts: "${{github.workspace}}/build/Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
