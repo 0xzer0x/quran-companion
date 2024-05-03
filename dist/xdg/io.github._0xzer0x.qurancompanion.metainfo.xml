@@ -44,6 +44,13 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.2.5" date="2024-05-03">
+      <description>
+        <ul>
+          <li>Added recitations menu in downloads manager for a more clear UI</li>
+        </ul>
+      </description>
+    </release>
     <release date="2024-03-05" version="1.2.4">
       <description>
         <ul>
