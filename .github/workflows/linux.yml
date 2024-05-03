@@ -1,4 +1,4 @@
-name: Deployment
+name: Linux Deployment
 on:
   workflow_dispatch:
   push:
@@ -28,7 +28,6 @@ jobs:
           host: linux
           target: desktop
           arch: gcc_64
-          tools: tools_ninja
           modules: >-
             qtimageformats
             qtmultimedia
@@ -37,7 +36,7 @@ jobs:
 
       - name: Install tools
         run: >
-          sudo apt update -y && sudo apt install wget fuse libxcb-cursor0 appstream appstream-util -y
+          sudo apt update -y && sudo apt install wget fuse libxcb-cursor0 appstream appstream-util ninja-build -y
 
           wget
           https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
@@ -114,6 +113,8 @@ jobs:
 
   macos:
     runs-on: macos-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

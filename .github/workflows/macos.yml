@@ -1,0 +1,64 @@
+name: MacOS Deployment
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+env:
+  BUILD_TYPE: Release
+jobs:
+  dmg:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Set APP_VER env variable
+        run: echo "APP_VER=$(cat ${{github.workspace}}/VERSION)" >> "$GITHUB_ENV"
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          aqtversion: "==3.1.*"
+          version: "6.6.*"
+          host: "mac"
+          cache: true
+          target: "desktop"
+          arch: "clang_64"
+          modules: >-
+            qtimageformats
+            qtmultimedia
+            qtnetworkauth
+
+      - name: Configure
+        run: >-
+          cmake -B ${{github.workspace}}/build
+          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+      - name: Build MacOS DMG
+        run: |
+          [[ -f "${QT_PLUGIN_PATH}/sqldrivers/libqsqlodbc.dylib" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlodbc.dylib
+          [[ -f "${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.dylib" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.dylib
+          [[ -f "${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.dylib" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.dylib
+          [[ -d "${QT_PLUGIN_PATH}/sqldrivers/libqsqlodbc.dylib.dSYM" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlodbc.dylib.dSYM
+          [[ -d "${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.dylib.dSYM" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.dylib.dSYM
+          [[ -d "${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.dylib.dSYM" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.dylib.dSYM
+          cd "${{github.workspace}}/build"
+          macdeployqt quran-companion.app -dmg
+          mv quran-companion.dmg Quran_Companion-${{env.APP_VER}}-x86_64.dmg
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          allowUpdates: true
+          name: "v${{env.APP_VER}}"
+          tag: "v${{env.APP_VER}}"
+          bodyFile: CHANGELOG.md
+          artifacts: "Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
