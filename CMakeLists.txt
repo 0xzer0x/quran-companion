@@ -2,8 +2,10 @@ cmake_minimum_required(VERSION 3.22)
 
 project(
   quran-companion
-  VERSION 1.0
-  LANGUAGES CXX)
+  LANGUAGES CXX
+  VERSION 1.2.4
+  DESCRIPTION "Quran reader and player"
+  HOMEPAGE_URL "https://0xzer0x.github.io/projects/quran-companion/")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -171,6 +173,7 @@ set(PROJECT_SOURCES
     src/widgets/betaqaviewer.cpp
     src/widgets/betaqaviewer.ui
     resources.qrc
+    resources/logo.icns
     qurancompanion.rc)
 
 qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
@@ -184,31 +187,46 @@ if(WIN32)
 elseif(APPLE)
   set_target_properties(
     quran-companion
-    PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER com.zer0x.qurancompanion
-               MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-               MACOSX_BUNDLE_SHORT_VERSION_STRING
-               ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-               MACOSX_BUNDLE TRUE)
+    PROPERTIES
+      MACOSX_BUNDLE_ICON_FILE "logo.icns"
+      MACOSX_BUNDLE_BUNDLE_NAME "Quran Companion"
+      MACOSX_BUNDLE_GUI_IDENTIFIER "io.github._0xzer0x.qurancompanion"
+      MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+      MACOSX_BUNDLE_SHORT_VERSION_STRING
+      ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+      MACOSX_BUNDLE_LONG_VERSION_STRING
+      ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}
+      MACOSX_BUNDLE TRUE)
+  # And this part tells CMake where to find and install the file itself
+  set(QURAN_COMPANION_ICON "resources/logo.icns")
+  set_source_files_properties(${QURAN_COMPANION_ICON}
+                              PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 endif()
 
 install(
   TARGETS quran-companion
   BUNDLE DESTINATION .
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
 install(DIRECTORY assets TYPE BIN)
 install(DIRECTORY bismillah TYPE BIN)
 
 message(STATUS "Copying application assets to build tree")
-file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
-file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
+if(APPLE)
+  file(INSTALL assets DESTINATION "quran-companion.app/Contents/MacOS")
+  file(INSTALL bismillah DESTINATION "quran-companion.app/Contents/MacOS")
+else()
+  file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
+  file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
+endif()
 
 list(APPEND SUPPORTED_LANGUAGES ar tr)
 foreach(lang IN LISTS SUPPORTED_LANGUAGES)
   message(STATUS "Adding ${lang} translation file to QC_TS")
-  list(APPEND QC_TS "dist/translations/qc_${lang}.ts")
+  list(APPEND QC_TS "dist/translations/out/qc_${lang}.ts")
 
   message(STATUS "Copying ${lang} qt translations to build tree")
-  configure_file("dist/translations/qtbase_${lang}.qm"
+  configure_file("dist/translations/qtbase/${lang}.qm"
                  "${CMAKE_BINARY_DIR}/${lang}.qm" COPYONLY)
 
   message(STATUS "Adding ${lang} qtbase qm file to QTBASE_QM")
@@ -221,7 +239,7 @@ qt_add_resources(
   quran-companion
   "qttranslations"
   PREFIX
-  "/base"
+  "/qtbase"
   BASE
   ${CMAKE_BINARY_DIR}
   FILES

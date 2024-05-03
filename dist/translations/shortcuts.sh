@@ -4,7 +4,7 @@ set -e
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
-tsfile=$SCRIPT_DIR/shortcuts.ts
+tsfile=$SCRIPT_DIR/generated/shortcuts.ts
 xmlfile=$SCRIPT_DIR/../../resources/shortcuts.xml
 
 mapfile -t names <<<"$(awk -F'"' '/desc/ { for(i=1;i<NF;i++) if($i~/description=/) { print $(i+1) } }' "$xmlfile")"

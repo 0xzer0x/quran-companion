@@ -4,7 +4,7 @@ set -e
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
-tsfile=$SCRIPT_DIR/reciters.ts
+tsfile=$SCRIPT_DIR/generated/reciters.ts
 xmlfile=$SCRIPT_DIR/../../resources/reciters.xml
 
 mapfile -t names <<<"$(awk -F'"' '/display/ { for(i=1;i<NF;i++) if($i~/display=/) { print $(i+1) } }' "$xmlfile")"

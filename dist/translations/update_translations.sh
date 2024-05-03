@@ -31,7 +31,6 @@ prompt() {
 }
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-
 prompt -s "----- Generating reciters TS file -----\n"
 "$SCRIPT_DIR/reciters.sh"
 
@@ -41,6 +40,12 @@ prompt -s "----- Generating shortcuts TS file -----\n"
 prompt -s "----- Generating tafasir TS file -----\n"
 "$SCRIPT_DIR/tafasir.sh"
 
+prompt -s "----- Generating sources TS file -----\n"
+~/Qt/6.6.1/gcc_64/bin/lupdate -recursive -no-obsolete "$SCRIPT_DIR/../../src" -ts "$SCRIPT_DIR/generated/sources.ts"
+
 prompt -s "----- Updating template TS file -----\n"
-~/Qt/6.6.1/gcc_64/bin/lupdate -recursive -no-obsolete "$SCRIPT_DIR/../../src" -ts "$SCRIPT_DIR/qc_src.ts"
-~/Qt/6.6.1/gcc_64/bin/lconvert -i "$SCRIPT_DIR/shortcuts.ts" "$SCRIPT_DIR/reciters.ts" "$SCRIPT_DIR/tafasir.ts" "$SCRIPT_DIR/qc_src.ts" -no-obsolete -o qc_template.ts
+declare -a generated
+for f in "$SCRIPT_DIR/generated/"*; do
+	generated=("${generated[@]}" "$f")
+done
+~/Qt/6.6.1/gcc_64/bin/lconvert -i "${generated[@]}" -no-obsolete -o template.ts
