@@ -33,7 +33,7 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, JobManager* manager)
   m_treeModel.setHorizontalHeaderLabels(headers);
   ui->treeView->setModel(&m_treeModel);
   populateTreeModel();
-  ui->treeView->resizeColumnToContents(0);
+  ui->treeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
   // connectors
   setupConnections();
@@ -304,7 +304,7 @@ DownloaderDialog::selectDownload(DownloadJob::Type type, QPair<int, int> info)
   QModelIndex parent;
   QModelIndex task;
   if (type == DownloadJob::Recitation) {
-    parent = m_treeModel.index(info.first, 0);
+    parent = m_treeModel.index(info.first, 0, m_treeModel.index(0, 0));
     task = m_treeModel.index(info.second - 1, 0, parent);
   } else if (type == DownloadJob::Qcf) {
     parent = m_treeModel.index(m_treeModel.rowCount() - 1, 0);
@@ -324,6 +324,8 @@ DownloaderDialog::selectDownload(DownloadJob::Type type, QPair<int, int> info)
   }
 
   ui->treeView->collapseAll();
+  if (type == DownloadJob::Recitation)
+    ui->treeView->expand(m_treeModel.index(0, 0));
   ui->treeView->expand(parent);
   selector->clearSelection();
   selector->select(task,
