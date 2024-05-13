@@ -220,7 +220,7 @@ else()
   file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
 endif()
 
-list(APPEND SUPPORTED_LANGUAGES ar tr)
+list(APPEND SUPPORTED_LANGUAGES ar tr ru)
 foreach(lang IN LISTS SUPPORTED_LANGUAGES)
   message(STATUS "Adding ${lang} translation file to QC_TS")
   list(APPEND QC_TS "dist/translations/out/qc_${lang}.ts")
