@@ -1307,7 +1307,7 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Sa&apos;ady</source>
-      <translation>Аль-Са`ади</translation>
+      <translation>Аль-Са&apos;ади</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
@@ -1322,7 +1322,7 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Ea&apos;rab</source>
-      <translation>И`араб</translation>
+      <translation>И&apos;араб</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
@@ -1357,7 +1357,7 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Kuliev &amp; Al-Sa&apos;ady - Russian</source>
-      <translation>Кулиев и Аль-Са`ади - Русский</translation>
+      <translation>Кулиев и Аль-Саади - Русский</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
