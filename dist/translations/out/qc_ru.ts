@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../src/dialogs/aboutdialog.ui" line="103"/>
       <source>Quran Companion</source>
-      <translation>Компаньоне Корана</translation>
+      <translation>Компаньон Корана</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/aboutdialog.ui" line="118"/>
@@ -460,7 +460,7 @@
       <location filename="../../../src/core/mainwindow.cpp" line="611"/>
       <location filename="../../../src/utils/systemtray.cpp" line="15"/>
       <source>Quran Companion</source>
-      <translation>Компаньоне Корана</translation>
+      <translation>Компаньон Корана</translation>
     </message>
     <message>
       <location filename="../../../src/core/mainwindow.ui" line="106"/>
