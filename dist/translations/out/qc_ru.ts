@@ -11,7 +11,7 @@
     <message>
       <location filename="../../../src/dialogs/aboutdialog.ui" line="103"/>
       <source>Quran Companion</source>
-      <translation>О Компаньоне Корана</translation>
+      <translation>Компаньоне Корана</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/aboutdialog.ui" line="118"/>
@@ -350,7 +350,7 @@
     <message>
       <location filename="../../../src/dialogs/downloaderdialog.cpp" line="389"/>
       <source>Download Failed</source>
-      <translation>Во время загрузки произошла ошибка:(</translation>
+      <translation>Ошибка загрузки</translation>
     </message>
   </context>
   <context>
@@ -402,7 +402,7 @@
     <message>
       <location filename="../../../src/notifiers/jobnotifier.cpp" line="21"/>
       <source>Download Failed</source>
-      <translation>Во время загрузки произошла ошибка:(</translation>
+      <translation>Ошибка загрузки</translation>
     </message>
   </context>
   <context>
@@ -460,7 +460,7 @@
       <location filename="../../../src/core/mainwindow.cpp" line="611"/>
       <location filename="../../../src/utils/systemtray.cpp" line="15"/>
       <source>Quran Companion</source>
-      <translation>О Компаньоне Корана</translation>
+      <translation>Компаньоне Корана</translation>
     </message>
     <message>
       <location filename="../../../src/core/mainwindow.ui" line="106"/>
@@ -979,7 +979,7 @@
       <location filename="../../../src/dialogs/settingsdialog.ui" line="105"/>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="156"/>
       <source>Features</source>
-      <translation>Возможности</translation>
+      <translation>Особенности</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="125"/>
@@ -1024,12 +1024,12 @@
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="207"/>
       <source>Double page</source>
-      <translation>Разворот</translation>
+      <translation>Двойная страница</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="225"/>
       <source>Page font</source>
-      <translation>Page font</translation>
+      <translation>Шрифт страницы</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="239"/>
@@ -1277,7 +1277,7 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Adwa&apos; ul-Bayan</source>
-      <translation>Адва `Уль-Байан</translation>
+      <translation>Адва&apos; Уль-Байан</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
