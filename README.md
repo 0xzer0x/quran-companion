@@ -24,7 +24,7 @@
   <a href="https://techforpalestine.org/learn-more"><img alt="StandWithPalestine" src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/StandWithPalestine.svg"></a>
   <img alt="GitHub Release" src="https://img.shields.io/github/v/release/0xzer0x/quran-companion">
   <a href="https://aur.archlinux.org/packages/quran-companion"><img alt="AUR Version" src="https://img.shields.io/aur/version/quran-companion"></a>
-  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/main.yml">
+  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/linux.yml">
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/0xzer0x/quran-companion">
 </p>
 
@@ -122,6 +122,11 @@ Quran Companion is a cross-platform Quran reader/player with recitation download
 
 Online installer can be downloaded from [here][win-installer].
 
+#### MacOS
+
+1. Download and open the [application dmg][macos-dmg-url].
+2. Drag the application into your _Applications_.
+
 #### Linux
 
 The application can be downloaded in any of the available packages (snap, flatpak, appimage, aur package).
@@ -130,7 +135,7 @@ The application can be downloaded in any of the available packages (snap, flatpa
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
     <img width='240' alt='Download Flatpak' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/>
  </a>
- <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.2.4/Quran_Companion-1.2.4-x86_64.AppImage'>
+ <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.2.5/Quran_Companion-1.2.5-x86_64.AppImage'>
     <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 10px'/>
  </a>
  <a href="https://snapcraft.io/quran-companion">
@@ -156,7 +161,7 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 
 - GCC / MSVC
 - CMake
-- Qt >= 6.4
+- Qt >= 6.5
   - `qtbase`
   - `qtimageformats`
   - `qtsvg`
@@ -168,22 +173,22 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 1. Clone the repo, make sure to pass `--depth=1` to reduce the download size
 
 ```sh
-  git clone --depth=1 -b main https://github.com/0xzer0x/quran-companion.git
+git clone --depth=1 -b main https://github.com/0xzer0x/quran-companion.git
 ```
 
 #### Windows
 
 2. Install Qt using the [online installer](https://www.qt.io/download-qt-installer), make sure to select Qt Multimedia & Qt image formats
 
-3. Add the Qt bin directory to the system **PATH** variable, usually `C:\Qt\6.X.X\mingw_64\bin`
+3. Add the Qt bin directory to the system **PATH** variable, usually `C:\Qt\6.x.x\msvc_2019\bin`
 
 4. Build (replace 6.x.x with the Qt version you installed)
 
-```cmd
-  mkdir build
-  cd build
-  cmake.exe -DCMAKE_PREFIX_PATH="C:\Qt\6.x.x\mingw_64" -DCMAKE_BUILD_TYPE=Release -G "Ninja" ..
-  ninja
+```sh
+mkdir build
+cd build
+cmake.exe -DCMAKE_PREFIX_PATH="C:\Qt\6.x.x\msvc_2019" -DCMAKE_BUILD_TYPE=Release ..
+cmake.exe --build . --config Release
 ```
 
 #### Linux
@@ -207,17 +212,10 @@ sudo pacman -Sy base-devel cmake qt6-base qt6-multimedia qt6-tools qt6-imageform
 **Note:** if you installed Qt through the online installer, you need to pass `-DCMAKE_PREFIX_PATH=~/Qt/6.x.x/gcc_64` to CMake in order for the linker to find the Qt libs
 
 ```sh
-  mkdir build
-  cd build
-  cmake ..
-  make
-```
-
-4. If you're using Qt 6.4, you need to set the **QT_MEDIA_BACKEND** environmental variable to `ffmpeg` every time you run the executable, you could put the following snippet in a bash file to run the application
-
-```sh
-export QT_MEDIA_BACKEND=ffmpeg
-./quran-companion
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build .
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -313,3 +311,4 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 [win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.9/qc_online_installer_x64_win.exe
 [translation-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations
 [recitations-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Recitations
+[macos-dmg-url]: https://github.com/0xzer0x/quran-companion/releases/download/v1.2.5/Quran_Companion-1.2.5-x86_64.dmg

@@ -22,7 +22,7 @@
   <a href="https://techforpalestine.org/learn-more"><img alt="StandWithPalestine" src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/StandWithPalestine.svg"></a>
   <img alt="GitHub Release" src="https://img.shields.io/github/v/release/0xzer0x/quran-companion">
   <a href="https://aur.archlinux.org/packages/quran-companion"><img alt="AUR Version" src="https://img.shields.io/aur/version/quran-companion"></a>
-  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/main.yml">
+  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/linux.yml">
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/0xzer0x/quran-companion">
 </p>
 
@@ -125,6 +125,11 @@
 
 مثّبت البرنامج يمكنك تحميله من [هنا][win-installer]
 
+#### ماك
+
+1. قم بتحميل و فتح ملف [الdmg][macos-dmg-url].
+2. قم بسحب البرنامج لمجلد التطبيقات.
+
 #### لينكس
 
 يمكنك تحميل البرنامج بأي صيغة من الصيغ المتوفرة (snap, flatpak, appimage, aur package)
@@ -133,7 +138,7 @@
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
     <img width='240' alt='Download Flatpak' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/>
  </a>
- <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.2.4/Quran_Companion-1.2.4-x86_64.AppImage'>
+ <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.2.5/Quran_Companion-1.2.5-x86_64.AppImage'>
     <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 10px'/>
  </a>
  <a href="https://snapcraft.io/quran-companion">
@@ -159,7 +164,7 @@
 
 - GCC / MSVC
 - CMake
-- Qt >= 6.4
+- Qt >= 6.5
   - `qtbase`
   - `qtimageformats`
   - `qtsvg`
@@ -194,8 +199,8 @@ git clone --depth=1 -b main https://github.com/0xzer0x/quran-companion.git
 ```sh
 mkdir build
 cd build
-cmake.exe -DCMAKE_PREFIX_PATH="C:\Qt\6.x.x\msvc_2019" -DCMAKE_BUILD_TYPE=Release -G "Ninja" ..
-ninja
+cmake.exe -DCMAKE_PREFIX_PATH="C:\Qt\6.x.x\msvc_2019" -DCMAKE_BUILD_TYPE=Release ..
+cmake.exe --build . --config Release
 ```
 
 <a name="linux-build"></a>
@@ -223,14 +228,8 @@ sudo pacman -Sy base-devel cmake qt6-base qt6-multimedia qt6-tools qt6-imageform
 ```sh
 mkdir build
 cd build
-cmake ..
-make
-```
-
-إذا كنت تستخدم Qt 6.4 ، فأنت بحاجة إلى تعيين المتغير البيئي **QT_MEDIA_BACKEND** إلى "ffmpeg" في كل مرة تقوم فيها بتشغيل الملف القابل للتنفيذ ، يمكنك وضع المقتطف التالي في ملف bash لتشغيل التطبيق
-
-```sh
-QT_MEDIA_BACKEND=ffmpeg ./quran-companion
+cmake -DCMAKE_BUILD_TYPE=Release -G "Ninja" ..
+cmake --build .
 ```
 
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
@@ -330,3 +329,4 @@ QT_MEDIA_BACKEND=ffmpeg ./quran-companion
 [win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.9/qc_online_installer_x64_win.exe
 [translation-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations
 [recitations-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Recitations
+[macos-dmg-url]: https://github.com/0xzer0x/quran-companion/releases/download/v1.2.5/Quran_Companion-1.2.5-x86_64.dmg
