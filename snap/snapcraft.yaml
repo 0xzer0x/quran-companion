@@ -2,7 +2,7 @@ name: quran-companion
 base: core22
 version: "1.2.5"
 title: Quran Companion
-website: https://github.com/0xzer0x/quran-companion
+website: https://0xzer0x.github.io/projects/quran-companion
 source-code: https://github.com/0xzer0x/quran-companion
 contact: youssefessamasu@gmail.com
 summary: Cross-platform Quran reader and player
@@ -25,11 +25,9 @@ apps:
     desktop: usr/share/applications/io.github._0xzer0x.qurancompanion.desktop
     environment:
       LD_LIBRARY_PATH: "$SNAP/opt/qt6/6.6.1/gcc_64/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$LD_LIBRARY_PATH"
-      WAYLAND_DISPLAY: "/run/user/1000/wayland-1"
       PULSE_RUNTIME_PATH: "$XDG_RUNTIME_DIR/../pulse"
       XDG_DATA_DIRS: "$SNAP/usr/share:$XDG_DATA_DIRS"
       QT_QPA_PLATFORMTHEME: gtk3
-      QT_QPA_PLATFORM: wayland-egl
     plugs:
       - audio-playback
       - gsettings
