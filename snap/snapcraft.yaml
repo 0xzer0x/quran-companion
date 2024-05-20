@@ -29,7 +29,7 @@ apps:
       XDG_DATA_DIRS: "$SNAP/usr/share:$XDG_DATA_DIRS"
       WAYLAND_DISPLAY: "/run/user/1000/wayland-1"
       QT_QPA_PLATFORM: "wayland-egl;xcb"
-      QT_QPA_PLATFORMTHEME: "gnome"
+      QT_QPA_PLATFORMTHEME: "xdgdesktopportal"
     plugs:
       - audio-playback
       - gsettings
