@@ -1,5 +1,5 @@
-#ifndef BETAQAT_SERVICE
-#define BETAQAT_SERVICE
+#ifndef BETAQATSERVICE_H
+#define BETAQATSERVICE_H
 
 #include <QString>
 

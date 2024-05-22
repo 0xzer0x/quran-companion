@@ -3,7 +3,9 @@
 
 #include <QDateTime>
 #include <QDialog>
-#include <database/translationdb.h>
+#include <repository/translationrepository.h>
+#include <service/quranservice.h>
+#include <service/translationservice.h>
 #include <types/verse.h>
 #include <utils/dirmanager.h>
 
@@ -36,8 +38,8 @@ protected:
 private:
   Ui::VerseDialog* ui;
   Configuration& m_config;
-  const QuranDb& m_quranDb;
-  const TranslationDb& m_translationDb;
+  const QuranService* m_quranService;
+  const TranslationService* m_translationService;
   QFile m_timestampFile;
   /**
    * @brief generate the verse of the day and set the votd html

@@ -1,5 +1,5 @@
-#ifndef TAFSIR_SERVICE_H
-#define TAFSIR_SERVICE_H
+#ifndef TAFSIRSERVICE_H
+#define TAFSIRSERVICE_H
 
 #include <QString>
 #include <types/tafsir.h>

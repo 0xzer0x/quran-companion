@@ -3,8 +3,11 @@
 
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <database/bookmarksdb.h>
 #include <interfaces/userdataexporter.h>
+#include <repository/bookmarksrepository.h>
+#include <service/bookmarkservice.h>
+#include <service/khatmahservice.h>
+#include <service/thoughtsservice.h>
 #include <types/verse.h>
 
 class JsonDataExporter : public UserDataExporter
@@ -18,7 +21,9 @@ public:
   bool save();
 
 private:
-  BookmarksDb& m_bookmarksDb = BookmarksDb::getInstance();
+  BookmarkService* m_bookmarkService;
+  KhatmahService* m_khatmahService;
+  ThoughtsService* m_thoughtsService;
   QJsonObject verseJson(const Verse& v);
   QJsonObject khatmahJson(const QPair<QString, Verse>& entry);
   QJsonObject thoughtJson(const QPair<Verse, QString>& entry);

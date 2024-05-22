@@ -1,5 +1,5 @@
-#ifndef BOOKMARK_SERVICE_H
-#define BOOKMARK_SERVICE_H
+#ifndef BOOKMARKSERVICE_H
+#define BOOKMARKSERVICE_H
 
 #include <QList>
 #include <notifiers/bookmarksnotifier.h>

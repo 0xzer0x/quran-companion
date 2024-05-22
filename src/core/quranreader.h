@@ -4,9 +4,14 @@
 #include <QLabel>
 #include <QScrollArea>
 #include <QWidget>
-#include <database/bookmarksdb.h>
-#include <database/tafsirdb.h>
-#include <database/translationdb.h>
+#include <repository/bookmarksrepository.h>
+#include <repository/tafsirrepository.h>
+#include <repository/translationrepository.h>
+#include <service/bookmarkservice.h>
+#include <service/glyphservice.h>
+#include <service/quranservice.h>
+#include <service/tafsirservice.h>
+#include <service/translationservice.h>
 #include <types/verse.h>
 #include <utils/verseplayer.h>
 #include <widgets/quranpagebrowser.h>
@@ -158,25 +163,25 @@ private:
    */
   Configuration& m_config;
   /**
-   * @brief reference to the singleton TafsirDb instance
+   * @brief reference to the singleton TafsirRepository instance
    */
-  TafsirDb& m_tafsirDb;
+  TafsirService* m_tafsirService;
   /**
-   * @brief reference to the singleton TranslationDb instance
+   * @brief reference to the singleton TranslationRepository instance
    */
-  TranslationDb& m_translationDb;
+  TranslationService* m_translationService;
   /**
-   * @brief reference to the singleton BookmarksDb instance
+   * @brief reference to the singleton BookmarksRepository instance
    */
-  BookmarksDb& m_bookmarksDb;
+  BookmarkService* m_bookmarkService;
   /**
-   * @brief reference to the singleton QuranDb instance
+   * @brief reference to the singleton QuranRepository instance
    */
-  QuranDb& m_quranDb;
+  QuranService* m_quranService;
   /**
-   * @brief reference to the singleton GlyphsDb instance
+   * @brief reference to the singleton GlyphsRepository instance
    */
-  const GlyphsDb& m_glyphsDb;
+  const GlyphService* m_glyphService;
   /**
    * @brief reference to the static QList of available tafasir
    */

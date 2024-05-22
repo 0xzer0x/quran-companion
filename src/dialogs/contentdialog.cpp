@@ -7,17 +7,19 @@
 #include "ui_contentdialog.h"
 #include <types/tafsir.h>
 #include <utils/fontmanager.h>
+#include <utils/servicefactory.h>
 #include <utils/stylemanager.h>
 
 ContentDialog::ContentDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::ContentDialog)
   , m_config(Configuration::getInstance())
-  , m_quranDb(QuranDb::getInstance())
-  , m_bookmarksDb(BookmarksDb::getInstance())
-  , m_glyphsDb(GlyphsDb::getInstance())
-  , m_tafsirDb(TafsirDb::getInstance())
-  , m_translationDb(TranslationDb::getInstance())
+  , m_quranService(ServiceFactory::quranService())
+  , m_bookmarkService(ServiceFactory::bookmarkService())
+  , m_glyphService(ServiceFactory::glyphService())
+  , m_tafsirService(ServiceFactory::tafsirService())
+  , m_translationService(ServiceFactory::translationService())
+  , m_thoughtsService(ServiceFactory::thoughtsService())
   , m_tafasir(Tafsir::tafasir)
   , m_translations(Translation::translations)
   , m_currMode(Tafsir)
@@ -65,12 +67,12 @@ ContentDialog::showVerseTafsir(const Verse& v)
 {
   static bool reload = false;
   if (reload) {
-    m_tafsirDb.updateLoadedTafsir();
+      m_tafsirService->loadTafsir();
     reload = false;
   }
 
-  if (!m_tafsirDb.currTafsir()->isAvailable()) {
-    int i = m_tafasir.indexOf(*m_tafsirDb.currTafsir());
+  if (!m_tafsirService->currTafsir()->isAvailable()) {
+    int i = m_tafasir.indexOf(*m_tafsirService->currTafsir());
     reload = true;
     emit missingTafsir(i);
     return;
@@ -86,12 +88,12 @@ ContentDialog::showVerseTranslation(const Verse& v)
 {
   static bool reload = false;
   if (reload) {
-    m_translationDb.updateLoadedTranslation();
+      m_translationService->loadTranslation();
     reload = false;
   }
 
-  if (!m_translationDb.currTranslation()->isAvailable()) {
-    int i = m_translations.indexOf(*m_translationDb.currTranslation());
+  if (!m_translationService->currTranslation()->isAvailable()) {
+    int i = m_translations.indexOf(*m_translationService->currTranslation());
     reload = true;
     emit missingTranslation(i);
     return;
@@ -125,13 +127,14 @@ ContentDialog::setShownVerse(const Verse& newShownVerse)
   if (m_shownVerse.number() == 0)
     m_shownVerse.setNumber(1);
 
-  QString title = tr("Surah: ") + m_quranDb.surahName(m_shownVerse.surah()) +
-                  " - " + tr("Verse: ") +
-                  QString::number(m_shownVerse.number());
+  QString title = tr("Surah: ") +
+                  m_quranService->surahName(m_shownVerse.surah()) + " - " +
+                  tr("Verse: ") + QString::number(m_shownVerse.number());
   QString glyphs =
     m_config.verseType() == Configuration::Qcf
-      ? m_glyphsDb.getVerseGlyphs(m_shownVerse.surah(), m_shownVerse.number())
-      : m_quranDb.verseText(m_shownVerse.surah(), m_shownVerse.number());
+      ? m_glyphService->getVerseGlyphs(m_shownVerse.surah(),
+                                       m_shownVerse.number())
+      : m_quranService->verseText(m_shownVerse.surah(), m_shownVerse.number());
   QString fontFamily = FontManager::getInstance().getInstance().verseFontname(
     m_config.verseType(), m_shownVerse.page());
 
@@ -152,14 +155,14 @@ ContentDialog::setShownVerse(const Verse& newShownVerse)
 void
 ContentDialog::btnNextClicked()
 {
-  setShownVerse(m_shownVerse.next(false));
+  setShownVerse(m_quranService->next(m_shownVerse, false));
   loadContent(m_currMode);
 }
 
 void
 ContentDialog::btnPrevClicked()
 {
-  setShownVerse(m_shownVerse.prev(false));
+  setShownVerse(m_quranService->previous(m_shownVerse, false));
   loadContent(m_currMode);
 }
 
@@ -197,7 +200,7 @@ ContentDialog::tafsirChanged()
 {
   m_tafsir = ui->cmbContent->currentData().toInt();
   m_config.settings().setValue("Reader/Tafsir", m_tafsir);
-  if (m_tafsirDb.setCurrentTafsir(m_tafsir))
+  if (m_tafsirService->setCurrentTafsir(m_tafsir))
     loadVerseTafsir();
 }
 
@@ -276,26 +279,26 @@ ContentDialog::cmbLoadTranslations()
 void
 ContentDialog::loadVerseTafsir()
 {
-  if (m_tafsirDb.currTafsir()->isText())
+  if (m_tafsirService->currTafsir()->isText())
     ui->tedContent->setText(
-      m_tafsirDb.getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
+      m_tafsirService->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
   else
     ui->tedContent->setHtml(
-      m_tafsirDb.getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
+      m_tafsirService->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
 }
 
 void
 ContentDialog::loadVerseTranslation()
 {
-  m_translationDb.setCurrentTranslation(m_translation);
-  ui->tedContent->setText(m_translationDb.getTranslation(
+  m_translationService->setCurrentTranslation(m_translation);
+  ui->tedContent->setText(m_translationService->getTranslation(
     m_shownVerse.surah(), m_shownVerse.number()));
 }
 
 void
 ContentDialog::loadVerseThoughts()
 {
-  ui->tedContent->setText(m_bookmarksDb.getThoughts(m_shownVerse));
+  ui->tedContent->setText(m_thoughtsService->getThoughts(m_shownVerse));
   ui->tedContent->setReadOnly(false);
   ui->tedContent->setCursorWidth(1);
 }
@@ -305,7 +308,7 @@ ContentDialog::saveVerseThoughts()
 {
   ui->tedContent->setCursorWidth(0);
   ui->tedContent->setReadOnly(true);
-  m_bookmarksDb.saveThoughts(m_shownVerse, ui->tedContent->toPlainText());
+  m_thoughtsService->saveThoughts(m_shownVerse, ui->tedContent->toPlainText());
 }
 
 void

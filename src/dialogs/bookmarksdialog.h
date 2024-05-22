@@ -13,8 +13,10 @@
 #include <QStandardItem>
 #include <QStringListModel>
 #include <QVBoxLayout>
-#include <database/bookmarksdb.h>
-#include <database/glyphsdb.h>
+#include <repository/bookmarksrepository.h>
+#include <repository/glyphsrepository.h>
+#include <service/bookmarkservice.h>
+#include <service/glyphservice.h>
 #include <types/verse.h>
 #include <utils/configuration.h>
 
@@ -123,17 +125,17 @@ private:
    */
   const Configuration& m_config;
   /**
-   * @brief reference to the singleton GlyphsDb instance
+   * @brief reference to the singleton GlyphsRepository instance
    */
-  const GlyphsDb& m_glpyhsDb;
+  const GlyphService* m_glyphService;
   /**
-   * @brief reference to the singleton QuranDb instance
+   * @brief reference to the singleton QuranRepository instance
    */
-  const QuranDb& m_quranDb;
+  const QuranService* m_quranService;
   /**
-   * @brief reference to the singleton BookmarksDb instance
+   * @brief reference to the singleton BookmarksRepository instance
    */
-  BookmarksDb& m_bookmarksDb;
+  BookmarkService* m_bookmarkService;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

@@ -1,12 +1,14 @@
 #include "copydialog.h"
 #include "ui_copydialog.h"
 
+#include <utils/servicefactory.h>
+
 CopyDialog::CopyDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::CopyDialog)
   , m_verseValidator(new QIntValidator(this))
   , m_currVerse(Verse::getCurrent())
-  , m_quranDb(QuranDb::getInstance())
+  , m_quranService(ServiceFactory::quranService())
   , m_notifier(this)
 {
   ui->setupUi(this);
@@ -20,13 +22,14 @@ void
 CopyDialog::copyVerseText(const Verse v)
 {
   QClipboard* clip = QApplication::clipboard();
-  QString text = m_quranDb.verseText(v.surah(), v.number());
+  QString text = m_quranService->verseText(v.surah(), v.number());
   QString vNum = QString::number(v.number());
   text.remove(text.size() - 1, 1);
   text = text.trimmed();
   text = "{" + text + "}";
   text += ' ';
-  text += "[" + m_quranDb.surahNames().at(v.surah() - 1) + ":" + vNum + "]";
+  text +=
+    "[" + m_quranService->surahNames().at(v.surah() - 1) + ":" + vNum + "]";
   clip->setText(text);
   m_notifier.copied();
 }
@@ -46,13 +49,14 @@ CopyDialog::copyRange()
   QString final = "{ ";
   QClipboard* clip = QApplication::clipboard();
   for (int i = from; i <= to; i++) {
-    QString text = m_quranDb.verseText(m_currVerse.surah(), i);
+    QString text = m_quranService->verseText(m_currVerse.surah(), i);
     text.remove(text.size() - 1, 1);
     text += "(" + QString::number(i) + ") ";
     final.append(text);
   }
 
-  final += "} [" + m_quranDb.surahNames().at(m_currVerse.surah() - 1) + "]";
+  final +=
+    "} [" + m_quranService->surahNames().at(m_currVerse.surah() - 1) + "]";
   clip->setText(final);
   m_notifier.copied();
 }
@@ -60,7 +64,7 @@ CopyDialog::copyRange()
 void
 CopyDialog::show()
 {
-  ui->lbCopySurahName->setText(m_quranDb.surahName(m_currVerse.surah()));
+  ui->lbCopySurahName->setText(m_quranService->surahName(m_currVerse.surah()));
 
   ui->cmbCopyFrom->clear();
   ui->cmbCopyTo->clear();

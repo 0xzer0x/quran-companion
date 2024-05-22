@@ -5,9 +5,9 @@
 
 #include "downloaderdialog.h"
 #include "ui_downloaderdialog.h"
-#include <downloader/contentjob.h>
-#include <downloader/qcfjob.h>
-#include <downloader/surahjob.h>
+#include <downloader/impl/contentjob.h>
+#include <downloader/impl/qcfjob.h>
+#include <downloader/impl/surahjob.h>
 #include <utils/stylemanager.h>
 
 DownloaderDialog::DownloaderDialog(QWidget* parent, JobManager* manager)
@@ -15,7 +15,7 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, JobManager* manager)
   , ui(new Ui::DownloaderDialog)
   , m_jobMgr(manager)
   , m_config(Configuration::getInstance())
-  , m_quranDb(QuranDb::getInstance())
+  , m_quranService(ServiceFactory::quranService())
   , m_reciters(Reciter::reciters)
   , m_tafasir(Tafsir::tafasir)
   , m_translations(Translation::translations)
@@ -26,7 +26,7 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, JobManager* manager)
     StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_download));
 
   // treeview setup
-  m_surahDisplayNames = m_quranDb.surahNames();
+  m_surahDisplayNames = m_quranService->surahNames();
   QStringList headers;
   headers.append(tr("Name"));
   headers.append(tr("Number"));

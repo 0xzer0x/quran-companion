@@ -6,7 +6,7 @@
 #include <QPropertyAnimation>
 #include <QSettings>
 #include <QWidget>
-#include <database/betaqatdb.h>
+#include <repository/betaqatrepository.h>
 
 namespace Ui {
 class BetaqaViewer;
@@ -30,7 +30,7 @@ protected:
 
 private:
   Ui::BetaqaViewer* ui;
-  BetaqatDb& m_betaqatDb;
+    BetaqatRepository& m_betaqatDb;
 
   int m_surah = -1;
   QPointer<QGraphicsDropShadowEffect> m_shadowEffect;

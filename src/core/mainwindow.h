@@ -16,9 +16,6 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QStringListModel>
-#include <database/bookmarksdb.h>
-#include <database/qurandb.h>
-#include <database/translationdb.h>
 #include <dialogs/bookmarksdialog.h>
 #include <dialogs/contentdialog.h>
 #include <dialogs/copydialog.h>
@@ -27,6 +24,9 @@
 #include <dialogs/searchdialog.h>
 #include <dialogs/settingsdialog.h>
 #include <dialogs/versedialog.h>
+#include <service/bookmarkservice.h>
+#include <service/quranservice.h>
+#include <service/translationservice.h>
 #include <types/verse.h>
 #include <utils/shortcuthandler.h>
 #include <utils/systemtray.h>
@@ -273,17 +273,19 @@ private:
    */
   ShortcutHandler& m_shortcutHandler;
   /**
-   * @brief reference to the singleton BookmarksDb instance
+   * @brief reference to the singleton BookmarksRepository instance
    */
-  BookmarksDb& m_bookmarksDb;
+  BookmarkService* m_bookmarkService;
+
+  KhatmahService* m_khatmahService;
   /**
-   * @brief reference to the singleton QuranDb instance
+   * @brief reference to the singleton QuranRepository instance
    */
-  const QuranDb& m_quranDb;
+  const QuranService* m_quranService;
   /**
-   * @brief reference to the singleton TranslationDb instance
+   * @brief reference to the singleton TranslationRepository instance
    */
-  const TranslationDb& m_translationDb;
+  const TranslationService* m_translationService;
   /**
    * @brief reference to the static QList of available reciters
    */

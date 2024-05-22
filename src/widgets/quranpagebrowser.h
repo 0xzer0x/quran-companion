@@ -17,8 +17,10 @@
 #include <QShortcut>
 #include <QTextBrowser>
 #include <QTextCursor>
-#include <database/glyphsdb.h>
-#include <database/qurandb.h>
+#include <repository/glyphsrepository.h>
+#include <repository/quranrepository.h>
+#include <service/glyphservice.h>
+#include <service/quranservice.h>
 #include <utils/configuration.h>
 #include <utils/stylemanager.h>
 
@@ -148,8 +150,8 @@ protected:
 private:
   Configuration& m_config;
   StyleManager& m_styleMgr;
-  const QuranDb& m_quranDb;
-  const GlyphsDb& m_glyphsDb;
+  const QuranService* m_quranService;
+  const GlyphService* m_glyphService;
   /**
    * @brief utility for creating menu actions for interacting with the widget
    */

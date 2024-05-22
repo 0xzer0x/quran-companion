@@ -3,8 +3,11 @@
 
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <database/bookmarksdb.h>
 #include <interfaces/userdataimporter.h>
+#include <repository/bookmarksrepository.h>
+#include <service/bookmarkservice.h>
+#include <service/khatmahservice.h>
+#include <service/thoughtsservice.h>
 #include <types/verse.h>
 
 class JsonDataImporter : public UserDataImporter
@@ -19,7 +22,9 @@ public:
   bool read() override;
 
 private:
-  BookmarksDb& m_bookmarksDb = BookmarksDb::getInstance();
+  BookmarkService* m_bookmarkService;
+  KhatmahService* m_khatmahService;
+  ThoughtsService* m_thoughtsService;
   bool validArray(const QString key);
   bool validVerse(const QJsonObject& obj);
   bool validKhatmah(const QJsonObject& obj);

@@ -1,8 +1,14 @@
 #include "jsondataimporter.h"
 #include <QFile>
 #include <QJsonArray>
+#include <utils/servicefactory.h>
 
-JsonDataImporter::JsonDataImporter() {}
+JsonDataImporter::JsonDataImporter()
+  : m_bookmarkService(ServiceFactory::bookmarkService())
+  , m_khatmahService(ServiceFactory::khatmahService())
+  , m_thoughtsService(ServiceFactory::thoughtsService())
+{
+}
 
 void
 JsonDataImporter::importBookmarks()
@@ -14,8 +20,8 @@ JsonDataImporter::importBookmarks()
     Verse bookmark = verseFromJson(item.toObject());
     if (bookmark.page() < 1 || bookmark.surah() < 1 || bookmark.number() < 1)
       continue;
-    if (!m_bookmarksDb.isBookmarked(bookmark))
-      m_bookmarksDb.addBookmark(bookmark, true);
+    if (!m_bookmarkService->isBookmarked(bookmark))
+      m_bookmarkService->addBookmark(bookmark, true);
   }
 }
 
@@ -28,7 +34,7 @@ JsonDataImporter::importKhatmah()
   foreach (const QJsonValue& item, arr) {
     QPair<QString, Verse> khatmah = khatmahFromJson(item.toObject());
     if (!khatmah.first.isEmpty())
-      m_bookmarksDb.addKhatmah(khatmah.second, khatmah.first);
+      m_khatmahService->addKhatmah(khatmah.second, khatmah.first);
   }
 }
 
@@ -41,7 +47,7 @@ JsonDataImporter::importThoughts()
   foreach (const QJsonValue& item, arr) {
     QPair<Verse, QString> thought = thoughtFromJson(item.toObject());
     if (!thought.second.isEmpty())
-      m_bookmarksDb.saveThoughts(thought.first, thought.second);
+      m_thoughtsService->saveThoughts(thought.first, thought.second);
   }
 }
 

@@ -7,15 +7,16 @@
 #include "ui_bookmarksdialog.h"
 #include <set>
 #include <utils/fontmanager.h>
+#include <utils/servicefactory.h>
 #include <utils/stylemanager.h>
 
 BookmarksDialog::BookmarksDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::BookmarksDialog)
   , m_config(Configuration::getInstance())
-  , m_quranDb(QuranDb::getInstance())
-  , m_bookmarksDb(BookmarksDb::getInstance())
-  , m_glpyhsDb(GlyphsDb::getInstance())
+  , m_quranService(ServiceFactory::quranService())
+  , m_bookmarkService(ServiceFactory::bookmarkService())
+  , m_glyphService(ServiceFactory::glyphService())
 {
   ui->setupUi(this);
   ui->navBar->setLayoutDirection(Qt::LeftToRight);
@@ -87,7 +88,7 @@ BookmarksDialog::loadBookmarks(int surah)
 {
   if (m_shownSurah != surah) {
     m_shownSurah = surah;
-    m_shownVerses = m_bookmarksDb.bookmarkedVerses(surah);
+    m_shownVerses = m_bookmarkService->bookmarkedVerses(surah);
     if (m_shownSurah == -1)
       m_allBookmarked = m_shownVerses;
   }
@@ -136,12 +137,12 @@ BookmarksDialog::loadBookmarks(int surah)
       removeFromFav, &QPushButton::clicked, this, &BookmarksDialog::btnRemove);
 
     QString info = tr("Surah: ") +
-                   m_quranDb.surahNames().at(verse.surah() - 1) + " - " +
+                   m_quranService->surahNames().at(verse.surah() - 1) + " - " +
                    tr("Verse: ") + QString::number(verse.number());
     QString glyphs =
       m_config.verseType() == Configuration::Qcf
-        ? m_glpyhsDb.getVerseGlyphs(verse.surah(), verse.number())
-        : m_quranDb.verseText(verse.surah(), verse.number());
+        ? m_glyphService->getVerseGlyphs(verse.surah(), verse.number())
+        : m_quranService->verseText(verse.surah(), verse.number());
 
     lbMeta->setText(info);
     lbMeta->setAlignment(Qt::AlignLeft);
@@ -192,7 +193,7 @@ BookmarksDialog::loadSurahs()
   }
 
   for (int s : surahs) {
-    item = new QStandardItem(m_quranDb.surahNames().at(s - 1));
+      item = new QStandardItem(m_quranService->surahNames().at(s - 1));
     item->setData(Qt::AlignCenter, Qt::TextAlignmentRole);
     item->setToolTip(item->text());
     item->setData(s, Qt::UserRole);
@@ -232,7 +233,7 @@ BookmarksDialog::btnRemove()
   QStringList info = sender()->parent()->objectName().split('-');
   Verse verse{ info.at(0).toInt(), info.at(1).toInt(), info.at(2).toInt() };
 
-  if (m_bookmarksDb.removeBookmark(verse, true)) {
+  if (m_bookmarkService->removeBookmark(verse, true)) {
     QFrame* frm = qobject_cast<QFrame*>(sender()->parent());
     int idx = m_frames.indexOf(frm);
     if (idx != -1)

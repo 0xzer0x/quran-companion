@@ -5,7 +5,10 @@
 #include <QLineEdit>
 #include <QPointer>
 #include <QSet>
-#include <database/bookmarksdb.h>
+#include <repository/bookmarksrepository.h>
+#include <service/bookmarkservice.h>
+#include <service/khatmahservice.h>
+#include <service/quranservice.h>
 #include <types/verse.h>
 #include <widgets/inputfield.h>
 
@@ -75,8 +78,8 @@ private slots:
 private:
   Ui::KhatmahDialog* ui;
   const Verse& m_currVerse;
-  QuranDb& m_quranDb;
-  BookmarksDb& m_bookmarksDb;
+  QuranService* m_quranService;
+  KhatmahService* m_khatmahService;
   Configuration& m_config;
   /**
    * @brief load all khatmah entries available

@@ -1,5 +1,5 @@
-#ifndef TRANSLATION_SERVICE_H
-#define TRANSLATION_SERVICE_H
+#ifndef TRANSLATIONSERVICE_H
+#define TRANSLATIONSERVICE_H
 
 #include <QObject>
 #include <QString>

@@ -1,5 +1,5 @@
-#ifndef GLYPH_SERVICE_H
-#define GLYPH_SERVICE_H
+#ifndef GLYPHSERVICE_H
+#define GLYPHSERVICE_H
 
 #include <QString>
 #include <QStringList>

@@ -1,5 +1,5 @@
-#ifndef QURAN_SERVICE_H
-#define QURAN_SERVICE_H
+#ifndef QURANSERVICE_H
+#define QURANSERVICE_H
 
 #include <QList>
 #include <QPair>
