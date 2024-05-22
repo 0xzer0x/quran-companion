@@ -2,7 +2,7 @@
 #define CONTENTJOB_H
 
 #include "taskdownloader.h"
-#include <interfaces/downloadjob.h>
+#include <downloader/downloadjob.h>
 #include <types/tafsir.h>
 #include <types/translation.h>
 

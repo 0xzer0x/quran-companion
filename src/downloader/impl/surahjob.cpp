@@ -5,10 +5,10 @@ SurahJob::SurahJob(int reciter, int surah)
   : m_reciter(reciter)
   , m_surah(surah)
   , m_completed(0)
-  , m_surahCount(Verse::surahVerseCount(surah))
   , m_isDownloading(false)
   , m_taskDlr(this)
-  , m_quranDb(QuranDb::getInstance())
+  , m_quranService(ServiceFactory::quranService())
+  , m_surahCount(Verse::surahVerseCount(surah))
   , m_reciters(Reciter::reciters)
 {
   connect(
@@ -121,7 +121,7 @@ QString
 SurahJob::name()
 {
   return m_reciters.at(m_reciter).displayName() + " - " +
-         m_quranDb.surahNames().at(m_surah - 1);
+           m_quranService->surahNames().at(m_surah - 1);
 }
 
 int

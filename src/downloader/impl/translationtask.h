@@ -1,7 +1,7 @@
 #ifndef TRANSLATIONTASK_H
 #define TRANSLATIONTASK_H
 
-#include <interfaces/downloadtask.h>
+#include <downloader/downloadtask.h>
 #include <types/translation.h>
 #include <utils/dirmanager.h>
 

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QQueue>
 #include <QSharedPointer>
-#include <interfaces/downloadjob.h>
+#include <downloader/downloadjob.h>
 #include <notifiers/jobnotifier.h>
 
 class JobManager : public QObject

@@ -1,18 +1,18 @@
-#ifndef QCFJOB_H
-#define QCFJOB_H
+#ifndef SURAHJOB_H
+#define SURAHJOB_H
 
+#include "recitationtask.h"
 #include "taskdownloader.h"
-#include <downloader/qcftask.h>
-#include <interfaces/downloadjob.h>
-
 #include <QQueue>
+#include <QTime>
+#include <downloader/downloadjob.h>
 
-class QcfJob : public DownloadJob
+class SurahJob : public DownloadJob
 {
   Q_OBJECT
 public:
-  QcfJob();
-  ~QcfJob();
+  SurahJob(int reciter, int surah);
+  ~SurahJob();
 
   void start() override;
   void stop() override;
@@ -23,6 +23,8 @@ public:
   QString name() override;
 
   void enqueueTasks();
+  int reciter() const;
+  int surah() const;
 
 private slots:
   void processTasks();
@@ -30,12 +32,17 @@ private slots:
   void taskFailed();
 
 private:
+  const QuranService* m_quranService;
+  QList<Reciter>& m_reciters;
   TaskDownloader m_taskDlr;
-  QQueue<QcfTask> m_queue;
+  QQueue<RecitationTask> m_queue;
   QNetworkAccessManager m_netMgr;
-  QcfTask m_active;
+  RecitationTask m_active;
   bool m_isDownloading;
+  int m_reciter;
+  int m_surah;
   int m_completed;
+  int m_surahCount;
 };
 
-#endif // QCFJOB_H
+#endif // SURAHJOB_H

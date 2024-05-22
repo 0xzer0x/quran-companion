@@ -1,7 +1,7 @@
 #ifndef TAFSIRTASK_H
 #define TAFSIRTASK_H
 
-#include <interfaces/downloadtask.h>
+#include <downloader/downloadtask.h>
 #include <types/tafsir.h>
 #include <utils/dirmanager.h>
 

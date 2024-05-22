@@ -4,7 +4,7 @@
 #include <QNetworkReply>
 #include <QObject>
 #include <QTime>
-#include <interfaces/downloadtask.h>
+#include <downloader/downloadtask.h>
 
 class TaskDownloader : public QObject
 {

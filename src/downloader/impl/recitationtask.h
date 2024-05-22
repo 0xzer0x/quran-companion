@@ -1,10 +1,12 @@
 #ifndef RECITATIONTASK_H
 #define RECITATIONTASK_H
 
-#include <database/qurandb.h>
-#include <interfaces/downloadtask.h>
+#include <downloader/downloadtask.h>
+#include <repository/quranrepository.h>
+#include <service/quranservice.h>
 #include <types/reciter.h>
 #include <utils/dirmanager.h>
+#include <utils/servicefactory.h>
 
 class RecitationTask : public DownloadTask
 {
@@ -21,7 +23,6 @@ public:
   QFileInfo destination() const override;
 
 private:
-  const QuranDb& m_quranDb = QuranDb::getInstance();
   const QDir& m_downloadsDir = DirManager::getInstance().downloadsDir();
   const QList<Reciter>& m_reciters = Reciter::reciters;
   int m_reciter;

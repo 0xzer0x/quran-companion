@@ -1,6 +1,6 @@
 #include "contentjob.h"
-#include <downloader/tafsirtask.h>
-#include <downloader/translationtask.h>
+#include "tafsirtask.h"
+#include "translationtask.h"
 
 ContentJob::ContentJob(Type type, int idx)
   : m_idx(idx)
