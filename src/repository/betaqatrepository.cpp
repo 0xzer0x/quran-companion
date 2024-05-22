@@ -1,23 +1,23 @@
-#include "betaqatdb.h"
+#include "betaqatrepository.h"
 #include <QSqlQuery>
 
-BetaqatDb&
-BetaqatDb::getInstance()
+BetaqatRepository&
+BetaqatRepository::getInstance()
 {
-  static BetaqatDb bdb;
+  static BetaqatRepository bdb;
   return bdb;
 }
 
-BetaqatDb::BetaqatDb()
+BetaqatRepository::BetaqatRepository()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "BetaqatCon"))
   , m_assetsDir(DirManager::getInstance().assetsDir())
   , m_config(Configuration::getInstance())
 {
-  BetaqatDb::open();
+  BetaqatRepository::open();
 }
 
 void
-BetaqatDb::open()
+BetaqatRepository::open()
 {
   setDatabaseName(m_assetsDir.absoluteFilePath("betaqat.db"));
   if (!QSqlDatabase::open())
@@ -25,13 +25,13 @@ BetaqatDb::open()
 }
 
 DbConnection::Type
-BetaqatDb::type()
+BetaqatRepository::type()
 {
   return DbConnection::Betaqat;
 }
 
 QString
-BetaqatDb::getBetaqa(const int surah)
+BetaqatRepository::getBetaqa(const int surah) const
 {
   QSqlQuery dbQuery(*this);
 

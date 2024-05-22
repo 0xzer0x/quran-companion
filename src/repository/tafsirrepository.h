@@ -1,5 +1,5 @@
-#ifndef TAFSIRDB_H
-#define TAFSIRDB_H
+#ifndef TAFSIRREPOSITORY_H
+#define TAFSIRREPOSITORY_H
 
 #include <QDir>
 #include <QPointer>
@@ -11,11 +11,11 @@
 #include <utils/dirmanager.h>
 
 /**
- * @class TafsirDb
- * @brief The TafsirDb class represents a connection to the currently selected
- * tafsir db
+ * @class TafsirRepository
+ * @brief The TafsirRepository class represents a connection to the currently
+ * selected tafsir db
  */
-class TafsirDb
+class TafsirRepository
   : public DbConnection
   , QSqlDatabase
 
@@ -25,41 +25,22 @@ public:
    * @brief get a reference to the single class instance
    * @return reference to the static class instance
    */
-  static TafsirDb& getInstance();
-  /**
-   * @brief sets and opens the sqlite database file
-   */
-  void open();
-  /**
-   * @brief getter for the type of the connection
-   * @return - DbConnection::Tafsir
-   */
-  Type type();
-  /**
-   * @brief set tafsir to the one in the settings, update the selected db
-   */
-  void updateLoadedTafsir();
-  /**
-   * @brief sets the active tafsir
-   * @param tafsirName - DBManager::Tafsir entry
-   */
+  static TafsirRepository& getInstance();
+
+  void open() override;
+
+  Type type() override;
+
+  void loadTafsir();
+
   bool setCurrentTafsir(int idx);
-  /**
-   * @brief gets the tafsir content for the given verse using the active
-   * DBManager::Tafsir
-   * @param sIdx - surah number
-   * @param vIdx - verse number
-   * @return QString containing the tafsir of the verse
-   */
+
   QString getTafsir(const int sIdx, const int vIdx);
-  /**
-   * @brief getter for m_currTafsir
-   * @return pointer to the currently selected Tafasir
-   */
+
   const ::Tafsir* currTafsir() const;
 
 private:
-  TafsirDb();
+  TafsirRepository();
   /**
    * @brief reference to the singleton Configuration instance
    */
@@ -82,4 +63,4 @@ private:
   QFileInfo m_tafsirFile;
 };
 
-#endif // TAFSIRDB_H
+#endif // TAFSIRREPOSITORY_H

@@ -1,14 +1,14 @@
-#include "translationdb.h"
+#include "translationrepository.h"
 #include <QSqlQuery>
 
-TranslationDb&
-TranslationDb::getInstance()
+TranslationRepository&
+TranslationRepository::getInstance()
 {
-  static TranslationDb tdb;
+  static TranslationRepository tdb;
   return tdb;
 }
 
-TranslationDb::TranslationDb()
+TranslationRepository::TranslationRepository()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "TranslationCon"))
   , m_dirMgr(DirManager::getInstance())
   , m_config(Configuration::getInstance())
@@ -17,7 +17,7 @@ TranslationDb::TranslationDb()
 }
 
 void
-TranslationDb::open()
+TranslationRepository::open()
 {
   setDatabaseName(m_translationFile.absoluteFilePath());
   if (!QSqlDatabase::open())
@@ -25,20 +25,20 @@ TranslationDb::open()
 }
 
 DbConnection::Type
-TranslationDb::type()
+TranslationRepository::type()
 {
   return DbConnection::Translation;
 }
 
 void
-TranslationDb::updateLoadedTranslation()
+TranslationRepository::loadTranslation()
 {
   int curr = m_config.settings().value("Reader/Translation").toInt();
   setCurrentTranslation(curr);
 }
 
 bool
-TranslationDb::setCurrentTranslation(int idx)
+TranslationRepository::setCurrentTranslation(int idx)
 {
   if (idx < 0 || idx >= m_translations.size())
     return false;
@@ -54,12 +54,12 @@ TranslationDb::setCurrentTranslation(int idx)
     return false;
 
   m_translationFile.setFile(baseDir.filePath(path));
-  TranslationDb::open();
+  TranslationRepository::open();
   return true;
 }
 
 QString
-TranslationDb::getTranslation(const int sIdx, const int vIdx) const
+TranslationRepository::getTranslation(const int sIdx, const int vIdx) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -76,7 +76,7 @@ TranslationDb::getTranslation(const int sIdx, const int vIdx) const
 }
 
 const Translation*
-TranslationDb::currTranslation() const
+TranslationRepository::currTranslation() const
 {
   return m_currTr;
 }

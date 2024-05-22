@@ -1,22 +1,22 @@
-#include "bookmarksdb.h"
+#include "bookmarksrepository.h"
 #include <QSqlError>
 #include <QSqlQuery>
+#include <utils/servicefactory.h>
 
-BookmarksDb&
-BookmarksDb::getInstance()
+BookmarksRepository&
+BookmarksRepository::getInstance()
 {
-  static BookmarksDb bookmarkDb;
+  static BookmarksRepository bookmarkDb;
   return bookmarkDb;
 }
 
-BookmarksDb::BookmarksDb()
+BookmarksRepository::BookmarksRepository()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "BookmarksCon"))
-  , m_notifier(this)
   , m_config(Configuration::getInstance())
   , m_configDir(DirManager::getInstance().configDir())
-  , m_quranDb(QuranDb::getInstance())
+  , m_quranService(ServiceFactory::quranService())
 {
-  BookmarksDb::open();
+  BookmarksRepository::open();
   QSqlQuery dbQuery(*this);
   dbQuery.exec(
     "CREATE TABLE IF NOT EXISTS khatmah(id INTEGER PRIMARY KEY "
@@ -32,7 +32,7 @@ BookmarksDb::BookmarksDb()
 }
 
 void
-BookmarksDb::open()
+BookmarksRepository::open()
 {
   setDatabaseName(m_configDir.absoluteFilePath("bookmarks.db"));
   if (!QSqlDatabase::open())
@@ -40,13 +40,13 @@ BookmarksDb::open()
 }
 
 DbConnection::Type
-BookmarksDb::type()
+BookmarksRepository::type()
 {
   return DbConnection::Bookmarks;
 }
 
 bool
-BookmarksDb::saveActiveKhatmah(const Verse& verse)
+BookmarksRepository::saveActiveKhatmah(const Verse& verse)
 {
   QSqlQuery dbQuery(*this);
   QString q = QString::asprintf(
@@ -66,7 +66,7 @@ BookmarksDb::saveActiveKhatmah(const Verse& verse)
 }
 
 QList<int>
-BookmarksDb::getAllKhatmah() const
+BookmarksRepository::getAllKhatmah() const
 {
   QList<int> res;
   QSqlQuery dbQuery(*this);
@@ -80,7 +80,7 @@ BookmarksDb::getAllKhatmah() const
 }
 
 QString
-BookmarksDb::getKhatmahName(const int id) const
+BookmarksRepository::getKhatmahName(const int id) const
 {
   QSqlQuery dbQuery(*this);
   if (!dbQuery.exec("SELECT name FROM khatmah WHERE id=" + QString::number(id)))
@@ -90,8 +90,8 @@ BookmarksDb::getKhatmahName(const int id) const
   return dbQuery.value(0).toString();
 }
 
-bool
-BookmarksDb::loadVerse(const int khatmahId, Verse& verse) const
+std::optional<Verse>
+BookmarksRepository::loadVerse(const int khatmahId) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -99,21 +99,21 @@ BookmarksDb::loadVerse(const int khatmahId, Verse& verse) const
     "SELECT page,surah,number FROM khatmah WHERE id=%i", khatmahId);
   if (!dbQuery.exec(q)) {
     qCritical() << "Couldn't execute getPosition SQL query!";
-    return false;
+    return std::nullopt;
   }
   if (!dbQuery.next())
-    return false;
+    return std::nullopt;
 
-  verse.setPage(dbQuery.value(0).toInt());
-  verse.setSurah(dbQuery.value(1).toInt());
-  verse.setNumber(dbQuery.value(2).toInt());
-  return true;
+  int page = dbQuery.value(0).toInt();
+  int surah = dbQuery.value(1).toInt();
+  int num = dbQuery.value(2).toInt();
+  return std::optional<Verse>(Verse(page, surah, num));
 }
 
 int
-BookmarksDb::addKhatmah(const Verse& verse,
-                        const QString name,
-                        const int id) const
+BookmarksRepository::addKhatmah(const Verse& verse,
+                                const QString name,
+                                const int id) const
 {
   QSqlQuery dbQuery(*this);
   QString q;
@@ -150,7 +150,7 @@ BookmarksDb::addKhatmah(const Verse& verse,
 }
 
 bool
-BookmarksDb::editKhatmahName(const int khatmahId, QString newName)
+BookmarksRepository::editKhatmahName(const int khatmahId, QString newName)
 {
   QSqlQuery dbQuery(*this);
   QString q = "SELECT DISTINCT id FROM khatmah WHERE name='%0'";
@@ -174,7 +174,7 @@ BookmarksDb::editKhatmahName(const int khatmahId, QString newName)
 }
 
 void
-BookmarksDb::removeKhatmah(const int id) const
+BookmarksRepository::removeKhatmah(const int id) const
 {
   QSqlQuery dbQuery(*this);
   if (!dbQuery.exec(QString::asprintf("DELETE FROM khatmah WHERE id=%i", id)))
@@ -182,7 +182,7 @@ BookmarksDb::removeKhatmah(const int id) const
 }
 
 QList<Verse>
-BookmarksDb::bookmarkedVerses(int surahIdx) const
+BookmarksRepository::bookmarkedVerses(int surahIdx) const
 {
   QList<Verse> results;
   QSqlQuery dbQuery(*this);
@@ -204,7 +204,7 @@ BookmarksDb::bookmarkedVerses(int surahIdx) const
 }
 
 bool
-BookmarksDb::isBookmarked(const Verse& verse) const
+BookmarksRepository::isBookmarked(const Verse& verse) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -225,7 +225,7 @@ BookmarksDb::isBookmarked(const Verse& verse) const
 }
 
 bool
-BookmarksDb::addBookmark(const Verse& verse, bool silent)
+BookmarksRepository::addBookmark(const Verse& verse)
 {
   QSqlQuery dbQuery(*this);
 
@@ -241,13 +241,11 @@ BookmarksDb::addBookmark(const Verse& verse, bool silent)
   }
 
   commit();
-  if (!silent)
-    m_notifier.notifyAdded();
   return true;
 }
 
 bool
-BookmarksDb::removeBookmark(const Verse& verse, bool silent)
+BookmarksRepository::removeBookmark(const Verse& verse)
 {
   QSqlQuery dbQuery(*this);
   dbQuery.prepare(
@@ -261,13 +259,11 @@ BookmarksDb::removeBookmark(const Verse& verse, bool silent)
     return false;
   }
 
-  if (!silent)
-    m_notifier.notifyRemoved();
   return true;
 }
 
 void
-BookmarksDb::saveThoughts(Verse& verse, const QString& text)
+BookmarksRepository::saveThoughts(Verse& verse, const QString& text)
 {
   int id = Verse::id(verse.surah(), verse.number());
   QSqlQuery dbQuery(*this);
@@ -286,7 +282,7 @@ BookmarksDb::saveThoughts(Verse& verse, const QString& text)
 }
 
 QString
-BookmarksDb::getThoughts(const Verse& verse) const
+BookmarksRepository::getThoughts(const Verse& verse) const
 {
   QSqlQuery dbQuery(*this);
   dbQuery.prepare(
@@ -303,7 +299,7 @@ BookmarksDb::getThoughts(const Verse& verse) const
 }
 
 QList<QPair<Verse, QString>>
-BookmarksDb::allThoughts() const
+BookmarksRepository::allThoughts() const
 {
   QList<QPair<Verse, QString>> all;
   QSqlQuery dbQuery(*this);
@@ -320,19 +316,13 @@ BookmarksDb::allThoughts() const
 }
 
 void
-BookmarksDb::setActiveKhatmah(const int id)
+BookmarksRepository::setActiveKhatmah(const int id)
 {
   m_activeKhatmah = id;
 }
 
 int
-BookmarksDb::activeKhatmah() const
+BookmarksRepository::activeKhatmah() const
 {
   return m_activeKhatmah;
-}
-
-const BookmarksNotifier*
-BookmarksDb::notifier() const
-{
-  return &m_notifier;
 }

@@ -1,23 +1,23 @@
-#include "glyphsdb.h"
+#include "glyphsrepository.h"
 #include <QSqlQuery>
 
-GlyphsDb&
-GlyphsDb::getInstance()
+GlyphsRepository&
+GlyphsRepository::getInstance()
 {
-  static GlyphsDb gdb;
+    static GlyphsRepository gdb;
   return gdb;
 }
 
-GlyphsDb::GlyphsDb()
+GlyphsRepository::GlyphsRepository()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "GlyphsCon"))
   , m_config(Configuration::getInstance())
   , m_assetsDir(DirManager::getInstance().assetsDir())
 {
-  GlyphsDb::open();
+    GlyphsRepository::open();
 }
 
 void
-GlyphsDb::open()
+GlyphsRepository::open()
 {
   setDatabaseName(m_assetsDir.absoluteFilePath("glyphs.db"));
   if (!QSqlDatabase::open())
@@ -25,13 +25,13 @@ GlyphsDb::open()
 }
 
 DbConnection::Type
-GlyphsDb::type()
+GlyphsRepository::type()
 {
   return DbConnection::Glyphs;
 }
 
 QStringList
-GlyphsDb::getPageLines(const int page) const
+GlyphsRepository::getPageLines(const int page) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -50,7 +50,7 @@ GlyphsDb::getPageLines(const int page) const
 }
 
 QString
-GlyphsDb::getSurahNameGlyph(const int sura) const
+GlyphsRepository::getSurahNameGlyph(const int sura) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -66,7 +66,7 @@ GlyphsDb::getSurahNameGlyph(const int sura) const
 }
 
 QString
-GlyphsDb::getJuzGlyph(const int juz) const
+GlyphsRepository::getJuzGlyph(const int juz) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -82,7 +82,7 @@ GlyphsDb::getJuzGlyph(const int juz) const
 }
 
 QString
-GlyphsDb::getVerseGlyphs(const int sIdx, const int vIdx) const
+GlyphsRepository::getVerseGlyphs(const int sIdx, const int vIdx) const
 {
   QSqlQuery dbQuery(*this);
 

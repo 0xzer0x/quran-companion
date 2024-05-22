@@ -1,24 +1,24 @@
-#include "tafsirdb.h"
+#include "tafsirrepository.h"
 #include <QSqlQuery>
 
-TafsirDb&
-TafsirDb::getInstance()
+TafsirRepository&
+TafsirRepository::getInstance()
 {
-  static TafsirDb tadb;
+  static TafsirRepository tadb;
   return tadb;
 }
 
-TafsirDb::TafsirDb()
+TafsirRepository::TafsirRepository()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "TafsirCon"))
   , m_config(Configuration::getInstance())
   , m_dirMgr(DirManager::getInstance())
   , m_tafasir(Tafsir::tafasir)
 {
-  updateLoadedTafsir();
+  loadTafsir();
 }
 
 void
-TafsirDb::open()
+TafsirRepository::open()
 {
   setDatabaseName(m_tafsirFile.absoluteFilePath());
   if (!QSqlDatabase::open())
@@ -26,20 +26,20 @@ TafsirDb::open()
 }
 
 DbConnection::Type
-TafsirDb::type()
+TafsirRepository::type()
 {
   return DbConnection::Tafsir;
 }
 
 void
-TafsirDb::updateLoadedTafsir()
+TafsirRepository::loadTafsir()
 {
   int curr = m_config.settings().value("Reader/Tafsir").toInt();
   setCurrentTafsir(curr);
 }
 
 bool
-TafsirDb::setCurrentTafsir(int idx)
+TafsirRepository::setCurrentTafsir(int idx)
 {
   if (idx < 0 || idx >= m_tafasir.size())
     return false;
@@ -54,12 +54,12 @@ TafsirDb::setCurrentTafsir(int idx)
     return false;
 
   m_tafsirFile.setFile(baseDir.filePath(path));
-  TafsirDb::open();
+  TafsirRepository::open();
   return true;
 }
 
 QString
-TafsirDb::getTafsir(const int sIdx, const int vIdx)
+TafsirRepository::getTafsir(const int sIdx, const int vIdx)
 {
   QSqlQuery dbQuery(*this);
 
@@ -76,7 +76,7 @@ TafsirDb::getTafsir(const int sIdx, const int vIdx)
 }
 
 const Tafsir*
-TafsirDb::currTafsir() const
+TafsirRepository::currTafsir() const
 {
   return m_currTafsir;
 }

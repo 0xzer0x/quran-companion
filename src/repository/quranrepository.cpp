@@ -1,26 +1,26 @@
-#include "qurandb.h"
+#include "quranrepository.h"
 #include <QRandomGenerator>
 #include <QSqlError>
 
-QuranDb&
-QuranDb::getInstance()
+QuranRepository&
+QuranRepository::getInstance()
 {
-  static QuranDb qdb;
+  static QuranRepository qdb;
   return qdb;
 }
 
-QuranDb::QuranDb()
+QuranRepository::QuranRepository()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "QuranCon"))
   , m_assetsDir(DirManager::getInstance().assetsDir())
   , m_config(Configuration::getInstance())
 {
-  QuranDb::open();
+  QuranRepository::open();
   for (int i = 1; i <= 114; i++)
     m_surahNames.append(surahName(i));
 }
 
 void
-QuranDb::open()
+QuranRepository::open()
 {
   setDatabaseName(m_assetsDir.absoluteFilePath("quran.db"));
   if (!QSqlDatabase::open())
@@ -28,13 +28,13 @@ QuranDb::open()
 }
 
 DbConnection::Type
-QuranDb::type()
+QuranRepository::type()
 {
   return DbConnection::Quran;
 }
 
 QPair<int, int>
-QuranDb::pageMetadata(const int page) const
+QuranRepository::pageMetadata(const int page) const
 {
   QSqlQuery dbQuery(*this);
   dbQuery.prepare(
@@ -50,7 +50,7 @@ QuranDb::pageMetadata(const int page) const
 }
 
 int
-QuranDb::getVersePage(const int& surahIdx, const int& verse) const
+QuranRepository::getVersePage(const int& surahIdx, const int& verse) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -68,7 +68,7 @@ QuranDb::getVersePage(const int& surahIdx, const int& verse) const
 }
 
 int
-QuranDb::getJuzStartPage(const int juz) const
+QuranRepository::getJuzStartPage(const int juz) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -86,7 +86,7 @@ QuranDb::getJuzStartPage(const int juz) const
 }
 
 int
-QuranDb::getJuzOfPage(const int page) const
+QuranRepository::getJuzOfPage(const int page) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -103,7 +103,7 @@ QuranDb::getJuzOfPage(const int page) const
 }
 
 QList<QList<int>>
-QuranDb::verseInfoList(const int page) const
+QuranRepository::verseInfoList(const int page) const
 {
   QList<QList<int>> viList;
   QSqlQuery dbQuery(*this);
@@ -126,7 +126,7 @@ QuranDb::verseInfoList(const int page) const
 }
 
 QString
-QuranDb::verseText(const int sIdx, const int vIdx) const
+QuranRepository::verseText(const int sIdx, const int vIdx) const
 {
   QSqlQuery dbQuery(*this);
   if (m_config.verseType() == Configuration::Annotated)
@@ -148,7 +148,7 @@ QuranDb::verseText(const int sIdx, const int vIdx) const
 }
 
 int
-QuranDb::surahStartPage(int surahIdx) const
+QuranRepository::surahStartPage(int surahIdx) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -164,7 +164,7 @@ QuranDb::surahStartPage(int surahIdx) const
 }
 
 QString
-QuranDb::surahName(const int sIdx, bool ar) const
+QuranRepository::surahName(const int sIdx, bool ar) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -183,7 +183,7 @@ QuranDb::surahName(const int sIdx, bool ar) const
 }
 
 QList<int>
-QuranDb::verseById(const int id) const
+QuranRepository::verseById(const int id) const
 {
   QSqlQuery dbQuery(*this);
   dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v1 WHERE id=:i");
@@ -200,7 +200,7 @@ QuranDb::verseById(const int id) const
 }
 
 int
-QuranDb::versePage(const int& surahIdx, const int& verse) const
+QuranRepository::versePage(const int& surahIdx, const int& verse) const
 {
   QSqlQuery dbQuery(*this);
 
@@ -218,7 +218,7 @@ QuranDb::versePage(const int& surahIdx, const int& verse) const
 }
 
 QList<int>
-QuranDb::searchSurahNames(QString text) const
+QuranRepository::searchSurahNames(QString text) const
 {
   QList<int> results;
   QSqlQuery dbQuery(*this);
@@ -242,9 +242,9 @@ QuranDb::searchSurahNames(QString text) const
 }
 
 QList<QList<int>>
-QuranDb::searchSurahs(QString searchText,
-                      const QList<int> surahs,
-                      const bool whole) const
+QuranRepository::searchSurahs(QString searchText,
+                              const QList<int> surahs,
+                              const bool whole) const
 {
   QList<QList<int>> results;
   QSqlQuery dbQuery(*this);
@@ -279,9 +279,9 @@ QuranDb::searchSurahs(QString searchText,
 }
 
 QList<QList<int>>
-QuranDb::searchVerses(QString searchText,
-                      const int range[],
-                      const bool whole) const
+QuranRepository::searchVerses(QString searchText,
+                              const int range[],
+                              const bool whole) const
 {
   QList<QList<int>> results;
   QSqlQuery dbQuery(*this);
@@ -314,7 +314,7 @@ QuranDb::searchVerses(QString searchText,
 }
 
 QList<int>
-QuranDb::randomVerse() const
+QuranRepository::randomVerse() const
 {
   QSqlQuery dbQuery(*this);
 
@@ -333,7 +333,42 @@ QuranDb::randomVerse() const
 }
 
 QStringList
-QuranDb::surahNames() const
+QuranRepository::surahNames() const
 {
   return m_surahNames;
+}
+
+Verse
+QuranRepository::next(const Verse& verse, bool withBasmallah) const
+{
+  Verse nxt(verse);
+  if (!nxt.number()) {
+    nxt.setNumber(1);
+    return nxt;
+  }
+
+  nxt = verseById(nxt.id(nxt.surah(), nxt.number()) + 1);
+
+  if (withBasmallah && nxt.number() == 1 && nxt.surah() != 9 &&
+      nxt.surah() != 1)
+    nxt.setNumber(0);
+
+  return nxt;
+}
+
+Verse
+QuranRepository::previous(const Verse& verse, bool withBasmallah) const
+{
+  Verse nxt(verse);
+  if (withBasmallah && nxt.number() == 1 && nxt.surah() != 9 &&
+      nxt.surah() != 1) {
+    nxt.setNumber(0);
+    return nxt;
+  }
+
+  if (!nxt.number())
+    nxt.setNumber(1);
+
+  nxt = verseById(nxt.id(nxt.surah(), nxt.number()) - 1);
+  return nxt;
 }
