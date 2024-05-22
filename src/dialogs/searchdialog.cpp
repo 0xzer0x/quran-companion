@@ -77,13 +77,11 @@ SearchDialog::getResults()
       ui->spnEndPage->setValue(range[0]);
     range[1] = ui->spnEndPage->value();
 
-    m_currResults = Verse::fromList(m_quranService->searchVerses(
-      m_searchText, range, ui->chkWholeWord->isChecked()));
+    m_currResults = m_quranService->searchVerses(
+      m_searchText, range, ui->chkWholeWord->isChecked());
   } else {
-    m_currResults = Verse::fromList(
-          m_quranService->searchSurahs(m_searchText,
-                                  m_selectedSurahMap.values(),
-                                  ui->chkWholeWord->isChecked()));
+    m_currResults = m_quranService->searchSurahs(
+      m_searchText, m_selectedSurahMap.values(), ui->chkWholeWord->isChecked());
   }
   ui->lbResultCount->setText(QString::number(m_currResults.size()) +
                              tr(" Search results"));
@@ -127,8 +125,8 @@ SearchDialog::showResults()
                    m_quranService->surahNames().at(v.surah() - 1) + " - " +
                    tr("Verse: ") + QString::number(v.number());
     QString glyphs = m_config.verseType() == Configuration::Qcf
-                         ? m_glyphService->getVerseGlyphs(v.surah(), v.number())
-                         : m_quranService->verseText(v.surah(), v.number());
+                       ? m_glyphService->getVerseGlyphs(v.surah(), v.number())
+                       : m_quranService->verseText(v.surah(), v.number());
 
     lbInfo->setText(info);
     lbInfo->setMaximumHeight(50);
@@ -189,7 +187,7 @@ SearchDialog::fillListView()
 {
   for (int i = 1; i <= 114; i++) {
     QStandardItem* surah =
-          new QStandardItem(m_quranService->surahNames().at(i - 1));
+      new QStandardItem(m_quranService->surahNames().at(i - 1));
     m_modelAllSurahs.invisibleRootItem()->appendRow(surah);
   }
 }

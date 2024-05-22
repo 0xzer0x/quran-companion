@@ -20,7 +20,7 @@ public:
 
   int getJuzOfPage(const int page) const override;
 
-  QList<QList<int>> verseInfoList(const int page) const override;
+  QList<Verse> verseInfoList(const int page) const override;
 
   QString verseText(const int sIdx, const int vIdx) const override;
 
@@ -28,21 +28,21 @@ public:
 
   QString surahName(const int sIdx, bool ar) const override;
 
-  QList<int> verseById(const int id) const override;
+  Verse verseById(const int id) const override;
 
   int versePage(const int& surahIdx, const int& verse) const override;
 
   QList<int> searchSurahNames(QString text) const override;
 
-  QList<QList<int>> searchSurahs(QString searchText,
-                                 const QList<int> surahs,
-                                 const bool whole) const override;
+  QList<Verse> searchSurahs(QString searchText,
+                            const QList<int> surahs,
+                            const bool whole) const override;
 
-  QList<QList<int>> searchVerses(QString searchText,
-                                 const int range[],
-                                 const bool whole) const override;
+  QList<Verse> searchVerses(QString searchText,
+                            const int range[],
+                            const bool whole) const override;
 
-  QList<int> randomVerse() const override;
+  Verse randomVerse() const override;
 
   QStringList surahNames() const override;
 

@@ -40,7 +40,7 @@ public:
    * @param page - Quran page number
    * @return QList of Verse instances
    */
-  virtual QList<QList<int>> verseInfoList(const int page) const = 0;
+  virtual QList<Verse> verseInfoList(const int page) const = 0;
   /**
    * @brief gets the verse text
    * @param sIdx - sura number (1-114)
@@ -67,7 +67,7 @@ public:
    * @param id - verse id
    * @return Verse instance
    */
-  virtual QList<int> verseById(const int id) const = 0;
+  virtual Verse verseById(const int id) const = 0;
   /**
    * @brief gets the page where the verse is found
    * @param surahIdx - sura number
@@ -89,9 +89,9 @@ public:
    * @param whole - boolean value to search for whole words only
    * @return QList of Verse instances representing the search results
    */
-  virtual QList<QList<int>> searchSurahs(QString searchText,
-                                         const QList<int> surahs,
-                                         const bool whole = false) const = 0;
+  virtual QList<Verse> searchSurahs(QString searchText,
+                                    const QList<int> surahs,
+                                    const bool whole = false) const = 0;
   /**
    * @brief search a range of pages for the given search text
    * @param searchText - text to search for
@@ -99,24 +99,23 @@ public:
    * @param whole - boolean value to indicate search for whole words only
    * @return QList of Verse instances representing the search results
    */
-  virtual QList<QList<int>> searchVerses(QString searchText,
-                                         const int range[2] = new int[2]{ 1,
-                                                                          604 },
-                                         const bool whole = false) const = 0;
+  virtual QList<Verse> searchVerses(QString searchText,
+                                    const int range[2] = new int[2]{ 1, 604 },
+                                    const bool whole = false) const = 0;
   /**
    * @brief gets a random verse from the Quran
    * @return QPair of Verse instance and verse text
    */
-  virtual QList<int> randomVerse() const = 0;
+  virtual Verse randomVerse() const = 0;
+
+  virtual Verse next(const Verse& verse, bool withBasmallah) const = 0;
+
+  virtual Verse previous(const Verse& verse, bool withBasmallah) const = 0;
   /**
    * @brief surahNames
    * @return
    */
   virtual QStringList surahNames() const = 0;
-
-  virtual Verse next(const Verse& verse, bool withBasmallah) const = 0;
-
-  virtual Verse previous(const Verse& verse, bool withBasmallah) const = 0;
 };
 
 #endif

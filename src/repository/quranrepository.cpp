@@ -102,10 +102,10 @@ QuranRepository::getJuzOfPage(const int page) const
   return dbQuery.value(0).toInt();
 }
 
-QList<QList<int>>
+QList<Verse>
 QuranRepository::verseInfoList(const int page) const
 {
-  QList<QList<int>> viList;
+  QList<Verse> viList;
   QSqlQuery dbQuery(*this);
 
   QString query =
@@ -118,8 +118,8 @@ QuranRepository::verseInfoList(const int page) const
   }
 
   while (dbQuery.next()) {
-    QList<int> v{ page, dbQuery.value(0).toInt(), dbQuery.value(1).toInt() };
-    viList.append(v);
+    viList.append(
+      Verse(page, dbQuery.value(0).toInt(), dbQuery.value(1).toInt()));
   }
 
   return viList;
@@ -182,7 +182,7 @@ QuranRepository::surahName(const int sIdx, bool ar) const
   return dbQuery.value(0).toString();
 }
 
-QList<int>
+Verse
 QuranRepository::verseById(const int id) const
 {
   QSqlQuery dbQuery(*this);
@@ -194,9 +194,9 @@ QuranRepository::verseById(const int id) const
 
   dbQuery.next();
 
-  return { dbQuery.value(0).toInt(),
-           dbQuery.value(1).toInt(),
-           dbQuery.value(2).toInt() };
+  return Verse(dbQuery.value(0).toInt(),
+               dbQuery.value(1).toInt(),
+               dbQuery.value(2).toInt());
 }
 
 int
@@ -241,12 +241,12 @@ QuranRepository::searchSurahNames(QString text) const
   return results;
 }
 
-QList<QList<int>>
+QList<Verse>
 QuranRepository::searchSurahs(QString searchText,
                               const QList<int> surahs,
                               const bool whole) const
 {
-  QList<QList<int>> results;
+  QList<Verse> results;
   QSqlQuery dbQuery(*this);
 
   QString q = "SELECT page,sura_no,aya_no FROM verses_v" +
@@ -270,20 +270,20 @@ QuranRepository::searchSurahs(QString searchText,
   }
 
   while (dbQuery.next()) {
-    results.append({ dbQuery.value(0).toInt(),
-                     dbQuery.value(1).toInt(),
-                     dbQuery.value(2).toInt() });
+    results.append(Verse(dbQuery.value(0).toInt(),
+                         dbQuery.value(1).toInt(),
+                         dbQuery.value(2).toInt()));
   }
 
   return results;
 }
 
-QList<QList<int>>
+QList<Verse>
 QuranRepository::searchVerses(QString searchText,
                               const int range[],
                               const bool whole) const
 {
-  QList<QList<int>> results;
+  QList<Verse> results;
   QSqlQuery dbQuery(*this);
 
   QString q = "SELECT page,sura_no,aya_no FROM verses_v" +
@@ -304,16 +304,15 @@ QuranRepository::searchVerses(QString searchText,
   }
 
   while (dbQuery.next()) {
-    QList<int> entry{ dbQuery.value(0).toInt(),
-                      dbQuery.value(1).toInt(),
-                      dbQuery.value(2).toInt() };
-    results.append(entry);
+    results.append(Verse(dbQuery.value(0).toInt(),
+                         dbQuery.value(1).toInt(),
+                         dbQuery.value(2).toInt()));
   }
 
   return results;
 }
 
-QList<int>
+Verse
 QuranRepository::randomVerse() const
 {
   QSqlQuery dbQuery(*this);
@@ -327,9 +326,9 @@ QuranRepository::randomVerse() const
     qCritical() << "Error occurred during randomVerse SQL statment exec";
   }
   dbQuery.next();
-  return { dbQuery.value(0).toInt(),
-           dbQuery.value(1).toInt(),
-           dbQuery.value(2).toInt() };
+  return Verse(dbQuery.value(0).toInt(),
+               dbQuery.value(1).toInt(),
+               dbQuery.value(2).toInt());
 }
 
 QStringList

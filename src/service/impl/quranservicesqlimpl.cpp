@@ -29,7 +29,7 @@ QuranServiceSqlImpl::getJuzOfPage(const int page) const
   return m_quranRepository.getJuzOfPage(page);
 }
 
-QList<QList<int>>
+QList<Verse>
 QuranServiceSqlImpl::verseInfoList(const int page) const
 {
   return m_quranRepository.verseInfoList(page);
@@ -53,7 +53,7 @@ QuranServiceSqlImpl::surahName(const int sIdx, bool ar) const
   return m_quranRepository.surahName(sIdx, ar);
 }
 
-QList<int>
+Verse
 QuranServiceSqlImpl::verseById(const int id) const
 {
   return m_quranRepository.verseById(id);
@@ -71,7 +71,7 @@ QuranServiceSqlImpl::searchSurahNames(QString text) const
   return m_quranRepository.searchSurahNames(text);
 }
 
-QList<QList<int>>
+QList<Verse>
 QuranServiceSqlImpl::searchSurahs(QString searchText,
                                   const QList<int> surahs,
                                   const bool whole) const
@@ -79,7 +79,7 @@ QuranServiceSqlImpl::searchSurahs(QString searchText,
   return m_quranRepository.searchSurahs(searchText, surahs, whole);
 }
 
-QList<QList<int>>
+QList<Verse>
 QuranServiceSqlImpl::searchVerses(QString searchText,
                                   const int range[],
                                   const bool whole) const
@@ -87,7 +87,7 @@ QuranServiceSqlImpl::searchVerses(QString searchText,
   return m_quranRepository.searchVerses(searchText, range, whole);
 }
 
-QList<int>
+Verse
 QuranServiceSqlImpl::randomVerse() const
 {
   return m_quranRepository.randomVerse();

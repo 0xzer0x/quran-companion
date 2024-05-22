@@ -36,7 +36,7 @@ public:
 
   int getJuzOfPage(const int page) const;
 
-  QList<QList<int>> verseInfoList(const int page) const;
+  QList<Verse> verseInfoList(const int page) const;
 
   QString verseText(const int sIdx, const int vIdx) const;
 
@@ -44,21 +44,21 @@ public:
 
   QString surahName(const int sIdx, bool ar = false) const;
 
-  QList<int> verseById(const int id) const;
+  Verse verseById(const int id) const;
 
   int versePage(const int& surahIdx, const int& verse) const;
 
   QList<int> searchSurahNames(QString text) const;
 
-  QList<QList<int>> searchSurahs(QString searchText,
-                                 const QList<int> surahs,
-                                 const bool whole = false) const;
+  QList<Verse> searchSurahs(QString searchText,
+                            const QList<int> surahs,
+                            const bool whole = false) const;
 
-  QList<QList<int>> searchVerses(QString searchText,
-                                 const int range[2] = new int[2]{ 1, 604 },
-                                 const bool whole = false) const;
+  QList<Verse> searchVerses(QString searchText,
+                            const int range[2] = new int[2]{ 1, 604 },
+                            const bool whole = false) const;
 
-  QList<int> randomVerse() const;
+  Verse randomVerse() const;
 
   QStringList surahNames() const;
 
