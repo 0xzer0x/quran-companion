@@ -127,36 +127,6 @@ Verse::update(const QList<int>& vInfo)
   m_number = vInfo[2];
 }
 
-Verse
-Verse::next(bool basmalah)
-{
-  if (!m_number) {
-    m_number = 1;
-    return *this;
-  }
-
-  Verse v(m_quranDb.verseById(id(m_surah, m_number) + 1));
-
-  if (v.number() == 1 && v.surah() != 9 && v.surah() != 1 && basmalah)
-    v.setNumber(0);
-
-  return v;
-}
-
-Verse
-Verse::prev(bool basmalah)
-{
-  if (m_number == 1 && m_surah != 9 && m_surah != 1 && basmalah) {
-    m_number = 0;
-    return *this;
-  }
-
-  if (!m_number)
-    m_number = 1;
-
-  return Verse(m_quranDb.verseById(id(m_surah, m_number) - 1));
-}
-
 void
 Verse::setPage(int newPage)
 {
