@@ -2,7 +2,7 @@
 #define JOBNOTIFIER_H
 
 #include <QPointer>
-#include <interfaces/downloadjob.h>
+#include <downloader/downloadjob.h>
 #include <interfaces/notificationsender.h>
 
 class JobNotifier : public NotificationSender
