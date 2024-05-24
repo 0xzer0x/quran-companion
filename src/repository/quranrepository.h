@@ -32,9 +32,9 @@ public:
 
   int getVersePage(const int& surahIdx, const int& verse) const;
 
-  int getJuzStartPage(const int juz) const;
+  Verse getJuzStart(const int juz) const;
 
-  int getJuzOfPage(const int page) const;
+  int getVerseJuz(const Verse verse) const;
 
   QList<Verse> verseInfoList(const int page) const;
 

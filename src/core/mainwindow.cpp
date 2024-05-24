@@ -126,7 +126,7 @@ MainWindow::loadComponents()
 
   // sets without emitting signal
   setCmbVerseIdx(m_currVerse.number() - 1);
-  setCmbJuzIdx(m_quranService->getJuzOfPage(m_currVerse.page()) - 1);
+  setCmbJuzIdx(m_quranService->getVerseJuz(m_currVerse) - 1);
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page() - 1);
 }
@@ -470,7 +470,7 @@ MainWindow::currentVerseChanged()
 {
   setCmbVerseIdx(m_currVerse.number() - 1);
   setCmbPageIdx(m_currVerse.page() - 1);
-  setCmbJuzIdx(m_quranService->getJuzOfPage(m_currVerse.page()) - 1);
+  setCmbJuzIdx(m_quranService->getVerseJuz(m_currVerse) - 1);
 }
 
 void
@@ -580,7 +580,7 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   m_reader->highlightCurrentVerse();
 
   setCmbPageIdx(page - 1);
-  setCmbJuzIdx(m_quranService->getJuzOfPage(page) - 1);
+  setCmbJuzIdx(m_quranService->getVerseJuz(m_currVerse) - 1);
 
   // open newly set verse recitation file
   m_player->loadActiveVerse();
@@ -593,8 +593,7 @@ MainWindow::cmbJuzChanged(int newJuzIdx)
     qDebug() << "Internal jozz change";
     return;
   }
-  int page = m_quranService->getJuzStartPage(newJuzIdx + 1);
-  m_reader->gotoPage(page);
+  m_reader->navigateToVerse(m_quranService->getJuzStart(newJuzIdx + 1));
 }
 
 void

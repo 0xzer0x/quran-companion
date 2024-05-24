@@ -67,14 +67,15 @@ QuranRepository::getVersePage(const int& surahIdx, const int& verse) const
   return dbQuery.value(0).toInt();
 }
 
-int
-QuranRepository::getJuzStartPage(const int juz) const
+Verse
+QuranRepository::getJuzStart(const int juz) const
 {
   QSqlQuery dbQuery(*this);
 
-  QString query =
-    "SELECT page FROM verses_v1 WHERE jozz=" + QString::number(juz) +
-    " ORDER BY id";
+  QString query = QString::asprintf(
+    "SELECT page,sura_no,aya_no FROM verses_v%i WHERE jozz=%i",
+    m_config.qcfVersion(),
+    juz);
   dbQuery.prepare(query);
 
   if (!dbQuery.exec()) {
@@ -82,17 +83,22 @@ QuranRepository::getJuzStartPage(const int juz) const
   }
   dbQuery.next();
 
-  return dbQuery.value(0).toInt();
+  return Verse(dbQuery.value(0).toInt(),
+               dbQuery.value(1).toInt(),
+               dbQuery.value(2).toInt());
 }
 
 int
-QuranRepository::getJuzOfPage(const int page) const
+QuranRepository::getVerseJuz(const Verse verse) const
 {
   QSqlQuery dbQuery(*this);
 
   QString query =
-    "SELECT jozz FROM verses_v1 WHERE page=" + QString::number(page);
+    "SELECT jozz FROM verses_v1 WHERE page=? AND sura_no=? AND aya_no=?";
   dbQuery.prepare(query);
+  dbQuery.addBindValue(verse.page());
+  dbQuery.addBindValue(verse.surah());
+  dbQuery.addBindValue(verse.number());
 
   if (!dbQuery.exec()) {
     qCritical() << "Error occurred during getJuzOfPage SQL statment exec";

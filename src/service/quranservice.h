@@ -28,13 +28,13 @@ public:
    * @param juz - juz number
    * @return page number
    */
-  virtual int getJuzStartPage(const int juz) const = 0;
+  virtual Verse getJuzStart(const int juz) const = 0;
   /**
    * @brief get the juz which the passed page is a part of
    * @param page - page number
    * @return juz number
    */
-  virtual int getJuzOfPage(const int page) const = 0;
+  virtual int getVerseJuz(const Verse verse) const = 0;
   /**
    * @brief gets a QList of Verse instances for the page verses
    * @param page - Quran page number

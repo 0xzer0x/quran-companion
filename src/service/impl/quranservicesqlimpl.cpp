@@ -17,16 +17,16 @@ QuranServiceSqlImpl::getVersePage(const int& surahIdx, const int& verse) const
   return m_quranRepository.getVersePage(surahIdx, verse);
 }
 
-int
-QuranServiceSqlImpl::getJuzStartPage(const int juz) const
+Verse
+QuranServiceSqlImpl::getJuzStart(const int juz) const
 {
-  return m_quranRepository.getJuzStartPage(juz);
+  return m_quranRepository.getJuzStart(juz);
 }
 
 int
-QuranServiceSqlImpl::getJuzOfPage(const int page) const
+QuranServiceSqlImpl::getVerseJuz(const Verse verse) const
 {
-  return m_quranRepository.getJuzOfPage(page);
+  return m_quranRepository.getVerseJuz(verse);
 }
 
 QList<Verse>

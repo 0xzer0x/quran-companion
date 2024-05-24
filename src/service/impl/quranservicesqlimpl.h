@@ -16,9 +16,9 @@ public:
 
   int getVersePage(const int& surahIdx, const int& verse) const override;
 
-  int getJuzStartPage(const int juz) const override;
+  Verse getJuzStart(const int juz) const override;
 
-  int getJuzOfPage(const int page) const override;
+  int getVerseJuz(const Verse verse) const override;
 
   QList<Verse> verseInfoList(const int page) const override;
 
