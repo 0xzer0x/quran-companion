@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>326</width>
-    <height>608</height>
+    <width>381</width>
+    <height>448</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -230,10 +230,10 @@
          <item>
           <widget class="QLabel" name="lbHomepage">
            <property name="toolTip">
-            <string notr="true">https://github.com/0xzer0x/quran-companion</string>
+            <string notr="true">https://0xzer0x.github.io/projects/quran-companion</string>
            </property>
            <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;%0&lt;/a&gt;</string>
+            <string notr="true">- &lt;a href=&quot;https://0xzer0x.github.io/projects/quran-companion&quot;&gt;%0&lt;/a&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
