@@ -11,6 +11,18 @@ QuranServiceSqlImpl::pageMetadata(const int page) const
   return m_quranRepository.pageMetadata(page);
 }
 
+std::optional<QPair<int, int>>
+QuranServiceSqlImpl::getRubStartingInPage(const int page) const
+{
+  std::optional<QPair<int, int>> result =
+    m_quranRepository.getRubStartingInPage(page);
+
+  if (result.has_value() && result->first == 0)
+    result->first = 4;
+
+  return result;
+}
+
 int
 QuranServiceSqlImpl::getVersePage(const int& surahIdx, const int& verse) const
 {

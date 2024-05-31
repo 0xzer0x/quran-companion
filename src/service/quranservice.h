@@ -3,7 +3,6 @@
 
 #include <QList>
 #include <QPair>
-
 #include <types/verse.h>
 
 class QuranService
@@ -16,6 +15,11 @@ public:
    * @return QList of 2 integers [0: surah index, 1: juz number]
    */
   virtual QPair<int, int> pageMetadata(const int page) const = 0;
+  /**
+   * TODO: add docs
+   */
+  virtual std::optional<QPair<int, int>> getRubStartingInPage(
+    const int page) const = 0;
   /**
    * @brief gets the page where the verse is found
    * @param surahIdx - sura number

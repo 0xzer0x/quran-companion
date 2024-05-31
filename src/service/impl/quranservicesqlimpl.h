@@ -14,6 +14,9 @@ public:
 
   QPair<int, int> pageMetadata(const int page) const override;
 
+  std::optional<QPair<int, int>> getRubStartingInPage(
+    const int page) const override;
+
   int getVersePage(const int& surahIdx, const int& verse) const override;
 
   Verse getJuzStart(const int juz) const override;
