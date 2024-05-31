@@ -149,6 +149,8 @@ set(PROJECT_SOURCES
     src/utils/jsondataimporter.cpp
     src/utils/servicefactory.h
     src/utils/servicefactory.cpp
+    src/utils/stringconverter.h
+    src/utils/stringconverter.cpp
     src/downloader/downloadjob.h
     src/downloader/downloadtask.h
     src/downloader/impl/surahjob.h
@@ -202,8 +204,7 @@ set(PROJECT_SOURCES
     resources/logo.icns
     qurancompanion.rc)
 
-qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES}
-)
+qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
 target_link_libraries(
   quran-companion PRIVATE Qt6::Widgets Qt6::Sql Qt6::Multimedia Qt6::Network
@@ -224,7 +225,6 @@ elseif(APPLE)
       MACOSX_BUNDLE_LONG_VERSION_STRING
       ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}
       MACOSX_BUNDLE TRUE)
-  # And this part tells CMake where to find and install the file itself
   set(QURAN_COMPANION_ICON "resources/logo.icns")
   set_source_files_properties(${QURAN_COMPANION_ICON}
                               PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")

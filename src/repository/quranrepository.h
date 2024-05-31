@@ -30,6 +30,8 @@ public:
 
   QPair<int, int> pageMetadata(const int page) const;
 
+  std::optional<QPair<int, int>> getRubStartingInPage(const int page) const;
+
   int getVersePage(const int& surahIdx, const int& verse) const;
 
   Verse getJuzStart(const int juz) const;
@@ -68,6 +70,7 @@ public:
 
 private:
   QuranRepository();
+  bool executeQuery(QSqlQuery &query, QString errMsg) const;
   /**
    * @brief reference to the singleton Configuration instance
    */

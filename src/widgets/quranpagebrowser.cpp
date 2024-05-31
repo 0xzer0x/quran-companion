@@ -30,18 +30,7 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   m_pageFormat.setAlignment(Qt::AlignCenter);
   m_pageFormat.setNonBreakableLines(true);
   m_pageFormat.setLayoutDirection(Qt::RightToLeft);
-  m_headerTextFormat.setFont(QFont("PakType Naskh Basic"));
-
-  m_easternNumsMap.insert("0", "٠");
-  m_easternNumsMap.insert("1", "١");
-  m_easternNumsMap.insert("2", "٢");
-  m_easternNumsMap.insert("3", "٣");
-  m_easternNumsMap.insert("4", "٤");
-  m_easternNumsMap.insert("5", "٥");
-  m_easternNumsMap.insert("6", "٦");
-  m_easternNumsMap.insert("7", "٧");
-  m_easternNumsMap.insert("8", "٨");
-  m_easternNumsMap.insert("9", "٩");
+  m_pageInfoTextFormat.setFont(QFont("PakType Naskh Basic"));
 }
 
 void
@@ -54,31 +43,23 @@ QuranPageBrowser::updateFontSize()
   highlightVerse(m_highlightedIdx);
 }
 
-QString
-QuranPageBrowser::getEasternNum(QString num)
-{
-  QString easternNum;
-
-  for (int i = 0; i < num.size(); i++) {
-    easternNum.append(m_easternNumsMap.value(num[i]));
-  }
-  return easternNum;
-}
-
 QString&
-QuranPageBrowser::justifyHeader(QString& baseHeader)
+QuranPageBrowser::justifyLine(QString& line)
 {
-  int margin = 20;
-  int spacePos = baseHeader.indexOf('$');
-  baseHeader.remove('$');
+  if (!line.contains('$'))
+    return line;
 
-  QFontMetrics headerSpacing(m_headerTextFormat.font());
-  while (headerSpacing.size(Qt::TextSingleLine, baseHeader).width() <
+  int margin = 20;
+  int spacePos = line.indexOf('$');
+  line.remove('$');
+
+  QFontMetrics headerSpacing(m_pageInfoTextFormat.font());
+  while (headerSpacing.size(Qt::TextSingleLine, line).width() <
          m_pageLineSize.width() - margin) {
-    baseHeader.insert(spacePos, " ");
+    line.insert(spacePos, " ");
   }
 
-  return baseHeader;
+  return line;
 }
 
 QSize
@@ -135,7 +116,55 @@ QuranPageBrowser::setHref(QTextCursor* cursor, int to, QString url)
   return lastInsertPos;
 }
 
-QString
+void
+QuranPageBrowser::insertFooter(QTextCursor* cursor, int page)
+{
+  if (m_config.qcfVersion() == 1)
+    m_pageInfoTextFormat.setFontPointSize(m_fontSize - 4);
+  else
+    m_pageInfoTextFormat.setFontPointSize(m_fontSize - 6);
+
+  cursor->insertBlock(m_pageFormat, m_pageInfoTextFormat);
+  QFontMetrics fm(m_pageInfoTextFormat.font());
+
+  // first -> rub no. relative to hizb
+  // second -> hizb no.
+  std::optional<QPair<int, int>> rubStartingInPage =
+    m_quranService->getRubStartingInPage(page);
+  m_currFooterSegments = this->pageFooter(m_page, rubStartingInPage);
+
+  if (rubStartingInPage.has_value()) {
+    int rubWidth = fm.horizontalAdvance(m_currFooterSegments.at(0));
+    int pageNumWidth = fm.horizontalAdvance(m_currFooterSegments.at(1));
+    int hizbWidth = fm.horizontalAdvance(m_currFooterSegments.at(2));
+
+    int remaining =
+      m_pageLineSize.width() - rubWidth - hizbWidth - pageNumWidth;
+    int spaceCount = remaining / fm.horizontalAdvance(' ');
+
+    m_pageInfoTextFormat.setForeground(
+      QBrush(qApp->palette().color(QPalette::PlaceholderText)));
+    cursor->setCharFormat(m_pageInfoTextFormat);
+    cursor->insertText(m_currFooterSegments.at(0));
+
+    m_pageInfoTextFormat.setForeground(qApp->palette().text());
+    cursor->setCharFormat(m_pageInfoTextFormat);
+    cursor->insertText(QString(spaceCount / 2, ' ') +
+                       m_currFooterSegments.at(1) +
+                       QString((spaceCount + 1) / 2, ' '));
+
+    m_pageInfoTextFormat.setForeground(
+      QBrush(qApp->palette().color(QPalette::PlaceholderText)));
+    cursor->setCharFormat(m_pageInfoTextFormat);
+    cursor->insertText(m_currFooterSegments.at(2));
+  } else {
+    m_pageInfoTextFormat.setForeground(qApp->palette().text());
+    cursor->setCharFormat(m_pageInfoTextFormat);
+    cursor->insertText(m_currFooterSegments.at(0));
+  }
+}
+
+QStringList
 QuranPageBrowser::pageHeader(int page)
 {
   m_headerData = m_quranService->pageMetadata(page);
@@ -143,11 +172,55 @@ QuranPageBrowser::pageHeader(int page)
   QString suraHeader, jozzHeader;
   suraHeader.append("سورة ");
   suraHeader.append(m_quranService->surahName(m_headerData.first, true));
-  suraHeader.append("$");
   jozzHeader.append("الجزء ");
   jozzHeader.append(m_glyphService->getJuzGlyph(m_headerData.second));
 
-  return suraHeader + jozzHeader;
+  return QStringList({ suraHeader, jozzHeader });
+}
+
+int
+QuranPageBrowser::insertHeader(QTextCursor* cursor, int page)
+{
+  m_currHeaderSegments = this->pageHeader(m_page);
+  m_pageInfoTextFormat.setForeground(
+    QBrush(qApp->palette().color(QPalette::PlaceholderText)));
+
+  // smaller header font size for long juz > 10
+  if (m_config.qcfVersion() == 1 && page >= 202)
+    m_pageInfoTextFormat.setFontPointSize(std::max(4, m_fontSize - 8));
+  else
+    m_pageInfoTextFormat.setFontPointSize(m_fontSize - 6);
+
+  QFontMetrics fm(m_pageInfoTextFormat.font());
+  int juzWidth = fm.horizontalAdvance(m_currHeaderSegments.at(0));
+  int suraWidth = fm.horizontalAdvance(m_currHeaderSegments.at(1));
+  int margin = m_config.qcfVersion() == 1 ? 5 : 10;
+  int remaining = m_pageLineSize.width() - juzWidth - suraWidth - margin;
+  int spaceCount = remaining / fm.horizontalAdvance(' ');
+
+  QString headerLine = m_currHeaderSegments.join(QString(spaceCount, ' '));
+  cursor->insertBlock(m_pageFormat, m_pageInfoTextFormat);
+  cursor->insertText(headerLine);
+
+  setHref(cursor, 1, "#F" + QString::number(m_headerData.first));
+  return headerLine.size();
+}
+
+QStringList
+QuranPageBrowser::pageFooter(int page,
+                             std::optional<QPair<int, int>> rubStartingInPage)
+{
+  QStringList footerSegments;
+  footerSegments.append(m_stringConverter.arabicNumber(page));
+
+  if (rubStartingInPage.has_value()) {
+    footerSegments.insert(
+      0, "الربع " + m_stringConverter.arabicNumber(rubStartingInPage->first));
+    footerSegments.append(
+      "الحزب " + m_stringConverter.arabicNumber(rubStartingInPage->second));
+  }
+
+  return footerSegments;
 }
 
 void
@@ -165,7 +238,6 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
   m_pageFont = FontManager::getInstance().pageFontname(pageNo);
   QTextCursor textCursor(this->document());
 
-  m_currPageHeader = this->pageHeader(m_page);
   m_currPageLines = m_glyphService->getPageLines(m_page);
 
   // automatic font adjustment check
@@ -179,26 +251,16 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
 
   m_pageLineSize = this->calcPageLineSize(m_currPageLines);
 
+  int prevAnchor = 0;
   // insert header in pages 3-604
   if (pageNo > 2) {
-    m_headerTextFormat.setForeground(
-      QBrush(qApp->palette().color(QPalette::PlaceholderText)));
-
-    // smaller header font size for long juz > 10
-    if (m_config.qcfVersion() == 1 && pageNo >= 202)
-      m_headerTextFormat.setFontPointSize(std::max(4, m_fontSize - 8));
-    else
-      m_headerTextFormat.setFontPointSize(m_fontSize - 6);
-
-    textCursor.insertBlock(m_pageFormat, m_headerTextFormat);
-    textCursor.insertText(this->justifyHeader(m_currPageHeader));
-    setHref(&textCursor, 1, "#F" + QString::number(m_headerData.first));
+    prevAnchor = this->insertHeader(&textCursor, m_page) + 1;
   }
 
   parentWidget()->setMinimumWidth(m_pageLineSize.width() + 70);
 
   // page lines drawing
-  int counter = 0, prevAnchor = pageNo < 3 ? 0 : m_currPageHeader.size() + 1;
+  int counter = 0;
   m_bodyTextFormat.setFont(QFont(m_pageFont, m_fontSize));
   foreach (QString l, m_currPageLines) {
     l = l.trimmed();
@@ -251,10 +313,7 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
   }
 
   // insert footer (page number)
-  m_headerTextFormat.setForeground(qApp->palette().text());
-  m_headerTextFormat.setFontPointSize(m_fontSize - 4);
-  textCursor.insertBlock(m_pageFormat, m_headerTextFormat);
-  textCursor.insertText(getEasternNum(QString::number(pageNo)));
+  insertFooter(&textCursor, m_page);
   setAlignment(Qt::AlignCenter);
 }
 
@@ -352,11 +411,11 @@ QuranPageBrowser::bestFitFontSize()
     QString completePage = m_currPageLines.join('\n');
     completePage.remove(rem);
 
-    QSize textSz = headerMetrics.size(Qt::TextSingleLine, m_currPageHeader) +
-                   fm.size(0, completePage);
-    if (textSz.height() + margin <= parentWidget()->height()) {
+    QSize textSz =
+      headerMetrics.size(Qt::TextSingleLine, m_currHeaderSegments.join(' ')) +
+      fm.size(0, completePage);
+    if (textSz.height() + margin <= parentWidget()->height())
       break;
-    }
   }
 
   return sz;

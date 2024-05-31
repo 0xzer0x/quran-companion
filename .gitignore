@@ -1,5 +1,6 @@
 .cache
 .clangd
+.ccls*
 .vscode
 *.exe
 *.run

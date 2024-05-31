@@ -19,6 +19,15 @@ QuranRepository::QuranRepository()
     m_surahNames.append(surahName(i));
 }
 
+bool
+QuranRepository::executeQuery(QSqlQuery& query, QString errMsg) const
+{
+  bool success = query.exec();
+  if (!success)
+    qCritical() << errMsg;
+  return success;
+}
+
 void
 QuranRepository::open()
 {
@@ -41,12 +50,29 @@ QuranRepository::pageMetadata(const int page) const
     "SELECT sura_no,jozz FROM verses_v1 WHERE page=:p ORDER BY id");
   dbQuery.bindValue(0, page);
 
-  if (!dbQuery.exec())
-    qCritical() << "Error occurred during getPageMetadata SQL statment exec";
+  executeQuery(dbQuery,
+               "Error occurred during getPageMetadata SQL statment exec");
 
   dbQuery.next();
   // { surahIdx, jozz }
   return { dbQuery.value(0).toInt(), dbQuery.value(1).toInt() };
+}
+
+std::optional<QPair<int, int>>
+QuranRepository::getRubStartingInPage(const int page) const
+{
+  std::optional<QPair<int, int>> result = std::nullopt;
+  QSqlQuery dbQuery(*this);
+  dbQuery.prepare(
+    "SELECT rub % 4, hizb FROM verses_v1 GROUP BY rub HAVING MIN(page) = ?");
+  dbQuery.addBindValue(page);
+
+  executeQuery(dbQuery, "Error during fetching rub starting at page");
+  if (dbQuery.next())
+    result.emplace(
+      std::make_pair(dbQuery.value(0).toInt(), dbQuery.value(1).toInt()));
+
+  return result;
 }
 
 int
@@ -59,9 +85,7 @@ QuranRepository::getVersePage(const int& surahIdx, const int& verse) const
                             QString::number(surahIdx),
                             QString::number(verse)));
 
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVersePage SQL statment exec";
-  }
+  executeQuery(dbQuery, "Error occurred during getVersePage SQL statment exec");
   dbQuery.next();
 
   return dbQuery.value(0).toInt();
@@ -78,9 +102,8 @@ QuranRepository::getJuzStart(const int juz) const
     juz);
   dbQuery.prepare(query);
 
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getJuzStartPage SQL statment exec";
-  }
+  executeQuery(dbQuery,
+               "Error occurred during getJuzStartPage SQL statment exec");
   dbQuery.next();
 
   return Verse(dbQuery.value(0).toInt(),
@@ -100,9 +123,7 @@ QuranRepository::getVerseJuz(const Verse verse) const
   dbQuery.addBindValue(verse.surah());
   dbQuery.addBindValue(verse.number());
 
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getJuzOfPage SQL statment exec";
-  }
+  executeQuery(dbQuery, "Error occurred during getJuzOfPage SQL statment exec");
   dbQuery.next();
 
   return dbQuery.value(0).toInt();
@@ -119,9 +140,8 @@ QuranRepository::verseInfoList(const int page) const
   dbQuery.prepare(
     query.arg(QString::number(m_config.qcfVersion()), QString::number(page)));
 
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVerseInfoList SQL statment exec";
-  }
+  executeQuery(dbQuery,
+               "Error occurred during getVerseInfoList SQL statment exec");
 
   while (dbQuery.next()) {
     viList.append(
@@ -145,9 +165,7 @@ QuranRepository::verseText(const int sIdx, const int vIdx) const
   dbQuery.bindValue(0, sIdx);
   dbQuery.bindValue(1, vIdx);
 
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVerseText SQL statment exec";
-  }
+  executeQuery(dbQuery, "Error occurred during getVerseText SQL statment exec");
   dbQuery.next();
 
   return dbQuery.value(0).toString();
@@ -161,9 +179,8 @@ QuranRepository::surahStartPage(int surahIdx) const
   dbQuery.prepare("SELECT page FROM verses_v1 WHERE sura_no=:sn AND aya_no=1");
   dbQuery.bindValue(0, surahIdx);
 
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getSurahStartPage SQL statment exec";
-  }
+  executeQuery(dbQuery,
+               "Error occurred during getSurahStartPage SQL statment exec");
   dbQuery.next();
 
   return dbQuery.value(0).toInt();
@@ -180,9 +197,7 @@ QuranRepository::surahName(const int sIdx, bool ar) const
     dbQuery.prepare("SELECT sura_name_en FROM verses_v1 WHERE sura_no=:i");
 
   dbQuery.bindValue(0, sIdx);
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getSurahName SQL statment exec";
-  }
+  executeQuery(dbQuery, "Error occurred during getSurahName SQL statment exec");
 
   dbQuery.next();
   return dbQuery.value(0).toString();
@@ -195,9 +210,8 @@ QuranRepository::verseById(const int id) const
   dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v1 WHERE id=:i");
   dbQuery.bindValue(0, id);
 
-  if (!dbQuery.exec())
-    qCritical() << "Error occurred during getVerseById SQL statement exec";
-
+  executeQuery(dbQuery,
+               "Error occurred during getVerseById SQL statement exec");
   dbQuery.next();
 
   return Verse(dbQuery.value(0).toInt(),
@@ -215,9 +229,7 @@ QuranRepository::versePage(const int& surahIdx, const int& verse) const
                             QString::number(surahIdx),
                             QString::number(verse)));
 
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getVersePage SQL statment exec";
-  }
+  executeQuery(dbQuery, "Error occurred during getVersePage SQL statment exec");
   dbQuery.next();
 
   return dbQuery.value(0).toInt();
@@ -236,9 +248,8 @@ QuranRepository::searchSurahNames(QString text) const
     text + "%')";
 
   dbQuery.prepare(q);
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during searchSurahNames SQL statment exec";
-  }
+  executeQuery(dbQuery,
+               "Error occurred during searchSurahNames SQL statment exec");
 
   while (dbQuery.next()) {
     results.append(dbQuery.value(0).toInt());
@@ -271,9 +282,7 @@ QuranRepository::searchSurahs(QString searchText,
     q.append(") AND (aya_text_emlaey like '%" + searchText + "%') ORDER BY id");
 
   dbQuery.prepare(q);
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during searchSurahs SQL statment exec";
-  }
+  executeQuery(dbQuery, "Error occurred during searchSurahs SQL statment exec");
 
   while (dbQuery.next()) {
     results.append(Verse(dbQuery.value(0).toInt(),
@@ -305,9 +314,7 @@ QuranRepository::searchVerses(QString searchText,
     q.append(" AND (aya_text_emlaey like '%" + searchText + "%') ORDER BY id");
 
   dbQuery.prepare(q);
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during searchVerses SQL statment exec";
-  }
+  executeQuery(dbQuery, "Error occurred during searchVerses SQL statment exec");
 
   while (dbQuery.next()) {
     results.append(Verse(dbQuery.value(0).toInt(),
@@ -328,9 +335,7 @@ QuranRepository::randomVerse() const
                   QString::number(m_config.qcfVersion()) +
                   " WHERE id=" + QString::number(id));
 
-  if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during randomVerse SQL statment exec";
-  }
+  executeQuery(dbQuery, "Error occurred during randomVerse SQL statment exec");
   dbQuery.next();
   return Verse(dbQuery.value(0).toInt(),
                dbQuery.value(1).toInt(),
