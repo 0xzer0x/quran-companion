@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <QPointer>
 #include <notifiers/copynotifier.h>
+#include <service/quranservice.h>
 #include <types/verse.h>
 
 namespace Ui {
@@ -56,9 +57,9 @@ private slots:
 private:
   Ui::CopyDialog* ui;
   /**
-   * @brief reference to the singleton QuranDb instance
+   * @brief reference to the singleton QuranRepository instance
    */
-  const QuranDb& m_quranDb;
+  const QuranService* m_quranService;
   /**
    * @brief reference to the shared current verse instance
    */

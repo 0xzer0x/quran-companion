@@ -21,7 +21,14 @@ public:
     Translation ///< currently selected translation database file
   };
 
+  /**
+   * @brief sets and opens the database connection
+   */
   virtual void open() = 0;
+  /**
+   * @brief getter for the type of the connection
+   * @return - DbConnection::Translation
+   */
   virtual Type type() = 0;
 };
 

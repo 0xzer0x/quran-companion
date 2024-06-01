@@ -14,8 +14,9 @@
 #include <QShortcut>
 #include <QStandardItem>
 #include <QStandardItemModel>
-#include <database/qurandb.h>
-#include <downloader/jobmanager.h>
+#include <downloader/impl/jobmanager.h>
+#include <repository/quranrepository.h>
+#include <service/quranservice.h>
 #include <types/reciter.h>
 #include <types/tafsir.h>
 #include <types/translation.h>
@@ -119,7 +120,7 @@ protected:
 private:
   Ui::DownloaderDialog* ui;
   const Configuration& m_config;
-  const QuranDb& m_quranDb;
+  const QuranService* m_quranService;
   const QList<Reciter>& m_reciters;
   const QList<Tafsir>& m_tafasir;
   const QList<Translation>& m_translations;

@@ -6,15 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
-    <height>472</height>
+    <width>381</width>
+    <height>448</height>
    </rect>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>330</width>
-    <height>472</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>About Quran Companion</string>
@@ -236,10 +230,10 @@
          <item>
           <widget class="QLabel" name="lbHomepage">
            <property name="toolTip">
-            <string notr="true">https://github.com/0xzer0x/quran-companion</string>
+            <string notr="true">https://0xzer0x.github.io/projects/quran-companion</string>
            </property>
            <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion&quot;&gt;%0&lt;/a&gt;</string>
+            <string notr="true">- &lt;a href=&quot;https://0xzer0x.github.io/projects/quran-companion&quot;&gt;%0&lt;/a&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
@@ -310,6 +304,43 @@
            </property>
            <property name="text">
             <string notr="true">&lt;a href=&quot;https://crowdin.com/profile/halak0013&quot;&gt;@halak0013&lt;/a&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="lytTranslator_2">
+         <item>
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string notr="true">Русский</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_12">
+           <property name="toolTip">
+            <string notr="true">https://crowdin.com/profile/k-zamanov</string>
+           </property>
+           <property name="text">
+            <string notr="true">&lt;a href=&quot;https://crowdin.com/profile/k-zamanov&quot;&gt;@k-zamanov&lt;/a&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>

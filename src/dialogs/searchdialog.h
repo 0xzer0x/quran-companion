@@ -14,7 +14,9 @@
 #include <QSpinBox>
 #include <QStandardItem>
 #include <QStandardItemModel>
-#include <database/glyphsdb.h>
+#include <repository/glyphsrepository.h>
+#include <service/glyphservice.h>
+#include <service/quranservice.h>
 #include <types/verse.h>
 #include <widgets/verseframe.h>
 
@@ -98,8 +100,8 @@ private slots:
 private:
   Ui::SearchDialog* ui;
   const Configuration& m_config;
-  const QuranDb& m_quranDb;
-  const GlyphsDb& m_glyphsDb;
+  const QuranService* m_quranService;
+  const GlyphService* m_glyphService;
   /**
    * @brief connects signals and slots for different UI
    * components and shortcuts.

@@ -10,7 +10,7 @@ BetaqaViewer::BetaqaViewer(QWidget* parent)
   , ui(new Ui::BetaqaViewer)
   , m_shadowEffect(new QGraphicsDropShadowEffect(this))
   , m_sizeAnim(new QPropertyAnimation(this, "size"))
-  , m_betaqatDb(BetaqatDb::getInstance())
+    , m_betaqatDb(BetaqatRepository::getInstance())
 {
   this->hide();
   ui->setupUi(this);

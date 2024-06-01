@@ -1,8 +1,8 @@
 #ifndef VERSE_H
 #define VERSE_H
 
+#include <QList>
 #include <QSharedPointer>
-#include <database/qurandb.h>
 
 /**
  * @brief Verse class represents a single quran verse
@@ -27,8 +27,6 @@ public:
   QList<int> toList() const;
   void update(const Verse& v);
   void update(const QList<int>& vInfo);
-  Verse next(bool basmalah = true);
-  Verse prev(bool basmalah = true);
 
   Verse& operator=(const Verse& cp);
   Verse& operator=(const QList<int>& vInfo);
@@ -46,8 +44,6 @@ public:
   void setNumber(int newNumber);
 
 private:
-  const QuranDb& m_quranDb = QuranDb::getInstance();
-
   int m_page = -1;      ///< verse page
   int m_surah = -1;     ///< verse surah number
   int m_number = -1;    ///< verse number in surah

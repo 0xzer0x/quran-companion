@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.22)
 project(
   quran-companion
   LANGUAGES CXX
-  VERSION 1.2.4
+  VERSION 1.2.6
   DESCRIPTION "Quran reader and player"
   HOMEPAGE_URL "https://0xzer0x.github.io/projects/quran-companion/")
 
@@ -91,10 +91,32 @@ set(PROJECT_SOURCES
     src/dialogs/importexportdialog.ui
     src/interfaces/userdataimporter.h
     src/interfaces/userdataexporter.h
-    src/interfaces/downloadjob.h
-    src/interfaces/downloadtask.h
     src/interfaces/dbconnection.h
     src/interfaces/notificationsender.h
+    src/service/betaqatservice.h
+    src/service/bookmarkservice.h
+    src/service/quranservice.h
+    src/service/glyphservice.h
+    src/service/tafsirservice.h
+    src/service/translationservice.h
+    src/service/khatmahservice.h
+    src/service/thoughtsservice.h
+    src/service/impl/betaqatservicesqlimpl.h
+    src/service/impl/betaqatservicesqlimpl.cpp
+    src/service/impl/quranservicesqlimpl.h
+    src/service/impl/quranservicesqlimpl.cpp
+    src/service/impl/glyphservicesqlimpl.h
+    src/service/impl/glyphservicesqlimpl.cpp
+    src/service/impl/bookmarkservicesqlimpl.h
+    src/service/impl/bookmarkservicesqlimpl.cpp
+    src/service/impl/tafsirservicesqlimpl.h
+    src/service/impl/tafsirservicesqlimpl.cpp
+    src/service/impl/translationservicesqlimpl.h
+    src/service/impl/translationservicesqlimpl.cpp
+    src/service/impl/khatmahservicesqlimpl.h
+    src/service/impl/khatmahservicesqlimpl.cpp
+    src/service/impl/thoughtsservicesqlimpl.h
+    src/service/impl/thoughtsservicesqlimpl.cpp
     src/notifiers/bookmarksnotifier.h
     src/notifiers/bookmarksnotifier.cpp
     src/notifiers/updatenotifier.h
@@ -125,36 +147,42 @@ set(PROJECT_SOURCES
     src/utils/jsondataexporter.cpp
     src/utils/jsondataimporter.h
     src/utils/jsondataimporter.cpp
-    src/downloader/surahjob.h
-    src/downloader/surahjob.cpp
-    src/downloader/recitationtask.h
-    src/downloader/recitationtask.cpp
-    src/downloader/taskdownloader.h
-    src/downloader/taskdownloader.cpp
-    src/downloader/tafsirtask.h
-    src/downloader/tafsirtask.cpp
-    src/downloader/translationtask.h
-    src/downloader/translationtask.cpp
-    src/downloader/qcftask.h
-    src/downloader/qcftask.cpp
-    src/downloader/contentjob.h
-    src/downloader/contentjob.cpp
-    src/downloader/qcfjob.h
-    src/downloader/qcfjob.cpp
-    src/downloader/jobmanager.h
-    src/downloader/jobmanager.cpp
-    src/database/qurandb.h
-    src/database/qurandb.cpp
-    src/database/glyphsdb.h
-    src/database/glyphsdb.cpp
-    src/database/betaqatdb.h
-    src/database/betaqatdb.cpp
-    src/database/tafsirdb.h
-    src/database/tafsirdb.cpp
-    src/database/translationdb.h
-    src/database/translationdb.cpp
-    src/database/bookmarksdb.h
-    src/database/bookmarksdb.cpp
+    src/utils/servicefactory.h
+    src/utils/servicefactory.cpp
+    src/utils/stringconverter.h
+    src/utils/stringconverter.cpp
+    src/downloader/downloadjob.h
+    src/downloader/downloadtask.h
+    src/downloader/impl/surahjob.h
+    src/downloader/impl/surahjob.cpp
+    src/downloader/impl/recitationtask.h
+    src/downloader/impl/recitationtask.cpp
+    src/downloader/impl/taskdownloader.h
+    src/downloader/impl/taskdownloader.cpp
+    src/downloader/impl/tafsirtask.h
+    src/downloader/impl/tafsirtask.cpp
+    src/downloader/impl/translationtask.h
+    src/downloader/impl/translationtask.cpp
+    src/downloader/impl/qcftask.h
+    src/downloader/impl/qcftask.cpp
+    src/downloader/impl/contentjob.h
+    src/downloader/impl/contentjob.cpp
+    src/downloader/impl/qcfjob.h
+    src/downloader/impl/qcfjob.cpp
+    src/downloader/impl/jobmanager.h
+    src/downloader/impl/jobmanager.cpp
+    src/repository/quranrepository.h
+    src/repository/quranrepository.cpp
+    src/repository/glyphsrepository.h
+    src/repository/glyphsrepository.cpp
+    src/repository/betaqatrepository.h
+    src/repository/betaqatrepository.cpp
+    src/repository/tafsirrepository.h
+    src/repository/tafsirrepository.cpp
+    src/repository/translationrepository.h
+    src/repository/translationrepository.cpp
+    src/repository/bookmarksrepository.h
+    src/repository/bookmarksrepository.cpp
     src/widgets/quranpagebrowser.h
     src/widgets/quranpagebrowser.cpp
     src/widgets/clickablelabel.cpp
@@ -197,7 +225,6 @@ elseif(APPLE)
       MACOSX_BUNDLE_LONG_VERSION_STRING
       ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}
       MACOSX_BUNDLE TRUE)
-  # And this part tells CMake where to find and install the file itself
   set(QURAN_COMPANION_ICON "resources/logo.icns")
   set_source_files_properties(${QURAN_COMPANION_ICON}
                               PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
@@ -220,7 +247,7 @@ else()
   file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
 endif()
 
-list(APPEND SUPPORTED_LANGUAGES ar tr)
+list(APPEND SUPPORTED_LANGUAGES ar tr ru)
 foreach(lang IN LISTS SUPPORTED_LANGUAGES)
   message(STATUS "Adding ${lang} translation file to QC_TS")
   list(APPEND QC_TS "dist/translations/out/qc_${lang}.ts")

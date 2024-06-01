@@ -8,6 +8,7 @@
 #include <QtAwesome.h>
 #include <dialogs/aboutdialog.h>
 #include <dialogs/khatmahdialog.h>
+#include <utils/servicefactory.h>
 #include <utils/stylemanager.h>
 using namespace fa;
 using std::make_pair;
@@ -19,9 +20,10 @@ MainWindow::MainWindow(QWidget* parent)
   , m_currVerse(Verse::getCurrent())
   , m_config(Configuration::getInstance())
   , m_shortcutHandler(ShortcutHandler::getInstance())
-  , m_bookmarksDb(BookmarksDb::getInstance())
-  , m_quranDb(QuranDb::getInstance())
-  , m_translationDb(TranslationDb::getInstance())
+  , m_bookmarkService(ServiceFactory::bookmarkService())
+  , m_quranService(ServiceFactory::quranService())
+  , m_khatmahService(ServiceFactory::khatmahService())
+  , m_translationService(ServiceFactory::translationService())
   , m_reciters(Reciter::reciters)
   , m_tafasir(Tafsir::tafasir)
 {
@@ -68,14 +70,16 @@ void
 MainWindow::loadVerse()
 {
   int id = m_config.settings().value("Reader/Khatmah").toInt();
-  Verse v = m_currVerse;
-  m_bookmarksDb.setActiveKhatmah(id);
-  if (!m_bookmarksDb.loadVerse(id, v)) {
-    QString name =
-      id ? tr("Khatmah") + " " + QString::number(id) : tr("Default");
-    m_bookmarksDb.addKhatmah(v, name, id);
+  m_khatmahService->setActiveKhatmah(id);
+
+  std::optional<Verse> khatmahPos = m_khatmahService->loadVerse(id);
+
+  if (!khatmahPos.has_value()) {
+    QString name = id ? QString::number(id) : tr("Default");
+    m_khatmahService->addKhatmah(Verse(1, 1, 1), name, id);
   }
-  m_currVerse.update(v);
+
+  m_currVerse.update(khatmahPos.value_or(Verse(1, 1, 1)));
 }
 
 void
@@ -122,7 +126,7 @@ MainWindow::loadComponents()
 
   // sets without emitting signal
   setCmbVerseIdx(m_currVerse.number() - 1);
-  setCmbJuzIdx(m_quranDb.getJuzOfPage(m_currVerse.page()) - 1);
+  setCmbJuzIdx(m_quranService->getVerseJuz(m_currVerse) - 1);
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page() - 1);
 }
@@ -328,8 +332,8 @@ MainWindow::connectSettings()
           &QuranReader::addSideContent);
   connect(m_settingsDlg,
           &SettingsDialog::translationChanged,
-          &m_translationDb,
-          &TranslationDb::updateLoadedTranslation);
+          m_translationService,
+          &TranslationService::loadTranslation);
   connect(m_settingsDlg,
           &SettingsDialog::sideFontChanged,
           m_reader,
@@ -388,7 +392,7 @@ MainWindow::connectNotifiers()
   m_popup->registerSender((NotificationSender*)(m_jobMgr->notifier()));
   m_popup->registerSender((NotificationSender*)(m_versionChecker->notifier()));
   m_popup->registerSender((NotificationSender*)(m_cpyDlg->notifier()));
-  m_popup->registerSender((NotificationSender*)(m_bookmarksDb.notifier()));
+  m_popup->registerSender((NotificationSender*)(m_bookmarkService->notifier()));
   connect(ui->sideDock,
           &QDockWidget::dockLocationChanged,
           m_popup,
@@ -400,7 +404,7 @@ MainWindow::setupSurahsDock()
 {
   for (int i = 1; i < 115; i++) {
     QString item = QString::number(i).rightJustified(3, '0') + ' ' +
-                   m_quranDb.surahNames().at(i - 1);
+                   m_quranService->surahNames().at(i - 1);
     m_surahList.append(item);
   }
 
@@ -466,7 +470,7 @@ MainWindow::currentVerseChanged()
 {
   setCmbVerseIdx(m_currVerse.number() - 1);
   setCmbPageIdx(m_currVerse.page() - 1);
-  setCmbJuzIdx(m_quranDb.getJuzOfPage(m_currVerse.page()) - 1);
+  setCmbJuzIdx(m_quranService->getVerseJuz(m_currVerse) - 1);
 }
 
 void
@@ -527,7 +531,7 @@ MainWindow::searchSurahTextChanged(const QString& arg1)
     m_surahListModel.setStringList(m_surahList);
     syncSelectedSurah();
   } else {
-    QList<int> suggestions = m_quranDb.searchSurahNames(arg1);
+    QList<int> suggestions = m_quranService->searchSurahNames(arg1);
     QStringList res;
     foreach (int sura, suggestions)
       res.append(m_surahList.at(sura - 1));
@@ -566,7 +570,7 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   }
 
   int verse = newVerseIdx + 1;
-  int page = m_quranDb.getVersePage(m_currVerse.surah(), verse);
+  int page = m_quranService->getVersePage(m_currVerse.surah(), verse);
 
   if (page != m_currVerse.page())
     m_reader->gotoPage(page, false);
@@ -576,7 +580,7 @@ MainWindow::cmbVerseChanged(int newVerseIdx)
   m_reader->highlightCurrentVerse();
 
   setCmbPageIdx(page - 1);
-  setCmbJuzIdx(m_quranDb.getJuzOfPage(page) - 1);
+  setCmbJuzIdx(m_quranService->getVerseJuz(m_currVerse) - 1);
 
   // open newly set verse recitation file
   m_player->loadActiveVerse();
@@ -589,8 +593,7 @@ MainWindow::cmbJuzChanged(int newJuzIdx)
     qDebug() << "Internal jozz change";
     return;
   }
-  int page = m_quranDb.getJuzStartPage(newJuzIdx + 1);
-  m_reader->gotoPage(page);
+  m_reader->navigateToVerse(m_quranService->getJuzStart(newJuzIdx + 1));
 }
 
 void
@@ -606,7 +609,7 @@ MainWindow::updateTrayTooltip(QMediaPlayer::PlaybackState state)
   if (state == QMediaPlayer::PlayingState) {
     m_systemTray->setTooltip(
       tr("Now playing: ") + m_player->reciterName() + " - " + tr("Surah ") +
-      m_quranDb.surahNames().at(m_currVerse.surah() - 1));
+      m_quranService->surahNames().at(m_currVerse.surah() - 1));
   } else
     m_systemTray->setTooltip(tr("Quran Companion"));
 }
@@ -614,8 +617,8 @@ MainWindow::updateTrayTooltip(QMediaPlayer::PlaybackState state)
 void
 MainWindow::bookmarkCurrent()
 {
-  if (!m_bookmarksDb.isBookmarked(m_currVerse))
-    m_bookmarksDb.addBookmark(m_currVerse, false);
+  if (!m_bookmarkService->isBookmarked(m_currVerse))
+    m_bookmarkService->addBookmark(m_currVerse, false);
 }
 
 void
@@ -725,7 +728,7 @@ MainWindow::actionKhatmahTriggered()
             &QuranReader::navigateToVerse);
   }
 
-  m_bookmarksDb.saveActiveKhatmah(m_currVerse);
+  m_khatmahService->saveActiveKhatmah(m_currVerse);
   m_khatmahDlg->show();
 }
 
@@ -799,7 +802,7 @@ MainWindow::nextVerse()
     return;
 
   bool keepPlaying = m_player->isOn();
-  m_reader->navigateToVerse(m_currVerse.next());
+  m_reader->navigateToVerse(m_quranService->next(m_currVerse, true));
   if (keepPlaying)
     m_player->play();
 }
@@ -811,7 +814,7 @@ MainWindow::prevVerse()
     return;
 
   bool keepPlaying = m_player->isOn();
-  m_reader->navigateToVerse(m_currVerse.prev());
+  m_reader->navigateToVerse(m_quranService->previous(m_currVerse, true));
   if (keepPlaying)
     m_player->play();
 }
@@ -891,7 +894,7 @@ MainWindow::saveReaderState()
   m_config.settings().setValue("Reciter", m_playerControls->currentReciter());
   m_config.settings().sync();
 
-  m_bookmarksDb.saveActiveKhatmah(m_currVerse);
+  m_khatmahService->saveActiveKhatmah(m_currVerse);
 }
 
 void

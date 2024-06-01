@@ -4,6 +4,7 @@
  */
 
 #include "verseplayer.h"
+#include "dirmanager.h"
 
 VersePlayer::VersePlayer(QObject* parent, int reciterIdx)
   : QMediaPlayer(parent)

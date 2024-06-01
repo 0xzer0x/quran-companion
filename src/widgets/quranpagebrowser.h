@@ -17,9 +17,12 @@
 #include <QShortcut>
 #include <QTextBrowser>
 #include <QTextCursor>
-#include <database/glyphsdb.h>
-#include <database/qurandb.h>
+#include <repository/glyphsrepository.h>
+#include <repository/quranrepository.h>
+#include <service/glyphservice.h>
+#include <service/quranservice.h>
 #include <utils/configuration.h>
+#include <utils/stringconverter.h>
 #include <utils/stylemanager.h>
 
 /**
@@ -71,7 +74,9 @@ public:
    * @param page - page number to generate header for
    * @return QString of the page header without spacing
    */
-  QString pageHeader(int page);
+  QStringList pageHeader(int page);
+  QStringList pageFooter(int page,
+                         std::optional<QPair<int, int>> rubStartingInPage);
   /**
    * @brief construct Quran page
    * @details the page construction process is done through:
@@ -148,18 +153,18 @@ protected:
 private:
   Configuration& m_config;
   StyleManager& m_styleMgr;
-  const QuranDb& m_quranDb;
-  const GlyphsDb& m_glyphsDb;
+  const QuranService* m_quranService;
+  const GlyphService* m_glyphService;
   /**
    * @brief utility for creating menu actions for interacting with the widget
    */
   void createActions();
   /**
    * @brief adjusts the header string according to the page width
-   * @param baseHeader - header string
+   * @param line - header string
    * @return reference to the adjusted string
    */
-  QString& justifyHeader(QString& baseHeader);
+  QString& justifyLine(QString& line);
   /**
    * @brief calculate the approximate pixel size of the page line
    * @param lines - QStringList of page lines
@@ -182,6 +187,8 @@ private:
    * @return int - the current cursor postion
    */
   int setHref(QTextCursor* cursor, int to, QString url);
+
+  void insertFooter(QTextCursor*, int);
   /**
    * @brief boolean indicating whether to highlight the foreground of the active
    * verse or not
@@ -211,7 +218,8 @@ private:
   /**
    * @brief QString of the page header
    */
-  QString m_currPageHeader;
+  QStringList m_currHeaderSegments;
+  QStringList m_currFooterSegments;
   /**
    * @brief mouse position relative to the widget
    */
@@ -279,7 +287,7 @@ private:
   /**
    * @brief character format used for header font properties
    */
-  QTextCharFormat m_headerTextFormat;
+  QTextCharFormat m_pageInfoTextFormat;
   /**
    * @brief character format used for main page text font properties
    */
@@ -294,10 +302,8 @@ private:
    */
   QList<QPair<int, int>> m_verseCoordinates;
   QPair<int, int> m_headerData;
-  /**
-   * @brief Hash Table used for converting page number to arabic numbers
-   */
-  QHash<QString, QString> m_easternNumsMap;
+  StringConverter m_stringConverter;
+  int insertHeader(QTextCursor*, int);
 };
 
 #endif // QURANPAGEBROWSER_H
