@@ -330,10 +330,9 @@ QuranRepository::randomVerse() const
 {
   QSqlQuery dbQuery(*this);
 
-  int id = QRandomGenerator::global()->bounded(1, 6237);
   dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v" +
                   QString::number(m_config.qcfVersion()) +
-                  " WHERE id=" + QString::number(id));
+                  " WHERE id = (ABS(RANDOM()) % 6236) + 1");
 
   executeQuery(dbQuery, "Error occurred during randomVerse SQL statment exec");
   dbQuery.next();
