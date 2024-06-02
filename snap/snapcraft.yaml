@@ -31,13 +31,14 @@ apps:
       QT_QPA_PLATFORM: "wayland-egl;xcb"
       QT_QPA_PLATFORMTHEME: "xdgdesktopportal"
     plugs:
+      - desktop
+      - desktop-legacy
       - audio-playback
       - gsettings
-      - desktop
-      - wayland
-      - x11
       - network
       - opengl
+      - wayland
+      - x11
 
 layout:
   /usr/share/libdrm:
