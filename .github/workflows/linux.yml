@@ -97,7 +97,7 @@ jobs:
 
       - name: Make AppImage
         run: >
-          ${{github.workspace}}/appimagetool-x86_64.AppImage QuranCompanion.AppDir
+          ${{github.workspace}}/appimagetool-x86_64.AppImage -n QuranCompanion.AppDir
           Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
 
           md5sum "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" > "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage.md5"

@@ -2,11 +2,14 @@
 
 ### التحديثات 💭
 
-- إضافة قائمة التلاوات في نافذة التحميل (#57)
-- إصدار نسخة أولية من البرنامج لأنظمة macos
+- دعم اللغة الروسية لواجهة البرنامج
+- تصليح بعض الأعطال في تصفح الأجزاء (#71)
+- إضافة رقم الربع و الحزب في صفحة القرآن (#70)
+
 </div>
 
 ### What's Changed 💭
 
-- Added recitations menu in downloads manager for a more clear UI (#57)
-- Initial MacOS application release
+- Russian UI translation
+- Bug fixes in Juz navigation (#71)
+- Added displaying of rub and hizb in the Quran page footer (#70)

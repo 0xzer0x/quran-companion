@@ -6,17 +6,24 @@
   <metadata_license>MIT</metadata_license>
   <project_license>LGPL-3.0-or-later</project_license>
   <content_rating type="oars-1.1"></content_rating>
-  <developer id="io.github._0xzer0x">
-    <name>Youssef Fathy</name>
-  </developer>
+  <keywords>
+    <keyword>Quran</keyword>
+    <keyword>Islam</keyword>
+    <keyword>Tafsir</keyword>
+    <keyword>Recitation</keyword>
+  </keywords>
   <description>
     <p>Quran Companion is a cross-platform Quran reader and player with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books and translations</p>
   </description>
+  <developer id="io.github._0xzer0x">
+    <name>Youssef Fathy</name>
+  </developer>
   <launchable type="desktop-id">io.github._0xzer0x.qurancompanion.desktop</launchable>
-  <url type="homepage">https://github.com/0xzer0x/quran-companion</url>
-  <url type="translate">https://crowdin.com/project/quran-companion</url>
-  <url type="contact">https://github.com/0xzer0x/quran-companion</url>
+  <url type="homepage">https://0xzer0x.github.io/projects/quran-companion</url>
+  <url type="vcs-browser">https://github.com/0xzer0x/quran-companion</url>
   <url type="bugtracker">https://github.com/0xzer0x/quran-companion/issues</url>
+  <url type="translate">https://crowdin.com/project/quran-companion</url>
+  <url type="contact">https://0xzer0x.github.io/contact</url>
   <screenshots>
     <screenshot type="default">
       <caption>The main application window in light theme.</caption>
@@ -44,6 +51,15 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.2.6" date="2024-06-01">
+      <description>
+        <ul>
+          <li>Russian UI translation</li>
+          <li>Bug fixes in Juz navigation</li>
+          <li>Added displaying of rub and hizb in the Quran page footer</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.2.5" date="2024-05-03">
       <description>
         <ul>

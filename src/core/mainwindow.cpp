@@ -117,6 +117,7 @@ MainWindow::loadComponents()
   ui->scrollAreaWidgetContents->layout()->addWidget(m_reader);
 
   ui->cmbPage->setValidator(new QIntValidator(1, 604, this));
+  ui->cmbJuz->setValidator(new QIntValidator(1, 30, this));
 
   setVerseComboBoxRange(true);
 
