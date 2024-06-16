@@ -77,7 +77,7 @@ signals:
    * navigation and selection of that verse.
    * @param v - Verse to navigate to
    */
-  void navigateToVerse(const Verse& v);
+  void navigateToVerse(const Verse& v, bool notify);
 
 protected:
   /** @brief Re-implementation of QWidget::closeEvent() in order to hide the

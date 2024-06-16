@@ -119,7 +119,7 @@ VerseDialog::showVOTD(bool startup)
 void
 VerseDialog::mouseReleaseEvent(QMouseEvent* event)
 {
-  emit navigateToVerse(m_votd);
+  emit navigateToVerse(m_votd, true);
   this->hide();
 }
 

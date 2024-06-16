@@ -77,7 +77,7 @@ signals:
    * navigation and selection of a verse.
    * @param v - Verse to navigate to
    */
-  void navigateToVerse(const Verse& v);
+  void navigateToVerse(const Verse& v, bool notify);
 
 public slots:
   /**

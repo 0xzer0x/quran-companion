@@ -94,7 +94,7 @@ SearchDialog::verseClicked()
 {
   QStringList data = sender()->objectName().split('-');
   Verse selected(data.at(0).toInt(), data.at(1).toInt(), data.at(2).toInt());
-  emit navigateToVerse(selected);
+  emit navigateToVerse(selected, true);
 }
 
 void

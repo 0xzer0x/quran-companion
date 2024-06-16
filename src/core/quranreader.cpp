@@ -423,6 +423,8 @@ QuranReader::selectVerse(int browserIdx, int IdxInPage)
 
   if (currSurah != v.surah())
     emit currentSurahChanged();
+
+  notifyVerseChange();
 }
 
 void
@@ -430,6 +432,7 @@ QuranReader::setVerseToStartOfPage()
 {
   // set the current verse to the verse at the top of the page
   m_currVerse.update(m_activeVList->at(0));
+  notifyVerseChange();
 }
 
 void
@@ -454,13 +457,10 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
     case QuranPageBrowser::Play:
       selectVerse(browerIdx, idx);
       highlightCurrentVerse();
-      m_playbackController->resetStrategy();
-      m_playbackController->start();
+      m_playbackController->player()->play();
       break;
     case QuranPageBrowser::Select:
       selectVerse(browerIdx, idx);
-      m_playbackController->resetStrategy();
-      m_playbackController->stop();
       highlightCurrentVerse();
       break;
     case QuranPageBrowser::Tafsir:
@@ -495,15 +495,16 @@ QuranReader::verseClicked()
   int verse = data.at(1).toInt();
 
   m_currVerse.setNumber(verse);
-  // emit currentVerseChanged();
+  emit currentVerseChanged();
 
   if (m_currVerse.surah() != surah) {
     m_currVerse.setSurah(surah);
-    // emit currentSurahChanged();
+    emit currentSurahChanged();
   }
 
   highlightCurrentVerse();
-  m_playbackController->start();
+  notifyVerseChange();
+  m_playbackController->player()->play();
 }
 
 void
@@ -512,7 +513,7 @@ QuranReader::gotoPage(int page, bool updateElements, bool automaticFlip)
   m_activeQuranBrowser->resetHighlight();
 
   if (!automaticFlip)
-    m_playbackController->pause();
+    m_playbackController->player()->stop();
 
   if (m_activeQuranBrowser->page() != page) {
     if (m_config.readerMode() == ReaderMode::SinglePage)
@@ -566,7 +567,8 @@ QuranReader::nextPage(int step)
 
     // if the page is flipped automatically, resume playback
     if (keepPlaying) {
-      m_playbackController->start();
+      m_playbackController->player()->play();
+      highlightCurrentVerse();
     }
   }
 }
@@ -582,7 +584,8 @@ QuranReader::prevPage(int step)
       m_scrlVerseByVerse->verticalScrollBar()->setValue(0);
 
     if (keepPlaying) {
-      m_playbackController->start();
+      m_playbackController->player()->play();
+      highlightCurrentVerse();
     }
   }
 }
@@ -598,8 +601,10 @@ QuranReader::gotoSurah(int surahIdx)
   m_currVerse.setSurah(surahIdx);
   m_currVerse.setNumber((surahIdx == 9 || surahIdx == 1) ? 1 : 0);
 
-  // syncing the player & playing basmalah
-  m_playbackController->start();
+  emit currentSurahChanged();
+  emit currentVerseChanged();
+
+  notifyVerseChange();
 }
 
 QuranReader::~QuranReader()

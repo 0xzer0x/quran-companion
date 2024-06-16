@@ -6,11 +6,8 @@
 
 #include <service/quranservice.h>
 
-class SetPlaybackStrategy
-  : public PlaybackStrategy
-  , QObject
+class SetPlaybackStrategy : public PlaybackStrategy
 {
-  Q_OBJECT
 public:
   SetPlaybackStrategy(Verse start,
                       Verse end,
@@ -19,14 +16,14 @@ public:
 
   Verse start() override;
   Verse stop() override;
-  Verse nextVerse() override;
+  std::optional<Verse> nextVerse() override;
   bool verseInRange(const Verse& v) override;
 
 private:
   int m_repeatCount;
   int m_verseFrequency;
   int m_currentIteration;
-  int m_currentVerseIteration;
+  int m_currentVerseRepetition;
   QuranService* m_quranService;
   const Verse& m_current;
   Verse m_start;

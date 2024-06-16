@@ -6,9 +6,10 @@
 class PlaybackStrategy
 {
 public:
+  virtual ~PlaybackStrategy(){};
   virtual Verse start() = 0;
   virtual Verse stop() = 0;
-  virtual Verse nextVerse() = 0;
+  virtual std::optional<Verse> nextVerse() = 0;
   virtual bool verseInRange(const Verse&) = 0;
 };
 

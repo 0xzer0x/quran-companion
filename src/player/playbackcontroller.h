@@ -22,10 +22,11 @@ public:
   void setStrategy(PlaybackStrategy* newStrategy);
 
   void start();
+  void next();
   void stop();
-  void pause();
 
   bool isPlaying() const;
+  QPointer<VersePlayer> player() const;
 
 signals:
   void verseOutOfRange();
@@ -36,8 +37,7 @@ private slots:
 private:
   Verse& m_current;
   void notifyVerseObservers() const;
-  PlaybackStrategy* m_defaultStrategy;
-  PlaybackStrategy* m_strategy;
+  std::unique_ptr<PlaybackStrategy> m_strategy;
   QList<VerseObserver*> m_verseObservers;
   QPointer<VersePlayer> m_player;
 };

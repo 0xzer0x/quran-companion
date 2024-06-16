@@ -20,8 +20,7 @@ ContinuousPlaybackStrategy::stop()
   return m_quranService->firstInPage(current.page());
 }
 
-Verse
-ContinuousPlaybackStrategy::nextVerse()
+std::optional<Verse> ContinuousPlaybackStrategy::nextVerse()
 {
   return m_quranService->next(Verse::getCurrent(), true);
 }

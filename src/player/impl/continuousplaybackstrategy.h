@@ -16,7 +16,7 @@ public:
 
   virtual Verse start() override;
   virtual Verse stop() override;
-  virtual Verse nextVerse() override;
+  virtual std::optional<Verse> nextVerse() override;
   bool verseInRange(const Verse&) override;
 };
 

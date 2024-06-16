@@ -11,7 +11,7 @@ SetPlaybackStrategy::SetPlaybackStrategy(Verse start,
   , m_end(end)
   , m_current(Verse::getCurrent())
   , m_currentIteration(0)
-  , m_currentVerseIteration(0)
+  , m_currentVerseRepetition(0)
   , m_repeatCount(repeatCount)
   , m_verseFrequency(verseFrequency)
 {
@@ -29,36 +29,29 @@ SetPlaybackStrategy::stop()
   return m_start;
 }
 
-Verse
+std::optional<Verse>
 SetPlaybackStrategy::nextVerse()
 {
   bool iterationDone = m_current == m_end;
   bool setDone = iterationDone && ++m_currentIteration == m_repeatCount;
-  bool verseRepeatDone = ++m_currentVerseIteration == m_verseFrequency;
+  bool verseRepeatDone = ++m_currentVerseRepetition == m_verseFrequency;
 
-  if (setDone) {
-    if (verseRepeatDone) {
-      return stop();
-    } else {
-      return m_current;
-    }
-  } else if (iterationDone) {
-    if (verseRepeatDone) {
+  if (verseRepeatDone) {
+    m_currentVerseRepetition = 0;
+    if (setDone) {
+      return std::nullopt;
+    } else if (iterationDone) {
       return m_start;
     } else {
-      return m_current;
+      return m_quranService->next(m_current, true);
     }
   } else {
-    if (verseRepeatDone) {
-      return m_quranService->next(m_current, true);
-    } else {
-      return m_current;
-    }
+    return m_current;
   }
 }
 
 bool
-SetPlaybackStrategy::verseInRange(const Verse &v)
+SetPlaybackStrategy::verseInRange(const Verse& v)
 {
   return v >= m_start && v <= m_end;
 }

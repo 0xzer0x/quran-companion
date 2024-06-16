@@ -21,8 +21,8 @@ class PlayerControls : public QWidget
 
 public:
   explicit PlayerControls(QWidget* parent,
-                          VersePlayer* player,
-                          QuranReader* reader);
+                          QPointer<PlaybackController> playbackController,
+                          QPointer<QuranReader> reader);
   ~PlayerControls();
 
   int currentReciter() const;
@@ -106,7 +106,7 @@ private:
   /**
    * @brief pointer to VersePlayer instance
    */
-  QPointer<VersePlayer> m_player;
+  QPointer<PlaybackController> m_playbackController;
   /**
    * @brief pointer to the QuranReader instance
    */

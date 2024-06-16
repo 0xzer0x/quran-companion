@@ -167,7 +167,7 @@ KhatmahDialog::setActiveKhatmah()
   m_currActive = newActive;
 
   ui->lbCurrKhatmah->setText(m_khatmahService->getKhatmahName(id.toInt()));
-  emit navigateToVerse(v);
+  emit navigateToVerse(v, true);
 }
 
 void
