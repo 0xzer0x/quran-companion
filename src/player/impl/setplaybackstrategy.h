@@ -1,0 +1,36 @@
+#ifndef SETPLAYBACKSTRATEGY_H
+#define SETPLAYBACKSTRATEGY_H
+
+#include <player/playbackstrategy.h>
+#include <player/verseplayer.h>
+
+#include <service/quranservice.h>
+
+class SetPlaybackStrategy
+  : public PlaybackStrategy
+  , QObject
+{
+  Q_OBJECT
+public:
+  SetPlaybackStrategy(Verse start,
+                      Verse end,
+                      int repeatCount = 1,
+                      int verseFrequency = 1);
+
+  Verse start() override;
+  Verse stop() override;
+  Verse nextVerse() override;
+  bool verseInRange(const Verse& v) override;
+
+private:
+  int m_repeatCount;
+  int m_verseFrequency;
+  int m_currentIteration;
+  int m_currentVerseIteration;
+  QuranService* m_quranService;
+  const Verse& m_current;
+  Verse m_start;
+  Verse m_end;
+};
+
+#endif // SETPLAYBACKSTRATEGY_H

@@ -51,6 +51,11 @@ set(PROJECT_SOURCES
     src/core/playercontrols.h
     src/core/playercontrols.cpp
     src/core/playercontrols.ui
+    src/player/verseplayer.h
+    src/player/verseplayer.cpp
+    src/player/playbackstrategy.h
+    src/player/impl/continuousplaybackstrategy.h
+    src/player/impl/continuousplaybackstrategy.cpp
     src/dialogs/searchdialog.h
     src/dialogs/searchdialog.cpp
     src/dialogs/searchdialog.ui
@@ -129,8 +134,6 @@ set(PROJECT_SOURCES
     src/utils/configuration.cpp
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
-    src/utils/verseplayer.h
-    src/utils/verseplayer.cpp
     src/utils/systemtray.h
     src/utils/systemtray.cpp
     src/utils/logger.h
@@ -204,7 +207,10 @@ set(PROJECT_SOURCES
     resources/logo.icns
     qurancompanion.rc)
 
-qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
+qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES}
+    src/player/impl/setplaybackstrategy.h src/player/impl/setplaybackstrategy.cpp
+    src/player/playbackcontroller.h src/player/playbackcontroller.cpp
+    src/interfaces/verseobserver.h)
 
 target_link_libraries(
   quran-companion PRIVATE Qt6::Widgets Qt6::Sql Qt6::Multimedia Qt6::Network

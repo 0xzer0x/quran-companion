@@ -29,7 +29,7 @@
 #include <utils/jsondataexporter.h>
 #include <utils/jsondataimporter.h>
 #include <utils/shortcuthandler.h>
-#include <utils/verseplayer.h>
+#include <player/verseplayer.h>
 typedef Configuration::ReaderMode ReaderMode;
 
 namespace Ui {

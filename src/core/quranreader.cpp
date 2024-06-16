@@ -8,10 +8,10 @@
 #include <widgets/clickablelabel.h>
 using namespace fa;
 
-QuranReader::QuranReader(QWidget* parent, VersePlayer* player)
+QuranReader::QuranReader(QWidget* parent,
+                         QPointer<PlaybackController> playbackController)
   : QWidget(parent)
   , ui(new Ui::QuranReader)
-  , m_player(player)
   , m_currVerse(Verse::getCurrent())
   , m_config(Configuration::getInstance())
   , m_tafasir(Tafsir::tafasir)
@@ -20,6 +20,7 @@ QuranReader::QuranReader(QWidget* parent, VersePlayer* player)
   , m_bookmarkService(ServiceFactory::bookmarkService())
   , m_quranService(ServiceFactory::quranService())
   , m_glyphService(ServiceFactory::glyphService())
+  , m_playbackController(playbackController)
 {
   ui->setupUi(this);
   setLayoutDirection(Qt::LeftToRight);
@@ -114,10 +115,10 @@ QuranReader::setupConnections()
               &QTextBrowser::anchorClicked,
               this,
               &QuranReader::verseAnchorClicked);
-  connect(this,
-          &QuranReader::currentVerseChanged,
-          m_player,
-          &VersePlayer::loadActiveVerse);
+  // connect(this,
+  // &QuranReader::currentVerseChanged,
+  // m_player,
+  // &VersePlayer::loadActiveVerse);
 
   const ShortcutHandler& handler = ShortcutHandler::getInstance();
   connect(
@@ -273,7 +274,7 @@ QuranReader::addSideContent()
       verselb, &ClickableLabel::clicked, this, &QuranReader::verseClicked);
   }
 
-  if (m_player->playbackState() == QMediaPlayer::PlayingState) {
+  if (m_playbackController->isPlaying()) {
     setHighlightedFrame();
   }
 }
@@ -312,7 +313,19 @@ QuranReader::setHighlightedFrame()
 }
 
 void
-QuranReader::navigateToVerse(const Verse& v)
+QuranReader::addVerseObserver(VerseObserver* observer)
+{
+  m_verseObservers.append(observer);
+}
+
+void
+QuranReader::removeVerseObserver(VerseObserver* observer)
+{
+  m_verseObservers.removeAll(observer);
+}
+
+void
+QuranReader::navigateToVerse(const Verse& v, bool notify)
 {
   gotoPage(v.page(), false);
 
@@ -320,6 +333,14 @@ QuranReader::navigateToVerse(const Verse& v)
   emit currentSurahChanged();
   emit currentVerseChanged();
   highlightCurrentVerse();
+  if (notify)
+    notifyVerseChange();
+}
+
+void
+QuranReader::verseChanged()
+{
+  navigateToVerse(m_currVerse, false);
 }
 
 void
@@ -338,6 +359,13 @@ QuranReader::updatePageVerseInfoList()
 
     m_activeVList = &m_vLists[1];
   }
+}
+
+void
+QuranReader::notifyVerseChange()
+{
+  for (VerseObserver* observer : m_verseObservers)
+    observer->verseChanged();
 }
 
 void
@@ -426,10 +454,13 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
     case QuranPageBrowser::Play:
       selectVerse(browerIdx, idx);
       highlightCurrentVerse();
-      m_player->play();
+      m_playbackController->resetStrategy();
+      m_playbackController->start();
       break;
     case QuranPageBrowser::Select:
       selectVerse(browerIdx, idx);
+      m_playbackController->resetStrategy();
+      m_playbackController->stop();
       highlightCurrentVerse();
       break;
     case QuranPageBrowser::Tafsir:
@@ -464,15 +495,15 @@ QuranReader::verseClicked()
   int verse = data.at(1).toInt();
 
   m_currVerse.setNumber(verse);
-  emit currentVerseChanged();
+  // emit currentVerseChanged();
 
   if (m_currVerse.surah() != surah) {
     m_currVerse.setSurah(surah);
-    emit currentSurahChanged();
+    // emit currentSurahChanged();
   }
 
   highlightCurrentVerse();
-  m_player->play();
+  m_playbackController->start();
 }
 
 void
@@ -481,7 +512,7 @@ QuranReader::gotoPage(int page, bool updateElements, bool automaticFlip)
   m_activeQuranBrowser->resetHighlight();
 
   if (!automaticFlip)
-    m_player->stop();
+    m_playbackController->pause();
 
   if (m_activeQuranBrowser->page() != page) {
     if (m_config.readerMode() == ReaderMode::SinglePage)
@@ -526,7 +557,7 @@ QuranReader::gotoDoublePage(int page)
 void
 QuranReader::nextPage(int step)
 {
-  bool keepPlaying = m_player->playbackState() == QMediaPlayer::PlayingState;
+  bool keepPlaying = m_playbackController->isPlaying();
   if (m_currVerse.page() + step <= 604) {
     gotoPage(m_currVerse.page() + step, true, true);
 
@@ -535,8 +566,7 @@ QuranReader::nextPage(int step)
 
     // if the page is flipped automatically, resume playback
     if (keepPlaying) {
-      m_player->play();
-      highlightCurrentVerse();
+      m_playbackController->start();
     }
   }
 }
@@ -544,7 +574,7 @@ QuranReader::nextPage(int step)
 void
 QuranReader::prevPage(int step)
 {
-  bool keepPlaying = m_player->playbackState() == QMediaPlayer::PlayingState;
+  bool keepPlaying = m_playbackController->isPlaying();
   if (m_currVerse.page() - step >= 1) {
     gotoPage(m_currVerse.page() - step, true, true);
 
@@ -552,8 +582,7 @@ QuranReader::prevPage(int step)
       m_scrlVerseByVerse->verticalScrollBar()->setValue(0);
 
     if (keepPlaying) {
-      m_player->play();
-      highlightCurrentVerse();
+      m_playbackController->start();
     }
   }
 }
@@ -570,11 +599,7 @@ QuranReader::gotoSurah(int surahIdx)
   m_currVerse.setNumber((surahIdx == 9 || surahIdx == 1) ? 1 : 0);
 
   // syncing the player & playing basmalah
-  m_player->playCurrentVerse();
-
-  highlightCurrentVerse();
-  emit currentVerseChanged();
-  emit currentSurahChanged();
+  m_playbackController->start();
 }
 
 QuranReader::~QuranReader()

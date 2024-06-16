@@ -3,8 +3,8 @@
 
 #include "quranreader.h"
 #include <QWidget>
+#include <player/verseplayer.h>
 #include <types/verse.h>
-#include <utils/verseplayer.h>
 
 namespace Ui {
 class PlayerControls;

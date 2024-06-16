@@ -30,7 +30,7 @@
 #include <types/verse.h>
 #include <utils/shortcuthandler.h>
 #include <utils/systemtray.h>
-#include <utils/verseplayer.h>
+#include <player/verseplayer.h>
 #include <utils/versionchecker.h>
 #include <widgets/betaqaviewer.h>
 #include <widgets/notificationpopup.h>

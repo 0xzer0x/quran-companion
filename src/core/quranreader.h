@@ -4,6 +4,9 @@
 #include <QLabel>
 #include <QScrollArea>
 #include <QWidget>
+#include <interfaces/verseobserver.h>
+#include <player/playbackcontroller.h>
+#include <player/verseplayer.h>
 #include <repository/bookmarksrepository.h>
 #include <repository/tafsirrepository.h>
 #include <repository/translationrepository.h>
@@ -13,7 +16,6 @@
 #include <service/tafsirservice.h>
 #include <service/translationservice.h>
 #include <types/verse.h>
-#include <utils/verseplayer.h>
 #include <widgets/quranpagebrowser.h>
 #include <widgets/verseframe.h>
 typedef Configuration::ReaderMode ReaderMode;
@@ -27,7 +29,9 @@ class QuranReader;
  * @brief The QuranReader class is responsible for displaying the Quran page(s)
  * and the side content
  */
-class QuranReader : public QWidget
+class QuranReader
+  : public QWidget
+  , public VerseObserver
 {
   Q_OBJECT
 
@@ -37,8 +41,11 @@ public:
    * @param parent - pointer to parent widget
    * @param player - pointer to VersePlayer instance
    */
-  explicit QuranReader(QWidget* parent, VersePlayer* player);
+  explicit QuranReader(QWidget* parent,
+                       QPointer<PlaybackController> playbackController);
   ~QuranReader();
+
+  void verseChanged();
 
 public slots:
   /**
@@ -50,11 +57,15 @@ public slots:
    * @brief highlight the currently active VerseFrame
    */
   void setHighlightedFrame();
+
+  void addVerseObserver(VerseObserver* observer);
+  void removeVerseObserver(VerseObserver* observer);
+
   /**
    * @brief navigate to the given Verse and update UI elements accordingly
    * @param v - Verse to navigate to
    */
-  void navigateToVerse(const Verse& v);
+  void navigateToVerse(const Verse& v, bool notify = true);
   /**
    * @brief toggle the main reader view by hiding one of the panels
    */
@@ -186,6 +197,9 @@ private:
    * @brief reference to the static QList of available tafasir
    */
   const QList<Tafsir>& m_tafasir;
+
+  QList<VerseObserver*> m_verseObservers;
+
   /**
    * @brief connects signals and slots for different UI components and
    * shortcuts
@@ -238,6 +252,8 @@ private:
    * current page
    */
   void updatePageVerseInfoList();
+
+  void notifyVerseChange();
   /**
    * @brief QScrollArea used in single page mode to display verses &
    * translation
@@ -274,7 +290,8 @@ private:
   /**
    * @brief pointer to the VersePlayer instance
    */
-  QPointer<VersePlayer> m_player;
+  // QPointer<VersePlayer> m_player;
+  QPointer<PlaybackController> m_playbackController;
   /**
    * @brief QFont used in the side panel translation
    */

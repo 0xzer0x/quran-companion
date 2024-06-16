@@ -111,6 +111,18 @@ Verse::operator>(const Verse& v2) const
   return m_surah > v2.m_surah;
 }
 
+bool
+Verse::operator>=(const Verse& v2) const
+{
+  return v2 == *this || v2 > *this;
+}
+
+bool
+Verse::operator<=(const Verse& v2) const
+{
+  return v2 == *this || v2 < *this;
+}
+
 void
 Verse::update(const Verse& v)
 {

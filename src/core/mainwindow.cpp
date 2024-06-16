@@ -8,6 +8,7 @@
 #include <QtAwesome.h>
 #include <dialogs/aboutdialog.h>
 #include <dialogs/khatmahdialog.h>
+#include <player/playbackcontroller.h>
 #include <utils/servicefactory.h>
 #include <utils/stylemanager.h>
 using namespace fa;
@@ -88,6 +89,9 @@ MainWindow::loadComponents()
   m_player =
     new VersePlayer(this, m_config.settings().value("Reciter", 0).toInt());
   m_reader = new QuranReader(this, m_player);
+  PlaybackController playbackController(this, m_player);
+  m_reader->addVerseObserver(&playbackController);
+  playbackController.addVerseObserver(m_reader);
   m_playerControls = new PlayerControls(this, m_player, m_reader);
   m_settingsDlg = new SettingsDialog(this, m_player);
   m_popup = new NotificationPopup(this);
@@ -199,6 +203,10 @@ MainWindow::connectPlayer()
           &QMediaPlayer::mediaStatusChanged,
           this,
           &MainWindow::mediaStatusChanged);
+  connect(m_player,
+          &VersePlayer::navigateToPageStart,
+          m_reader,
+          &QuranReader::navigateToPageTop);
 }
 
 void

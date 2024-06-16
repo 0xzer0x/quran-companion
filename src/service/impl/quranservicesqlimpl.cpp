@@ -47,6 +47,12 @@ QuranServiceSqlImpl::verseInfoList(const int page) const
   return m_quranRepository.verseInfoList(page);
 }
 
+Verse
+QuranServiceSqlImpl::firstInPage(int page) const
+{
+  return m_quranRepository.firstInPage(page);
+}
+
 QString
 QuranServiceSqlImpl::verseText(const int sIdx, const int vIdx) const
 {

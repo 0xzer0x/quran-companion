@@ -151,6 +151,22 @@ QuranRepository::verseInfoList(const int page) const
   return viList;
 }
 
+Verse
+QuranRepository::firstInPage(int page) const
+{
+  QSqlQuery dbQuery(*this);
+  dbQuery.prepare("SELECT sura_no,aya_no FROM verses_v" +
+                  QString::number(m_config.qcfVersion()) +
+                  " WHERE page = ? ORDER BY id LIMIT 1");
+  dbQuery.addBindValue(page);
+
+  executeQuery(dbQuery, "Error during finding first verse in page");
+
+  dbQuery.next();
+
+  return Verse(page, dbQuery.value(0).toInt(), dbQuery.value(1).toInt());
+}
+
 QString
 QuranRepository::verseText(const int sIdx, const int vIdx) const
 {
