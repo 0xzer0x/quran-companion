@@ -43,7 +43,7 @@ public:
    *
    * MODIFIED
    */
-  void registerSender(NotificationSender* sender);
+  void registerSender(NotificationSender *sender);
   /**
    * @brief adjust the popup position based on the position of the side dock
    * position in the main window

@@ -25,7 +25,7 @@ public:
 
   bool removeBookmark(const Verse& verse, bool silent) override;
 
-  const BookmarksNotifier* notifier() const override;
+  NotificationSender* notifier() override;
 };
 
 #endif // BOOKMARKSERVICESQLIMPL_H

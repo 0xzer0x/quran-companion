@@ -78,8 +78,8 @@ VersionChecker::toolExists()
   return QFileInfo::exists(m_updateTool);
 }
 
-const UpdateNotifier*
-VersionChecker::notifier() const
+NotificationSender*
+VersionChecker::notifier()
 {
   return &m_notifier;
 }

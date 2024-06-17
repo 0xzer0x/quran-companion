@@ -2,7 +2,8 @@
 #define BOOKMARKSERVICE_H
 
 #include <QList>
-#include <notifiers/bookmarksnotifier.h>
+#include <QObject>
+#include <interfaces/notificationsender.h>
 #include <types/verse.h>
 
 class BookmarkService : public QObject
@@ -37,7 +38,7 @@ public:
    * @brief returns the address of the class notifier
    * @return - pointer to BookmarksNotifier instance
    */
-  virtual const BookmarksNotifier* notifier() const = 0;
+  virtual NotificationSender* notifier() = 0;
 };
 
 #endif
