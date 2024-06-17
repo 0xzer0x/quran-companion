@@ -3,6 +3,7 @@
 
 #include "quranreader.h"
 #include <QWidget>
+#include <player/playbackcontroller.h>
 #include <player/verseplayer.h>
 #include <types/verse.h>
 
@@ -32,10 +33,6 @@ public slots:
    * @brief toggle play/pause of the current verse
    */
   void togglePlayback();
-
-signals:
-  void currentVerseChanged();
-  void currentSurahChanged();
 
 private slots:
   /**

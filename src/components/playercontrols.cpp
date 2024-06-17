@@ -92,7 +92,7 @@ PlayerControls::setupConnections()
 void
 PlayerControls::togglePlayback()
 {
-  if (m_playbackController->isPlaying()) {
+  if (m_playbackController->player()->isPlaying()) {
     btnPauseClicked();
   } else {
     btnPlayClicked();
