@@ -1,9 +1,10 @@
 #ifndef PLAYBACKCONTROLLER_H
 #define PLAYBACKCONTROLLER_H
 
+#include <QObject>
 #include "playbackstrategy.h"
 #include "verseplayer.h"
-#include <QObject>
+#include <components/navigator.h>
 #include <interfaces/verseobserver.h>
 
 class PlaybackController
@@ -14,9 +15,7 @@ class PlaybackController
 public:
   explicit PlaybackController(QObject* parent, QPointer<VersePlayer> player);
 
-  void addVerseObserver(VerseObserver* observer);
-  void removeVerseObserver(VerseObserver* observer);
-  void verseChanged();
+  void activeVerseChanged();
 
   void resetStrategy();
   void setStrategy(PlaybackStrategy* newStrategy);
@@ -25,19 +24,19 @@ public:
   void next();
   void stop();
 
-  bool isPlaying() const;
   QPointer<VersePlayer> player() const;
 
 signals:
-  void verseOutOfRange();
+  void verseOutOfPlaybackRange();
 
 private slots:
   void mediaStatusChanged(QMediaPlayer::MediaStatus status);
 
 private:
   Verse& m_current;
-  void notifyVerseObservers() const;
-  std::unique_ptr<PlaybackStrategy> m_strategy;
+  Navigator& m_navigator;
+  std::shared_ptr<PlaybackStrategy> m_defaultStrategy;
+  std::shared_ptr<PlaybackStrategy> m_strategy;
   QList<VerseObserver*> m_verseObservers;
   QPointer<VersePlayer> m_player;
 };

@@ -1,11 +1,13 @@
 #ifndef VERSEOBSERVER_H
 #define VERSEOBSERVER_H
 
+#include <types/navigationinitiator.h>
+
 class VerseObserver
 {
 public:
   virtual ~VerseObserver(){};
-  virtual void verseChanged() = 0;
+  virtual void activeVerseChanged() = 0;
 };
 
 #endif // VERSEOBSERVER_H

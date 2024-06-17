@@ -6,6 +6,7 @@ VerseDialog::VerseDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::VerseDialog)
   , m_config(Configuration::getInstance())
+  , m_navigator(Navigator::getInstance())
   , m_quranService(ServiceFactory::quranService())
   , m_translationService(ServiceFactory::translationService())
   , m_timestampFile(
@@ -119,7 +120,7 @@ VerseDialog::showVOTD(bool startup)
 void
 VerseDialog::mouseReleaseEvent(QMouseEvent* event)
 {
-  emit navigateToVerse(m_votd, true);
+  m_navigator.navigateToVerse(m_votd);
   this->hide();
 }
 
