@@ -6,12 +6,12 @@
 using namespace fa;
 
 PlayerControls::PlayerControls(QWidget* parent,
-                               VersePlayer* player,
-                               QuranReader* reader)
+                               QPointer<PlaybackController> playbackController,
+                               QPointer<QuranReader> reader)
   : QWidget(parent)
   , ui(new Ui::PlayerControls)
-  , m_player(player)
   , m_reader(reader)
+  , m_playbackController(playbackController)
   , m_currVerse(Verse::getCurrent())
   , m_config(Configuration::getInstance())
   , m_reciters(Reciter::reciters)
@@ -56,18 +56,18 @@ PlayerControls::setupConnections()
           this,
           &PlayerControls::decrementVolume);
 
-  connect(m_player,
+  connect(m_playbackController->player(),
           &QMediaPlayer::positionChanged,
           this,
           &PlayerControls::mediaPosChanged);
-  connect(m_player,
+  connect(m_playbackController->player(),
           &QMediaPlayer::playbackStateChanged,
           this,
           &PlayerControls::mediaStateChanged);
 
   connect(ui->sldrAudioPlayer,
           &QSlider::sliderMoved,
-          m_player,
+          m_playbackController->player(),
           &QMediaPlayer::setPosition);
   connect(ui->sldrVolume,
           &QSlider::valueChanged,
@@ -85,14 +85,14 @@ PlayerControls::setupConnections()
 
   connect(ui->cmbReciter,
           &QComboBox::currentIndexChanged,
-          m_player,
+          m_playbackController->player(),
           &VersePlayer::changeReciter);
 }
 
 void
 PlayerControls::togglePlayback()
 {
-  if (m_player->playbackState() == QMediaPlayer::PlayingState) {
+  if (m_playbackController->player()->isPlaying()) {
     btnPauseClicked();
   } else {
     btnPlayClicked();
@@ -102,8 +102,9 @@ PlayerControls::togglePlayback()
 void
 PlayerControls::mediaPosChanged(qint64 position)
 {
-  if (ui->sldrAudioPlayer->maximum() != m_player->duration())
-    ui->sldrAudioPlayer->setMaximum(m_player->duration());
+  if (ui->sldrAudioPlayer->maximum() !=
+      m_playbackController->player()->duration())
+    ui->sldrAudioPlayer->setMaximum(m_playbackController->player()->duration());
 
   if (!ui->sldrAudioPlayer->isSliderDown())
     ui->sldrAudioPlayer->setValue(position);
@@ -113,22 +114,19 @@ void
 PlayerControls::btnPlayClicked()
 {
   m_reader->highlightCurrentVerse();
-  m_player->play();
+  m_playbackController->player()->play();
 }
 
 void
 PlayerControls::btnPauseClicked()
 {
-  m_player->pause();
+  m_playbackController->player()->pause();
 }
 
 void
 PlayerControls::btnStopClicked()
 {
-  m_player->stop();
-  m_reader->setVerseToStartOfPage();
-  emit currentVerseChanged();
-  emit currentSurahChanged();
+  m_playbackController->stop();
 }
 
 void
@@ -158,7 +156,7 @@ PlayerControls::volumeSliderValueChanged(int position)
                           QAudio::LinearVolumeScale);
   if (linearVolume != m_volume) {
     m_volume = linearVolume;
-    m_player->setPlayerVolume(m_volume);
+    m_playbackController->player()->setPlayerVolume(m_volume);
   }
 }
 

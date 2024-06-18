@@ -1,13 +1,13 @@
-#ifndef STRINGCONVERTER_H
-#define STRINGCONVERTER_H
+#ifndef NUMBERTOSTRINGCONVERTER_H
+#define NUMBERTOSTRINGCONVERTER_H
 
 #include <QHash>
 #include <QString>
 
-class StringConverter
+class NumberToStringConverter
 {
 public:
-  StringConverter();
+  NumberToStringConverter();
 
   QString arabicNumber(int number);
 
@@ -18,4 +18,4 @@ private:
   const QHash<int, QString> m_easternNumsMap;
 };
 
-#endif // STRINGCONVERTER_H
+#endif // NUMBERTOSTRINGCONVERTER_H

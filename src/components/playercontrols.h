@@ -3,8 +3,9 @@
 
 #include "quranreader.h"
 #include <QWidget>
+#include <player/playbackcontroller.h>
+#include <player/verseplayer.h>
 #include <types/verse.h>
-#include <utils/verseplayer.h>
 
 namespace Ui {
 class PlayerControls;
@@ -21,8 +22,8 @@ class PlayerControls : public QWidget
 
 public:
   explicit PlayerControls(QWidget* parent,
-                          VersePlayer* player,
-                          QuranReader* reader);
+                          QPointer<PlaybackController> playbackController,
+                          QPointer<QuranReader> reader);
   ~PlayerControls();
 
   int currentReciter() const;
@@ -32,10 +33,6 @@ public slots:
    * @brief toggle play/pause of the current verse
    */
   void togglePlayback();
-
-signals:
-  void currentVerseChanged();
-  void currentSurahChanged();
 
 private slots:
   /**
@@ -106,7 +103,7 @@ private:
   /**
    * @brief pointer to VersePlayer instance
    */
-  QPointer<VersePlayer> m_player;
+  QPointer<PlaybackController> m_playbackController;
   /**
    * @brief pointer to the QuranReader instance
    */

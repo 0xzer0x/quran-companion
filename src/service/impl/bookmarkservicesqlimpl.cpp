@@ -36,8 +36,8 @@ BookmarkServiceSqlImpl::removeBookmark(const Verse& verse, bool silent)
   return ok;
 }
 
-const BookmarksNotifier*
-BookmarkServiceSqlImpl::notifier() const
+NotificationSender*
+BookmarkServiceSqlImpl::notifier()
 {
   return &m_notifier;
 }

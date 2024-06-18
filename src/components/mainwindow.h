@@ -6,8 +6,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "playercontrols.h"
-#include "quranreader.h"
 #include <QBoxLayout>
 #include <QIntValidator>
 #include <QMainWindow>
@@ -16,21 +14,25 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QStringListModel>
+#include <components/playercontrols.h>
+#include <components/quranreader.h>
+#include <components/systemtray.h>
 #include <dialogs/bookmarksdialog.h>
 #include <dialogs/contentdialog.h>
 #include <dialogs/copydialog.h>
 #include <dialogs/downloaderdialog.h>
+#include <dialogs/fileselector.h>
+#include <dialogs/importexportdialog.h>
 #include <dialogs/khatmahdialog.h>
 #include <dialogs/searchdialog.h>
 #include <dialogs/settingsdialog.h>
 #include <dialogs/versedialog.h>
+#include <player/verseplayer.h>
 #include <service/bookmarkservice.h>
 #include <service/quranservice.h>
 #include <service/translationservice.h>
 #include <types/verse.h>
 #include <utils/shortcuthandler.h>
-#include <utils/systemtray.h>
-#include <utils/verseplayer.h>
 #include <utils/versionchecker.h>
 #include <widgets/betaqaviewer.h>
 #include <widgets/notificationpopup.h>
@@ -47,7 +49,9 @@ QT_END_NAMESPACE
  * components and is responsible for the navigation dock and menubar
  * functionality
  */
-class MainWindow : public QMainWindow
+class MainWindow
+  : public QMainWindow
+  , public VerseObserver
 {
   Q_OBJECT
 
@@ -59,17 +63,9 @@ public:
   explicit MainWindow(QWidget* parent);
   ~MainWindow();
 
+  void activeVerseChanged();
+
 public slots:
-  /**
-   * @brief slot for adjusting UI elements to reflect the current verse
-   * information
-   */
-  void currentVerseChanged();
-  /**
-   * @brief slot for reseting the verses combobox and
-   * highlighting the active surah in the navigation dock
-   */
-  void currentSurahChanged();
   /**
    * @brief save the current position and window state of the application to the
    * settings file
@@ -135,11 +131,6 @@ private slots:
    * @param idx - index of translation in Translation::translations
    */
   void missingTranslation(int idx);
-  /**
-   * @brief move to the next verse as the playback of the current verse ends
-   * @param status - the status of the current verse recitation media
-   */
-  void mediaStatusChanged(QMediaPlayer::MediaStatus status);
   /**
    * @brief set the systray icon tooltip text according to the currently playing
    * recitation
@@ -272,6 +263,9 @@ private:
    * @brief reference to the singleton ShortcutHandler instance
    */
   ShortcutHandler& m_shortcutHandler;
+
+  Navigator& m_navigator;
+
   /**
    * @brief reference to the singleton BookmarksRepository instance
    */
@@ -397,6 +391,7 @@ private:
    * change of juz combobox index
    */
   bool m_internalJuzChange = false;
+
   /**
    * @brief QList for surah names as it appears in the navigation dock QListView
    */
@@ -406,11 +401,17 @@ private:
    * list of surahs
    */
   QStringListModel m_surahListModel;
+
   /**
-   * @brief m_reader
-   *
-   * MODIFIED
+   * @brief pointer to VersionChecker instance
    */
+  QPointer<VersionChecker> m_versionChecker;
+  /**
+   * @brief pointer to the validator for the editable verse combobox to ensure
+   * the number entered is within the surah verse range
+   */
+  QPointer<QIntValidator> m_verseValidator;
+
   QPointer<QuranReader> m_reader;
   /**
    * @brief m_playerControls
@@ -429,7 +430,7 @@ private:
   /**
    * @brief pointer to VersePlayer instance
    */
-  QPointer<VersePlayer> m_player;
+  QPointer<PlaybackController> m_playbackController;
   /**
    * @brief pointer to ContentDialog instance
    */
@@ -480,15 +481,5 @@ private:
    * import/export
    */
   QPointer<ImportExportDialog> m_importExportDlg;
-
-  /**
-   * @brief pointer to VersionChecker instance
-   */
-  QPointer<VersionChecker> m_versionChecker;
-  /**
-   * @brief pointer to the validator for the editable verse combobox to ensure
-   * the number entered is within the surah verse range
-   */
-  QPointer<QIntValidator> m_verseValidator;
 };
 #endif // MAINWINDOW_H

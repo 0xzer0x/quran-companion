@@ -8,7 +8,7 @@
 #include <QRegularExpression>
 #include <QtAwesome.h>
 #include <utils/fontmanager.h>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 using namespace fa;
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)

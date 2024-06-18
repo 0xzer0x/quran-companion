@@ -1,7 +1,7 @@
 #include "bookmarksrepository.h"
 #include <QSqlError>
 #include <QSqlQuery>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 
 BookmarksRepository&
 BookmarksRepository::getInstance()

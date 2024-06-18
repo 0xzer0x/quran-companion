@@ -42,15 +42,29 @@ set(PROJECT_SOURCES
     src/types/tafsir.cpp
     src/types/translation.h
     src/types/translation.cpp
-    src/core/mainwindow.cpp
-    src/core/mainwindow.h
-    src/core/mainwindow.ui
-    src/core/quranreader.h
-    src/core/quranreader.cpp
-    src/core/quranreader.ui
-    src/core/playercontrols.h
-    src/core/playercontrols.cpp
-    src/core/playercontrols.ui
+    src/components/mainwindow.cpp
+    src/components/mainwindow.h
+    src/components/mainwindow.ui
+    src/components/quranreader.h
+    src/components/quranreader.cpp
+    src/components/quranreader.ui
+    src/components/playercontrols.h
+    src/components/playercontrols.cpp
+    src/components/playercontrols.ui
+    src/components/systemtray.h
+    src/components/systemtray.cpp
+    src/navigation/navigator.h
+    src/navigation/navigator.cpp
+    src/navigation/verseobserver.h
+    src/player/verseplayer.h
+    src/player/verseplayer.cpp
+    src/player/playbackcontroller.h
+    src/player/playbackcontroller.cpp
+    src/player/playbackstrategy.h
+    src/player/impl/continuousplaybackstrategy.h
+    src/player/impl/continuousplaybackstrategy.cpp
+    src/player/impl/setplaybackstrategy.h
+    src/player/impl/setplaybackstrategy.cpp
     src/dialogs/searchdialog.h
     src/dialogs/searchdialog.cpp
     src/dialogs/searchdialog.ui
@@ -89,10 +103,21 @@ set(PROJECT_SOURCES
     src/dialogs/importexportdialog.h
     src/dialogs/importexportdialog.cpp
     src/dialogs/importexportdialog.ui
-    src/interfaces/userdataimporter.h
-    src/interfaces/userdataexporter.h
-    src/interfaces/dbconnection.h
-    src/interfaces/notificationsender.h
+    src/repository/dbconnection.h
+    src/repository/quranrepository.h
+    src/repository/quranrepository.cpp
+    src/repository/glyphsrepository.h
+    src/repository/glyphsrepository.cpp
+    src/repository/betaqatrepository.h
+    src/repository/betaqatrepository.cpp
+    src/repository/tafsirrepository.h
+    src/repository/tafsirrepository.cpp
+    src/repository/translationrepository.h
+    src/repository/translationrepository.cpp
+    src/repository/bookmarksrepository.h
+    src/repository/bookmarksrepository.cpp
+    src/service/servicefactory.h
+    src/service/servicefactory.cpp
     src/service/betaqatservice.h
     src/service/bookmarkservice.h
     src/service/quranservice.h
@@ -117,6 +142,7 @@ set(PROJECT_SOURCES
     src/service/impl/khatmahservicesqlimpl.cpp
     src/service/impl/thoughtsservicesqlimpl.h
     src/service/impl/thoughtsservicesqlimpl.cpp
+    src/notifiers/notificationsender.h
     src/notifiers/bookmarksnotifier.h
     src/notifiers/bookmarksnotifier.cpp
     src/notifiers/updatenotifier.h
@@ -129,10 +155,6 @@ set(PROJECT_SOURCES
     src/utils/configuration.cpp
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
-    src/utils/verseplayer.h
-    src/utils/verseplayer.cpp
-    src/utils/systemtray.h
-    src/utils/systemtray.cpp
     src/utils/logger.h
     src/utils/logger.cpp
     src/utils/dirmanager.h
@@ -143,14 +165,14 @@ set(PROJECT_SOURCES
     src/utils/fontmanager.cpp
     src/utils/versionchecker.h
     src/utils/versionchecker.cpp
-    src/utils/jsondataexporter.h
-    src/utils/jsondataexporter.cpp
-    src/utils/jsondataimporter.h
-    src/utils/jsondataimporter.cpp
-    src/utils/servicefactory.h
-    src/utils/servicefactory.cpp
-    src/utils/stringconverter.h
-    src/utils/stringconverter.cpp
+    src/utils/numbertostringconverter.h
+    src/utils/numbertostringconverter.cpp
+    src/serializer/userdataimporter.h
+    src/serializer/userdataexporter.h
+    src/serializer/impl/jsondataexporter.h
+    src/serializer/impl/jsondataexporter.cpp
+    src/serializer/impl/jsondataimporter.h
+    src/serializer/impl/jsondataimporter.cpp
     src/downloader/downloadjob.h
     src/downloader/downloadtask.h
     src/downloader/impl/surahjob.h
@@ -171,18 +193,6 @@ set(PROJECT_SOURCES
     src/downloader/impl/qcfjob.cpp
     src/downloader/impl/jobmanager.h
     src/downloader/impl/jobmanager.cpp
-    src/repository/quranrepository.h
-    src/repository/quranrepository.cpp
-    src/repository/glyphsrepository.h
-    src/repository/glyphsrepository.cpp
-    src/repository/betaqatrepository.h
-    src/repository/betaqatrepository.cpp
-    src/repository/tafsirrepository.h
-    src/repository/tafsirrepository.cpp
-    src/repository/translationrepository.h
-    src/repository/translationrepository.cpp
-    src/repository/bookmarksrepository.h
-    src/repository/bookmarksrepository.cpp
     src/widgets/quranpagebrowser.h
     src/widgets/quranpagebrowser.cpp
     src/widgets/clickablelabel.cpp

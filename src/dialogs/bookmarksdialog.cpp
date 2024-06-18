@@ -7,13 +7,14 @@
 #include "ui_bookmarksdialog.h"
 #include <set>
 #include <utils/fontmanager.h>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 #include <utils/stylemanager.h>
 
 BookmarksDialog::BookmarksDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::BookmarksDialog)
   , m_config(Configuration::getInstance())
+  , m_navigator(Navigator::getInstance())
   , m_quranService(ServiceFactory::quranService())
   , m_bookmarkService(ServiceFactory::bookmarkService())
   , m_glyphService(ServiceFactory::glyphService())
@@ -193,7 +194,7 @@ BookmarksDialog::loadSurahs()
   }
 
   for (int s : surahs) {
-      item = new QStandardItem(m_quranService->surahNames().at(s - 1));
+    item = new QStandardItem(m_quranService->surahNames().at(s - 1));
     item->setData(Qt::AlignCenter, Qt::TextAlignmentRole);
     item->setToolTip(item->text());
     item->setData(s, Qt::UserRole);
@@ -224,7 +225,7 @@ BookmarksDialog::btnGoToVerse()
 {
   QStringList info = sender()->parent()->objectName().split('-');
   Verse verse(info.at(0).toInt(), info.at(1).toInt(), info.at(2).toInt());
-  emit navigateToVerse(verse);
+  m_navigator.navigateToVerse(verse);
 }
 
 void

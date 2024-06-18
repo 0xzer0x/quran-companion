@@ -5,8 +5,8 @@
 #include <QList>
 #include <QSharedPointer>
 #include <QSqlDatabase>
-#include <interfaces/dbconnection.h>
 #include <notifiers/bookmarksnotifier.h>
+#include <repository/dbconnection.h>
 #include <repository/quranrepository.h>
 #include <service/quranservice.h>
 #include <types/verse.h>

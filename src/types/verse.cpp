@@ -111,6 +111,26 @@ Verse::operator>(const Verse& v2) const
   return m_surah > v2.m_surah;
 }
 
+bool
+Verse::operator>=(const Verse& v2) const
+{
+  if (m_surah > v2.m_surah)
+    return true;
+  if (m_surah == v2.m_surah && m_number >= v2.m_number)
+    return true;
+  return false;
+}
+
+bool
+Verse::operator<=(const Verse& v2) const
+{
+  if (m_surah < v2.m_surah)
+    return true;
+  if (m_surah == v2.m_surah && m_number <= v2.m_number)
+    return true;
+  return false;
+}
+
 void
 Verse::update(const Verse& v)
 {

@@ -39,7 +39,7 @@ public:
    * notifications
    * @return pointer to CopyNotifier instance
    */
-  const CopyNotifier* notifier() const;
+  NotificationSender* notifier();
 
 public slots:
   /**

@@ -4,6 +4,10 @@
 #include <QLabel>
 #include <QScrollArea>
 #include <QWidget>
+#include <navigation/navigator.h>
+#include <navigation/verseobserver.h>
+#include <player/playbackcontroller.h>
+#include <player/verseplayer.h>
 #include <repository/bookmarksrepository.h>
 #include <repository/tafsirrepository.h>
 #include <repository/translationrepository.h>
@@ -13,7 +17,6 @@
 #include <service/tafsirservice.h>
 #include <service/translationservice.h>
 #include <types/verse.h>
-#include <utils/verseplayer.h>
 #include <widgets/quranpagebrowser.h>
 #include <widgets/verseframe.h>
 typedef Configuration::ReaderMode ReaderMode;
@@ -27,7 +30,9 @@ class QuranReader;
  * @brief The QuranReader class is responsible for displaying the Quran page(s)
  * and the side content
  */
-class QuranReader : public QWidget
+class QuranReader
+  : public QWidget
+  , public VerseObserver
 {
   Q_OBJECT
 
@@ -37,8 +42,11 @@ public:
    * @param parent - pointer to parent widget
    * @param player - pointer to VersePlayer instance
    */
-  explicit QuranReader(QWidget* parent, VersePlayer* player);
+  explicit QuranReader(QWidget* parent,
+                       QPointer<PlaybackController> playbackController);
   ~QuranReader();
+
+  void activeVerseChanged();
 
 public slots:
   /**
@@ -50,11 +58,6 @@ public slots:
    * @brief highlight the currently active VerseFrame
    */
   void setHighlightedFrame();
-  /**
-   * @brief navigate to the given Verse and update UI elements accordingly
-   * @param v - Verse to navigate to
-   */
-  void navigateToVerse(const Verse& v);
   /**
    * @brief toggle the main reader view by hiding one of the panels
    */
@@ -84,12 +87,6 @@ public slots:
    */
   void updateHighlight();
   /**
-   * @brief gets the page of the 1st verse in this surah, moves to that page,
-   * and starts playback of the surah
-   * @param surahIdx - surah number (1-114)
-   */
-  void gotoSurah(int surahIdx);
-  /**
    * @brief ensure the page given is visible and update other members to match
    * the properties of the first verse in the page, calls the appropriate
    * navigation function according to the ::ReaderMode
@@ -99,21 +96,13 @@ public slots:
    * @param automaticFlip - boolean indicating whether the function was called
    * by internal signal to automatically flip the page
    */
-  void gotoPage(int page,
-                bool updateElements = true,
-                bool automaticFlip = false);
-  /**
-   * @brief sets m_currVerse to the first verse in m_vInfoList
-   */
-  void setVerseToStartOfPage();
+  void gotoPage(int page);
   /**
    * @brief slot for updating the page font size of all quran pages
    */
   void updatePageFontSize();
 
 signals:
-  void currentVerseChanged();
-  void currentSurahChanged();
   void showBetaqa(int surah);
   void copyVerseText(const Verse& v);
   void showVerseTafsir(const Verse& v);
@@ -134,18 +123,9 @@ private slots:
    */
   void verseClicked();
   /**
-   * @brief navigates to the next page relative to the current page
-   */
-  void nextPage(int step = 1);
-  /**
-   * @brief navigates to the previous page relative to the current page
-   */
-  void prevPage(int step = 1);
-  /**
    * @brief single page mode navigation
-   * @param page - page to navigate to
    */
-  void gotoSinglePage(int page);
+  void gotoSinglePage();
   /**
    * @brief double page mode navigation
    * @param page - page to navigate to
@@ -162,10 +142,9 @@ private:
    * @brief reference to the singleton Configuration instance
    */
   Configuration& m_config;
-  /**
-   * @brief reference to the singleton TafsirRepository instance
-   */
-  TafsirService* m_tafsirService;
+
+  Navigator& m_navigator;
+
   /**
    * @brief reference to the singleton TranslationRepository instance
    */
@@ -182,10 +161,6 @@ private:
    * @brief reference to the singleton GlyphsRepository instance
    */
   const GlyphService* m_glyphService;
-  /**
-   * @brief reference to the static QList of available tafasir
-   */
-  const QList<Tafsir>& m_tafasir;
   /**
    * @brief connects signals and slots for different UI components and
    * shortcuts
@@ -272,10 +247,6 @@ private:
    */
   QPointer<VerseFrame> m_highlightedFrm;
   /**
-   * @brief pointer to the VersePlayer instance
-   */
-  QPointer<VersePlayer> m_player;
-  /**
    * @brief QFont used in the side panel translation
    */
   QFont m_sideFont;
@@ -283,6 +254,8 @@ private:
    * @brief QFont used in displaying Quranic verse
    */
   QFont m_versesFont;
+
+  QPointer<PlaybackController> m_playbackController;
 };
 
 #endif // QURANREADER_H

@@ -4,8 +4,8 @@
 #include <QAbstractButton>
 #include <QDialog>
 #include <QPointer>
-#include <interfaces/userdataexporter.h>
-#include <interfaces/userdataimporter.h>
+#include <serializer/userdataexporter.h>
+#include <serializer/userdataimporter.h>
 
 namespace Ui {
 class ImportExportDialog;

@@ -17,7 +17,7 @@
 #include <QTimer>
 #include <QWidget>
 #include <downloader/downloadjob.h>
-#include <interfaces/notificationsender.h>
+#include <notifiers/notificationsender.h>
 #include <types/reciter.h>
 #include <types/tafsir.h>
 #include <types/translation.h>
@@ -43,7 +43,7 @@ public:
    *
    * MODIFIED
    */
-  void registerSender(NotificationSender* sender);
+  void registerSender(NotificationSender *sender);
   /**
    * @brief adjust the popup position based on the position of the side dock
    * position in the main window

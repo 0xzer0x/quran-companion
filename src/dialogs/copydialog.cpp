@@ -1,15 +1,15 @@
 #include "copydialog.h"
 #include "ui_copydialog.h"
 
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 
 CopyDialog::CopyDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::CopyDialog)
+  , m_notifier(this)
   , m_verseValidator(new QIntValidator(this))
   , m_currVerse(Verse::getCurrent())
   , m_quranService(ServiceFactory::quranService())
-  , m_notifier(this)
 {
   ui->setupUi(this);
   ui->cmbCopyFrom->setValidator(m_verseValidator);
@@ -82,8 +82,8 @@ CopyDialog::show()
   QDialog::show();
 }
 
-const CopyNotifier*
-CopyDialog::notifier() const
+NotificationSender*
+CopyDialog::notifier()
 {
   return &m_notifier;
 }

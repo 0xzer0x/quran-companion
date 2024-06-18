@@ -1,7 +1,7 @@
 #ifndef BOOKMARKSNOTIFIER_H
 #define BOOKMARKSNOTIFIER_H
 
-#include <interfaces/notificationsender.h>
+#include <notifiers/notificationsender.h>
 
 class BookmarksNotifier : public NotificationSender
 {
