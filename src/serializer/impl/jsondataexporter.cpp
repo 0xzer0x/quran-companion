@@ -1,6 +1,6 @@
 #include "jsondataexporter.h"
 #include <QJsonArray>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 
 JsonDataExporter::JsonDataExporter()
   : m_bookmarkService(ServiceFactory::bookmarkService())

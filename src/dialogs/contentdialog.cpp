@@ -7,7 +7,7 @@
 #include "ui_contentdialog.h"
 #include <types/tafsir.h>
 #include <utils/fontmanager.h>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 #include <utils/stylemanager.h>
 
 ContentDialog::ContentDialog(QWidget* parent)

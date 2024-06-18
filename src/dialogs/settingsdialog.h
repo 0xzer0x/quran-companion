@@ -6,8 +6,6 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include "fileselector.h"
-#include "importexportdialog.h"
 #include <QApplication>
 #include <QAudioDevice>
 #include <QColorDialog>
@@ -23,13 +21,13 @@
 #include <QShortcut>
 #include <QStandardItemModel>
 #include <QValidator>
+#include <player/verseplayer.h>
+#include <serializer/impl/jsondataexporter.h>
+#include <serializer/impl/jsondataimporter.h>
 #include <types/tafsir.h>
 #include <types/translation.h>
 #include <utils/configuration.h>
-#include <utils/jsondataexporter.h>
-#include <utils/jsondataimporter.h>
 #include <utils/shortcuthandler.h>
-#include <player/verseplayer.h>
 typedef Configuration::ReaderMode ReaderMode;
 
 namespace Ui {

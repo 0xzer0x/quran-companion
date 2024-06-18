@@ -1,6 +1,6 @@
 #include "versedialog.h"
 #include "ui_versedialog.h"
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 
 VerseDialog::VerseDialog(QWidget* parent)
   : QDialog(parent)

@@ -13,7 +13,7 @@
 #include <QStandardItem>
 #include <QStringListModel>
 #include <QVBoxLayout>
-#include <components/navigator.h>
+#include <navigation/navigator.h>
 #include <repository/bookmarksrepository.h>
 #include <repository/glyphsrepository.h>
 #include <service/bookmarkservice.h>

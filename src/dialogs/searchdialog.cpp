@@ -6,7 +6,7 @@
 #include "searchdialog.h"
 #include "ui_searchdialog.h"
 #include <utils/fontmanager.h>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 #include <utils/stylemanager.h>
 #include <widgets/clickablelabel.h>
 

@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QPointer>
-#include <interfaces/verseobserver.h>
+#include <navigation/verseobserver.h>
 #include <service/quranservice.h>
 #include <types/verse.h>
 

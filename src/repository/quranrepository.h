@@ -4,7 +4,7 @@
 #include <QFileInfo>
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <interfaces/dbconnection.h>
+#include <repository/dbconnection.h>
 #include <types/verse.h>
 #include <utils/configuration.h>
 #include <utils/dirmanager.h>

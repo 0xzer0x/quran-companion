@@ -17,7 +17,7 @@
 #include <QTimer>
 #include <QWidget>
 #include <downloader/downloadjob.h>
-#include <interfaces/notificationsender.h>
+#include <notifiers/notificationsender.h>
 #include <types/reciter.h>
 #include <types/tafsir.h>
 #include <types/translation.h>

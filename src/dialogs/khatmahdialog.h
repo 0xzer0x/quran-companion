@@ -5,7 +5,7 @@
 #include <QLineEdit>
 #include <QPointer>
 #include <QSet>
-#include <components/navigator.h>
+#include <navigation/navigator.h>
 #include <repository/bookmarksrepository.h>
 #include <service/bookmarkservice.h>
 #include <service/khatmahservice.h>

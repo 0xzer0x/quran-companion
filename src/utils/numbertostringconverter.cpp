@@ -1,6 +1,6 @@
-#include "stringconverter.h"
+#include "numbertostringconverter.h"
 
-StringConverter::StringConverter()
+NumberToStringConverter::NumberToStringConverter()
   : m_easternNumsMap({ { 0, "٠" },
                        { 1, "١" },
                        { 2, "٢" },
@@ -15,7 +15,7 @@ StringConverter::StringConverter()
 }
 
 QString
-StringConverter::arabicNumber(int number)
+NumberToStringConverter::arabicNumber(int number)
 {
   if (number < 10)
     return m_easternNumsMap.value(number);

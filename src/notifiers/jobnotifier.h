@@ -3,7 +3,7 @@
 
 #include <QPointer>
 #include <downloader/downloadjob.h>
-#include <interfaces/notificationsender.h>
+#include <notifiers/notificationsender.h>
 
 class JobNotifier : public NotificationSender
 {

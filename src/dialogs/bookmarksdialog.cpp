@@ -7,7 +7,7 @@
 #include "ui_bookmarksdialog.h"
 #include <set>
 #include <utils/fontmanager.h>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 #include <utils/stylemanager.h>
 
 BookmarksDialog::BookmarksDialog(QWidget* parent)

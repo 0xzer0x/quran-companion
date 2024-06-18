@@ -14,7 +14,7 @@
 #include <QSpinBox>
 #include <QStandardItem>
 #include <QStandardItemModel>
-#include <components/navigator.h>
+#include <navigation/navigator.h>
 #include <repository/glyphsrepository.h>
 #include <service/glyphservice.h>
 #include <service/quranservice.h>

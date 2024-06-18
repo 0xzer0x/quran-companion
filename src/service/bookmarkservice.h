@@ -3,7 +3,7 @@
 
 #include <QList>
 #include <QObject>
-#include <interfaces/notificationsender.h>
+#include <notifiers/notificationsender.h>
 #include <types/verse.h>
 
 class BookmarkService : public QObject

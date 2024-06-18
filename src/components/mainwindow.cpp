@@ -10,7 +10,7 @@
 #include <dialogs/khatmahdialog.h>
 #include <player/impl/setplaybackstrategy.h>
 #include <player/playbackcontroller.h>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 #include <utils/stylemanager.h>
 using namespace fa;
 using std::make_pair;
@@ -538,7 +538,7 @@ MainWindow::cmbPageChanged(int newIdx)
     return;
   }
 
-  m_reader->gotoPage(newIdx + 1);
+  m_navigator.navigateToPage(newIdx + 1);
 }
 
 void

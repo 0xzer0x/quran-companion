@@ -16,10 +16,13 @@
 #include <QStringListModel>
 #include <components/playercontrols.h>
 #include <components/quranreader.h>
+#include <components/systemtray.h>
 #include <dialogs/bookmarksdialog.h>
 #include <dialogs/contentdialog.h>
 #include <dialogs/copydialog.h>
 #include <dialogs/downloaderdialog.h>
+#include <dialogs/fileselector.h>
+#include <dialogs/importexportdialog.h>
 #include <dialogs/khatmahdialog.h>
 #include <dialogs/searchdialog.h>
 #include <dialogs/settingsdialog.h>
@@ -30,7 +33,6 @@
 #include <service/translationservice.h>
 #include <types/verse.h>
 #include <utils/shortcuthandler.h>
-#include <utils/systemtray.h>
 #include <utils/versionchecker.h>
 #include <widgets/betaqaviewer.h>
 #include <widgets/notificationpopup.h>

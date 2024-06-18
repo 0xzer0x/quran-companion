@@ -4,8 +4,8 @@
 #include "playbackstrategy.h"
 #include "verseplayer.h"
 #include <QObject>
-#include <components/navigator.h>
-#include <interfaces/verseobserver.h>
+#include <navigation/navigator.h>
+#include <navigation/verseobserver.h>
 
 class PlaybackController
   : public QObject

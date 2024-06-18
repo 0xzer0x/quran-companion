@@ -3,7 +3,7 @@
 
 #include <QDateTime>
 #include <QDialog>
-#include <components/navigator.h>
+#include <navigation/navigator.h>
 #include <repository/translationrepository.h>
 #include <service/quranservice.h>
 #include <service/translationservice.h>

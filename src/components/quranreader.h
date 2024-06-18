@@ -1,12 +1,11 @@
 #ifndef QURANREADER_H
 #define QURANREADER_H
 
-#include "navigator.h"
-
 #include <QLabel>
 #include <QScrollArea>
 #include <QWidget>
-#include <interfaces/verseobserver.h>
+#include <navigation/navigator.h>
+#include <navigation/verseobserver.h>
 #include <player/playbackcontroller.h>
 #include <player/verseplayer.h>
 #include <repository/bookmarksrepository.h>

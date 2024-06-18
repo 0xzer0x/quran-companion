@@ -1,6 +1,6 @@
 #include "continuousplaybackstrategy.h"
 
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 
 ContinuousPlaybackStrategy::ContinuousPlaybackStrategy()
   : m_quranService(ServiceFactory::quranService())

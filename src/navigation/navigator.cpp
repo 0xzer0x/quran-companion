@@ -1,5 +1,5 @@
 #include "navigator.h"
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 
 Navigator::Navigator()
   : QObject()

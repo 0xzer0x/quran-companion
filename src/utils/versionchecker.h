@@ -7,7 +7,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QProcess>
-#include <interfaces/notificationsender.h>
+#include <notifiers/notificationsender.h>
 #include <notifiers/updatenotifier.h>
 
 class VersionChecker : public QObject

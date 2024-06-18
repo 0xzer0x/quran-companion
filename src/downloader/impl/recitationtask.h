@@ -6,7 +6,7 @@
 #include <service/quranservice.h>
 #include <types/reciter.h>
 #include <utils/dirmanager.h>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 
 class RecitationTask : public DownloadTask
 {

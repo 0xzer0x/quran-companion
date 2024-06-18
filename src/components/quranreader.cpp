@@ -2,7 +2,7 @@
 #include "ui_quranreader.h"
 #include <QtAwesome.h>
 #include <utils/fontmanager.h>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 #include <utils/shortcuthandler.h>
 #include <utils/stylemanager.h>
 #include <widgets/clickablelabel.h>

@@ -1,6 +1,6 @@
 #include "setplaybackstrategy.h"
 
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 
 SetPlaybackStrategy::SetPlaybackStrategy(Verse start,
                                          Verse end,

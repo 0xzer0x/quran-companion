@@ -2,7 +2,7 @@
 #include "ui_khatmahdialog.h"
 #include <QGraphicsDropShadowEffect>
 #include <utils/configuration.h>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 #include <utils/stylemanager.h>
 
 KhatmahDialog::KhatmahDialog(QWidget* parent)

@@ -1,7 +1,7 @@
 #include "copydialog.h"
 #include "ui_copydialog.h"
 
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 
 CopyDialog::CopyDialog(QWidget* parent)
   : QDialog(parent)
