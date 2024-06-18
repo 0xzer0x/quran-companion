@@ -44,7 +44,7 @@ Navigator::navigateToVerse(const Verse& verse)
 void
 Navigator::navigateToSurah(int surah)
 {
-  Verse start(m_quranService->surahStartPage(surah),
+  Verse start(m_quranService->versePage(surah, 1),
               surah,
               (surah == 1 || surah == 9) ? 1 : 0);
   navigateToVerse(start);

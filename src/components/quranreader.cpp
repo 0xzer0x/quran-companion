@@ -20,7 +20,6 @@ QuranReader::QuranReader(QWidget* parent,
   , m_quranService(ServiceFactory::quranService())
   , m_glyphService(ServiceFactory::glyphService())
   , m_playbackController(playbackController)
-  , m_activePage(0)
 {
   ui->setupUi(this);
   setLayoutDirection(Qt::LeftToRight);
@@ -138,6 +137,8 @@ QuranReader::setupConnections()
               &QuranPageBrowser::actionZoomOut);
     }
   }
+
+  m_navigator.addObserver(this);
 }
 
 void
@@ -270,8 +271,6 @@ QuranReader::addSideContent()
     connect(
       verselb, &ClickableLabel::clicked, this, &QuranReader::verseClicked);
   }
-
-  setHighlightedFrame();
 }
 
 void
@@ -380,13 +379,6 @@ QuranReader::selectVerse(int browserIdx, int IdxInPage)
 }
 
 void
-QuranReader::setVerseToStartOfPage()
-{
-  // set the current verse to the verse at the top of the page
-  m_currVerse.update(m_activeVList->at(0));
-}
-
-void
 QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
 {
   if (hrefUrl.toString().at(1) == 'F') {
@@ -456,7 +448,6 @@ QuranReader::gotoPage(int page)
     else
       gotoDoublePage(page);
   }
-  m_activePage = page;
 }
 
 void
@@ -470,8 +461,9 @@ void
 QuranReader::gotoDoublePage(int page)
 {
   int pageBrowerIdx = page % 2 == 0;
+  int activePage = m_activeQuranBrowser->page();
 
-  if (areNeighbors(m_activePage, page) || areNeighbors(page, m_activePage))
+  if (areNeighbors(activePage, page) || areNeighbors(page, activePage))
     switchActivePage();
   else {
     m_activeQuranBrowser = m_quranBrowsers[pageBrowerIdx];

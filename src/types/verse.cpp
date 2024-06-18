@@ -114,13 +114,21 @@ Verse::operator>(const Verse& v2) const
 bool
 Verse::operator>=(const Verse& v2) const
 {
-  return v2 == *this || v2 > *this;
+  if (m_surah > v2.m_surah)
+    return true;
+  if (m_surah == v2.m_surah && m_number >= v2.m_number)
+    return true;
+  return false;
 }
 
 bool
 Verse::operator<=(const Verse& v2) const
 {
-  return v2 == *this || v2 < *this;
+  if (m_surah < v2.m_surah)
+    return true;
+  if (m_surah == v2.m_surah && m_number <= v2.m_number)
+    return true;
+  return false;
 }
 
 void

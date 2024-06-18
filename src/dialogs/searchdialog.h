@@ -14,6 +14,7 @@
 #include <QSpinBox>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <components/navigator.h>
 #include <repository/glyphsrepository.h>
 #include <service/glyphservice.h>
 #include <service/quranservice.h>
@@ -70,15 +71,6 @@ public slots:
    */
   void moveBwd();
 
-signals:
-  /**
-   * @fn void navigateToVerse(Verse v)
-   * @brief Emitted when a search result is clicked to signal the
-   * navigation and selection of that verse.
-   * @param v - Verse to navigate to
-   */
-  void navigateToVerse(const Verse& v, bool notify);
-
 protected:
   /** @brief Re-implementation of QWidget::closeEvent() in order to hide the
    * window instead of closing it.
@@ -99,6 +91,7 @@ private slots:
 
 private:
   Ui::SearchDialog* ui;
+  Navigator& m_navigator;
   const Configuration& m_config;
   const QuranService* m_quranService;
   const GlyphService* m_glyphService;

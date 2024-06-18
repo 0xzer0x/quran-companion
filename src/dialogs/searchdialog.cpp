@@ -14,6 +14,7 @@ SearchDialog::SearchDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::SearchDialog)
   , m_config(Configuration::getInstance())
+  , m_navigator(Navigator::getInstance())
   , m_quranService(ServiceFactory::quranService())
   , m_glyphService(ServiceFactory::glyphService())
 {
@@ -94,7 +95,7 @@ SearchDialog::verseClicked()
 {
   QStringList data = sender()->objectName().split('-');
   Verse selected(data.at(0).toInt(), data.at(1).toInt(), data.at(2).toInt());
-  emit navigateToVerse(selected, true);
+  m_navigator.navigateToVerse(selected);
 }
 
 void

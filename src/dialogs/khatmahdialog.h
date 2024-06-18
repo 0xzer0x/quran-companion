@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QPointer>
 #include <QSet>
+#include <components/navigator.h>
 #include <repository/bookmarksrepository.h>
 #include <service/bookmarkservice.h>
 #include <service/khatmahservice.h>
@@ -36,14 +37,6 @@ public:
    * @brief reload shown khatmah entries and show the dialog
    */
   void show();
-
-signals:
-  /**
-   * @fn void navigateToVerse(Verse v)
-   * @brief Emitted when changing the active khatmah
-   * @param v - Verse to navigate to
-   */
-  void navigateToVerse(const Verse& v, bool notify);
 
 protected:
   /**
@@ -81,6 +74,7 @@ private:
   QuranService* m_quranService;
   KhatmahService* m_khatmahService;
   Configuration& m_config;
+  Navigator& m_navigator;
   /**
    * @brief load all khatmah entries available
    */

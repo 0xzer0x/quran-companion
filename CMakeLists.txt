@@ -42,20 +42,26 @@ set(PROJECT_SOURCES
     src/types/tafsir.cpp
     src/types/translation.h
     src/types/translation.cpp
-    src/core/mainwindow.cpp
-    src/core/mainwindow.h
-    src/core/mainwindow.ui
-    src/core/quranreader.h
-    src/core/quranreader.cpp
-    src/core/quranreader.ui
-    src/core/playercontrols.h
-    src/core/playercontrols.cpp
-    src/core/playercontrols.ui
+    src/components/mainwindow.cpp
+    src/components/mainwindow.h
+    src/components/mainwindow.ui
+    src/components/quranreader.h
+    src/components/quranreader.cpp
+    src/components/quranreader.ui
+    src/components/playercontrols.h
+    src/components/playercontrols.cpp
+    src/components/playercontrols.ui
+    src/components/navigator.h
+    src/components/navigator.cpp
     src/player/verseplayer.h
     src/player/verseplayer.cpp
+    src/player/playbackcontroller.h
+    src/player/playbackcontroller.cpp
     src/player/playbackstrategy.h
     src/player/impl/continuousplaybackstrategy.h
     src/player/impl/continuousplaybackstrategy.cpp
+    src/player/impl/setplaybackstrategy.h
+    src/player/impl/setplaybackstrategy.cpp
     src/dialogs/searchdialog.h
     src/dialogs/searchdialog.cpp
     src/dialogs/searchdialog.ui
@@ -98,6 +104,7 @@ set(PROJECT_SOURCES
     src/interfaces/userdataexporter.h
     src/interfaces/dbconnection.h
     src/interfaces/notificationsender.h
+    src/interfaces/verseobserver.h
     src/service/betaqatservice.h
     src/service/bookmarkservice.h
     src/service/quranservice.h
@@ -207,10 +214,7 @@ set(PROJECT_SOURCES
     resources/logo.icns
     qurancompanion.rc)
 
-qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES}
-    src/player/impl/setplaybackstrategy.h src/player/impl/setplaybackstrategy.cpp
-    src/player/playbackcontroller.h src/player/playbackcontroller.cpp
-    src/interfaces/verseobserver.h)
+qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
 target_link_libraries(
   quran-companion PRIVATE Qt6::Widgets Qt6::Sql Qt6::Multimedia Qt6::Network

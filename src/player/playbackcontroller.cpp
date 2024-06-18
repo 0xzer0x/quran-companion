@@ -14,6 +14,7 @@ PlaybackController::PlaybackController(QObject* parent,
           &QMediaPlayer::mediaStatusChanged,
           this,
           &PlaybackController::mediaStatusChanged);
+  m_navigator.addObserver(this);
 }
 
 void
@@ -23,29 +24,33 @@ PlaybackController::resetStrategy()
 }
 
 void
-PlaybackController::setStrategy(PlaybackStrategy* newStrategy)
+PlaybackController::setStrategy(std::shared_ptr<PlaybackStrategy> newStrategy)
 {
-  m_strategy = std::shared_ptr<PlaybackStrategy>(newStrategy);
+  m_strategy = newStrategy;
 }
 
 void
 PlaybackController::start()
 {
   Verse startVerse = m_strategy->start();
-  m_current.update(startVerse);
-  m_player->playCurrentVerse();
+  m_navigator.navigateToVerse(startVerse);
+  m_player->play();
 }
 
 void
 PlaybackController::next()
 {
   std::optional<Verse> nextVerse = m_strategy->nextVerse();
-  m_navigator.navigateToVerse(nextVerse.value_or(m_strategy->stop()));
+  if (nextVerse.has_value())
+    m_navigator.navigateToVerse(nextVerse.value());
+  else
+    stop();
 }
 
 void
 PlaybackController::stop()
 {
+  m_player->stop();
   Verse stopVerse = m_strategy->stop();
   m_navigator.navigateToVerse(stopVerse);
 }
@@ -53,15 +58,14 @@ PlaybackController::stop()
 void
 PlaybackController::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
-  if (status != QMediaPlayer::EndOfMedia)
-    return;
-  next();
+  if (status == QMediaPlayer::EndOfMedia)
+    next();
 }
 
 void
 PlaybackController::activeVerseChanged()
 {
-  bool keepPlaying = m_player->isPlaying();
+  bool keepPlaying = m_player->isOn();
   m_player->stop();
 
   if (!m_strategy->verseInRange(m_current)) {

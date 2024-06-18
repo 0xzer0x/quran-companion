@@ -146,6 +146,7 @@ MainWindow::setupConnections()
   connectControls();
   connectSettings();
   connectNotifiers();
+  m_navigator.addObserver(this);
 }
 
 void
@@ -449,14 +450,18 @@ MainWindow::syncSelectedSurah()
 void
 MainWindow::activeVerseChanged()
 {
-  syncSelectedSurah();
-  setCmbPageIdx(m_currVerse.page() - 1);
-  setCmbJuzIdx(m_quranService->getVerseJuz(m_currVerse) - 1);
+  Verse curr = m_currVerse;
+  if (curr.number() == 0)
+    curr.setNumber(1);
 
-  if (m_currVerse.surahCount() != ui->cmbVerse->count())
+  syncSelectedSurah();
+  setCmbPageIdx(curr.page() - 1);
+  setCmbJuzIdx(m_quranService->getVerseJuz(curr) - 1);
+
+  if (curr.surahCount() != ui->cmbVerse->count())
     setVerseComboBoxRange();
   else
-    setCmbVerseIdx(m_currVerse.number() - 1);
+    setCmbVerseIdx(curr.number() - 1);
 }
 
 void
@@ -662,13 +667,8 @@ MainWindow::actionDMTriggered()
 void
 MainWindow::actionBookmarksTriggered()
 {
-  if (m_bookmarksDlg == nullptr) {
+  if (m_bookmarksDlg == nullptr)
     m_bookmarksDlg = new BookmarksDialog(this);
-    connect(m_bookmarksDlg,
-            &BookmarksDialog::navigateToVerse,
-            m_reader,
-            &QuranReader::navigateToVerse);
-  }
 
   m_bookmarksDlg->showWindow();
 }
@@ -676,13 +676,8 @@ MainWindow::actionBookmarksTriggered()
 void
 MainWindow::actionKhatmahTriggered()
 {
-  if (m_khatmahDlg == nullptr) {
+  if (m_khatmahDlg == nullptr)
     m_khatmahDlg = new KhatmahDialog(this);
-    connect(m_khatmahDlg,
-            &KhatmahDialog::navigateToVerse,
-            m_reader,
-            &QuranReader::navigateToVerse);
-  }
 
   m_khatmahService->saveActiveKhatmah(m_currVerse);
   m_khatmahDlg->show();
@@ -718,21 +713,13 @@ void
 MainWindow::actionAboutQttriggered()
 {
   QMessageBox::aboutQt(this, tr("About Qt"));
-  m_playbackController->setStrategy(
-    new SetPlaybackStrategy(Verse(311, 19, 77), Verse(311, 19, 80), 4));
-  m_playbackController->start();
 }
 
 void
 MainWindow::actionSearchTriggered()
 {
-  if (m_searchDlg == nullptr) {
+  if (m_searchDlg == nullptr)
     m_searchDlg = new SearchDialog(this);
-    connect(m_searchDlg,
-            &SearchDialog::navigateToVerse,
-            m_reader,
-            &QuranReader::navigateToVerse);
-  }
 
   m_searchDlg->show();
 }

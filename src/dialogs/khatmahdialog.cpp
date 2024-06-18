@@ -10,6 +10,7 @@ KhatmahDialog::KhatmahDialog(QWidget* parent)
   , ui(new Ui::KhatmahDialog)
   , m_currVerse(Verse::getCurrent())
   , m_config(Configuration::getInstance())
+  , m_navigator(Navigator::getInstance())
   , m_quranService(ServiceFactory::quranService())
   , m_khatmahService(ServiceFactory::khatmahService())
 {
@@ -167,7 +168,7 @@ KhatmahDialog::setActiveKhatmah()
   m_currActive = newActive;
 
   ui->lbCurrKhatmah->setText(m_khatmahService->getKhatmahName(id.toInt()));
-  emit navigateToVerse(v, true);
+  m_navigator.navigateToVerse(v);
 }
 
 void

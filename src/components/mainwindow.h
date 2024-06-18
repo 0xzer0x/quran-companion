@@ -14,8 +14,8 @@
 #include <QSettings>
 #include <QShortcut>
 #include <QStringListModel>
-#include "components/playercontrols.h"
-#include "components/quranreader.h"
+#include <components/playercontrols.h>
+#include <components/quranreader.h>
 #include <dialogs/bookmarksdialog.h>
 #include <dialogs/contentdialog.h>
 #include <dialogs/copydialog.h>

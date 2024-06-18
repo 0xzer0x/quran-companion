@@ -5,7 +5,7 @@
 
 #include <QApplication>
 #include <QSplashScreen>
-#include <core/mainwindow.h>
+#include <components/mainwindow.h>
 #include <types/reciter.h>
 #include <types/tafsir.h>
 #include <types/translation.h>

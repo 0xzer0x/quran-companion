@@ -14,6 +14,7 @@ BookmarksDialog::BookmarksDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::BookmarksDialog)
   , m_config(Configuration::getInstance())
+  , m_navigator(Navigator::getInstance())
   , m_quranService(ServiceFactory::quranService())
   , m_bookmarkService(ServiceFactory::bookmarkService())
   , m_glyphService(ServiceFactory::glyphService())
@@ -224,7 +225,7 @@ BookmarksDialog::btnGoToVerse()
 {
   QStringList info = sender()->parent()->objectName().split('-');
   Verse verse(info.at(0).toInt(), info.at(1).toInt(), info.at(2).toInt());
-  emit navigateToVerse(verse, true);
+  m_navigator.navigateToVerse(verse);
 }
 
 void

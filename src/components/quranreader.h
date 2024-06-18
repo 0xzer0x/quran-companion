@@ -99,10 +99,6 @@ public slots:
    */
   void gotoPage(int page);
   /**
-   * @brief sets m_currVerse to the first verse in m_vInfoList
-   */
-  void setVerseToStartOfPage();
-  /**
    * @brief slot for updating the page font size of all quran pages
    */
   void updatePageFontSize();
@@ -259,8 +255,6 @@ private:
    * @brief QFont used in displaying Quranic verse
    */
   QFont m_versesFont;
-
-  int m_activePage;
 
   QPointer<PlaybackController> m_playbackController;
 };

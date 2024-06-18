@@ -5,7 +5,6 @@
 #include <QPointer>
 #include <interfaces/verseobserver.h>
 #include <service/quranservice.h>
-#include <types/navigationinitiator.h>
 #include <types/verse.h>
 
 class Navigator : public QObject

@@ -13,6 +13,7 @@
 #include <QStandardItem>
 #include <QStringListModel>
 #include <QVBoxLayout>
+#include <components/navigator.h>
 #include <repository/bookmarksrepository.h>
 #include <repository/glyphsrepository.h>
 #include <service/bookmarkservice.h>
@@ -70,15 +71,6 @@ public:
    */
   void loadSurahs();
 
-signals:
-  /**
-   * @fn void navigateToVerse(Verse v)
-   * @brief Emitted when 'go to verse' button is clicked to signal the
-   * navigation and selection of a verse.
-   * @param v - Verse to navigate to
-   */
-  void navigateToVerse(const Verse& v, bool notify);
-
 public slots:
   /**
    * @brief generates Verse object from the name of the Frame containing the
@@ -124,6 +116,9 @@ private:
    * @brief reference to the singleton Configuration instance
    */
   const Configuration& m_config;
+
+  Navigator& m_navigator;
+
   /**
    * @brief reference to the singleton GlyphsRepository instance
    */

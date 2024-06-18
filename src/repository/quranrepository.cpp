@@ -192,8 +192,10 @@ QuranRepository::surahStartPage(int surahIdx) const
 {
   QSqlQuery dbQuery(*this);
 
-  dbQuery.prepare("SELECT page FROM verses_v1 WHERE sura_no=:sn AND aya_no=1");
-  dbQuery.bindValue(0, surahIdx);
+  dbQuery.prepare("SELECT page FROM verses_v" +
+                  QString::number(m_config.qcfVersion()) +
+                  " WHERE sura_no=? AND aya_no=1");
+  dbQuery.addBindValue(surahIdx);
 
   executeQuery(dbQuery,
                "Error occurred during getSurahStartPage SQL statment exec");

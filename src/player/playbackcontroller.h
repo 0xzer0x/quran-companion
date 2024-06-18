@@ -1,9 +1,9 @@
 #ifndef PLAYBACKCONTROLLER_H
 #define PLAYBACKCONTROLLER_H
 
-#include <QObject>
 #include "playbackstrategy.h"
 #include "verseplayer.h"
+#include <QObject>
 #include <components/navigator.h>
 #include <interfaces/verseobserver.h>
 
@@ -18,7 +18,7 @@ public:
   void activeVerseChanged();
 
   void resetStrategy();
-  void setStrategy(PlaybackStrategy* newStrategy);
+  void setStrategy(std::shared_ptr<PlaybackStrategy> newStrategy);
 
   void start();
   void next();

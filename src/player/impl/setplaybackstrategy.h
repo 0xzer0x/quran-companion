@@ -23,7 +23,7 @@ private:
   int m_repeatCount;
   int m_verseFrequency;
   int m_currentIteration;
-  int m_currentVerseRepetition;
+  int m_currentRepetition;
   QuranService* m_quranService;
   const Verse& m_current;
   Verse m_start;
