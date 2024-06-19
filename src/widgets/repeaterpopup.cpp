@@ -140,6 +140,9 @@ RepeaterPopup::populateVerseComboboxes()
     ui->cmbFromVerse->addItem(QString::number(i));
     ui->cmbToVerse->addItem(QString::number(i));
   }
+
+  for (QComboBox* const& cmb : { ui->cmbFromVerse, ui->cmbToVerse })
+    cmb->setCurrentIndex(m_currVerse.number() - 1);
 }
 
 void
