@@ -1462,11 +1462,6 @@
   <context>
     <name>RepeaterPopup</name>
     <message>
-      <location filename="../../../src/widgets/repeaterpopup.ui" line="14"/>
-      <source>Form</source>
-      <translation type="unfinished">Form</translation>
-    </message>
-    <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="47"/>
       <source>From</source>
       <translation>من</translation>
@@ -1495,8 +1490,8 @@
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="191"/>
-      <source>Verse Frequency</source>
-      <translation type="unfinished">Verse Frequency</translation>
+      <source>Verse frequency</source>
+      <translation type="unfinished">Verse frequency</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="212"/>
