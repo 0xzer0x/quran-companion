@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>285</width>
-    <height>273</height>
+    <width>296</width>
+    <height>289</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Repeater</string>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -188,7 +188,7 @@
            <item>
             <widget class="QLabel" name="label_8">
              <property name="text">
-              <string>Verse Frequency</string>
+              <string>Verse frequency</string>
              </property>
             </widget>
            </item>
