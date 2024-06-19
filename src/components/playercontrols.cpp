@@ -1,6 +1,7 @@
 #include "playercontrols.h"
 #include "ui_playercontrols.h"
 #include <QtAwesome.h>
+#include <qnamespace.h>
 #include <utils/shortcuthandler.h>
 #include <utils/stylemanager.h>
 using namespace fa;
@@ -15,6 +16,7 @@ PlayerControls::PlayerControls(QWidget* parent,
   , m_currVerse(Verse::getCurrent())
   , m_config(Configuration::getInstance())
   , m_reciters(Reciter::reciters)
+  , m_repeater(new RepeaterPopup(parent, playbackController))
 {
   ui->setupUi(this);
   loadIcons();
@@ -34,6 +36,7 @@ PlayerControls::loadIcons()
   ui->btnPlay->setIcon(awesome.icon(fa_solid, fa_play));
   ui->btnPause->setIcon(awesome.icon(fa_solid, fa_pause));
   ui->btnStop->setIcon(awesome.icon(fa_solid, fa_stop));
+  ui->btnRepeat->setIcon(awesome.icon(fa_solid, fa_rotate_right));
 
   ui->lbSpeaker->setText(QString(fa_volume_high));
   ui->lbSpeaker->setFont(awesome.font(fa_solid, 16));
@@ -87,6 +90,11 @@ PlayerControls::setupConnections()
           &QComboBox::currentIndexChanged,
           m_playbackController->player(),
           &VersePlayer::changeReciter);
+
+  connect(ui->btnRepeat,
+          &QPushButton::toggled,
+          this,
+          &PlayerControls::btnRepeatClicked);
 }
 
 void
@@ -127,6 +135,16 @@ void
 PlayerControls::btnStopClicked()
 {
   m_playbackController->stop();
+}
+
+void
+PlayerControls::btnRepeatClicked(bool on)
+{
+  if (on) {
+    m_repeater->show();
+  } else {
+    m_repeater->hide();
+  }
 }
 
 void
@@ -172,6 +190,20 @@ PlayerControls::decrementVolume()
 {
   int val = ui->sldrVolume->value() - 5;
   ui->sldrVolume->setValue(val < 0 ? 0 : val);
+}
+
+void
+PlayerControls::adjustRepeatWidgetPos()
+{
+  QPoint bottomLeft;
+  if (this->layoutDirection() == Qt::LeftToRight) {
+    bottomLeft = mapToGlobal(ui->btnRepeat->geometry().bottomRight());
+    bottomLeft.setX(bottomLeft.x() + 10 - m_repeater->width());
+  } else {
+    bottomLeft = mapToGlobal(ui->btnRepeat->geometry().bottomLeft());
+    bottomLeft.setX(bottomLeft.x() - 10);
+  }
+  m_repeater->setGeometry(QRect(bottomLeft, m_repeater->size()));
 }
 
 int
