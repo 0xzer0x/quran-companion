@@ -41,10 +41,12 @@ void
 PlaybackController::next()
 {
   std::optional<Verse> nextVerse = m_strategy->nextVerse();
-  if (nextVerse.has_value())
+  if (nextVerse.has_value()) {
     m_navigator.navigateToVerse(nextVerse.value());
-  else
+  } else {
     stop();
+    emit playbackFinished();
+  }
 }
 
 void

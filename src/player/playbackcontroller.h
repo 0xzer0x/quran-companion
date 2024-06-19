@@ -28,6 +28,7 @@ public:
 
 signals:
   void verseOutOfPlaybackRange();
+  void playbackFinished();
 
 private slots:
   void mediaStatusChanged(QMediaPlayer::MediaStatus status);
