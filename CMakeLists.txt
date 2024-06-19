@@ -210,6 +210,9 @@ set(PROJECT_SOURCES
     src/widgets/betaqaviewer.h
     src/widgets/betaqaviewer.cpp
     src/widgets/betaqaviewer.ui
+    src/widgets/repeaterpopup.h
+    src/widgets/repeaterpopup.cpp
+    src/widgets/repeaterpopup.ui
     resources.qrc
     resources/logo.icns
     qurancompanion.rc)
