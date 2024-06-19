@@ -1486,22 +1486,22 @@
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="165"/>
       <source>Options</source>
-      <translation type="unfinished">Options</translation>
+      <translation>خيارات</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="191"/>
       <source>Verse frequency</source>
-      <translation type="unfinished">Verse frequency</translation>
+      <translation>تردد الآية</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="212"/>
       <source>Repetitions</source>
-      <translation type="unfinished">Repetitions</translation>
+      <translation>التكرارات</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.cpp" line="120"/>
       <source>End verse cannot be before start verse</source>
-      <translation type="unfinished">End verse cannot be before start verse</translation>
+      <translation>لا يمكن لآية النهاية أن تكون قبل آية البداية</translation>
     </message>
   </context>
 </TS>
