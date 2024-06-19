@@ -6,6 +6,7 @@
 #include <player/playbackcontroller.h>
 #include <player/verseplayer.h>
 #include <types/verse.h>
+#include <widgets/repeaterpopup.h>
 
 namespace Ui {
 class PlayerControls;
@@ -33,6 +34,8 @@ public slots:
    * @brief toggle play/pause of the current verse
    */
   void togglePlayback();
+
+  void adjustRepeatWidgetPos();
 
 private slots:
   /**
@@ -74,6 +77,8 @@ private slots:
    */
   void decrementVolume();
 
+  void btnRepeatClicked(bool on);
+
 private:
   Ui::PlayerControls* ui;
   /**
@@ -108,6 +113,8 @@ private:
    * @brief pointer to the QuranReader instance
    */
   QPointer<QuranReader> m_reader;
+
+  QPointer<RepeaterPopup> m_repeater;
 };
 
 #endif // PLAYERCONTROLS_H
