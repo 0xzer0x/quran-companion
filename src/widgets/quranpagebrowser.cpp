@@ -7,8 +7,8 @@
 #include <QApplication>
 #include <QRegularExpression>
 #include <QtAwesome.h>
-#include <utils/fontmanager.h>
 #include <service/servicefactory.h>
+#include <utils/fontmanager.h>
 using namespace fa;
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
@@ -20,6 +20,7 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   , m_quranService(ServiceFactory::quranService())
   , m_glyphService(ServiceFactory::glyphService())
 {
+  setOpenLinks(false);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setTextInteractionFlags(Qt::TextInteractionFlag::LinksAccessibleByMouse);
   setStyleSheet("QTextBrowser{background-color: transparent;}");
