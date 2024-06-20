@@ -33,10 +33,12 @@ public:
 
   void show();
 
+public slots:
+  void playbackFinished();
+
 private slots:
   void cmbSurahChanged(int newIndex);
   void btnPlaybackClicked(bool checked);
-  void playbackFinished();
 
 private:
   Ui::RepeaterPopup* ui;

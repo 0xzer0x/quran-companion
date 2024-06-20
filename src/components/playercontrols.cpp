@@ -88,8 +88,8 @@ PlayerControls::setupConnections()
 
   connect(ui->cmbReciter,
           &QComboBox::currentIndexChanged,
-          m_playbackController->player(),
-          &VersePlayer::changeReciter);
+          this,
+          &PlayerControls::cmbReciterChanged);
 
   connect(ui->btnRepeat,
           &QPushButton::toggled,
@@ -145,6 +145,13 @@ PlayerControls::btnRepeatClicked(bool on)
   } else {
     m_repeater->hide();
   }
+}
+
+void
+PlayerControls::cmbReciterChanged(int newIndex)
+{
+  m_playbackController->player()->changeReciter(newIndex);
+  m_repeater->playbackFinished();
 }
 
 void

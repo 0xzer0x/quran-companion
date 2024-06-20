@@ -57,6 +57,8 @@ private slots:
    * update verses combobox & selected surah
    */
   void btnStopClicked();
+
+  void cmbReciterChanged(int newIndex);
   /**
    * @brief disables/enables control buttons according to the media player state
    * and update the systray tooltip
