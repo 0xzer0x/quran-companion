@@ -1325,6 +1325,16 @@
     </message>
     <message>
         <location filename="../main.cpp"/>
+        <source>Asbab ul-Nuzul - al-Wahidi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
+        <source>Hidayat Al-Quran Al-Kareem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp"/>
         <source>Ibn-Ashoor</source>
         <translation type="unfinished"></translation>
     </message>
