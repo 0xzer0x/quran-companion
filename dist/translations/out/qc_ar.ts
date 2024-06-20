@@ -1326,12 +1326,12 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Asbab ul-Nuzul - al-Wahidi</source>
-      <translation type="unfinished">Asbab ul-Nuzul - al-Wahidi</translation>
+      <translation>أسباب النزول - الواحدي</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Hidayat Al-Quran Al-Kareem</source>
-      <translation type="unfinished">Hidayat Al-Quran Al-Kareem</translation>
+      <translation>هدايات القرآن الكريم</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
