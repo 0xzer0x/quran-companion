@@ -815,7 +815,6 @@ MainWindow::resizeEvent(QResizeEvent* event)
   m_popup->adjustLocation();
   m_popup->move(m_popup->notificationPos());
   m_betaqaViewer->center();
-  m_playerControls->adjustRepeatWidgetPos();
 }
 
 void

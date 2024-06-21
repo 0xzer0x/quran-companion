@@ -141,6 +141,7 @@ void
 PlayerControls::btnRepeatClicked(bool on)
 {
   if (on) {
+    adjustRepeatWidgetPos();
     m_repeater->show();
   } else {
     m_repeater->hide();
@@ -204,19 +205,36 @@ PlayerControls::adjustRepeatWidgetPos()
 {
   QPoint bottomLeft;
   if (this->layoutDirection() == Qt::LeftToRight) {
-    bottomLeft = mapToGlobal(ui->btnRepeat->geometry().bottomRight());
+    bottomLeft = ui->btnRepeat->mapToGlobal(
+      QPoint(ui->btnRepeat->width(), ui->btnRepeat->height()));
     bottomLeft.setX(bottomLeft.x() + 10 - m_repeater->width());
   } else {
-    bottomLeft = mapToGlobal(ui->btnRepeat->geometry().bottomLeft());
+    bottomLeft = ui->btnRepeat->mapToGlobal(QPoint(0, ui->btnRepeat->height()));
     bottomLeft.setX(bottomLeft.x() - 10);
   }
-  m_repeater->setGeometry(QRect(bottomLeft, m_repeater->size()));
+  m_repeater->move(bottomLeft);
+}
+
+void
+PlayerControls::moveEvent(QMoveEvent* event)
+{
+  QWidget::moveEvent(event);
+  if (m_repeater->isVisible())
+    adjustRepeatWidgetPos();
 }
 
 int
 PlayerControls::currentReciter() const
 {
   return ui->cmbReciter->currentIndex();
+}
+
+void
+PlayerControls::hideEvent(QHideEvent* event)
+{
+  QWidget::hideEvent(event);
+  ui->btnRepeat->setChecked(false);
+  m_repeater->hide();
 }
 
 PlayerControls::~PlayerControls()

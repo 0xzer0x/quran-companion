@@ -316,7 +316,7 @@
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">QPushButton { min-width: 40px; min-height: 25px; max-width: 50px; max-height: 25px; }</string>
+         <string notr="true">QPushButton { min-width: 40px; min-height: 28px; max-width: 50px; max-height: 28px; }</string>
         </property>
         <property name="text">
          <string notr="true"/>

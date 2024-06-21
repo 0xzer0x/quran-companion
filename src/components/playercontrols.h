@@ -37,6 +37,10 @@ public slots:
 
   void adjustRepeatWidgetPos();
 
+protected:
+  void moveEvent(QMoveEvent* event);
+  void hideEvent(QHideEvent* event);
+
 private slots:
   /**
    * @brief sets the current position in the audio file as the position of the
