@@ -91,7 +91,7 @@ QPushButton:disabled {
   background-color: #515151;
 }
 
-QPushButton:pressed {
+QPushButton:pressed, QPushButton#btnRepeat:checked {
   background-color: #4c4c4c;
 }
 
@@ -124,6 +124,12 @@ QComboBox::drop-down {
 
 QComboBox::down-arrow {
   image: url(":/resources/dark/icons/arrow-down.svg");
+}
+
+QFrame#repeaterFrame {
+  background: palette(base);
+  border-radius: 6px;
+  border: 1px solid #444444;
 }
 
 /* --------- Reader Styles --------- */

@@ -11,6 +11,8 @@
         <tafsir name="Al-Tabary" file="tabary.db" text="0" extra="1" />
         <tafsir name="Al-Jalalayn" file="jalalayn.db" text="0" extra="1" />
         <tafsir name="Ea&apos;rab" file="e3rab.db" text="0" extra="1" />
+        <tafsir name="Asbab ul-Nuzul - al-Wahidi" file="asbabnuzul.db" text="0" extra="1" />
+        <tafsir name="Hidayat Al-Quran Al-Kareem" file="hidayatquran.db" text="0" extra="1" />
         <tafsir name="Ibn-Ashoor" file="tanweer.db" text="0" extra="1" />
         <tafsir name="Ibn-Juzayy" file="tasheel.db" text="0" extra="1" />
         <tafsir name="Ibn-Katheer" file="katheer.db" text="0" extra="1" />

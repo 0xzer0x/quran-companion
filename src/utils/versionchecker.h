@@ -7,7 +7,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QProcess>
-#include <interfaces/notificationsender.h>
+#include <notifiers/notificationsender.h>
 #include <notifiers/updatenotifier.h>
 
 class VersionChecker : public QObject
@@ -15,7 +15,7 @@ class VersionChecker : public QObject
   Q_OBJECT
 public:
   explicit VersionChecker(QObject* parent = nullptr);
-  const UpdateNotifier* notifier() const;
+  NotificationSender *notifier();
 
 public slots:
   void checkUpdates();

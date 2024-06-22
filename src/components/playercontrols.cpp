@@ -1,20 +1,22 @@
 #include "playercontrols.h"
 #include "ui_playercontrols.h"
 #include <QtAwesome.h>
+#include <qnamespace.h>
 #include <utils/shortcuthandler.h>
 #include <utils/stylemanager.h>
 using namespace fa;
 
 PlayerControls::PlayerControls(QWidget* parent,
-                               VersePlayer* player,
-                               QuranReader* reader)
+                               QPointer<PlaybackController> playbackController,
+                               QPointer<QuranReader> reader)
   : QWidget(parent)
   , ui(new Ui::PlayerControls)
-  , m_player(player)
   , m_reader(reader)
+  , m_playbackController(playbackController)
   , m_currVerse(Verse::getCurrent())
   , m_config(Configuration::getInstance())
   , m_reciters(Reciter::reciters)
+  , m_repeater(new RepeaterPopup(parent, playbackController))
 {
   ui->setupUi(this);
   loadIcons();
@@ -34,6 +36,7 @@ PlayerControls::loadIcons()
   ui->btnPlay->setIcon(awesome.icon(fa_solid, fa_play));
   ui->btnPause->setIcon(awesome.icon(fa_solid, fa_pause));
   ui->btnStop->setIcon(awesome.icon(fa_solid, fa_stop));
+  ui->btnRepeat->setIcon(awesome.icon(fa_solid, fa_rotate_right));
 
   ui->lbSpeaker->setText(QString(fa_volume_high));
   ui->lbSpeaker->setFont(awesome.font(fa_solid, 16));
@@ -56,18 +59,18 @@ PlayerControls::setupConnections()
           this,
           &PlayerControls::decrementVolume);
 
-  connect(m_player,
+  connect(m_playbackController->player(),
           &QMediaPlayer::positionChanged,
           this,
           &PlayerControls::mediaPosChanged);
-  connect(m_player,
+  connect(m_playbackController->player(),
           &QMediaPlayer::playbackStateChanged,
           this,
           &PlayerControls::mediaStateChanged);
 
   connect(ui->sldrAudioPlayer,
           &QSlider::sliderMoved,
-          m_player,
+          m_playbackController->player(),
           &QMediaPlayer::setPosition);
   connect(ui->sldrVolume,
           &QSlider::valueChanged,
@@ -85,14 +88,19 @@ PlayerControls::setupConnections()
 
   connect(ui->cmbReciter,
           &QComboBox::currentIndexChanged,
-          m_player,
-          &VersePlayer::changeReciter);
+          this,
+          &PlayerControls::cmbReciterChanged);
+
+  connect(ui->btnRepeat,
+          &QPushButton::toggled,
+          this,
+          &PlayerControls::btnRepeatClicked);
 }
 
 void
 PlayerControls::togglePlayback()
 {
-  if (m_player->playbackState() == QMediaPlayer::PlayingState) {
+  if (m_playbackController->player()->isPlaying()) {
     btnPauseClicked();
   } else {
     btnPlayClicked();
@@ -102,8 +110,9 @@ PlayerControls::togglePlayback()
 void
 PlayerControls::mediaPosChanged(qint64 position)
 {
-  if (ui->sldrAudioPlayer->maximum() != m_player->duration())
-    ui->sldrAudioPlayer->setMaximum(m_player->duration());
+  if (ui->sldrAudioPlayer->maximum() !=
+      m_playbackController->player()->duration())
+    ui->sldrAudioPlayer->setMaximum(m_playbackController->player()->duration());
 
   if (!ui->sldrAudioPlayer->isSliderDown())
     ui->sldrAudioPlayer->setValue(position);
@@ -113,22 +122,37 @@ void
 PlayerControls::btnPlayClicked()
 {
   m_reader->highlightCurrentVerse();
-  m_player->play();
+  m_playbackController->player()->play();
 }
 
 void
 PlayerControls::btnPauseClicked()
 {
-  m_player->pause();
+  m_playbackController->player()->pause();
 }
 
 void
 PlayerControls::btnStopClicked()
 {
-  m_player->stop();
-  m_reader->setVerseToStartOfPage();
-  emit currentVerseChanged();
-  emit currentSurahChanged();
+  m_playbackController->stop();
+}
+
+void
+PlayerControls::btnRepeatClicked(bool on)
+{
+  if (on) {
+    adjustRepeatWidgetPos();
+    m_repeater->show();
+  } else {
+    m_repeater->hide();
+  }
+}
+
+void
+PlayerControls::cmbReciterChanged(int newIndex)
+{
+  m_playbackController->player()->changeReciter(newIndex);
+  m_repeater->playbackFinished();
 }
 
 void
@@ -158,7 +182,7 @@ PlayerControls::volumeSliderValueChanged(int position)
                           QAudio::LinearVolumeScale);
   if (linearVolume != m_volume) {
     m_volume = linearVolume;
-    m_player->setPlayerVolume(m_volume);
+    m_playbackController->player()->setPlayerVolume(m_volume);
   }
 }
 
@@ -176,10 +200,41 @@ PlayerControls::decrementVolume()
   ui->sldrVolume->setValue(val < 0 ? 0 : val);
 }
 
+void
+PlayerControls::adjustRepeatWidgetPos()
+{
+  QPoint bottomLeft;
+  if (this->layoutDirection() == Qt::LeftToRight) {
+    bottomLeft = ui->btnRepeat->mapToGlobal(
+      QPoint(ui->btnRepeat->width(), ui->btnRepeat->height()));
+    bottomLeft.setX(bottomLeft.x() + 10 - m_repeater->width());
+  } else {
+    bottomLeft = ui->btnRepeat->mapToGlobal(QPoint(0, ui->btnRepeat->height()));
+    bottomLeft.setX(bottomLeft.x() - 10);
+  }
+  m_repeater->move(bottomLeft);
+}
+
+void
+PlayerControls::moveEvent(QMoveEvent* event)
+{
+  QWidget::moveEvent(event);
+  if (m_repeater->isVisible())
+    adjustRepeatWidgetPos();
+}
+
 int
 PlayerControls::currentReciter() const
 {
   return ui->cmbReciter->currentIndex();
+}
+
+void
+PlayerControls::hideEvent(QHideEvent* event)
+{
+  QWidget::hideEvent(event);
+  ui->btnRepeat->setChecked(false);
+  m_repeater->hide();
 }
 
 PlayerControls::~PlayerControls()

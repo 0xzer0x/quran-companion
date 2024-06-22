@@ -4,7 +4,7 @@
 #include <QDir>
 #include <QSharedPointer>
 #include <QSqlDatabase>
-#include <interfaces/dbconnection.h>
+#include <repository/dbconnection.h>
 #include <utils/configuration.h>
 #include <utils/dirmanager.h>
 

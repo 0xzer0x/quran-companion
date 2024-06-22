@@ -140,8 +140,8 @@ JobManager::active() const
   return m_active;
 }
 
-const JobNotifier*
-JobManager::notifier() const
+NotificationSender*
+JobManager::notifier()
 {
   return &m_notifier;
 }

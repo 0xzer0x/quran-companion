@@ -1,7 +1,7 @@
 #ifndef UPDATENOTIFIER_H
 #define UPDATENOTIFIER_H
 
-#include <interfaces/notificationsender.h>
+#include <notifiers/notificationsender.h>
 
 class UpdateNotifier : public NotificationSender
 {

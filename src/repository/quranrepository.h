@@ -4,7 +4,7 @@
 #include <QFileInfo>
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <interfaces/dbconnection.h>
+#include <repository/dbconnection.h>
 #include <types/verse.h>
 #include <utils/configuration.h>
 #include <utils/dirmanager.h>
@@ -40,6 +40,8 @@ public:
 
   QList<Verse> verseInfoList(const int page) const;
 
+  Verse firstInPage(int page) const;
+
   QString verseText(const int sIdx, const int vIdx) const;
 
   int surahStartPage(int surahIdx) const;
@@ -70,7 +72,7 @@ public:
 
 private:
   QuranRepository();
-  bool executeQuery(QSqlQuery &query, QString errMsg) const;
+  bool executeQuery(QSqlQuery& query, QString errMsg) const;
   /**
    * @brief reference to the singleton Configuration instance
    */

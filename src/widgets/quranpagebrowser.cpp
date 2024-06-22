@@ -7,8 +7,8 @@
 #include <QApplication>
 #include <QRegularExpression>
 #include <QtAwesome.h>
+#include <service/servicefactory.h>
 #include <utils/fontmanager.h>
-#include <utils/servicefactory.h>
 using namespace fa;
 
 QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
@@ -20,6 +20,7 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   , m_quranService(ServiceFactory::quranService())
   , m_glyphService(ServiceFactory::glyphService())
 {
+  setOpenLinks(false);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setTextInteractionFlags(Qt::TextInteractionFlag::LinksAccessibleByMouse);
   setStyleSheet("QTextBrowser{background-color: transparent;}");
@@ -119,10 +120,7 @@ QuranPageBrowser::setHref(QTextCursor* cursor, int to, QString url)
 void
 QuranPageBrowser::insertFooter(QTextCursor* cursor, int page)
 {
-  if (m_config.qcfVersion() == 1)
-    m_pageInfoTextFormat.setFontPointSize(m_fontSize - 4);
-  else
-    m_pageInfoTextFormat.setFontPointSize(m_fontSize - 6);
+  m_pageInfoTextFormat.setFontPointSize(m_fontSize - 6);
 
   cursor->insertBlock(m_pageFormat, m_pageInfoTextFormat);
   QFontMetrics fm(m_pageInfoTextFormat.font());
@@ -402,19 +400,12 @@ int
 QuranPageBrowser::bestFitFontSize()
 {
   int sz;
-  int margin = 50;
-  static QRegularExpression rem("frame.*|bsml");
+  int margin = 10;
   for (sz = 28; sz >= 12; sz--) {
-    QFont pf(m_pageFont, sz);
-    QFontMetrics fm(pf);
+    QFontMetrics pageMetrics(QFont(m_pageFont, sz));
     QFontMetrics headerMetrics(QFont("PakType Naskh Basic", sz - 6));
-    QString completePage = m_currPageLines.join('\n');
-    completePage.remove(rem);
-
-    QSize textSz =
-      headerMetrics.size(Qt::TextSingleLine, m_currHeaderSegments.join(' ')) +
-      fm.size(0, completePage);
-    if (textSz.height() + margin <= parentWidget()->height())
+    int pageHeight = (pageMetrics.height() * 15) + (headerMetrics.height() * 2);
+    if (pageHeight + margin <= parentWidget()->height())
       break;
   }
 

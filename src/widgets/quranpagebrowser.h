@@ -22,7 +22,7 @@
 #include <service/glyphservice.h>
 #include <service/quranservice.h>
 #include <utils/configuration.h>
-#include <utils/stringconverter.h>
+#include <utils/numbertostringconverter.h>
 #include <utils/stylemanager.h>
 
 /**
@@ -302,7 +302,7 @@ private:
    */
   QList<QPair<int, int>> m_verseCoordinates;
   QPair<int, int> m_headerData;
-  StringConverter m_stringConverter;
+  NumberToStringConverter m_stringConverter;
   int insertHeader(QTextCursor*, int);
 };
 

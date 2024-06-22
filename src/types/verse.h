@@ -2,7 +2,6 @@
 #define VERSE_H
 
 #include <QList>
-#include <QSharedPointer>
 
 /**
  * @brief Verse class represents a single quran verse
@@ -34,6 +33,8 @@ public:
   bool operator!=(const Verse& v2) const;
   bool operator<(const Verse& v2) const;
   bool operator>(const Verse& v2) const;
+  bool operator>=(const Verse& v2) const;
+  bool operator<=(const Verse& v2) const;
 
   int page() const;
   int surah() const;

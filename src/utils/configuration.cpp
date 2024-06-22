@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QFont>
 #include <QLocale>
+#include <QStyleHints>
 #include <QTranslator>
 
 Configuration&
@@ -39,7 +40,13 @@ Configuration::checkConfGroup(int gId)
     case 0:
       m_settings.setValue("Language",
                           m_settings.value("Language", (int)QLocale::English));
-      m_settings.setValue("Theme", m_settings.value("Theme", 0));
+      m_settings.setValue(
+        "Theme",
+        m_settings.value("Theme",
+                         QGuiApplication::styleHints()->colorScheme() ==
+                             Qt::ColorScheme::Dark
+                           ? 2
+                           : 0));
       m_settings.setValue("VOTD", m_settings.value("VOTD", true));
       m_settings.setValue("MissingFileWarning",
                           m_settings.value("MissingFileWarning", true));

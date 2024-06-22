@@ -1,7 +1,7 @@
 #include "jsondataimporter.h"
 #include <QFile>
 #include <QJsonArray>
-#include <utils/servicefactory.h>
+#include <service/servicefactory.h>
 
 JsonDataImporter::JsonDataImporter()
   : m_bookmarkService(ServiceFactory::bookmarkService())

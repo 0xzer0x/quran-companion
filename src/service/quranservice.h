@@ -45,6 +45,8 @@ public:
    * @return QList of Verse instances
    */
   virtual QList<Verse> verseInfoList(const int page) const = 0;
+
+  virtual Verse firstInPage(int page) const = 0;
   /**
    * @brief gets the verse text
    * @param sIdx - sura number (1-114)

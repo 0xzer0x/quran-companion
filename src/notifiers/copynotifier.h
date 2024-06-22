@@ -1,7 +1,7 @@
 #ifndef COPYNOTIFIER_H
 #define COPYNOTIFIER_H
 
-#include <interfaces/notificationsender.h>
+#include <notifiers/notificationsender.h>
 
 class CopyNotifier : public NotificationSender
 {

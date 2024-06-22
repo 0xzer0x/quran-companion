@@ -4,7 +4,8 @@
  */
 
 #include "verseplayer.h"
-#include "dirmanager.h"
+#include <player/impl/continuousplaybackstrategy.h>
+#include <utils/dirmanager.h>
 
 VersePlayer::VersePlayer(QObject* parent, int reciterIdx)
   : QMediaPlayer(parent)
@@ -86,7 +87,7 @@ VersePlayer::changeReciter(int reciterIdx)
   if (m_activeVerse.number() == 0)
     m_activeVerse.setNumber(1);
 
-  stop();
+  pause();
   if (reciterIdx != m_reciter) {
     m_reciterDir.cdUp();
     m_reciterDir.cd(m_reciters.at(reciterIdx).baseDirName());
@@ -99,8 +100,9 @@ VersePlayer::changeReciter(int reciterIdx)
 bool
 VersePlayer::setVerseFile(const QString& newVerseFilename)
 {
+  setSource(QUrl());
+
   if (!m_reciterDir.exists(newVerseFilename)) {
-    setSource(QUrl());
     qDebug() << "file " + newVerseFilename + " is missing.";
     emit missingVerseFile(m_reciter, m_activeVerse.surah());
     return false;

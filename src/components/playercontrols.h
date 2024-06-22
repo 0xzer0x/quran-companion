@@ -3,8 +3,10 @@
 
 #include "quranreader.h"
 #include <QWidget>
+#include <player/playbackcontroller.h>
+#include <player/verseplayer.h>
 #include <types/verse.h>
-#include <utils/verseplayer.h>
+#include <widgets/repeaterpopup.h>
 
 namespace Ui {
 class PlayerControls;
@@ -21,8 +23,8 @@ class PlayerControls : public QWidget
 
 public:
   explicit PlayerControls(QWidget* parent,
-                          VersePlayer* player,
-                          QuranReader* reader);
+                          QPointer<PlaybackController> playbackController,
+                          QPointer<QuranReader> reader);
   ~PlayerControls();
 
   int currentReciter() const;
@@ -33,9 +35,11 @@ public slots:
    */
   void togglePlayback();
 
-signals:
-  void currentVerseChanged();
-  void currentSurahChanged();
+  void adjustRepeatWidgetPos();
+
+protected:
+  void moveEvent(QMoveEvent* event);
+  void hideEvent(QHideEvent* event);
 
 private slots:
   /**
@@ -57,6 +61,8 @@ private slots:
    * update verses combobox & selected surah
    */
   void btnStopClicked();
+
+  void cmbReciterChanged(int newIndex);
   /**
    * @brief disables/enables control buttons according to the media player state
    * and update the systray tooltip
@@ -76,6 +82,8 @@ private slots:
    * @brief utility to decrement the VersePlayer playback volume by steps of 5
    */
   void decrementVolume();
+
+  void btnRepeatClicked(bool on);
 
 private:
   Ui::PlayerControls* ui;
@@ -106,11 +114,13 @@ private:
   /**
    * @brief pointer to VersePlayer instance
    */
-  QPointer<VersePlayer> m_player;
+  QPointer<PlaybackController> m_playbackController;
   /**
    * @brief pointer to the QuranReader instance
    */
   QPointer<QuranReader> m_reader;
+
+  QPointer<RepeaterPopup> m_repeater;
 };
 
 #endif // PLAYERCONTROLS_H

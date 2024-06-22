@@ -19,7 +19,7 @@ public:
 
   bool isOn() const;
   QSharedPointer<DownloadJob> active() const;
-  const JobNotifier* notifier() const;
+  NotificationSender* notifier();
 
 public slots:
   void processJobs();

@@ -25,6 +25,8 @@ public:
 
   QList<Verse> verseInfoList(const int page) const override;
 
+  Verse firstInPage(int page) const override;
+
   QString verseText(const int sIdx, const int vIdx) const override;
 
   int surahStartPage(int surahIdx) const override;
