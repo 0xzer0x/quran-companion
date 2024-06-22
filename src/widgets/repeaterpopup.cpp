@@ -63,12 +63,20 @@ RepeaterPopup::showErrorMessagebox(QString msg)
 void
 RepeaterPopup::cmbSurahChanged(int newIndex)
 {
-  QComboBox* const& cmb =
-    sender() == ui->cmbFromSurah ? ui->cmbFromVerse : ui->cmbToVerse;
+  QIntValidator* validator = nullptr;
+  QComboBox* cmb = nullptr;
+  if (sender() == ui->cmbFromSurah) {
+    cmb = ui->cmbFromVerse;
+    validator = &m_fromVerseValidator;
+  } else {
+    cmb = ui->cmbToVerse;
+    validator = &m_toVerseValidator;
+  }
 
   cmb->clear();
   for (int i = 1; i <= Verse::surahVerseCount(newIndex + 1); i++)
     cmb->addItem(QString::number(i));
+  validator->setTop(Verse::surahVerseCount(newIndex + 1));
   cmb->setCurrentIndex(0);
 }
 
