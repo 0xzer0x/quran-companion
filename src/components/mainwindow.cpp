@@ -686,7 +686,6 @@ MainWindow::actionKhatmahTriggered()
 void
 MainWindow::actionAdvancedCopyTriggered()
 {
-
   m_cpyDlg->show();
 }
 
