@@ -35,6 +35,10 @@ public:
 
 public slots:
   void playbackFinished();
+  void adjustPosition();
+
+protected:
+  void moveEvent(QMoveEvent* event) override;
 
 private slots:
   void cmbSurahChanged(int newIndex);

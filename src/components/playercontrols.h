@@ -24,7 +24,8 @@ class PlayerControls : public QWidget
 public:
   explicit PlayerControls(QWidget* parent,
                           QPointer<PlaybackController> playbackController,
-                          QPointer<QuranReader> reader);
+                          QPointer<QuranReader> reader,
+                          QPointer<RepeaterPopup> repeater);
   ~PlayerControls();
 
   int currentReciter() const;
@@ -35,10 +36,7 @@ public slots:
    */
   void togglePlayback();
 
-  void adjustRepeatWidgetPos();
-
 protected:
-  void moveEvent(QMoveEvent* event);
   void hideEvent(QHideEvent* event);
 
 private slots:
