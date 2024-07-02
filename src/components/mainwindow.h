@@ -481,5 +481,7 @@ private:
    * import/export
    */
   QPointer<ImportExportDialog> m_importExportDlg;
+
+  QPointer<RepeaterPopup> m_repeater;
 };
 #endif // MAINWINDOW_H

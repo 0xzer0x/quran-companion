@@ -92,7 +92,9 @@ MainWindow::loadComponents()
     new VersePlayer(this, m_config.settings().value("Reciter", 0).toInt());
   m_playbackController = new PlaybackController(this, player);
   m_reader = new QuranReader(this, m_playbackController);
-  m_playerControls = new PlayerControls(this, m_playbackController, m_reader);
+  m_repeater = new RepeaterPopup(this, m_playbackController);
+  m_playerControls =
+    new PlayerControls(this, m_playbackController, m_reader, m_repeater);
   m_settingsDlg = new SettingsDialog(this, player);
   m_popup = new NotificationPopup(this);
   m_betaqaViewer = new BetaqaViewer(this);
@@ -686,7 +688,6 @@ MainWindow::actionKhatmahTriggered()
 void
 MainWindow::actionAdvancedCopyTriggered()
 {
-
   m_cpyDlg->show();
 }
 
@@ -784,12 +785,14 @@ MainWindow::toggleMenubar()
     ui->menubar->hide();
   else
     ui->menubar->show();
+  m_repeater->adjustPosition();
 }
 
 void
 MainWindow::toggleNavDock()
 {
   ui->sideDock->toggleViewAction()->toggle();
+  m_repeater->adjustPosition();
 }
 
 void
@@ -815,6 +818,7 @@ MainWindow::resizeEvent(QResizeEvent* event)
   m_popup->adjustLocation();
   m_popup->move(m_popup->notificationPos());
   m_betaqaViewer->center();
+  m_repeater->adjustPosition();
 }
 
 void

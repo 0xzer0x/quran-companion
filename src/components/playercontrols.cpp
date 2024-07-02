@@ -8,15 +8,16 @@ using namespace fa;
 
 PlayerControls::PlayerControls(QWidget* parent,
                                QPointer<PlaybackController> playbackController,
-                               QPointer<QuranReader> reader)
+                               QPointer<QuranReader> reader,
+                               QPointer<RepeaterPopup> repeater)
   : QWidget(parent)
   , ui(new Ui::PlayerControls)
   , m_reader(reader)
+  , m_repeater(repeater)
   , m_playbackController(playbackController)
   , m_currVerse(Verse::getCurrent())
   , m_config(Configuration::getInstance())
   , m_reciters(Reciter::reciters)
-  , m_repeater(new RepeaterPopup(parent, playbackController))
 {
   ui->setupUi(this);
   loadIcons();
@@ -141,7 +142,7 @@ void
 PlayerControls::btnRepeatClicked(bool on)
 {
   if (on) {
-    adjustRepeatWidgetPos();
+    m_repeater->adjustPosition();
     m_repeater->show();
   } else {
     m_repeater->hide();
@@ -198,29 +199,6 @@ PlayerControls::decrementVolume()
 {
   int val = ui->sldrVolume->value() - 5;
   ui->sldrVolume->setValue(val < 0 ? 0 : val);
-}
-
-void
-PlayerControls::adjustRepeatWidgetPos()
-{
-  QPoint bottomLeft;
-  if (this->layoutDirection() == Qt::LeftToRight) {
-    bottomLeft = ui->btnRepeat->mapToGlobal(
-      QPoint(ui->btnRepeat->width(), ui->btnRepeat->height()));
-    bottomLeft.setX(bottomLeft.x() + 10 - m_repeater->width());
-  } else {
-    bottomLeft = ui->btnRepeat->mapToGlobal(QPoint(0, ui->btnRepeat->height()));
-    bottomLeft.setX(bottomLeft.x() - 10);
-  }
-  m_repeater->move(bottomLeft);
-}
-
-void
-PlayerControls::moveEvent(QMoveEvent* event)
-{
-  QWidget::moveEvent(event);
-  if (m_repeater->isVisible())
-    adjustRepeatWidgetPos();
 }
 
 int

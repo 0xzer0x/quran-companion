@@ -51,6 +51,22 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.2.8" date="2024-06-25">
+      <description>
+        <ul>
+          <li>Bugfix in repeater widget positioning</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.2.7" date="2024-06-22">
+      <description>
+        <ul>
+          <li>Added verse group repeat feature</li>
+          <li>Added Asbab al-Nuzul - Al-Wahidi</li>
+          <li>Added Hadayat al-Quran - Maʿalim al-Tadabbur</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.2.6" date="2024-06-01">
       <description>
         <ul>

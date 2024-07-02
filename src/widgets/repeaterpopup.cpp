@@ -190,6 +190,35 @@ RepeaterPopup::show()
   QWidget::show();
 }
 
+void
+RepeaterPopup::adjustPosition()
+{
+  QPushButton* btnRepeat = parentWidget()->findChild<QPushButton*>("btnRepeat");
+  if (!btnRepeat) {
+    qCritical() << "Repeat button not found";
+    return;
+  }
+  QPoint topLeft;
+  if (layoutDirection() == Qt::LeftToRight) {
+    topLeft = btnRepeat->mapTo(parentWidget(),
+                               QPoint(btnRepeat->width(), btnRepeat->height()));
+    topLeft.setX(topLeft.x() - width() + 10);
+  } else {
+    topLeft = btnRepeat->mapTo(parentWidget(), QPoint(0, btnRepeat->height()));
+    topLeft.setX(topLeft.x() - 10);
+  }
+  topLeft.setY(topLeft.y() + 2);
+  move(topLeft);
+}
+
+void
+RepeaterPopup::moveEvent(QMoveEvent* event)
+{
+  QWidget::moveEvent(event);
+  if (isVisible())
+    adjustPosition();
+}
+
 RepeaterPopup::~RepeaterPopup()
 {
   delete ui;
