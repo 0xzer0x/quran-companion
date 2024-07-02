@@ -1,22 +1,30 @@
-name: ⭐ Feature Request
+name: ✨ Feature Request
 description: Submit a feature request
+labels:
+  - enhancement
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for submitting a feature request! Please search the issue tracker to see if there is an existing issue for the feature you are requesting.
+  - type: dropdown
+    id: feature-type
+    attributes:
+      label: The type of the feature request
+      description: Choose a type for the feature request
+      multiple: false
+      options:
+        - Book
+        - Recitation
+        - Application
+      default: 2
+    validations:
+      required: true
   - type: textarea
     id: the-feature-request
     attributes:
       label: The feature request
       description: Write a clear and concise description of what the feature or problem is.
-    validations:
-      required: true
-  - type: textarea
-    id: proposed-solution
-    attributes:
-      label: Proposed solution
-      description: Share how this will benefit the application and its users.
     validations:
       required: true
   - type: textarea
