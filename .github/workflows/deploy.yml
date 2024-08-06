@@ -1,0 +1,220 @@
+name: Deploy
+on:
+  push:
+    tags:
+      - "v*.*.*"
+env:
+  BUILD_TYPE: Release
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: "${{ steps.setversion.outputs.version }}"
+    steps:
+      - name: Set application version
+        id: setversion
+        run: echo "version=$(echo "${{ github.ref_name }}" | cut -d'v' -f2)" >> "$GITHUB_OUTPUT"
+
+  build-appimage:
+    needs:
+      - prepare
+    runs-on: ubuntu-latest
+    env:
+      APP_VER: "${{ needs.prepare.outputs.version }}"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          submodules: true
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          aqtversion: ==3.1.*
+          version: 6.6.*
+          host: linux
+          target: desktop
+          arch: gcc_64
+          modules: >-
+            qtimageformats
+            qtmultimedia
+            qtnetworkauth
+            qtwaylandcompositor
+
+      - name: Install tools
+        run: |
+          sudo apt update -y && sudo apt install wget fuse libxcb-cursor0 appstream appstream-util ninja-build -y
+          wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+          wget https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage
+          chmod +x linuxdeployqt-continuous-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+
+      - name: Prepare AppDir
+        run: >-
+          mkdir -p QuranCompanion.AppDir/usr/{bin,share/{applications,metainfo,icons/hicolor/256x256/apps}}
+
+          cp
+          ${{github.workspace}}/dist/xdg/io.github._0xzer0x.qurancompanion.desktop
+          QuranCompanion.AppDir/
+
+          cp ${{github.workspace}}/dist/xdg/logo256.png
+          QuranCompanion.AppDir/io.github._0xzer0x.qurancompanion.png
+
+          cp
+          ${{github.workspace}}/dist/xdg/io.github._0xzer0x.qurancompanion.desktop
+          QuranCompanion.AppDir/usr/share/applications/
+
+          cp ${{github.workspace}}/dist/xdg/logo256.png
+          QuranCompanion.AppDir/usr/share/icons/hicolor/256x256/apps/io.github._0xzer0x.qurancompanion.png
+
+          cp ${{github.workspace}}/dist/xdg/io.github._0xzer0x.qurancompanion.metainfo.xml
+          QuranCompanion.AppDir/usr/share/metainfo/io.github._0xzer0x.qurancompanion.appdata.xml
+
+          echo -e "[Paths]\nPlugins = ../plugins\nLibraries = ../lib\nImports =
+          ../qml\nQml2Imports = ../qml" > QuranCompanion.AppDir/usr/bin/qt.conf
+
+      - name: Configure
+        run: >-
+          cmake -B ${{github.workspace}}/build
+          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: "cmake --build ${{github.workspace}}/build"
+
+      - name: Install
+        run: >-
+          cmake --install ${{github.workspace}}/build --prefix
+          QuranCompanion.AppDir/usr
+
+      - name: Run linuxdeployqt
+        run: >-
+          rm
+          ${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.so
+          ${QT_PLUGIN_PATH}/sqldrivers/libqsqlmysql.so
+          ${QT_PLUGIN_PATH}/sqldrivers/libqsqlodbc.so
+          ${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.so
+
+          ${{github.workspace}}/linuxdeployqt-continuous-x86_64.AppImage
+          QuranCompanion.AppDir/usr/bin/quran-companion
+          -unsupported-allow-new-glibc -qmake=$(which qmake) -no-translations
+          -extra-plugins=sqldrivers,iconengines,imageformats,multimedia,networkinformation,platforms,platformthemes,wayland-decoration-client,wayland-graphics-integration-client,wayland-graphics-integration-server,wayland-shell-integration,xcbglintegrations,egldeviceintegrations
+          -verbose=1
+
+      - name: Make AppImage
+        run: >-
+          ${{github.workspace}}/appimagetool-x86_64.AppImage -n QuranCompanion.AppDir
+          Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: appimage
+          path: "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage"
+          retention-days: 7
+
+  build-dmg:
+    needs:
+      - prepare
+    runs-on: macos-12
+    env:
+      APP_VER: "${{ needs.prepare.outputs.version }}"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          submodules: true
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          aqtversion: "==3.1.*"
+          version: "6.6.*"
+          host: "mac"
+          cache: true
+          target: "desktop"
+          arch: "clang_64"
+          modules: >-
+            qtimageformats
+            qtmultimedia
+            qtnetworkauth
+
+      - name: Configure
+        run: >-
+          cmake -B ${{github.workspace}}/build
+          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+      - name: Make DMG
+        run: |
+          [[ -f "${QT_PLUGIN_PATH}/sqldrivers/libqsqlodbc.dylib" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlodbc.dylib
+          [[ -f "${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.dylib" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.dylib
+          [[ -f "${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.dylib" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.dylib
+          [[ -d "${QT_PLUGIN_PATH}/sqldrivers/libqsqlodbc.dylib.dSYM" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlodbc.dylib.dSYM
+          [[ -d "${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.dylib.dSYM" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.dylib.dSYM
+          [[ -d "${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.dylib.dSYM" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.dylib.dSYM
+          cd "${{github.workspace}}/build"
+          macdeployqt quran-companion.app -dmg
+          mv quran-companion.dmg ${{ github.workspace }}/Quran_Companion-${{env.APP_VER}}-x86_64.dmg
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dmg
+          path: "Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
+          retention-days: 7
+  deploy:
+    needs:
+      - prepare
+      - build-appimage
+      - build-dmg
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    env:
+      APP_VER: "${{ needs.prepare.outputs.version }}"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          sparse-checkout: CHANGELOG.md
+          sparse-checkout-cone-mode: false
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+
+      - name: Verify artifacts
+        run: |
+          if [[ ! -f "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" || ! -f "Quran_Companion-${{env.APP_VER}}-x86_64.dmg" ]]; then
+            echo "Artifacts missing" >&2
+            echo -e "ls -la:\n$(ls -la)" >&2
+            exit 1
+          fi
+
+      - name: Generate attestations
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: |
+            Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
+            Quran_Companion-${{env.APP_VER}}-x86_64.dmg
+
+      - name: Generate checksums
+        run: |
+          b2sum "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" > "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage.b2sum"
+          b2sum "Quran_Companion-${{env.APP_VER}}-x86_64.dmg" > "Quran_Companion-${{env.APP_VER}}-x86_64.dmg.b2sum"
+
+      - name: Release
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          name: "${{ github.ref_name }}"
+          tag: "${{ github.ref_name }}"
+          bodyFile: CHANGELOG.md
+          artifacts: "Quran_Companion-${{env.APP_VER}}-x86_64.*"
