@@ -1,10 +1,10 @@
 #include "configuration.h"
-#include "dirmanager.h"
 #include <QApplication>
 #include <QFont>
 #include <QLocale>
 #include <QStyleHints>
 #include <QTranslator>
+#include <utils/dirmanager.h>
 
 Configuration&
 Configuration::getInstance()
@@ -19,11 +19,23 @@ Configuration::Configuration()
                QSettings::IniFormat)
 {
   checkGroups();
+  setCustomPaths();
   m_themeId = m_settings.value("Theme").toInt();
   m_qcfVersion = m_settings.value("Reader/QCF").toInt();
   m_language = qvariant_cast<QLocale::Language>(m_settings.value("Language"));
   m_readerMode = qvariant_cast<ReaderMode>(m_settings.value("Reader/Mode"));
   m_darkMode = m_themeId == 2;
+}
+
+void
+Configuration::setCustomPaths()
+{
+  QString path = m_settings.value("DownloadsDir").toString();
+  if (!path.isEmpty()) {
+    QDir dir = QDir(path);
+    DirManager::getInstance().setDownloadsDir(dir);
+  }
+  DirManager::getInstance().createDirSkeleton();
 }
 
 void
@@ -50,6 +62,7 @@ Configuration::checkConfGroup(int gId)
       m_settings.setValue("VOTD", m_settings.value("VOTD", true));
       m_settings.setValue("MissingFileWarning",
                           m_settings.value("MissingFileWarning", true));
+      m_settings.setValue("DownloadsDir", m_settings.value("DownloadsDir", ""));
       break;
     case 1:
       m_settings.beginGroup("Reader");

@@ -42,6 +42,7 @@ public:
 
 private:
   Configuration();
+  void setCustomPaths();
   int m_themeId;
   bool m_darkMode;
   int m_qcfVersion;

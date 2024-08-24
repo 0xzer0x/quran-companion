@@ -21,6 +21,8 @@ public:
   const QDir& downloadsDir() const;
   const QDir& basmallahDir() const;
 
+  void createDirSkeleton() const;
+
 private:
   DirManager();
   QDir m_fontsDir;

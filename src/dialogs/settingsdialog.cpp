@@ -5,6 +5,7 @@
 
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
+#include <QFileDialog>
 #include <utils/fontmanager.h>
 #include <utils/stylemanager.h>
 #include <widgets/shortcutdelegate.h>
@@ -27,6 +28,7 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   ui->tableViewShortcuts->setModel(&m_shortcutsModel);
   ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
   ui->tableViewShortcuts->setItemDelegate(new ShortcutDelegate);
+  ui->lbDownloadsPath->setText(m_downloadsDir.absolutePath());
 
   fillLanguageCombobox();
   setCurrentSettingsAsRef();
@@ -36,6 +38,10 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
 void
 SettingsDialog::setupConnections()
 {
+  connect(ui->btnChangeDownloadsPath,
+          &QPushButton::clicked,
+          this,
+          &SettingsDialog::selectDownloadsDir);
   connect(ui->buttonBox,
           &QDialogButtonBox::clicked,
           this,
@@ -150,6 +156,26 @@ SettingsDialog::checkShortcuts()
 }
 
 void
+SettingsDialog::selectDownloadsDir()
+{
+  QString path = QFileDialog::getExistingDirectory(
+    this, tr("Select directory"), m_downloadsDir.absolutePath());
+  if (path.isEmpty())
+    return;
+
+  QFileInfo pathInfo(path);
+  if (!pathInfo.isWritable()) {
+    QMessageBox::warning(
+      this,
+      tr("Invalid path"),
+      tr("The chosen path is not valid. Please select a writable path."));
+    return;
+  }
+
+  ui->lbDownloadsPath->setText(path);
+}
+
+void
 SettingsDialog::updateTheme(int themeIdx)
 {
   m_config.settings().setValue("Theme", themeIdx);
@@ -175,6 +201,21 @@ SettingsDialog::updateLang(QLocale::Language lang)
     QMessageBox::question(this,
                           tr("Restart required"),
                           tr("Application language was changed, restart now?"));
+
+  m_restartReq = btn == QMessageBox::Yes;
+}
+
+void
+SettingsDialog::updateDownloadsPath(QString path)
+{
+  m_config.settings().setValue("DownloadsDir", path);
+  if (m_restartReq)
+    return;
+
+  QMessageBox::StandardButton btn = QMessageBox::question(
+    this,
+    tr("Restart required"),
+    tr("Application downloads path was changed, restart now?"));
 
   m_restartReq = btn == QMessageBox::Yes;
 }
@@ -310,6 +351,9 @@ SettingsDialog::applyAllChanges()
 
   if (ui->cmbTheme->currentIndex() != m_config.themeId())
     updateTheme(ui->cmbTheme->currentIndex());
+
+  if (ui->lbDownloadsPath->text() != m_downloadsDir.absolutePath())
+    updateDownloadsPath(ui->lbDownloadsPath->text());
 
   if (ui->chkDailyVerse->isChecked() != m_votd)
     updateDailyVerse(ui->chkDailyVerse->isChecked());

@@ -1,11 +1,11 @@
 name: quran-companion
 base: core22
-version: '1.2.8'
+version: 1.2.9
 title: Quran Companion
 website: https://0xzer0x.github.io/projects/quran-companion
 source-code: https://github.com/0xzer0x/quran-companion
-contact: youssefessamasu@gmail.com
-summary: Cross-platform Quran reader and player
+contact: https://0xzer0x.github.io/contact
+summary: Read and listen to the Quran
 description: |
   Quran Companion is a cross-platform Quran reader and player with recitation download capabilities, verse highlighting, re-sizable Quran font, and a variety of tafsir books and translations.
 
