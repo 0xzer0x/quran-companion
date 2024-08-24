@@ -998,7 +998,7 @@
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="143"/>
       <source>Downloads path</source>
-      <translation type="unfinished">Downloads path</translation>
+      <translation>مسار التحميلات</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="186"/>
@@ -1008,7 +1008,7 @@
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="170"/>
       <source>Change</source>
-      <translation type="unfinished">Change</translation>
+      <translation>تغيير</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="214"/>
@@ -1132,17 +1132,17 @@
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="162"/>
       <source>Select directory</source>
-      <translation type="unfinished">Select directory</translation>
+      <translation>حدد المجلد</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="170"/>
       <source>Invalid path</source>
-      <translation type="unfinished">Invalid path</translation>
+      <translation>مسار غير صالح</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="171"/>
       <source>The chosen path is not valid. Please select a writable path.</source>
-      <translation type="unfinished">The chosen path is not valid. Please select a writable path.</translation>
+      <translation>المسار المختار غير صالح. الرجاء اختيار مسار قابل للكتابة.</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="203"/>
@@ -1157,7 +1157,7 @@
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="218"/>
       <source>Application downloads path was changed, restart now?</source>
-      <translation type="unfinished">Application downloads path was changed, restart now?</translation>
+      <translation>تم تغيير مسار تحميلات التطبيق، هل تريد إعادة التشغيل الآن؟</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="273"/>
