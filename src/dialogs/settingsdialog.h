@@ -70,6 +70,7 @@ public slots:
    * @param lang - QLocale::Language enum value representing the new language
    */
   void updateLang(QLocale::Language lang);
+  void updateDownloadsPath(QString path);
   /**
    * @brief Update daily verse option
    * @param on - boolean flag representing the new setting value
@@ -213,6 +214,9 @@ protected:
    * @param event
    */
   void closeEvent(QCloseEvent* event);
+
+private slots:
+  void selectDownloadsDir();
 
 private:
   Ui::SettingsDialog* ui;

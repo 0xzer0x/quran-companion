@@ -12,35 +12,16 @@ DirManager::getInstance()
 DirManager::DirManager()
 {
   m_downloadsDir.setPath(
-    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
+    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
+    QDir::separator() + "QuranCompanion");
   m_configDir.setPath(
-    QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation));
+    QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) +
+    QDir::separator() + "QuranCompanion");
   m_assetsDir.setPath(QApplication::applicationDirPath() + QDir::separator() +
                       "assets");
   m_fontsDir.setPath(m_assetsDir.absoluteFilePath("fonts"));
   m_basmallahDir.setPath(QApplication::applicationDirPath() +
                          QDir::separator() + "bismillah");
-
-  // config & downloads
-  if (!m_configDir.exists("QuranCompanion"))
-    m_configDir.mkpath("QuranCompanion");
-  m_configDir.cd("QuranCompanion");
-
-  if (!m_downloadsDir.exists("QuranCompanion"))
-    m_downloadsDir.mkpath("QuranCompanion");
-  m_downloadsDir.cd("QuranCompanion");
-
-  if (!m_downloadsDir.exists("recitations"))
-    m_downloadsDir.mkpath("recitations");
-
-  if (!m_downloadsDir.exists("QCFV2"))
-    m_downloadsDir.mkpath("QCFV2");
-
-  if (!m_downloadsDir.exists("tafasir"))
-    m_downloadsDir.mkpath("tafasir");
-
-  if (!m_downloadsDir.exists("translations"))
-    m_downloadsDir.mkpath("translations");
 }
 
 void
@@ -101,4 +82,27 @@ const QDir&
 DirManager::basmallahDir() const
 {
   return m_basmallahDir;
+}
+
+void
+DirManager::createDirSkeleton() const
+{
+  // config & downloads
+  if (!m_configDir.exists())
+    m_configDir.mkpath(m_configDir.absolutePath());
+
+  if (!m_downloadsDir.exists())
+    m_downloadsDir.mkpath(m_downloadsDir.absolutePath());
+
+  if (!m_downloadsDir.exists("recitations"))
+    m_downloadsDir.mkpath("recitations");
+
+  if (!m_downloadsDir.exists("QCFV2"))
+    m_downloadsDir.mkpath("QCFV2");
+
+  if (!m_downloadsDir.exists("tafasir"))
+    m_downloadsDir.mkpath("tafasir");
+
+  if (!m_downloadsDir.exists("translations"))
+    m_downloadsDir.mkpath("translations");
 }
