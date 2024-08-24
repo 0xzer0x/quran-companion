@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>io.github._0xzer0x.qurancompanion</id>
   <name>Quran Companion</name>
-  <summary>Cross-platform Quran reader and player</summary>
+  <summary>Read and listen to the Quran</summary>
   <metadata_license>MIT</metadata_license>
   <project_license>LGPL-3.0-or-later</project_license>
   <content_rating type="oars-1.1"></content_rating>
@@ -15,6 +15,10 @@
   <description>
     <p>Quran Companion is a cross-platform Quran reader and player with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books and translations</p>
   </description>
+  <branding>
+    <color type="primary" scheme_preference="light">#8ab4f8</color>
+    <color type="primary" scheme_preference="dark">#8ab4f8</color>
+  </branding>
   <developer id="io.github._0xzer0x">
     <name>Youssef Fathy</name>
   </developer>
@@ -51,6 +55,13 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.2.9" date="2024-08-24">
+      <description>
+        <ul>
+          <li>Customizable downloads path</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.2.8" date="2024-06-25">
       <description>
         <ul>
