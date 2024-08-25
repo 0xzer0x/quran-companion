@@ -1,8 +1,8 @@
 #include "khatmahdialog.h"
 #include "ui_khatmahdialog.h"
 #include <QGraphicsDropShadowEffect>
-#include <utils/configuration.h>
 #include <service/servicefactory.h>
+#include <utils/configuration.h>
 #include <utils/stylemanager.h>
 
 KhatmahDialog::KhatmahDialog(QWidget* parent)
@@ -36,9 +36,9 @@ KhatmahDialog::loadKhatmah(const int id)
   frame->setProperty("khatmah", true);
   if (!m_config.darkMode()) {
     QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect(frame);
-    shadow->setColor(palette().color(QPalette::Shadow));
     shadow->setOffset(1);
     shadow->setBlurRadius(8);
+    shadow->setColor(QColor(0, 0, 0, 80));
     frame->setGraphicsEffect(shadow);
   }
 

@@ -122,7 +122,7 @@ QComboBox::down-arrow {
 QFrame#repeaterFrame {
   background: palette(base);
   border-radius: 6px;
-  border: 1px solid #383023;
+  border: 1px solid #aea698;
 }
 
 /* --------- Reader Styles --------- */

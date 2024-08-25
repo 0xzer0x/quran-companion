@@ -10,7 +10,7 @@ BetaqaViewer::BetaqaViewer(QWidget* parent)
   , ui(new Ui::BetaqaViewer)
   , m_shadowEffect(new QGraphicsDropShadowEffect(this))
   , m_sizeAnim(new QPropertyAnimation(this, "size"))
-    , m_betaqatDb(BetaqatRepository::getInstance())
+  , m_betaqatDb(BetaqatRepository::getInstance())
 {
   this->hide();
   ui->setupUi(this);
@@ -18,9 +18,9 @@ BetaqaViewer::BetaqaViewer(QWidget* parent)
   ui->betaqaTextBrowser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   ui->betaqaTextBrowser->setFont(QFont(qApp->font().families(), 14));
 
-  m_shadowEffect->setOffset(2);
-  m_shadowEffect->setBlurRadius(22);
-  m_shadowEffect->setColor(palette().color(QPalette::Shadow));
+  m_shadowEffect->setOffset(4);
+  m_shadowEffect->setBlurRadius(15);
+  m_shadowEffect->setColor(QColor(0, 0, 0, 50));
   this->setGraphicsEffect(m_shadowEffect);
 
   m_sizeAnim->setStartValue(QSize(0, 0));
