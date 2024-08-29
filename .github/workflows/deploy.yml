@@ -1,8 +1,12 @@
 name: Deploy
 on:
+  workflow_dispatch:
   push:
     tags:
       - "v*.*.*"
+concurrency:
+  group: "${{ github.workflow }}"
+  cancel-in-progress: true
 env:
   BUILD_TYPE: Release
 jobs:
