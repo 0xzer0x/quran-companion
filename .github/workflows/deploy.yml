@@ -1,6 +1,5 @@
 name: Deploy
 on:
-  workflow_dispatch:
   push:
     tags:
       - "v*.*.*"
@@ -144,6 +143,11 @@ jobs:
             qtmultimedia
             qtnetworkauth
 
+      - name: Install tools
+        run: |
+          brew install graphicsmagick imagemagick
+          npm install --global create-dmg
+
       - name: Configure
         run: >-
           cmake -B ${{github.workspace}}/build
@@ -161,8 +165,15 @@ jobs:
           [[ -d "${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.dylib.dSYM" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlpsql.dylib.dSYM
           [[ -d "${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.dylib.dSYM" ]] && rm -rf ${QT_PLUGIN_PATH}/sqldrivers/libqsqlmimer.dylib.dSYM
           cd "${{github.workspace}}/build"
-          macdeployqt quran-companion.app -dmg
-          mv quran-companion.dmg ${{ github.workspace }}/Quran_Companion-${{env.APP_VER}}-x86_64.dmg
+          macdeployqt quran-companion.app
+          create-dmg --dmg-title="Install Quran Companion" quran-companion.app || true
+          file="$(find . -maxdepth 1 -name "Quran Companion*.dmg" | head -n 1)"
+          if [[ -n "$file" ]]; then
+            mv "$file" "Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
+          else
+            echo "DMG file not found!"
+            exit 1
+          fi
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
