@@ -2,10 +2,10 @@
 
 ### التحديثات 💭
 
-- تصليح عطل في مكان ظهور نافذة التكرار
+- إضافة خاصية: تغيير مسار التحميلات (#88)
 
 </div>
 
 ### What's Changed 💭
 
-- Bug fix in repeater widget positioning
+- Added feature: Customizable downloads path (#88)

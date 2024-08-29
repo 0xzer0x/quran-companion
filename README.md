@@ -135,7 +135,7 @@ The application can be downloaded in any of the available packages (snap, flatpa
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
     <img width='240' alt='Download Flatpak' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/>
  </a>
- <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.2.8/Quran_Companion-1.2.8-x86_64.AppImage'>
+ <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.2.9/Quran_Companion-1.2.9-x86_64.AppImage'>
     <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 10px'/>
  </a>
  <a href="https://snapcraft.io/quran-companion">
@@ -311,4 +311,4 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 [win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.9/qc_online_installer_x64_win.exe
 [translation-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations
 [recitations-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Recitations
-[macos-dmg-url]: https://github.com/0xzer0x/quran-companion/releases/download/v1.2.8/Quran_Companion-1.2.8-x86_64.dmg
+[macos-dmg-url]: https://github.com/0xzer0x/quran-companion/releases/download/v1.2.9/Quran_Companion-1.2.9-x86_64.dmg
