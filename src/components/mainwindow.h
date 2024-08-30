@@ -483,5 +483,7 @@ private:
   QPointer<ImportExportDialog> m_importExportDlg;
 
   QPointer<RepeaterPopup> m_repeater;
+
+  QPointer<QPushButton> m_btnToggleNav;
 };
 #endif // MAINWINDOW_H

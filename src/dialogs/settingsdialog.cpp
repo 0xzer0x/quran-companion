@@ -13,6 +13,7 @@
 SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   : QDialog(parent)
   , ui(new Ui::SettingsDialog)
+  , m_audioOutIdx(0)
   , m_vPlayerPtr(vPlayerPtr)
   , m_config(Configuration::getInstance())
   , m_downloadsDir(DirManager::getInstance().downloadsDir())
@@ -113,15 +114,17 @@ SettingsDialog::setCurrentSettingsAsRef()
   m_verseFontSize = m_config.settings().value("Reader/VerseFontSize").toInt();
 
   m_audioDevices = QMediaDevices::audioOutputs();
-  ui->cmbAudioDevices->clear();
-  for (int i = 0; i < m_audioDevices.length(); i++) {
-    ui->cmbAudioDevices->addItem(m_audioDevices.at(i).description());
-    if (m_audioDevices.at(i) == m_vPlayerPtr->getOutput()->device())
-      m_audioOutIdx = i;
+  if (!m_audioDevices.isEmpty()) {
+    ui->cmbAudioDevices->clear();
+    for (int i = 0; i < m_audioDevices.length(); i++) {
+      ui->cmbAudioDevices->addItem(m_audioDevices.at(i).description());
+      if (m_audioDevices.at(i) == m_vPlayerPtr->getOutput()->device())
+        m_audioOutIdx = i;
+    }
+    ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
   }
 
   // set ui elements to current settings
-  ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
   ui->cmbLang->setCurrentIndex(ui->cmbLang->findData(m_config.language()));
   ui->cmbTheme->setCurrentIndex(m_config.themeId());
   ui->cmbReaderMode->setCurrentIndex(m_config.readerMode());
@@ -129,7 +132,6 @@ SettingsDialog::setCurrentSettingsAsRef()
   ui->cmbQuranFontSz->setCurrentText(QString::number(m_quranFontSize));
   ui->fntCmbSide->setCurrentFont(m_sideFont);
   ui->cmbSideFontSz->setCurrentText(QString::number(m_sideFont.pointSize()));
-  ui->cmbAudioDevices->setCurrentIndex(m_audioOutIdx);
   ui->chkDailyVerse->setChecked(m_votd);
   ui->chkAdaptive->setChecked(m_adaptive);
   ui->chkMissingWarning->setChecked(m_missingFileWarning);
@@ -394,7 +396,8 @@ SettingsDialog::applyAllChanges()
       QString::number(m_sideFont.pointSize()))
     updateSideFontSize(ui->cmbSideFontSz->currentText());
 
-  if (ui->cmbAudioDevices->currentIndex() != m_audioOutIdx) {
+  if (!m_audioDevices.isEmpty() &&
+      ui->cmbAudioDevices->currentIndex() != m_audioOutIdx) {
     m_audioOutIdx = ui->cmbAudioDevices->currentIndex();
     ui->cmbAudioDevices->setCurrentText(
       m_audioDevices.at(m_audioOutIdx).description());
