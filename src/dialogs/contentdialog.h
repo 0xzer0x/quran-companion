@@ -76,8 +76,8 @@ protected:
   void closeEvent(QCloseEvent* event);
 
 signals:
-  void missingTafsir(int idx);
-  void missingTranslation(int idx);
+  void missingTafsir(QString id);
+  void missingTranslation(QString id);
 
 private slots:
   /**
@@ -205,12 +205,12 @@ private:
   /**
    * @brief index of the currently shown Tafsir in Tafsir::tafasir
    */
-  int m_tafsir;
+  QString m_tafsir;
   /**
    * @brief index of the currently shown Translation in
    * Translation::translations
    */
-  int m_translation;
+  QString m_translation;
   /**
    * @brief fixed font size for the verse text displayed above the tafsir.
    */

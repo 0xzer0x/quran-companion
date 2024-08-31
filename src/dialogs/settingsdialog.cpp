@@ -83,10 +83,9 @@ void
 SettingsDialog::updateContentCombobox()
 {
   ui->cmbTranslation->clear();
-  for (int i = 0; i < m_translations.size(); i++) {
-    const Translation& tr = m_translations[i];
+  foreach (const Translation& tr, m_translations) {
     if (tr.isAvailable())
-      ui->cmbTranslation->addItem(tr.displayName(), i);
+      ui->cmbTranslation->addItem(tr.displayName(), tr.id());
   }
 
   m_translation = ui->cmbTranslation->findData(
@@ -235,9 +234,9 @@ SettingsDialog::updateFileWarning(bool on)
 }
 
 void
-SettingsDialog::updateTranslation(int idx)
+SettingsDialog::updateTranslation(QString id)
 {
-  m_config.settings().setValue("Reader/Translation", idx);
+  m_config.settings().setValue("Reader/Translation", id);
   emit translationChanged();
 
   m_renderSideContent = true;
@@ -367,7 +366,7 @@ SettingsDialog::applyAllChanges()
     updateFgHighlight(ui->chkFgHighlight->isChecked());
 
   if (ui->cmbTranslation->currentIndex() != m_translation)
-    updateTranslation(ui->cmbTranslation->currentData().toInt());
+    updateTranslation(ui->cmbTranslation->currentData().toString());
 
   if (ui->cmbQCF->currentIndex() + 1 != m_config.qcfVersion())
     updateQuranFont(ui->cmbQCF->currentIndex() + 1);

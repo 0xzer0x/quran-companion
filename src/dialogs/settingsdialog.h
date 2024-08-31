@@ -85,7 +85,7 @@ public slots:
    * @brief Update the selected translation
    * @param idx - index of the translation value in DBManager::Translation enum
    */
-  void updateTranslation(int idx);
+  void updateTranslation(QString id);
   /**
    * @brief update the ::ReaderMode used
    * @param idx - index of the new ::ReaderMode

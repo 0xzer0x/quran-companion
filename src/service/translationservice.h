@@ -13,7 +13,7 @@ public:
    * @brief sets the active translation
    * @param translationName - DBManager::Translation entry
    */
-  virtual bool setCurrentTranslation(int idx) = 0;
+  virtual bool setCurrentTranslation(QString id) = 0;
   /**
    * @brief gets the translation of the given verse using the active
    * DBManager::Translation
@@ -26,7 +26,7 @@ public:
    * @brief getter for m_currTr
    * @return pointer to the currently selected translation
    */
-  virtual const Translation* currTranslation() const = 0;
+  virtual std::optional<const Translation> currTranslation() const = 0;
   /**
    * @brief set translation to the one in the settings, update the selected db
    */

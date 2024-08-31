@@ -33,19 +33,25 @@ TranslationRepository::type()
 void
 TranslationRepository::loadTranslation()
 {
-  int curr = m_config.settings().value("Reader/Translation").toInt();
+  QString curr = m_config.settings().value("Reader/Translation").toString();
+  bool isNum;
+  curr.toInt(&isNum);
+  if (isNum) {
+    curr = m_translations.at(curr.toInt()).id();
+    m_config.settings().setValue("Reader/Translation", curr);
+  }
+
   setCurrentTranslation(curr);
 }
 
 bool
-TranslationRepository::setCurrentTranslation(int idx)
+TranslationRepository::setCurrentTranslation(QString id)
 {
-  if (idx < 0 || idx >= m_translations.size())
+  std::optional<::Translation> translation = Translation::findById(id);
+  if (!translation.has_value())
     return false;
-  if (m_currTr == &m_translations[idx])
-    return true;
 
-  m_currTr = &m_translations[idx];
+  m_currTr = translation.value();
   const QDir& baseDir = m_currTr->isExtra()
                           ? DirManager::getInstance().downloadsDir()
                           : DirManager::getInstance().assetsDir();
@@ -75,7 +81,7 @@ TranslationRepository::getTranslation(const int sIdx, const int vIdx) const
   return dbQuery.value(0).toString();
 }
 
-const Translation*
+std::optional<const ::Translation>
 TranslationRepository::currTranslation() const
 {
   return m_currTr;

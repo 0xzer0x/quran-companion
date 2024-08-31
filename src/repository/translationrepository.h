@@ -34,11 +34,11 @@ public:
 
   void loadTranslation();
 
-  bool setCurrentTranslation(int idx);
+  bool setCurrentTranslation(QString id);
 
   QString getTranslation(const int sIdx, const int vIdx) const;
 
-  const ::Translation* currTranslation() const;
+  std::optional<const ::Translation> currTranslation() const;
 
 private:
   TranslationRepository();
@@ -57,7 +57,7 @@ private:
   /**
    * @brief the current active DBManager::Translation
    */
-  const ::Translation* m_currTr;
+  std::optional<::Translation> m_currTr;
   /**
    * @brief path to the currently active translation database file
    */

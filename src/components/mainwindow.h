@@ -125,12 +125,12 @@ private slots:
    * @brief display a warning messagebox when a tafsir db file is not found
    * @param idx - index of tafsir in Tafsir::tafasir
    */
-  void missingTafsir(int idx);
+  void missingTafsir(QString id);
   /**
    * @brief display a warning messagebox when a translation db file is not found
    * @param idx - index of translation in Translation::translations
    */
-  void missingTranslation(int idx);
+  void missingTranslation(QString id);
   /**
    * @brief set the systray icon tooltip text according to the currently playing
    * recitation

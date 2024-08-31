@@ -22,7 +22,9 @@ Translation::populateTranslations()
         QString name = reader.attributes().value("name").toString();
         QString file = reader.attributes().value("file").toString();
         bool extra = reader.attributes().value("extra").toInt();
-        translations.append(Translation(name, file, extra));
+        QString id = file.first(file.size() - 3);
+
+        translations.append(Translation(id, name, file, extra));
       }
     }
   }
@@ -31,21 +33,37 @@ Translation::populateTranslations()
   translations.squeeze();
 }
 
-Translation::Translation(QString display, QString filename, bool isExtra)
-  : Content(display, filename, isExtra)
+std::optional<Translation>
+Translation::findById(QString id)
+{
+  std::optional<Translation> result = std::nullopt;
+  foreach (const Translation& translation, translations) {
+    if (translation.id() == id) {
+      result = translation;
+      break;
+    }
+  }
+  return result;
+}
+
+Translation::Translation(QString id,
+                         QString display,
+                         QString filename,
+                         bool isExtra)
+  : Content(id, display, filename, isExtra)
 {
 }
 
 bool
 Translation::operator==(const Translation& v2) const
 {
-  return this->filename() == v2.filename();
+  return this->id() == v2.id();
 }
 
 bool
 Translation::operator!=(const Translation& v2) const
 {
-  return this->filename() != v2.filename();
+  return this->id() != v2.id();
 }
 
 bool

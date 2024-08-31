@@ -25,7 +25,9 @@ Tafsir::populateTafasir()
         QString file = reader.attributes().value("file").toString();
         bool isText = reader.attributes().value("text").toInt();
         bool isExtra = reader.attributes().value("extra").toInt();
-        tafasir.append(Tafsir(name, file, isText, isExtra));
+        QString id = file.first(file.size() - 3);
+
+        tafasir.append(Tafsir(id, name, file, isText, isExtra));
       }
     }
   }
@@ -34,22 +36,51 @@ Tafsir::populateTafasir()
   tafasir.squeeze();
 }
 
-Tafsir::Tafsir(QString display, QString filename, bool isText, bool isExtra)
-  : Content(display, filename, isExtra)
+std::optional<Tafsir>
+Tafsir::findById(QString id)
+{
+  std::optional<Tafsir> result = std::nullopt;
+  foreach (const Tafsir& tafsir, tafasir) {
+    if (tafsir.id() == id) {
+      result = tafsir;
+      break;
+    }
+  }
+  return result;
+}
+
+Tafsir::Tafsir(QString id,
+               QString display,
+               QString filename,
+               bool isText,
+               bool isExtra)
+  : Content(id, display, filename, isExtra)
   , m_isText(isText)
 {
+}
+
+Tafsir&
+Tafsir::operator=(const Tafsir& other)
+{
+  m_id = other.m_id;
+  m_displayName = other.m_displayName;
+  m_filename = other.m_filename;
+  m_isExtra = other.m_isExtra;
+  m_isText = other.m_isText;
+
+  return *this;
 }
 
 bool
 Tafsir::operator==(const Tafsir& v2) const
 {
-  return this->filename() == v2.filename();
+  return this->id() == v2.id();
 }
 
 bool
 Tafsir::operator!=(const Tafsir& v2) const
 {
-  return this->filename() != v2.filename();
+  return this->id() != v2.id();
 }
 
 bool

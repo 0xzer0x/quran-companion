@@ -33,11 +33,11 @@ public:
 
   void loadTafsir();
 
-  bool setCurrentTafsir(int idx);
+  bool setCurrentTafsir(QString id);
 
   QString getTafsir(const int sIdx, const int vIdx);
 
-  const ::Tafsir* currTafsir() const;
+  std::optional<const ::Tafsir> currTafsir() const;
 
 private:
   TafsirRepository();
@@ -56,7 +56,7 @@ private:
   /**
    * @brief pointer to the currently selected Tafsir
    */
-  const ::Tafsir* m_currTafsir;
+  std::optional<::Tafsir> m_currTafsir;
   /**
    * @brief path to the currently active tafsir database file
    */

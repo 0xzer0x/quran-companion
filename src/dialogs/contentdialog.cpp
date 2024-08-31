@@ -5,9 +5,9 @@
 
 #include "contentdialog.h"
 #include "ui_contentdialog.h"
+#include <service/servicefactory.h>
 #include <types/tafsir.h>
 #include <utils/fontmanager.h>
-#include <service/servicefactory.h>
 #include <utils/stylemanager.h>
 
 ContentDialog::ContentDialog(QWidget* parent)
@@ -39,8 +39,8 @@ ContentDialog::ContentDialog(QWidget* parent)
   else
     m_fontSZ = 16;
 
-  m_tafsir = m_config.settings().value("Reader/Tafsir").toInt();
-  m_translation = m_config.settings().value("Reader/Translation").toInt();
+  m_tafsir = m_config.settings().value("Reader/Tafsir").toString();
+  m_translation = m_config.settings().value("Reader/Translation").toString();
   // connectors
   setupConnections();
 }
@@ -67,14 +67,14 @@ ContentDialog::showVerseTafsir(const Verse& v)
 {
   static bool reload = false;
   if (reload) {
-      m_tafsirService->loadTafsir();
+    m_tafsirService->loadTafsir();
     reload = false;
   }
 
-  if (!m_tafsirService->currTafsir()->isAvailable()) {
-    int i = m_tafasir.indexOf(*m_tafsirService->currTafsir());
+  if (m_tafsirService->currTafsir().has_value() &&
+      !m_tafsirService->currTafsir()->isAvailable()) {
     reload = true;
-    emit missingTafsir(i);
+    emit missingTafsir(m_tafsirService->currTafsir()->id());
     return;
   }
 
@@ -88,14 +88,14 @@ ContentDialog::showVerseTranslation(const Verse& v)
 {
   static bool reload = false;
   if (reload) {
-      m_translationService->loadTranslation();
+    m_translationService->loadTranslation();
     reload = false;
   }
 
-  if (!m_translationService->currTranslation()->isAvailable()) {
-    int i = m_translations.indexOf(*m_translationService->currTranslation());
+  if (m_translationService->currTranslation().has_value() &&
+      !m_translationService->currTranslation()->isAvailable()) {
     reload = true;
-    emit missingTranslation(i);
+    emit missingTranslation(m_translationService->currTranslation()->id());
     return;
   }
 
@@ -198,7 +198,7 @@ ContentDialog::contentChanged()
 void
 ContentDialog::tafsirChanged()
 {
-  m_tafsir = ui->cmbContent->currentData().toInt();
+  m_tafsir = ui->cmbContent->currentData().toString();
   m_config.settings().setValue("Reader/Tafsir", m_tafsir);
   if (m_tafsirService->setCurrentTafsir(m_tafsir))
     loadVerseTafsir();
@@ -207,7 +207,7 @@ ContentDialog::tafsirChanged()
 void
 ContentDialog::translationChanged()
 {
-  m_translation = ui->cmbContent->currentData().toInt();
+  m_translation = ui->cmbContent->currentData().toString();
   loadVerseTranslation();
 }
 
@@ -255,9 +255,9 @@ ContentDialog::updateContentComboBox(Mode mode)
 void
 ContentDialog::cmbLoadTafasir()
 {
-  for (int i = 0; i < m_tafasir.size(); i++) {
-    if (m_tafasir.at(i).isAvailable())
-      ui->cmbContent->addItem(m_tafasir.at(i).displayName(), i);
+  foreach (const ::Tafsir& tafsir, m_tafasir) {
+    if (tafsir.isAvailable())
+      ui->cmbContent->addItem(tafsir.displayName(), tafsir.id());
   }
 
   int idx = ui->cmbContent->findData(m_tafsir);
@@ -267,9 +267,9 @@ ContentDialog::cmbLoadTafasir()
 void
 ContentDialog::cmbLoadTranslations()
 {
-  for (int i = 0; i < m_translations.size(); i++) {
-    if (m_translations.at(i).isAvailable())
-      ui->cmbContent->addItem(m_translations.at(i).displayName(), i);
+  foreach (const ::Translation& translation, m_translations) {
+    if (translation.isAvailable())
+      ui->cmbContent->addItem(translation.displayName(), translation.id());
   }
 
   int idx = ui->cmbContent->findData(m_translation);

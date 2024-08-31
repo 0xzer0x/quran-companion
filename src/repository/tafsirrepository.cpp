@@ -1,5 +1,6 @@
 #include "tafsirrepository.h"
 #include <QSqlQuery>
+#include <types/tafsir.h>
 
 TafsirRepository&
 TafsirRepository::getInstance()
@@ -34,19 +35,25 @@ TafsirRepository::type()
 void
 TafsirRepository::loadTafsir()
 {
-  int curr = m_config.settings().value("Reader/Tafsir").toInt();
+  QString curr = m_config.settings().value("Reader/Tafsir").toString();
+  bool isNum;
+  curr.toInt(&isNum);
+  if (isNum) {
+    curr = m_tafasir.at(curr.toInt()).id();
+    m_config.settings().setValue("Reader/Tafsir", curr);
+  }
+
   setCurrentTafsir(curr);
 }
 
 bool
-TafsirRepository::setCurrentTafsir(int idx)
+TafsirRepository::setCurrentTafsir(QString id)
 {
-  if (idx < 0 || idx >= m_tafasir.size())
+  std::optional<::Tafsir> tafsir = Tafsir::findById(id);
+  if (!tafsir.has_value())
     return false;
-  if (m_currTafsir == &m_tafasir[idx])
-    return true;
 
-  m_currTafsir = &m_tafasir[idx];
+  m_currTafsir = tafsir.value();
   const QDir& baseDir =
     m_currTafsir->isExtra() ? m_dirMgr.downloadsDir() : m_dirMgr.assetsDir();
   QString path = "tafasir/" + m_currTafsir->filename();
@@ -75,8 +82,8 @@ TafsirRepository::getTafsir(const int sIdx, const int vIdx)
   return dbQuery.value(0).toString();
 }
 
-const Tafsir*
+std::optional<const Tafsir>
 TafsirRepository::currTafsir() const
 {
-  return m_currTafsir;
+  return m_currTafsir.value();
 }

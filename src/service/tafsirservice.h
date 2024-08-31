@@ -15,7 +15,7 @@ public:
    * @brief sets the active tafsir
    * @param tafsirName - DBManager::Tafsir entry
    */
-  virtual bool setCurrentTafsir(int idx) = 0;
+  virtual bool setCurrentTafsir(QString id) = 0;
   /**
    * @brief gets the tafsir content for the given verse using the active
    * DBManager::Tafsir
@@ -28,7 +28,7 @@ public:
    * @brief getter for m_currTafsir
    * @return pointer to the currently selected Tafasir
    */
-  virtual const Tafsir* currTafsir() const = 0;
+  virtual std::optional<const Tafsir> currTafsir() const = 0;
 };
 
 #endif

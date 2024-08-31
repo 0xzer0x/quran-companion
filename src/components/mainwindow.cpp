@@ -605,7 +605,7 @@ MainWindow::missingQCF()
 }
 
 void
-MainWindow::missingTafsir(int idx)
+MainWindow::missingTafsir(QString id)
 {
   QMessageBox::StandardButton btn = QMessageBox::question(
     this,
@@ -614,12 +614,13 @@ MainWindow::missingTafsir(int idx)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(DownloadJob::TafsirFile, { 0, idx });
+    m_downloaderDlg->selectDownload(
+      DownloadJob::TafsirFile, { 0, m_tafasir.indexOf(Tafsir::findById(id)) });
   }
 }
 
 void
-MainWindow::missingTranslation(int idx)
+MainWindow::missingTranslation(QString id)
 {
   QMessageBox::StandardButton btn = QMessageBox::question(
     this,
@@ -628,7 +629,9 @@ MainWindow::missingTranslation(int idx)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(DownloadJob::TranslationFile, { 1, idx });
+    m_downloaderDlg->selectDownload(
+      DownloadJob::TranslationFile,
+      { 1, Translation::translations.indexOf(Translation::findById(id)) });
   }
 }
 

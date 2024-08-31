@@ -1,8 +1,8 @@
 #include "quranreader.h"
 #include "ui_quranreader.h"
 #include <QtAwesome.h>
-#include <utils/fontmanager.h>
 #include <service/servicefactory.h>
+#include <utils/fontmanager.h>
 #include <utils/shortcuthandler.h>
 #include <utils/stylemanager.h>
 #include <widgets/clickablelabel.h>
@@ -226,8 +226,7 @@ QuranReader::addSideContent()
     m_versesFont.setFamily(
       FontManager::getInstance().pageFontname(m_currVerse.page()));
 
-  m_translationService->setCurrentTranslation(
-    m_config.settings().value("Reader/Translation").toInt());
+  m_translationService->loadTranslation();
   for (int i = m_activeVList->size() - 1; i >= 0; i--) {
     const Verse* verse = &(m_activeVList->at(i));
 
