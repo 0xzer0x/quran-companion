@@ -93,7 +93,7 @@ QuranPageBrowser::surahFrame(int surah)
   // draw on top of the image the surah name text
   QPainter p(&baseImage);
   p.setPen(QPen(Qt::black));
-  p.setFont(QFont("QCF_BSML", 77));
+  p.setFont(QFont("QCF_BSML", 85));
   p.drawText(baseImage.rect(), Qt::AlignCenter, frmText);
 
   if (m_config.darkMode())

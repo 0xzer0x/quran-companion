@@ -188,6 +188,7 @@ private:
    */
   int setHref(QTextCursor* cursor, int to, QString url);
 
+  int insertHeader(QTextCursor*, int);
   void insertFooter(QTextCursor*, int);
   /**
    * @brief boolean indicating whether to highlight the foreground of the active
@@ -303,7 +304,6 @@ private:
   QList<QPair<int, int>> m_verseCoordinates;
   QPair<int, int> m_headerData;
   NumberToStringConverter m_stringConverter;
-  int insertHeader(QTextCursor*, int);
 };
 
 #endif // QURANPAGEBROWSER_H
