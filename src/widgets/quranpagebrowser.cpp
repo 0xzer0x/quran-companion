@@ -44,25 +44,6 @@ QuranPageBrowser::updateFontSize()
   highlightVerse(m_highlightedIdx);
 }
 
-QString&
-QuranPageBrowser::justifyLine(QString& line)
-{
-  if (!line.contains('$'))
-    return line;
-
-  int margin = 20;
-  int spacePos = line.indexOf('$');
-  line.remove('$');
-
-  QFontMetrics headerSpacing(m_pageInfoTextFormat.font());
-  while (headerSpacing.size(Qt::TextSingleLine, line).width() <
-         m_pageLineSize.width() - margin) {
-    line.insert(spacePos, " ");
-  }
-
-  return line;
-}
-
 QSize
 QuranPageBrowser::calcPageLineSize(QStringList& lines)
 {

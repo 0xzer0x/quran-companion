@@ -160,12 +160,6 @@ private:
    */
   void createActions();
   /**
-   * @brief adjusts the header string according to the page width
-   * @param line - header string
-   * @return reference to the adjusted string
-   */
-  QString& justifyLine(QString& line);
-  /**
    * @brief calculate the approximate pixel size of the page line
    * @param lines - QStringList of page lines
    * @return QSize of a single page line
