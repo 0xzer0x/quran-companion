@@ -13,64 +13,81 @@
 namespace Ui {
 class CopyDialog;
 }
+
 /**
  * @class CopyDialog
- * @brief The CopyDialog class is used for selecting a range of verses within
- * the current surah to copy to clipboard or copying the current Verse
+ * @brief The CopyDialog class provides a dialog interface for selecting and
+ * copying a range of verses from the current surah to the clipboard. It also
+ * allows copying a single verse with proper formatting.
  */
 class CopyDialog : public QDialog
 {
   Q_OBJECT
 public:
   /**
-   * @brief class consrtuctor
-   * @param parent - pointer to parent widget
+   * @brief Constructor for the CopyDialog class.
+   * @param parent - Pointer to the parent widget.
    */
   explicit CopyDialog(QWidget* parent);
   ~CopyDialog();
 
   /**
-   * @brief sets the currently active surah name in the corresponding QLabel and
-   * fills the range selection comboboxes before showing the CopyDialog
+   * @brief Prepares the dialog by setting the currently active surah name
+   * in the corresponding QLabel and populating the range selection comboboxes.
+   * Then, it shows the dialog.
    */
   void show();
   /**
-   * @brief getter for the address of the CopyNotifier used for sending
-   * notifications
-   * @return pointer to CopyNotifier instance
+   * @brief Getter for the address of the CopyNotifier used for sending
+   * notifications.
+   * @return Pointer to the CopyNotifier instance.
    */
   NotificationSender* notifier();
 
 public slots:
   /**
-   * @brief copy to clipboard the text of the verse with the given index
-   * @param IdxInPage - verse index relative to the start of the page
+   * @brief Copies the text of the specified verse to the clipboard, with
+   * formatting that includes the verse number and surah name.
+   * @param v - The Verse object representing the verse to copy.
    */
   void copyVerseText(const Verse v);
 
 protected:
+  /**
+   * @brief Handles the close event for the dialog, hiding the dialog
+   * instead of closing it.
+   * @param event - The QCloseEvent object representing the close event.
+   */
   void closeEvent(QCloseEvent* event);
 
 private slots:
+  /**
+   * @brief Copies a range of verses, specified by the combobox values,
+   * to the clipboard. The copied text includes the verse numbers and
+   * surah name with proper formatting.
+   */
   void copyRange();
 
 private:
   Ui::CopyDialog* ui;
   /**
-   * @brief reference to the singleton QuranRepository instance
+   * @brief Reference to the QuranService instance used for accessing verse
+   * data.
    */
   const QuranService* m_quranService;
   /**
-   * @brief reference to the shared current verse instance
+   * @brief Reference to the shared current verse instance, representing
+   * the verse currently being displayed or manipulated.
    */
   const Verse& m_currVerse;
   /**
-   * @brief pointer to QIntValidator used for validating the selected range of
-   * verses
+   * @brief Pointer to a QIntValidator used for validating the range
+   * of verses entered by the user.
    */
   QPointer<QIntValidator> m_verseValidator;
   /**
-   * @brief CopyNotifier instance used for sending notifications
+   * @brief Instance of CopyNotifier used for sending notifications when
+   * verses are copied to the clipboard.
    */
   CopyNotifier m_notifier;
 };

@@ -46,6 +46,9 @@ public:
                        QPointer<PlaybackController> playbackController);
   ~QuranReader();
 
+  /**
+   * @brief implementation of the VerseObserver interface callback function
+   */
   void activeVerseChanged();
 
 public slots:
@@ -142,9 +145,10 @@ private:
    * @brief reference to the singleton Configuration instance
    */
   Configuration& m_config;
-
+  /**
+   * @brief reference to the singleton Navigator instance
+   */
   Navigator& m_navigator;
-
   /**
    * @brief reference to the singleton TranslationRepository instance
    */
@@ -254,7 +258,9 @@ private:
    * @brief QFont used in displaying Quranic verse
    */
   QFont m_versesFont;
-
+  /**
+   * @brief pointer to PlaybackController instance
+   */
   QPointer<PlaybackController> m_playbackController;
 };
 

@@ -116,9 +116,10 @@ private:
    * @brief reference to the singleton Configuration instance
    */
   const Configuration& m_config;
-
+  /**
+   * @brief reference to the singleton Navigator instance
+   */
   Navigator& m_navigator;
-
   /**
    * @brief reference to the singleton GlyphsRepository instance
    */

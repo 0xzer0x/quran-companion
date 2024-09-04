@@ -16,7 +16,10 @@ public:
    */
   virtual QPair<int, int> pageMetadata(const int page) const = 0;
   /**
-   * TODO: add docs
+   * @brief get the rub number and hizb if the current page contains the start
+   * of a hizb
+   * @return optional value of a QPair of the rub number relative to the hizb
+   * and the hizb number relative to the mushaf
    */
   virtual std::optional<QPair<int, int>> getRubStartingInPage(
     const int page) const = 0;
@@ -45,7 +48,11 @@ public:
    * @return QList of Verse instances
    */
   virtual QList<Verse> verseInfoList(const int page) const = 0;
-
+  /**
+   * @brief get the first Verse in the page given
+   * @param page - Quran page number
+   * @return the first Verse in the page
+   */
   virtual Verse firstInPage(int page) const = 0;
   /**
    * @brief gets the verse text
@@ -113,13 +120,27 @@ public:
    * @return QPair of Verse instance and verse text
    */
   virtual Verse randomVerse() const = 0;
-
+  /**
+   * @brief get the next Verse to the given verse, if given the last Verse in
+   * a surah the return depends on the withBasmallah boolean
+   * @param verse - Verse to get the next of
+   * @param withBasmallah - boolean value for returning Verse number 0 to
+   * indicate a basmallah
+   * @return the Verse after the given one
+   */
   virtual Verse next(const Verse& verse, bool withBasmallah) const = 0;
-
+  /**
+   * @brief get the previous Verse to the given verse, if given the last
+   * Verse in a surah the return depends on the withBasmallah boolean
+   * @param verse - Verse to get the previous of
+   * @param withBasmallah - boolean value for returning Verse number 0 to
+   * indicate a basmallah
+   * @return the Verse before the given one
+   */
   virtual Verse previous(const Verse& verse, bool withBasmallah) const = 0;
   /**
    * @brief surahNames
-   * @return
+   * @return QList of QStrings representing the surah names
    */
   virtual QStringList surahNames() const = 0;
 };

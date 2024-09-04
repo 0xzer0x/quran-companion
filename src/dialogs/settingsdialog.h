@@ -123,6 +123,10 @@ public slots:
    * @param size - QString representing the new font size
    */
   void updateSideFontSize(QString size);
+  /**
+   * @brief Update the type of font to use for displaying verses
+   * @param vt - value corresponding to entry in Configuration::VerseType
+   */
   void updateVerseType(int vt);
   void updateVerseFontsize(QString size);
   /**
@@ -264,11 +268,15 @@ private:
   /**
    * @brief DBManager::Translation enum value mapped to the translation index in
    * the combobox.
-   *
-   * MODIFIED
    */
   int m_translation;
+  /**
+   * @brief Configuration::VerseType configuration value
+   */
   int m_verseType;
+  /**
+   * @brief Font size of the verses in the side panel
+   */
   int m_verseFontSize;
   /**
    * @brief boolean flag representing the verse of the day option checkbox

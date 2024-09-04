@@ -123,12 +123,12 @@ private slots:
   void missingQCF();
   /**
    * @brief display a warning messagebox when a tafsir db file is not found
-   * @param idx - index of tafsir in Tafsir::tafasir
+   * @param id - missing Tafsir id
    */
   void missingTafsir(QString id);
   /**
    * @brief display a warning messagebox when a translation db file is not found
-   * @param idx - index of translation in Translation::translations
+   * @param id - missing Translation id
    */
   void missingTranslation(QString id);
   /**
@@ -391,7 +391,6 @@ private:
    * change of juz combobox index
    */
   bool m_internalJuzChange = false;
-
   /**
    * @brief QList for surah names as it appears in the navigation dock QListView
    */
@@ -401,7 +400,6 @@ private:
    * list of surahs
    */
   QStringListModel m_surahListModel;
-
   /**
    * @brief pointer to VersionChecker instance
    */
@@ -411,12 +409,12 @@ private:
    * the number entered is within the surah verse range
    */
   QPointer<QIntValidator> m_verseValidator;
-
+  /**
+   * @brief pointer to QuranReader instance
+   */
   QPointer<QuranReader> m_reader;
   /**
-   * @brief m_playerControls
-   *
-   * MODIFIED
+   * @brief pointer to PlayerControls instance
    */
   QPointer<PlayerControls> m_playerControls;
   /**
@@ -481,9 +479,14 @@ private:
    * import/export
    */
   QPointer<ImportExportDialog> m_importExportDlg;
-
+  /**
+   * @brief pointer to repeater popup widget
+   */
   QPointer<RepeaterPopup> m_repeater;
-
+  /**
+   * @brief pointer to navigation dock toggle button
+   */
   QPointer<QPushButton> m_btnToggleNav;
 };
+
 #endif // MAINWINDOW_H

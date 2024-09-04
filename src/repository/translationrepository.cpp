@@ -51,11 +51,11 @@ TranslationRepository::setCurrentTranslation(QString id)
   if (!translation.has_value())
     return false;
 
-  m_currTr = translation.value();
-  const QDir& baseDir = m_currTr->isExtra()
+  m_currTranslation = translation.value();
+  const QDir& baseDir = m_currTranslation->isExtra()
                           ? DirManager::getInstance().downloadsDir()
                           : DirManager::getInstance().assetsDir();
-  QString path = "translations/" + m_currTr->filename();
+  QString path = "translations/" + m_currTranslation->filename();
   if (!baseDir.exists(path))
     return false;
 
@@ -84,5 +84,5 @@ TranslationRepository::getTranslation(const int sIdx, const int vIdx) const
 std::optional<const ::Translation>
 TranslationRepository::currTranslation() const
 {
-  return m_currTr;
+  return m_currTranslation;
 }
