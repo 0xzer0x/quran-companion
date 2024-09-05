@@ -174,7 +174,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideLeft</enum>
@@ -494,8 +494,6 @@
           <widget class="QLabel" name="label_19">
            <property name="text">
             <string notr="true">- &lt;a href=&quot;https://albitaqat.com&quot;&gt;AlBitaqat&lt;/a&gt;
-&lt;br/&gt;
-- &lt;a href=&quot;https://api-docs.quran.com&quot;&gt;Sayyid Abul Ala Maududi - Tafheem ul-Qur'an&lt;/a&gt;
 
 </string>
            </property>
