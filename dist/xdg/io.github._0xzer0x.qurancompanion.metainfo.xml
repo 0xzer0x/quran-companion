@@ -55,6 +55,16 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.3.0" date="2024-09-05">
+      <description>
+        <ul>
+          <li>Move all downloadable content to a different location</li>
+          <li>Fix bug in the consistency of the selected content</li>
+          <li>Use the same source for English overview of surah</li>
+          <li>Changes the shadows of UI components</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.2.9" date="2024-08-24">
       <description>
         <ul>
