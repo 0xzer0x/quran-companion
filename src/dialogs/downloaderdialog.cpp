@@ -315,11 +315,10 @@ DownloaderDialog::selectDownload(DownloadJob::Type type, QPair<int, int> info)
     // remove default db indices from current index as defaults are not
     // downloadable
     if (!info.first)
-      // tafsir
-      info.second -= info.second > 6;
+      info.second -= info.second > m_tafasir.indexOf(Tafsir::findById("sa3dy"));
     else
-      // translation
-      info.second -= 1 + info.second > 5;
+      info.second -= 1 + (info.second > m_translations.indexOf(
+                                          Translation::findById("en_khattab")));
     task = m_treeModel.index(info.second, 0, parent);
   }
 

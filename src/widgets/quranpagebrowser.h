@@ -160,12 +160,6 @@ private:
    */
   void createActions();
   /**
-   * @brief adjusts the header string according to the page width
-   * @param line - header string
-   * @return reference to the adjusted string
-   */
-  QString& justifyLine(QString& line);
-  /**
    * @brief calculate the approximate pixel size of the page line
    * @param lines - QStringList of page lines
    * @return QSize of a single page line
@@ -188,6 +182,7 @@ private:
    */
   int setHref(QTextCursor* cursor, int to, QString url);
 
+  int insertHeader(QTextCursor*, int);
   void insertFooter(QTextCursor*, int);
   /**
    * @brief boolean indicating whether to highlight the foreground of the active
@@ -303,7 +298,6 @@ private:
   QList<QPair<int, int>> m_verseCoordinates;
   QPair<int, int> m_headerData;
   NumberToStringConverter m_stringConverter;
-  int insertHeader(QTextCursor*, int);
 };
 
 #endif // QURANPAGEBROWSER_H

@@ -77,8 +77,9 @@ Configuration::checkConfGroup(int gId)
       m_settings.setValue("VerseType", m_settings.value("VerseType", 0));
       m_settings.setValue("VerseFontSize",
                           m_settings.value("VerseFontSize", 20));
-      m_settings.setValue("Tafsir", m_settings.value("Tafsir", 6));
-      m_settings.setValue("Translation", m_settings.value("Translation", 5));
+      m_settings.setValue("Tafsir", m_settings.value("Tafsir", "sa3dy"));
+      m_settings.setValue("Translation",
+                          m_settings.value("Translation", "en_khattab"));
       m_settings.setValue(
         "SideContentFont",
         m_settings.value("SideContentFont", QFont("Expo Arabic", 14)));

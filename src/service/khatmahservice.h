@@ -7,7 +7,8 @@ class KhatmahService
 {
 public:
   /**
-   * MODIFIED
+   * @brief load the last saved Verse for the given khatmah
+   * @return An optional containing the Verse corresponding to the given khatmah
    */
   virtual std::optional<Verse> loadVerse(const int khatmahId) const = 0;
   /**

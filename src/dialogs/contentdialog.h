@@ -76,8 +76,8 @@ protected:
   void closeEvent(QCloseEvent* event);
 
 signals:
-  void missingTafsir(int idx);
-  void missingTranslation(int idx);
+  void missingTafsir(QString id);
+  void missingTranslation(QString id);
 
 private slots:
   /**
@@ -108,25 +108,27 @@ private:
    */
   Configuration& m_config;
   /**
-   * @brief reference to the singleton TafsirRepository instance
+   * @brief pointer to implementation of TafsirService
    */
   TafsirService* m_tafsirService;
   /**
-   * @brief reference to the singleton TranslationRepository instance
+   * @brief pointer to implementation of TranslationService
    */
   TranslationService* m_translationService;
-
+  /**
+   * @brief pointer to implementation of ThoughtsService
+   */
   ThoughtsService* m_thoughtsService;
   /**
-   * @brief reference to the singleton BookmarksRepository instance
+   * @brief pointer to implementation of BookmarkService
    */
   const BookmarkService* m_bookmarkService;
   /**
-   * @brief reference to the singleton QuranRepository instance
+   * @brief pointer to implementation of QuranService
    */
   const QuranService* m_quranService;
   /**
-   * @brief reference to the singleton GlyphsRepository instance
+   * @brief pointer to implementation of GlyphService
    */
   const GlyphService* m_glyphService;
   /**
@@ -205,12 +207,12 @@ private:
   /**
    * @brief index of the currently shown Tafsir in Tafsir::tafasir
    */
-  int m_tafsir;
+  QString m_tafsir;
   /**
    * @brief index of the currently shown Translation in
    * Translation::translations
    */
-  int m_translation;
+  QString m_translation;
   /**
    * @brief fixed font size for the verse text displayed above the tafsir.
    */

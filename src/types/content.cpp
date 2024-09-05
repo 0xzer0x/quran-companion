@@ -1,10 +1,17 @@
 #include "content.h"
 
-Content::Content(QString display, QString filename, bool isExtra)
-  : m_displayName(display)
+Content::Content(QString id, QString display, QString filename, bool isExtra)
+  : m_id(id)
+  , m_displayName(display)
   , m_filename(filename)
   , m_isExtra(isExtra)
 {
+}
+
+const QString&
+Content::id() const
+{
+  return m_id;
 }
 
 const QString&

@@ -28,6 +28,11 @@ public:
                           QPointer<RepeaterPopup> repeater);
   ~PlayerControls();
 
+  /**
+   * @brief getter for the index of the currently selected reciter in the
+   * reciters combobox
+   * @return index of reciter in the combobox
+   */
   int currentReciter() const;
 
 public slots:
@@ -47,7 +52,7 @@ private slots:
    */
   void mediaPosChanged(qint64 position);
   /**
-   * @brief continues playback of the current verse
+   * @brief continue playback of the current verse
    */
   void btnPlayClicked();
   /**
@@ -59,7 +64,10 @@ private slots:
    * update verses combobox & selected surah
    */
   void btnStopClicked();
-
+  /**
+   * @brief callback for updating the selected reciter
+   * @param newIndex
+   */
   void cmbReciterChanged(int newIndex);
   /**
    * @brief disables/enables control buttons according to the media player state
@@ -80,7 +88,10 @@ private slots:
    * @brief utility to decrement the VersePlayer playback volume by steps of 5
    */
   void decrementVolume();
-
+  /**
+   * @brief callback for toggling the repeater dialog
+   * @param on - boolean indicating the state of the button
+   */
   void btnRepeatClicked(bool on);
 
 private:
@@ -117,7 +128,9 @@ private:
    * @brief pointer to the QuranReader instance
    */
   QPointer<QuranReader> m_reader;
-
+  /**
+   * @brief pointer to the RepeaterPopup instance
+   */
   QPointer<RepeaterPopup> m_repeater;
 };
 

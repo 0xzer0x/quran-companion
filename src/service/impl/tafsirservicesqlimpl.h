@@ -14,11 +14,11 @@ public:
 
   void loadTafsir() override;
 
-  bool setCurrentTafsir(int idx) override;
+  bool setCurrentTafsir(QString id) override;
 
   QString getTafsir(const int sIdx, const int vIdx) override;
 
-  const Tafsir* currTafsir() const override;
+  std::optional<const Tafsir> currTafsir() const override;
 };
 
 #endif // TAFSIRSERVICESQLIMPL_H

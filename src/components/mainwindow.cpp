@@ -406,33 +406,33 @@ MainWindow::setupSurahsDock()
 void
 MainWindow::setupMenubarButton()
 {
-  QPushButton* toggleNav = new QPushButton(this);
-  toggleNav->setObjectName("btnToggleNav");
-  toggleNav->setCheckable(true);
-  toggleNav->setChecked(!ui->sideDock->isHidden());
-  toggleNav->setCursor(Qt::PointingHandCursor);
-  toggleNav->setToolTip(tr("Navigation"));
-  toggleNav->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-  toggleNav->setStyleSheet(
+  m_btnToggleNav = new QPushButton(this);
+  m_btnToggleNav->setObjectName("btnToggleNav");
+  m_btnToggleNav->setCheckable(true);
+  m_btnToggleNav->setChecked(!ui->sideDock->isHidden());
+  m_btnToggleNav->setCursor(Qt::PointingHandCursor);
+  m_btnToggleNav->setToolTip(tr("Navigation"));
+  m_btnToggleNav->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+  m_btnToggleNav->setStyleSheet(
     QString("QPushButton { min-height: %0px; min-width: %1px; }")
       .arg(QString::number(ui->menubar->height()),
            QString::number(ui->menubar->height() * 2)));
-  ui->menubar->setCornerWidget(toggleNav);
-  toggleNav->setIcon(
+  ui->menubar->setCornerWidget(m_btnToggleNav);
+  m_btnToggleNav->setIcon(
     StyleManager::getInstance().awesome().icon(fa_solid, fa_compass));
-  toggleNav->setIconSize(QSize(20, 20));
+  m_btnToggleNav->setIconSize(QSize(20, 20));
 
-  connect(toggleNav, &QPushButton::toggled, this, [this](bool checked) {
+  connect(m_btnToggleNav, &QPushButton::toggled, this, [this](bool checked) {
     if (ui->sideDock->isVisible() != checked)
       ui->sideDock->setVisible(checked);
   });
 
   connect(ui->sideDock->toggleViewAction(),
           &QAction::toggled,
-          toggleNav,
-          [this, toggleNav](bool visible) {
-            if (toggleNav->isChecked() != visible && !this->isMinimized())
-              toggleNav->setChecked(visible);
+          m_btnToggleNav,
+          [this](bool visible) {
+            if (m_btnToggleNav->isChecked() != visible && !this->isMinimized())
+              m_btnToggleNav->setChecked(visible);
           });
 }
 
@@ -605,7 +605,7 @@ MainWindow::missingQCF()
 }
 
 void
-MainWindow::missingTafsir(int idx)
+MainWindow::missingTafsir(QString id)
 {
   QMessageBox::StandardButton btn = QMessageBox::question(
     this,
@@ -614,12 +614,13 @@ MainWindow::missingTafsir(int idx)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(DownloadJob::TafsirFile, { 0, idx });
+    m_downloaderDlg->selectDownload(
+      DownloadJob::TafsirFile, { 0, m_tafasir.indexOf(Tafsir::findById(id)) });
   }
 }
 
 void
-MainWindow::missingTranslation(int idx)
+MainWindow::missingTranslation(QString id)
 {
   QMessageBox::StandardButton btn = QMessageBox::question(
     this,
@@ -628,7 +629,9 @@ MainWindow::missingTranslation(int idx)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(DownloadJob::TranslationFile, { 1, idx });
+    m_downloaderDlg->selectDownload(
+      DownloadJob::TranslationFile,
+      { 1, Translation::translations.indexOf(Translation::findById(id)) });
   }
 }
 
@@ -841,6 +844,10 @@ MainWindow::restartApp()
 
 MainWindow::~MainWindow()
 {
+  disconnect(m_btnToggleNav, &QPushButton::toggled, nullptr, nullptr);
+  disconnect(
+    ui->sideDock->toggleViewAction(), &QAction::toggled, nullptr, nullptr);
+
   saveReaderState();
   delete ui;
 }

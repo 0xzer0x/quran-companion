@@ -44,25 +44,6 @@ QuranPageBrowser::updateFontSize()
   highlightVerse(m_highlightedIdx);
 }
 
-QString&
-QuranPageBrowser::justifyLine(QString& line)
-{
-  if (!line.contains('$'))
-    return line;
-
-  int margin = 20;
-  int spacePos = line.indexOf('$');
-  line.remove('$');
-
-  QFontMetrics headerSpacing(m_pageInfoTextFormat.font());
-  while (headerSpacing.size(Qt::TextSingleLine, line).width() <
-         m_pageLineSize.width() - margin) {
-    line.insert(spacePos, " ");
-  }
-
-  return line;
-}
-
 QSize
 QuranPageBrowser::calcPageLineSize(QStringList& lines)
 {
@@ -93,7 +74,7 @@ QuranPageBrowser::surahFrame(int surah)
   // draw on top of the image the surah name text
   QPainter p(&baseImage);
   p.setPen(QPen(Qt::black));
-  p.setFont(QFont("QCF_BSML", 77));
+  p.setFont(QFont("QCF_BSML", 85));
   p.drawText(baseImage.rect(), Qt::AlignCenter, frmText);
 
   if (m_config.darkMode())

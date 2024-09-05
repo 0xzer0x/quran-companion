@@ -6,13 +6,15 @@
 class Content
 {
 public:
-  explicit Content(QString display, QString filename, bool isExtra);
+  explicit Content(QString id, QString display, QString filename, bool isExtra);
+  const QString& id() const;
   const QString& displayName() const;
   const QString& filename() const;
   const bool& isExtra() const;
   virtual bool isAvailable() const = 0;
 
-private:
+protected:
+  QString m_id;
   QString m_displayName;
   QString m_filename;
   bool m_isExtra;

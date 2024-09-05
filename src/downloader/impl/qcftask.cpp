@@ -5,17 +5,18 @@ QcfTask::QcfTask(int page)
 {
 }
 
-QcfTask::QcfTask(const QcfTask &other)
+QcfTask::QcfTask(const QcfTask& other)
 {
   m_page = other.m_page;
 }
 
-QcfTask::QcfTask(const QcfTask &&other)
+QcfTask::QcfTask(const QcfTask&& other)
 {
   m_page = other.m_page;
 }
 
-QcfTask &QcfTask::operator=(const QcfTask other)
+QcfTask&
+QcfTask::operator=(const QcfTask other)
 {
   m_page = other.m_page;
   return *this;
@@ -25,7 +26,7 @@ QUrl
 QcfTask::url() const
 {
   return QUrl::fromEncoded(
-    ("https://github.com/0xzer0x/quran-companion/raw/main/extras/QCFV2/QCF2" +
+    ("https://github.com/0xzer0x/quran-companion-extras/raw/main/QCFV2/QCF2" +
      QString::number(m_page).rightJustified(3, '0') + ".ttf")
       .toLatin1());
 }
@@ -33,6 +34,6 @@ QcfTask::url() const
 QFileInfo
 QcfTask::destination() const
 {
-    return QFileInfo(m_downloadsDir.absoluteFilePath(
+  return QFileInfo(m_downloadsDir.absoluteFilePath(
     "QCFV2/QCF2" + QString::number(m_page).rightJustified(3, '0') + ".ttf"));
 }

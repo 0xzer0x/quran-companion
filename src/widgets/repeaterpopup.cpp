@@ -31,9 +31,9 @@ RepeaterPopup::setupUI()
   ui->setupUi(this);
   QPointer<QGraphicsDropShadowEffect> shadow =
     new QGraphicsDropShadowEffect(this);
-  shadow->setOffset(1);
-  shadow->setBlurRadius(20);
-  shadow->setColor(palette().color(QPalette::Shadow));
+  shadow->setOffset(0, 4);
+  shadow->setBlurRadius(15);
+  shadow->setColor(QColor(0, 0, 0, 60));
   setGraphicsEffect(shadow);
   setToggleState(false);
 

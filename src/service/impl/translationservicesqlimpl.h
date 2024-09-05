@@ -13,11 +13,11 @@ private:
 public:
   TranslationServiceSqlImpl();
 
-  bool setCurrentTranslation(int idx) override;
+  bool setCurrentTranslation(QString id) override;
 
   QString getTranslation(const int sIdx, const int vIdx) const override;
 
-  const Translation* currTranslation() const override;
+  std::optional<const Translation> currTranslation() const override;
 
   void loadTranslation() override;
 };

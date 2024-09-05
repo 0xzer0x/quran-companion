@@ -25,15 +25,16 @@ TranslationTask::operator=(const TranslationTask other)
 QUrl
 TranslationTask::url() const
 {
-  return QUrl::fromEncoded(("https://github.com/0xzer0x/quran-companion/raw/"
-                            "main/extras/translations/" +
-                              m_translations.at(m_idx).filename())
-                             .toLatin1());
+  return QUrl::fromEncoded(
+    ("https://github.com/0xzer0x/quran-companion-extras/raw/"
+     "main/translations/" +
+     m_translations.at(m_idx).filename())
+      .toLatin1());
 }
 
 QFileInfo
 TranslationTask::destination() const
 {
-    return QFileInfo(m_downloadsDir.absoluteFilePath(
-        "translations/" + m_translations.at(m_idx).filename()));
+  return QFileInfo(m_downloadsDir.absoluteFilePath(
+    "translations/" + m_translations.at(m_idx).filename()));
 }
