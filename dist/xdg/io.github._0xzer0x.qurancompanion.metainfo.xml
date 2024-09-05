@@ -34,6 +34,10 @@
       <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/light.png</image>
     </screenshot>
     <screenshot>
+      <caption>The main application window in two page mode.</caption>
+      <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/two-pages.png</image>
+    </screenshot>
+    <screenshot>
       <caption>The main application window in dark theme.</caption>
       <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/dark.png</image>
     </screenshot>
@@ -48,10 +52,6 @@
     <screenshot>
       <caption>The main application window in dark theme with Arabic UI.</caption>
       <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_dark.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>The main application window in dark theme with Arabic UI and two page mode.</caption>
-      <image type="source">https://raw.githubusercontent.com/0xzer0x/quran-companion/main/screenshots/ar_two-page.png</image>
     </screenshot>
   </screenshots>
   <releases>

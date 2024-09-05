@@ -107,11 +107,11 @@
 
 ![ar_dark.png](screenshots/ar_dark.png)
 
-![ar_two-page.png](screenshots/ar_two-page.png)
-
 #### الواجهة الإنجليزية
 
 ![light.png](screenshots/light.png)
+
+![two-page.png](screenshots/two-pages.png)
 
 ![dark.png](screenshots/dark.png)
 

@@ -102,6 +102,8 @@ Quran Companion is a cross-platform Quran reader/player with recitation download
 
 ![light.png](screenshots/light.png)
 
+![two-page.png](screenshots/two-pages.png)
+
 ![dark.png](screenshots/dark.png)
 
 #### Arabic UI
@@ -109,8 +111,6 @@ Quran Companion is a cross-platform Quran reader/player with recitation download
 ![ar_light.png](screenshots/ar_light.png)
 
 ![ar_dark.png](screenshots/ar_dark.png)
-
-![ar_two-page.png](screenshots/ar_two-page.png)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
