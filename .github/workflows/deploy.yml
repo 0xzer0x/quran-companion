@@ -169,7 +169,7 @@ jobs:
           create-dmg --dmg-title="Install Quran Companion" quran-companion.app || true
           file="$(find . -maxdepth 1 -name "Quran Companion*.dmg" | head -n 1)"
           if [[ -n "$file" ]]; then
-            mv "$file" "Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
+            mv "$file" "${{ github.workspace }}/Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
           else
             echo "DMG file not found!"
             exit 1
