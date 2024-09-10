@@ -4,7 +4,7 @@ env:
   CMAKE_GENERATOR: Ninja Multi-Config
   CMAKE_EXPORT_COMPILE_COMMANDS: 1
   CMAKE_PREFIX_PATH:
-    sh: find "$HOME" -maxdepth 2 -path "$HOME/Qt/6.6.*" -type d | head -n 1
+    sh: find "$HOME" -maxdepth 3 -path "$HOME/Qt/6.6.*/gcc_64" -type d | head -n 1
 vars:
   BUILD_DIR: "{{ .ROOT_DIR }}/build"
 tasks:
