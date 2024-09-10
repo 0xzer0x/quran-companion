@@ -13,6 +13,7 @@ CMakeLists.txt.*
 compile_commands.json
 !template.ts
 !reciters.sh
+!tafasir.sh
 !shortcuts.sh
 !update_translations.sh
 !docs/Doxyfile
