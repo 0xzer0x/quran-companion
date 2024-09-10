@@ -307,102 +307,102 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Adwa&apos; ul-Bayan</source>
-      <translation type="unfinished">Adwa&apos; ul-Bayan</translation>
+      <translation>Адва&apos; Уль-Байан</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Aysar ul-Tafasir</source>
-      <translation type="unfinished">Aysar ul-Tafasir</translation>
+      <translation>Айсар Уль-Тасфир</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Tafsir Al-Waseet</source>
-      <translation type="unfinished">Al-Tafsir Al-Waseet</translation>
+      <translation>Аль-Тасфир Аль-Уасит</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Mukhtasar fil Tafsir</source>
-      <translation type="unfinished">Al-Mukhtasar fil Tafsir</translation>
+      <translation>Аль-Мухтасар филь Тасфир</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Baghawy</source>
-      <translation type="unfinished">Al-Baghawy</translation>
+      <translation>Аль-Багхави</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Qortoby</source>
-      <translation type="unfinished">Al-Qortoby</translation>
+      <translation>Аль-Куртуби</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Sa&apos;ady</source>
-      <translation type="unfinished">Al-Sa&apos;ady</translation>
+      <translation>Аль-Са&apos;ади</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Tabary</source>
-      <translation type="unfinished">Al-Tabary</translation>
+      <translation>Аль-Табари</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Jalalayn</source>
-      <translation type="unfinished">Al-Jalalayn</translation>
+      <translation>Аль-Джалалайн</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Ea&apos;rab</source>
-      <translation type="unfinished">Ea&apos;rab</translation>
+      <translation>И&apos;араб</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Asbab ul-Nuzul - al-Wahidi</source>
-      <translation type="unfinished">Asbab ul-Nuzul - al-Wahidi</translation>
+      <translation>Asbab ul-Nuzul - al-Wahidi</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Hidayat Al-Quran Al-Kareem</source>
-      <translation type="unfinished">Hidayat Al-Quran Al-Kareem</translation>
+      <translation>Hidayat Al-Quran Al-Kareem</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Ibn-Ashoor</source>
-      <translation type="unfinished">Ibn-Ashoor</translation>
+      <translation>Ибн-Ашур</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Ibn-Juzayy</source>
-      <translation type="unfinished">Ibn-Juzayy</translation>
+      <translation>Ибн-Джузай</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Ibn-Katheer</source>
-      <translation type="unfinished">Ibn-Katheer</translation>
+      <translation>Ибн-Кахир</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Ibn-Katheer - English</source>
-      <translation type="unfinished">Ibn-Katheer - English</translation>
+      <translation>Ибн-Кахир - Английский</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Jalalayn - English</source>
-      <translation type="unfinished">Al-Jalalayn - English</translation>
+      <translation>Аль-Джалалайн - Английский</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Jalalayn - Indonesian</source>
-      <translation type="unfinished">Al-Jalalayn - Indonesian</translation>
+      <translation>Аль-Джалалайн - Индонезийский</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Kuliev &amp; Al-Sa&apos;ady - Russian</source>
-      <translation type="unfinished">Kuliev &amp; Al-Sa&apos;ady - Russian</translation>
+      <translation>Кулиев и Аль-Саади - Русский</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Tafheem ul-Quran - English</source>
-      <translation type="unfinished">Tafheem ul-Quran - English</translation>
+      <translation>Тафхим уль-Коран - Английский</translation>
     </message>
   </context>
   <context>
@@ -596,12 +596,12 @@
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="143"/>
       <source>Downloads path</source>
-      <translation type="unfinished">Downloads path</translation>
+      <translation>Путь скачивания</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="170"/>
       <source>Change</source>
-      <translation type="unfinished">Change</translation>
+      <translation>Редактировать</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="180"/>
@@ -721,17 +721,17 @@
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="164"/>
       <source>Select directory</source>
-      <translation type="unfinished">Select directory</translation>
+      <translation>Выберите каталог</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="172"/>
       <source>Invalid path</source>
-      <translation type="unfinished">Invalid path</translation>
+      <translation>Недопустимый путь</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="173"/>
       <source>The chosen path is not valid. Please select a writable path.</source>
-      <translation type="unfinished">The chosen path is not valid. Please select a writable path.</translation>
+      <translation>Выбранный путь недействителен. Пожалуйста, выберите доступный для записи.</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="189"/>
@@ -755,7 +755,7 @@
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="220"/>
       <source>Application downloads path was changed, restart now?</source>
-      <translation type="unfinished">Application downloads path was changed, restart now?</translation>
+      <translation>Путь загрузок приложения изменён, перезапустить сейчас?</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="254"/>
@@ -1334,22 +1334,22 @@
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="165"/>
       <source>Options</source>
-      <translation type="unfinished">Options</translation>
+      <translation>Опции</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="191"/>
       <source>Verse frequency</source>
-      <translation type="unfinished">Verse frequency</translation>
+      <translation>Частота стихов</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="212"/>
       <source>Repetitions</source>
-      <translation type="unfinished">Repetitions</translation>
+      <translation>Повторы</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.cpp" line="128"/>
       <source>End verse cannot be before start verse</source>
-      <translation type="unfinished">End verse cannot be before start verse</translation>
+      <translation>Конечный стих не может быть до начала стиха</translation>
     </message>
   </context>
   <context>
