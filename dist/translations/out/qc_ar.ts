@@ -307,102 +307,102 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Adwa&apos; ul-Bayan</source>
-      <translation type="unfinished">Adwa&apos; ul-Bayan</translation>
+      <translation>أضواء البيان</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Aysar ul-Tafasir</source>
-      <translation type="unfinished">Aysar ul-Tafasir</translation>
+      <translation>أيسر التفاسير</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Tafsir Al-Waseet</source>
-      <translation type="unfinished">Al-Tafsir Al-Waseet</translation>
+      <translation>التفسير الوسيط</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Mukhtasar fil Tafsir</source>
-      <translation type="unfinished">Al-Mukhtasar fil Tafsir</translation>
+      <translation>المختصر في التفسير</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Baghawy</source>
-      <translation type="unfinished">Al-Baghawy</translation>
+      <translation>البغوي</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Qortoby</source>
-      <translation type="unfinished">Al-Qortoby</translation>
+      <translation>القرطبي</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Sa&apos;ady</source>
-      <translation type="unfinished">Al-Sa&apos;ady</translation>
+      <translation>السعدي</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Tabary</source>
-      <translation type="unfinished">Al-Tabary</translation>
+      <translation>الطبري</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Jalalayn</source>
-      <translation type="unfinished">Al-Jalalayn</translation>
+      <translation>الجلالين</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Ea&apos;rab</source>
-      <translation type="unfinished">Ea&apos;rab</translation>
+      <translation>إعراب الكلمات</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Asbab ul-Nuzul - al-Wahidi</source>
-      <translation type="unfinished">Asbab ul-Nuzul - al-Wahidi</translation>
+      <translation>أسباب النزول - الواحدي</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Hidayat Al-Quran Al-Kareem</source>
-      <translation type="unfinished">Hidayat Al-Quran Al-Kareem</translation>
+      <translation>هدايات القرآن الكريم</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Ibn-Ashoor</source>
-      <translation type="unfinished">Ibn-Ashoor</translation>
+      <translation>ابن عاشور</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Ibn-Juzayy</source>
-      <translation type="unfinished">Ibn-Juzayy</translation>
+      <translation>ابن جزي</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Ibn-Katheer</source>
-      <translation type="unfinished">Ibn-Katheer</translation>
+      <translation>ابن كثير</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Ibn-Katheer - English</source>
-      <translation type="unfinished">Ibn-Katheer - English</translation>
+      <translation>ابن كثير - الإنجليزية</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Jalalayn - English</source>
-      <translation type="unfinished">Al-Jalalayn - English</translation>
+      <translation>الجلالين - الإنجليزية</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Al-Jalalayn - Indonesian</source>
-      <translation type="unfinished">Al-Jalalayn - Indonesian</translation>
+      <translation>الجلالين - الإندونيسية</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Kuliev &amp; Al-Sa&apos;ady - Russian</source>
-      <translation type="unfinished">Kuliev &amp; Al-Sa&apos;ady - Russian</translation>
+      <translation>كولييف و السعدي - الروسية</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Tafheem ul-Quran - English</source>
-      <translation type="unfinished">Tafheem ul-Quran - English</translation>
+      <translation>تفهيم القرآن - الإنجليزية</translation>
     </message>
   </context>
   <context>
