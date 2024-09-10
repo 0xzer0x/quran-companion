@@ -6,6 +6,7 @@
 *.run
 *.sh
 *.ts
+build
 docs/*
 dist/windows/*
 CMakeLists.txt.*
