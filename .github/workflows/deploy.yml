@@ -14,9 +14,32 @@ jobs:
     outputs:
       version: "${{ steps.setversion.outputs.version }}"
     steps:
+      - name: Checkout VERSION
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: VERSION
+
+      - name: Set environmental variables
+        run: |
+          echo "RELEASE_VERSION=$(cat "${{ github.workspace }}/VERSION")" >> "$GITHUB_ENV"
+          echo "TAG_VERSION=$(echo "${{ github.ref_name }}" | cut -d'v' -f2)" >> "$GITHUB_ENV"
+          echo "MAIN_SHA=$(git rev-parse --verify main)" >> "$GITHUB_ENV"
+
+      - name: Check release version and commit sha
+        run: |
+          if [[ "$RELEASE_VERSION" != "$TAG_VERSION" ]]; then
+            echo "Tag version ($TAG_VERSION) does not match release version ($RELEASE_VERSION)"
+            exit 1
+          elif [[ "$GITHUB_SHA" != "$MAIN_SHA" ]]; then
+            echo "Tag commit ($GITHUB_SHA) does not match latest commit on main ($MAIN_SHA)"
+            exit 1
+          fi
+
       - name: Set application version
         id: setversion
-        run: echo "version=$(echo "${{ github.ref_name }}" | cut -d'v' -f2)" >> "$GITHUB_OUTPUT"
+        run: echo "version=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
 
   build-appimage:
     needs:
@@ -194,12 +217,12 @@ jobs:
     env:
       APP_VER: "${{ needs.prepare.outputs.version }}"
     steps:
-      - name: Checkout repository
+      - name: Checkout CHANGELOG.md
         uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
-          sparse-checkout: CHANGELOG.md
           sparse-checkout-cone-mode: false
+          sparse-checkout: CHANGELOG.md
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
