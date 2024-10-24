@@ -240,7 +240,7 @@
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="521"/>
       <source>Toggle reader view</source>
-      <translation type="unfinished">Toggle reader view</translation>
+      <translation/>
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="526"/>
@@ -415,7 +415,7 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Toggle reader view</source>
-      <translation type="unfinished">Toggle reader view</translation>
+      <translation/>
     </message>
     <message>
       <location filename="../main.cpp"/>
