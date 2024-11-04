@@ -16,6 +16,7 @@ typedef DownloadJob::Type Type;
  */
 class DownloadProgressBar : public QProgressBar
 {
+  Q_OBJECT
 public:
   /**
    * @brief class constructor
