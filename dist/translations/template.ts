@@ -806,27 +806,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../src/dialogs/aboutdialog.ui" line="369"/>
+        <location filename="../../../src/dialogs/aboutdialog.ui" line="406"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../src/dialogs/aboutdialog.ui" line="390"/>
+        <location filename="../../../src/dialogs/aboutdialog.ui" line="427"/>
         <source>Recitations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../src/dialogs/aboutdialog.ui" line="438"/>
+        <location filename="../../../src/dialogs/aboutdialog.ui" line="475"/>
         <source>Tafsir/Translations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../src/dialogs/aboutdialog.ui" line="489"/>
+        <location filename="../../../src/dialogs/aboutdialog.ui" line="526"/>
         <source>Surah Cards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../src/dialogs/aboutdialog.ui" line="535"/>
+        <location filename="../../../src/dialogs/aboutdialog.ui" line="572"/>
         <source>Libraries</source>
         <translation type="unfinished"></translation>
     </message>

@@ -34,3 +34,7 @@ tasks:
         if [ ! -L "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/bismillah"  ]; then
           ln -s "{{ .BUILD_DIR }}/bismillah" "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/bismillah"
         fi
+
+  template.ts:
+    cmds:
+      - "{{ .ROOT_DIR }}/dist/translations/generate-template"
