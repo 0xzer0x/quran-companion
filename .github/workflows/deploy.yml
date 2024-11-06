@@ -17,9 +17,9 @@ jobs:
       - name: Checkout VERSION
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
-          sparse-checkout-cone-mode: false
+          ref: main
           sparse-checkout: VERSION
+          sparse-checkout-cone-mode: false
 
       - name: Set environmental variables
         run: |
