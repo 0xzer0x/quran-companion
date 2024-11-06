@@ -24,7 +24,7 @@ apps:
     common-id: io.github._0xzer0x.qurancompanion
     desktop: usr/share/applications/io.github._0xzer0x.qurancompanion.desktop
     environment:
-      LD_LIBRARY_PATH: "$SNAP/opt/qt6/6.6.1/gcc_64/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$LD_LIBRARY_PATH"
+      LD_LIBRARY_PATH: "$SNAP/opt/qt6/6.7.3/gcc_64/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio:$LD_LIBRARY_PATH"
       PULSE_RUNTIME_PATH: "$XDG_RUNTIME_DIR/../pulse"
       XDG_DATA_DIRS: "$SNAP/usr/share:$XDG_DATA_DIRS"
       WAYLAND_DISPLAY: "/run/user/1000/wayland-0"
@@ -62,10 +62,10 @@ parts:
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/bin
 
       echo -en "[Paths]\nPlugins =
-      ../../opt/qt6/6.6.1/gcc_64/plugins\nLibraries =
-      ../../opt/qt6/6.6.1/gcc_64/lib\nImports =
-      ../../opt/qt6/6.6.1/gcc_64/qml\nQml2Imports =
-      ../../opt/qt6/6.6.1/gcc_64/qml" > "$SNAPCRAFT_PART_INSTALL/usr/bin/qt.conf"
+      ../../opt/qt6/6.7.3/gcc_64/plugins\nLibraries =
+      ../../opt/qt6/6.7.3/gcc_64/lib\nImports =
+      ../../opt/qt6/6.7.3/gcc_64/qml\nQml2Imports =
+      ../../opt/qt6/6.7.3/gcc_64/qml" > "$SNAPCRAFT_PART_INSTALL/usr/bin/qt.conf"
 
       mkdir -p $SNAPCRAFT_PART_INSTALL/opt/qt6
 
@@ -73,7 +73,7 @@ parts:
 
       pip install aqtinstall
 
-      aqt install-qt linux desktop 6.6.1 gcc_64 -m qtimageformats qtmultimedia qtnetworkauth
+      aqt install-qt linux desktop 6.7.3 linux_gcc_64 -m qtimageformats qtmultimedia qtnetworkauth
     prime:
       - opt/qt6
       - usr/bin/qt.conf
@@ -100,7 +100,7 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
-      - -DCMAKE_PREFIX_PATH="$CRAFT_STAGE/opt/qt6/6.6.1/gcc_64"
+      - -DCMAKE_PREFIX_PATH="$CRAFT_STAGE/opt/qt6/6.7.3/gcc_64"
     after:
       - qt
       - metadata
