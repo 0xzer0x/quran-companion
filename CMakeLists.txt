@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.22)
 project(
   quran-companion
   LANGUAGES CXX
-  VERSION 1.3.0
+  VERSION 1.3.1
   DESCRIPTION "Quran reader and player"
   HOMEPAGE_URL "https://0xzer0x.github.io/projects/quran-companion/")
 
@@ -260,17 +260,19 @@ else()
   file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
 endif()
 
-list(APPEND SUPPORTED_LANGUAGES ar tr ru)
+list(APPEND SUPPORTED_LANGUAGES ar tr ru id)
 foreach(lang IN LISTS SUPPORTED_LANGUAGES)
   message(STATUS "Adding ${lang} translation file to QC_TS")
   list(APPEND QC_TS "dist/translations/out/qc_${lang}.ts")
 
-  message(STATUS "Copying ${lang} qt translations to build tree")
-  configure_file("dist/translations/qtbase/${lang}.qm"
-                 "${CMAKE_BINARY_DIR}/${lang}.qm" COPYONLY)
+  if(EXISTS "dist/translations/qtbase/${lang}.qm")
+    message(STATUS "Copying ${lang} qt translations to build tree")
+    configure_file("dist/translations/qtbase/${lang}.qm"
+                   "${CMAKE_BINARY_DIR}/${lang}.qm" COPYONLY)
 
-  message(STATUS "Adding ${lang} qtbase qm file to QTBASE_QM")
-  list(APPEND QTBASE_QM "${CMAKE_BINARY_DIR}/${lang}.qm")
+    message(STATUS "Adding ${lang} qtbase qm file to QTBASE_QM")
+    list(APPEND QTBASE_QM "${CMAKE_BINARY_DIR}/${lang}.qm")
+  endif()
 endforeach()
 
 message(STATUS "Creating qt translations resource file")

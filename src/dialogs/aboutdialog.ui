@@ -174,7 +174,7 @@
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideLeft</enum>
@@ -341,6 +341,43 @@
            </property>
            <property name="text">
             <string notr="true">&lt;a href=&quot;https://crowdin.com/profile/k-zamanov&quot;&gt;@k-zamanov&lt;/a&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="lytTranslator_3">
+         <item>
+          <widget class="QLabel" name="label_13">
+           <property name="text">
+            <string notr="true">Bahasa Indonesia</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_15">
+           <property name="toolTip">
+            <string notr="true">https://crowdin.com/profile/tap</string>
+           </property>
+           <property name="text">
+            <string notr="true">&lt;a href=&quot;https://crowdin.com/profile/tap&quot;&gt;@tap&lt;/a&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>

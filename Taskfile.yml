@@ -1,0 +1,40 @@
+version: "3"
+env:
+  CMAKE_BUILD_TYPE: Release
+  CMAKE_GENERATOR: Ninja Multi-Config
+  CMAKE_EXPORT_COMPILE_COMMANDS: 1
+  CMAKE_PREFIX_PATH:
+    sh: find "$HOME" -maxdepth 3 -path "$HOME/Qt/6.*/gcc_64" -type d | head -n 1
+vars:
+  BUILD_DIR: "{{ .ROOT_DIR }}/build"
+tasks:
+  clean:
+    cmds:
+      - cmake --build "{{ .BUILD_DIR }}" --target clean
+      - |
+        if [ -L "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/assets"  ]; then
+          rm "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/assets"
+        fi
+        if [ -L "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/bismillah"  ]; then
+          rm "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/bismillah"
+        fi
+
+  generate:
+    cmd: cmake -S "{{ .ROOT_DIR }}" -B "{{ .BUILD_DIR }}"
+
+  build:
+    deps:
+      - generate
+    cmds:
+      - cmake --build "{{ .BUILD_DIR }}" --config "{{ .CMAKE_BUILD_TYPE }}"
+      - |
+        if [ ! -L "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/assets"  ]; then
+          ln -s "{{ .BUILD_DIR }}/assets" "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/assets"
+        fi
+        if [ ! -L "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/bismillah"  ]; then
+          ln -s "{{ .BUILD_DIR }}/bismillah" "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/bismillah"
+        fi
+
+  template.ts:
+    cmds:
+      - "{{ .ROOT_DIR }}/dist/translations/generate-template"

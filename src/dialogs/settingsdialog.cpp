@@ -77,6 +77,7 @@ SettingsDialog::fillLanguageCombobox()
   ui->cmbLang->addItem("العربية", QLocale::Arabic);
   ui->cmbLang->addItem("Türkçe", QLocale::Turkish);
   ui->cmbLang->addItem("русскийe", QLocale::Russian);
+  ui->cmbLang->addItem("Bahasa Indonesia", QLocale::Indonesian);
 }
 
 void
@@ -425,9 +426,10 @@ SettingsDialog::applyAllChanges()
 void
 SettingsDialog::btnBoxAction(QAbstractButton* btn)
 {
-  if (btn->text().contains(tr("Apply"))) {
+  if (btn == ui->buttonBox->button(QDialogButtonBox::StandardButton::Apply)) {
     applyAllChanges();
-  } else if (btn->text().contains(tr("Cancel"))) {
+  } else if (btn ==
+             ui->buttonBox->button(QDialogButtonBox::StandardButton::Cancel)) {
     this->reject();
   } else {
     applyAllChanges();

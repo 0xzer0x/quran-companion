@@ -17,6 +17,7 @@
  */
 class VerseFrame : public QFrame
 {
+  Q_OBJECT
 public:
   /**
    * @brief Class constructor
