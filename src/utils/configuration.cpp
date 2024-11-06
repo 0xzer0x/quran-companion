@@ -108,6 +108,10 @@ Configuration::loadUiTranslation()
     delete translation;
     delete qtBase;
   }
+
+  if (m_language == QLocale::Arabic) {
+    qApp->setLayoutDirection(Qt::RightToLeft);
+  }
 }
 
 QSettings&
