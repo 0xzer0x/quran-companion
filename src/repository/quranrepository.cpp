@@ -225,7 +225,8 @@ Verse
 QuranRepository::verseById(const int id) const
 {
   QSqlQuery dbQuery(*this);
-  dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v1 WHERE id=:i");
+  dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v" +
+                  QString::number(m_config.qcfVersion()) + " WHERE id=:i");
   dbQuery.bindValue(0, id);
 
   executeQuery(dbQuery,
