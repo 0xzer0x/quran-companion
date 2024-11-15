@@ -657,8 +657,8 @@
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="292"/>
-      <location filename="../../../src/dialogs/settingsdialog.ui" line="415"/>
-      <location filename="../../../src/dialogs/settingsdialog.ui" line="538"/>
+      <location filename="../../../src/dialogs/settingsdialog.ui" line="420"/>
+      <location filename="../../../src/dialogs/settingsdialog.ui" line="543"/>
       <source>size</source>
       <translation>الحجم</translation>
     </message>
@@ -674,32 +674,37 @@
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="400"/>
-      <source>Uthmanic</source>
-      <translation>عثماني</translation>
+      <source>Hafs</source>
+      <translation type="unfinished">Hafs</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="405"/>
-      <source>Uthmanic (annotated)</source>
-      <translation>عثماني (مرمز)</translation>
+      <source>Hafs (annotated)</source>
+      <translation type="unfinished">Hafs (annotated)</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.ui" line="505"/>
+      <location filename="../../../src/dialogs/settingsdialog.ui" line="410"/>
+      <source>Warsh</source>
+      <translation type="unfinished">Warsh</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/settingsdialog.ui" line="510"/>
       <source>Side content</source>
       <translation>المحتوى الجانبي</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.ui" line="513"/>
+      <location filename="../../../src/dialogs/settingsdialog.ui" line="518"/>
       <source>Font Family</source>
       <translation>نوع الخط</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.ui" line="624"/>
+      <location filename="../../../src/dialogs/settingsdialog.ui" line="629"/>
       <location filename="../../../src/dialogs/downloaderdialog.cpp" line="130"/>
       <source>Translation</source>
       <translation>الترجمة</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.ui" line="647"/>
+      <location filename="../../../src/dialogs/settingsdialog.ui" line="652"/>
       <source>Shortcuts</source>
       <translation>الاختصارات</translation>
     </message>
@@ -806,27 +811,27 @@
       <translation>المترجمون</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="369"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="406"/>
       <source>Credits</source>
       <translation>شكر وتقدير</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="390"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="427"/>
       <source>Recitations</source>
       <translation>التلاوات</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="438"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="475"/>
       <source>Tafsir/Translations</source>
       <translation>التفسير/الترجمات</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="489"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="526"/>
       <source>Surah Cards</source>
       <translation>بطاقات السور</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="535"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="572"/>
       <source>Libraries</source>
       <translation>المكتبات</translation>
     </message>
