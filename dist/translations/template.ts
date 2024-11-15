@@ -657,8 +657,8 @@
     </message>
     <message>
         <location filename="../../../src/dialogs/settingsdialog.ui" line="292"/>
-        <location filename="../../../src/dialogs/settingsdialog.ui" line="415"/>
-        <location filename="../../../src/dialogs/settingsdialog.ui" line="538"/>
+        <location filename="../../../src/dialogs/settingsdialog.ui" line="420"/>
+        <location filename="../../../src/dialogs/settingsdialog.ui" line="543"/>
         <source>size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -683,23 +683,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../src/dialogs/settingsdialog.ui" line="505"/>
+        <location filename="../../../src/dialogs/settingsdialog.ui" line="410"/>
+        <source>Warsh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../src/dialogs/settingsdialog.ui" line="510"/>
         <source>Side content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../src/dialogs/settingsdialog.ui" line="513"/>
+        <location filename="../../../src/dialogs/settingsdialog.ui" line="518"/>
         <source>Font Family</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../src/dialogs/settingsdialog.ui" line="624"/>
+        <location filename="../../../src/dialogs/settingsdialog.ui" line="629"/>
         <location filename="../../../src/dialogs/downloaderdialog.cpp" line="130"/>
         <source>Translation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../src/dialogs/settingsdialog.ui" line="647"/>
+        <location filename="../../../src/dialogs/settingsdialog.ui" line="652"/>
         <source>Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>

@@ -100,6 +100,9 @@ FontManager::verseFontname(Configuration::VerseType type, int page)
     case Configuration::Annotated:
       fontname = "Emine";
       break;
+    case Configuration::Warsh:
+      fontname = "kfgqpc_warsh_uthmanic_script";
+      break;
   }
   return fontname;
 }

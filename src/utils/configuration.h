@@ -12,7 +12,8 @@ public:
   {
     Qcf,
     Uthmanic,
-    Annotated
+    Annotated,
+    Warsh
   };
   /**
    * @brief ReaderMode enum represents the available modes for the Quran reader
