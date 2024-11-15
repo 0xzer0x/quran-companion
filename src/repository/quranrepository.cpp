@@ -173,7 +173,7 @@ QuranRepository::verseText(const int sIdx, const int vIdx) const
   QSqlQuery dbQuery(*this);
   QString columnName;
   switch (m_config.verseType()) {
-    case Configuration::Annotated:
+    case Configuration::HafsAnnotated:
       columnName = "aya_text_annotated";
       break;
     case Configuration::Warsh:

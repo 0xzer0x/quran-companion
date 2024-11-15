@@ -94,10 +94,10 @@ FontManager::verseFontname(Configuration::VerseType type, int page)
     case Configuration::Qcf:
       fontname = pageFontname(page);
       break;
-    case Configuration::Uthmanic:
+    case Configuration::Hafs:
       fontname = "kfgqpc_hafs_uthmanic _script";
       break;
-    case Configuration::Annotated:
+    case Configuration::HafsAnnotated:
       fontname = "Emine";
       break;
     case Configuration::Warsh:

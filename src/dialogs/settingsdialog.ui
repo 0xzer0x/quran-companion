@@ -29,7 +29,7 @@
       <enum>QTabWidget::TabShape::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="elideMode">
       <enum>Qt::TextElideMode::ElideNone</enum>
@@ -397,12 +397,12 @@
               </item>
               <item>
                <property name="text">
-                <string>Uthmanic</string>
+                <string>Hafs</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Uthmanic (annotated)</string>
+                <string>Hafs (annotated)</string>
                </property>
               </item>
               <item>

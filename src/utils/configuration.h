@@ -11,8 +11,8 @@ public:
   enum VerseType
   {
     Qcf,
-    Uthmanic,
-    Annotated,
+    Hafs,
+    HafsAnnotated,
     Warsh
   };
   /**

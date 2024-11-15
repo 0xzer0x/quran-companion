@@ -674,12 +674,12 @@
     </message>
     <message>
         <location filename="../../../src/dialogs/settingsdialog.ui" line="400"/>
-        <source>Uthmanic</source>
+        <source>Hafs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../src/dialogs/settingsdialog.ui" line="405"/>
-        <source>Uthmanic (annotated)</source>
+        <source>Hafs (annotated)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
