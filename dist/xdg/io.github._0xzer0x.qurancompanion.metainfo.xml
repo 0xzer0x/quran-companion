@@ -16,8 +16,8 @@
     <p>Quran Companion is a cross-platform Quran reader and player with recitation download capabilities, verse highlighting, resizable quran font, and a variety of tafsir books and translations</p>
   </description>
   <branding>
-    <color type="primary" scheme_preference="light">#8ab4f8</color>
-    <color type="primary" scheme_preference="dark">#8ab4f8</color>
+    <color scheme_preference="light" type="primary">#8ab4f8</color>
+    <color scheme_preference="dark" type="primary">#8ab4f8</color>
   </branding>
   <developer id="io.github._0xzer0x">
     <name>Youssef Fathy</name>
@@ -55,7 +55,15 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="1.3.0" date="2024-09-05">
+    <release date="2024-11-06" version="1.3.1">
+      <description>
+        <ul>
+          <li>Added Indonesian UI translation</li>
+          <li>Upgrade to Qt 6.7</li>
+        </ul>
+      </description>
+    </release>
+    <release date="2024-09-05" version="1.3.0">
       <description>
         <ul>
           <li>Move all downloadable content to a different location</li>
@@ -65,21 +73,21 @@
         </ul>
       </description>
     </release>
-    <release version="1.2.9" date="2024-08-24">
+    <release date="2024-08-24" version="1.2.9">
       <description>
         <ul>
           <li>Customizable downloads path</li>
         </ul>
       </description>
     </release>
-    <release version="1.2.8" date="2024-06-25">
+    <release date="2024-06-25" version="1.2.8">
       <description>
         <ul>
           <li>Bugfix in repeater widget positioning</li>
         </ul>
       </description>
     </release>
-    <release version="1.2.7" date="2024-06-22">
+    <release date="2024-06-22" version="1.2.7">
       <description>
         <ul>
           <li>Added verse group repeat feature</li>
@@ -88,7 +96,7 @@
         </ul>
       </description>
     </release>
-    <release version="1.2.6" date="2024-06-01">
+    <release date="2024-06-01" version="1.2.6">
       <description>
         <ul>
           <li>Russian UI translation</li>
@@ -97,7 +105,7 @@
         </ul>
       </description>
     </release>
-    <release version="1.2.5" date="2024-05-03">
+    <release date="2024-05-03" version="1.2.5">
       <description>
         <ul>
           <li>Added recitations menu in downloads manager for a more clear UI</li>
