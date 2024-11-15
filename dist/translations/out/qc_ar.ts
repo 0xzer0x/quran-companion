@@ -124,6 +124,16 @@
       <translation>محمد جبريل</translation>
     </message>
     <message>
+      <location filename="../main.cpp"/>
+      <source>Ibrahim Al-Dosary (Warsh)</source>
+      <translation type="unfinished">Ibrahim Al-Dosary (Warsh)</translation>
+    </message>
+    <message>
+      <location filename="../main.cpp"/>
+      <source>Yassin Al-Jazaery (Warsh)</source>
+      <translation type="unfinished">Yassin Al-Jazaery (Warsh)</translation>
+    </message>
+    <message>
       <location filename="../../../src/components/mainwindow.ui" line="17"/>
       <location filename="../../../src/components/mainwindow.cpp" line="577"/>
       <location filename="../../../src/components/systemtray.cpp" line="15"/>
