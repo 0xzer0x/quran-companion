@@ -826,22 +826,27 @@
       <translation>Kredit</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="427"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="424"/>
+      <source>Quran Text</source>
+      <translation type="unfinished">Quran Text</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="473"/>
       <source>Recitations</source>
       <translation>Qiraah</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="475"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="521"/>
       <source>Tafsir/Translations</source>
       <translation>Tafsir/Terjemahan</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="526"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="572"/>
       <source>Surah Cards</source>
       <translation>Kartu Surah</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="572"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="618"/>
       <source>Libraries</source>
       <translation>Pustaka</translation>
     </message>
