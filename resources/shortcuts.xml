@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shortcuts>
-    <shortcut key="TogglePlayerControls" default="Shift+P" description="Toggle player controls" />
-    <shortcut key="ToggleReaderView" default="R" description="Toggle reader view" />
-    <shortcut key="ToggleMenubar" default="M" description="Toggle visibility of the menubar" />
-    <shortcut key="ToggleNavDock" default="N" description="Toggle visibility of the navigation dock" />
-    <shortcut key="TogglePlayback" default="Space" description="Toggle playback state of recitation" />
-    <shortcut key="VolumeUp" default="+" description="Increase the playback volume" />
-    <shortcut key="VolumeDown" default="-" description="Decrease the playback volume" />
-    <shortcut key="NextPage" default="Left" description="Move to the next page" />
-    <shortcut key="PrevPage" default="Right" description="Move to the previous page" />
-    <shortcut key="NextVerse" default="V" description="Move to the next verse" />
-    <shortcut key="PrevVerse" default="Shift+V" description="Move to the previous verse" />
-    <shortcut key="NextSurah" default="S" description="Move to the next surah" />
-    <shortcut key="PrevSurah" default="Shift+S" description="Move to the previous surah" />
-    <shortcut key="NextJuz" default="J" description="Move to the next juz" />
-    <shortcut key="PrevJuz" default="Shift+J" description="Move to the previous juz" />
-    <shortcut key="ZoomIn" default="Ctrl+=" description="Increase the size of the quran page" />
-    <shortcut key="ZoomOut" default="Ctrl+-" description="Decrease the size of the quran page" />
-    <shortcut key="BookmarkCurrent" default="Shift+B"
-        description="Bookmark the current active verse" />
-    <shortcut key="BookmarksDialog" default="B" description="Open the bookmarks dialog" />
-    <shortcut key="KhatmahDialog" default="K" description="Open the khatmah dialog" />
-    <shortcut key="SearchDialog" default="F" description="Open the search dialog" />
-    <shortcut key="SettingsDialog" default="P" description="Open the preferences dialog" />
-    <shortcut key="ContentDialog" default="T"
-        description="Open the tafsir for the current active verse" />
-    <shortcut key="DownloaderDialog" default="D" description="Open the download manager dialog" />
-    <shortcut key="CopyDialog" default="'" description="Open the advanced copy dialog" />
-    <shortcut key="Quit" default="Ctrl+Q" description="Quit" />
+  <shortcut default="Shift+P" description="Toggle player controls" key="TogglePlayerControls"></shortcut>
+  <shortcut default="R" description="Toggle reader view" key="ToggleReaderView"></shortcut>
+  <shortcut default="M" description="Toggle visibility of the menubar" key="ToggleMenubar"></shortcut>
+  <shortcut default="N" description="Toggle visibility of the navigation dock" key="ToggleNavDock"></shortcut>
+  <shortcut default="Space" description="Toggle playback state of recitation" key="TogglePlayback"></shortcut>
+  <shortcut default="+" description="Increase the playback volume" key="VolumeUp"></shortcut>
+  <shortcut default="-" description="Decrease the playback volume" key="VolumeDown"></shortcut>
+  <shortcut default="Left" description="Move to the next page" key="NextPage"></shortcut>
+  <shortcut default="Right" description="Move to the previous page" key="PrevPage"></shortcut>
+  <shortcut default="V" description="Move to the next verse" key="NextVerse"></shortcut>
+  <shortcut default="Shift+V" description="Move to the previous verse" key="PrevVerse"></shortcut>
+  <shortcut default="S" description="Move to the next surah" key="NextSurah"></shortcut>
+  <shortcut default="Shift+S" description="Move to the previous surah" key="PrevSurah"></shortcut>
+  <shortcut default="J" description="Move to the next juz" key="NextJuz"></shortcut>
+  <shortcut default="Shift+J" description="Move to the previous juz" key="PrevJuz"></shortcut>
+  <shortcut default="Ctrl+=" description="Increase the size of the quran page" key="ZoomIn"></shortcut>
+  <shortcut default="Ctrl+-" description="Decrease the size of the quran page" key="ZoomOut"></shortcut>
+  <shortcut default="Shift+B" description="Bookmark the current active verse" key="BookmarkCurrent"></shortcut>
+  <shortcut default="B" description="Open the bookmarks dialog" key="BookmarksDialog"></shortcut>
+  <shortcut default="K" description="Open the khatmah dialog" key="KhatmahDialog"></shortcut>
+  <shortcut default="F" description="Open the search dialog" key="SearchDialog"></shortcut>
+  <shortcut default="P" description="Open the preferences dialog" key="SettingsDialog"></shortcut>
+  <shortcut default="T" description="Open the tafsir for the current active verse" key="ContentDialog"></shortcut>
+  <shortcut default="D" description="Open the download manager dialog" key="DownloaderDialog"></shortcut>
+  <shortcut default="'" description="Open the advanced copy dialog" key="CopyDialog"></shortcut>
+  <shortcut default="Ctrl+Q" description="Quit" key="Quit"></shortcut>
 </shortcuts>

@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files>
-    <tafasir>
-        <tafsir name="Adwa' ul-Bayan" file="adwa.db" text="0" extra="1" />
-        <tafsir name="Aysar ul-Tafasir" file="aysar.db" text="0" extra="1" />
-        <tafsir name="Al-Tafsir Al-Waseet" file="waseet.db" text="0" extra="1" />
-        <tafsir name="Al-Mukhtasar fil Tafsir" file="mukhtasar.db" text="1" extra="1" />
-        <tafsir name="Al-Baghawy" file="baghawy.db" text="0" extra="1" />
-        <tafsir name="Al-Qortoby" file="qortoby.db" text="0" extra="1" />
-        <tafsir name="Al-Sa'ady" file="sa3dy.db" text="1" extra="0" />
-        <tafsir name="Al-Tabary" file="tabary.db" text="0" extra="1" />
-        <tafsir name="Al-Jalalayn" file="jalalayn.db" text="0" extra="1" />
-        <tafsir name="Ea'rab" file="e3rab.db" text="0" extra="1" />
-        <tafsir name="Asbab ul-Nuzul - al-Wahidi" file="asbabnuzul.db" text="0" extra="1" />
-        <tafsir name="Hidayat Al-Quran Al-Kareem" file="hidayatquran.db" text="0" extra="1" />
-        <tafsir name="Ibn-Ashoor" file="tanweer.db" text="0" extra="1" />
-        <tafsir name="Ibn-Juzayy" file="tasheel.db" text="0" extra="1" />
-        <tafsir name="Ibn-Katheer" file="katheer.db" text="0" extra="1" />
-        <tafsir name="Ibn-Katheer - English" file="katheer_en.db" text="0" extra="1" />
-        <tafsir name="Al-Jalalayn - English" file="jalalayn_en.db" text="0" extra="1" />
-        <tafsir name="Al-Jalalayn - Indonesian" file="jalalayn_in.db" text="0" extra="1" />
-        <tafsir name="Kuliev &amp; Al-Sa'ady - Russian" file="sa3dy_ru.db" text="0" extra="1" />
-        <tafsir name="Tafheem ul-Quran - English" file="tafheem_en.db" text="0" extra="1" />
-    </tafasir>
-    <translations>
-        <translation name="عربي - التفسير الميسّر" file="muyassar.db" extra="0" />
-        <translation name="عربي - معاني الكلمات" file="ar_ma3any.db" extra="1" />
-        <translation name="Bengali - Muhiuddin Khan" file="bn_bengali.db" extra="1" />
-        <translation name="Bosanski - Korkut" file="bs_korkut.db" extra="1" />
-        <translation name="Deutsch - Bubenheim &amp; Elyas" file="de_bubenheim.db" extra="1" />
-        <translation name="English - Clear Quran" file="en_khattab.db" extra="0" />
-        <translation name="English - Sahih International" file="en_sahih.db" extra="1" />
-        <translation name="English - Abdullah Yusuf Ali" file="en_yusuf.db" extra="1" />
-        <translation name="English - Pickthall" file="en_pickthall.db" extra="1" />
-        <translation name="Español - Abdel Ghani Navio" file="es_navio.db" extra="1" />
-        <translation name="Français - Hamidullah" file="fr_hamidullah.db" extra="1" />
-        <translation name="Hausa - Gumi" file="ha_gumi.db" extra="1" />
-        <translation name="Indonesian - Bahasa Indonesia" file="id_indonesian.db" extra="1" />
-        <translation name="Italiano - Piccardo" file="it_piccardo.db" extra="1" />
-        <translation name="كوردى - برهان محمد أمين" file="ku_asan.db" extra="1" />
-        <translation name="Malayalam - Abdul Hameed &amp; Kunhi" file="ml_abdulhameed.db" extra="1" />
-        <translation name="Melayu - Basmeih" file="ms_basmeih.db" extra="1" />
-        <translation name="Dutch - Sofian Siregar" file="nl_siregar.db" extra="1" />
-        <translation name="فارسى - حسين تاجى كله دارى" file="pr_tagi.db" extra="1" />
-        <translation name="Português - El Hayek" file="pt_elhayek.db" extra="1" />
-        <translation name="Russian - Elmir Kuliev" file="ru_kuliev.db" extra="1" />
-        <translation name="Somali - Abduh" file="so_abduh.db" extra="1" />
-        <translation name="Shqiptar - Efendi Nahi" file="sq_nahi.db" extra="1" />
-        <translation name="Swedish - Bernström" file="sv_bernstrom.db" extra="1" />
-        <translation name="Swahili - Al-Barwani" file="sw_barwani.db" extra="1" />
-        <translation name="Tamil - Jan Turst Foundation" file="ta_tamil.db" extra="1" />
-        <translation name="ภาษาไทย - ภาษาไทย" file="th_thai.db" extra="1" />
-        <translation name="Türkçe - Diyanet Isleri" file="tr_diyanet.db" extra="1" />
-        <translation name="اردو - جالندربرى" file="ur_jalandhry.db" extra="1" />
-        <translation name="Uzbek - Мухаммад Содик" file="uz_sodik.db" extra="1" />
-        <translation name="中国语文 - Ma Jian" file="zh_jian.db" extra="1" />
-    </translations>
+  <tafasir>
+    <tafsir extra="1" file="adwa.db" name="Adwa' ul-Bayan" text="0"></tafsir>
+    <tafsir extra="1" file="aysar.db" name="Aysar ul-Tafasir" text="0"></tafsir>
+    <tafsir extra="1" file="waseet.db" name="Al-Tafsir Al-Waseet" text="0"></tafsir>
+    <tafsir extra="1" file="mukhtasar.db" name="Al-Mukhtasar fil Tafsir" text="1"></tafsir>
+    <tafsir extra="1" file="baghawy.db" name="Al-Baghawy" text="0"></tafsir>
+    <tafsir extra="1" file="qortoby.db" name="Al-Qortoby" text="0"></tafsir>
+    <tafsir extra="0" file="sa3dy.db" name="Al-Sa'ady" text="1"></tafsir>
+    <tafsir extra="1" file="tabary.db" name="Al-Tabary" text="0"></tafsir>
+    <tafsir extra="1" file="jalalayn.db" name="Al-Jalalayn" text="0"></tafsir>
+    <tafsir extra="1" file="e3rab.db" name="Ea'rab" text="0"></tafsir>
+    <tafsir extra="1" file="asbabnuzul.db" name="Asbab ul-Nuzul - al-Wahidi" text="0"></tafsir>
+    <tafsir extra="1" file="hidayatquran.db" name="Hidayat Al-Quran Al-Kareem" text="0"></tafsir>
+    <tafsir extra="1" file="tanweer.db" name="Ibn-Ashoor" text="0"></tafsir>
+    <tafsir extra="1" file="tasheel.db" name="Ibn-Juzayy" text="0"></tafsir>
+    <tafsir extra="1" file="katheer.db" name="Ibn-Katheer" text="0"></tafsir>
+    <tafsir extra="1" file="katheer_en.db" name="Ibn-Katheer - English" text="0"></tafsir>
+    <tafsir extra="1" file="jalalayn_en.db" name="Al-Jalalayn - English" text="0"></tafsir>
+    <tafsir extra="1" file="jalalayn_in.db" name="Al-Jalalayn - Indonesian" text="0"></tafsir>
+    <tafsir extra="1" file="sa3dy_ru.db" name="Kuliev &amp; Al-Sa'ady - Russian" text="0"></tafsir>
+    <tafsir extra="1" file="tafheem_en.db" name="Tafheem ul-Quran - English" text="0"></tafsir>
+  </tafasir>
+  <translations>
+    <translation extra="0" file="muyassar.db" name="عربي - التفسير الميسّر"></translation>
+    <translation extra="1" file="ar_ma3any.db" name="عربي - معاني الكلمات"></translation>
+    <translation extra="1" file="bn_bengali.db" name="Bengali - Muhiuddin Khan"></translation>
+    <translation extra="1" file="bs_korkut.db" name="Bosanski - Korkut"></translation>
+    <translation extra="1" file="de_bubenheim.db" name="Deutsch - Bubenheim &amp; Elyas"></translation>
+    <translation extra="0" file="en_khattab.db" name="English - Clear Quran"></translation>
+    <translation extra="1" file="en_sahih.db" name="English - Sahih International"></translation>
+    <translation extra="1" file="en_yusuf.db" name="English - Abdullah Yusuf Ali"></translation>
+    <translation extra="1" file="en_pickthall.db" name="English - Pickthall"></translation>
+    <translation extra="1" file="es_navio.db" name="Español - Abdel Ghani Navio"></translation>
+    <translation extra="1" file="fr_hamidullah.db" name="Français - Hamidullah"></translation>
+    <translation extra="1" file="ha_gumi.db" name="Hausa - Gumi"></translation>
+    <translation extra="1" file="id_indonesian.db" name="Indonesian - Bahasa Indonesia"></translation>
+    <translation extra="1" file="it_piccardo.db" name="Italiano - Piccardo"></translation>
+    <translation extra="1" file="ku_asan.db" name="كوردى - برهان محمد أمين"></translation>
+    <translation extra="1" file="ml_abdulhameed.db" name="Malayalam - Abdul Hameed &amp; Kunhi"></translation>
+    <translation extra="1" file="ms_basmeih.db" name="Melayu - Basmeih"></translation>
+    <translation extra="1" file="nl_siregar.db" name="Dutch - Sofian Siregar"></translation>
+    <translation extra="1" file="pr_tagi.db" name="فارسى - حسين تاجى كله دارى"></translation>
+    <translation extra="1" file="pt_elhayek.db" name="Português - El Hayek"></translation>
+    <translation extra="1" file="ru_kuliev.db" name="Russian - Elmir Kuliev"></translation>
+    <translation extra="1" file="so_abduh.db" name="Somali - Abduh"></translation>
+    <translation extra="1" file="sq_nahi.db" name="Shqiptar - Efendi Nahi"></translation>
+    <translation extra="1" file="sv_bernstrom.db" name="Swedish - Bernström"></translation>
+    <translation extra="1" file="sw_barwani.db" name="Swahili - Al-Barwani"></translation>
+    <translation extra="1" file="ta_tamil.db" name="Tamil - Jan Turst Foundation"></translation>
+    <translation extra="1" file="th_thai.db" name="ภาษาไทย - ภาษาไทย"></translation>
+    <translation extra="1" file="tr_diyanet.db" name="Türkçe - Diyanet Isleri"></translation>
+    <translation extra="1" file="ur_jalandhry.db" name="اردو - جالندربرى"></translation>
+    <translation extra="1" file="uz_sodik.db" name="Uzbek - Мухаммад Содик"></translation>
+    <translation extra="1" file="zh_jian.db" name="中国语文 - Ma Jian"></translation>
+  </translations>
 </files>
