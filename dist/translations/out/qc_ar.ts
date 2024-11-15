@@ -675,17 +675,17 @@
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="400"/>
       <source>Hafs</source>
-      <translation type="unfinished">Hafs</translation>
+      <translation>حفص</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="405"/>
       <source>Hafs (annotated)</source>
-      <translation type="unfinished">Hafs (annotated)</translation>
+      <translation>حفص (مرمّز)</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="410"/>
       <source>Warsh</source>
-      <translation type="unfinished">Warsh</translation>
+      <translation>ورش</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="510"/>
