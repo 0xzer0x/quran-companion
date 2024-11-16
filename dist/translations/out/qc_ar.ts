@@ -126,12 +126,12 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Ibrahim Al-Dosary (Warsh)</source>
-      <translation type="unfinished">Ibrahim Al-Dosary (Warsh)</translation>
+      <translation>إبراهيم الدوسري (ورش)</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Yassin Al-Jazaery (Warsh)</source>
-      <translation type="unfinished">Yassin Al-Jazaery (Warsh)</translation>
+      <translation>ياسين الجزائري (ورش)</translation>
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="17"/>
@@ -828,7 +828,7 @@
     <message>
       <location filename="../../../src/dialogs/aboutdialog.ui" line="424"/>
       <source>Quran Text</source>
-      <translation type="unfinished">Quran Text</translation>
+      <translation>نص القرآن</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/aboutdialog.ui" line="473"/>
