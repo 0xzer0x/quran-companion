@@ -124,6 +124,16 @@
       <translation>محمد جبريل</translation>
     </message>
     <message>
+      <location filename="../main.cpp"/>
+      <source>Ibrahim Al-Dosary (Warsh)</source>
+      <translation>إبراهيم الدوسري (ورش)</translation>
+    </message>
+    <message>
+      <location filename="../main.cpp"/>
+      <source>Yassin Al-Jazaery (Warsh)</source>
+      <translation>ياسين الجزائري (ورش)</translation>
+    </message>
+    <message>
       <location filename="../../../src/components/mainwindow.ui" line="17"/>
       <location filename="../../../src/components/mainwindow.cpp" line="577"/>
       <location filename="../../../src/components/systemtray.cpp" line="15"/>
@@ -816,22 +826,27 @@
       <translation>شكر وتقدير</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="427"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="424"/>
+      <source>Quran Text</source>
+      <translation>نص القرآن</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="473"/>
       <source>Recitations</source>
       <translation>التلاوات</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="475"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="521"/>
       <source>Tafsir/Translations</source>
       <translation>التفسير/الترجمات</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="526"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="572"/>
       <source>Surah Cards</source>
       <translation>بطاقات السور</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="572"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="618"/>
       <source>Libraries</source>
       <translation>المكتبات</translation>
     </message>
