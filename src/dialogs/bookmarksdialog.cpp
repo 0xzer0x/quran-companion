@@ -5,9 +5,9 @@
 
 #include "bookmarksdialog.h"
 #include "ui_bookmarksdialog.h"
+#include <service/servicefactory.h>
 #include <set>
 #include <utils/fontmanager.h>
-#include <service/servicefactory.h>
 #include <utils/stylemanager.h>
 
 BookmarksDialog::BookmarksDialog(QWidget* parent)
@@ -141,7 +141,7 @@ BookmarksDialog::loadBookmarks(int surah)
                    m_quranService->surahNames().at(verse.surah() - 1) + " - " +
                    tr("Verse: ") + QString::number(verse.number());
     QString glyphs =
-      m_config.verseType() == Configuration::Qcf
+      m_config.verseType() == ConfigurationSchema::Qcf
         ? m_glyphService->getVerseGlyphs(verse.surah(), verse.number())
         : m_quranService->verseText(verse.surah(), verse.number());
 

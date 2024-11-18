@@ -1,7 +1,7 @@
 #include "playercontrols.h"
 #include "ui_playercontrols.h"
 #include <QtAwesome.h>
-#include <qnamespace.h>
+#include <algorithm>
 #include <utils/shortcuthandler.h>
 #include <utils/stylemanager.h>
 using namespace fa;
@@ -205,6 +205,13 @@ int
 PlayerControls::currentReciter() const
 {
   return ui->cmbReciter->currentIndex();
+}
+
+void
+PlayerControls::adjustWidth()
+{
+  QFrame* readerFrame = m_reader->findChild<QFrame*>("frmReader");
+  this->setMaximumWidth(std::min(readerFrame->width(), 950));
 }
 
 void

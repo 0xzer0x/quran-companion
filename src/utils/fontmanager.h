@@ -4,13 +4,14 @@
 #include "configuration.h"
 #include "dirmanager.h"
 #include <QString>
+#include <utils/configurationschema.h>
 
 class FontManager
 {
 public:
   static FontManager& getInstance();
   QString pageFontname(int page);
-  QString verseFontname(Configuration::VerseType type, int page);
+  QString verseFontname(ConfigurationSchema::VerseType type, int page);
   void loadFonts();
   bool qcfExists();
 

@@ -163,8 +163,9 @@ QuranReader::updateSideFont()
 void
 QuranReader::updateVerseType()
 {
-  Configuration::VerseType type = qvariant_cast<Configuration::VerseType>(
-    m_config.settings().value("Reader/VerseType"));
+  ConfigurationSchema::VerseType type =
+    qvariant_cast<ConfigurationSchema::VerseType>(
+      m_config.settings().value("Reader/VerseType"));
   m_versesFont.setFamily(
     FontManager::getInstance().verseFontname(type, m_currVerse.page()));
   m_versesFont.setPointSize(
@@ -195,7 +196,7 @@ QuranReader::redrawQuranPage(bool manualSz)
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_quranBrowsers[0]->constructPage(m_currVerse.page(), manualSz);
-    if (m_config.readerMode() == Configuration::DoublePage &&
+    if (m_config.readerMode() == ConfigurationSchema::DoublePage &&
         m_quranBrowsers[1])
       m_quranBrowsers[1]->constructPage(m_currVerse.page() + 1, manualSz);
   } else {
@@ -222,7 +223,7 @@ QuranReader::addSideContent()
   QLabel* contentLb;
   VerseFrame* verseContFrame;
   QString prevLbContent, currLbContent, glyphs;
-  if (m_config.verseType() == Configuration::Qcf)
+  if (m_config.verseType() == ConfigurationSchema::Qcf)
     m_versesFont.setFamily(
       FontManager::getInstance().pageFontname(m_currVerse.page()));
 
@@ -233,7 +234,7 @@ QuranReader::addSideContent()
     verseContFrame = new VerseFrame(m_scrlVerseByVerse->widget());
     verselb = new ClickableLabel(verseContFrame);
     contentLb = new QLabel(verseContFrame);
-    glyphs = m_config.verseType() == Configuration::Qcf
+    glyphs = m_config.verseType() == ConfigurationSchema::Qcf
                ? m_glyphService->getVerseGlyphs(verse->surah(), verse->number())
                : m_quranService->verseText(verse->surah(), verse->number());
 
@@ -311,7 +312,7 @@ QuranReader::updatePageVerseInfoList()
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_vLists[0] = m_quranService->verseInfoList(m_currVerse.page());
-    if (m_config.readerMode() == Configuration::DoublePage)
+    if (m_config.readerMode() == ConfigurationSchema::DoublePage)
       m_vLists[1] = m_quranService->verseInfoList(m_currVerse.page() + 1);
 
     m_activeVList = &m_vLists[0];

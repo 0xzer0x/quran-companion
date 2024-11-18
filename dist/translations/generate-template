@@ -5,62 +5,64 @@ set -euo pipefail
 _SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 _QT_DIR=$(find "$HOME" -maxdepth 3 -path "$HOME/Qt/6.*/gcc_64" -type d | head -n 1)
 #COLORS
-CDEF="\033[0m"      # default color
-b_CCIN="\033[1;36m" # bold info color
-b_CGSC="\033[1;32m" # bold success color
-b_CRER="\033[1;31m" # bold error color
-b_CWAR="\033[1;33m" # bold warning color
+__CDEF="\033[0m"      # default color
+__b_CCIN="\033[1;36m" # bold info color
+__b_CGSC="\033[1;32m" # bold success color
+__b_CRER="\033[1;31m" # bold error color
+__b_CWAR="\033[1;33m" # bold warning color
 
 # echo like with flag type and display message colors
-prompt() {
+__prompt() {
   case ${1} in
   "-s" | "--success")
-    echo -ne "${b_CGSC}${2}${CDEF}"
+    echo -e "${__b_CGSC}${2}${__CDEF}"
     ;; # print success message
   "-e" | "--error")
-    echo -ne "${b_CRER}${2}${CDEF}"
+    echo -e "${__b_CRER}${2}${__CDEF}"
     ;; # print error message
   "-w" | "--warning")
-    echo -ne "${b_CWAR}${2}${CDEF}"
+    echo -e "${__b_CWAR}${2}${__CDEF}"
     ;; # print warning message
   "-i" | "--info")
-    echo -ne "${b_CCIN}${2}${CDEF}"
+    echo -e "${__b_CCIN}${2}${__CDEF}"
     ;; # print info message
   *)
-    echo -ne "$@"
+    echo -e "$@"
     ;;
   esac
 }
 
 extract-reciters() {
-  prompt -s "-- generating reciters ts file\n"
-  local __tsfile=$_SCRIPT_DIR/generated/tafasir.ts
-  local __xmlfile=$_SCRIPT_DIR/../../resources/files.xml
+  __prompt -s "-- generating reciters ts file"
+  local __tsfile=$_SCRIPT_DIR/generated/reciters.ts
+  local __xmlfile=$_SCRIPT_DIR/../../resources/reciters.xml
 
-  mapfile -t __reciters_names <<<"$(awk -F'"' '/name/ { for(i=1;i<NF;i++) if($i~/tafsir name=/) { print $(i+1) } }' "$__xmlfile")"
+  mapfile -t __reciters_names <<<"$(grep -oE 'display="([^"]+)"' "${__xmlfile}" | cut -d'"' -f2)"
 
-  printf "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!DOCTYPE TS>\n<TS version=\"2.1\">\n" >"$__tsfile"
-  printf "<context>\n\t<name>MainWindow</name>" >>"$__tsfile"
+  printf "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!DOCTYPE TS>\n<TS version=\"2.1\">\n" >"${__tsfile}"
+  printf "<context>\n\t<name>MainWindow</name>" >>"${__tsfile}"
 
   for n in "${__reciters_names[@]}"; do
-    printf "\n\t<message>\n\t\t<location filename=\"../main.cpp\"/>\n\t\t<source>%s</source>\n\t\t<translation type=\"unfinished\"></translation>\n\t</message>" "$n" >>"$__tsfile"
+    __prompt -i "-- adding '${n}'"
+    printf "\n\t<message>\n\t\t<location filename=\"../main.cpp\"/>\n\t\t<source>%s</source>\n\t\t<translation type=\"unfinished\"></translation>\n\t</message>" "$n" >>"${__tsfile}"
   done
 
-  printf "\n</context>\n</TS>" >>"$__tsfile"
+  printf "\n</context>\n</TS>" >>"${__tsfile}"
   echo "-- extracted ${#__reciters_names[@]} reciters"
 }
 
 extract-tafasir() {
-  prompt -s "-- generating tafasir ts file\n"
+  __prompt -s "-- generating tafasir ts file"
   local __tsfile=$_SCRIPT_DIR/generated/tafasir.ts
   local __xmlfile=$_SCRIPT_DIR/../../resources/files.xml
 
-  mapfile -t __tafasir_names <<<"$(awk -F'"' '/name/ { for(i=1;i<NF;i++) if($i~/tafsir name=/) { print $(i+1) } }' "$__xmlfile")"
+  mapfile -t __tafasir_names <<<"$(grep -oE 'tafsir.*name="([^"]+)"' "${__xmlfile}" | cut -d'"' -f6)"
 
   printf "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!DOCTYPE TS>\n<TS version=\"2.1\">\n" >"$__tsfile"
   printf "<context>\n\t<name>MainWindow</name>" >>"$__tsfile"
 
   for n in "${__tafasir_names[@]}"; do
+    __prompt -i "-- adding '${n}'"
     printf "\n\t<message>\n\t\t<location filename=\"../main.cpp\"/>\n\t\t<source>%s</source>\n\t\t<translation type=\"unfinished\"></translation>\n\t</message>" "$n" >>"$__tsfile"
   done
 
@@ -69,16 +71,17 @@ extract-tafasir() {
 }
 
 extract-shortcuts() {
-  prompt -s "-- generating shortcuts ts file\n"
+  __prompt -s "-- generating shortcuts ts file"
   local __tsfile=$_SCRIPT_DIR/generated/shortcuts.ts
   local __xmlfile=$_SCRIPT_DIR/../../resources/shortcuts.xml
 
-  mapfile -t __shortcuts_desc <<<"$(awk -F'"' '/desc/ { for(i=1;i<NF;i++) if($i~/description=/) { print $(i+1) } }' "$__xmlfile")"
+  mapfile -t __shortcuts_desc <<<"$(grep -oE 'description="[^"]+"' "${__xmlfile}" | cut -d'"' -f2)"
 
   printf "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!DOCTYPE TS>\n<TS version=\"2.1\">\n" >"$__tsfile"
   printf "<context>\n\t<name>SettingsDialog</name>" >>"$__tsfile"
 
   for n in "${__shortcuts_desc[@]}"; do
+    __prompt -i "-- adding '${n}'"
     printf "\n\t<message>\n\t\t<location filename=\"../main.cpp\"/>\n\t\t<source>%s</source>\n\t\t<translation type=\"unfinished\"></translation>\n\t</message>" "$n" >>"$__tsfile"
   done
 
@@ -87,12 +90,12 @@ extract-shortcuts() {
 }
 
 extract-source-strings() {
-  prompt -s "-- generating sources ts file\n"
+  __prompt -s "-- generating sources ts file"
   "$_QT_DIR/bin/lupdate" -recursive -no-obsolete "$_SCRIPT_DIR/../../src" -ts "$_SCRIPT_DIR/generated/sources.ts"
 }
 
 update-template() {
-  prompt -s "-- updating template ts file\n"
+  __prompt -s "-- updating template ts file"
   local templatefile="$_SCRIPT_DIR/template.ts"
   declare -a generated
   for f in "$_SCRIPT_DIR/generated/"*; do

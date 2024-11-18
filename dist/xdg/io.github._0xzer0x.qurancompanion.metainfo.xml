@@ -55,6 +55,19 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release date="2024-11-18" version="1.3.2">
+      <description>
+        <ul>
+          <li>Bug fixes for QCF v2 font</li>
+          <li>Bug fix for issue with the translation of Tafsir names</li>
+          <li>Added the Ayat font for Warsh 'an Nafi' narration</li>
+          <li>New reciter Ibrahim Al-Dosari (Warsh)</li>
+          <li>New reciter Yassine Al-Jazairi (Warsh)</li>
+          <li>Added saving of the state of the menu bar (visible/hidden)</li>
+          <li>Updating Qt to version 6.8</li>
+        </ul>
+      </description>
+    </release>
     <release date="2024-11-06" version="1.3.1">
       <description>
         <ul>

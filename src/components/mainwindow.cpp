@@ -35,10 +35,10 @@ MainWindow::MainWindow(QWidget* parent)
   loadVerse();
   loadComponents();
 
-  if (m_config.settings().value("WindowState").isNull())
-    m_config.settings().setValue("WindowState", saveState());
+  if (m_config.settings().value("Window/State").isNull())
+    m_config.settings().setValue("Window/State", saveState());
   else
-    restoreState(m_config.settings().value("WindowState").toByteArray());
+    restoreState(m_config.settings().value("Window/State").toByteArray());
 
   // connectors
   setupShortcuts();
@@ -48,6 +48,9 @@ MainWindow::MainWindow(QWidget* parent)
   this->show();
 
   m_popup->setDockArea(dockWidgetArea(ui->sideDock));
+  if (!m_config.settings().value("Window/VisibleMenubar").toBool()) {
+    toggleMenubar();
+  }
 }
 
 void
@@ -115,9 +118,9 @@ MainWindow::loadComponents()
   controls->setAlignment(Qt::AlignCenter);
   controls->setContentsMargins(0, 0, 0, 0);
   controls->setSpacing(0);
-  controls->addStretch(1);
-  controls->addWidget(m_playerControls);
-  controls->addStretch(1);
+  controls->addStretch(0);
+  controls->addWidget(m_playerControls, 1);
+  controls->addStretch(0);
   controlsFrame->setLayout(controls);
   ui->scrollAreaWidgetContents->layout()->addWidget(controlsFrame);
   ui->scrollAreaWidgetContents->layout()->addWidget(m_reader);
@@ -789,6 +792,8 @@ MainWindow::toggleMenubar()
   else
     ui->menubar->show();
   m_repeater->adjustPosition();
+  m_config.settings().setValue("Window/VisibleMenubar",
+                               ui->menubar->isVisible());
 }
 
 void
@@ -822,12 +827,13 @@ MainWindow::resizeEvent(QResizeEvent* event)
   m_popup->move(m_popup->notificationPos());
   m_betaqaViewer->center();
   m_repeater->adjustPosition();
+  m_playerControls->adjustWidth();
 }
 
 void
 MainWindow::saveReaderState()
 {
-  m_config.settings().setValue("WindowState", saveState());
+  m_config.settings().setValue("Window/State", saveState());
   m_config.settings().setValue("Reciter", m_playerControls->currentReciter());
   m_config.settings().sync();
 

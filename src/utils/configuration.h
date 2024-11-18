@@ -4,30 +4,12 @@
 #include <QLocale>
 #include <QSettings>
 #include <QSharedPointer>
+#include <utils/configurationschema.h>
 
 class Configuration
 {
 public:
-  enum VerseType
-  {
-    Qcf,
-    Uthmanic,
-    Annotated
-  };
-  /**
-   * @brief ReaderMode enum represents the available modes for the Quran reader
-   * in MainWindow
-   */
-  enum ReaderMode
-  {
-    SinglePage, ///< Single Quran page, side panel is used for displaying verses
-                ///< with translation
-    DoublePage  ///< Two Quran pages, both panels are used to display Quran
-                ///< pages, no translation
-  };
-
   static Configuration& getInstance();
-  void checkConfGroup(int gId);
   void loadUiTranslation();
   void checkGroups();
 
@@ -36,9 +18,9 @@ public:
   bool darkMode() const;
   int qcfVersion() const;
   QLocale::Language language() const;
-  ReaderMode readerMode() const;
-  VerseType verseType() const;
-  void setVerseType(VerseType newVerseType);
+  ConfigurationSchema::ReaderMode readerMode() const;
+  ConfigurationSchema::VerseType verseType() const;
+  void setVerseType(ConfigurationSchema::VerseType newVerseType);
 
 private:
   Configuration();
@@ -48,8 +30,8 @@ private:
   int m_qcfVersion;
   QLocale::Language m_language;
   QSettings m_settings;
-  ReaderMode m_readerMode;
-  VerseType m_verseType;
+  ConfigurationSchema::ReaderMode m_readerMode;
+  ConfigurationSchema::VerseType m_verseType;
 };
 
 #endif // CONFIGURATION_H

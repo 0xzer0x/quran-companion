@@ -171,13 +171,22 @@ QString
 QuranRepository::verseText(const int sIdx, const int vIdx) const
 {
   QSqlQuery dbQuery(*this);
-  if (m_config.verseType() == Configuration::Annotated)
-    dbQuery.prepare("SELECT aya_text_annotated FROM verses_v1 WHERE sura_no=:s "
-                    "AND aya_no=:v");
-  else
-    dbQuery.prepare(
-      "SELECT aya_text FROM verses_v1 WHERE sura_no=:s AND aya_no=:v");
+  QString columnName;
+  switch (m_config.verseType()) {
+    case ConfigurationSchema::HafsAnnotated:
+      columnName = "aya_text_annotated";
+      break;
+    case ConfigurationSchema::Warsh:
+      columnName = "aya_text_warsh";
+      break;
+    default:
+      columnName = "aya_text";
+      break;
+  }
 
+  dbQuery.prepare("SELECT " + columnName +
+                  " FROM verses_v1 WHERE sura_no=:s "
+                  "AND aya_no=:v");
   dbQuery.bindValue(0, sIdx);
   dbQuery.bindValue(1, vIdx);
 
@@ -225,7 +234,8 @@ Verse
 QuranRepository::verseById(const int id) const
 {
   QSqlQuery dbQuery(*this);
-  dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v1 WHERE id=:i");
+  dbQuery.prepare("SELECT page,sura_no,aya_no FROM verses_v" +
+                  QString::number(m_config.qcfVersion()) + " WHERE id=:i");
   dbQuery.bindValue(0, id);
 
   executeQuery(dbQuery,

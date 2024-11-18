@@ -17,9 +17,10 @@
 #include <service/tafsirservice.h>
 #include <service/translationservice.h>
 #include <types/verse.h>
+#include <utils/configurationschema.h>
 #include <widgets/quranpagebrowser.h>
 #include <widgets/verseframe.h>
-typedef Configuration::ReaderMode ReaderMode;
+typedef ConfigurationSchema::ReaderMode ReaderMode;
 
 namespace Ui {
 class QuranReader;

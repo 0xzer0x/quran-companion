@@ -5,8 +5,8 @@
 
 #include "searchdialog.h"
 #include "ui_searchdialog.h"
-#include <utils/fontmanager.h>
 #include <service/servicefactory.h>
+#include <utils/fontmanager.h>
 #include <utils/stylemanager.h>
 #include <widgets/clickablelabel.h>
 
@@ -125,7 +125,7 @@ SearchDialog::showResults()
     QString info = tr("Surah: ") +
                    m_quranService->surahNames().at(v.surah() - 1) + " - " +
                    tr("Verse: ") + QString::number(v.number());
-    QString glyphs = m_config.verseType() == Configuration::Qcf
+    QString glyphs = m_config.verseType() == ConfigurationSchema::Qcf
                        ? m_glyphService->getVerseGlyphs(v.surah(), v.number())
                        : m_quranService->verseText(v.surah(), v.number());
 
