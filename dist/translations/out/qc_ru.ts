@@ -135,7 +135,7 @@
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="17"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="577"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="580"/>
       <location filename="../../../src/components/systemtray.cpp" line="15"/>
       <source>Quran Companion</source>
       <translation>Компаньон Корана</translation>
@@ -162,7 +162,7 @@
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="179"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="414"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="417"/>
       <source>Navigation</source>
       <translation>Навигация</translation>
     </message>
@@ -223,7 +223,7 @@
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="487"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="719"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="722"/>
       <source>About Qt</source>
       <translation>О платформе Qt</translation>
     </message>
@@ -268,49 +268,49 @@
       <translation>Управление плеером</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="81"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="84"/>
       <source>Default</source>
       <translation>По умолчанию</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="573"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="576"/>
       <source>Now playing: </source>
       <translation>Сейчас проигрывается:</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="574"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="577"/>
       <source>Surah </source>
       <translation>Сура </translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="598"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="612"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="627"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="601"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="615"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="630"/>
       <source>Files Missing</source>
       <translation>Файл не найден</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="599"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="602"/>
       <source>The selected font files are missing, would you like to download it?</source>
       <translation>Файлы выбранного шрифта отсутствуют, вы хотите загрузить их?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="613"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="616"/>
       <source>The selected tafsir is missing, would you like to download it?</source>
       <translation>Файлы выбранного тафсира отсутствуют, вы хотите загрузить его?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="628"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="631"/>
       <source>The selected translation is missing, would you like to download it?</source>
       <translation>Файлы выбранного перевода отсутствуют, вы хотите загрузить их?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="646"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="649"/>
       <source>Recitation not found</source>
       <translation>Чтец не найден</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="647"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="650"/>
       <source>The recitation files for the current surah is missing, would you like to download it?</source>
       <translation>Файл чтения для текущей суры отсутствует, вы хотите скачать его?</translation>
     </message>
@@ -1243,7 +1243,7 @@
   <context>
     <name>PlayerControls</name>
     <message>
-      <location filename="../../../src/components/playercontrols.ui" line="74"/>
+      <location filename="../../../src/components/playercontrols.ui" line="68"/>
       <source>Reciter</source>
       <translation>Чтец</translation>
     </message>
