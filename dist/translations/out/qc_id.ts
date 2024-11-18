@@ -135,7 +135,7 @@
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="17"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="577"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="580"/>
       <location filename="../../../src/components/systemtray.cpp" line="15"/>
       <source>Quran Companion</source>
       <translation>Teman Quran</translation>
@@ -162,7 +162,7 @@
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="179"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="414"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="417"/>
       <source>Navigation</source>
       <translation>Navigasi</translation>
     </message>
@@ -223,7 +223,7 @@
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="487"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="719"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="722"/>
       <source>About Qt</source>
       <translation>Tentang Qt</translation>
     </message>
@@ -268,49 +268,49 @@
       <translation>Kontrol player</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="81"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="84"/>
       <source>Default</source>
       <translation>Default</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="573"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="576"/>
       <source>Now playing: </source>
       <translation>Sedang diputar: </translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="574"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="577"/>
       <source>Surah </source>
       <translation>Surah </translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="598"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="612"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="627"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="601"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="615"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="630"/>
       <source>Files Missing</source>
       <translation>Berkas Kurang</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="599"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="602"/>
       <source>The selected font files are missing, would you like to download it?</source>
       <translation>Berkas font yang dipilih tidak ditemukan, apakah anda ingin mengunduhnya?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="613"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="616"/>
       <source>The selected tafsir is missing, would you like to download it?</source>
       <translation>Tafsir yang dipilih tidak ditemukan, apakah anda ingin mengunduhnya?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="628"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="631"/>
       <source>The selected translation is missing, would you like to download it?</source>
       <translation>Terjemahan yang dipilih tidak ditemukan, apakah anda ingin mengunduhnya?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="646"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="649"/>
       <source>Recitation not found</source>
       <translation>Qiraah tidak ditemukan</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="647"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="650"/>
       <source>The recitation files for the current surah is missing, would you like to download it?</source>
       <translation>Berkas qiraah untuk surah saat ini tidak ditemukan, apakah anda ingin mengunduhnya?</translation>
     </message>
@@ -1243,7 +1243,7 @@
   <context>
     <name>PlayerControls</name>
     <message>
-      <location filename="../../../src/components/playercontrols.ui" line="74"/>
+      <location filename="../../../src/components/playercontrols.ui" line="68"/>
       <source>Reciter</source>
       <translation>Qori</translation>
     </message>
