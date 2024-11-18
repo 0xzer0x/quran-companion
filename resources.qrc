@@ -17,4 +17,9 @@
         <file>resources/tray.png</file>
         <file>resources/files.xml</file>
     </qresource>
+    <qresource prefix="/qtbase">
+        <file alias="ar.qm">dist/translations/qtbase/ar.qm</file>
+        <file alias="ru.qm">dist/translations/qtbase/ru.qm</file>
+        <file alias="tr.qm">dist/translations/qtbase/tr.qm</file>
+    </qresource>
 </RCC>

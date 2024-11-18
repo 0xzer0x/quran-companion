@@ -266,28 +266,10 @@ list(APPEND SUPPORTED_LANGUAGES ar tr ru id)
 foreach(lang IN LISTS SUPPORTED_LANGUAGES)
   message(STATUS "Adding ${lang} translation file to QC_TS")
   list(APPEND QC_TS "dist/translations/out/qc_${lang}.ts")
-
-  if(EXISTS "dist/translations/qtbase/${lang}.qm")
-    message(STATUS "Copying ${lang} qt translations to build tree")
-    configure_file("dist/translations/qtbase/${lang}.qm"
-                   "${CMAKE_BINARY_DIR}/${lang}.qm" COPYONLY)
-
-    message(STATUS "Adding ${lang} qtbase qm file to QTBASE_QM")
-    list(APPEND QTBASE_QM "${CMAKE_BINARY_DIR}/${lang}.qm")
-  endif()
 endforeach()
 
 message(STATUS "Creating qt translations resource file")
 qt_add_translations(quran-companion TS_FILES ${QC_TS})
-qt_add_resources(
-  quran-companion
-  "qttranslations"
-  PREFIX
-  "/qtbase"
-  BASE
-  ${CMAKE_BINARY_DIR}
-  FILES
-  ${QTBASE_QM})
 
 if(QT_VERSION_MAJOR EQUAL 6)
   qt_finalize_executable(quran-companion)
