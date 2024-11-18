@@ -21,7 +21,7 @@ Tafsir::populateTafasir()
     if (token == QXmlStreamReader::StartElement) {
       if (reader.name().toString() == "tafsir") {
         QString name = qApp->translate(
-          "SettingsDialog", reader.attributes().value("name").toLatin1());
+          "MainWindow", reader.attributes().value("name").toLatin1());
         QString file = reader.attributes().value("file").toString();
         bool isText = reader.attributes().value("text").toInt();
         bool isExtra = reader.attributes().value("extra").toInt();
