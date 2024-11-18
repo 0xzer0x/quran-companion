@@ -1,700 +1,686 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AboutDialog</class>
- <widget class="QDialog" name="AboutDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>388</width>
-    <height>480</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>About Quran Companion</string>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
-   <item>
-    <widget class="QFrame" name="frmAppInfo">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>64</width>
-       <height>80</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>80</height>
-      </size>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+  <class>AboutDialog</class>
+  <widget class="QDialog" name="AboutDialog">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>388</width>
+        <height>480</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>About Quran Companion</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
       <item>
-       <widget class="QLabel" name="lbLogo">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>64</width>
-          <height>64</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>64</width>
-          <height>64</height>
-         </size>
-        </property>
-        <property name="text">
-         <string notr="true"/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../../resources.qrc">:/resources/tray.png</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="lytInfo" stretch="0,0,1,0">
-        <property name="spacing">
-         <number>2</number>
-        </property>
-        <item>
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLabel" name="lbAppName">
-          <property name="font">
-           <font>
-            <family>SF Pro Display</family>
-            <pointsize>11</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Quran Companion</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLabel" name="label_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <widget class="QFrame" name="frmAppInfo">
+          <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Version</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lbVersionNum">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>SF Pro Display</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string notr="true">1.x.x</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
+            </sizepolicy>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
+          <property name="minimumSize">
+            <size>
+              <width>64</width>
+              <height>80</height>
+            </size>
           </property>
-         </spacer>
-        </item>
-       </layout>
+          <property name="maximumSize">
+            <size>
+              <width>16777215</width>
+              <height>80</height>
+            </size>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+              <widget class="QLabel" name="lbLogo">
+                <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                  <size>
+                    <width>64</width>
+                    <height>64</height>
+                  </size>
+                </property>
+                <property name="maximumSize">
+                  <size>
+                    <width>64</width>
+                    <height>64</height>
+                  </size>
+                </property>
+                <property name="text">
+                  <string notr="true"></string>
+                </property>
+                <property name="pixmap">
+                  <pixmap resource="../../resources.qrc">:/resources/tray.png</pixmap>
+                </property>
+                <property name="scaledContents">
+                  <bool>true</bool>
+                </property>
+              </widget>
+            </item>
+            <item>
+              <layout class="QVBoxLayout" name="lytInfo" stretch="0,0,1,0">
+                <property name="spacing">
+                  <number>2</number>
+                </property>
+                <item>
+                  <spacer name="verticalSpacer_2">
+                    <property name="orientation">
+                      <enum>Qt::Orientation::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                      <size>
+                        <width>20</width>
+                        <height>40</height>
+                      </size>
+                    </property>
+                  </spacer>
+                </item>
+                <item>
+                  <widget class="QLabel" name="lbAppName">
+                    <property name="font">
+                      <font>
+                        <pointsize>11</pointsize>
+                        <bold>true</bold>
+                      </font>
+                    </property>
+                    <property name="text">
+                      <string>Quran Companion</string>
+                    </property>
+                  </widget>
+                </item>
+                <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout">
+                    <item>
+                      <widget class="QLabel" name="label_2">
+                        <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                          </sizepolicy>
+                        </property>
+                        <property name="font">
+                          <font>
+                            <pointsize>10</pointsize>
+                          </font>
+                        </property>
+                        <property name="text">
+                          <string>Version</string>
+                        </property>
+                      </widget>
+                    </item>
+                    <item>
+                      <widget class="QLabel" name="lbVersionNum">
+                        <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                          </sizepolicy>
+                        </property>
+                        <property name="font">
+                          <font>
+                            <pointsize>10</pointsize>
+                          </font>
+                        </property>
+                        <property name="text">
+                          <string notr="true">1.x.x</string>
+                        </property>
+                      </widget>
+                    </item>
+                    <item>
+                      <spacer name="horizontalSpacer_2">
+                        <property name="orientation">
+                          <enum>Qt::Orientation::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                          <size>
+                            <width>40</width>
+                            <height>20</height>
+                          </size>
+                        </property>
+                      </spacer>
+                    </item>
+                  </layout>
+                </item>
+                <item>
+                  <spacer name="verticalSpacer">
+                    <property name="orientation">
+                      <enum>Qt::Orientation::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                      <size>
+                        <width>20</width>
+                        <height>40</height>
+                      </size>
+                    </property>
+                  </spacer>
+                </item>
+              </layout>
+            </item>
+          </layout>
+        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTabWidget" name="aboutTabWidget">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="tabPosition">
-      <enum>QTabWidget::TabPosition::North</enum>
-     </property>
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <property name="elideMode">
-      <enum>Qt::TextElideMode::ElideLeft</enum>
-     </property>
-     <property name="movable">
-      <bool>false</bool>
-     </property>
-     <widget class="QWidget" name="aboutTab">
-      <attribute name="title">
-       <string>About</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,1">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>A free, open-source Quran reader &amp; player</string>
-           </property>
+      <item>
+        <widget class="QTabWidget" name="aboutTabWidget">
+          <property name="styleSheet">
+            <string notr="true"></string>
+          </property>
+          <property name="tabPosition">
+            <enum>QTabWidget::TabPosition::North</enum>
+          </property>
+          <property name="currentIndex">
+            <number>0</number>
+          </property>
+          <property name="elideMode">
+            <enum>Qt::TextElideMode::ElideLeft</enum>
+          </property>
+          <property name="movable">
+            <bool>false</bool>
+          </property>
+          <widget class="QWidget" name="aboutTab">
+            <attribute name="title">
+              <string>About</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,1">
+              <item>
+                <layout class="QVBoxLayout" name="verticalLayout">
+                  <item>
+                    <widget class="QLabel" name="label_4">
+                      <property name="text">
+                        <string>A free, open-source Quran reader &amp; player</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="lbLicense">
+                      <property name="text">
+                        <string notr="true">%0 &lt;a href="https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9">%1&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </item>
+              <item>
+                <layout class="QVBoxLayout" name="verticalLayout_3">
+                  <property name="spacing">
+                    <number>0</number>
+                  </property>
+                  <item>
+                    <widget class="QLabel" name="lbLinks">
+                      <property name="font">
+                        <font>
+                          <family>SF Pro Display</family>
+                          <pointsize>10</pointsize>
+                          <bold>true</bold>
+                        </font>
+                      </property>
+                      <property name="text">
+                        <string>Useful Links</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="lbHomepage">
+                      <property name="toolTip">
+                        <string notr="true">https://0xzer0x.github.io/projects/quran-companion</string>
+                      </property>
+                      <property name="text">
+                        <string notr="true">- &lt;a href="https://0xzer0x.github.io/projects/quran-companion">%0&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="lbBugFeatureReq">
+                      <property name="toolTip">
+                        <string notr="true">https://github.com/0xzer0x/quran-companion/issues</string>
+                      </property>
+                      <property name="text">
+                        <string notr="true">- &lt;a href="https://github.com/0xzer0x/quran-companion/issues">%0&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="lbContribTranslation">
+                      <property name="toolTip">
+                        <string notr="true">https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations</string>
+                      </property>
+                      <property name="text">
+                        <string notr="true">- &lt;a href="https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations">%0&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </item>
+            </layout>
           </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lbLicense">
-           <property name="text">
-            <string notr="true">%0 &lt;a href=&quot;https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9&quot;&gt;%1&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
+          <widget class="QWidget" name="translatorsTab">
+            <attribute name="title">
+              <string>Translators</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+                <layout class="QHBoxLayout" name="lytTranslator">
+                  <item>
+                    <widget class="QLabel" name="label_8">
+                      <property name="text">
+                        <string notr="true">Türkçe</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <spacer name="horizontalSpacer">
+                      <property name="orientation">
+                        <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                        <size>
+                          <width>40</width>
+                          <height>20</height>
+                        </size>
+                      </property>
+                    </spacer>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="label_9">
+                      <property name="toolTip">
+                        <string notr="true">https://crowdin.com/profile/halak0013</string>
+                      </property>
+                      <property name="text">
+                        <string notr="true">&lt;a href="https://crowdin.com/profile/halak0013">@halak0013&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </item>
+              <item>
+                <layout class="QHBoxLayout" name="lytTranslator_2">
+                  <item>
+                    <widget class="QLabel" name="label_10">
+                      <property name="text">
+                        <string notr="true">Русский</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <spacer name="horizontalSpacer_3">
+                      <property name="orientation">
+                        <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                        <size>
+                          <width>40</width>
+                          <height>20</height>
+                        </size>
+                      </property>
+                    </spacer>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="label_12">
+                      <property name="toolTip">
+                        <string notr="true">https://crowdin.com/profile/k-zamanov</string>
+                      </property>
+                      <property name="text">
+                        <string notr="true">&lt;a href="https://crowdin.com/profile/k-zamanov">@k-zamanov&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </item>
+              <item>
+                <layout class="QHBoxLayout" name="lytTranslator_3">
+                  <item>
+                    <widget class="QLabel" name="label_13">
+                      <property name="text">
+                        <string notr="true">Bahasa Indonesia</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <spacer name="horizontalSpacer_4">
+                      <property name="orientation">
+                        <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                        <size>
+                          <width>40</width>
+                          <height>20</height>
+                        </size>
+                      </property>
+                    </spacer>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="label_15">
+                      <property name="toolTip">
+                        <string notr="true">https://crowdin.com/profile/tap</string>
+                      </property>
+                      <property name="text">
+                        <string notr="true">&lt;a href="https://crowdin.com/profile/tap">@tap&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </item>
+              <item>
+                <spacer name="verticalSpacer_3">
+                  <property name="orientation">
+                    <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                    <size>
+                      <width>20</width>
+                      <height>40</height>
+                    </size>
+                  </property>
+                </spacer>
+              </item>
+            </layout>
           </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lbLinks">
-           <property name="font">
-            <font>
-             <family>SF Pro Display</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Useful Links</string>
-           </property>
+          <widget class="QWidget" name="creditsTab">
+            <attribute name="title">
+              <string>Credits</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+                <layout class="QVBoxLayout" name="lytContent_2">
+                  <property name="spacing">
+                    <number>0</number>
+                  </property>
+                  <item>
+                    <widget class="QLabel" name="lbQuranText">
+                      <property name="font">
+                        <font>
+                          <pointsize>10</pointsize>
+                          <bold>true</bold>
+                        </font>
+                      </property>
+                      <property name="text">
+                        <string>Quran Text</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="label_16">
+                      <property name="text">
+                        <string notr="true">- &lt;a href="https://qurancomplex.gov.sa/en/techquran/dev/">QPC Developer Portal&lt;/a> &lt;br/> - &lt;a href="https://github.com/fawazahmed0/quran-api">fawazahmed0/quran-api&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <spacer name="verticalSpacer_7">
+                      <property name="orientation">
+                        <enum>Qt::Orientation::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                        <size>
+                          <width>20</width>
+                          <height>40</height>
+                        </size>
+                      </property>
+                    </spacer>
+                  </item>
+                </layout>
+              </item>
+              <item>
+                <layout class="QVBoxLayout" name="lytRecitations">
+                  <property name="spacing">
+                    <number>0</number>
+                  </property>
+                  <item>
+                    <widget class="QLabel" name="lbRecitations">
+                      <property name="font">
+                        <font>
+                          <pointsize>10</pointsize>
+                          <bold>true</bold>
+                        </font>
+                      </property>
+                      <property name="styleSheet">
+                        <string notr="true"></string>
+                      </property>
+                      <property name="text">
+                        <string>Recitations</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="label_11">
+                      <property name="text">
+                        <string notr="true">- &lt;a href="https://everyayah.com/recitations_ayat.html">EveryAyah&lt;/a> &lt;br/> - &lt;a href="https://alquran.cloud/cdn">AlQuran Cloud CDN&lt;/a> &lt;br/> - &lt;a href="https://quran.ksu.edu.sa/index.php">Ayat&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <spacer name="verticalSpacer_4">
+                      <property name="orientation">
+                        <enum>Qt::Orientation::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                        <size>
+                          <width>20</width>
+                          <height>40</height>
+                        </size>
+                      </property>
+                    </spacer>
+                  </item>
+                </layout>
+              </item>
+              <item>
+                <layout class="QVBoxLayout" name="lytContent">
+                  <property name="spacing">
+                    <number>0</number>
+                  </property>
+                  <item>
+                    <widget class="QLabel" name="lbContentType">
+                      <property name="font">
+                        <font>
+                          <pointsize>10</pointsize>
+                          <bold>true</bold>
+                        </font>
+                      </property>
+                      <property name="text">
+                        <string>Tafsir/Translations</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="label_14">
+                      <property name="text">
+                        <string notr="true">- &lt;a href="https://quran.ksu.edu.sa/index.php">Ayat&lt;/a> &lt;br/> - &lt;a href="https://api-docs.quran.com/">Quran.com API&lt;/a> &lt;br/> - &lt;a href="https://mosshaf.com">Mosshaf&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <spacer name="verticalSpacer_5">
+                      <property name="orientation">
+                        <enum>Qt::Orientation::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                        <size>
+                          <width>20</width>
+                          <height>40</height>
+                        </size>
+                      </property>
+                    </spacer>
+                  </item>
+                </layout>
+              </item>
+              <item>
+                <layout class="QVBoxLayout" name="lytCards">
+                  <property name="spacing">
+                    <number>0</number>
+                  </property>
+                  <item>
+                    <widget class="QLabel" name="lbSurahCards">
+                      <property name="font">
+                        <font>
+                          <pointsize>10</pointsize>
+                          <bold>true</bold>
+                        </font>
+                      </property>
+                      <property name="styleSheet">
+                        <string notr="true"></string>
+                      </property>
+                      <property name="text">
+                        <string>Surah Cards</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="label_19">
+                      <property name="text">
+                        <string notr="true">- &lt;a href="https://albitaqat.com">AlBitaqat&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <spacer name="verticalSpacer_8">
+                      <property name="orientation">
+                        <enum>Qt::Orientation::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                        <size>
+                          <width>20</width>
+                          <height>40</height>
+                        </size>
+                      </property>
+                    </spacer>
+                  </item>
+                </layout>
+              </item>
+              <item>
+                <layout class="QVBoxLayout" name="lytLibs">
+                  <property name="spacing">
+                    <number>0</number>
+                  </property>
+                  <item>
+                    <widget class="QLabel" name="lbLibraries">
+                      <property name="font">
+                        <font>
+                          <pointsize>10</pointsize>
+                          <bold>true</bold>
+                        </font>
+                      </property>
+                      <property name="text">
+                        <string>Libraries</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QLabel" name="label_21">
+                      <property name="text">
+                        <string notr="true">- &lt;a href="https://github.com/gamecreature/QtAwesome">QtAwesome&lt;/a></string>
+                      </property>
+                      <property name="openExternalLinks">
+                        <bool>true</bool>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <spacer name="verticalSpacer_6">
+                      <property name="orientation">
+                        <enum>Qt::Orientation::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                        <size>
+                          <width>20</width>
+                          <height>40</height>
+                        </size>
+                      </property>
+                    </spacer>
+                  </item>
+                </layout>
+              </item>
+            </layout>
           </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lbHomepage">
-           <property name="toolTip">
-            <string notr="true">https://0xzer0x.github.io/projects/quran-companion</string>
-           </property>
-           <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://0xzer0x.github.io/projects/quran-companion&quot;&gt;%0&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lbBugFeatureReq">
-           <property name="toolTip">
-            <string notr="true">https://github.com/0xzer0x/quran-companion/issues</string>
-           </property>
-           <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/issues&quot;&gt;%0&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lbContribTranslation">
-           <property name="toolTip">
-            <string notr="true">https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations</string>
-           </property>
-           <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations&quot;&gt;%0&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="translatorsTab">
-      <attribute name="title">
-       <string>Translators</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <layout class="QHBoxLayout" name="lytTranslator">
-         <item>
-          <widget class="QLabel" name="label_8">
-           <property name="text">
-            <string notr="true">Türkçe</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
+        </widget>
+      </item>
+      <item>
+        <widget class="QDialogButtonBox" name="btnBox">
+          <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_9">
-           <property name="toolTip">
-            <string notr="true">https://crowdin.com/profile/halak0013</string>
-           </property>
-           <property name="text">
-            <string notr="true">&lt;a href=&quot;https://crowdin.com/profile/halak0013&quot;&gt;@halak0013&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="lytTranslator_2">
-         <item>
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string notr="true">Русский</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Orientation::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_12">
-           <property name="toolTip">
-            <string notr="true">https://crowdin.com/profile/k-zamanov</string>
-           </property>
-           <property name="text">
-            <string notr="true">&lt;a href=&quot;https://crowdin.com/profile/k-zamanov&quot;&gt;@k-zamanov&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="lytTranslator_3">
-         <item>
-          <widget class="QLabel" name="label_13">
-           <property name="text">
-            <string notr="true">Bahasa Indonesia</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Orientation::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_15">
-           <property name="toolTip">
-            <string notr="true">https://crowdin.com/profile/tap</string>
-           </property>
-           <property name="text">
-            <string notr="true">&lt;a href=&quot;https://crowdin.com/profile/tap&quot;&gt;@tap&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="creditsTab">
-      <attribute name="title">
-       <string>Credits</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
-       <item>
-        <layout class="QVBoxLayout" name="lytContent_2">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lbQuranText">
-           <property name="font">
-            <font>
-             <family>SF Pro Display</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Quran Text</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_16">
-           <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://qurancomplex.gov.sa/en/techquran/dev/&quot;&gt;QPC Developer Portal&lt;/a&gt;
-&lt;br/&gt;
-- &lt;a href=&quot;https://github.com/fawazahmed0/quran-api&quot;&gt;fawazahmed0/quran-api&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_7">
-           <property name="orientation">
-            <enum>Qt::Orientation::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="lytRecitations">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lbRecitations">
-           <property name="font">
-            <font>
-             <family>SF Pro Display</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string>Recitations</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://everyayah.com/recitations_ayat.html&quot;&gt;EveryAyah&lt;/a&gt;
-&lt;br/&gt;
-- &lt;a href=&quot;https://alquran.cloud/cdn&quot;&gt;AlQuran Cloud CDN&lt;/a&gt;
-&lt;br/&gt;
-- &lt;a href=&quot;https://quran.ksu.edu.sa/index.php&quot;&gt;Ayat&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Orientation::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="lytContent">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lbContentType">
-           <property name="font">
-            <font>
-             <family>SF Pro Display</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Tafsir/Translations</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_14">
-           <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://quran.ksu.edu.sa/index.php&quot;&gt;Ayat&lt;/a&gt;
-&lt;br/&gt;
-- &lt;a href=&quot;https://api-docs.quran.com/&quot;&gt;Quran.com API&lt;/a&gt;
-&lt;br/&gt;
-- &lt;a href=&quot;https://mosshaf.com&quot;&gt;Mosshaf&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Orientation::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="lytCards">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lbSurahCards">
-           <property name="font">
-            <font>
-             <family>SF Pro Display</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string>Surah Cards</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_19">
-           <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://albitaqat.com&quot;&gt;AlBitaqat&lt;/a&gt;
-
-</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_8">
-           <property name="orientation">
-            <enum>Qt::Orientation::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="lytLibs">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lbLibraries">
-           <property name="font">
-            <font>
-             <family>SF Pro Display</family>
-             <pointsize>10</pointsize>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Libraries</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://github.com/gamecreature/QtAwesome&quot;&gt;QtAwesome&lt;/a&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_6">
-           <property name="orientation">
-            <enum>Qt::Orientation::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
-   <item>
-    <widget class="QDialogButtonBox" name="btnBox">
-     <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::StandardButton::Ok</set>
-     </property>
-    </widget>
-   </item>
-  </layout>
- </widget>
- <resources>
-  <include location="../../resources.qrc"/>
- </resources>
- <connections>
-  <connection>
-   <sender>btnBox</sender>
-   <signal>accepted()</signal>
-   <receiver>AboutDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnBox</sender>
-   <signal>rejected()</signal>
-   <receiver>AboutDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+          </property>
+          <property name="standardButtons">
+            <set>QDialogButtonBox::StandardButton::Ok</set>
+          </property>
+        </widget>
+      </item>
+    </layout>
+  </widget>
+  <resources>
+    <include location="../../resources.qrc"></include>
+  </resources>
+  <connections>
+    <connection>
+      <sender>btnBox</sender>
+      <signal>accepted()</signal>
+      <receiver>AboutDialog</receiver>
+      <slot>accept()</slot>
+      <hints>
+        <hint type="sourcelabel">
+          <x>248</x>
+          <y>254</y>
+        </hint>
+        <hint type="destinationlabel">
+          <x>157</x>
+          <y>274</y>
+        </hint>
+      </hints>
+    </connection>
+    <connection>
+      <sender>btnBox</sender>
+      <signal>rejected()</signal>
+      <receiver>AboutDialog</receiver>
+      <slot>reject()</slot>
+      <hints>
+        <hint type="sourcelabel">
+          <x>316</x>
+          <y>260</y>
+        </hint>
+        <hint type="destinationlabel">
+          <x>286</x>
+          <y>274</y>
+        </hint>
+      </hints>
+    </connection>
+  </connections>
 </ui>
