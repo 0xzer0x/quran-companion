@@ -64,6 +64,8 @@ QImage
 QuranPageBrowser::surahFrame(int surah)
 {
   QImage baseImage(":/resources/sura_box.png"); // load the empty frame
+  QRect drawingRect = baseImage.rect();
+  drawingRect.setTop(drawingRect.top() + 20);
 
   // construct the text to be put inside the frame
   QString frmText;
@@ -75,7 +77,7 @@ QuranPageBrowser::surahFrame(int surah)
   QPainter p(&baseImage);
   p.setPen(QPen(Qt::black));
   p.setFont(QFont("QCF_BSML", 85));
-  p.drawText(baseImage.rect(), Qt::AlignCenter, frmText);
+  p.drawText(drawingRect, Qt::AlignCenter, frmText);
 
   if (m_config.darkMode())
     baseImage.invertPixels();
