@@ -153,6 +153,8 @@ set(PROJECT_SOURCES
     src/notifiers/jobnotifier.cpp
     src/utils/configuration.h
     src/utils/configuration.cpp
+    src/utils/configurationschema.h
+    src/utils/configurationschema.cpp
     src/utils/shortcuthandler.h
     src/utils/shortcuthandler.cpp
     src/utils/logger.h

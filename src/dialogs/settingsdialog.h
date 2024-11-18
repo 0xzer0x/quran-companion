@@ -28,7 +28,7 @@
 #include <types/translation.h>
 #include <utils/configuration.h>
 #include <utils/shortcuthandler.h>
-typedef Configuration::ReaderMode ReaderMode;
+typedef ConfigurationSchema::ReaderMode ReaderMode;
 
 namespace Ui {
 class SettingsDialog;
@@ -125,7 +125,7 @@ public slots:
   void updateSideFontSize(QString size);
   /**
    * @brief Update the type of font to use for displaying verses
-   * @param vt - value corresponding to entry in Configuration::VerseType
+   * @param vt - value corresponding to entry in ConfigurationSchema::VerseType
    */
   void updateVerseType(int vt);
   void updateVerseFontsize(QString size);
@@ -271,7 +271,7 @@ private:
    */
   int m_translation;
   /**
-   * @brief Configuration::VerseType configuration value
+   * @brief ConfigurationSchema::VerseType configuration value
    */
   int m_verseType;
   /**

@@ -23,7 +23,8 @@ Configuration::Configuration()
   m_themeId = m_settings.value("Theme").toInt();
   m_qcfVersion = m_settings.value("Reader/QCF").toInt();
   m_language = qvariant_cast<QLocale::Language>(m_settings.value("Language"));
-  m_readerMode = qvariant_cast<ReaderMode>(m_settings.value("Reader/Mode"));
+  m_readerMode = qvariant_cast<ConfigurationSchema::ReaderMode>(
+    m_settings.value("Reader/Mode"));
   m_darkMode = m_themeId == 2;
 }
 
@@ -41,50 +42,16 @@ Configuration::setCustomPaths()
 void
 Configuration::checkGroups()
 {
-  for (int i = 0; i < 2; i++)
-    checkConfGroup(i);
-}
-
-void
-Configuration::checkConfGroup(int gId)
-{
-  switch (gId) {
-    case 0:
-      m_settings.setValue("Language",
-                          m_settings.value("Language", (int)QLocale::English));
-      m_settings.setValue(
-        "Theme",
-        m_settings.value("Theme",
-                         QGuiApplication::styleHints()->colorScheme() ==
-                             Qt::ColorScheme::Dark
-                           ? 2
-                           : 0));
-      m_settings.setValue("VOTD", m_settings.value("VOTD", true));
-      m_settings.setValue("MissingFileWarning",
-                          m_settings.value("MissingFileWarning", true));
-      m_settings.setValue("DownloadsDir", m_settings.value("DownloadsDir", ""));
-      break;
-    case 1:
-      m_settings.beginGroup("Reader");
-      m_settings.setValue("Mode", m_settings.value("Mode", 0));
-      m_settings.setValue("FGHighlight", m_settings.value("FGHighlight", 1));
-      m_settings.setValue("Khatmah", m_settings.value("Khatmah", 0));
-      m_settings.setValue("AdaptiveFont",
-                          m_settings.value("AdaptiveFont", true));
-      m_settings.setValue("QCF1Size", m_settings.value("QCF1Size", 22));
-      m_settings.setValue("QCF2Size", m_settings.value("QCF2Size", 20));
-      m_settings.setValue("QCF", m_settings.value("QCF", 1));
-      m_settings.setValue("VerseType", m_settings.value("VerseType", 0));
-      m_settings.setValue("VerseFontSize",
-                          m_settings.value("VerseFontSize", 20));
-      m_settings.setValue("Tafsir", m_settings.value("Tafsir", "sa3dy"));
-      m_settings.setValue("Translation",
-                          m_settings.value("Translation", "en_khattab"));
-      m_settings.setValue(
-        "SideContentFont",
-        m_settings.value("SideContentFont", QFont("Expo Arabic", 14)));
-      m_settings.endGroup();
-      break;
+  const ConfigurationSchema& schema = ConfigurationSchema::getInstance();
+  QList<QString> allKeys = schema.getKeys().value();
+  for (const QString& fullKey : allKeys) {
+    QString settingsKey = fullKey;
+    if (settingsKey.startsWith("General/")) {
+      settingsKey.remove(0, 8);
+    }
+    m_settings.setValue(
+      settingsKey,
+      m_settings.value(settingsKey, schema.getDefault(fullKey).value()));
   }
 }
 
@@ -144,20 +111,20 @@ Configuration::language() const
   return m_language;
 }
 
-Configuration::ReaderMode
+ConfigurationSchema::ReaderMode
 Configuration::readerMode() const
 {
   return m_readerMode;
 }
 
-Configuration::VerseType
+ConfigurationSchema::VerseType
 Configuration::verseType() const
 {
   return m_verseType;
 }
 
 void
-Configuration::setVerseType(VerseType newVerseType)
+Configuration::setVerseType(ConfigurationSchema::VerseType newVerseType)
 {
   m_verseType = newVerseType;
 }

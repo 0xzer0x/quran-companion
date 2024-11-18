@@ -131,7 +131,7 @@ ContentDialog::setShownVerse(const Verse& newShownVerse)
                   m_quranService->surahName(m_shownVerse.surah()) + " - " +
                   tr("Verse: ") + QString::number(m_shownVerse.number());
   QString glyphs =
-    m_config.verseType() == Configuration::Qcf
+    m_config.verseType() == ConfigurationSchema::Qcf
       ? m_glyphService->getVerseGlyphs(m_shownVerse.surah(),
                                        m_shownVerse.number())
       : m_quranService->verseText(m_shownVerse.surah(), m_shownVerse.number());

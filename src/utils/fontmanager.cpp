@@ -87,20 +87,20 @@ FontManager::pageFontname(int page)
 }
 
 QString
-FontManager::verseFontname(Configuration::VerseType type, int page)
+FontManager::verseFontname(ConfigurationSchema::VerseType type, int page)
 {
   QString fontname;
   switch (type) {
-    case Configuration::Qcf:
+    case ConfigurationSchema::Qcf:
       fontname = pageFontname(page);
       break;
-    case Configuration::Hafs:
+    case ConfigurationSchema::Hafs:
       fontname = "kfgqpc_hafs_uthmanic _script";
       break;
-    case Configuration::HafsAnnotated:
+    case ConfigurationSchema::HafsAnnotated:
       fontname = "Emine";
       break;
-    case Configuration::Warsh:
+    case ConfigurationSchema::Warsh:
       fontname = "kfgqpc_warsh_uthmanic_script";
       break;
   }
