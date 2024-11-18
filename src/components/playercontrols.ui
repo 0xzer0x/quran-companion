@@ -16,12 +16,6 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="maximumSize">
-   <size>
-    <width>900</width>
-    <height>16777215</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string notr="true"/>
   </property>
@@ -44,10 +38,10 @@
    <item>
     <widget class="QFrame" name="playerFrame">
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::Shape::StyledPanel</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+      <enum>QFrame::Shadow::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,1,0,0,0,0,0,0">
       <property name="leftMargin">
@@ -78,7 +72,7 @@
       <item>
        <widget class="QComboBox" name="cmbReciter">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -87,12 +81,6 @@
          <size>
           <width>150</width>
           <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>150</width>
-          <height>16777215</height>
          </size>
         </property>
         <property name="cursor">
@@ -103,20 +91,14 @@
       <item>
        <widget class="QSlider" name="sldrAudioPlayer">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>200</width>
-          <height>0</height>
-         </size>
-        </property>
         <property name="maximumSize">
          <size>
-          <width>350</width>
+          <width>300</width>
           <height>16777215</height>
          </size>
         </property>
@@ -124,7 +106,7 @@
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
        </widget>
       </item>
@@ -221,21 +203,15 @@
       <item>
        <widget class="QSlider" name="sldrVolume">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>115</width>
+          <width>80</width>
           <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>16777215</height>
          </size>
         </property>
         <property name="cursor">
@@ -254,7 +230,7 @@
          <number>100</number>
         </property>
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="invertedAppearance">
          <bool>false</bool>
@@ -294,13 +270,13 @@
          <string notr="true"/>
         </property>
         <property name="textFormat">
-         <enum>Qt::PlainText</enum>
+         <enum>Qt::TextFormat::PlainText</enum>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
         </property>
         <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
         <property name="indent">
          <number>0</number>

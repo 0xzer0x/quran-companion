@@ -115,9 +115,9 @@ MainWindow::loadComponents()
   controls->setAlignment(Qt::AlignCenter);
   controls->setContentsMargins(0, 0, 0, 0);
   controls->setSpacing(0);
-  controls->addStretch(1);
-  controls->addWidget(m_playerControls);
-  controls->addStretch(1);
+  controls->addStretch(0);
+  controls->addWidget(m_playerControls, 1);
+  controls->addStretch(0);
   controlsFrame->setLayout(controls);
   ui->scrollAreaWidgetContents->layout()->addWidget(controlsFrame);
   ui->scrollAreaWidgetContents->layout()->addWidget(m_reader);
@@ -822,6 +822,7 @@ MainWindow::resizeEvent(QResizeEvent* event)
   m_popup->move(m_popup->notificationPos());
   m_betaqaViewer->center();
   m_repeater->adjustPosition();
+  m_playerControls->adjustWidth();
 }
 
 void

@@ -40,6 +40,7 @@ public slots:
    * @brief toggle play/pause of the current verse
    */
   void togglePlayback();
+  void adjustWidth();
 
 protected:
   void hideEvent(QHideEvent* event);
