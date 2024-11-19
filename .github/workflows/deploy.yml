@@ -45,6 +45,9 @@ jobs:
     needs:
       - prepare
     runs-on: ubuntu-latest
+    environment:
+      name: Linux - AppImage
+      url: https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Quran_Companion-${{ needs.prepare.outputs.version }}-x86_64.AppImage
     env:
       APP_VER: "${{ needs.prepare.outputs.version }}"
     steps:
@@ -143,6 +146,9 @@ jobs:
     needs:
       - prepare
     runs-on: macos-12
+    environment:
+      name: MacOS - DMG
+      url: https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Quran_Companion-${{ needs.prepare.outputs.version }}-x86_64.dmg
     env:
       APP_VER: "${{ needs.prepare.outputs.version }}"
     steps:
