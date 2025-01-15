@@ -24,7 +24,7 @@
   <a href="https://techforpalestine.org/learn-more"><img alt="StandWithPalestine" src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/StandWithPalestine.svg"></a>
   <img alt="GitHub Release" src="https://img.shields.io/github/v/release/0xzer0x/quran-companion">
   <a href="https://aur.archlinux.org/packages/quran-companion"><img alt="AUR Version" src="https://img.shields.io/aur/version/quran-companion"></a>
-  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/deploy.yml">
+  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/release.yml">
   <img alt="GitHub issues" src="https://img.shields.io/github/issues/0xzer0x/quran-companion">
 </p>
 

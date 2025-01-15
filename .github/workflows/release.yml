@@ -1,4 +1,4 @@
-name: Deploy
+name: Release
 on:
   push:
     tags:
@@ -29,13 +29,18 @@ jobs:
 
       - name: Check release version and commit sha
         run: |
-          if [[ "$RELEASE_VERSION" != "$TAG_VERSION" ]]; then
-            echo "Tag version ($TAG_VERSION) does not match release version ($RELEASE_VERSION)"
-            exit 1
-          elif [[ "$GITHUB_SHA" != "$MAIN_SHA" ]]; then
-            echo "Tag commit ($GITHUB_SHA) does not match latest commit on main ($MAIN_SHA)"
+          echo "::group::Check tag commit matches latest commit on main"
+          if [[ "$GITHUB_SHA" != "$MAIN_SHA" ]]; then
+            echo "::error title=Commit mismatch::Latest commit on main ($MAIN_SHA) does not match tag commit ($GITHUB_SHA)"
             exit 1
           fi
+          echo "::endgroup::"
+          echo "::group::Check release version matches tag"
+          if [[ "$RELEASE_VERSION" != "$TAG_VERSION" ]]; then
+            echo "::error title=Version mismatch::Release version ($RELEASE_VERSION) does not match tag version ($TAG_VERSION)"
+            exit 1
+          fi
+          echo "::endgroup::"
 
       - name: Set application version
         id: setversion
@@ -145,7 +150,7 @@ jobs:
   build-dmg:
     needs:
       - prepare
-    runs-on: macos-12
+    runs-on: macos-13
     environment:
       name: MacOS - DMG
       url: https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Quran_Companion-${{ needs.prepare.outputs.version }}-x86_64.dmg
