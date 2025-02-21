@@ -215,7 +215,8 @@ jobs:
           name: dmg
           path: "Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
           retention-days: 7
-  deploy:
+
+  release:
     needs:
       - prepare
       - build-appimage
@@ -267,3 +268,47 @@ jobs:
           tag: "${{ github.ref_name }}"
           bodyFile: CHANGELOG.md
           artifacts: "Quran_Companion-${{env.APP_VER}}-x86_64.*"
+
+  aur:
+    needs:
+      - prepare
+      - release
+    runs-on: ubuntu-latest
+    environment:
+      name: AUR
+      url: https://aur.archlinux.org/packages/quran-companion
+    env:
+      APP_VER: "${{ needs.prepare.outputs.version }}"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            dist/aur/pkgbuildgen.awk
+            dist/aur/PKGBUILD.in
+
+      - name: Download AppImage
+        uses: actions/download-artifact@v4
+        with:
+          name: appimage
+
+      - name: Generate PKGBUILD
+        run: |
+          APPIMAGE_B2SUM="$(b2sum appimage/Quran_Companion-${{env.APP_VER}}-x86_64.AppImage | cut -d' ' -f1)"
+          awk \
+            -v "pkgver=${{ env.APP_VER }}" \
+            -v "b2sum=${APPIMAGE_B2SUM}" \
+            -f dist/aur/pkgbuildgen.awk \
+            dist/aur/PKGBUILD.in > PKGBUILD
+
+      - name: Publish AUR package
+        uses: KSXGitHub/github-actions-deploy-aur@v4.1.1
+        with:
+          pkgname: quran-companion
+          pkgbuild: PKGBUILD
+          ssh_private_key: "${{ secrets.AUR_KEY }}"
+          commit_email: "${{ vars.AUR_EMAIL }}"
+          commit_username: "${{ vars.AUR_USERNAME }}"
+          commit_message: "release: update to version ${{ env.APP_VER }}"
+          ssh_keyscan_types: rsa,ecdsa,ed25519
