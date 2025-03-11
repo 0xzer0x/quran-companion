@@ -37,6 +37,10 @@ public:
    * @return True if the verse is within range, false otherwise.
    */
   virtual bool verseInRange(const Verse&) = 0;
+  /**
+   * @brief Gets verse frequency delay in seconds.
+   * @return Verse frequency delay in seconds.
+   */
   virtual int getNextVerseDelay() = 0;
   /**
    * @brief Virtual destructor for the PlaybackStrategy class.
