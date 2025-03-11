@@ -14,10 +14,10 @@ private:
 public:
   ContinuousPlaybackStrategy();
 
-  virtual Verse start() override;
-  virtual Verse stop() override;
-  virtual std::optional<Verse> nextVerse() override;
-  virtual int getNextVerseDelay() override;
+  Verse start() override;
+  Verse stop() override;
+  std::optional<Verse> nextVerse() override;
+  int getNextVerseDelay() override;
   bool verseInRange(const Verse&) override;
 };
 
