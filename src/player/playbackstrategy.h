@@ -37,6 +37,7 @@ public:
    * @return True if the verse is within range, false otherwise.
    */
   virtual bool verseInRange(const Verse&) = 0;
+  virtual int getNextVerseDelay() = 0;
   /**
    * @brief Virtual destructor for the PlaybackStrategy class.
    */

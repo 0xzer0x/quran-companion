@@ -30,3 +30,9 @@ ContinuousPlaybackStrategy::verseInRange(const Verse &)
 {
   return true;
 }
+
+int
+ContinuousPlaybackStrategy::getNextVerseDelay()
+{
+  return 0;
+}

@@ -5,11 +5,13 @@
 SetPlaybackStrategy::SetPlaybackStrategy(Verse start,
                                          Verse end,
                                          int repeatCount,
-                                         int verseFrequency)
+                                         int verseFrequency,
+                                         int verseFrequencyDelay)
   : m_currentIteration(0)
   , m_currentRepetition(0)
   , m_repeatCount(repeatCount)
   , m_verseFrequency(verseFrequency)
+  , m_verseFrequencyDelay(verseFrequencyDelay)
   , m_start(start)
   , m_end(end)
   , m_current(Verse::getCurrent())
@@ -56,4 +58,10 @@ bool
 SetPlaybackStrategy::verseInRange(const Verse& v)
 {
   return v >= m_start && v <= m_end;
+}
+
+int
+SetPlaybackStrategy::getNextVerseDelay()
+{
+  return m_verseFrequencyDelay;
 }

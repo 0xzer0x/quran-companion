@@ -122,6 +122,7 @@ RepeaterPopup::generatePlaybackStrategy()
     Verse(m_quranService->versePage(toSurah, toVerse), toSurah, toVerse);
 
   int frequency = ui->spnVerseFrequency->value();
+  int frequencyDelay = ui->spnVerseFrequencyDelay->value() * 1000;
   int repetitions = ui->spnRepetitions->value();
 
   if (start > end) {
@@ -134,7 +135,7 @@ RepeaterPopup::generatePlaybackStrategy()
   }
 
   return shared_ptr<SetPlaybackStrategy>(
-    new SetPlaybackStrategy(start, end, repetitions, frequency));
+    new SetPlaybackStrategy(start, end, repetitions, frequency, frequencyDelay));
 }
 
 void

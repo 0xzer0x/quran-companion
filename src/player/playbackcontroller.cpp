@@ -1,4 +1,5 @@
 #include "playbackcontroller.h"
+#include <QTimer>
 #include <player/impl/continuousplaybackstrategy.h>
 
 PlaybackController::PlaybackController(QObject* parent,
@@ -40,6 +41,7 @@ PlaybackController::start()
 void
 PlaybackController::next()
 {
+  QTimer::singleShot(m_strategy->getNextVerseDelay(), this, [this] {
   std::optional<Verse> nextVerse = m_strategy->nextVerse();
   if (nextVerse.has_value()) {
     m_navigator.navigateToVerse(nextVerse.value());
@@ -47,6 +49,7 @@ PlaybackController::next()
     stop();
     emit playbackFinished();
   }
+  });
 }
 
 void
