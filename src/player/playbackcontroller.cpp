@@ -9,7 +9,7 @@ PlaybackController::PlaybackController(QObject* parent,
   , m_current(Verse::getCurrent())
   , m_navigator(Navigator::getInstance())
   , m_defaultStrategy(new ContinuousPlaybackStrategy)
-  , m_nextVerseTimer(new QTimer(this))  // Initialize the timer once
+  , m_nextVerseTimer(new QTimer(this))
 {
   resetStrategy();
   connect(m_player,
