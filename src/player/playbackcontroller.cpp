@@ -9,6 +9,7 @@ PlaybackController::PlaybackController(QObject* parent,
   , m_current(Verse::getCurrent())
   , m_navigator(Navigator::getInstance())
   , m_defaultStrategy(new ContinuousPlaybackStrategy)
+  , m_nextVerseTimer(new QTimer(this))  // Initialize the timer once
 {
   resetStrategy();
   connect(m_player,
@@ -16,6 +17,12 @@ PlaybackController::PlaybackController(QObject* parent,
           this,
           &PlaybackController::mediaStatusChanged);
   m_navigator.addObserver(this);
+
+  m_nextVerseTimer->setSingleShot(true);
+  connect(m_nextVerseTimer,
+    &QTimer::timeout,
+    this,
+    &PlaybackController::next);
 }
 
 void
@@ -41,7 +48,6 @@ PlaybackController::start()
 void
 PlaybackController::next()
 {
-  QTimer::singleShot(m_strategy->getNextVerseDelay(), this, [this] {
   std::optional<Verse> nextVerse = m_strategy->nextVerse();
   if (nextVerse.has_value()) {
     m_navigator.navigateToVerse(nextVerse.value());
@@ -49,7 +55,6 @@ PlaybackController::next()
     stop();
     emit playbackFinished();
   }
-  });
 }
 
 void
@@ -58,13 +63,15 @@ PlaybackController::stop()
   m_player->stop();
   Verse stopVerse = m_strategy->stop();
   m_navigator.navigateToVerse(stopVerse);
+
+  m_nextVerseTimer->stop();
 }
 
 void
 PlaybackController::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
   if (status == QMediaPlayer::EndOfMedia)
-    next();
+    m_nextVerseTimer->start(m_strategy->getNextVerseDelay());
 }
 
 void
@@ -81,6 +88,8 @@ PlaybackController::activeVerseChanged()
   m_player->loadActiveVerse();
   if (keepPlaying)
     m_player->play();
+
+  m_nextVerseTimer->stop();
 }
 
 QPointer<VersePlayer>
