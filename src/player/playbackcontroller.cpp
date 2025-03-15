@@ -62,16 +62,23 @@ PlaybackController::stop()
 {
   m_player->stop();
   Verse stopVerse = m_strategy->stop();
-  m_navigator.navigateToVerse(stopVerse);
-
+  Verse startVerse = m_strategy->start();
+  if (m_current == stopVerse) {
+    m_navigator.navigateToVerse(startVerse);
+  }
+  else m_navigator.navigateToVerse(stopVerse);
   m_nextVerseTimer->stop();
 }
 
 void
 PlaybackController::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
-  if (status == QMediaPlayer::EndOfMedia)
-    m_nextVerseTimer->start(m_strategy->getNextVerseDelay());
+  if (status == QMediaPlayer::EndOfMedia) {
+    if (m_strategy->stop() == m_current)
+      next();
+    else
+      m_nextVerseTimer->start(m_strategy->getNextVerseDelay());
+  }
 }
 
 void
