@@ -26,6 +26,11 @@ public:
    */
   virtual Verse stop() = 0;
   /**
+   * @brief Gets the final/ending verse for the playback strategy.
+   * @return The Verse object representing the stopping verse.
+   */
+  virtual Verse end() = 0;
+  /**
    * @brief Gets the next verse in the playback sequence.
    * @return An optional Verse object representing the next verse. If there is
    * no next verse, the result is an empty optional.

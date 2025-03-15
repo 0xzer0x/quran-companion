@@ -28,6 +28,12 @@ SetPlaybackStrategy::start()
 Verse
 SetPlaybackStrategy::stop()
 {
+  return m_start;
+}
+
+Verse
+SetPlaybackStrategy::end()
+{
   return m_end;
 }
 

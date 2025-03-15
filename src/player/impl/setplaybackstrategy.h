@@ -17,6 +17,7 @@ public:
 
   Verse start() override;
   Verse stop() override;
+  Verse end() override;
   std::optional<Verse> nextVerse() override;
   bool verseInRange(const Verse& v) override;
   int getNextVerseDelay() override;
