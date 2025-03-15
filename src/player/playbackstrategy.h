@@ -27,7 +27,7 @@ public:
   virtual Verse stop() = 0;
   /**
    * @brief Gets the final/ending verse for the playback strategy.
-   * @return The Verse object representing the stopping verse.
+   * @return The Verse object representing the last played verse.
    */
   virtual Verse end() = 0;
   /**
