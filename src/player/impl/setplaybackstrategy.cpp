@@ -28,7 +28,7 @@ SetPlaybackStrategy::start()
 Verse
 SetPlaybackStrategy::stop()
 {
-  return m_start;
+  return m_end;
 }
 
 std::optional<Verse>
