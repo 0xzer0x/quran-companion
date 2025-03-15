@@ -48,6 +48,11 @@ public:
    */
   virtual int getNextVerseDelay() = 0;
   /**
+   * @brief Gets if it's the last verse repetition.
+   * @return 1 if it's last verse repetition.
+   */
+  virtual bool lastRepeat() = 0;
+  /**
    * @brief Virtual destructor for the PlaybackStrategy class.
    */
   virtual ~PlaybackStrategy() {};

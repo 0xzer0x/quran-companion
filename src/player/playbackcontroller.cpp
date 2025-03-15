@@ -67,7 +67,7 @@ void
 PlaybackController::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
   if (status == QMediaPlayer::EndOfMedia) {
-    if (m_strategy->end() == m_current)
+    if (m_strategy->end() == m_current && m_strategy->lastRepeat())
       next();
     else
       m_nextVerseTimer->start(m_strategy->getNextVerseDelay());

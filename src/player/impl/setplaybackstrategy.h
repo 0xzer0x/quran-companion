@@ -21,6 +21,7 @@ public:
   std::optional<Verse> nextVerse() override;
   bool verseInRange(const Verse& v) override;
   int getNextVerseDelay() override;
+  bool lastRepeat() override;
 
 private:
   int m_repeatCount;

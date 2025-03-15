@@ -42,7 +42,7 @@ SetPlaybackStrategy::nextVerse()
 {
   bool iterationDone = m_current == m_end;
   bool setDone = iterationDone && (m_currentIteration + 1) == m_repeatCount;
-  bool verseRepeatDone = (m_currentRepetition + 1) == m_verseFrequency;
+  bool verseRepeatDone = lastRepeat();
 
   if (verseRepeatDone) {
     m_currentRepetition = 0;
@@ -70,4 +70,8 @@ int
 SetPlaybackStrategy::getNextVerseDelay()
 {
   return m_verseFrequencyDelay;
+}
+
+bool SetPlaybackStrategy::lastRepeat() {
+  return (m_currentRepetition + 1) == m_verseFrequency;
 }
