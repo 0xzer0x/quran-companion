@@ -78,6 +78,7 @@ SettingsDialog::fillLanguageCombobox()
   ui->cmbLang->addItem("Türkçe", QLocale::Turkish);
   ui->cmbLang->addItem("русскийe", QLocale::Russian);
   ui->cmbLang->addItem("Bahasa Indonesia", QLocale::Indonesian);
+  ui->cmbLang->addItem("Español", QLocale::Spanish);
 }
 
 void
