@@ -20,13 +20,32 @@ ContinuousPlaybackStrategy::stop()
   return m_quranService->firstInPage(current.page());
 }
 
-std::optional<Verse> ContinuousPlaybackStrategy::nextVerse()
+Verse
+ContinuousPlaybackStrategy::end()
+{
+  return Verse(604, 114, 6);
+}
+
+std::optional<Verse>
+ContinuousPlaybackStrategy::nextVerse()
 {
   return m_quranService->next(Verse::getCurrent(), true);
 }
 
 bool
-ContinuousPlaybackStrategy::verseInRange(const Verse &)
+ContinuousPlaybackStrategy::verseInRange(const Verse&)
+{
+  return true;
+}
+
+int
+ContinuousPlaybackStrategy::getNextVerseDelay()
+{
+  return 0;
+}
+
+bool
+ContinuousPlaybackStrategy::lastRepeat()
 {
   return true;
 }

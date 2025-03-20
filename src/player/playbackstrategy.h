@@ -26,6 +26,11 @@ public:
    */
   virtual Verse stop() = 0;
   /**
+   * @brief Gets the final/ending verse for the playback strategy.
+   * @return The Verse object representing the last played verse.
+   */
+  virtual Verse end() = 0;
+  /**
    * @brief Gets the next verse in the playback sequence.
    * @return An optional Verse object representing the next verse. If there is
    * no next verse, the result is an empty optional.
@@ -37,6 +42,16 @@ public:
    * @return True if the verse is within range, false otherwise.
    */
   virtual bool verseInRange(const Verse&) = 0;
+  /**
+   * @brief Gets verse frequency delay in seconds.
+   * @return Verse frequency delay in seconds.
+   */
+  virtual int getNextVerseDelay() = 0;
+  /**
+   * @brief Gets if it's the last verse repetition.
+   * @return 1 if it's last verse repetition.
+   */
+  virtual bool lastRepeat() = 0;
   /**
    * @brief Virtual destructor for the PlaybackStrategy class.
    */
