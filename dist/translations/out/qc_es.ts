@@ -791,62 +791,62 @@
       <translation>Acerca de Quran Companion</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="97"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="96"/>
       <source>Quran Companion</source>
       <translation>Quran Companion</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="112"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="116"/>
       <source>Version</source>
       <translation>Versión</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="187"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="190"/>
       <source>About</source>
       <translation>Acerca de</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="195"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="198"/>
       <source>A free, open-source Quran reader &amp; player</source>
       <translation>Un lector y reproductor gratuito para el Corán, de código abierto</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="226"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="229"/>
       <source>Useful Links</source>
       <translation>Enlaces útiles</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="275"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="278"/>
       <source>Translators</source>
       <translation>Traductores</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="406"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="409"/>
       <source>Credits</source>
       <translation>Agradecimientos</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="424"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="426"/>
       <source>Quran Text</source>
       <translation>Texto del Corán</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="473"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="472"/>
       <source>Recitations</source>
       <translation>Recitaciones</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="521"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="515"/>
       <source>Tafsir/Translations</source>
       <translation>Tafsir/Traducciones</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="572"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="561"/>
       <source>Surah Cards</source>
       <translation>Tarjetas de Sura</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="618"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="604"/>
       <source>Libraries</source>
       <translation>Bibliotecas</translation>
     </message>
@@ -1363,11 +1363,16 @@
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="212"/>
+      <source>Verse frequency delay</source>
+      <translation type="unfinished">Verse frequency delay</translation>
+    </message>
+    <message>
+      <location filename="../../../src/widgets/repeaterpopup.ui" line="226"/>
       <source>Repetitions</source>
       <translation>Repeticiones</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/repeaterpopup.cpp" line="128"/>
+      <location filename="../../../src/widgets/repeaterpopup.cpp" line="129"/>
       <source>End verse cannot be before start verse</source>
       <translation>El verso final no puede ser anterior al verso inicial</translation>
     </message>
