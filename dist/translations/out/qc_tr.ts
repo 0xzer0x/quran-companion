@@ -791,62 +791,62 @@
       <translation>Kura-an'ı Kerim Arkadaşı hakkında</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="97"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="96"/>
       <source>Quran Companion</source>
       <translation>Kura-an'ı Kerim Arkadaşı</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="112"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="116"/>
       <source>Version</source>
       <translation type="unfinished">Version</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="187"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="190"/>
       <source>About</source>
       <translation type="unfinished">About</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="195"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="198"/>
       <source>A free, open-source Quran reader &amp; player</source>
       <translation type="unfinished">A free, open-source Quran reader &amp; player</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="226"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="229"/>
       <source>Useful Links</source>
       <translation type="unfinished">Useful Links</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="275"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="278"/>
       <source>Translators</source>
       <translation type="unfinished">Translators</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="406"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="409"/>
       <source>Credits</source>
       <translation type="unfinished">Credits</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="424"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="426"/>
       <source>Quran Text</source>
       <translation type="unfinished">Quran Text</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="473"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="472"/>
       <source>Recitations</source>
       <translation type="unfinished">Recitations</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="521"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="515"/>
       <source>Tafsir/Translations</source>
       <translation type="unfinished">Tafsir/Translations</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="572"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="561"/>
       <source>Surah Cards</source>
       <translation type="unfinished">Surah Cards</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="618"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="604"/>
       <source>Libraries</source>
       <translation type="unfinished">Libraries</translation>
     </message>
@@ -1363,11 +1363,16 @@
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="212"/>
+      <source>Verse frequency delay</source>
+      <translation type="unfinished">Verse frequency delay</translation>
+    </message>
+    <message>
+      <location filename="../../../src/widgets/repeaterpopup.ui" line="226"/>
       <source>Repetitions</source>
       <translation type="unfinished">Repetitions</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/repeaterpopup.cpp" line="128"/>
+      <location filename="../../../src/widgets/repeaterpopup.cpp" line="129"/>
       <source>End verse cannot be before start verse</source>
       <translation type="unfinished">End verse cannot be before start verse</translation>
     </message>
