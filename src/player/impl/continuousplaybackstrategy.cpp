@@ -43,6 +43,9 @@ ContinuousPlaybackStrategy::getNextVerseDelay()
 {
   return 0;
 }
-bool ContinuousPlaybackStrategy::lastRepeat() {
+
+bool
+ContinuousPlaybackStrategy::lastRepeat()
+{
   return true;
 }
