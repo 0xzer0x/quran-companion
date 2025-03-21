@@ -1364,7 +1364,7 @@
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="212"/>
       <source>Verse frequency delay</source>
-      <translation type="unfinished">Verse frequency delay</translation>
+      <translation>تأخير تردد الآية</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="226"/>
