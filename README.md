@@ -219,7 +219,7 @@ cmake --build .
 # To launch quran-companion
 ./quran-companion
 # For installation
-sudo make install
+sudo cmake --install .
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
