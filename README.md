@@ -216,6 +216,10 @@ mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
+# To launch quran-companion
+./quran-companion
+# For installation
+sudo cmake --install .
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
