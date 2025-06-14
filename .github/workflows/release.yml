@@ -295,7 +295,7 @@ jobs:
 
       - name: Generate PKGBUILD
         run: |
-          APPIMAGE_B2SUM="$(b2sum appimage/Quran_Companion-${{env.APP_VER}}-x86_64.AppImage | cut -d' ' -f1)"
+          APPIMAGE_B2SUM="$(b2sum Quran_Companion-${{env.APP_VER}}-x86_64.AppImage | cut -d' ' -f1)"
           awk \
             -v "pkgver=${{ env.APP_VER }}" \
             -v "b2sum=${APPIMAGE_B2SUM}" \
