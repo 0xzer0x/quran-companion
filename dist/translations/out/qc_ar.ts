@@ -1364,7 +1364,7 @@
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="212"/>
       <source>Post-verse pause (sec)</source>
-      <translation type="unfinished">Post-verse pause (sec)</translation>
+      <translation>إيقاف بعد الآية (ث)</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="226"/>
@@ -1379,7 +1379,7 @@
     <message>
       <location filename="../../../src/widgets/repeaterpopup.cpp" line="134"/>
       <source>Verse frequency and repetitions must be more than 0</source>
-      <translation type="unfinished">Verse frequency and repetitions must be more than 0</translation>
+      <translation>تردد الآية والتكرارات يجب أن تكون أكثر من 0</translation>
     </message>
   </context>
   <context>
