@@ -126,12 +126,12 @@
     <message>
       <location filename="../main.cpp"/>
       <source>Ibrahim Al-Dosary (Warsh)</source>
-      <translation type="unfinished">Ibrahim Al-Dosary (Warsh)</translation>
+      <translation>Ibrahim Al-Dosary (Warsh)</translation>
     </message>
     <message>
       <location filename="../main.cpp"/>
       <source>Yassin Al-Jazaery (Warsh)</source>
-      <translation type="unfinished">Yassin Al-Jazaery (Warsh)</translation>
+      <translation>Yassin Al-Jazaery (Warsh)</translation>
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="17"/>
@@ -685,17 +685,17 @@
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="400"/>
       <source>Hafs</source>
-      <translation type="unfinished">Hafs</translation>
+      <translation>Hafs</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="405"/>
       <source>Hafs (annotated)</source>
-      <translation type="unfinished">Hafs (annotated)</translation>
+      <translation>Hafs (dengan anotasi)</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="410"/>
       <source>Warsh</source>
-      <translation type="unfinished">Warsh</translation>
+      <translation>Warsh</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="510"/>
@@ -828,7 +828,7 @@
     <message>
       <location filename="../../../src/dialogs/aboutdialog.ui" line="463"/>
       <source>Quran Text</source>
-      <translation type="unfinished">Quran Text</translation>
+      <translation>Teks Al-Qur'an</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/aboutdialog.ui" line="509"/>
@@ -1364,7 +1364,7 @@
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="212"/>
       <source>Post-verse pause (sec)</source>
-      <translation type="unfinished">Post-verse pause (sec)</translation>
+      <translation>Jeda setelah ayat (detik)</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="226"/>
@@ -1379,7 +1379,7 @@
     <message>
       <location filename="../../../src/widgets/repeaterpopup.cpp" line="134"/>
       <source>Verse frequency and repetitions must be more than 0</source>
-      <translation type="unfinished">Verse frequency and repetitions must be more than 0</translation>
+      <translation>Frekuensi dan pengulangan ayat harus lebih dari 0</translation>
     </message>
   </context>
   <context>
