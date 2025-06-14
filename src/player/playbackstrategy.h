@@ -43,15 +43,15 @@ public:
    */
   virtual bool verseInRange(const Verse&) = 0;
   /**
-   * @brief Gets verse frequency delay in seconds.
+   * @brief Gets post verse pause in seconds.
    * @return Verse frequency delay in seconds.
    */
-  virtual int getNextVerseDelay() = 0;
+  virtual int getPostVersePause() = 0;
   /**
    * @brief Gets if it's the last verse repetition.
    * @return 1 if it's last verse repetition.
    */
-  virtual bool lastRepeat() = 0;
+  virtual bool isLastVerseRepetition() = 0;
   /**
    * @brief Virtual destructor for the PlaybackStrategy class.
    */

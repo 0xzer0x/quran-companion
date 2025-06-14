@@ -209,12 +209,12 @@
            <item>
             <widget class="QLabel" name="label">
              <property name="text">
-              <string>Verse frequency delay</string>
+              <string>Post-verse pause (sec)</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spnVerseFrequencyDelay"/>
+            <widget class="QSpinBox" name="spnPostVersePause"/>
            </item>
           </layout>
          </item>

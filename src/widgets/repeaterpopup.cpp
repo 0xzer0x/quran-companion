@@ -122,7 +122,7 @@ RepeaterPopup::generatePlaybackStrategy()
     Verse(m_quranService->versePage(toSurah, toVerse), toSurah, toVerse);
 
   int frequency = ui->spnVerseFrequency->value();
-  int frequencyDelay = ui->spnVerseFrequencyDelay->value() * 1000;
+  int postVersePauseSeconds = ui->spnPostVersePause->value();
   int repetitions = ui->spnRepetitions->value();
 
   if (start > end) {
@@ -130,12 +130,13 @@ RepeaterPopup::generatePlaybackStrategy()
     return nullopt;
   }
   if (frequency < 1 || repetitions < 1) {
-    showErrorMessagebox("Verse frequency and repetitions must be more than 0");
+    showErrorMessagebox(
+      tr("Verse frequency and repetitions must be more than 0"));
     return nullopt;
   }
 
-  return shared_ptr<SetPlaybackStrategy>(
-    new SetPlaybackStrategy(start, end, repetitions, frequency, frequencyDelay));
+  return shared_ptr<SetPlaybackStrategy>(new SetPlaybackStrategy(
+    start, end, repetitions, frequency, postVersePauseSeconds));
 }
 
 void

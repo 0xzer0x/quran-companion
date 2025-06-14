@@ -39,13 +39,13 @@ ContinuousPlaybackStrategy::verseInRange(const Verse&)
 }
 
 int
-ContinuousPlaybackStrategy::getNextVerseDelay()
+ContinuousPlaybackStrategy::getPostVersePause()
 {
   return 0;
 }
 
 bool
-ContinuousPlaybackStrategy::lastRepeat()
+ContinuousPlaybackStrategy::isLastVerseRepetition()
 {
   return true;
 }

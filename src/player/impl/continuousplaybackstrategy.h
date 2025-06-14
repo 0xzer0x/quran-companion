@@ -18,8 +18,8 @@ public:
   Verse stop() override;
   Verse end() override;
   std::optional<Verse> nextVerse() override;
-  int getNextVerseDelay() override;
-  bool lastRepeat() override;
+  int getPostVersePause() override;
+  bool isLastVerseRepetition() override;
   bool verseInRange(const Verse&) override;
 };
 
