@@ -734,51 +734,51 @@
       <translation>Teclas</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="164"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="165"/>
       <source>Select directory</source>
       <translation>Seleccionar carpeta</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="172"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="173"/>
       <source>Invalid path</source>
       <translation>Ruta inválida</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="173"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="174"/>
       <source>The chosen path is not valid. Please select a writable path.</source>
       <translation>La ruta seleccionada no es válida. Por favor, una ruta accesible.</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="189"/>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="204"/>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="219"/>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="254"/>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="274"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="190"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="205"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="220"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="255"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="275"/>
       <source>Restart required</source>
       <translation>Es necesario reiniciar</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="190"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="191"/>
       <source>Application theme was changed, restart now?</source>
       <translation>Se ha cambiado el tema de la aplicación, ¿reiniciar ahora?</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="205"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="206"/>
       <source>Application language was changed, restart now?</source>
       <translation>Se ha cambiado el idioma de la aplicación, ¿reiniciar ahora?</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="220"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="221"/>
       <source>Application downloads path was changed, restart now?</source>
       <translation>Se ha cambiado la ruta de descarga de la aplicación, ¿reiniciar ahora?</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="254"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="255"/>
       <source>Reading mode was changed, restart now?</source>
       <translation>Se ha cambiado el modo de lectura, ¿reiniciar ahora?</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="275"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="276"/>
       <source>Restart is required to load new quran font, restart now?</source>
       <translation>Es necesario reiniciar para cargar la nueva fuente para el Corán, ¿reiniciar ahora?</translation>
     </message>
@@ -821,32 +821,32 @@
       <translation>Traductores</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="409"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="446"/>
       <source>Credits</source>
       <translation>Agradecimientos</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="426"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="463"/>
       <source>Quran Text</source>
       <translation>Texto del Corán</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="472"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="509"/>
       <source>Recitations</source>
       <translation>Recitaciones</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="515"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="552"/>
       <source>Tafsir/Translations</source>
       <translation>Tafsir/Traducciones</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="561"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="598"/>
       <source>Surah Cards</source>
       <translation>Tarjetas de Sura</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.ui" line="604"/>
+      <location filename="../../../src/dialogs/aboutdialog.ui" line="641"/>
       <source>Libraries</source>
       <translation>Bibliotecas</translation>
     </message>
@@ -1264,52 +1264,52 @@
   <context>
     <name>QuranPageBrowser</name>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="399"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="401"/>
       <source>Zoom In</source>
       <translation>Acercar</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="400"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="402"/>
       <source>Zoom Out</source>
       <translation>Alejar</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="401"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="403"/>
       <source>Copy Verse</source>
       <translation>Copiar Verso</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="402"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="404"/>
       <source>Select</source>
       <translation>Seleccionar</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="403"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="405"/>
       <source>Play</source>
       <translation>Reproducir</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="404"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="406"/>
       <source>Tafsir</source>
       <translation>Tafsir</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="405"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="407"/>
       <source>Translation</source>
       <translation>Traducciones</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="406"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="408"/>
       <source>Thoughts</source>
       <translation>Reflexiones</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="407"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="409"/>
       <source>Add Bookmark</source>
       <translation>Añadir Marcador</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="408"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="410"/>
       <source>Remove Bookmark</source>
       <translation>Quitar Marcador</translation>
     </message>
@@ -1363,8 +1363,8 @@
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="212"/>
-      <source>Verse frequency delay</source>
-      <translation type="unfinished">Verse frequency delay</translation>
+      <source>Post-verse pause (sec)</source>
+      <translation>Pausa post-versículo (seg)</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/repeaterpopup.ui" line="226"/>
@@ -1375,6 +1375,11 @@
       <location filename="../../../src/widgets/repeaterpopup.cpp" line="129"/>
       <source>End verse cannot be before start verse</source>
       <translation>El verso final no puede ser anterior al verso inicial</translation>
+    </message>
+    <message>
+      <location filename="../../../src/widgets/repeaterpopup.cpp" line="134"/>
+      <source>Verse frequency and repetitions must be more than 0</source>
+      <translation>La frecuencia del versículo y las repeticiones deben ser más de 0</translation>
     </message>
   </context>
   <context>
