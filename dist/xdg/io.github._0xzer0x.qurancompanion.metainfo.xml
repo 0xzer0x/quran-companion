@@ -55,6 +55,15 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release date="2025-06-14" version="1.3.3" >
+      <description>
+        <ul>
+          <li>Bugfixes</li>
+          <li>Spanish UI translation</li>
+          <li>Feature: Pause after verse recitation</li>
+        </ul>
+      </description>
+    </release>
     <release date="2024-11-18" version="1.3.2">
       <description>
         <ul>

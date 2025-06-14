@@ -21,5 +21,6 @@
         <file alias="ar.qm">dist/translations/qtbase/ar.qm</file>
         <file alias="ru.qm">dist/translations/qtbase/ru.qm</file>
         <file alias="tr.qm">dist/translations/qtbase/tr.qm</file>
+        <file alias="es.qm">dist/translations/qtbase/es.qm</file>
     </qresource>
 </RCC>
