@@ -32,7 +32,16 @@ void
 VersePlayer::play()
 {
   m_isOn = true;
+
+  bool isResuming = (playbackState() == QMediaPlayer::PausedState);
+
   QMediaPlayer::play();
+
+  if (isResuming){
+    qint64 savedPos = position();
+    setPosition(savedPos);
+  }
+
 }
 
 void
