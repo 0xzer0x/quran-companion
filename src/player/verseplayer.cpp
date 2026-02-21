@@ -38,8 +38,7 @@ VersePlayer::play()
   QMediaPlayer::play();
 
   if (isResuming){
-    qint64 savedPos = position();
-    setPosition(savedPos);
+    setPosition(position());
   }
 
 }
