@@ -40,7 +40,6 @@ VersePlayer::play()
   if (isResuming){
     setPosition(position());
   }
-
 }
 
 void
