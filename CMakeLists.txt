@@ -266,8 +266,13 @@ if(APPLE)
   file(INSTALL assets DESTINATION "quran-companion.app/Contents/MacOS")
   file(INSTALL bismillah DESTINATION "quran-companion.app/Contents/MacOS")
 else()
-  file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
-  file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
+  add_custom_command(
+    TARGET quran-companion
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets
+            $<TARGET_FILE_DIR:quran-companion>/assets
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/bismillah
+            $<TARGET_FILE_DIR:quran-companion>/bismillah)
 endif()
 
 list(
