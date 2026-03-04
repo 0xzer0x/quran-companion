@@ -91,8 +91,9 @@ MainWindow::loadVerse()
 void
 MainWindow::loadComponents()
 {
-  QPointer<VersePlayer> player =
-    new VersePlayer(this, m_config.settings().value("Reciter", 0).toInt());
+  int reciterIdx =
+    Reciter::resolveSettingsIndex(m_config.settings().value("Reciter"));
+  QPointer<VersePlayer> player = new VersePlayer(this, reciterIdx);
   m_playbackController = new PlaybackController(this, player);
   m_reader = new QuranReader(this, m_playbackController);
   m_repeater = new RepeaterPopup(this, m_playbackController);
@@ -834,7 +835,9 @@ void
 MainWindow::saveReaderState()
 {
   m_config.settings().setValue("Window/State", saveState());
-  m_config.settings().setValue("Reciter", m_playerControls->currentReciter());
+  int idx = m_playerControls->currentReciter();
+  m_config.settings().setValue("Reciter",
+                               Reciter::reciters.at(idx).baseDirName());
   m_config.settings().sync();
 
   m_khatmahService->saveActiveKhatmah(m_currVerse);

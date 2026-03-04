@@ -79,7 +79,8 @@ TaskDownloader::finish()
   if (m_reply->error() != QNetworkReply::NoError)
     return handleError(m_reply->error());
   m_bytes = m_total;
-  saveFile();
+  if (!saveFile())
+    return emit taskError();
   emit completed();
 }
 
@@ -99,14 +100,17 @@ TaskDownloader::handleError(QNetworkReply::NetworkError err)
 bool
 TaskDownloader::saveFile()
 {
+  const QByteArray fdata = m_reply->readAll();
+  m_reply->close();
+
+  if (fdata.isEmpty())
+    return false;
+
   QFile localFile(m_task->destination().absoluteFilePath());
   if (!localFile.open(QIODevice::WriteOnly)) {
     qWarning() << "Couldn't open file:" << m_task->destination();
     return false;
   }
-
-  const QByteArray fdata = m_reply->readAll();
-  m_reply->close();
 
   localFile.write(fdata);
   localFile.close();

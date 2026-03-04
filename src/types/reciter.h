@@ -4,6 +4,7 @@
 #include <QList>
 #include <QSharedPointer>
 #include <QString>
+#include <QVariant>
 
 /**
  * @class Reciter
@@ -14,6 +15,8 @@ class Reciter
 public:
   static QList<Reciter> reciters;
   static void populateReciters();
+  static int indexByDirName(const QString& dirName);
+  static int resolveSettingsIndex(const QVariant& savedReciter);
 
   explicit Reciter(QString dir,
                    QString display,

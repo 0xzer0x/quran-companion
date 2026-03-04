@@ -29,7 +29,7 @@ PlayerControls::PlayerControls(QWidget* parent,
     ui->cmbReciter->addItem(r.displayName());
 
   ui->cmbReciter->setCurrentIndex(
-    m_config.settings().value("Reciter", 0).toInt());
+    Reciter::resolveSettingsIndex(m_config.settings().value("Reciter")));
 }
 
 void

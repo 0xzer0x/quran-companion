@@ -4,6 +4,7 @@
  */
 
 #include "verseplayer.h"
+#include <QFileInfo>
 #include <player/impl/continuousplaybackstrategy.h>
 #include <utils/dirmanager.h>
 
@@ -102,14 +103,15 @@ VersePlayer::setVerseFile(const QString& newVerseFilename)
 {
   setSource(QUrl());
 
-  if (!m_reciterDir.exists(newVerseFilename)) {
+  QFileInfo verseFile(m_reciterDir.filePath(newVerseFilename));
+  if (!verseFile.exists() || verseFile.size() == 0) {
     qDebug() << "file " + newVerseFilename + " is missing.";
     emit missingVerseFile(m_reciter, m_activeVerse.surah());
     return false;
   }
 
   m_verseFile = newVerseFilename;
-  setSource(QUrl::fromLocalFile(m_reciterDir.filePath(m_verseFile)));
+  setSource(QUrl::fromLocalFile(verseFile.absoluteFilePath()));
 
   return true;
 }
