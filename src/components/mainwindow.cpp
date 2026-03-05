@@ -91,9 +91,7 @@ MainWindow::loadVerse()
 void
 MainWindow::loadComponents()
 {
-  int reciterIdx =
-    Reciter::resolveSettingsIndex(m_config.settings().value("Reciter"));
-  QPointer<VersePlayer> player = new VersePlayer(this, reciterIdx);
+  QPointer<VersePlayer> player = new VersePlayer(this, &m_config.reciter());
   m_playbackController = new PlaybackController(this, player);
   m_reader = new QuranReader(this, m_playbackController);
   m_repeater = new RepeaterPopup(this, m_playbackController);
@@ -640,7 +638,7 @@ MainWindow::missingTranslation(QString id)
 }
 
 void
-MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
+MainWindow::missingRecitationFileWarn(const Reciter* const reciter, int surah)
 {
   if (!m_config.settings().value("MissingFileWarning").toBool())
     return;
@@ -653,8 +651,8 @@ MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(DownloadJob::Recitation,
-                                    { reciterIdx, surah });
+    m_downloaderDlg->selectDownload(
+      DownloadJob::Recitation, { Reciter::indexForReciter(reciter), surah });
   }
 }
 
@@ -835,9 +833,7 @@ void
 MainWindow::saveReaderState()
 {
   m_config.settings().setValue("Window/State", saveState());
-  int idx = m_playerControls->currentReciter();
-  m_config.settings().setValue("Reciter",
-                               Reciter::reciters.at(idx).baseDirName());
+  m_config.setReciter(m_playerControls->currentReciter());
   m_config.settings().sync();
 
   m_khatmahService->saveActiveKhatmah(m_currVerse);

@@ -33,7 +33,7 @@ public:
    * reciters combobox
    * @return index of reciter in the combobox
    */
-  int currentReciter() const;
+  const Reciter* currentReciter() const;
 
 public slots:
   /**

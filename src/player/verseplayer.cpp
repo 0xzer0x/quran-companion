@@ -8,18 +8,23 @@
 #include <player/impl/continuousplaybackstrategy.h>
 #include <utils/dirmanager.h>
 
-VersePlayer::VersePlayer(QObject* parent, int reciterIdx)
+VersePlayer::VersePlayer(QObject* parent, const Reciter* reciter)
   : QMediaPlayer(parent)
-  , m_reciter(reciterIdx)
+  , m_reciter(reciter)
   , m_output(new QAudioOutput(this))
   , m_activeVerse(Verse::getCurrent())
   , m_reciterDir(
       DirManager::getInstance().downloadsDir().absoluteFilePath("recitations"))
-  , m_reciters(Reciter::reciters)
 {
   setAudioOutput(m_output);
 
-  m_reciterDir.cd(m_reciters.at(m_reciter).baseDirName());
+  // WARN: Make sure passed m_reciter is not a nullptr before passing
+  if (m_reciter == nullptr) {
+    qFatal() << "Invalid value for reciter pointer in verse player:"
+             << m_reciter;
+  }
+
+  m_reciterDir.cd(m_reciter->baseDirName());
   loadActiveVerse();
 }
 
@@ -83,16 +88,17 @@ VersePlayer::playCurrentVerse()
 }
 
 bool
-VersePlayer::changeReciter(int reciterIdx)
+VersePlayer::changeReciter(const Reciter* reciter)
 {
-  if (m_activeVerse.number() == 0)
+  if (m_activeVerse.number() == 0) {
     m_activeVerse.setNumber(1);
+  }
 
   pause();
-  if (reciterIdx != m_reciter) {
+  if (reciter != m_reciter && reciter != nullptr) {
     m_reciterDir.cdUp();
-    m_reciterDir.cd(m_reciters.at(reciterIdx).baseDirName());
-    m_reciter = reciterIdx;
+    m_reciterDir.cd(reciter->baseDirName());
+    m_reciter = reciter;
   }
 
   return loadActiveVerse();
@@ -120,7 +126,7 @@ bool
 VersePlayer::loadActiveVerse()
 {
   if (m_activeVerse.number() == 0) {
-    setSource(QUrl::fromLocalFile(m_reciters.at(m_reciter).basmallahPath()));
+    setSource(QUrl::fromLocalFile(m_reciter->basmallahPath()));
     return true;
   }
 
@@ -130,7 +136,7 @@ VersePlayer::loadActiveVerse()
 QString
 VersePlayer::reciterName() const
 {
-  return m_reciters.at(m_reciter).displayName();
+  return m_reciter->displayName();
 }
 
 QAudioOutput*

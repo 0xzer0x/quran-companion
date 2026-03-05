@@ -116,7 +116,7 @@ private slots:
    * @param reciterIdx - ::Reciter::reciters index for the reciter
    * @param surah
    */
-  void missingRecitationFileWarn(int reciterIdx, int surah);
+  void missingRecitationFileWarn(const Reciter* const reciter, int surah);
   /**
    * @brief display a warning messagebox when QCF2 files are not found
    */

@@ -32,9 +32,9 @@ public:
   /**
    * @brief Constructs a VersePlayer object.
    * @param parent Pointer to the parent QObject.
-   * @param reciterIdx Index of the reciter in the reciters list.
+   * @param reciter the reciter in the reciters list.
    */
-  explicit VersePlayer(QObject* parent, int reciterIdx);
+  explicit VersePlayer(QObject* parent, const Reciter* reciter);
   /**
    * @brief Constructs the filename for a given verse.
    * @param v The Verse object to generate the filename for.
@@ -95,11 +95,11 @@ public slots:
   /**
    * @brief Changes the currently selected reciter and loads the active verse
    * from the new reciter's directory.
-   * @param reciterIdx Index of the new reciter in the reciters list.
+   * @param reciterId ID of the new reciter in the reciters list.
    * @return Boolean indicating whether the active verse was successfully loaded
    * from the new reciter.
    */
-  bool changeReciter(int reciterIdx);
+  bool changeReciter(const Reciter* reciter);
   /**
    * @brief Changes the audio device used for playback.
    * @param dev The QAudioDevice to use for playback.
@@ -114,18 +114,17 @@ public slots:
 signals:
   /**
    * @brief Emitted when a verse file is missing.
-   * @param reciterIdx Index of the reciter.
+   * @param reciter the reciter.
    * @param surah The surah number associated with the missing verse file.
    */
-  void missingVerseFile(int reciterIdx, int surah);
+  void missingVerseFile(const Reciter* reciter, int surah);
 
 private:
   Verse& m_activeVerse; ///< Current active verse.
   QDir m_reciterDir;    ///< Directory of the current reciter's recitations.
-  const QList<Reciter>& m_reciters; ///< List of available reciters.
-  bool m_isOn = false;              ///< Indicates whether the player is on.
-  int m_reciter = 0;   ///< Index of the currently selected reciter.
-  QString m_verseFile; ///< Filename of the current verse.
+  bool m_isOn = false;  ///< Indicates whether the player is on.
+  QString m_verseFile;  ///< Filename of the current verse.
+  const Reciter* m_reciter = nullptr; ///< The currently selected reciter.
   QPointer<QAudioOutput>
     m_output; ///< Pointer to the QAudioOutput object for playback control.
 };
