@@ -20,6 +20,7 @@ Reciter::populateReciters()
     QXmlStreamReader::TokenType token = reader.readNext();
     if (token == QXmlStreamReader::StartElement) {
       if (reader.name().toString() == "reciter") {
+        QString id = reader.attributes().value("id").toString();
         QString baseDirName = reader.attributes().value("dirname").toString();
         QString displayName = qApp->translate(
           "MainWindow", reader.attributes().value("display").toLatin1());
@@ -27,10 +28,10 @@ Reciter::populateReciters()
         QString basmallahPath =
           DirManager::getInstance().basmallahDir().absoluteFilePath(
             reader.attributes().value("basmallah").toString());
-        bool useId = reader.attributes().value("useid").toInt();
+        bool downloadById = reader.attributes().value("downloadById").toInt();
 
-        reciters.append(
-          Reciter(baseDirName, displayName, basmallahPath, baseUrl, useId));
+        reciters.append(Reciter(
+          id, baseDirName, displayName, basmallahPath, baseUrl, downloadById));
       }
     }
   }
@@ -57,64 +58,102 @@ Reciter::populateReciters()
   }
 }
 
-Reciter::Reciter(QString dir,
+const Reciter*
+Reciter::reciterById(const QString id)
+{
+  const Reciter* reciter = nullptr;
+
+  const auto iterator =
+    std::find_if(Reciter::reciters.constBegin(),
+                 Reciter::reciters.constEnd(),
+                 [&id](const Reciter& reciter) { return reciter.id() == id; });
+
+  // NOTE: Dereference iterator into QPointer if reciter is found
+  if (iterator != Reciter::reciters.constEnd()) {
+    reciter = &(*iterator);
+  }
+
+  return reciter;
+}
+
+const int
+Reciter::indexForReciter(const Reciter* const reciter)
+{
+  return Reciter::reciters.indexOf(*reciter);
+}
+
+Reciter::Reciter(QString id,
+                 QString dir,
                  QString display,
                  QString basmallah,
                  QString url,
-                 bool useId)
-  : m_baseDirName(dir)
+                 bool downloadById)
+  : m_id(id)
+  , m_baseDirName(dir)
   , m_displayName(display)
   , m_basmallahPath(basmallah)
   , m_baseUrl(url)
-  , m_useId(useId)
+  , m_downloadVerseById(downloadById)
 {
 }
 
-QString
+Reciter&
+Reciter::operator=(const Reciter& r)
+{
+  m_id = r.m_id;
+  m_displayName = r.m_displayName;
+  m_baseDirName = r.m_baseDirName;
+  m_basmallahPath = r.m_basmallahPath;
+  m_baseUrl = r.m_baseUrl;
+  m_downloadVerseById = r.m_downloadVerseById;
+
+  return *this;
+}
+
+bool
+Reciter::operator==(const Reciter& r) const
+{
+  return this->id() == r.id();
+}
+
+bool
+Reciter::operator!=(const Reciter& r) const
+{
+  return this->id() != r.id();
+}
+
+const QString&
+Reciter::id() const
+{
+  return m_id;
+}
+
+const QString&
 Reciter::baseUrl() const
 {
   return m_baseUrl;
 }
 
-QString
+const QString&
 Reciter::basmallahPath() const
 {
   return m_basmallahPath;
 }
 
-QString
+const QString&
 Reciter::displayName() const
 {
   return m_displayName;
 }
 
-QString
+const QString&
 Reciter::baseDirName() const
 {
   return m_baseDirName;
 }
 
-bool
-Reciter::useId() const
+const bool
+Reciter::downloadVerseById() const
 {
-  return m_useId;
-}
-
-int
-Reciter::indexByDirName(const QString& dirName)
-{
-  auto it = std::find_if(
-    reciters.cbegin(), reciters.cend(), [&dirName](const Reciter& r) {
-      return r.baseDirName() == dirName;
-    });
-  return it != reciters.cend() ? std::distance(reciters.cbegin(), it) : 0;
-}
-
-int
-Reciter::resolveSettingsIndex(const QVariant& savedReciter)
-{
-  if (savedReciter.typeId() == QMetaType::QString)
-    return indexByDirName(savedReciter.toString());
-
-  return qBound(0, savedReciter.toInt(), reciters.size() - 1);
+  return m_downloadVerseById;
 }
