@@ -68,7 +68,7 @@ Reciter::reciterById(const QString id)
                  Reciter::reciters.constEnd(),
                  [&id](const Reciter& reciter) { return reciter.id() == id; });
 
-  // NOTE: Dereference iterator into QPointer if reciter is found
+  // NOTE: Dereference iterator into pointer if reciter is found
   if (iterator != Reciter::reciters.constEnd()) {
     reciter = &(*iterator);
   }

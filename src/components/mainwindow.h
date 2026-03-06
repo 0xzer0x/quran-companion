@@ -113,7 +113,8 @@ private slots:
   /**
    * @brief display warning message box in case that recitation files are
    * missing
-   * @param reciterIdx - ::Reciter::reciters index for the reciter
+   * @param reciter - Pointer to a ::Reciter from the ::Reciter::reciters
+   * list
    * @param surah
    */
   void missingRecitationFileWarn(const Reciter* const reciter, int surah);

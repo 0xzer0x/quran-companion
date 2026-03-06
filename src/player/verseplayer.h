@@ -95,7 +95,8 @@ public slots:
   /**
    * @brief Changes the currently selected reciter and loads the active verse
    * from the new reciter's directory.
-   * @param reciterId ID of the new reciter in the reciters list.
+   * @param reciter Pointer to the new ::Reciter to change to in the reciters
+   * list.
    * @return Boolean indicating whether the active verse was successfully loaded
    * from the new reciter.
    */
@@ -114,7 +115,7 @@ public slots:
 signals:
   /**
    * @brief Emitted when a verse file is missing.
-   * @param reciter the reciter.
+   * @param reciter Pointer to the ::Reciter in the ::Reciter::reciters list.
    * @param surah The surah number associated with the missing verse file.
    */
   void missingVerseFile(const Reciter* reciter, int surah);
