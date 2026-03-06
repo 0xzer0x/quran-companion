@@ -2,14 +2,18 @@
 
 ### التحديثات 💭
 
-- إضافة الترجمة الإسبانية لواجهة البرنامج
-- تصليح بعض الأعطال
-- إضافة خاصية التوقف بعد كل آية لعدد من الثواني ( #129)
+- إضافة خاصية التحكم في سرعة التشغيل
+- إضافة القارئ محمد الطبلاوي
+- إضافة القارئ أحمد نعينع
+- إصلاح مشاكل البناء مع الإصدارات الحديثة من Qt
+- تحديث الاعتماد على Qt إلى الإصدار 6.10
 
 </div>
 
 ### What's Changed 💭
 
-- Added Spanish UI translation
-- Bug fixes
-- Added feature for pausing after each verse for a number of seconds (#129)
+- Added playback speed control feature
+- Added new reciter Mohammed Al-Tablaway
+- Added new reciter Ahmed Neana
+- Fixed compilation issues with recent Qt versions
+- Updated Qt dependency to version 6.10

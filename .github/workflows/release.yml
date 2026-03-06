@@ -122,6 +122,8 @@ jobs:
 
       - name: Run linuxdeployqt
         run: >-
+          find "${QT_PLUGIN_PATH}/imageformats" -name 'libqtiff.so' -type f -delete
+
           find "${QT_PLUGIN_PATH}/sqldrivers" -not -name 'libqsqlite.so' -type f -delete
 
           ${{github.workspace}}/linuxdeployqt-continuous-x86_64.AppImage
@@ -145,7 +147,7 @@ jobs:
   build-dmg:
     needs:
       - prepare
-    runs-on: macos-13
+    runs-on: macos-14
     environment:
       name: MacOS - DMG
       url: https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Quran_Companion-${{ needs.prepare.outputs.version }}-x86_64.dmg
@@ -162,7 +164,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           aqtversion: ==3.1.*
-          version: 6.8.0
+          version: 6.10.2
           host: "mac"
           cache: true
           target: "desktop"
