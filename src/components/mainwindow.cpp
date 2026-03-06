@@ -91,7 +91,7 @@ MainWindow::loadVerse()
 void
 MainWindow::loadComponents()
 {
-  QPointer<VersePlayer> player = new VersePlayer(this, &m_config.reciter());
+  QPointer<VersePlayer> player = new VersePlayer(this);
   m_playbackController = new PlaybackController(this, player);
   m_reader = new QuranReader(this, m_playbackController);
   m_repeater = new RepeaterPopup(this, m_playbackController);

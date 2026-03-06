@@ -15,6 +15,7 @@
 #include <QPointer>
 #include <types/reciter.h>
 #include <types/verse.h>
+#include <utils/configuration.h>
 
 /**
  * @class VersePlayer
@@ -32,9 +33,8 @@ public:
   /**
    * @brief Constructs a VersePlayer object.
    * @param parent Pointer to the parent QObject.
-   * @param reciter the reciter in the reciters list.
    */
-  explicit VersePlayer(QObject* parent, const Reciter* reciter);
+  explicit VersePlayer(QObject* parent);
   /**
    * @brief Constructs the filename for a given verse.
    * @param v The Verse object to generate the filename for.
@@ -120,10 +120,11 @@ signals:
   void missingVerseFile(const Reciter* reciter, int surah);
 
 private:
-  Verse& m_activeVerse; ///< Current active verse.
-  QDir m_reciterDir;    ///< Directory of the current reciter's recitations.
-  bool m_isOn = false;  ///< Indicates whether the player is on.
-  QString m_verseFile;  ///< Filename of the current verse.
+  Verse& m_activeVerse;    ///< Current active verse.
+  Configuration& m_config; ///< Reference to the Configuration instance.
+  QDir m_reciterDir;       ///< Directory of the current reciter's recitations.
+  bool m_isOn = false;     ///< Indicates whether the player is on.
+  QString m_verseFile;     ///< Filename of the current verse.
   const Reciter* m_reciter = nullptr; ///< The currently selected reciter.
   QPointer<QAudioOutput>
     m_output; ///< Pointer to the QAudioOutput object for playback control.

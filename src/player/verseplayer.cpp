@@ -8,11 +8,12 @@
 #include <player/impl/continuousplaybackstrategy.h>
 #include <utils/dirmanager.h>
 
-VersePlayer::VersePlayer(QObject* parent, const Reciter* reciter)
+VersePlayer::VersePlayer(QObject* parent)
   : QMediaPlayer(parent)
-  , m_reciter(reciter)
+  , m_config(Configuration::getInstance())
   , m_output(new QAudioOutput(this))
   , m_activeVerse(Verse::getCurrent())
+  , m_reciter(&m_config.reciter())
   , m_reciterDir(
       DirManager::getInstance().downloadsDir().absoluteFilePath("recitations"))
 {
