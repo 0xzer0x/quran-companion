@@ -4,21 +4,28 @@
  */
 
 #include "verseplayer.h"
+#include <QFileInfo>
 #include <player/impl/continuousplaybackstrategy.h>
 #include <utils/dirmanager.h>
 
-VersePlayer::VersePlayer(QObject* parent, int reciterIdx)
+VersePlayer::VersePlayer(QObject* parent)
   : QMediaPlayer(parent)
-  , m_reciter(reciterIdx)
+  , m_config(Configuration::getInstance())
   , m_output(new QAudioOutput(this))
   , m_activeVerse(Verse::getCurrent())
+  , m_reciter(&m_config.reciter())
   , m_reciterDir(
       DirManager::getInstance().downloadsDir().absoluteFilePath("recitations"))
-  , m_reciters(Reciter::reciters)
 {
   setAudioOutput(m_output);
 
-  m_reciterDir.cd(m_reciters.at(m_reciter).baseDirName());
+  // WARN: Make sure passed m_reciter is not a nullptr before passing
+  if (m_reciter == nullptr) {
+    qFatal() << "Invalid value for reciter pointer in verse player:"
+             << m_reciter;
+  }
+
+  m_reciterDir.cd(m_reciter->baseDirName());
   loadActiveVerse();
 }
 
@@ -82,16 +89,17 @@ VersePlayer::playCurrentVerse()
 }
 
 bool
-VersePlayer::changeReciter(int reciterIdx)
+VersePlayer::changeReciter(const Reciter* reciter)
 {
-  if (m_activeVerse.number() == 0)
+  if (m_activeVerse.number() == 0) {
     m_activeVerse.setNumber(1);
+  }
 
   pause();
-  if (reciterIdx != m_reciter) {
+  if (reciter != m_reciter && reciter != nullptr) {
     m_reciterDir.cdUp();
-    m_reciterDir.cd(m_reciters.at(reciterIdx).baseDirName());
-    m_reciter = reciterIdx;
+    m_reciterDir.cd(reciter->baseDirName());
+    m_reciter = reciter;
   }
 
   return loadActiveVerse();
@@ -102,14 +110,15 @@ VersePlayer::setVerseFile(const QString& newVerseFilename)
 {
   setSource(QUrl());
 
-  if (!m_reciterDir.exists(newVerseFilename)) {
+  QFileInfo verseFile(m_reciterDir.filePath(newVerseFilename));
+  if (!verseFile.exists() || verseFile.size() == 0) {
     qDebug() << "file " + newVerseFilename + " is missing.";
     emit missingVerseFile(m_reciter, m_activeVerse.surah());
     return false;
   }
 
   m_verseFile = newVerseFilename;
-  setSource(QUrl::fromLocalFile(m_reciterDir.filePath(m_verseFile)));
+  setSource(QUrl::fromLocalFile(verseFile.absoluteFilePath()));
 
   return true;
 }
@@ -118,7 +127,7 @@ bool
 VersePlayer::loadActiveVerse()
 {
   if (m_activeVerse.number() == 0) {
-    setSource(QUrl::fromLocalFile(m_reciters.at(m_reciter).basmallahPath()));
+    setSource(QUrl::fromLocalFile(m_reciter->basmallahPath()));
     return true;
   }
 
@@ -128,7 +137,7 @@ VersePlayer::loadActiveVerse()
 QString
 VersePlayer::reciterName() const
 {
-  return m_reciters.at(m_reciter).displayName();
+  return m_reciter->displayName();
 }
 
 QAudioOutput*

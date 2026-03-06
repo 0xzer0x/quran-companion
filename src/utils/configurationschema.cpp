@@ -26,6 +26,7 @@ ConfigurationSchema::ConfigurationSchema()
     make_pair("VOTD", true),
     make_pair("MissingFileWarning", true),
     make_pair("DownloadsDir", QVariant()),
+    make_pair("Reciter", "husary"),
   };
   QHash<QString, QVariant> window = {
     make_pair("State", QVariant()),

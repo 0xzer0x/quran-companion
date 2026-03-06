@@ -123,6 +123,31 @@ Configuration::verseType() const
   return m_verseType;
 }
 
+const Reciter&
+Configuration::reciter() const
+{
+  const QString reciterId = m_settings.value("Reciter").toString();
+  // NOTE: Get reciter with the configured id and fallback if ID is not valid
+  const Reciter* reciterPtr = Reciter::reciterById(reciterId);
+  if (reciterPtr == nullptr) {
+    reciterPtr = Reciter::reciterById("husary");
+  }
+
+  return *reciterPtr;
+}
+
+void
+Configuration::setReciter(const Reciter* reciter)
+{
+  if (!reciter) {
+    qWarning()
+      << "Invalid reciter pointer value passed to configuration: nullptr";
+    return;
+  }
+
+  m_settings.setValue("Reciter", reciter->id());
+}
+
 void
 Configuration::setVerseType(ConfigurationSchema::VerseType newVerseType)
 {

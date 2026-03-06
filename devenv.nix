@@ -16,6 +16,7 @@ in
     CMAKE_EXPORT_COMPILE_COMMANDS = 1;
     # WARN: Required for proper audio playback
     QT_PLUGIN_PATH = "${config.git.root}/.devenv/profile/lib/qt-6/plugins";
+    LD_LIBRARY_PATH = "${config.git.root}/.devenv/profile/lib";
   };
 
   languages.cplusplus.enable = true;
@@ -27,6 +28,7 @@ in
       ninja
       clang-tools
       crowdin-cli
+      pipewire
     ])
     ++ (with qt6Packages; [
       qtbase
