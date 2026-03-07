@@ -3,7 +3,7 @@
 set -euo pipefail
 
 _SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-_QT_DIR=$(find "$HOME" -maxdepth 3 -path "$HOME/Qt/6.*/gcc_64" -type d | head -n 1)
+
 #COLORS
 __CDEF="\033[0m"      # default color
 __b_CCIN="\033[1;36m" # bold info color
@@ -91,7 +91,7 @@ extract-shortcuts() {
 
 extract-source-strings() {
   __prompt -s "-- generating sources ts file"
-  "$_QT_DIR/bin/lupdate" -recursive -no-obsolete "$_SCRIPT_DIR/../../src" -ts "$_SCRIPT_DIR/generated/sources.ts"
+  lupdate -recursive -no-obsolete "$_SCRIPT_DIR/../../src" -ts "$_SCRIPT_DIR/generated/sources.ts"
 }
 
 update-template() {
@@ -101,7 +101,7 @@ update-template() {
   for f in "$_SCRIPT_DIR/generated/"*; do
     generated=("${generated[@]}" "$f")
   done
-  "$_QT_DIR/bin/lconvert" -i "${generated[@]}" -no-obsolete -o "${templatefile}"
+  lconvert -i "${generated[@]}" -no-obsolete -o "${templatefile}"
 }
 
 _main() {
