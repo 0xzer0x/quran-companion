@@ -361,7 +361,7 @@ jobs:
       - release
     runs-on: ubuntu-latest
     environment:
-      name: AUR
+      name: Linux - AUR
       url: https://aur.archlinux.org/packages/quran-companion
     env:
       APP_VER: "${{ needs.prepare.outputs.version }}"
