@@ -1,3 +1,5 @@
+<a name="md-top"></a>
+
 # Contributing to Quran Companion
 
 Thank you for taking the time to contribute to **Quran Companion**.
@@ -45,6 +47,8 @@ If you’re unsure what to work on, check the issue tracker:
 
 - Issues: <https://github.com/0xzer0x/quran-companion/issues>
 
+<p align="right">(<a href="#md-top">back to top</a>)</p>
+
 ## Before you start
 
 ### Discuss first for large changes
@@ -76,6 +80,8 @@ Include:
 
 Tip: attach the log **before launching a new app instance**, since logs may reset on startup.
 
+<p align="right">(<a href="#md-top">back to top</a>)</p>
+
 ## Requesting features
 
 Please use the **Feature Request** issue template:
@@ -86,6 +92,8 @@ The template asks you to categorize the request (Book / Recitation / Application
 
 - Mockups / screenshots
 - Any relevant references or sources
+
+<p align="right">(<a href="#md-top">back to top</a>)</p>
 
 ## Development setup
 
@@ -147,6 +155,8 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
 ./quran-companion
 ```
+
+<p align="right">(<a href="#md-top">back to top</a>)</p>
 
 ## Project structure
 
@@ -212,6 +222,8 @@ cmake --build .
 └── resources.qrc                     Qt resource collection file defining what gets bundled from resources/.
 ```
 
+<p align="right">(<a href="#md-top">back to top</a>)</p>
+
 ## Pull request process
 
 1. **Fork** the repo and create a branch: `git checkout -b your-branch-name`
@@ -221,6 +233,8 @@ cmake --build .
    - what changed and why
    - screenshots for UI changes
    - link the issue it fixes (e.g. “Fixes #123”)
+
+<p align="right">(<a href="#md-top">back to top</a>)</p>
 
 ### Commit messages
 
@@ -276,6 +290,8 @@ If your commit fixes an issue, you can reference it in the footer:
 Refs: #123
 ```
 
+<p align="right">(<a href="#md-top">back to top</a>)</p>
+
 ## Internationalization
 
 Internationalization is done through the localization platform [Crowdin](https://crowdin.com/), which makes it easier for people who aren't familiar with developer tools such as git and GitHub to contribute translations.
@@ -288,6 +304,8 @@ Internationalization is done through the localization platform [Crowdin](https:/
 4. Enable notifications for new translatable strings:
    - Crowdin → **Account Settings** → **Notifications** → enable **New Strings**
 5. Once a language translation is completed and approved, it will be included in a release following its approval.
+
+<p align="right">(<a href="#md-top">back to top</a>)</p>
 
 ## Recitations
 
@@ -352,6 +370,8 @@ After exporting all **114 surahs** into verse MP3 files:
    - `name_bitrate`
 4. Open a GitLab [merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html) to merge your fork into the main repository
 
+<p align="right">(<a href="#md-top">back to top</a>)</p>
+
 ## Quran Content
 
 > [!WARNING]
@@ -384,6 +404,8 @@ CREATE TABLE IF NOT EXISTS "content" (
 );
 ```
 
+<p align="right">(<a href="#md-top">back to top</a>)</p>
+
 ## Documentation
 
 ### Doxygen
@@ -397,8 +419,12 @@ doxygen
 
 By default, output is HTML (you can change `Doxyfile` to generate other formats).
 
+<p align="right">(<a href="#md-top">back to top</a>)</p>
+
 ## License
 
-By contributing, you agree that your contributions will be licensed under the project license:
+By contributing, you agree that your contributions will be licensed under the project licenses:
 
 - Waqf General Public License (see `license-en.txt` / `license-ar.txt` in the repository).
+
+<p align="right">(<a href="#md-top">back to top</a>)</p>
