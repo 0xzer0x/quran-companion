@@ -65,6 +65,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
+          cache: true
           aqtversion: ==3.1.*
           version: 6.10.2
           host: linux
