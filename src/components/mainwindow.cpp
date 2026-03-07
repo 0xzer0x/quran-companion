@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget* parent)
   setupConnections();
   setupSurahsDock();
   setupMenubarButton();
-  this->show();
+  show();
 
   m_popup->setDockArea(dockWidgetArea(ui->sideDock));
   if (!m_config.settings().value("Window/VisibleMenubar").toBool()) {
@@ -116,10 +116,7 @@ MainWindow::loadComponents()
   QFrame* controlsFrame = new QFrame(this);
   controls->setAlignment(Qt::AlignCenter);
   controls->setContentsMargins(0, 0, 0, 0);
-  controls->setSpacing(0);
-  controls->addStretch(0);
   controls->addWidget(m_playerControls, 1);
-  controls->addStretch(0);
   controlsFrame->setLayout(controls);
   ui->scrollAreaWidgetContents->layout()->addWidget(controlsFrame);
   ui->scrollAreaWidgetContents->layout()->addWidget(m_reader);
@@ -138,6 +135,7 @@ MainWindow::loadComponents()
   setCmbJuzIdx(m_quranService->getVerseJuz(m_currVerse) - 1);
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page() - 1);
+  ui->scrollAreaWidgetContents->layout()->activate();
 }
 
 void
