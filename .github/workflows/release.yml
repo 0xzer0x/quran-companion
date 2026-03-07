@@ -294,7 +294,7 @@ jobs:
         run: |-
           Push-Location "${{ env.BUNDLE_DIR }}\bin"
           Copy-Item -Path "${{ github.workspace }}\dist\windows\installer\installer.nsi" -Destination "installer.nsi" -Force
-          makensis /V4 /DOUTFILE="${{ env.BUNDLE_DIR }}\Quran_Companion-${{ env.APP_VER }}-x86_64-setup.exe" installer.nsi
+          makensis /V4 /DAPPVER="${{ env.APP_VER }}" /DOUTFILE="${{ env.BUNDLE_DIR }}\Quran_Companion-${{ env.APP_VER }}-x86_64-setup.exe" installer.nsi
           Pop-Location
 
       - name: Upload build artifact

@@ -12,6 +12,11 @@ Unicode True
 
 Name "Quran Companion"
 
+; Set application version
+!ifndef APPVER
+  !define APPVER "1.0"
+!endif
+
 !ifndef OUTFILE
   !define OUTFILE "QuranCompanionSetup.exe"
 !endif
@@ -134,6 +139,16 @@ Section "Quran Companion Application" SecMain
   ; Store install path in registry
   WriteRegStr HKCU "Software\QuranCompanion" "" $INSTDIR
 
+  ; Write to the Windows uninstall registry
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Quran Companion" "DisplayName" "Quran Companion"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Quran Companion" "DisplayIcon" "$INSTDIR\quran-companion.exe"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Quran Companion" "DisplayVersion" "${APPVER}"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Quran Companion" "Publisher" "Youssef Fathy"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Quran Companion" "InstallLocation" "$INSTDIR"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Quran Companion" "UninstallString" "$INSTDIR\Uninstall.exe"
+  WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Quran Companion" "NoModify" 0
+  WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Quran Companion" "NoRepair" 1
+
   ; Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
@@ -193,8 +208,9 @@ Section "Uninstall"
   ; Delete desktop shortcuts
   Delete "$DESKTOP\Quran Companion.lnk"
 
-  ; Remove registry key
+  ; Remove registry keys
   DeleteRegKey HKCU "Software\QuranCompanion"
+  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\Quran Companion"
 
 SectionEnd
 
