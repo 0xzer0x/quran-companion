@@ -17,7 +17,7 @@ compile_commands.json
 !shortcuts.sh
 !update_translations.sh
 !docs/Doxyfile
-!dist/windows/online-installer/
+!dist/windows/*installer/
 
 # Devenv
 .devenv*
