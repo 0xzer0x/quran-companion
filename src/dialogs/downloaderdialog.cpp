@@ -111,7 +111,7 @@ DownloaderDialog::populateTreeModel()
 
   // tafsir submenu
   QStandardItem* tafsir =
-    new QStandardItem(qApp->translate("SettingsDialog", "Tafsir"));
+    new QStandardItem(QCoreApplication::translate("SettingsDialog", "Tafsir"));
   tafsir->setData("tafsir", Qt::UserRole);
   m_treeModel.invisibleRootItem()->appendRow(tafsir);
   // -- tafasir
@@ -126,8 +126,8 @@ DownloaderDialog::populateTreeModel()
   }
 
   // translation submenu
-  QStandardItem* translation =
-    new QStandardItem(qApp->translate("SettingsDialog", "Translation"));
+  QStandardItem* translation = new QStandardItem(
+    QCoreApplication::translate("SettingsDialog", "Translation"));
   tafsir->setData("translation", Qt::UserRole);
   m_treeModel.invisibleRootItem()->appendRow(translation);
   // -- translations
@@ -148,7 +148,7 @@ DownloaderDialog::populateTreeModel()
   m_treeModel.invisibleRootItem()->appendRow(extras);
   // -- qcf 2
   QStandardItem* qcf =
-    new QStandardItem(qApp->translate("SettingsDialog", "QCF V2"));
+    new QStandardItem(QCoreApplication::translate("SettingsDialog", "QCF V2"));
   qcf->setData("qcf", Qt::UserRole);
   extras->appendRow(qcf);
 }

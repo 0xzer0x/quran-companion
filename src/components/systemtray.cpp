@@ -12,7 +12,7 @@ SystemTray::SystemTray(QObject* parent)
   , m_trayMenu(new QMenu())
 {
   addActions();
-  setTooltip(qApp->translate("MainWindow", "Quran Companion"));
+  setTooltip(QCoreApplication::translate("MainWindow", "Quran Companion"));
   m_sysTray->setContextMenu(m_trayMenu);
   m_sysTray->setIcon(QIcon(":/resources/tray.png"));
   m_sysTray->show();

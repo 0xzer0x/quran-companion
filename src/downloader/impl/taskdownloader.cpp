@@ -60,13 +60,13 @@ TaskDownloader::taskProgress(qint64 bytes, qint64 total)
     secs = 1;
 
   int speedPerSec = bytes / secs;
-  QString unit = qApp->translate("DownloadManager", "bytes");
+  QString unit = QCoreApplication::translate("DownloadManager", "bytes");
   if (speedPerSec >= 1024) {
-    unit = qApp->translate("DownloadManager", "KB");
+    unit = QCoreApplication::translate("DownloadManager", "KB");
     speedPerSec /= 1024;
   }
   if (speedPerSec >= 1024) {
-    unit = qApp->translate("DownloadManager", "MB");
+    unit = QCoreApplication::translate("DownloadManager", "MB");
     speedPerSec /= 1024;
   }
 

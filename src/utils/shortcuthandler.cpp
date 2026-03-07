@@ -36,9 +36,9 @@ ShortcutHandler::populateDescriptionMap()
       if (reader.name().toString() == "shortcut") {
         QString key = reader.attributes().value("key").toString();
         QString defBind = reader.attributes().value("default").toString();
-        QString desc =
-          qApp->translate("SettingsDialog",
-                          reader.attributes().value("description").toLatin1());
+        QString desc = QCoreApplication::translate(
+          "SettingsDialog",
+          reader.attributes().value("description").toLatin1());
 
         m_shortcutsDescription.insert(key, desc);
         if (!m_config.settings().contains(key))
@@ -81,6 +81,8 @@ ShortcutHandler::setupConnections()
          make_pair("TogglePlayback", &ShortcutHandler::togglePlayback),
          make_pair("VolumeUp", &ShortcutHandler::incrementVolume),
          make_pair("VolumeDown", &ShortcutHandler::decrementVolume),
+         make_pair("PlaybackSpeedInc", &ShortcutHandler::incrementPlaybackRate),
+         make_pair("PlaybackSpeedDec", &ShortcutHandler::decrementPlaybackRate),
          make_pair("BookmarkCurrent", &ShortcutHandler::bookmarkCurrent),
          make_pair("NextPage", &ShortcutHandler::nextPage),
          make_pair("PrevPage", &ShortcutHandler::prevPage),

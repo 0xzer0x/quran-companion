@@ -1,5 +1,5 @@
 #include "copynotifier.h"
-#include <QApplication>
+#include <QCoreApplication>
 
 CopyNotifier::CopyNotifier(QObject* parent)
 {
@@ -9,7 +9,7 @@ CopyNotifier::CopyNotifier(QObject* parent)
 void
 CopyNotifier::copied()
 {
-  QString msg =
-    qApp->translate("CopyNotifier", "Verse text copied to clipboard");
+  QString msg = QCoreApplication::translate("CopyNotifier",
+                                            "Verse text copied to clipboard");
   emit notify(copiedText, msg);
 }
