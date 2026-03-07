@@ -159,7 +159,7 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 
 - GCC / MSVC
 - CMake
-- Qt >= 6.5
+- Qt >= 6.10
   - `qtbase`
   - `qtimageformats`
   - `qtsvg`
@@ -248,24 +248,7 @@ See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a f
 
 ## Contributing 💡
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-
-### Documetation 📚
-
-- [Doxygen](https://www.doxygen.nl/) documentation is provided for the project, to generate the documentation preform the following steps
-  - `git clone https://github.com/0xzer0x/quran-companion.git`
-  - `cd quran-companion/docs`
-  - `doxygen`
-
-- default documentaion format is html, if you want to generate any other format modify `Doxyfile` accordingly
-
-### Translation 🌐
-
-Look at [this wiki page][translation-wiki]
-
-### Recitations 📻
-
-Look at [this wiki page][recitations-wiki]
+Please check out the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to contribute, submit issues, or create pull requests.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -297,7 +280,7 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [latest-release]: https://github.com/0xzer0x/quran-companion/releases/latest
-[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.9/qc_online_installer_x64_win.exe
+[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.5.0/Quran_Companion-1.5.0-x86_64-setup.exe
 [translation-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations
 [recitations-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Recitations
 [macos-dmg-url]: https://github.com/0xzer0x/quran-companion/releases/download/v1.4.0/Quran_Companion-1.4.0-x86_64.dmg
