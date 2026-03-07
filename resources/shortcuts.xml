@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shortcuts>
   <shortcut default="Shift+P" description="Toggle player controls" key="TogglePlayerControls"></shortcut>
+  <shortcut default="X" description="Increase the playback speed" key="PlaybackSpeedInc"></shortcut>
+  <shortcut default="Shift+X" description="Decrease the playback speed" key="PlaybackSpeedDec"></shortcut>
   <shortcut default="R" description="Toggle reader view" key="ToggleReaderView"></shortcut>
   <shortcut default="M" description="Toggle visibility of the menubar" key="ToggleMenubar"></shortcut>
   <shortcut default="N" description="Toggle visibility of the navigation dock" key="ToggleNavDock"></shortcut>
