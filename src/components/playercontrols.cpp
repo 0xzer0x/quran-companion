@@ -64,6 +64,14 @@ PlayerControls::setupConnections()
           &ShortcutHandler::decrementVolume,
           this,
           &PlayerControls::decrementVolume);
+  connect(&handler,
+          &ShortcutHandler::incrementPlaybackRate,
+          this,
+          &PlayerControls::incrementPlaybackRate);
+  connect(&handler,
+          &ShortcutHandler::decrementPlaybackRate,
+          this,
+          &PlayerControls::decrementPlaybackRate);
 
   connect(m_playbackController->player(),
           &QMediaPlayer::positionChanged,
@@ -224,6 +232,29 @@ PlayerControls::decrementVolume()
 {
   int val = ui->sldrVolume->value() - 5;
   ui->sldrVolume->setValue(val < 0 ? 0 : val);
+}
+
+void
+PlayerControls::incrementPlaybackRate()
+{
+  int currRateIndex = ui->cmbPlaybackRate->currentIndex();
+  int maxIndex = ui->cmbPlaybackRate->count() - 1;
+  if (currRateIndex == maxIndex) {
+    return;
+  }
+
+  ui->cmbPlaybackRate->setCurrentIndex(currRateIndex + 1);
+}
+
+void
+PlayerControls::decrementPlaybackRate()
+{
+  int currRateIndex = ui->cmbPlaybackRate->currentIndex();
+  if (currRateIndex == 0) {
+    return;
+  }
+
+  ui->cmbPlaybackRate->setCurrentIndex(currRateIndex - 1);
 }
 
 const Reciter*

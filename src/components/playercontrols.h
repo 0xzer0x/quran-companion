@@ -99,7 +99,8 @@ private slots:
    * @param on - boolean indicating the state of the button
    */
   void btnRepeatClicked(bool on);
-
+  void incrementPlaybackRate();
+  void decrementPlaybackRate();
   void cmbPlaybackRateChanged(QString newText);
 
 private:

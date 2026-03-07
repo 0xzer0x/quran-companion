@@ -54,6 +54,8 @@ signals:
   void zoomOut();
   void incrementVolume();
   void decrementVolume();
+  void incrementPlaybackRate();
+  void decrementPlaybackRate();
   void bookmarkCurrent();
   void openBookmarks();
   void openKhatmah();
