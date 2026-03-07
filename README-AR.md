@@ -68,8 +68,6 @@
     <li><a href="#contributing">المشاركة</a></li>
     <li><a href="#credits">الحقوق</a></li>
     <li><a href="#license">الترخيص</a></li>
-    <li><a href="#contact">التواصل</a></li>
-
 </ol>
 </details>
 
@@ -306,18 +304,6 @@ cmake --build .
 ## الترخيص
 
 مرخّص بموجب رخصة [وقف العامة](https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9)
-
-<p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
-
-<!-- CONTACT -->
-
-<a name="contact"></a>
-
-## التواصل
-
-> 0xzer0x - y.essam2256@nu.edu.eg
->
-> رابط المشروع: [https://github.com/0xzer0x/quran-companion](https://github.com/0xzer0x/quran-companion)
 
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
 
