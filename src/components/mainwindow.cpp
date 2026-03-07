@@ -51,6 +51,9 @@ MainWindow::MainWindow(QWidget* parent)
   if (!m_config.settings().value("Window/VisibleMenubar").toBool()) {
     toggleMenubar();
   }
+
+  // FIX: Required for player controls to not be squashed on launch
+  adjustSize();
 }
 
 void
@@ -135,7 +138,6 @@ MainWindow::loadComponents()
   setCmbJuzIdx(m_quranService->getVerseJuz(m_currVerse) - 1);
 
   ui->cmbPage->setCurrentIndex(m_currVerse.page() - 1);
-  ui->scrollAreaWidgetContents->layout()->activate();
 }
 
 void
