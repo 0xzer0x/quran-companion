@@ -17,7 +17,8 @@ DownloadProgressBar::DownloadProgressBar(QWidget* parent, Type type, int max)
   setValue(0);
   if (m_type == DownloadJob::TafsirFile ||
       m_type == DownloadJob::TranslationFile)
-    setFormat("%v / %m " + qApp->translate("DownloadManager", "KB"));
+    setFormat("%v / %m " +
+              QCoreApplication::translate("DownloadManager", "KB"));
   else
     setFormat("%v / %m");
 }

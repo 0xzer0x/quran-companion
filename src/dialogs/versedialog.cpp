@@ -92,10 +92,11 @@ VerseDialog::updateLabels()
     "ﵩ " + m_quranService->verseText(m_votd.surah(), m_votd.number()) + " ﵨ");
   ui->lbContent->setText(
     m_translationService->getTranslation(m_votd.surah(), m_votd.number()));
-  ui->lbInfo->setText(qApp->translate("BookmarksDialog", "Surah: ") +
-                      m_quranService->surahName(m_votd.surah()) + " - " +
-                      qApp->translate("BookmarksDialog", "Verse: ") +
-                      QString::number(m_votd.number()));
+  ui->lbInfo->setText(
+    QCoreApplication::translate("BookmarksDialog", "Surah: ") +
+    m_quranService->surahName(m_votd.surah()) + " - " +
+    QCoreApplication::translate("BookmarksDialog", "Verse: ") +
+    QString::number(m_votd.number()));
 }
 
 void

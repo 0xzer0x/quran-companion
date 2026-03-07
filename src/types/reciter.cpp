@@ -22,7 +22,7 @@ Reciter::populateReciters()
       if (reader.name().toString() == "reciter") {
         QString id = reader.attributes().value("id").toString();
         QString baseDirName = reader.attributes().value("dirname").toString();
-        QString displayName = qApp->translate(
+        QString displayName = QCoreApplication::translate(
           "MainWindow", reader.attributes().value("display").toLatin1());
         QString baseUrl = reader.attributes().value("url").toString();
         QString basmallahPath =
