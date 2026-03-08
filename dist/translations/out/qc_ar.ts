@@ -385,11 +385,11 @@
     </message>
     <message>
       <source>Increase the playback speed</source>
-      <translation type="unfinished">Increase the playback speed</translation>
+      <translation>زيادة سرعة القراءة</translation>
     </message>
     <message>
       <source>Decrease the playback speed</source>
-      <translation type="unfinished">Decrease the playback speed</translation>
+      <translation>خفض سرعة القراءة</translation>
     </message>
     <message>
       <source>Toggle reader view</source>
