@@ -17,15 +17,16 @@
 <h2 align="center">Quran Companion</h2>
 
 <h4 align="center">
-  Cross-platform desktop Quran reader & player
+  Free and open-source desktop Quran reader and player
 </h4>
 
 <p align="center">
   <a href="https://techforpalestine.org/learn-more"><img alt="StandWithPalestine" src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/StandWithPalestine.svg"></a>
   <img alt="GitHub Release" src="https://img.shields.io/github/v/release/0xzer0x/quran-companion">
   <a href="https://aur.archlinux.org/packages/quran-companion"><img alt="AUR Version" src="https://img.shields.io/aur/version/quran-companion"></a>
+  <img alt="Flathub Downloads" src="https://img.shields.io/flathub/downloads/io.github._0xzer0x.qurancompanion?label=flathub">
+  <img alt="GitHub Downloads" src="https://img.shields.io/github/downloads/0xzer0x/quran-companion/total">
   <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/release.yml">
-  <img alt="GitHub issues" src="https://img.shields.io/github/issues/0xzer0x/quran-companion">
 </p>
 
 <p align="center">
