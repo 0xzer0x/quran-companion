@@ -4,148 +4,120 @@
   <context>
     <name>MainWindow</name>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Husary</source>
       <translation>Аль-Хусари</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Husary (Qasr)</source>
       <translation>Аль-Хусари (Каср)</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Husary (Mujawwad)</source>
       <translation>Аль-Хусари (Муджаввад)</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Abdul-Basit</source>
       <translation>Абд Аль-Басит</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Abdul-Basit (Mujawwad)</source>
       <translation>Абд Аль-Басит (муджаввад)</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Menshawi</source>
       <translation>Менсави</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Menshawi (Mujawwad)</source>
       <translation>Менсави (муджаввад)</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Mishary Alafasy</source>
       <translation>Мишари Рашид Аль-Афаси</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Khalefa Al-Tunaiji</source>
       <translation>Халифа аль-Тунаиджи</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Yasser Ad-Dussary</source>
       <translation>Йасир Ад-Даусари</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Mahmoud Al-Banna</source>
       <translation>Махмуд Аль-Банна</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Abdullah Basfar</source>
       <translation>Абдуллах Басфар</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Abu Bakr Ash-Shaatree</source>
       <translation>Абу Бакр Аш-Шатри</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Ahmed Al-Ajamy</source>
       <translation>Ахмед Аль-Аджами</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Ali Jaber</source>
       <translation>Али Джабер</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Fares Abbad</source>
       <translation>Фарес Аббад</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Saad Al-Ghamadi</source>
       <translation>Саад Аль-Гамиди</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Hani Rifai</source>
       <translation>Хани Рифаи</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Hudhaify</source>
       <translation>Худхаифи</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Saood Ash-Shuraym</source>
       <translation>Сауд Аш-Шурайм</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Nasser Alqatami</source>
       <translation>Насер Алькатами</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Maher Al-Muaiqly</source>
       <translation>Махир Аль-Му'айкли</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Mostafa Ismail</source>
       <translation>Мостафа Исмаил</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Muhammad Jibreel</source>
       <translation>Мухаммад Джибриль</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Ibrahim Al-Dosary (Warsh)</source>
       <translation type="unfinished">Ibrahim Al-Dosary (Warsh)</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Yassin Al-Jazaery (Warsh)</source>
       <translation type="unfinished">Yassin Al-Jazaery (Warsh)</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Mohammad Al-Tablaway</source>
       <translation type="unfinished">Mohammad Al-Tablaway</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Ahmed Neana</source>
       <translation type="unfinished">Ahmed Neana</translation>
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="17"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="580"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="578"/>
       <location filename="../../../src/components/systemtray.cpp" line="15"/>
       <source>Quran Companion</source>
       <translation>Компаньон Корана</translation>
@@ -172,7 +144,7 @@
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="179"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="417"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="415"/>
       <source>Navigation</source>
       <translation>Навигация</translation>
     </message>
@@ -233,7 +205,7 @@
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="487"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="722"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="720"/>
       <source>About Qt</source>
       <translation>О платформе Qt</translation>
     </message>
@@ -278,149 +250,129 @@
       <translation>Управление плеером</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="84"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="86"/>
       <source>Default</source>
       <translation>По умолчанию</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="576"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="574"/>
       <source>Now playing: </source>
       <translation>Сейчас проигрывается:</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="577"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="575"/>
       <source>Surah </source>
       <translation>Сура </translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="601"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="615"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="630"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="599"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="613"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="628"/>
       <source>Files Missing</source>
       <translation>Файл не найден</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="602"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="600"/>
       <source>The selected font files are missing, would you like to download it?</source>
       <translation>Файлы выбранного шрифта отсутствуют, вы хотите загрузить их?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="616"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="614"/>
       <source>The selected tafsir is missing, would you like to download it?</source>
       <translation>Файлы выбранного тафсира отсутствуют, вы хотите загрузить его?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="631"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="629"/>
       <source>The selected translation is missing, would you like to download it?</source>
       <translation>Файлы выбранного перевода отсутствуют, вы хотите загрузить их?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="649"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="647"/>
       <source>Recitation not found</source>
       <translation>Чтец не найден</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="650"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="648"/>
       <source>The recitation files for the current surah is missing, would you like to download it?</source>
       <translation>Файл чтения для текущей суры отсутствует, вы хотите скачать его?</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Adwa&apos; ul-Bayan</source>
       <translation>Адва&apos; Уль-Байан</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Aysar ul-Tafasir</source>
       <translation>Айсар Уль-Тасфир</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Tafsir Al-Waseet</source>
       <translation>Аль-Тасфир Аль-Уасит</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Mukhtasar fil Tafsir</source>
       <translation>Аль-Мухтасар филь Тасфир</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Baghawy</source>
       <translation>Аль-Багхави</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Qortoby</source>
       <translation>Аль-Куртуби</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Sa&apos;ady</source>
       <translation>Аль-Са&apos;ади</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Tabary</source>
       <translation>Аль-Табари</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Jalalayn</source>
       <translation>Аль-Джалалайн</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Ea&apos;rab</source>
       <translation>И&apos;араб</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Asbab ul-Nuzul - al-Wahidi</source>
       <translation>Asbab ul-Nuzul - al-Wahidi</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Hidayat Al-Quran Al-Kareem</source>
       <translation>Hidayat Al-Quran Al-Kareem</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Ibn-Ashoor</source>
       <translation>Ибн-Ашур</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Ibn-Juzayy</source>
       <translation>Ибн-Джузай</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Ibn-Katheer</source>
       <translation>Ибн-Кахир</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Ibn-Katheer - English</source>
       <translation>Ибн-Кахир - Английский</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Jalalayn - English</source>
       <translation>Аль-Джалалайн - Английский</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Al-Jalalayn - Indonesian</source>
       <translation>Аль-Джалалайн - Индонезийский</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Kuliev &amp; Al-Sa&apos;ady - Russian</source>
       <translation>Кулиев и Аль-Саади - Русский</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Tafheem ul-Quran - English</source>
       <translation>Тафхим уль-Коран - Английский</translation>
     </message>
@@ -428,132 +380,114 @@
   <context>
     <name>SettingsDialog</name>
     <message>
-      <location filename="../main.cpp"/>
       <source>Toggle player controls</source>
       <translation>Переключить управление плеера</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
+      <source>Increase the playback speed</source>
+      <translation type="unfinished">Increase the playback speed</translation>
+    </message>
+    <message>
+      <source>Decrease the playback speed</source>
+      <translation type="unfinished">Decrease the playback speed</translation>
+    </message>
+    <message>
       <source>Toggle reader view</source>
       <translation>Переключить режим чтения</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Toggle visibility of the menubar</source>
       <translation>Переключение видимости меню</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Toggle visibility of the navigation dock</source>
       <translation>Переключение видимости панели навигации</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Toggle playback state of recitation</source>
       <translation>Переключить состояние воспроизведения</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Increase the playback volume</source>
       <translation>Увеличить громкость воспроизведения</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Decrease the playback volume</source>
       <translation>Уменьшить громкость воспроизведения</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Move to the next page</source>
       <translation>Перейти на следующую страницу</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Move to the previous page</source>
       <translation>Перейти на предыдущую страницу</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Move to the next verse</source>
       <translation>Перейти к следующему аяту</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Move to the previous verse</source>
       <translation>Перейти к предыдущему аяту</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Move to the next surah</source>
       <translation>Перейти к следующей суре</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Move to the previous surah</source>
       <translation>Перейти к предыдущей суре</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Move to the next juz</source>
       <translation>Перейти к следующему джузу</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Move to the previous juz</source>
       <translation>Перейти к предыдущему джузу</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Increase the size of the quran page</source>
       <translation>Увеличить размер страницы</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Decrease the size of the quran page</source>
       <translation>Уменьшить размер страницы</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Bookmark the current active verse</source>
       <translation>Добавить в закладки текущий аят</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Open the bookmarks dialog</source>
       <translation>Открыть диалоговое окно закладки</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Open the khatmah dialog</source>
       <translation>Открыть диалоговое окно хатма</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Open the search dialog</source>
       <translation>Открыть диалоговое окно поиска</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Open the preferences dialog</source>
       <translation>Открыть диалоговое окно настроек</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Open the tafsir for the current active verse</source>
       <translation>Открыть тафсир текущего аята</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Open the download manager dialog</source>
       <translation>Открыть диалоговое окно менеджера загрузок</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Open the advanced copy dialog</source>
       <translation>Открыть расширенное диалоговое окно копирования</translation>
     </message>
     <message>
-      <location filename="../main.cpp"/>
       <source>Quit</source>
       <translation>Выход</translation>
     </message>
@@ -729,11 +663,6 @@
       <translation>Сочетания клавиш</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="114"/>
-      <source>Tafsir</source>
-      <translation>Тафсир</translation>
-    </message>
-    <message>
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="56"/>
       <source>Description</source>
       <translation>Описание</translation>
@@ -791,6 +720,11 @@
       <location filename="../../../src/dialogs/settingsdialog.cpp" line="276"/>
       <source>Restart is required to load new quran font, restart now?</source>
       <translation>Перезапуск необходим для загрузки нового шрифта, перезапустить сейчас?</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="114"/>
+      <source>Tafsir</source>
+      <translation>Тафсир</translation>
     </message>
   </context>
   <context>
@@ -930,13 +864,13 @@
     </message>
     <message>
       <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="140"/>
-      <location filename="../../../src/dialogs/versedialog.cpp" line="95"/>
+      <location filename="../../../src/dialogs/versedialog.cpp" line="96"/>
       <source>Surah: </source>
       <translation>Сура: </translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="142"/>
-      <location filename="../../../src/dialogs/versedialog.cpp" line="97"/>
+      <location filename="../../../src/dialogs/versedialog.cpp" line="98"/>
       <source>Verse: </source>
       <translation>Аят: </translation>
     </message>
@@ -949,12 +883,12 @@
   <context>
     <name>BookmarksNotifier</name>
     <message>
-      <location filename="../../../src/notifiers/bookmarksnotifier.cpp" line="13"/>
+      <location filename="../../../src/notifiers/bookmarksnotifier.cpp" line="12"/>
       <source>Verse added to bookmarks</source>
       <translation>Аят добавлен в закладки</translation>
     </message>
     <message>
-      <location filename="../../../src/notifiers/bookmarksnotifier.cpp" line="21"/>
+      <location filename="../../../src/notifiers/bookmarksnotifier.cpp" line="20"/>
       <source>Verse removed from bookmarks</source>
       <translation>Аят удален из закладок</translation>
     </message>
@@ -1062,7 +996,7 @@
     </message>
     <message>
       <location filename="../../../src/downloader/impl/taskdownloader.cpp" line="65"/>
-      <location filename="../../../src/widgets/downloadprogressbar.cpp" line="20"/>
+      <location filename="../../../src/widgets/downloadprogressbar.cpp" line="21"/>
       <source>KB</source>
       <translation>КБ</translation>
     </message>
@@ -1550,29 +1484,6 @@
       <location filename="../../../src/dialogs/versedialog.ui" line="14"/>
       <source>Verse Of The Day</source>
       <translation>Аят дня</translation>
-    </message>
-  </context>
-  <context>
-    <name>VersionChecker</name>
-    <message>
-      <location filename="../../../src/utils/versionchecker.cpp" line="42"/>
-      <source>There are currently no updates available.</source>
-      <translation>В настоящее время нет доступных обновлений.</translation>
-    </message>
-    <message>
-      <location filename="../../../src/utils/versionchecker.cpp" line="43"/>
-      <source>Update info</source>
-      <translation>Информация об обновлении</translation>
-    </message>
-    <message>
-      <location filename="../../../src/utils/versionchecker.cpp" line="45"/>
-      <source>Updates available, do you want to open the update tool?</source>
-      <translation>Доступны обновления, открыть инструмент обновления?</translation>
-    </message>
-    <message>
-      <location filename="../../../src/utils/versionchecker.cpp" line="47"/>
-      <source>Updates info</source>
-      <translation>Информация об обновлении</translation>
     </message>
   </context>
 </TS>
