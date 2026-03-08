@@ -24,7 +24,7 @@
   <a href="https://aur.archlinux.org/packages/quran-companion"><img alt="AUR Version" src="https://img.shields.io/aur/version/quran-companion"></a>
   <img alt="Flathub Downloads" src="https://img.shields.io/flathub/downloads/io.github._0xzer0x.qurancompanion?label=flathub">
   <img alt="GitHub Downloads" src="https://img.shields.io/github/downloads/0xzer0x/quran-companion/total">
-  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/deploy.yml">
+  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/release.yml">
 </p>
 
 <p align="center">
@@ -122,7 +122,9 @@
 
 #### ويندوز
 
-مثّبت البرنامج يمكنك تحميله من [هنا][win-installer]
+> بدءًا من الإصدار **1.5.0**، تم تغيير صيغة التوزيع على ويندوز لتصبح مثبتات مستقلة تعمل دون اتصال بالإنترنت بدلًا من المثبت القديم عبر الإنترنت. للترقية، يجب إزالة النسخة القديمة بالكامل أولًا، ثم تثبيت ملف الـ `setup.exe` من الإصدار المطلوب.
+
+يمكنك تحميل أحدث إصدار من المثبت من [هنا][win-installer].
 
 #### ماك
 
@@ -163,7 +165,7 @@
 
 - GCC / MSVC
 - CMake
-- Qt >= 6.5
+- Qt >= 6.10
   - `qtbase`
   - `qtimageformats`
   - `qtsvg`
@@ -222,7 +224,6 @@ sudo pacman -Sy base-devel cmake qt6-base qt6-multimedia qt6-tools qt6-imageform
 ```
 
 <li>البناء</li>
-</ol>
 
 ```sh
 mkdir build
@@ -231,25 +232,25 @@ cmake -DCMAKE_BUILD_TYPE=Release -G "Ninja" ..
 cmake --build .
 ```
 
+<li>التثبيت (اختياري)</li>
+
+```sh
+cmake --install .
+```
+
+</ol>
+
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
 
 <!-- ROADMAP -->
 
 <a name="roadmap"></a>
 
-## خارطة الطريق 🎯
+## خارطة الطريق 📊
 
-- [x] إضافة خاصية الآية اليومية
-- [x] إضافة نافذة الايآت المفضلة
-- [x] تحسين خاصية البحث
-  - [x] البحث في نطاق عدد معين من الصفحات
-  - [x] البحث في سور محددة فقط
-- [x] إضافة كتب تفسير جديدة
-  - [x] أيسر التفاسير - أبو بكر الجزائري
-  - [x] التسهيل لعلوم التنزيل (تفسير إبن جزي)
-  - [x] أضواء البيان - الشنقيطي
+راجع [لوحة المشروع](https://github.com/users/0xzer0x/projects/1) للاطلاع على خارطة الطريق الحالية وتقدم التطوير.
 
-راجع [المشكلات المفتوحة](https://github.com/0xzer0x/quran-companion/issues) للحصول على قائمة كاملة بالميزات المقترحة (والمشكلات المعروفة).
+يمكنك أيضًا مراجعة [المشكلات المفتوحة](https://github.com/0xzer0x/quran-companion/issues) للاطلاع على الميزات المخطط لها والمشكلات المبلغ عنها.
 
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
 
@@ -284,7 +285,7 @@ cmake --build .
 
 ## الترخيص
 
-مرخّص بموجب رخصة [وقف العامة](https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9)
+مرخّص بموجب رخصة [وقف العامة](https://ojuba.org/waqf-2.0:%D8%B1%D8%AE%D8%B5%D8%A9_%D9%88%D9%82%D9%81_%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9).
 
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
 
@@ -293,7 +294,7 @@ cmake --build .
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [latest-release]: https://github.com/0xzer0x/quran-companion/releases/latest
-[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.9/qc_online_installer_x64_win.exe
+[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.5.0/Quran_Companion-1.5.0-x86_64-setup.exe
 [translation-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations
 [recitations-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Recitations
 [macos-dmg-url]: https://github.com/0xzer0x/quran-companion/releases/download/v1.4.0/Quran_Companion-1.4.0-x86_64.dmg

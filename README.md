@@ -119,7 +119,10 @@ Quran Companion is a cross-platform Quran reader/player with recitation download
 
 #### Windows
 
-Online installer can be downloaded from [here][win-installer].
+> [!WARNING]
+> Starting with version **1.5.0**, Windows releases are distributed as self-contained offline installers instead of the previous online installer. To migrate, completely remove the old installation first, then install the `setup.exe` from the desired release.
+
+Latest release installer can be downloaded from [here][win-installer].
 
 #### MacOS
 
@@ -217,7 +220,11 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
 # To launch quran-companion
 ./quran-companion
-# For installation
+```
+
+4. Install (optional)
+
+```sh
 sudo cmake --install .
 ```
 
@@ -227,19 +234,11 @@ sudo cmake --install .
 
 <a name="roadmap"></a>
 
-## Roadmap 🎯
+## Roadmap 📊
 
-- [x] Add daily verse functionality
-- [x] Add bookmarked verses tab
-- [x] Enhance search functionality
-  - [x] Search in a range of pages only
-  - [x] Search in a specific surah only
-- [x] Add new tafsir books
-  - [x] Aysar Al-Tafasir (al-Jazaeri)
-  - [x] al-Tashil li Ulum al-Tanzil (Ibn Juzayy)
-  - [x] Adwa' ul-Bayan (al-Shinqiti)
+See the [project board](https://github.com/users/0xzer0x/projects/1) for the current roadmap and development progress.
 
-See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a full list of proposed features (and known issues).
+You can also review [open issues](https://github.com/0xzer0x/quran-companion/issues) for planned features and reported problems.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
