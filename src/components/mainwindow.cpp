@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget* parent)
   }
 
   // FIX: Required for player controls to not be squashed on launch
-  adjustSize();
+  m_playerControls->adjustWidth();
 }
 
 void
