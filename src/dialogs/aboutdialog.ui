@@ -556,7 +556,7 @@
          <item>
           <widget class="QLabel" name="label_14">
            <property name="text">
-            <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;a href=&quot;https://quran.ksu.edu.sa/index.php&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Ayat&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://api-docs.quran.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Quran.com API&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://mosshaf.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Mosshaf&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://qul.tarteel.ai/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;QUL&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string notr="true">- &lt;a href=&quot;https://quran.ksu.edu.sa/index.php&quot;&gt;Ayat&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://api-docs.quran.com/&quot;&gt;Quran.com API&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://mosshaf.com&quot;&gt;Mosshaf&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://qul.tarteel.ai/&quot;&gt;QUL&lt;/a&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
