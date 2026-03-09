@@ -55,6 +55,15 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release date="2026-03-10" version="1.5.0" >
+      <description>
+        <ul>
+          <li>Sort reciters alphabetically by display name</li>
+          <li>Added keyboard shortcuts for increasing/decreasing playback speed</li>
+          <li>Fix squashed player width on application launch</li>
+        </ul>
+      </description>
+    </release>
     <release date="2026-02-22" version="1.4.0" >
       <description>
         <ul>
