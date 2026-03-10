@@ -4,6 +4,7 @@
 #include <QLocale>
 #include <QSettings>
 #include <QSharedPointer>
+#include <types/reciter.h>
 #include <utils/configurationschema.h>
 
 class Configuration
@@ -17,10 +18,12 @@ public:
   int themeId() const;
   bool darkMode() const;
   int qcfVersion() const;
+  const Reciter& reciter() const;
   QLocale::Language language() const;
   ConfigurationSchema::ReaderMode readerMode() const;
   ConfigurationSchema::VerseType verseType() const;
   void setVerseType(ConfigurationSchema::VerseType newVerseType);
+  void setReciter(const Reciter* reciter);
 
 private:
   Configuration();

@@ -225,42 +225,42 @@
         </property>
         <item>
          <property name="text">
-          <string>0.25x</string>
+          <string notr="true">0.25x</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>0.5x</string>
+          <string notr="true">0.5x</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>0.75x</string>
+          <string notr="true">0.75x</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>1x</string>
+          <string notr="true">1x</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>1.25x</string>
+          <string notr="true">1.25x</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>1.5x</string>
+          <string notr="true">1.5x</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>1.75x</string>
+          <string notr="true">1.75x</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>2x</string>
+          <string notr="true">2x</string>
          </property>
         </item>
        </widget>

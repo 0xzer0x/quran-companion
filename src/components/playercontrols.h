@@ -29,11 +29,16 @@ public:
   ~PlayerControls();
 
   /**
-   * @brief getter for the index of the currently selected reciter in the
-   * reciters combobox
-   * @return index of reciter in the combobox
+   * @brief Returns the currently selected reciter.
+   *
+   * Retrieves the ID stored in the reciters combo box current item data and
+   * resolves it to a Reciter instance.
+   *
+   * @return Pointer to a Reciter in the ::Reciter::reciters list corresponding
+   * to the currently selected combo box item, or nullptr if no matching reciter
+   * exists.
    */
-  int currentReciter() const;
+  const Reciter* currentReciter() const;
 
 public slots:
   /**
@@ -94,7 +99,8 @@ private slots:
    * @param on - boolean indicating the state of the button
    */
   void btnRepeatClicked(bool on);
-
+  void incrementPlaybackRate();
+  void decrementPlaybackRate();
   void cmbPlaybackRateChanged(QString newText);
 
 private:

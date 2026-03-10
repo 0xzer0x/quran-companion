@@ -114,7 +114,7 @@ QcfJob::type()
 QString
 QcfJob::name()
 {
-  return qApp->translate("SettingsDialog", "QCF V2");
+  return QCoreApplication::translate("SettingsDialog", "QCF V2");
 }
 
 QcfJob::~QcfJob() {}

@@ -8,6 +8,11 @@ concurrency:
   cancel-in-progress: true
 env:
   BUILD_TYPE: Release
+  QT_INSTALL_VERSION: 6.10.2
+  QT_INSTALL_MODULES: >-
+    qtimageformats
+    qtmultimedia
+    qtnetworkauth
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -65,15 +70,12 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          aqtversion: ==3.1.*
-          version: 6.10.2
+          cache: true
           host: linux
           target: desktop
           arch: linux_gcc_64
-          modules: >-
-            qtimageformats
-            qtmultimedia
-            qtnetworkauth
+          version: "${{ env.QT_INSTALL_VERSION }}"
+          modules: "${{ env.QT_INSTALL_MODULES }}"
 
       - name: Install tools
         run: |-
@@ -163,16 +165,12 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          aqtversion: ==3.1.*
-          version: 6.10.2
-          host: "mac"
           cache: true
-          target: "desktop"
-          arch: "clang_64"
-          modules: >-
-            qtimageformats
-            qtmultimedia
-            qtnetworkauth
+          host: mac
+          target: desktop
+          arch: clang_64
+          version: "${{ env.QT_INSTALL_VERSION }}"
+          modules: "${{ env.QT_INSTALL_MODULES }}"
 
       - name: Install tools
         run: |-
@@ -213,11 +211,98 @@ jobs:
           path: "Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
           retention-days: 7
 
+  build-installer:
+    needs:
+      - prepare
+    runs-on: windows-latest
+    environment:
+      name: Windows - Installer
+      url: https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Quran_Companion-${{ needs.prepare.outputs.version }}-x86_64-setup.exe
+    env:
+      APP_VER: "${{ needs.prepare.outputs.version }}"
+      BUNDLE_DIR: '${{ github.workspace }}\bundle'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          submodules: true
+
+      - name: Setup MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          cache: true
+          host: windows
+          target: desktop
+          arch: win64_msvc2022_64
+          version: "${{ env.QT_INSTALL_VERSION }}"
+          modules: "${{ env.QT_INSTALL_MODULES }}"
+
+      - name: Install NSIS
+        shell: pwsh
+        run: |
+          choco install nsis -y
+          $env:Path += ';C:\Program Files (x86)\NSIS'
+          'C:\Program Files (x86)\NSIS' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+          $nsisVersion = (& makensis /VERSION 2>&1 | Select-Object -First 1).Trim()
+          Write-Host "NSIS version: $nsisVersion"
+
+      - name: Configure
+        shell: pwsh
+        run: cmake -G Ninja -DCMAKE_BUILD_TYPE="${{ env.BUILD_TYPE }}" -B build
+
+      - name: Build
+        shell: pwsh
+        run: cmake --build build --config "${{ env.BUILD_TYPE }}"
+
+      - name: Install to bundle directory
+        shell: pwsh
+        run: |-
+          cmake --install build --config "${{ env.BUILD_TYPE }}" --prefix "${{ env.BUNDLE_DIR }}"
+
+          # FIX: Required for proper displaying of Arabic text in installer
+          $bundle = "${{ env.BUNDLE_DIR }}\bin"
+          $licenses = @(
+            "license-en.txt",
+            "license-ar.txt"
+          )
+          foreach ($file in $licenses) {
+            $src = Join-Path "${{ github.workspace }}" $file
+            $dst = Join-Path $bundle $file
+            # Rewrite license file as UTF-8 with BOM
+            $content = Get-Content $src -Raw
+            Set-Content -Path $dst -Value $content -Encoding utf8BOM
+          }
+
+      - name: Run windeployqt
+        shell: pwsh
+        run: windeployqt.exe -no-translations --release --dir "${{ env.BUNDLE_DIR }}\bin" "${{ env.BUNDLE_DIR }}\bin\quran-companion.exe"
+
+      - name: Build NSIS installer
+        shell: pwsh
+        run: |-
+          Push-Location "${{ env.BUNDLE_DIR }}\bin"
+          Copy-Item -Path "${{ github.workspace }}\dist\windows\installer\installer.nsi" -Destination "installer.nsi" -Force
+          makensis /V4 /DAPPVER="${{ env.APP_VER }}" /DOUTFILE="${{ env.BUNDLE_DIR }}\Quran_Companion-${{ env.APP_VER }}-x86_64-setup.exe" installer.nsi
+          Pop-Location
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer
+          path: "${{ env.BUNDLE_DIR }}/Quran_Companion-${{ env.APP_VER }}-x86_64-setup.exe"
+          retention-days: 7
+
   release:
     needs:
       - prepare
       - build-appimage
       - build-dmg
+      - build-installer
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -240,11 +325,13 @@ jobs:
 
       - name: Verify artifacts
         run: |-
-          if [[ ! -f "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" || ! -f "Quran_Companion-${{env.APP_VER}}-x86_64.dmg" ]]; then
-            echo "Artifacts missing" >&2
-            echo -e "ls -la:\n$(ls -la)" >&2
+          echo "::group::Checking release artifacts"
+          if [[ ! -f "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" || ! -f "Quran_Companion-${{env.APP_VER}}-x86_64.dmg" || ! -f "Quran_Companion-${{env.APP_VER}}-x86_64-setup.exe" ]]; then
+            echo "::error title=Missing Artifact::One of the platform build artifacts is missing"
+            echo -e "Files listing:\n$(ls -la)" >&2
             exit 1
           fi
+          echo "::endgroup::"
 
       - name: Generate attestations
         uses: actions/attest-build-provenance@v1
@@ -252,11 +339,13 @@ jobs:
           subject-path: |
             Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
             Quran_Companion-${{env.APP_VER}}-x86_64.dmg
+            Quran_Companion-${{env.APP_VER}}-x86_64-setup.exe
 
       - name: Generate checksums
-        run: |
+        run: |-
           b2sum "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" > "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage.b2sum"
           b2sum "Quran_Companion-${{env.APP_VER}}-x86_64.dmg" > "Quran_Companion-${{env.APP_VER}}-x86_64.dmg.b2sum"
+          b2sum "Quran_Companion-${{env.APP_VER}}-x86_64-setup.exe" > "Quran_Companion-${{env.APP_VER}}-x86_64-setup.exe.b2sum"
 
       - name: Release
         uses: ncipollo/release-action@v1.13.0
@@ -264,7 +353,7 @@ jobs:
           name: "${{ github.ref_name }}"
           tag: "${{ github.ref_name }}"
           bodyFile: CHANGELOG.md
-          artifacts: "Quran_Companion-${{env.APP_VER}}-x86_64.*"
+          artifacts: "Quran_Companion-${{env.APP_VER}}-x86_64*"
 
   aur:
     needs:
@@ -272,7 +361,7 @@ jobs:
       - release
     runs-on: ubuntu-latest
     environment:
-      name: AUR
+      name: Linux - AUR
       url: https://aur.archlinux.org/packages/quran-companion
     env:
       APP_VER: "${{ needs.prepare.outputs.version }}"

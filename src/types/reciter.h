@@ -2,8 +2,10 @@
 #define RECITER_H
 
 #include <QList>
+#include <QPointer>
 #include <QSharedPointer>
 #include <QString>
+#include <QVariant>
 
 /**
  * @class Reciter
@@ -14,20 +16,31 @@ class Reciter
 public:
   static QList<Reciter> reciters;
   static void populateReciters();
+  static const Reciter* reciterById(const QString id);
+  static const int indexForReciter(const Reciter* const reciter);
 
-  explicit Reciter(QString dir,
+  explicit Reciter(QString id,
+                   QString dir,
                    QString display,
                    QString basmallah,
                    QString url,
-                   bool useId = false);
+                   bool downloadById = false);
 
-  QString basmallahPath() const;
-  QString displayName() const;
-  QString baseDirName() const;
-  QString baseUrl() const;
-  bool useId() const;
+  // NOTE: Override copy operator
+  Reciter& operator=(const Reciter& r);
+  // NOTE: Override comparison operators
+  bool operator==(const Reciter& r) const;
+  bool operator!=(const Reciter& r) const;
+
+  const QString& id() const;
+  const QString& basmallahPath() const;
+  const QString& displayName() const;
+  const QString& baseDirName() const;
+  const QString& baseUrl() const;
+  const bool downloadVerseById() const;
 
 private:
+  QString m_id;
   /**
    * @brief The name of the directory conatining recitations in the application
    * recitations directory.
@@ -50,7 +63,7 @@ private:
    * downloading using the verse number relative to the beginning of the Quran
    * or a combination of surah and verse numbers.
    */
-  bool m_useId;
+  bool m_downloadVerseById;
 };
 
 #endif // RECITER_H

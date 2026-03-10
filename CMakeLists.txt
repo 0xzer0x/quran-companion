@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.22)
 project(
   quran-companion
   LANGUAGES CXX
-  VERSION 1.4.0
+  VERSION 1.5.0
   DESCRIPTION "Quran reader and player"
   HOMEPAGE_URL "https://0xzer0x.github.io/projects/quran-companion/")
 
@@ -266,8 +266,13 @@ if(APPLE)
   file(INSTALL assets DESTINATION "quran-companion.app/Contents/MacOS")
   file(INSTALL bismillah DESTINATION "quran-companion.app/Contents/MacOS")
 else()
-  file(INSTALL assets DESTINATION ${CMAKE_BINARY_DIR})
-  file(INSTALL bismillah DESTINATION ${CMAKE_BINARY_DIR})
+  add_custom_command(
+    TARGET quran-companion
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets
+            $<TARGET_FILE_DIR:quran-companion>/assets
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/bismillah
+            $<TARGET_FILE_DIR:quran-companion>/bismillah)
 endif()
 
 list(

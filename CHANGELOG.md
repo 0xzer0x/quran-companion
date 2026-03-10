@@ -2,18 +2,16 @@
 
 ### التحديثات 💭
 
-- إضافة خاصية التحكم في سرعة التشغيل
-- إضافة القارئ محمد الطبلاوي
-- إضافة القارئ أحمد نعينع
-- إصلاح مشاكل البناء مع الإصدارات الحديثة من Qt
-- تحديث الاعتماد على Qt إلى الإصدار 6.10
+- ترتيب القرّاء أبجديًا حسب الاسم المعروض (#149)
+- إضافة اختصارات لوحة المفاتيح لزيادة أو تقليل سرعة التشغيل (#156)
+- إضافة ترجمة هلالي-خان الإنجليزية (#140)
+- إصلاح مشكلة انضغاط عرض مشغل الصوت عند تشغيل التطبيق
 
 </div>
 
 ### What's Changed 💭
 
-- Added playback speed control feature
-- Added new reciter Mohammed Al-Tablaway
-- Added new reciter Ahmed Neana
-- Fixed compilation issues with recent Qt versions
-- Updated Qt dependency to version 6.10
+- Sorted reciters alphabetically by display name (#149)
+- Added keyboard shortcuts to increase/decrease playback speed (#156)
+- Added Hilali-Khan English translation (#140)
+- Fixed squashed player width on application launch

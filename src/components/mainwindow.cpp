@@ -45,12 +45,15 @@ MainWindow::MainWindow(QWidget* parent)
   setupConnections();
   setupSurahsDock();
   setupMenubarButton();
-  this->show();
+  show();
 
   m_popup->setDockArea(dockWidgetArea(ui->sideDock));
   if (!m_config.settings().value("Window/VisibleMenubar").toBool()) {
     toggleMenubar();
   }
+
+  // FIX: Required for player controls to not be squashed on launch
+  m_playerControls->adjustWidth();
 }
 
 void
@@ -91,8 +94,7 @@ MainWindow::loadVerse()
 void
 MainWindow::loadComponents()
 {
-  QPointer<VersePlayer> player =
-    new VersePlayer(this, m_config.settings().value("Reciter", 0).toInt());
+  QPointer<VersePlayer> player = new VersePlayer(this);
   m_playbackController = new PlaybackController(this, player);
   m_reader = new QuranReader(this, m_playbackController);
   m_repeater = new RepeaterPopup(this, m_playbackController);
@@ -117,10 +119,7 @@ MainWindow::loadComponents()
   QFrame* controlsFrame = new QFrame(this);
   controls->setAlignment(Qt::AlignCenter);
   controls->setContentsMargins(0, 0, 0, 0);
-  controls->setSpacing(0);
-  controls->addStretch(0);
   controls->addWidget(m_playerControls, 1);
-  controls->addStretch(0);
   controlsFrame->setLayout(controls);
   ui->scrollAreaWidgetContents->layout()->addWidget(controlsFrame);
   ui->scrollAreaWidgetContents->layout()->addWidget(m_reader);
@@ -639,7 +638,7 @@ MainWindow::missingTranslation(QString id)
 }
 
 void
-MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
+MainWindow::missingRecitationFileWarn(const Reciter* const reciter, int surah)
 {
   if (!m_config.settings().value("MissingFileWarning").toBool())
     return;
@@ -652,8 +651,8 @@ MainWindow::missingRecitationFileWarn(int reciterIdx, int surah)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(DownloadJob::Recitation,
-                                    { reciterIdx, surah });
+    m_downloaderDlg->selectDownload(
+      DownloadJob::Recitation, { Reciter::indexForReciter(reciter), surah });
   }
 }
 
@@ -834,7 +833,7 @@ void
 MainWindow::saveReaderState()
 {
   m_config.settings().setValue("Window/State", saveState());
-  m_config.settings().setValue("Reciter", m_playerControls->currentReciter());
+  m_config.setReciter(m_playerControls->currentReciter());
   m_config.settings().sync();
 
   m_khatmahService->saveActiveKhatmah(m_currVerse);

@@ -1,4 +1,5 @@
 #include "playercontrols.h"
+#include "types/reciter.h"
 #include "ui_playercontrols.h"
 #include <QtAwesome.h>
 #include <algorithm>
@@ -26,10 +27,12 @@ PlayerControls::PlayerControls(QWidget* parent,
   setupConnections();
 
   foreach (const Reciter& r, m_reciters)
-    ui->cmbReciter->addItem(r.displayName());
+    ui->cmbReciter->addItem(r.displayName(), r.id());
 
+  // NOTE: Set the currently selected reciter to the configured one
+  const Reciter& currentReciter = m_config.reciter();
   ui->cmbReciter->setCurrentIndex(
-    m_config.settings().value("Reciter", 0).toInt());
+    ui->cmbReciter->findData(currentReciter.id()));
 }
 
 void
@@ -61,6 +64,14 @@ PlayerControls::setupConnections()
           &ShortcutHandler::decrementVolume,
           this,
           &PlayerControls::decrementVolume);
+  connect(&handler,
+          &ShortcutHandler::incrementPlaybackRate,
+          this,
+          &PlayerControls::incrementPlaybackRate);
+  connect(&handler,
+          &ShortcutHandler::decrementPlaybackRate,
+          this,
+          &PlayerControls::decrementPlaybackRate);
 
   connect(m_playbackController->player(),
           &QMediaPlayer::positionChanged,
@@ -159,7 +170,10 @@ PlayerControls::btnRepeatClicked(bool on)
 void
 PlayerControls::cmbReciterChanged(int newIndex)
 {
-  m_playbackController->player()->changeReciter(newIndex);
+  const QString newReciterId = ui->cmbReciter->itemData(newIndex).toString();
+  const Reciter* newReciter = Reciter::reciterById(newReciterId);
+
+  m_playbackController->player()->changeReciter(newReciter);
   m_repeater->playbackFinished();
 }
 
@@ -220,10 +234,34 @@ PlayerControls::decrementVolume()
   ui->sldrVolume->setValue(val < 0 ? 0 : val);
 }
 
-int
+void
+PlayerControls::incrementPlaybackRate()
+{
+  int currRateIndex = ui->cmbPlaybackRate->currentIndex();
+  int maxIndex = ui->cmbPlaybackRate->count() - 1;
+  if (currRateIndex == maxIndex) {
+    return;
+  }
+
+  ui->cmbPlaybackRate->setCurrentIndex(currRateIndex + 1);
+}
+
+void
+PlayerControls::decrementPlaybackRate()
+{
+  int currRateIndex = ui->cmbPlaybackRate->currentIndex();
+  if (currRateIndex == 0) {
+    return;
+  }
+
+  ui->cmbPlaybackRate->setCurrentIndex(currRateIndex - 1);
+}
+
+const Reciter*
 PlayerControls::currentReciter() const
 {
-  return ui->cmbReciter->currentIndex();
+  const QString reciterId = ui->cmbReciter->currentData().toString();
+  return Reciter::reciterById(reciterId);
 }
 
 void

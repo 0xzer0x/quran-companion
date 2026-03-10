@@ -36,7 +36,7 @@ SurahJob::processTasks()
   }
 
   m_active = m_queue.dequeue();
-  while (m_active.destination().exists()) {
+  while (m_active.destination().exists() && m_active.destination().size() > 0) {
     m_completed++;
     if (m_completed == m_surahCount) {
       emit DownloadJob::progressed();

@@ -17,15 +17,16 @@
 <h2 align="center">Quran Companion</h2>
 
 <h4 align="center">
-  Cross-platform desktop Quran reader & player
+  Free and open-source desktop Quran reader and player
 </h4>
 
 <p align="center">
   <a href="https://techforpalestine.org/learn-more"><img alt="StandWithPalestine" src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/StandWithPalestine.svg"></a>
   <img alt="GitHub Release" src="https://img.shields.io/github/v/release/0xzer0x/quran-companion">
   <a href="https://aur.archlinux.org/packages/quran-companion"><img alt="AUR Version" src="https://img.shields.io/aur/version/quran-companion"></a>
+  <img alt="Flathub Downloads" src="https://img.shields.io/flathub/downloads/io.github._0xzer0x.qurancompanion?label=flathub">
+  <img alt="GitHub Downloads" src="https://img.shields.io/github/downloads/0xzer0x/quran-companion/total">
   <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/0xzer0x/quran-companion/release.yml">
-  <img alt="GitHub issues" src="https://img.shields.io/github/issues/0xzer0x/quran-companion">
 </p>
 
 <p align="center">
@@ -70,8 +71,6 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#credits">Credits</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-
 </ol>
 </details>
 
@@ -120,7 +119,10 @@ Quran Companion is a cross-platform Quran reader/player with recitation download
 
 #### Windows
 
-Online installer can be downloaded from [here][win-installer].
+> [!WARNING]
+> Starting with version **1.5.0**, Windows releases are distributed as self-contained offline installers instead of the previous online installer. To migrate, completely remove the old installation first, then install the `setup.exe` from the desired release.
+
+Latest release installer can be downloaded from [here][win-installer].
 
 #### MacOS
 
@@ -135,7 +137,7 @@ The application can be downloaded in any of the available packages (snap, flatpa
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
     <img width='240' alt='Download Flatpak' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/>
  </a>
- <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.4.0/Quran_Companion-1.4.0-x86_64.AppImage'>
+ <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.5.0/Quran_Companion-1.5.0-x86_64.AppImage'>
     <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 10px'/>
  </a>
  <a href="https://snapcraft.io/quran-companion">
@@ -161,7 +163,7 @@ Also you can open and build/debug the project in a C++ IDE. For example, in Qt C
 
 - GCC / MSVC
 - CMake
-- Qt >= 6.5
+- Qt >= 6.10
   - `qtbase`
   - `qtimageformats`
   - `qtsvg`
@@ -218,7 +220,11 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
 # To launch quran-companion
 ./quran-companion
-# For installation
+```
+
+4. Install (optional)
+
+```sh
 sudo cmake --install .
 ```
 
@@ -228,19 +234,11 @@ sudo cmake --install .
 
 <a name="roadmap"></a>
 
-## Roadmap 🎯
+## Roadmap 📊
 
-- [x] Add daily verse functionality
-- [x] Add bookmarked verses tab
-- [x] Enhance search functionality
-  - [x] Search in a range of pages only
-  - [x] Search in a specific surah only
-- [x] Add new tafsir books
-  - [x] Aysar Al-Tafasir (al-Jazaeri)
-  - [x] al-Tashil li Ulum al-Tanzil (Ibn Juzayy)
-  - [x] Adwa' ul-Bayan (al-Shinqiti)
+See the [project board](https://github.com/users/0xzer0x/projects/1) for the current roadmap and development progress.
 
-See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a full list of proposed features (and known issues).
+You can also review [open issues](https://github.com/0xzer0x/quran-companion/issues) for planned features and reported problems.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -250,24 +248,7 @@ See the [open issues](https://github.com/0xzer0x/quran-companion/issues) for a f
 
 ## Contributing 💡
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-
-### Documetation 📚
-
-- [Doxygen](https://www.doxygen.nl/) documentation is provided for the project, to generate the documentation preform the following steps
-  - `git clone https://github.com/0xzer0x/quran-companion.git`
-  - `cd quran-companion/docs`
-  - `doxygen`
-
-- default documentaion format is html, if you want to generate any other format modify `Doxyfile` accordingly
-
-### Translation 🌐
-
-Look at [this wiki page][translation-wiki]
-
-### Recitations 📻
-
-Look at [this wiki page][recitations-wiki]
+Please check out the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to contribute, submit issues, or create pull requests.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -296,22 +277,10 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTACT -->
-
-<a name="contact"></a>
-
-## Contact
-
-> 0xzer0x - y.essam2256@nu.edu.eg
->
-> Project Link: [https://github.com/0xzer0x/quran-companion](https://github.com/0xzer0x/quran-companion)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [latest-release]: https://github.com/0xzer0x/quran-companion/releases/latest
-[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.1.9/qc_online_installer_x64_win.exe
+[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.5.0/Quran_Companion-1.5.0-x86_64-setup.exe
 [translation-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations
 [recitations-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Recitations
-[macos-dmg-url]: https://github.com/0xzer0x/quran-companion/releases/download/v1.4.0/Quran_Companion-1.4.0-x86_64.dmg
+[macos-dmg-url]: https://github.com/0xzer0x/quran-companion/releases/download/v1.5.0/Quran_Companion-1.5.0-x86_64.dmg

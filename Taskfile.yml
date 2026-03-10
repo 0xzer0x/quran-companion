@@ -5,13 +5,6 @@ tasks:
   clean:
     cmds:
       - cmake --build "{{ .BUILD_DIR }}" --target clean
-      - |
-        if [ -L "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/assets"  ]; then
-          rm "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/assets"
-        fi
-        if [ -L "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/bismillah"  ]; then
-          rm "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/bismillah"
-        fi
 
   generate:
     cmd: cmake -S "{{ .ROOT_DIR }}" -B "{{ .BUILD_DIR }}"
@@ -21,13 +14,6 @@ tasks:
       - generate
     cmds:
       - cmake --build "{{ .BUILD_DIR }}" --config "{{ .CMAKE_BUILD_TYPE }}"
-      - |
-        if [ ! -L "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/assets"  ]; then
-          ln -s "{{ .BUILD_DIR }}/assets" "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/assets"
-        fi
-        if [ ! -L "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/bismillah"  ]; then
-          ln -s "{{ .BUILD_DIR }}/bismillah" "{{ .BUILD_DIR }}/{{ .CMAKE_BUILD_TYPE }}/bismillah"
-        fi
 
   template.ts:
     cmds:

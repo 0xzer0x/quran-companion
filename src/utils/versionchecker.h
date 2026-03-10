@@ -21,14 +21,11 @@ public slots:
   void checkUpdates();
 
 private slots:
-  void handleToolOutput();
   void handleReply(QPointer<QNetworkReply> reply);
 
 private:
-  bool toolExists();
   void getLatestVersion();
   QProcess m_runner;
-  QString m_updateTool;
   QNetworkRequest m_versionReq;
   QNetworkAccessManager m_netMgr;
   UpdateNotifier m_notifier;

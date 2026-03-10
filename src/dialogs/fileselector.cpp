@@ -26,10 +26,10 @@ FileSelector::setCaption(Mode mode)
 {
   switch (mode) {
     case Mode::Read:
-      setWindowTitle(qApp->translate("QFileDialog", "Open File"));
+      setWindowTitle(QCoreApplication::translate("QFileDialog", "Open File"));
       break;
     case Mode::Write:
-      setWindowTitle(qApp->translate("QFileDialog", "Save File"));
+      setWindowTitle(QCoreApplication::translate("QFileDialog", "Save File"));
       break;
     default:
       break;

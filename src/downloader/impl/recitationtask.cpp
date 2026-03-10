@@ -44,7 +44,7 @@ RecitationTask::url() const
 {
   const Reciter& r = m_reciters.at(m_reciter);
   QString url = r.baseUrl();
-  if (r.useId())
+  if (r.downloadVerseById())
     url.append(QString::number(Verse::id(m_surah, m_verse)) + ".mp3");
   else
     url.append(QString::number(m_surah).rightJustified(3, '0') +

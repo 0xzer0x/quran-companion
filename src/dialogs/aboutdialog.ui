@@ -414,7 +414,7 @@
          <item>
           <widget class="QLabel" name="label_18">
            <property name="toolTip">
-            <string notr="true">https://crowdin.com/profile/tap</string>
+            <string notr="true">https://crowdin.com/profile/yaisatyan</string>
            </property>
            <property name="text">
             <string notr="true">&lt;a href=&quot;https://crowdin.com/profile/yaisatyan&quot;&gt;@yaisatyan&lt;/a&gt;</string>
@@ -556,7 +556,7 @@
          <item>
           <widget class="QLabel" name="label_14">
            <property name="text">
-            <string notr="true">- &lt;a href=&quot;https://quran.ksu.edu.sa/index.php&quot;&gt;Ayat&lt;/a&gt; &lt;br/&gt; - &lt;a href=&quot;https://api-docs.quran.com/&quot;&gt;Quran.com API&lt;/a&gt; &lt;br/&gt; - &lt;a href=&quot;https://mosshaf.com&quot;&gt;Mosshaf&lt;/a&gt;</string>
+            <string notr="true">- &lt;a href=&quot;https://quran.ksu.edu.sa/index.php&quot;&gt;Ayat&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://api-docs.quran.com/&quot;&gt;Quran.com API&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://mosshaf.com&quot;&gt;Mosshaf&lt;/a&gt;&lt;br/&gt;- &lt;a href=&quot;https://qul.tarteel.ai/&quot;&gt;QUL&lt;/a&gt;</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
