@@ -294,7 +294,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: installer
-          path: '${{ env.BUNDLE_DIR }}\Quran_Companion-${{ env.APP_VER }}-x86_64-setup.exe'
+          path: "${{ env.BUNDLE_DIR }}/Quran_Companion-${{ env.APP_VER }}-x86_64-setup.exe"
           retention-days: 7
 
   release:
