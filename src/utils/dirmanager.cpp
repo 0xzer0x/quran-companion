@@ -17,11 +17,30 @@ DirManager::DirManager()
   m_configDir.setPath(
     QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) +
     QDir::separator() + "QuranCompanion");
-  m_assetsDir.setPath(QApplication::applicationDirPath() + QDir::separator() +
-                      "assets");
+
+  // WARN: Required runtime directories
+  m_basmallahDir = resolveRuntimeDataDir("bismillah");
+  m_assetsDir = resolveRuntimeDataDir("assets");
   m_fontsDir.setPath(m_assetsDir.absoluteFilePath("fonts"));
-  m_basmallahDir.setPath(QApplication::applicationDirPath() +
-                         QDir::separator() + "bismillah");
+}
+
+QDir
+DirManager::resolveRuntimeDataDir(const QString& subdir)
+{
+  // NOTE: Look for the specified runtime directory in
+  // <binary-location>/../share/quran-companion
+  QDir qcDataDir(QApplication::applicationDirPath() + QDir::separator() + ".." +
+                 QDir::separator() + "share" + QDir::separator() +
+                 "quran-companion");
+
+  QDir candidate(qcDataDir.absoluteFilePath(subdir));
+  if (candidate.exists()) {
+    return candidate;
+  }
+
+  // WARN: Fallback to application binary location
+  QDir fallback(QApplication::applicationDirPath());
+  return QDir(fallback.absoluteFilePath(subdir));
 }
 
 void

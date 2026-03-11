@@ -25,6 +25,7 @@ public:
 
 private:
   DirManager();
+  QDir resolveRuntimeDataDir(const QString& subdir);
   QDir m_fontsDir;
   QDir m_configDir;
   QDir m_assetsDir;
