@@ -248,14 +248,16 @@ elseif(APPLE)
                               PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 endif()
 
-# WARN: Required for development builds to run
-add_custom_command(
-  TARGET quran-companion
-  POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets
-          $<TARGET_FILE_DIR:quran-companion>/assets
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/bismillah
-          $<TARGET_FILE_DIR:quran-companion>/bismillah)
+if(NOT APPLE)
+  # WARN: Required for development builds to run
+  add_custom_command(
+    TARGET quran-companion
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets
+            $<TARGET_FILE_DIR:quran-companion>/assets
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/bismillah
+            $<TARGET_FILE_DIR:quran-companion>/bismillah)
+endif()
 
 install(
   TARGETS quran-companion
@@ -264,19 +266,17 @@ install(
 
 if(APPLE)
   set(QC_RUNTIME_DATAROOT "quran-companion.app/Contents/MacOS")
-  message(
-    STATUS "Copying runtime assets to be installed to ${QC_RUNTIME_DATAROOT}")
+  message(STATUS "Copying runtime assets to ${QC_RUNTIME_DATAROOT}")
   file(INSTALL assets DESTINATION ${QC_RUNTIME_DATAROOT})
   file(INSTALL bismillah DESTINATION ${QC_RUNTIME_DATAROOT})
+
 elseif(LINUX)
   set(QC_RUNTIME_DATAROOT ${CMAKE_INSTALL_DATAROOTDIR}/quran-companion)
-  message(
-    STATUS
-      "Configuring runtime assets to be installed to ${QC_RUNTIME_DATAROOT}")
+  message(STATUS "Installing runtime assets to ${QC_RUNTIME_DATAROOT}")
   install(DIRECTORY assets DESTINATION ${QC_RUNTIME_DATAROOT})
   install(DIRECTORY bismillah DESTINATION ${QC_RUNTIME_DATAROOT})
 
-  message(STATUS "Configuring Linux XDG files for installation")
+  message(STATUS "Installing Linux XDG files")
   list(APPEND ICON_SIZES 64 128 256)
   foreach(size IN LISTS ICON_SIZES)
     install(
@@ -289,12 +289,12 @@ elseif(LINUX)
           DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/metainfo)
   install(FILES dist/xdg/io.github._0xzer0x.qurancompanion.desktop
           DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
+
 else()
-  message(
-    STATUS
-      "Configuring runtime assets to be installed to ${CMAKE_INSTALL_BINDIR}")
+  message(STATUS "Installing runtime assets to ${CMAKE_INSTALL_BINDIR}")
   install(DIRECTORY assets TYPE BIN)
   install(DIRECTORY bismillah TYPE BIN)
+
 endif()
 
 list(
