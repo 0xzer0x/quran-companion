@@ -248,6 +248,15 @@ elseif(APPLE)
                               PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 endif()
 
+# WARN: Required for development builds to run
+add_custom_command(
+  TARGET quran-companion
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/assets
+          $<TARGET_FILE_DIR:quran-companion>/assets
+  COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/bismillah
+          $<TARGET_FILE_DIR:quran-companion>/bismillah)
+
 install(
   TARGETS quran-companion
   BUNDLE DESTINATION .
