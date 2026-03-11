@@ -252,9 +252,9 @@ endif()
 add_custom_command(
   TARGET quran-companion
   POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/assets
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets
           $<TARGET_FILE_DIR:quran-companion>/assets
-  COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/bismillah
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/bismillah
           $<TARGET_FILE_DIR:quran-companion>/bismillah)
 
 install(
