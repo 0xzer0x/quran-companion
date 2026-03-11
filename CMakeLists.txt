@@ -29,12 +29,7 @@ if(WIN32)
   set(Vulkan_INCLUDE_DIR "$ENV{VULKAN_SDK}\\Include\\vulkan")
 endif()
 
-if(DEFINED BUILD_FLATPAK)
-  message(STATUS "Adding flatpak specific files")
-  add_subdirectory(dist/flatpak)
-endif()
-
-add_subdirectory(third_party/QtAwesome)
+add_subdirectory(third_party/QtAwesome EXCLUDE_FROM_ALL)
 
 include_directories(src)
 
