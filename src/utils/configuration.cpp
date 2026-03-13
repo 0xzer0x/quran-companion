@@ -1,6 +1,7 @@
 #include "configuration.h"
 #include <QApplication>
 #include <QFont>
+#include <QKeySequence>
 #include <QLocale>
 #include <QStyleHints>
 #include <QTranslator>
@@ -87,69 +88,276 @@ Configuration::settings()
   return m_settings;
 }
 
-int
+const int
 Configuration::themeId() const
 {
   return m_themeId;
 }
 
-bool
+const bool
 Configuration::darkMode() const
 {
   return m_darkMode;
 }
 
-int
+const int
 Configuration::qcfVersion() const
 {
   return m_qcfVersion;
 }
 
-QLocale::Language
+const int
+Configuration::qcfFontSize() const
+{
+  return m_settings
+    .value("Reader/QCF" + QString::number(m_qcfVersion) + "Size", 22)
+    .toInt();
+}
+
+const int
+Configuration::verseFontSize() const
+{
+  return m_settings.value("Reader/VerseFontSize").toInt();
+}
+
+const QLocale::Language
 Configuration::language() const
 {
   return m_language;
 }
 
-ConfigurationSchema::ReaderMode
+const ConfigurationSchema::ReaderMode
 Configuration::readerMode() const
 {
   return m_readerMode;
 }
 
-ConfigurationSchema::VerseType
+const ConfigurationSchema::VerseType
 Configuration::verseType() const
 {
-  return m_verseType;
+  return qvariant_cast<ConfigurationSchema::VerseType>(
+    m_settings.value("Reader/VerseType"));
 }
 
-const Reciter&
+const Reciter
 Configuration::reciter() const
 {
   const QString reciterId = m_settings.value("Reciter").toString();
   // NOTE: Get reciter with the configured id and fallback if ID is not valid
-  const Reciter* reciterPtr = Reciter::reciterById(reciterId);
-  if (reciterPtr == nullptr) {
-    reciterPtr = Reciter::reciterById("husary");
-  }
+  std::optional<Reciter> reciter = Reciter::findById(reciterId);
+  return reciter.value_or(Reciter::defaultReciter());
+}
 
-  return *reciterPtr;
+const QByteArray
+Configuration::windowState() const
+{
+  return m_settings.value("Window/State").toByteArray();
+}
+
+const bool
+Configuration::menuBarVisible() const
+{
+  return m_settings.value("Window/VisibleMenubar").toBool();
+}
+
+const int
+Configuration::khatmahId() const
+{
+  return m_settings.value("Reader/Khatmah").toInt();
+}
+
+const bool
+Configuration::adaptiveReaderFont() const
+{
+  return m_settings.value("Reader/AdaptiveFont").toBool();
+}
+
+const QKeySequence
+Configuration::shortcutKeySequence(const QString name) const
+{
+  QKeySequence seq =
+    qvariant_cast<QKeySequence>(m_settings.value("Shortcuts/" + name));
+  return seq;
+}
+
+const Tafsir
+Configuration::tafsir() const
+{
+  const QString tafsirId = m_settings.value("Reader/Tafsir").toString();
+  const std::optional<const Tafsir> tafsir = Tafsir::findById(tafsirId);
+  return tafsir.value_or(Tafsir::defaultTafsir());
+}
+
+const Translation
+Configuration::translation() const
+{
+  const QString translationId =
+    m_settings.value("Reader/Translation").toString();
+  const std::optional<const Translation> translation =
+    Translation::findById(translationId);
+  return translation.value_or(Translation::defaultTranslation());
+}
+
+const bool
+Configuration::foregroundHighlighting() const
+{
+  return m_settings.value("Reader/FGHighlight").toBool();
+}
+
+const QFont
+Configuration::sideContentFont() const
+{
+  return qvariant_cast<QFont>(m_settings.value("Reader/SideContentFont"));
+}
+
+const bool
+Configuration::missingFileWarning() const
+{
+  return m_settings.value("MissingFileWarning").toBool();
+}
+
+const bool
+Configuration::showVerseOfTheDay() const
+{
+  return m_settings.value("VOTD").toBool();
 }
 
 void
-Configuration::setReciter(const Reciter* reciter)
+Configuration::setWindowState(const QByteArray windowState)
 {
-  if (!reciter) {
-    qWarning()
-      << "Invalid reciter pointer value passed to configuration: nullptr";
-    return;
-  }
+  m_settings.setValue("Window/State", windowState);
+}
 
-  m_settings.setValue("Reciter", reciter->id());
+void
+Configuration::setTafsir(const Tafsir tafsir)
+{
+  m_settings.setValue("Reader/Tafsir", tafsir.id());
+}
+
+void
+Configuration::setTranslation(Translation translation)
+{
+  m_settings.setValue("Reader/Translation", translation.id());
+}
+
+void
+Configuration::setAdaptiveReaderFont(const bool enabled)
+{
+  m_settings.setValue("Reader/AdaptiveFont", enabled);
+}
+
+void
+Configuration::setKhatmahId(const int id)
+{
+  m_settings.setValue("Reader/Khatmah", id);
+}
+
+void
+Configuration::setMenuBarVisible(const bool visible)
+{
+  m_settings.setValue("Window/VisibleMenubar", visible);
+}
+
+void
+Configuration::setReciter(const Reciter reciter)
+{
+  m_settings.setValue("Reciter", reciter.id());
 }
 
 void
 Configuration::setVerseType(ConfigurationSchema::VerseType newVerseType)
 {
-  m_verseType = newVerseType;
+  m_settings.setValue("Reader/VerseType", newVerseType);
+}
+
+void
+Configuration::setShortcutIfNotExists(const QString name, const QString value)
+{
+  QString settingsKey = "Shortcuts/" + name;
+  if (!m_settings.contains(settingsKey)) {
+    m_settings.setValue(settingsKey, value);
+  }
+}
+
+void
+Configuration::setQcfVersion(const int version)
+{
+  if (version == 1 || version == 2) {
+    m_settings.setValue("Reader/QCF", version);
+  }
+}
+
+void
+Configuration::setQcfFontSize(const int size)
+{
+  m_settings.setValue("Reader/QCF" + QString::number(m_qcfVersion) + "Size",
+                      size);
+}
+
+void
+Configuration::setForegroundHighlighting(const bool enabled)
+{
+  m_settings.setValue("Reader/FGHighlight", enabled);
+}
+
+void
+Configuration::setSideContentFont(const QFont font)
+{
+  m_settings.setValue("Reader/SideContentFont", font);
+}
+
+void
+Configuration::setVerseFontSize(const int size)
+{
+  m_settings.setValue("Reader/VerseFontSize", size);
+}
+
+void
+Configuration::setTheme(const int themeId)
+{
+  m_settings.setValue("Theme", themeId);
+}
+
+void
+Configuration::setLanguage(const QLocale::Language lang)
+{
+  m_settings.setValue("Language", lang);
+}
+
+void
+Configuration::setDownloadsDir(const QString path)
+{
+  m_settings.setValue("DownloadsDir", path);
+}
+
+void
+Configuration::setShowVerseOfTheDay(const bool enabled)
+{
+  m_settings.setValue("VOTD", enabled);
+}
+
+void
+Configuration::setMissingFileWarning(const bool enabled)
+{
+  m_settings.setValue("MissingFileWarning", enabled);
+}
+
+void
+Configuration::setReaderMode(const ConfigurationSchema::ReaderMode mode)
+{
+  m_settings.setValue("Reader/Mode", mode);
+}
+
+void
+Configuration::setShortcutKeySequence(const QString name,
+                                      const QKeySequence sequence)
+{
+  QString settingsKey = "Shortcuts/" + name;
+  m_settings.setValue(settingsKey, sequence.toString());
+}
+
+void
+Configuration::sync()
+{
+  m_settings.sync();
 }

@@ -14,13 +14,12 @@ VerseDialog::VerseDialog(QWidget* parent)
 {
   ui->setupUi(this);
 
-  QFont sideFont =
-    qvariant_cast<QFont>(m_config.settings().value("Reader/SideContentFont"));
+  QFont sideFont = m_config.sideContentFont();
   ui->lbContent->setFont(sideFont);
   ui->lbInfo->setFont(sideFont);
   ui->lbVerse->setFont(QFont("kfgqpc_hafs_uthmanic _script", 20));
 
-  if (m_config.settings().value("VOTD").toBool())
+  if (m_config.showVerseOfTheDay())
     showVOTD(true);
 }
 

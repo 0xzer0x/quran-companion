@@ -13,7 +13,7 @@ TafsirRepository::TafsirRepository()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "TafsirCon"))
   , m_config(Configuration::getInstance())
   , m_dirMgr(DirManager::getInstance())
-  , m_tafasir(Tafsir::tafasir)
+  , m_currTafsir(m_config.tafsir())
 {
   loadTafsir();
 }
@@ -35,15 +35,7 @@ TafsirRepository::type()
 void
 TafsirRepository::loadTafsir()
 {
-  QString curr = m_config.settings().value("Reader/Tafsir").toString();
-  bool isNum;
-  curr.toInt(&isNum);
-  if (isNum) {
-    curr = m_tafasir.at(curr.toInt()).id();
-    m_config.settings().setValue("Reader/Tafsir", curr);
-  }
-
-  setCurrentTafsir(curr);
+  setCurrentTafsir(m_config.tafsir());
 }
 
 bool

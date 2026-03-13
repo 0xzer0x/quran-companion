@@ -37,10 +37,7 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
 void
 QuranPageBrowser::updateFontSize()
 {
-  m_fontSize =
-    m_config.settings()
-      .value("Reader/QCF" + QString::number(m_config.qcfVersion()) + "Size", 22)
-      .toInt();
+  m_fontSize = m_config.qcfFontSize();
   highlightVerse(m_highlightedIdx);
 }
 
@@ -222,12 +219,9 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
   m_currPageLines = m_glyphService->getPageLines(m_page);
 
   // automatic font adjustment check
-  if (!forceCustomSize &&
-      m_config.settings().value("Reader/AdaptiveFont").toBool()) {
+  if (!forceCustomSize && m_config.adaptiveReaderFont()) {
     m_fontSize = this->bestFitFontSize();
-    m_config.settings().setValue(
-      "Reader/QCF" + QString::number(m_config.qcfVersion()) + "Size",
-      m_fontSize);
+    m_config.setQcfFontSize(m_fontSize);
   }
 
   m_pageLineSize = this->calcPageLineSize(m_currPageLines);
@@ -444,8 +438,7 @@ void
 QuranPageBrowser::actionZoomIn()
 {
   m_fontSize++;
-  m_config.settings().setValue(
-    "Reader/QCF" + QString::number(m_config.qcfVersion()) + "Size", m_fontSize);
+  m_config.setQcfFontSize(m_fontSize);
   constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
 }
@@ -454,8 +447,7 @@ void
 QuranPageBrowser::actionZoomOut()
 {
   m_fontSize--;
-  m_config.settings().setValue(
-    "Reader/QCF" + QString::number(m_config.qcfVersion()) + "Size", m_fontSize);
+  m_config.setQcfFontSize(m_fontSize);
   constructPage(m_page, true);
   highlightVerse(m_highlightedIdx);
 }
@@ -465,7 +457,7 @@ QuranPageBrowser::updateHighlightLayer()
 {
   int old = m_highlightedIdx;
   resetHighlight();
-  m_fgHighlight = m_config.settings().value("Reader/FGHighlight").toBool();
+  m_fgHighlight = m_config.foregroundHighlighting();
 
   QColor hc = m_highlightColor.color();
   if (m_fgHighlight)

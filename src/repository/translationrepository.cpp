@@ -12,7 +12,7 @@ TranslationRepository::TranslationRepository()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "TranslationCon"))
   , m_dirMgr(DirManager::getInstance())
   , m_config(Configuration::getInstance())
-  , m_translations(Translation::translations)
+  , m_currTranslation(m_config.translation())
 {
 }
 
@@ -33,15 +33,7 @@ TranslationRepository::type()
 void
 TranslationRepository::loadTranslation()
 {
-  QString curr = m_config.settings().value("Reader/Translation").toString();
-  bool isNum;
-  curr.toInt(&isNum);
-  if (isNum) {
-    curr = m_translations.at(curr.toInt()).id();
-    m_config.settings().setValue("Reader/Translation", curr);
-  }
-
-  setCurrentTranslation(curr);
+  setCurrentTranslation(m_config.translation());
 }
 
 bool

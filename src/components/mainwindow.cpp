@@ -35,10 +35,11 @@ MainWindow::MainWindow(QWidget* parent)
   loadVerse();
   loadComponents();
 
-  if (m_config.settings().value("Window/State").isNull())
-    m_config.settings().setValue("Window/State", saveState());
-  else
-    restoreState(m_config.settings().value("Window/State").toByteArray());
+  if (m_config.windowState().isNull()) {
+    m_config.setWindowState(saveState());
+  } else {
+    restoreState(m_config.windowState());
+  }
 
   // connectors
   setupShortcuts();
@@ -48,7 +49,7 @@ MainWindow::MainWindow(QWidget* parent)
   show();
 
   m_popup->setDockArea(dockWidgetArea(ui->sideDock));
-  if (!m_config.settings().value("Window/VisibleMenubar").toBool()) {
+  if (!m_config.menuBarVisible()) {
     toggleMenubar();
   }
 
@@ -78,7 +79,7 @@ MainWindow::loadIcons()
 void
 MainWindow::loadVerse()
 {
-  int id = m_config.settings().value("Reader/Khatmah").toInt();
+  int id = m_config.khatmahId();
   m_khatmahService->setActiveKhatmah(id);
 
   std::optional<Verse> khatmahPos = m_khatmahService->loadVerse(id);
@@ -640,7 +641,7 @@ MainWindow::missingTranslation(QString id)
 void
 MainWindow::missingRecitationFileWarn(const Reciter* const reciter, int surah)
 {
-  if (!m_config.settings().value("MissingFileWarning").toBool())
+  if (!m_config.missingFileWarning())
     return;
 
   QMessageBox::StandardButton btn =
@@ -734,7 +735,7 @@ void
 MainWindow::actionPlayerControlsToggled(bool checked)
 {
   m_playerControls->setVisible(checked);
-  if (m_config.settings().value("Reader/AdaptiveFont").toBool()) {
+  if (m_config.adaptiveReaderFont()) {
     m_reader->redrawQuranPage();
     m_reader->highlightCurrentVerse();
   }
@@ -791,8 +792,7 @@ MainWindow::toggleMenubar()
   else
     ui->menubar->show();
   m_repeater->adjustPosition();
-  m_config.settings().setValue("Window/VisibleMenubar",
-                               ui->menubar->isVisible());
+  m_config.setMenuBarVisible(ui->menubar->isVisible());
 }
 
 void
@@ -832,9 +832,9 @@ MainWindow::resizeEvent(QResizeEvent* event)
 void
 MainWindow::saveReaderState()
 {
-  m_config.settings().setValue("Window/State", saveState());
+  m_config.setWindowState(saveState());
   m_config.setReciter(m_playerControls->currentReciter());
-  m_config.settings().sync();
+  m_config.sync();
 
   m_khatmahService->saveActiveKhatmah(m_currVerse);
 }

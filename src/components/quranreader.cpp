@@ -156,21 +156,16 @@ QuranReader::toggleReaderView()
 void
 QuranReader::updateSideFont()
 {
-  m_sideFont =
-    qvariant_cast<QFont>(m_config.settings().value("Reader/SideContentFont"));
+  m_sideFont = m_config.sideContentFont();
 }
 
 void
 QuranReader::updateVerseType()
 {
-  ConfigurationSchema::VerseType type =
-    qvariant_cast<ConfigurationSchema::VerseType>(
-      m_config.settings().value("Reader/VerseType"));
+  ConfigurationSchema::VerseType type = m_config.verseType();
   m_versesFont.setFamily(
     FontManager::getInstance().verseFontname(type, m_currVerse.page()));
-  m_versesFont.setPointSize(
-    m_config.settings().value("Reader/VerseFontSize").toInt());
-  m_config.setVerseType(type);
+  m_versesFont.setPointSize(m_config.verseFontSize());
 }
 
 void

@@ -154,12 +154,12 @@ void
 KhatmahDialog::setActiveKhatmah()
 {
   QFrame* newActive = qobject_cast<QFrame*>(sender()->parent());
-  QVariant id = newActive->objectName();
+  const int id = newActive->objectName().toInt();
 
-  m_config.settings().setValue("Reader/Khatmah", id);
+  m_config.setKhatmahId(id);
   m_khatmahService->saveActiveKhatmah(m_currVerse);
-  m_khatmahService->setActiveKhatmah(id.toInt());
-  Verse v = m_khatmahService->loadVerse(id.toInt()).value();
+  m_khatmahService->setActiveKhatmah(id);
+  Verse v = m_khatmahService->loadVerse(id).value();
 
   newActive->findChild<QPushButton*>("activate")->setEnabled(false);
   newActive->findChild<QPushButton*>("remove")->setEnabled(false);
@@ -167,7 +167,7 @@ KhatmahDialog::setActiveKhatmah()
   m_currActive->findChild<QPushButton*>("remove")->setEnabled(true);
   m_currActive = newActive;
 
-  ui->lbCurrKhatmah->setText(m_khatmahService->getKhatmahName(id.toInt()));
+  ui->lbCurrKhatmah->setText(m_khatmahService->getKhatmahName(id));
   m_navigator.navigateToVerse(v);
 }
 

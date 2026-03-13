@@ -44,8 +44,8 @@ FontManager::loadQcf()
     QString fontName = pageFontname(i) + ".ttf";
 
     if (m_config.qcfVersion() == 2 && !m_dirMgr.fontsDir().exists(fontName)) {
-      m_config.settings().setValue("Reader/QCF", 1);
-      m_config.settings().sync();
+      m_config.setQcfVersion(1);
+      m_config.sync();
       qFatal() << m_dirMgr.fontsDir().filePath(fontName)
                << " font file not found, fallback to QCF v1";
     } else

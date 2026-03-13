@@ -20,10 +20,10 @@ ContentDialog::ContentDialog(QWidget* parent)
   , m_tafsirService(ServiceFactory::tafsirService())
   , m_translationService(ServiceFactory::translationService())
   , m_thoughtsService(ServiceFactory::thoughtsService())
-  , m_tafasir(Tafsir::tafasir)
-  , m_translations(Translation::translations)
   , m_currMode(Tafsir)
   , m_internalLoading(false)
+  , m_tafsir(m_config.tafsir())
+  , m_translation(m_config.translation())
 {
   setWindowIcon(
     StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_book_open));
@@ -39,8 +39,6 @@ ContentDialog::ContentDialog(QWidget* parent)
   else
     m_fontSZ = 16;
 
-  m_tafsir = m_config.settings().value("Reader/Tafsir").toString();
-  m_translation = m_config.settings().value("Reader/Translation").toString();
   // connectors
   setupConnections();
 }
@@ -115,8 +113,7 @@ ContentDialog::showVerseThoughts(const Verse& v)
 void
 ContentDialog::loadSideFont()
 {
-  QFont sideFont =
-    qvariant_cast<QFont>(m_config.settings().value("Reader/SideContentFont"));
+  QFont sideFont = m_config.sideContentFont();
   ui->tedContent->setFont(sideFont);
 }
 
