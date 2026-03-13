@@ -4,6 +4,8 @@
 #include <QFile>
 #include <QXmlStreamReader>
 #include <algorithm>
+#include <optional>
+#include <utils/configurationschema.h>
 #include <utils/dirmanager.h>
 
 QList<Reciter> Reciter::reciters;
@@ -58,28 +60,41 @@ Reciter::populateReciters()
   }
 }
 
-const Reciter*
-Reciter::reciterById(const QString id)
+std::optional<Reciter>
+Reciter::findById(const QString id)
 {
-  const Reciter* reciter = nullptr;
+  std::optional<Reciter> reciter = std::nullopt;
 
   const auto iterator =
     std::find_if(Reciter::reciters.constBegin(),
                  Reciter::reciters.constEnd(),
                  [&id](const Reciter& reciter) { return reciter.id() == id; });
 
-  // NOTE: Dereference iterator into pointer if reciter is found
+  // NOTE: Dereference iterator if found
   if (iterator != Reciter::reciters.constEnd()) {
-    reciter = &(*iterator);
+    reciter = *iterator;
   }
 
   return reciter;
 }
 
 const int
-Reciter::indexForReciter(const Reciter* const reciter)
+Reciter::indexForReciter(const Reciter& reciter)
 {
-  return Reciter::reciters.indexOf(*reciter);
+  return Reciter::reciters.indexOf(reciter);
+}
+
+const Reciter
+Reciter::defaultReciter()
+{
+  const QString defaultId =
+    ConfigurationSchema::getInstance().getDefault("Reciter").value().toString();
+
+  const std::optional<const Reciter> reciter = Reciter::findById(defaultId);
+  if (!reciter.has_value()) {
+    qFatal() << "Failed to find default reciter using id:" << defaultId;
+  }
+  return reciter.value();
 }
 
 Reciter::Reciter(QString id,

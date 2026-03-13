@@ -16,8 +16,9 @@ class Reciter
 public:
   static QList<Reciter> reciters;
   static void populateReciters();
-  static const Reciter* reciterById(const QString id);
-  static const int indexForReciter(const Reciter* const reciter);
+  static std::optional<Reciter> findById(const QString id);
+  static const int indexForReciter(const Reciter& reciter);
+  static const Reciter defaultReciter();
 
   explicit Reciter(QString id,
                    QString dir,

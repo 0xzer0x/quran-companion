@@ -171,9 +171,9 @@ void
 PlayerControls::cmbReciterChanged(int newIndex)
 {
   const QString newReciterId = ui->cmbReciter->itemData(newIndex).toString();
-  const Reciter* newReciter = Reciter::reciterById(newReciterId);
+  std::optional<const Reciter> newReciter = Reciter::findById(newReciterId);
 
-  m_playbackController->player()->changeReciter(newReciter);
+  m_playbackController->player()->changeReciter(newReciter.value());
   m_repeater->playbackFinished();
 }
 
@@ -257,11 +257,11 @@ PlayerControls::decrementPlaybackRate()
   ui->cmbPlaybackRate->setCurrentIndex(currRateIndex - 1);
 }
 
-const Reciter*
+const Reciter
 PlayerControls::currentReciter() const
 {
   const QString reciterId = ui->cmbReciter->currentData().toString();
-  return Reciter::reciterById(reciterId);
+  return Reciter::findById(reciterId).value();
 }
 
 void

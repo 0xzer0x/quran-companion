@@ -13,19 +13,13 @@ VersePlayer::VersePlayer(QObject* parent)
   , m_config(Configuration::getInstance())
   , m_output(new QAudioOutput(this))
   , m_activeVerse(Verse::getCurrent())
-  , m_reciter(&m_config.reciter())
+  , m_reciter(m_config.reciter())
   , m_reciterDir(
       DirManager::getInstance().downloadsDir().absoluteFilePath("recitations"))
 {
   setAudioOutput(m_output);
 
-  // WARN: Make sure passed m_reciter is not a nullptr before passing
-  if (m_reciter == nullptr) {
-    qFatal() << "Invalid value for reciter pointer in verse player:"
-             << m_reciter;
-  }
-
-  m_reciterDir.cd(m_reciter->baseDirName());
+  m_reciterDir.cd(m_reciter.baseDirName());
   loadActiveVerse();
 }
 
@@ -89,16 +83,16 @@ VersePlayer::playCurrentVerse()
 }
 
 bool
-VersePlayer::changeReciter(const Reciter* reciter)
+VersePlayer::changeReciter(const Reciter reciter)
 {
   if (m_activeVerse.number() == 0) {
     m_activeVerse.setNumber(1);
   }
 
   pause();
-  if (reciter != m_reciter && reciter != nullptr) {
+  if (reciter != m_reciter) {
     m_reciterDir.cdUp();
-    m_reciterDir.cd(reciter->baseDirName());
+    m_reciterDir.cd(reciter.baseDirName());
     m_reciter = reciter;
   }
 
@@ -127,7 +121,7 @@ bool
 VersePlayer::loadActiveVerse()
 {
   if (m_activeVerse.number() == 0) {
-    setSource(QUrl::fromLocalFile(m_reciter->basmallahPath()));
+    setSource(QUrl::fromLocalFile(m_reciter.basmallahPath()));
     return true;
   }
 
@@ -137,7 +131,7 @@ VersePlayer::loadActiveVerse()
 QString
 VersePlayer::reciterName() const
 {
-  return m_reciter->displayName();
+  return m_reciter.displayName();
 }
 
 QAudioOutput*

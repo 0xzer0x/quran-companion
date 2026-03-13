@@ -30,15 +30,10 @@ public:
 
   /**
    * @brief Returns the currently selected reciter.
-   *
-   * Retrieves the ID stored in the reciters combo box current item data and
-   * resolves it to a Reciter instance.
-   *
-   * @return Pointer to a Reciter in the ::Reciter::reciters list corresponding
-   * to the currently selected combo box item, or nullptr if no matching reciter
-   * exists.
+   * @return Reciter instance corresponding to the currently selected combo box
+   * item.
    */
-  const Reciter* currentReciter() const;
+  const Reciter currentReciter() const;
 
 public slots:
   /**

@@ -95,12 +95,11 @@ public slots:
   /**
    * @brief Changes the currently selected reciter and loads the active verse
    * from the new reciter's directory.
-   * @param reciter Pointer to the new ::Reciter to change to in the reciters
-   * list.
+   * @param The new ::Reciter to change to.
    * @return Boolean indicating whether the active verse was successfully loaded
    * from the new reciter.
    */
-  bool changeReciter(const Reciter* reciter);
+  bool changeReciter(const Reciter reciter);
   /**
    * @brief Changes the audio device used for playback.
    * @param dev The QAudioDevice to use for playback.
@@ -115,10 +114,10 @@ public slots:
 signals:
   /**
    * @brief Emitted when a verse file is missing.
-   * @param reciter Pointer to the ::Reciter in the ::Reciter::reciters list.
-   * @param surah The surah number associated with the missing verse file.
+   * @param reciter - The ::Reciter whose recitation file is missing.
+   * @param surah - The surah number associated with the missing verse file.
    */
-  void missingVerseFile(const Reciter* reciter, int surah);
+  void missingVerseFile(const Reciter reciter, int surah);
 
 private:
   Verse& m_activeVerse;    ///< Current active verse.
@@ -126,7 +125,7 @@ private:
   QDir m_reciterDir;       ///< Directory of the current reciter's recitations.
   bool m_isOn = false;     ///< Indicates whether the player is on.
   QString m_verseFile;     ///< Filename of the current verse.
-  const Reciter* m_reciter = nullptr; ///< The currently selected reciter.
+  Reciter m_reciter;       ///< The currently selected reciter.
   QPointer<QAudioOutput>
     m_output; ///< Pointer to the QAudioOutput object for playback control.
 };
