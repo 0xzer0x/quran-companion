@@ -11,6 +11,7 @@
 #include <player/impl/setplaybackstrategy.h>
 #include <player/playbackcontroller.h>
 #include <service/servicefactory.h>
+#include <types/tafsir.h>
 #include <utils/stylemanager.h>
 using namespace fa;
 using std::make_pair;
@@ -27,8 +28,6 @@ MainWindow::MainWindow(QWidget* parent)
   , m_quranService(ServiceFactory::quranService())
   , m_khatmahService(ServiceFactory::khatmahService())
   , m_translationService(ServiceFactory::translationService())
-  , m_reciters(Reciter::reciters)
-  , m_tafasir(Tafsir::tafasir)
 {
   ui->setupUi(this);
   loadIcons();
@@ -608,7 +607,7 @@ MainWindow::missingQCF()
 }
 
 void
-MainWindow::missingTafsir(QString id)
+MainWindow::missingTafsir(Tafsir tafsir)
 {
   QMessageBox::StandardButton btn = QMessageBox::question(
     this,
@@ -617,13 +616,13 @@ MainWindow::missingTafsir(QString id)
 
   if (btn == QMessageBox::Yes) {
     actionDMTriggered();
-    m_downloaderDlg->selectDownload(
-      DownloadJob::TafsirFile, { 0, m_tafasir.indexOf(Tafsir::findById(id)) });
+    m_downloaderDlg->selectDownload(DownloadJob::TafsirFile,
+                                    { 0, Tafsir::indexForTafsir(tafsir) });
   }
 }
 
 void
-MainWindow::missingTranslation(QString id)
+MainWindow::missingTranslation(Translation translation)
 {
   QMessageBox::StandardButton btn = QMessageBox::question(
     this,
@@ -634,12 +633,12 @@ MainWindow::missingTranslation(QString id)
     actionDMTriggered();
     m_downloaderDlg->selectDownload(
       DownloadJob::TranslationFile,
-      { 1, Translation::translations.indexOf(Translation::findById(id)) });
+      { 1, Translation::indexForTranslation(translation) });
   }
 }
 
 void
-MainWindow::missingRecitationFileWarn(const Reciter* const reciter, int surah)
+MainWindow::missingRecitationFileWarn(const Reciter reciter, int surah)
 {
   if (!m_config.missingFileWarning())
     return;

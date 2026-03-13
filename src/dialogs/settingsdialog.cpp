@@ -85,14 +85,13 @@ void
 SettingsDialog::updateContentCombobox()
 {
   ui->cmbTranslation->clear();
-  foreach (const Translation& tr, m_translations) {
+  foreach (const Translation& tr, Translation::translations) {
     if (tr.isAvailable())
       ui->cmbTranslation->addItem(tr.displayName(), tr.id());
   }
 
-  m_translation = ui->cmbTranslation->findData(
-    m_config.settings().value("Reader/Translation"));
-  ui->cmbTranslation->setCurrentIndex(m_translation);
+  const int translationIdx = ui->cmbTranslation->findData(m_translation.id());
+  ui->cmbTranslation->setCurrentIndex(translationIdx);
 }
 
 void
@@ -363,7 +362,7 @@ SettingsDialog::applyAllChanges()
   if (ui->chkFgHighlight->isChecked() != m_fgHighlight)
     updateFgHighlight(ui->chkFgHighlight->isChecked());
 
-  if (ui->cmbTranslation->currentIndex() != m_translation)
+  if (ui->cmbTranslation->currentData().toString() != m_translation.id())
     updateTranslation(ui->cmbTranslation->currentData().toString());
 
   if (ui->cmbQCF->currentIndex() + 1 != m_config.qcfVersion())

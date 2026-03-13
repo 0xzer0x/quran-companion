@@ -6,9 +6,9 @@ TranslationServiceSqlImpl::TranslationServiceSqlImpl()
 }
 
 bool
-TranslationServiceSqlImpl::setCurrentTranslation(QString id)
+TranslationServiceSqlImpl::setCurrentTranslation(Translation translation)
 {
-  return m_translationRepository.setCurrentTranslation(id);
+  return m_translationRepository.setCurrentTranslation(translation);
 }
 
 QString
@@ -17,7 +17,7 @@ TranslationServiceSqlImpl::getTranslation(const int sIdx, const int vIdx) const
   return m_translationRepository.getTranslation(sIdx, vIdx);
 }
 
-std::optional<const Translation>
+const Translation
 TranslationServiceSqlImpl::currTranslation() const
 {
   return m_translationRepository.currTranslation();

@@ -37,20 +37,16 @@ TranslationRepository::loadTranslation()
 }
 
 bool
-TranslationRepository::setCurrentTranslation(QString id)
+TranslationRepository::setCurrentTranslation(const ::Translation translation)
 {
-  std::optional<::Translation> translation = Translation::findById(id);
-  if (!translation.has_value())
-    return false;
-
-  m_currTranslation = translation.value();
-  const QDir& baseDir = m_currTranslation->isExtra()
+  const QDir& baseDir = translation.isExtra()
                           ? DirManager::getInstance().downloadsDir()
                           : DirManager::getInstance().assetsDir();
-  QString path = "translations/" + m_currTranslation->filename();
+  QString path = "translations/" + translation.filename();
   if (!baseDir.exists(path))
     return false;
 
+  m_currTranslation = translation;
   m_translationFile.setFile(baseDir.filePath(path));
   TranslationRepository::open();
   return true;
@@ -73,7 +69,7 @@ TranslationRepository::getTranslation(const int sIdx, const int vIdx) const
   return dbQuery.value(0).toString();
 }
 
-std::optional<const ::Translation>
+const ::Translation
 TranslationRepository::currTranslation() const
 {
   return m_currTranslation;

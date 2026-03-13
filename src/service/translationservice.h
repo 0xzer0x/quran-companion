@@ -11,9 +11,9 @@ class TranslationService : public QObject
 public:
   /**
    * @brief sets the active translation
-   * @param translationName - DBManager::Translation entry
+   * @param translation - ::Translation instance to set as the active one
    */
-  virtual bool setCurrentTranslation(QString id) = 0;
+  virtual bool setCurrentTranslation(Translation translation) = 0;
   /**
    * @brief gets the translation of the given verse using the active
    * DBManager::Translation
@@ -23,10 +23,10 @@ public:
    */
   virtual QString getTranslation(const int sIdx, const int vIdx) const = 0;
   /**
-   * @brief getter for m_currTr
-   * @return pointer to the currently selected translation
+   * @brief getter for the currently active ::Translation
+   * @return The currently selected ::Translation
    */
-  virtual std::optional<const Translation> currTranslation() const = 0;
+  virtual const Translation currTranslation() const = 0;
   /**
    * @brief set translation to the one in the settings, update the selected db
    */

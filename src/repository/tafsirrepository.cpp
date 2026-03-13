@@ -39,21 +39,18 @@ TafsirRepository::loadTafsir()
 }
 
 bool
-TafsirRepository::setCurrentTafsir(QString id)
+TafsirRepository::setCurrentTafsir(const ::Tafsir tafsir)
 {
-  std::optional<::Tafsir> tafsir = Tafsir::findById(id);
-  if (!tafsir.has_value())
-    return false;
-
-  m_currTafsir = tafsir.value();
   const QDir& baseDir =
-    m_currTafsir->isExtra() ? m_dirMgr.downloadsDir() : m_dirMgr.assetsDir();
-  QString path = "tafasir/" + m_currTafsir->filename();
+    tafsir.isExtra() ? m_dirMgr.downloadsDir() : m_dirMgr.assetsDir();
+  QString path = "tafasir/" + tafsir.filename();
   if (!baseDir.exists(path))
     return false;
 
+  m_currTafsir = tafsir;
   m_tafsirFile.setFile(baseDir.filePath(path));
   TafsirRepository::open();
+
   return true;
 }
 
@@ -74,8 +71,8 @@ TafsirRepository::getTafsir(const int sIdx, const int vIdx)
   return dbQuery.value(0).toString();
 }
 
-std::optional<const Tafsir>
+const Tafsir
 TafsirRepository::currTafsir() const
 {
-  return m_currTafsir.value();
+  return m_currTafsir;
 }

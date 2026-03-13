@@ -52,10 +52,10 @@ public:
   void loadTranslation();
   /**
    * @brief Sets the current translation to the specified ID.
-   * @param id The ID of the translation to set as the current translation.
+   * @param translation - The ::Translation to set as the current translation.
    * @return True if the translation was successfully set, false otherwise.
    */
-  bool setCurrentTranslation(QString id);
+  bool setCurrentTranslation(const ::Translation translation);
   /**
    * @brief Retrieves the translation text for a specific surah and ayah.
    * @param sIdx Index of the surah.
@@ -65,10 +65,9 @@ public:
   QString getTranslation(const int sIdx, const int vIdx) const;
   /**
    * @brief Gets the currently selected translation.
-   * @return An optional containing the current translation, or an empty
-   * optional if none is set.
+   * @return The currently selected ::Translation.
    */
-  std::optional<const ::Translation> currTranslation() const;
+  const ::Translation currTranslation() const;
 
 private:
   /**
@@ -84,13 +83,9 @@ private:
    */
   const DirManager& m_dirMgr;
   /**
-   * @brief Reference to the static QList of available translations.
+   * @brief The currently selected Translation.
    */
-  const QList<::Translation>& m_translations;
-  /**
-   * @brief Pointer to the currently selected Translation.
-   */
-  std::optional<::Translation> m_currTranslation;
+  ::Translation m_currTranslation;
   /**
    * @brief Path to the currently active translation database file.
    */

@@ -3,6 +3,7 @@
 
 #include <repository/tafsirrepository.h>
 #include <service/tafsirservice.h>
+#include <types/tafsir.h>
 
 class TafsirServiceSqlImpl : public TafsirService
 {
@@ -13,12 +14,9 @@ public:
   TafsirServiceSqlImpl();
 
   void loadTafsir() override;
-
-  bool setCurrentTafsir(QString id) override;
-
+  bool setCurrentTafsir(const Tafsir tafsir) override;
   QString getTafsir(const int sIdx, const int vIdx) override;
-
-  std::optional<const Tafsir> currTafsir() const override;
+  const Tafsir currTafsir() const override;
 };
 
 #endif // TAFSIRSERVICESQLIMPL_H

@@ -69,10 +69,9 @@ ContentDialog::showVerseTafsir(const Verse& v)
     reload = false;
   }
 
-  if (m_tafsirService->currTafsir().has_value() &&
-      !m_tafsirService->currTafsir()->isAvailable()) {
+  if (m_tafsirService->currTafsir().isAvailable()) {
     reload = true;
-    emit missingTafsir(m_tafsirService->currTafsir()->id());
+    emit missingTafsir(m_tafsirService->currTafsir());
     return;
   }
 
@@ -90,10 +89,9 @@ ContentDialog::showVerseTranslation(const Verse& v)
     reload = false;
   }
 
-  if (m_translationService->currTranslation().has_value() &&
-      !m_translationService->currTranslation()->isAvailable()) {
+  if (!m_translationService->currTranslation().isAvailable()) {
     reload = true;
-    emit missingTranslation(m_translationService->currTranslation()->id());
+    emit missingTranslation(m_translationService->currTranslation());
     return;
   }
 
@@ -195,8 +193,9 @@ ContentDialog::contentChanged()
 void
 ContentDialog::tafsirChanged()
 {
-  m_tafsir = ui->cmbContent->currentData().toString();
-  m_config.settings().setValue("Reader/Tafsir", m_tafsir);
+  const QString tafsirId = ui->cmbContent->currentData().toString();
+  m_tafsir = Tafsir::findById(tafsirId).value();
+
   if (m_tafsirService->setCurrentTafsir(m_tafsir))
     loadVerseTafsir();
 }
@@ -204,7 +203,8 @@ ContentDialog::tafsirChanged()
 void
 ContentDialog::translationChanged()
 {
-  m_translation = ui->cmbContent->currentData().toString();
+  const QString translationId = ui->cmbContent->currentData().toString();
+  m_translation = Translation::findById(translationId).value();
   loadVerseTranslation();
 }
 
@@ -252,31 +252,31 @@ ContentDialog::updateContentComboBox(Mode mode)
 void
 ContentDialog::cmbLoadTafasir()
 {
-  foreach (const ::Tafsir& tafsir, m_tafasir) {
+  foreach (const ::Tafsir& tafsir, Tafsir::tafasir) {
     if (tafsir.isAvailable())
       ui->cmbContent->addItem(tafsir.displayName(), tafsir.id());
   }
 
-  int idx = ui->cmbContent->findData(m_tafsir);
+  int idx = ui->cmbContent->findData(m_tafsir.id());
   ui->cmbContent->setCurrentIndex(idx);
 }
 
 void
 ContentDialog::cmbLoadTranslations()
 {
-  foreach (const ::Translation& translation, m_translations) {
+  foreach (const ::Translation& translation, Translation::translations) {
     if (translation.isAvailable())
       ui->cmbContent->addItem(translation.displayName(), translation.id());
   }
 
-  int idx = ui->cmbContent->findData(m_translation);
+  int idx = ui->cmbContent->findData(m_translation.id());
   ui->cmbContent->setCurrentIndex(idx);
 }
 
 void
 ContentDialog::loadVerseTafsir()
 {
-  if (m_tafsirService->currTafsir()->isText())
+  if (m_tafsirService->currTafsir().isText())
     ui->tedContent->setText(
       m_tafsirService->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
   else
