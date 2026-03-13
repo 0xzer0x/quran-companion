@@ -9,9 +9,11 @@
 class Tafsir : public Content
 {
 public:
+  static QList<Tafsir> tafasir;
   static void populateTafasir();
   static std::optional<Tafsir> findById(QString id);
-  static QList<Tafsir> tafasir;
+  static const int indexForTafsir(const Tafsir& tafsir);
+  static const Tafsir defaultTafsir();
 
   Tafsir& operator=(const Tafsir& other);
   bool operator==(const Tafsir& v2) const;

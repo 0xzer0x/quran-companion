@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QFile>
 #include <QXmlStreamReader>
+#include <utils/configurationschema.h>
 #include <utils/dirmanager.h>
 
 QList<Tafsir> Tafsir::tafasir;
@@ -47,6 +48,27 @@ Tafsir::findById(QString id)
     }
   }
   return result;
+}
+
+const Tafsir
+Tafsir::defaultTafsir()
+{
+  const QString defaultId = ConfigurationSchema::getInstance()
+                              .getDefault("Reader/Tafsir")
+                              .value()
+                              .toString();
+
+  std::optional<const Tafsir> tafsir = Tafsir::findById(defaultId);
+  if (!tafsir.has_value()) {
+    qFatal() << "Default tafsir not found, tafsir ID used:" << defaultId;
+  }
+  return tafsir.value();
+}
+
+const int
+Tafsir::indexForTafsir(const Tafsir& tafsir)
+{
+  return Tafsir::tafasir.indexOf(tafsir);
 }
 
 Tafsir::Tafsir(QString id,

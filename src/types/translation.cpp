@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QFile>
 #include <QXmlStreamReader>
+#include <utils/configurationschema.h>
 #include <utils/dirmanager.h>
 
 QList<Translation> Translation::translations;
@@ -44,6 +45,28 @@ Translation::findById(QString id)
     }
   }
   return result;
+}
+
+const int
+Translation::indexForTranslation(const Translation& translation)
+{
+  return Translation::translations.indexOf(translation);
+}
+
+const Translation
+Translation::defaultTranslation()
+{
+  const QString defaultId = ConfigurationSchema::getInstance()
+                              .getDefault("Reader/Translation")
+                              .value()
+                              .toString();
+  ;
+  const std::optional<const Translation> translation =
+    Translation::findById(defaultId);
+  if (!translation.has_value()) {
+    qFatal() << "Failed to find translation using default ID:" << defaultId;
+  }
+  return translation.value();
 }
 
 Translation::Translation(QString id,
