@@ -1,7 +1,7 @@
 #include "logger.h"
+#include <qnamespace.h>
 
-static const QtMessageHandler QT_DEFAULT_MESSAGE_HANDLER =
-  qInstallMessageHandler(nullptr);
+static const QtMessageHandler QT_DEFAULT_MESSAGE_HANDLER = qInstallMessageHandler(nullptr);
 QString Logger::filename = "qc.log";
 QFile Logger::logFile = QFile(filename);
 
@@ -14,7 +14,7 @@ bool
 Logger::startLogger(QString parentDir)
 {
   logFile.setFileName(parentDir + QDir::separator() + filename);
-  return logFile.open(QIODevice::WriteOnly);
+  return logFile.open(QIODevice::Append);
 }
 
 void
@@ -31,9 +31,7 @@ Logger::attach()
 }
 
 void
-Logger::handler(QtMsgType type,
-                const QMessageLogContext& context,
-                const QString& msg)
+Logger::handler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
   QString txt;
   switch (type) {
@@ -60,8 +58,8 @@ Logger::handler(QtMsgType type,
 
   QTextStream ts(&Logger::logFile);
 
-  ts << '[' << QDateTime::currentDateTime().toString() << ']' << txt
-     << " file: " << context.file << " line: " << context.line << "\n";
+  ts << '[' << QDateTime::currentDateTime().toString(Qt::DateFormat::ISODate) << ']' << txt << " file: " << context.file
+     << " line: " << context.line << "\n";
 
   ts.flush();
 }
