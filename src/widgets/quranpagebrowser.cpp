@@ -27,7 +27,7 @@ QuranPageBrowser::QuranPageBrowser(QWidget* parent, int initPage)
   createActions();
   updateFontSize();
 
-  m_pageFont = FontManager::getInstance().getInstance().pageFontname(initPage);
+  m_pageFont = FontManager::getInstance().pageFontname(initPage);
   m_pageFormat.setAlignment(Qt::AlignCenter);
   m_pageFormat.setNonBreakableLines(true);
   m_pageFormat.setLayoutDirection(Qt::RightToLeft);
