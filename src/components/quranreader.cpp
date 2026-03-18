@@ -8,8 +8,7 @@
 #include <widgets/clickablelabel.h>
 using namespace fa;
 
-QuranReader::QuranReader(QWidget* parent,
-                         QPointer<PlaybackController> playbackController)
+QuranReader::QuranReader(QWidget* parent, QPointer<PlaybackController> playbackController)
   : QWidget(parent)
   , ui(new Ui::QuranReader)
   , m_currVerse(Verse::getCurrent())
@@ -20,6 +19,7 @@ QuranReader::QuranReader(QWidget* parent,
   , m_quranService(ServiceFactory::quranService())
   , m_glyphService(ServiceFactory::glyphService())
   , m_playbackController(playbackController)
+  , m_secondPageVisible(m_config.readerMode() == ReaderMode::DoublePage)
 {
   ui->setupUi(this);
   setLayoutDirection(Qt::LeftToRight);
@@ -38,18 +38,15 @@ QuranReader::QuranReader(QWidget* parent,
 void
 QuranReader::loadIcons()
 {
-  ui->btnNext->setIcon(
-    StyleManager::getInstance().awesome().icon(fa_solid, fa_arrow_left));
-  ui->btnPrev->setIcon(
-    StyleManager::getInstance().awesome().icon(fa_solid, fa_arrow_right));
+  ui->btnNext->setIcon(StyleManager::getInstance().awesome().icon(fa_solid, fa_arrow_left));
+  ui->btnPrev->setIcon(StyleManager::getInstance().awesome().icon(fa_solid, fa_arrow_right));
 }
 
 void
 QuranReader::loadReader()
 {
   if (m_config.readerMode() == ReaderMode::SinglePage) {
-    m_activeQuranBrowser = m_quranBrowsers[0] =
-      new QuranPageBrowser(ui->frmPageContent, m_currVerse.page());
+    m_activeQuranBrowser = m_quranBrowsers[0] = new QuranPageBrowser(ui->frmPageContent, m_currVerse.page());
 
     QWidget* scrollWidget = new QWidget();
     scrollWidget->setObjectName("scrollWidget");
@@ -57,34 +54,25 @@ QuranReader::loadReader()
     vbl->setDirection(QBoxLayout::BottomToTop);
     scrollWidget->setLayout(vbl);
 
-    m_scrlVerseByVerse = new QScrollArea;
+    m_scrlVerseByVerse = new QScrollArea(this);
+    m_scrlVerseByVerse->setObjectName("scrlVerseByVerse");
     m_scrlVerseByVerse->setWidget(scrollWidget);
     m_scrlVerseByVerse->setWidgetResizable(true);
-    m_scrlVerseByVerse->setStyleSheet(
-      "QLabel, QAbstractScrollArea, QWidget#scrollWidget { "
-      "background: "
-      "transparent }");
 
     QHBoxLayout* lyt = qobject_cast<QHBoxLayout*>(ui->frmReader->layout());
     ui->frmSidePanel->layout()->addWidget(m_scrlVerseByVerse);
     lyt->setStretch(0, 1);
     lyt->setStretch(1, 0);
     this->setMinimumWidth(900);
-  }
-
-  else {
+  } else {
     // even Quran pages are always on the left side
     if (m_currVerse.page() % 2 == 0) {
-      m_quranBrowsers[0] =
-        new QuranPageBrowser(ui->frmPageContent, m_currVerse.page() - 1);
-      m_activeQuranBrowser = m_quranBrowsers[1] =
-        new QuranPageBrowser(ui->frmSidePanel, m_currVerse.page());
+      m_quranBrowsers[0] = new QuranPageBrowser(ui->frmPageContent, m_currVerse.page() - 1);
+      m_activeQuranBrowser = m_quranBrowsers[1] = new QuranPageBrowser(ui->frmSidePanel, m_currVerse.page());
 
     } else {
-      m_activeQuranBrowser = m_quranBrowsers[0] =
-        new QuranPageBrowser(ui->frmPageContent, m_currVerse.page());
-      m_quranBrowsers[1] =
-        new QuranPageBrowser(ui->frmSidePanel, m_currVerse.page() + 1);
+      m_activeQuranBrowser = m_quranBrowsers[0] = new QuranPageBrowser(ui->frmPageContent, m_currVerse.page());
+      m_quranBrowsers[1] = new QuranPageBrowser(ui->frmSidePanel, m_currVerse.page() + 1);
     }
 
     ui->frmSidePanel->layout()->addWidget(m_quranBrowsers[1]);
@@ -104,37 +92,23 @@ QuranReader::loadReader()
 void
 QuranReader::setupConnections()
 {
-  connect(
-    ui->btnNext, &QPushButton::clicked, this, &QuranReader::btnNextClicked);
-  connect(
-    ui->btnPrev, &QPushButton::clicked, this, &QuranReader::btnPrevClicked);
-  for (int i = 0; i <= 1; i++)
-    if (m_quranBrowsers[i])
-      connect(m_quranBrowsers[i],
-              &QTextBrowser::anchorClicked,
-              this,
-              &QuranReader::verseAnchorClicked);
+  connect(ui->btnNext, &QPushButton::clicked, this, &QuranReader::btnNextClicked);
+  connect(ui->btnPrev, &QPushButton::clicked, this, &QuranReader::btnPrevClicked);
+  for (int i = 0; i <= 1; i++) {
+    if (m_quranBrowsers[i]) {
+      connect(m_quranBrowsers[i], &QTextBrowser::anchorClicked, this, &QuranReader::verseAnchorClicked);
+    }
+  }
 
   const ShortcutHandler& handler = ShortcutHandler::getInstance();
-  connect(
-    &handler, &ShortcutHandler::nextPage, this, &QuranReader::btnNextClicked);
-  connect(
-    &handler, &ShortcutHandler::prevPage, this, &QuranReader::btnPrevClicked);
-  connect(&handler,
-          &ShortcutHandler::toggleReaderView,
-          this,
-          &QuranReader::toggleReaderView);
+  connect(&handler, &ShortcutHandler::nextPage, this, &QuranReader::btnNextClicked);
+  connect(&handler, &ShortcutHandler::prevPage, this, &QuranReader::btnPrevClicked);
+  connect(&handler, &ShortcutHandler::toggleReaderView, this, &QuranReader::toggleReaderView);
 
   for (int i = 0; i <= 1; i++) {
     if (m_quranBrowsers[i]) {
-      connect(&handler,
-              &ShortcutHandler::zoomIn,
-              m_quranBrowsers[i],
-              &QuranPageBrowser::actionZoomIn);
-      connect(&handler,
-              &ShortcutHandler::zoomOut,
-              m_quranBrowsers[i],
-              &QuranPageBrowser::actionZoomOut);
+      connect(&handler, &ShortcutHandler::zoomIn, m_quranBrowsers[i], &QuranPageBrowser::actionZoomIn);
+      connect(&handler, &ShortcutHandler::zoomOut, m_quranBrowsers[i], &QuranPageBrowser::actionZoomOut);
     }
   }
 
@@ -142,15 +116,35 @@ QuranReader::setupConnections()
 }
 
 void
+QuranReader::syncActiveQuranBrowser()
+{
+  // NOTE: Target page should be rendered in the left panel (index 1) in case:
+  // - Both panels are visible
+  // - Page number is even
+  int pageBrowerIdx = bothPagesVisible() && (m_currVerse.page() % 2 == 0);
+  m_activeQuranBrowser = m_quranBrowsers[pageBrowerIdx];
+  m_activeVList = &m_vLists[pageBrowerIdx];
+}
+
+void
 QuranReader::toggleReaderView()
 {
-  if (ui->frmPageContent->isVisible() && ui->frmSidePanel->isVisible()) {
-    ui->frmSidePanel->setVisible(false);
-  } else if (ui->frmPageContent->isVisible()) {
-    ui->frmSidePanel->setVisible(true);
-    ui->frmPageContent->setVisible(false);
-  } else
-    ui->frmPageContent->setVisible(true);
+  if (m_config.readerMode() == ReaderMode::DoublePage) {
+    m_secondPageVisible = !ui->frmSidePanel->isVisible();
+    ui->frmSidePanel->setVisible(m_secondPageVisible);
+    // NOTE: Reset the active page browser pointer according to where it is supposed to point to
+    syncActiveQuranBrowser();
+    // WARN: Force redraw to sync pages since left page is not updated when hidden
+    m_navigator.navigateToVerse(m_currVerse);
+  } else {
+    if (ui->frmPageContent->isVisible() && ui->frmSidePanel->isVisible()) {
+      ui->frmSidePanel->setVisible(false);
+    } else if (ui->frmPageContent->isVisible()) {
+      ui->frmSidePanel->setVisible(true);
+      ui->frmPageContent->setVisible(false);
+    } else
+      ui->frmPageContent->setVisible(true);
+  }
 }
 
 void
@@ -163,8 +157,7 @@ void
 QuranReader::updateVerseType()
 {
   ConfigurationSchema::VerseType type = m_config.verseType();
-  m_versesFont.setFamily(
-    FontManager::getInstance().verseFontname(type, m_currVerse.page()));
+  m_versesFont.setFamily(FontManager::getInstance().verseFontname(type, m_currVerse.page()));
   m_versesFont.setPointSize(m_config.verseFontSize());
 }
 
@@ -191,8 +184,7 @@ QuranReader::redrawQuranPage(bool manualSz)
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_quranBrowsers[0]->constructPage(m_currVerse.page(), manualSz);
-    if (m_config.readerMode() == ConfigurationSchema::DoublePage &&
-        m_quranBrowsers[1])
+    if (bothPagesVisible() && m_quranBrowsers[1])
       m_quranBrowsers[1]->constructPage(m_currVerse.page() + 1, manualSz);
   } else {
     m_quranBrowsers[0]->constructPage(m_currVerse.page() - 1, manualSz);
@@ -219,8 +211,7 @@ QuranReader::addSideContent()
   VerseFrame* verseContFrame;
   QString prevLbContent, currLbContent, glyphs;
   if (m_config.verseType() == ConfigurationSchema::Qcf)
-    m_versesFont.setFamily(
-      FontManager::getInstance().pageFontname(m_currVerse.page()));
+    m_versesFont.setFamily(FontManager::getInstance().pageFontname(m_currVerse.page()));
 
   m_translationService->loadTranslation();
   for (int i = m_activeVList->size() - 1; i >= 0; i--) {
@@ -233,8 +224,7 @@ QuranReader::addSideContent()
                ? m_glyphService->getVerseGlyphs(verse->surah(), verse->number())
                : m_quranService->verseText(verse->surah(), verse->number());
 
-    verseContFrame->setObjectName(QString::number(verse->page()) + "_" +
-                                  QString::number(verse->surah()) + "_" +
+    verseContFrame->setObjectName(QString::number(verse->page()) + "_" + QString::number(verse->surah()) + "_" +
                                   QString::number(verse->number()));
 
     verselb->setFont(m_versesFont);
@@ -242,8 +232,7 @@ QuranReader::addSideContent()
     verselb->setAlignment(Qt::AlignCenter);
     verselb->setWordWrap(true);
 
-    currLbContent =
-      m_translationService->getTranslation(verse->surah(), verse->number());
+    currLbContent = m_translationService->getTranslation(verse->surah(), verse->number());
 
     if (currLbContent == prevLbContent) {
       currLbContent = '-';
@@ -263,8 +252,7 @@ QuranReader::addSideContent()
     m_verseFrameList.insert(0, verseContFrame);
 
     // connect clicked signal for each label
-    connect(
-      verselb, &ClickableLabel::clicked, this, &QuranReader::verseClicked);
+    connect(verselb, &ClickableLabel::clicked, this, &QuranReader::verseClicked);
   }
 }
 
@@ -292,8 +280,7 @@ QuranReader::setHighlightedFrame()
     m_highlightedFrm->setSelected(false);
 
   VerseFrame* verseFrame = m_scrlVerseByVerse->widget()->findChild<VerseFrame*>(
-    QString::number(m_currVerse.page()) + "_" +
-    QString::number(m_currVerse.surah()) + "_" +
+    QString::number(m_currVerse.page()) + "_" + QString::number(m_currVerse.surah()) + "_" +
     QString::number(m_currVerse.number()));
 
   verseFrame->setSelected(true);
@@ -324,10 +311,6 @@ void
 QuranReader::btnNextClicked()
 {
   int step = 1;
-  if (m_config.readerMode() == ReaderMode::DoublePage &&
-      m_currVerse.page() % 2 != 0)
-    step = 2;
-
   if (m_currVerse.page() + step <= 604)
     m_navigator.navigateToPage(m_currVerse.page() + step);
 }
@@ -336,10 +319,6 @@ void
 QuranReader::btnPrevClicked()
 {
   int step = 1;
-  if (m_config.readerMode() == ReaderMode::DoublePage &&
-      m_currVerse.page() % 2 == 0)
-    step = 2;
-
   if (m_currVerse.page() - step >= 1)
     m_navigator.navigateToPage(m_currVerse.page() - step);
 }
@@ -348,6 +327,12 @@ bool
 QuranReader::areNeighbors(int page1, int page2)
 {
   return page1 % 2 != 0 && page2 % 2 == 0 && page2 == page1 + 1;
+}
+
+bool
+QuranReader::bothPagesVisible()
+{
+  return m_config.readerMode() == ReaderMode::DoublePage && m_secondPageVisible;
 }
 
 void
@@ -388,8 +373,7 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
   int idx = hrefUrl.toString().remove('#').toInt();
   Verse v(m_vLists[browerIdx].at(idx));
 
-  QuranPageBrowser::Action chosenAction =
-    senderBrowser->lmbVerseMenu(m_bookmarkService->isBookmarked(v));
+  QuranPageBrowser::Action chosenAction = senderBrowser->lmbVerseMenu(m_bookmarkService->isBookmarked(v));
 
   switch (chosenAction) {
     case QuranPageBrowser::Play:
@@ -437,11 +421,10 @@ void
 QuranReader::gotoPage(int page)
 {
   m_activeQuranBrowser->resetHighlight();
-  if (m_activeQuranBrowser->page() != page) {
-    if (m_config.readerMode() == ReaderMode::SinglePage)
-      gotoSinglePage();
-    else
-      gotoDoublePage(page);
+  if (m_config.readerMode() == ReaderMode::SinglePage || !bothPagesVisible()) {
+    gotoSinglePage();
+  } else {
+    gotoDoublePage();
   }
 }
 
@@ -453,15 +436,14 @@ QuranReader::gotoSinglePage()
 }
 
 void
-QuranReader::gotoDoublePage(int page)
+QuranReader::gotoDoublePage()
 {
-  int pageBrowerIdx = page % 2 == 0;
+  int targetPage = m_currVerse.page();
   int activePage = m_activeQuranBrowser->page();
 
-  if (areNeighbors(activePage, page) || areNeighbors(page, activePage))
-    switchActivePage();
-  else {
-    m_activeQuranBrowser = m_quranBrowsers[pageBrowerIdx];
+  syncActiveQuranBrowser();
+  // NOTE: Redraw if target is not one of the currently rendered pages
+  if (!areNeighbors(activePage, targetPage) && !areNeighbors(targetPage, activePage)) {
     redrawQuranPage();
   }
 }

@@ -43,8 +43,7 @@ public:
    * @param parent - pointer to parent widget
    * @param player - pointer to VersePlayer instance
    */
-  explicit QuranReader(QWidget* parent,
-                       QPointer<PlaybackController> playbackController);
+  explicit QuranReader(QWidget* parent, QPointer<PlaybackController> playbackController);
   ~QuranReader();
 
   /**
@@ -91,14 +90,9 @@ public slots:
    */
   void updateHighlight();
   /**
-   * @brief ensure the page given is visible and update other members to match
-   * the properties of the first verse in the page, calls the appropriate
-   * navigation function according to the ::ReaderMode
+   * @brief ensure the page given is visible and update other members to match the properties of the first verse in the
+   * page, calls the appropriate navigation function according to the ::ReaderMode
    * @param page - page to navigate to
-   * @param updateElements - boolean flag to indicate whether to update other
-   * elements or not
-   * @param automaticFlip - boolean indicating whether the function was called
-   * by internal signal to automatically flip the page
    */
   void gotoPage(int page);
   /**
@@ -132,9 +126,8 @@ private slots:
   void gotoSinglePage();
   /**
    * @brief double page mode navigation
-   * @param page - page to navigate to
    */
-  void gotoDoublePage(int page);
+  void gotoDoublePage();
 
 private:
   Ui::QuranReader* ui;
@@ -181,8 +174,7 @@ private:
    */
   void loadReader();
   /**
-   * @brief utility function to check whether 2 pages are beside each other in
-   * 2-page mode
+   * @brief utility function to check whether 2 pages are beside each other in 2-page mode
    * @details 2 pages are considered neighbors if the right page is odd and the
    * left page is directly after the right page
    * @param page1 - the right side page
@@ -190,6 +182,11 @@ private:
    * @return boolean value indicating whether the given pages are neighbors
    */
   bool areNeighbors(int page1, int page2);
+  /**
+   * @brief utility function to check where both mushaf pages are currently visible in the UI
+   * @return boolean value indicating whether both page panels are visible
+   */
+  bool bothPagesVisible();
   /**
    * @brief 2-page mode utility to switch the active page & verse info list to
    * the opposite side of the current
@@ -218,6 +215,11 @@ private:
    * current page
    */
   void updatePageVerseInfoList();
+  /**
+   * @brief set the m_activeQuranBrowser and m_activeVList pointers to point to the page browser and verses list
+   * corresponding to the current verse page
+   */
+  void syncActiveQuranBrowser();
   /**
    * @brief QScrollArea used in single page mode to display verses &
    * translation
@@ -263,6 +265,10 @@ private:
    * @brief pointer to PlaybackController instance
    */
   QPointer<PlaybackController> m_playbackController;
+  /**
+   * @brief boolean indicating whether the second quran page browser is visible
+   */
+  bool m_secondPageVisible;
 };
 
 #endif // QURANREADER_H
