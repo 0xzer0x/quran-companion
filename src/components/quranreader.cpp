@@ -58,6 +58,8 @@ QuranReader::loadReader()
     m_scrlVerseByVerse->setObjectName("scrlVerseByVerse");
     m_scrlVerseByVerse->setWidget(scrollWidget);
     m_scrlVerseByVerse->setWidgetResizable(true);
+    m_scrlVerseByVerse->viewport()->setAutoFillBackground(false);
+    m_scrlVerseByVerse->setFrameShape(QFrame::NoFrame);
 
     QHBoxLayout* lyt = qobject_cast<QHBoxLayout*>(ui->frmReader->layout());
     ui->frmSidePanel->layout()->addWidget(m_scrlVerseByVerse);

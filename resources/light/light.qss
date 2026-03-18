@@ -136,6 +136,12 @@ QFrame#repeaterFrame {
 
 /* --------- Reader Styles --------- */
 
+QScrollArea#scrlVerseByVerse QLabel,
+QScrollArea#scrlVerseByVerse QAbstractScrollArea,
+QQScrollArea#scrlVerseByVerse Widget#scrollWidget {
+  background: transparent;
+}
+
 VerseFrame[selected="true"],
 VerseFrame[selected="true"]:hover {
   background-color: rgba(138, 180, 248, 90);
