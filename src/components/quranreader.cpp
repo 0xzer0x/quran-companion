@@ -296,15 +296,12 @@ QuranReader::updatePageVerseInfoList()
 {
   if (m_activeQuranBrowser == m_quranBrowsers[0]) {
     m_vLists[0] = m_quranService->verseInfoList(m_currVerse.page());
-    if (m_config.readerMode() == ConfigurationSchema::DoublePage)
+    if (m_config.readerMode() == ReaderMode::DoublePage)
       m_vLists[1] = m_quranService->verseInfoList(m_currVerse.page() + 1);
-
     m_activeVList = &m_vLists[0];
-
   } else {
     m_vLists[0] = m_quranService->verseInfoList(m_currVerse.page() - 1);
     m_vLists[1] = m_quranService->verseInfoList(m_currVerse.page());
-
     m_activeVList = &m_vLists[1];
   }
 }
