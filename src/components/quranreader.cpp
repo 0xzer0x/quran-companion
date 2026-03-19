@@ -433,8 +433,10 @@ QuranReader::gotoPage(int page)
 void
 QuranReader::gotoSinglePage()
 {
-  redrawQuranPage();
-  addSideContent();
+  if (m_currVerse.page() != m_activeQuranBrowser->page()) {
+    redrawQuranPage();
+    addSideContent();
+  }
 }
 
 void
