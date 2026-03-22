@@ -261,20 +261,9 @@ parts:
       - -./usr/mkspecs
       - -./usr/modules
 
-  metadata:
-    plugin: dump
-    source: dist/xdg
-    organize:
-      "*.desktop": usr/share/applications/
-      "*.xml": usr/share/metainfo/
-      "*logo64.png": usr/share/icons/hicolor/64x64/apps/io.github._0xzer0x.qurancompanion.png
-      "*logo128.png": usr/share/icons/hicolor/128x128/apps/io.github._0xzer0x.qurancompanion.png
-      "*logo256.png": usr/share/icons/hicolor/256x256/apps/io.github._0xzer0x.qurancompanion.png
-
   quran-companion:
     after:
       - qt
-      - metadata
     source: .
     source-type: git
     source-branch: main
@@ -311,6 +300,7 @@ parts:
       - libgtk-3-common
     prime:
       - usr/bin
+      - usr/share
 
   desktop-qt:
     after:
