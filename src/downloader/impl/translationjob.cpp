@@ -7,10 +7,7 @@ TranslationJob::TranslationJob(int idx)
 {
   connect(m_taskDlr, &TaskDownloader::completed, this, &DownloadJob::finished);
   connect(m_taskDlr, &TaskDownloader::taskError, this, &DownloadJob::failed);
-  connect(m_taskDlr,
-          &TaskDownloader::downloadSpeedUpdated,
-          this,
-          &DownloadJob::downloadSpeedUpdated);
+  connect(m_taskDlr, &TaskDownloader::downloadSpeedUpdated, this, &DownloadJob::downloadSpeedUpdated);
 }
 
 void

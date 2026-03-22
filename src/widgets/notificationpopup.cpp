@@ -51,17 +51,13 @@ NotificationPopup::NotificationPopup(QWidget* parent)
 void
 NotificationPopup::setupConnections()
 {
-  connect(m_fadeoutAnim,
-          &QPropertyAnimation::finished,
-          this,
-          &NotificationPopup::hide);
+  connect(m_fadeoutAnim, &QPropertyAnimation::finished, this, &NotificationPopup::hide);
 }
 
 void
 NotificationPopup::registerSender(NotificationSender* sender)
 {
-  connect(
-    sender, &NotificationSender::notify, this, &NotificationPopup::notify);
+  connect(sender, &NotificationSender::notify, this, &NotificationPopup::notify);
 }
 
 void
@@ -82,8 +78,7 @@ NotificationPopup::setDockArea(Qt::DockWidgetArea dockPos)
 void
 NotificationPopup::adjustLocation()
 {
-  m_notificationPos.setY(
-    parentWidget()->findChild<QWidget*>("menubar")->height() + 5);
+  m_notificationPos.setY(parentWidget()->findChild<QWidget*>("menubar")->height() + 5);
 
   switch (m_dockArea) {
     case Qt::LeftDockWidgetArea:
@@ -127,8 +122,7 @@ NotificationPopup::setNotificationIcon(NotificationType type)
       break;
   }
 
-  m_iconWidget->setFont(
-    StyleManager::getInstance().awesome().font(faStyle, 18));
+  m_iconWidget->setFont(StyleManager::getInstance().awesome().font(faStyle, 18));
   m_iconWidget->setText(ico);
 }
 

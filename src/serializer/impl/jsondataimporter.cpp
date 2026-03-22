@@ -68,16 +68,13 @@ JsonDataImporter::validArray(QString key)
 bool
 JsonDataImporter::validVerse(const QJsonObject& obj)
 {
-  if (!obj.contains("page") || !obj.contains("surah") ||
-      !obj.contains("number")) {
+  if (!obj.contains("page") || !obj.contains("surah") || !obj.contains("number")) {
     emit UserDataImporter::error(MissingKeyError, "Missing verse key");
     return false;
   }
 
-  int page = obj.value("page").toInt(), surah = obj.value("surah").toInt(),
-      number = obj.value("number").toInt();
-  if (page < 1 || page > 604 || surah < 1 || surah > 114 || number < 1 ||
-      number > 286) {
+  int page = obj.value("page").toInt(), surah = obj.value("surah").toInt(), number = obj.value("number").toInt();
+  if (page < 1 || page > 604 || surah < 1 || surah > 114 || number < 1 || number > 286) {
     emit UserDataImporter::error(InvalidValueError, "Invalid verse values");
     return false;
   }
@@ -93,8 +90,7 @@ JsonDataImporter::validKhatmah(const QJsonObject& obj)
     return false;
   }
 
-  if (!obj.value("name").isString() ||
-      !validVerse(obj.value("verse").toObject())) {
+  if (!obj.value("name").isString() || !validVerse(obj.value("verse").toObject())) {
     emit UserDataImporter::error(InvalidValueError, "Invalid khatmah values");
     return false;
   }
@@ -110,8 +106,7 @@ JsonDataImporter::validThought(const QJsonObject& obj)
     return false;
   }
 
-  if (!obj.value("text").isString() ||
-      !validVerse(obj.value("verse").toObject())) {
+  if (!obj.value("text").isString() || !validVerse(obj.value("verse").toObject())) {
     emit UserDataImporter::error(InvalidValueError, "Invalid thought values");
     return false;
   }
@@ -169,20 +164,18 @@ JsonDataImporter::read()
 {
   QFile jsonFile(m_file.absoluteFilePath());
   if (!jsonFile.open(QIODevice::ReadOnly)) {
-    qWarning() << "Failed to open json file during import";
-    emit UserDataImporter::error(
-      IOError, "Failed to open json file: " + m_file.absoluteFilePath());
+    qWarning("Failed to open JSON file during import: %s", qPrintable(m_file.absoluteFilePath()));
+    emit UserDataImporter::error(IOError, "Failed to open json file: " + m_file.absoluteFilePath());
     return false;
   }
 
   QJsonParseError* err = nullptr;
   QJsonDocument document = QJsonDocument::fromJson(jsonFile.readAll(), err);
   if (document.isNull()) {
-    qWarning() << "Failed to parse json file";
-    emit UserDataImporter::error(
-      ParseError, "Failed to parse json file: " + m_file.absoluteFilePath());
-    if (err)
-      qWarning() << "Error string:" << err->errorString();
+    qWarning("Failed to parse JSON file, file: %s, error: %s",
+             qPrintable(m_file.absoluteFilePath()),
+             err ? qPrintable(err->errorString()) : "null");
+    emit UserDataImporter::error(ParseError, "Failed to parse JSON file: " + m_file.absoluteFilePath());
     return false;
   }
 

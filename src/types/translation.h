@@ -18,10 +18,7 @@ public:
   bool operator==(const Translation& v2) const;
   bool operator!=(const Translation& v2) const;
 
-  explicit Translation(QString id,
-                       QString display,
-                       QString filename,
-                       bool isExtra);
+  explicit Translation(QString id, QString display, QString filename, bool isExtra);
   bool isAvailable() const;
 };
 

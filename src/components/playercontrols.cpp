@@ -31,8 +31,7 @@ PlayerControls::PlayerControls(QWidget* parent,
 
   // NOTE: Set the currently selected reciter to the configured one
   const Reciter& currentReciter = m_config.reciter();
-  ui->cmbReciter->setCurrentIndex(
-    ui->cmbReciter->findData(currentReciter.id()));
+  ui->cmbReciter->setCurrentIndex(ui->cmbReciter->findData(currentReciter.id()));
 }
 
 void
@@ -52,68 +51,28 @@ void
 PlayerControls::setupConnections()
 {
   const ShortcutHandler& handler = ShortcutHandler::getInstance();
-  connect(&handler,
-          &ShortcutHandler::togglePlayback,
-          this,
-          &PlayerControls::togglePlayback);
-  connect(&handler,
-          &ShortcutHandler::incrementVolume,
-          this,
-          &PlayerControls::incrementVolume);
-  connect(&handler,
-          &ShortcutHandler::decrementVolume,
-          this,
-          &PlayerControls::decrementVolume);
-  connect(&handler,
-          &ShortcutHandler::incrementPlaybackRate,
-          this,
-          &PlayerControls::incrementPlaybackRate);
-  connect(&handler,
-          &ShortcutHandler::decrementPlaybackRate,
-          this,
-          &PlayerControls::decrementPlaybackRate);
+  connect(&handler, &ShortcutHandler::togglePlayback, this, &PlayerControls::togglePlayback);
+  connect(&handler, &ShortcutHandler::incrementVolume, this, &PlayerControls::incrementVolume);
+  connect(&handler, &ShortcutHandler::decrementVolume, this, &PlayerControls::decrementVolume);
+  connect(&handler, &ShortcutHandler::incrementPlaybackRate, this, &PlayerControls::incrementPlaybackRate);
+  connect(&handler, &ShortcutHandler::decrementPlaybackRate, this, &PlayerControls::decrementPlaybackRate);
 
-  connect(m_playbackController->player(),
-          &QMediaPlayer::positionChanged,
-          this,
-          &PlayerControls::mediaPosChanged);
-  connect(m_playbackController->player(),
-          &QMediaPlayer::playbackStateChanged,
-          this,
-          &PlayerControls::mediaStateChanged);
-
-  connect(ui->sldrAudioPlayer,
-          &QSlider::sliderMoved,
-          m_playbackController->player(),
-          &QMediaPlayer::setPosition);
-  connect(ui->sldrVolume,
-          &QSlider::valueChanged,
-          this,
-          &PlayerControls::volumeSliderValueChanged);
-
+  connect(m_playbackController->player(), &QMediaPlayer::positionChanged, this, &PlayerControls::mediaPosChanged);
   connect(
-    ui->btnPlay, &QPushButton::clicked, this, &PlayerControls::btnPlayClicked);
-  connect(ui->btnPause,
-          &QPushButton::clicked,
-          this,
-          &PlayerControls::btnPauseClicked);
-  connect(
-    ui->btnStop, &QPushButton::clicked, this, &PlayerControls::btnStopClicked);
+    m_playbackController->player(), &QMediaPlayer::playbackStateChanged, this, &PlayerControls::mediaStateChanged);
 
-  connect(ui->cmbReciter,
-          &QComboBox::currentIndexChanged,
-          this,
-          &PlayerControls::cmbReciterChanged);
+  connect(ui->sldrAudioPlayer, &QSlider::sliderMoved, m_playbackController->player(), &QMediaPlayer::setPosition);
+  connect(ui->sldrVolume, &QSlider::valueChanged, this, &PlayerControls::volumeSliderValueChanged);
 
-  connect(ui->btnRepeat,
-          &QPushButton::toggled,
-          this,
-          &PlayerControls::btnRepeatClicked);
+  connect(ui->btnPlay, &QPushButton::clicked, this, &PlayerControls::btnPlayClicked);
+  connect(ui->btnPause, &QPushButton::clicked, this, &PlayerControls::btnPauseClicked);
+  connect(ui->btnStop, &QPushButton::clicked, this, &PlayerControls::btnStopClicked);
 
-  connect(ui->cmbPlaybackRate,
-          &QComboBox::currentTextChanged,
-          this,
-          &PlayerControls::cmbPlaybackRateChanged);
+  connect(ui->cmbReciter, &QComboBox::currentIndexChanged, this, &PlayerControls::cmbReciterChanged);
+
+  connect(ui->btnRepeat, &QPushButton::toggled, this, &PlayerControls::btnRepeatClicked);
+
+  connect(ui->cmbPlaybackRate, &QComboBox::currentTextChanged, this, &PlayerControls::cmbPlaybackRateChanged);
 }
 
 void
@@ -129,8 +88,7 @@ PlayerControls::togglePlayback()
 void
 PlayerControls::mediaPosChanged(qint64 position)
 {
-  if (ui->sldrAudioPlayer->maximum() !=
-      m_playbackController->player()->duration())
+  if (ui->sldrAudioPlayer->maximum() != m_playbackController->player()->duration())
     ui->sldrAudioPlayer->setMaximum(m_playbackController->player()->duration());
 
   if (!ui->sldrAudioPlayer->isSliderDown())
@@ -210,10 +168,8 @@ PlayerControls::mediaStateChanged(QMediaPlayer::PlaybackState state)
 void
 PlayerControls::volumeSliderValueChanged(int position)
 {
-  qreal linearVolume =
-    QAudio::convertVolume(ui->sldrVolume->value() / qreal(100.0),
-                          QAudio::LogarithmicVolumeScale,
-                          QAudio::LinearVolumeScale);
+  qreal linearVolume = QAudio::convertVolume(
+    ui->sldrVolume->value() / qreal(100.0), QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
   if (linearVolume != m_volume) {
     m_volume = linearVolume;
     m_playbackController->player()->setPlayerVolume(m_volume);

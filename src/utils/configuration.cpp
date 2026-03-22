@@ -15,17 +15,14 @@ Configuration::getInstance()
 }
 
 Configuration::Configuration()
-  : m_settings(DirManager::getInstance().configDir().absoluteFilePath(
-                 "qurancompanion.conf"),
-               QSettings::IniFormat)
+  : m_settings(DirManager::getInstance().configDir().absoluteFilePath("qurancompanion.conf"), QSettings::IniFormat)
 {
   checkGroups();
   setCustomPaths();
   m_themeId = m_settings.value("Theme").toInt();
   m_qcfVersion = m_settings.value("Reader/QCF").toInt();
   m_language = qvariant_cast<QLocale::Language>(m_settings.value("Language"));
-  m_readerMode = qvariant_cast<ConfigurationSchema::ReaderMode>(
-    m_settings.value("Reader/Mode"));
+  m_readerMode = qvariant_cast<ConfigurationSchema::ReaderMode>(m_settings.value("Reader/Mode"));
   m_darkMode = m_themeId == 2;
 }
 
@@ -50,9 +47,7 @@ Configuration::checkGroups()
     if (settingsKey.startsWith("General/")) {
       settingsKey.remove(0, 8);
     }
-    m_settings.setValue(
-      settingsKey,
-      m_settings.value(settingsKey, schema.getDefault(fullKey).value()));
+    m_settings.setValue(settingsKey, m_settings.value(settingsKey, schema.getDefault(fullKey).value()));
   }
 }
 
@@ -63,16 +58,16 @@ Configuration::loadUiTranslation()
     return;
 
   QString code = QLocale::languageToCode(m_language);
-  QTranslator *translation = new QTranslator(qApp),
-              *qtBase = new QTranslator(qApp);
+  QTranslator *translation = new QTranslator(qApp), *qtBase = new QTranslator(qApp);
 
   if (translation->load(":/i18n/qc_" + code + ".qm")) {
-    qInfo() << translation->language() << "translation loaded";
-    qInfo() << "base translation:" << qtBase->load(":/qtbase/" + code + ".qm");
+    bool baseTranslationLoaded = qtBase->load(":/qtbase/" + code + ".qm");
+    qInfo("Base translation: %s", qPrintable(baseTranslationLoaded ? code : "none"));
+    qInfo("UI translation: %s", qPrintable(translation->language()));
     qApp->installTranslator(translation);
     qApp->installTranslator(qtBase);
   } else {
-    qWarning() << code + " translation not loaded!";
+    qWarning("Failed to load UI translation: %s", qPrintable(code));
     delete translation;
     delete qtBase;
   }
@@ -109,9 +104,7 @@ Configuration::qcfVersion() const
 const int
 Configuration::qcfFontSize() const
 {
-  return m_settings
-    .value("Reader/QCF" + QString::number(m_qcfVersion) + "Size", 22)
-    .toInt();
+  return m_settings.value("Reader/QCF" + QString::number(m_qcfVersion) + "Size", 22).toInt();
 }
 
 const int
@@ -135,8 +128,7 @@ Configuration::readerMode() const
 const ConfigurationSchema::VerseType
 Configuration::verseType() const
 {
-  return qvariant_cast<ConfigurationSchema::VerseType>(
-    m_settings.value("Reader/VerseType"));
+  return qvariant_cast<ConfigurationSchema::VerseType>(m_settings.value("Reader/VerseType"));
 }
 
 const Reciter
@@ -175,8 +167,7 @@ Configuration::adaptiveReaderFont() const
 const QKeySequence
 Configuration::shortcutKeySequence(const QString name) const
 {
-  QKeySequence seq =
-    qvariant_cast<QKeySequence>(m_settings.value("Shortcuts/" + name));
+  QKeySequence seq = qvariant_cast<QKeySequence>(m_settings.value("Shortcuts/" + name));
   return seq;
 }
 
@@ -191,10 +182,8 @@ Configuration::tafsir() const
 const Translation
 Configuration::translation() const
 {
-  const QString translationId =
-    m_settings.value("Reader/Translation").toString();
-  const std::optional<const Translation> translation =
-    Translation::findById(translationId);
+  const QString translationId = m_settings.value("Reader/Translation").toString();
+  const std::optional<const Translation> translation = Translation::findById(translationId);
   return translation.value_or(Translation::defaultTranslation());
 }
 
@@ -290,8 +279,7 @@ Configuration::setQcfVersion(const int version)
 void
 Configuration::setQcfFontSize(const int size)
 {
-  m_settings.setValue("Reader/QCF" + QString::number(m_qcfVersion) + "Size",
-                      size);
+  m_settings.setValue("Reader/QCF" + QString::number(m_qcfVersion) + "Size", size);
 }
 
 void
@@ -349,8 +337,7 @@ Configuration::setReaderMode(const ConfigurationSchema::ReaderMode mode)
 }
 
 void
-Configuration::setShortcutKeySequence(const QString name,
-                                      const QKeySequence sequence)
+Configuration::setShortcutKeySequence(const QString name, const QKeySequence sequence)
 {
   QString settingsKey = "Shortcuts/" + name;
   m_settings.setValue(settingsKey, sequence.toString());

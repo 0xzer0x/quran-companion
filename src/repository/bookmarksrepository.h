@@ -72,9 +72,7 @@ public:
    * @param id The ID of the khatmah (-1 for a new khatmah).
    * @return The ID of the newly added or updated khatmah.
    */
-  int addKhatmah(const Verse& verse,
-                 const QString name,
-                 const int id = -1) const;
+  int addKhatmah(const Verse& verse, const QString name, const int id = -1) const;
   /**
    * @brief Edits the name of an existing khatmah.
    * @param khatmahId The ID of the khatmah to edit.

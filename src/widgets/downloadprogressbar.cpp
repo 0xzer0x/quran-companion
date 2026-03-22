@@ -15,10 +15,8 @@ DownloadProgressBar::DownloadProgressBar(QWidget* parent, Type type, int max)
   setStyling(downloading);
   setMaximum(max);
   setValue(0);
-  if (m_type == DownloadJob::TafsirFile ||
-      m_type == DownloadJob::TranslationFile)
-    setFormat("%v / %m " +
-              QCoreApplication::translate("DownloadManager", "KB"));
+  if (m_type == DownloadJob::TafsirFile || m_type == DownloadJob::TranslationFile)
+    setFormat("%v / %m " + QCoreApplication::translate("DownloadManager", "KB"));
   else
     setFormat("%v / %m");
 }
@@ -35,8 +33,7 @@ DownloadProgressBar::updateProgress(QSharedPointer<DownloadJob> job)
 void
 DownloadProgressBar::finished()
 {
-  if (m_type == DownloadJob::TafsirFile ||
-      m_type == DownloadJob::TranslationFile) {
+  if (m_type == DownloadJob::TafsirFile || m_type == DownloadJob::TranslationFile) {
     setValue(1);
     setMaximum(1);
   }
@@ -46,8 +43,7 @@ DownloadProgressBar::finished()
 void
 DownloadProgressBar::failed()
 {
-  if (m_type == DownloadJob::TafsirFile ||
-      m_type == DownloadJob::TranslationFile) {
+  if (m_type == DownloadJob::TafsirFile || m_type == DownloadJob::TranslationFile) {
     setValue(0);
     setMaximum(1);
   }

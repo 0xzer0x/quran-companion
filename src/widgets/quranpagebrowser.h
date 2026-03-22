@@ -75,8 +75,7 @@ public:
    * @return QString of the page header without spacing
    */
   QStringList pageHeader(int page);
-  QStringList pageFooter(int page,
-                         std::optional<QPair<int, int>> rubStartingInPage);
+  QStringList pageFooter(int page, std::optional<QPair<int, int>> rubStartingInPage);
   /**
    * @brief construct Quran page
    * @details the page construction process is done through:

@@ -47,8 +47,7 @@ public:
    * @param parent - pointer to parent widget
    * @param vPlayerPtr - pointer to VersePlayer instance used for playback
    */
-  explicit SettingsDialog(QWidget* parent = nullptr,
-                          VersePlayer* vPlayerPtr = nullptr);
+  explicit SettingsDialog(QWidget* parent = nullptr, VersePlayer* vPlayerPtr = nullptr);
   ~SettingsDialog();
 
 public slots:

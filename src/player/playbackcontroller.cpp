@@ -2,8 +2,7 @@
 #include <QTimer>
 #include <player/impl/continuousplaybackstrategy.h>
 
-PlaybackController::PlaybackController(QObject* parent,
-                                       QPointer<VersePlayer> player)
+PlaybackController::PlaybackController(QObject* parent, QPointer<VersePlayer> player)
   : QObject(parent)
   , m_player(player)
   , m_current(Verse::getCurrent())
@@ -12,10 +11,7 @@ PlaybackController::PlaybackController(QObject* parent,
   , m_nextVerseTimer(new QTimer(this))
 {
   resetStrategy();
-  connect(m_player,
-          &QMediaPlayer::mediaStatusChanged,
-          this,
-          &PlaybackController::mediaStatusChanged);
+  connect(m_player, &QMediaPlayer::mediaStatusChanged, this, &PlaybackController::mediaStatusChanged);
   m_navigator.addObserver(this);
 
   m_nextVerseTimer->setSingleShot(true);

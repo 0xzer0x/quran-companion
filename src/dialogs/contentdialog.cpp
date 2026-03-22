@@ -25,14 +25,11 @@ ContentDialog::ContentDialog(QWidget* parent)
   , m_tafsir(m_config.tafsir())
   , m_translation(m_config.translation())
 {
-  setWindowIcon(
-    StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_book_open));
+  setWindowIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_book_open));
   ui->setupUi(this);
   ui->frmNav->setLayoutDirection(Qt::LeftToRight);
-  ui->btnNext->setIcon(StyleManager::getInstance().awesome().icon(
-    fa::fa_solid, fa::fa_arrow_left));
-  ui->btnPrev->setIcon(StyleManager::getInstance().awesome().icon(
-    fa::fa_solid, fa::fa_arrow_right));
+  ui->btnNext->setIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_arrow_left));
+  ui->btnPrev->setIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_arrow_right));
 
   if (m_config.qcfVersion() == 1)
     m_fontSZ = 18;
@@ -46,18 +43,10 @@ ContentDialog::ContentDialog(QWidget* parent)
 void
 ContentDialog::setupConnections()
 {
-  connect(
-    ui->btnNext, &QPushButton::clicked, this, &ContentDialog::btnNextClicked);
-  connect(
-    ui->btnPrev, &QPushButton::clicked, this, &ContentDialog::btnPrevClicked);
-  connect(ui->cmbType,
-          &QComboBox::currentIndexChanged,
-          this,
-          &ContentDialog::typeChanged);
-  connect(ui->cmbContent,
-          &QComboBox::currentIndexChanged,
-          this,
-          &ContentDialog::contentChanged);
+  connect(ui->btnNext, &QPushButton::clicked, this, &ContentDialog::btnNextClicked);
+  connect(ui->btnPrev, &QPushButton::clicked, this, &ContentDialog::btnPrevClicked);
+  connect(ui->cmbType, &QComboBox::currentIndexChanged, this, &ContentDialog::typeChanged);
+  connect(ui->cmbContent, &QComboBox::currentIndexChanged, this, &ContentDialog::contentChanged);
 }
 
 void
@@ -122,16 +111,13 @@ ContentDialog::setShownVerse(const Verse& newShownVerse)
   if (m_shownVerse.number() == 0)
     m_shownVerse.setNumber(1);
 
-  QString title = tr("Surah: ") +
-                  m_quranService->surahName(m_shownVerse.surah()) + " - " +
-                  tr("Verse: ") + QString::number(m_shownVerse.number());
-  QString glyphs =
-    m_config.verseType() == ConfigurationSchema::Qcf
-      ? m_glyphService->getVerseGlyphs(m_shownVerse.surah(),
-                                       m_shownVerse.number())
-      : m_quranService->verseText(m_shownVerse.surah(), m_shownVerse.number());
-  QString fontFamily = FontManager::getInstance().getInstance().verseFontname(
-    m_config.verseType(), m_shownVerse.page());
+  QString title = tr("Surah: ") + m_quranService->surahName(m_shownVerse.surah()) + " - " + tr("Verse: ") +
+                  QString::number(m_shownVerse.number());
+  QString glyphs = m_config.verseType() == ConfigurationSchema::Qcf
+                     ? m_glyphService->getVerseGlyphs(m_shownVerse.surah(), m_shownVerse.number())
+                     : m_quranService->verseText(m_shownVerse.surah(), m_shownVerse.number());
+  QString fontFamily =
+    FontManager::getInstance().getInstance().verseFontname(m_config.verseType(), m_shownVerse.page());
 
   ui->lbVerseInfo->setText(title);
   ui->lbVerseText->setWordWrap(true);
@@ -277,19 +263,16 @@ void
 ContentDialog::loadVerseTafsir()
 {
   if (m_tafsirService->currTafsir().isText())
-    ui->tedContent->setText(
-      m_tafsirService->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
+    ui->tedContent->setText(m_tafsirService->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
   else
-    ui->tedContent->setHtml(
-      m_tafsirService->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
+    ui->tedContent->setHtml(m_tafsirService->getTafsir(m_shownVerse.surah(), m_shownVerse.number()));
 }
 
 void
 ContentDialog::loadVerseTranslation()
 {
   m_translationService->setCurrentTranslation(m_translation);
-  ui->tedContent->setText(m_translationService->getTranslation(
-    m_shownVerse.surah(), m_shownVerse.number()));
+  ui->tedContent->setText(m_translationService->getTranslation(m_shownVerse.surah(), m_shownVerse.number()));
 }
 
 void

@@ -26,8 +26,7 @@ FontManager::loadFonts()
 void
 FontManager::loadQcf()
 {
-  QFontDatabase::addApplicationFont(
-    m_dirMgr.fontsDir().filePath("QCFV1/QCF_BSML.ttf"));
+  QFontDatabase::addApplicationFont(m_dirMgr.fontsDir().filePath("QCFV1/QCF_BSML.ttf"));
   switch (m_config.qcfVersion()) {
     case 1:
       m_dirMgr.setFontsDir(m_dirMgr.fontsDir().absoluteFilePath("QCFV1"));
@@ -46,8 +45,7 @@ FontManager::loadQcf()
     if (m_config.qcfVersion() == 2 && !m_dirMgr.fontsDir().exists(fontName)) {
       m_config.setQcfVersion(1);
       m_config.sync();
-      qFatal() << m_dirMgr.fontsDir().filePath(fontName)
-               << " font file not found, fallback to QCF v1";
+      qFatal("Font file not found: %s, reseting QCF font to v1", qPrintable(m_dirMgr.fontsDir().filePath(fontName)));
     } else
       QFontDatabase::addApplicationFont(m_dirMgr.fontsDir().filePath(fontName));
   }
@@ -57,8 +55,7 @@ void
 FontManager::loadUiFonts()
 {
   // ui fonts
-  foreach (const QFileInfo& font,
-           m_dirMgr.fontsDir().entryInfoList(QDir::Files))
+  foreach (const QFileInfo& font, m_dirMgr.fontsDir().entryInfoList(QDir::Files))
     QFontDatabase::addApplicationFont(font.absoluteFilePath());
   // set default UI fonts to use
   QStringList uiFonts;
@@ -72,8 +69,7 @@ FontManager::qcfExists()
 {
   QString filename = "QCFV2/QCF2%0.ttf";
   for (int i = 1; i <= 604; i++) {
-    if (!m_dirMgr.downloadsDir().exists(
-          filename.arg(QString::number(i).rightJustified(3, '0'))))
+    if (!m_dirMgr.downloadsDir().exists(filename.arg(QString::number(i).rightJustified(3, '0'))))
       return false;
   }
 

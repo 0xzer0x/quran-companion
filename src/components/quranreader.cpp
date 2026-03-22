@@ -362,7 +362,6 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
 {
   if (hrefUrl.toString().at(1) == 'F') {
     int surah = hrefUrl.toString().remove("#F").toInt();
-    qDebug() << "SURAH CARD:" << surah;
     emit showBetaqa(surah);
     return;
   }

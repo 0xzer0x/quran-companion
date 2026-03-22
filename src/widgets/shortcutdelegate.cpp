@@ -1,17 +1,12 @@
 #include "shortcutdelegate.h"
 
 QWidget*
-ShortcutDelegate::createEditor(QWidget* parent,
-                               const QStyleOptionViewItem& option,
-                               const QModelIndex& index) const
+ShortcutDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
   if (index.column() != 1)
     return nullptr;
   QKeySequenceEdit* editor = new QKeySequenceEdit(parent);
-  connect(editor,
-          &QKeySequenceEdit::editingFinished,
-          this,
-          &ShortcutDelegate::commitAndCloseEditor);
+  connect(editor, &QKeySequenceEdit::editingFinished, this, &ShortcutDelegate::commitAndCloseEditor);
   return editor;
 }
 
@@ -26,9 +21,7 @@ ShortcutDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 }
 
 void
-ShortcutDelegate::setModelData(QWidget* editor,
-                               QAbstractItemModel* model,
-                               const QModelIndex& index) const
+ShortcutDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
   if (index.column() != 1)
     return;

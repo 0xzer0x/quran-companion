@@ -21,7 +21,7 @@ TranslationRepository::open()
 {
   setDatabaseName(m_translationFile.absoluteFilePath());
   if (!QSqlDatabase::open())
-    qFatal("Error opening translation db");
+    qFatal("Failed to open translation DB, file: %s", qPrintable(m_translationFile.absoluteFilePath()));
 }
 
 DbConnection::Type
@@ -39,9 +39,8 @@ TranslationRepository::loadTranslation()
 bool
 TranslationRepository::setCurrentTranslation(const ::Translation translation)
 {
-  const QDir& baseDir = translation.isExtra()
-                          ? DirManager::getInstance().downloadsDir()
-                          : DirManager::getInstance().assetsDir();
+  const QDir& baseDir =
+    translation.isExtra() ? DirManager::getInstance().downloadsDir() : DirManager::getInstance().assetsDir();
   QString path = "translations/" + translation.filename();
   if (!baseDir.exists(path))
     return false;

@@ -11,12 +11,10 @@ DirManager::getInstance()
 
 DirManager::DirManager()
 {
-  m_downloadsDir.setPath(
-    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
-    QDir::separator() + "QuranCompanion");
-  m_configDir.setPath(
-    QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) +
-    QDir::separator() + "QuranCompanion");
+  m_downloadsDir.setPath(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QDir::separator() +
+                         "QuranCompanion");
+  m_configDir.setPath(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + QDir::separator() +
+                      "QuranCompanion");
 
   // WARN: Required runtime directories
   m_basmallahDir = resolveRuntimeDataDir("bismillah");
@@ -29,9 +27,8 @@ DirManager::resolveRuntimeDataDir(const QString& subdir)
 {
   // NOTE: Look for the specified runtime directory in
   // <binary-location>/../share/quran-companion
-  QDir qcDataDir(QApplication::applicationDirPath() + QDir::separator() + ".." +
-                 QDir::separator() + "share" + QDir::separator() +
-                 "quran-companion");
+  QDir qcDataDir(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator() + "share" +
+                 QDir::separator() + "quran-companion");
 
   QDir candidate(qcDataDir.absoluteFilePath(subdir));
   if (candidate.exists()) {

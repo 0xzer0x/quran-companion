@@ -53,53 +53,25 @@ JobManager::connectActive()
   if (!m_active.isNull())
     disconnectActive();
 
-  if (m_active->type() == DownloadJob::TafsirFile ||
-      m_active->type() == DownloadJob::TranslationFile)
-    connect(qobject_cast<ContentJob*>(m_active.data()),
-            &ContentJob::fileFound,
-            this,
-            &JobManager::handleFilesFound);
+  if (m_active->type() == DownloadJob::TafsirFile || m_active->type() == DownloadJob::TranslationFile)
+    connect(qobject_cast<ContentJob*>(m_active.data()), &ContentJob::fileFound, this, &JobManager::handleFilesFound);
 
-  connect(
-    m_active.data(), &DownloadJob::failed, this, &JobManager::handleFailed);
-  connect(m_active.data(),
-          &DownloadJob::finished,
-          this,
-          &JobManager::handleCompleted);
-  connect(m_active.data(),
-          &DownloadJob::progressed,
-          this,
-          &JobManager::handleProgressed);
-  connect(m_active.data(),
-          &DownloadJob::downloadSpeedUpdated,
-          this,
-          &JobManager::downloadSpeedUpdated);
+  connect(m_active.data(), &DownloadJob::failed, this, &JobManager::handleFailed);
+  connect(m_active.data(), &DownloadJob::finished, this, &JobManager::handleCompleted);
+  connect(m_active.data(), &DownloadJob::progressed, this, &JobManager::handleProgressed);
+  connect(m_active.data(), &DownloadJob::downloadSpeedUpdated, this, &JobManager::downloadSpeedUpdated);
 }
 
 void
 JobManager::disconnectActive()
 {
-  if (m_active->type() == DownloadJob::TafsirFile ||
-      m_active->type() == DownloadJob::TranslationFile)
-    disconnect(qobject_cast<ContentJob*>(m_active.data()),
-               &ContentJob::fileFound,
-               this,
-               &JobManager::handleFilesFound);
+  if (m_active->type() == DownloadJob::TafsirFile || m_active->type() == DownloadJob::TranslationFile)
+    disconnect(qobject_cast<ContentJob*>(m_active.data()), &ContentJob::fileFound, this, &JobManager::handleFilesFound);
 
-  disconnect(
-    m_active.data(), &DownloadJob::failed, this, &JobManager::handleFailed);
-  disconnect(m_active.data(),
-             &DownloadJob::finished,
-             this,
-             &JobManager::handleCompleted);
-  disconnect(m_active.data(),
-             &DownloadJob::progressed,
-             this,
-             &JobManager::handleProgressed);
-  disconnect(m_active.data(),
-             &DownloadJob::downloadSpeedUpdated,
-             this,
-             &JobManager::downloadSpeedUpdated);
+  disconnect(m_active.data(), &DownloadJob::failed, this, &JobManager::handleFailed);
+  disconnect(m_active.data(), &DownloadJob::finished, this, &JobManager::handleCompleted);
+  disconnect(m_active.data(), &DownloadJob::progressed, this, &JobManager::handleProgressed);
+  disconnect(m_active.data(), &DownloadJob::downloadSpeedUpdated, this, &JobManager::downloadSpeedUpdated);
 }
 
 void

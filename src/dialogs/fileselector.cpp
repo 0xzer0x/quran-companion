@@ -61,8 +61,7 @@ FileSelector::validFile(Mode mode, const QString& file)
   if (mode == Read)
     return fInf.isReadable();
   if (mode == Write)
-    return fInf.isWritable() ||
-           QFileInfo(fInf.dir().absolutePath()).isWritable();
+    return fInf.isWritable() || QFileInfo(fInf.dir().absolutePath()).isWritable();
 
   return false;
 }

@@ -20,9 +20,7 @@ public:
 
   QString getKhatmahName(const int id) const override;
 
-  int addKhatmah(const Verse& verse,
-                 const QString name,
-                 const int id) const override;
+  int addKhatmah(const Verse& verse, const QString name, const int id) const override;
 
   bool editKhatmahName(const int khatmahId, QString newName) override;
 

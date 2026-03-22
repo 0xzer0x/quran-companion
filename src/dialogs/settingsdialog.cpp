@@ -24,8 +24,7 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
   ui->setupUi(this);
   ui->cmbQuranFontSz->setValidator(new QIntValidator(10, 72));
   ui->cmbSideFontSz->setValidator(new QIntValidator(10, 72));
-  setWindowIcon(
-    StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_gear));
+  setWindowIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_gear));
   ui->tableViewShortcuts->setModel(&m_shortcutsModel);
   ui->tableViewShortcuts->horizontalHeader()->setStretchLastSection(true);
   ui->tableViewShortcuts->setItemDelegate(new ShortcutDelegate);
@@ -39,14 +38,8 @@ SettingsDialog::SettingsDialog(QWidget* parent, VersePlayer* vPlayerPtr)
 void
 SettingsDialog::setupConnections()
 {
-  connect(ui->btnChangeDownloadsPath,
-          &QPushButton::clicked,
-          this,
-          &SettingsDialog::selectDownloadsDir);
-  connect(ui->buttonBox,
-          &QDialogButtonBox::clicked,
-          this,
-          &SettingsDialog::btnBoxAction);
+  connect(ui->btnChangeDownloadsPath, &QPushButton::clicked, this, &SettingsDialog::selectDownloadsDir);
+  connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingsDialog::btnBoxAction);
 }
 
 void
@@ -144,8 +137,7 @@ void
 SettingsDialog::checkShortcuts()
 {
   for (int row = 0; row < m_shortcutsModel.rowCount(); row++) {
-    const QString& key =
-      m_shortcutsModel.item(row, 0)->data(Qt::UserRole).toString();
+    const QString& key = m_shortcutsModel.item(row, 0)->data(Qt::UserRole).toString();
     const QString& keySequence = m_shortcutsModel.item(row, 1)->text();
     if (m_config.shortcutKeySequence(key).toString() != keySequence)
       updateShortcut(key, keySequence);
@@ -155,17 +147,13 @@ SettingsDialog::checkShortcuts()
 void
 SettingsDialog::selectDownloadsDir()
 {
-  QString path = QFileDialog::getExistingDirectory(
-    this, tr("Select directory"), m_downloadsDir.absolutePath());
+  QString path = QFileDialog::getExistingDirectory(this, tr("Select directory"), m_downloadsDir.absolutePath());
   if (path.isEmpty())
     return;
 
   QFileInfo pathInfo(path);
   if (!pathInfo.isWritable()) {
-    QMessageBox::warning(
-      this,
-      tr("Invalid path"),
-      tr("The chosen path is not valid. Please select a writable path."));
+    QMessageBox::warning(this, tr("Invalid path"), tr("The chosen path is not valid. Please select a writable path."));
     return;
   }
 
@@ -180,9 +168,7 @@ SettingsDialog::updateTheme(int themeIdx)
     return;
 
   QMessageBox::StandardButton btn =
-    QMessageBox::question(this,
-                          tr("Restart required"),
-                          tr("Application theme was changed, restart now?"));
+    QMessageBox::question(this, tr("Restart required"), tr("Application theme was changed, restart now?"));
 
   m_restartReq = btn == QMessageBox::Yes;
 }
@@ -195,9 +181,7 @@ SettingsDialog::updateLang(QLocale::Language lang)
     return;
 
   QMessageBox::StandardButton btn =
-    QMessageBox::question(this,
-                          tr("Restart required"),
-                          tr("Application language was changed, restart now?"));
+    QMessageBox::question(this, tr("Restart required"), tr("Application language was changed, restart now?"));
 
   m_restartReq = btn == QMessageBox::Yes;
 }
@@ -209,10 +193,8 @@ SettingsDialog::updateDownloadsPath(QString path)
   if (m_restartReq)
     return;
 
-  QMessageBox::StandardButton btn = QMessageBox::question(
-    this,
-    tr("Restart required"),
-    tr("Application downloads path was changed, restart now?"));
+  QMessageBox::StandardButton btn =
+    QMessageBox::question(this, tr("Restart required"), tr("Application downloads path was changed, restart now?"));
 
   m_restartReq = btn == QMessageBox::Yes;
 }
@@ -245,8 +227,8 @@ SettingsDialog::updateReaderMode(int idx)
   if (m_restartReq)
     return;
 
-  QMessageBox::StandardButton btn = QMessageBox::question(
-    this, tr("Restart required"), tr("Reading mode was changed, restart now?"));
+  QMessageBox::StandardButton btn =
+    QMessageBox::question(this, tr("Restart required"), tr("Reading mode was changed, restart now?"));
 
   m_restartReq = btn == QMessageBox::Yes;
 }
@@ -264,10 +246,8 @@ SettingsDialog::updateQuranFont(int qcfV)
   if (m_restartReq)
     return;
 
-  QMessageBox::StandardButton btn = QMessageBox::question(
-    this,
-    tr("Restart required"),
-    tr("Restart is required to load new quran font, restart now?"));
+  QMessageBox::StandardButton btn =
+    QMessageBox::question(this, tr("Restart required"), tr("Restart is required to load new quran font, restart now?"));
 
   m_restartReq = btn == QMessageBox::Yes;
 }
@@ -332,8 +312,7 @@ SettingsDialog::updateVerseFontsize(QString size)
 void
 SettingsDialog::updateShortcut(QString key, QString keySequence)
 {
-  QKeySequence sequence(keySequence,
-                        QKeySequence::SequenceFormat::PortableText);
+  QKeySequence sequence(keySequence, QKeySequence::SequenceFormat::PortableText);
   m_config.setShortcutKeySequence(key, sequence);
   emit shortcutChanged(key);
 }
@@ -341,8 +320,7 @@ SettingsDialog::updateShortcut(QString key, QString keySequence)
 void
 SettingsDialog::applyAllChanges()
 {
-  QLocale::Language chosenLang =
-    qvariant_cast<QLocale::Language>(ui->cmbLang->currentData());
+  QLocale::Language chosenLang = qvariant_cast<QLocale::Language>(ui->cmbLang->currentData());
   if (chosenLang != m_config.language()) {
     updateLang(chosenLang);
   }
@@ -382,21 +360,17 @@ SettingsDialog::applyAllChanges()
 
   bool forceManualFont = false;
   if (ui->cmbQuranFontSz->currentText() != QString::number(m_quranFontSize))
-    updateQuranFontSize(ui->cmbQuranFontSz->currentText()),
-      forceManualFont = true;
+    updateQuranFontSize(ui->cmbQuranFontSz->currentText()), forceManualFont = true;
 
   if (ui->fntCmbSide->currentFont() != m_sideFont)
     updateSideFont(ui->fntCmbSide->currentFont());
 
-  if (ui->cmbSideFontSz->currentText() !=
-      QString::number(m_sideFont.pointSize()))
+  if (ui->cmbSideFontSz->currentText() != QString::number(m_sideFont.pointSize()))
     updateSideFontSize(ui->cmbSideFontSz->currentText());
 
-  if (!m_audioDevices.isEmpty() &&
-      ui->cmbAudioDevices->currentIndex() != m_audioOutIdx) {
+  if (!m_audioDevices.isEmpty() && ui->cmbAudioDevices->currentIndex() != m_audioOutIdx) {
     m_audioOutIdx = ui->cmbAudioDevices->currentIndex();
-    ui->cmbAudioDevices->setCurrentText(
-      m_audioDevices.at(m_audioOutIdx).description());
+    ui->cmbAudioDevices->setCurrentText(m_audioDevices.at(m_audioOutIdx).description());
     emit usedAudioDeviceChanged(m_audioDevices.at(m_audioOutIdx));
   }
 
@@ -424,8 +398,7 @@ SettingsDialog::btnBoxAction(QAbstractButton* btn)
 {
   if (btn == ui->buttonBox->button(QDialogButtonBox::StandardButton::Apply)) {
     applyAllChanges();
-  } else if (btn ==
-             ui->buttonBox->button(QDialogButtonBox::StandardButton::Cancel)) {
+  } else if (btn == ui->buttonBox->button(QDialogButtonBox::StandardButton::Cancel)) {
     this->reject();
   } else {
     applyAllChanges();

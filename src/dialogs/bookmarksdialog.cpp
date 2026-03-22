@@ -21,13 +21,10 @@ BookmarksDialog::BookmarksDialog(QWidget* parent)
 {
   ui->setupUi(this);
   ui->navBar->setLayoutDirection(Qt::LeftToRight);
-  ui->btnNext->setIcon(StyleManager::getInstance().awesome().icon(
-    fa::fa_solid, fa::fa_arrow_left));
-  ui->btnPrev->setIcon(StyleManager::getInstance().awesome().icon(
-    fa::fa_solid, fa::fa_arrow_right));
+  ui->btnNext->setIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_arrow_left));
+  ui->btnPrev->setIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_arrow_right));
   ui->scrollArea->setLayoutDirection(Qt::LeftToRight);
-  setWindowIcon(
-    StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_bookmark));
+  setWindowIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_bookmark));
   ui->listViewBookmarkedSurahs->setModel(&m_surahsModel);
 
   loadDefault();
@@ -37,14 +34,9 @@ BookmarksDialog::BookmarksDialog(QWidget* parent)
 void
 BookmarksDialog::setupConnections()
 {
-  connect(ui->listViewBookmarkedSurahs,
-          &QListView::clicked,
-          this,
-          &BookmarksDialog::surahSelected);
-  connect(
-    ui->btnNext, &QPushButton::clicked, this, &BookmarksDialog::btnNextClicked);
-  connect(
-    ui->btnPrev, &QPushButton::clicked, this, &BookmarksDialog::btnPrevClicked);
+  connect(ui->listViewBookmarkedSurahs, &QListView::clicked, this, &BookmarksDialog::surahSelected);
+  connect(ui->btnNext, &QPushButton::clicked, this, &BookmarksDialog::btnNextClicked);
+  connect(ui->btnPrev, &QPushButton::clicked, this, &BookmarksDialog::btnPrevClicked);
 }
 
 void
@@ -54,8 +46,7 @@ BookmarksDialog::addEmptyBookmarksLabel()
   QFont fnt = empty->font();
   fnt.setPointSize(14);
   empty->setFont(fnt);
-  empty->setText(
-    tr("No bookmarks available. Start bookmarking verses to see them here."));
+  empty->setText(tr("No bookmarks available. Start bookmarking verses to see them here."));
   empty->setAlignment(Qt::AlignCenter);
   ui->layoutFavorites->addWidget(empty);
   m_frames.append(empty);
@@ -68,8 +59,7 @@ BookmarksDialog::loadDefault()
   loadBookmarks();
   loadSurahs();
   ui->listViewBookmarkedSurahs->selectionModel()->select(
-    m_surahsModel.index(0, 0),
-    QItemSelectionModel::SelectionFlag::Rows | QItemSelectionModel::Select);
+    m_surahsModel.index(0, 0), QItemSelectionModel::SelectionFlag::Rows | QItemSelectionModel::Select);
 }
 
 void
@@ -94,8 +84,7 @@ BookmarksDialog::loadBookmarks(int surah)
       m_allBookmarked = m_shownVerses;
   }
 
-  int end = m_startIdx + 10 > m_shownVerses.size() ? m_shownVerses.size()
-                                                   : m_startIdx + 10;
+  int end = m_startIdx + 10 > m_shownVerses.size() ? m_shownVerses.size() : m_startIdx + 10;
 
   if (m_startIdx == 0)
     ui->btnPrev->setDisabled(true);
@@ -113,8 +102,7 @@ BookmarksDialog::loadBookmarks(int surah)
 
   for (int i = m_startIdx; i < end; i++) {
     const Verse& verse = m_shownVerses.at(i);
-    QString fontName = FontManager::getInstance().verseFontname(
-      m_config.verseType(), verse.page());
+    QString fontName = FontManager::getInstance().verseFontname(m_config.verseType(), verse.page());
 
     QFrame* frame = new QFrame(ui->scrlBookmarks);
     frame->setProperty("bookmark", true);
@@ -127,23 +115,17 @@ BookmarksDialog::loadBookmarks(int surah)
     QPushButton* removeFromFav = new QPushButton(tr("Remove"), frame);
     goToVerse->setCursor(Qt::PointingHandCursor);
     removeFromFav->setCursor(Qt::PointingHandCursor);
-    goToVerse->setStyleSheet(
-      "QPushButton { min-width: 150px; max-width: 150px; }");
-    removeFromFav->setStyleSheet(
-      "QPushButton { min-width: 150px; max-width: 150px; }");
+    goToVerse->setStyleSheet("QPushButton { min-width: 150px; max-width: 150px; }");
+    removeFromFav->setStyleSheet("QPushButton { min-width: 150px; max-width: 150px; }");
 
-    connect(
-      goToVerse, &QPushButton::clicked, this, &BookmarksDialog::btnGoToVerse);
-    connect(
-      removeFromFav, &QPushButton::clicked, this, &BookmarksDialog::btnRemove);
+    connect(goToVerse, &QPushButton::clicked, this, &BookmarksDialog::btnGoToVerse);
+    connect(removeFromFav, &QPushButton::clicked, this, &BookmarksDialog::btnRemove);
 
-    QString info = tr("Surah: ") +
-                   m_quranService->surahNames().at(verse.surah() - 1) + " - " +
-                   tr("Verse: ") + QString::number(verse.number());
-    QString glyphs =
-      m_config.verseType() == ConfigurationSchema::Qcf
-        ? m_glyphService->getVerseGlyphs(verse.surah(), verse.number())
-        : m_quranService->verseText(verse.surah(), verse.number());
+    QString info = tr("Surah: ") + m_quranService->surahNames().at(verse.surah() - 1) + " - " + tr("Verse: ") +
+                   QString::number(verse.number());
+    QString glyphs = m_config.verseType() == ConfigurationSchema::Qcf
+                       ? m_glyphService->getVerseGlyphs(verse.surah(), verse.number())
+                       : m_quranService->verseText(verse.surah(), verse.number());
 
     lbMeta->setText(info);
     lbMeta->setAlignment(Qt::AlignLeft);
@@ -169,8 +151,7 @@ BookmarksDialog::loadBookmarks(int surah)
     frmLayout->addItem(lbLayout);
 
     frame->setLayout(frmLayout);
-    frame->setObjectName(QString::number(verse.page()) + '-' +
-                         QString::number(verse.surah()) + '-' +
+    frame->setObjectName(QString::number(verse.page()) + '-' + QString::number(verse.surah()) + '-' +
                          QString::number(verse.number()));
 
     ui->layoutFavorites->addWidget(frame);

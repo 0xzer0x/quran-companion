@@ -11,13 +11,9 @@ SurahJob::SurahJob(int reciter, int surah)
   , m_surahCount(Verse::surahVerseCount(surah))
   , m_reciters(Reciter::reciters)
 {
-  connect(
-    &m_taskDlr, &TaskDownloader::completed, this, &SurahJob::taskFinished);
+  connect(&m_taskDlr, &TaskDownloader::completed, this, &SurahJob::taskFinished);
   connect(&m_taskDlr, &TaskDownloader::taskError, this, &SurahJob::taskFailed);
-  connect(&m_taskDlr,
-          &TaskDownloader::downloadSpeedUpdated,
-          this,
-          &DownloadJob::downloadSpeedUpdated);
+  connect(&m_taskDlr, &TaskDownloader::downloadSpeedUpdated, this, &DownloadJob::downloadSpeedUpdated);
 }
 
 void
@@ -120,8 +116,7 @@ SurahJob::type()
 QString
 SurahJob::name()
 {
-  return m_reciters.at(m_reciter).displayName() + " - " +
-         m_quranService->surahNames().at(m_surah - 1);
+  return m_reciters.at(m_reciter).displayName() + " - " + m_quranService->surahNames().at(m_surah - 1);
 }
 
 int

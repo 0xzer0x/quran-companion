@@ -9,16 +9,13 @@ JobNotifier::JobNotifier(QObject* parent)
 void
 JobNotifier::notifyCompleted(QPointer<DownloadJob> job)
 {
-  QString msg =
-    QCoreApplication::translate("JobNotifier", "Download Completed") + ": " +
-    job->name();
+  QString msg = QCoreApplication::translate("JobNotifier", "Download Completed") + ": " + job->name();
   emit notify(success, msg);
 }
 
 void
 JobNotifier::notifyFailed(QPointer<DownloadJob> job)
 {
-  QString msg = QCoreApplication::translate("JobNotifier", "Download Failed") +
-                ": " + job->name();
+  QString msg = QCoreApplication::translate("JobNotifier", "Download Failed") + ": " + job->name();
   emit notify(fail, msg);
 }

@@ -21,8 +21,7 @@ Tafsir::populateTafasir()
     QXmlStreamReader::TokenType token = reader.readNext();
     if (token == QXmlStreamReader::StartElement) {
       if (reader.name().toString() == "tafsir") {
-        QString name = QCoreApplication::translate(
-          "MainWindow", reader.attributes().value("name").toLatin1());
+        QString name = QCoreApplication::translate("MainWindow", reader.attributes().value("name").toLatin1());
         QString file = reader.attributes().value("file").toString();
         bool isText = reader.attributes().value("text").toInt();
         bool isExtra = reader.attributes().value("extra").toInt();
@@ -53,14 +52,11 @@ Tafsir::findById(QString id)
 const Tafsir
 Tafsir::defaultTafsir()
 {
-  const QString defaultId = ConfigurationSchema::getInstance()
-                              .getDefault("Reader/Tafsir")
-                              .value()
-                              .toString();
+  const QString defaultId = ConfigurationSchema::getInstance().getDefault("Reader/Tafsir").value().toString();
 
   std::optional<const Tafsir> tafsir = Tafsir::findById(defaultId);
   if (!tafsir.has_value()) {
-    qFatal() << "Default tafsir not found, tafsir ID used:" << defaultId;
+    qFatal("Default tafsir not found, ID: %s", qPrintable(defaultId));
   }
   return tafsir.value();
 }
@@ -71,11 +67,7 @@ Tafsir::indexForTafsir(const Tafsir& tafsir)
   return Tafsir::tafasir.indexOf(tafsir);
 }
 
-Tafsir::Tafsir(QString id,
-               QString display,
-               QString filename,
-               bool isText,
-               bool isExtra)
+Tafsir::Tafsir(QString id, QString display, QString filename, bool isText, bool isExtra)
   : Content(id, display, filename, isExtra)
   , m_isText(isText)
 {
@@ -108,8 +100,7 @@ Tafsir::operator!=(const Tafsir& v2) const
 bool
 Tafsir::isAvailable() const
 {
-  const QDir& baseDir = isExtra() ? DirManager::getInstance().downloadsDir()
-                                  : DirManager::getInstance().assetsDir();
+  const QDir& baseDir = isExtra() ? DirManager::getInstance().downloadsDir() : DirManager::getInstance().assetsDir();
   return baseDir.exists("tafasir/" + filename());
 }
 

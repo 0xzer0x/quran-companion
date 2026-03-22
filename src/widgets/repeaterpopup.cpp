@@ -9,8 +9,7 @@
 #include <service/servicefactory.h>
 #include <utils/stylemanager.h>
 
-RepeaterPopup::RepeaterPopup(QWidget* parent,
-                             QPointer<PlaybackController> playbackController)
+RepeaterPopup::RepeaterPopup(QWidget* parent, QPointer<PlaybackController> playbackController)
   : QWidget(parent)
   , ui(new Ui::RepeaterPopup)
   , m_quranService(ServiceFactory::quranService())
@@ -29,8 +28,7 @@ RepeaterPopup::setupUI()
 {
   this->hide();
   ui->setupUi(this);
-  QPointer<QGraphicsDropShadowEffect> shadow =
-    new QGraphicsDropShadowEffect(this);
+  QPointer<QGraphicsDropShadowEffect> shadow = new QGraphicsDropShadowEffect(this);
   shadow->setOffset(0, 4);
   shadow->setBlurRadius(15);
   shadow->setColor(QColor(0, 0, 0, 60));
@@ -44,14 +42,8 @@ RepeaterPopup::setupUI()
     connect(cmb, &QComboBox::activated, this, &RepeaterPopup::cmbSurahChanged);
   }
 
-  connect(ui->btnTogglePlayback,
-          &QPushButton::clicked,
-          this,
-          &RepeaterPopup::btnPlaybackClicked);
-  connect(m_playbackController,
-          &PlaybackController::playbackFinished,
-          this,
-          &RepeaterPopup::playbackFinished);
+  connect(ui->btnTogglePlayback, &QPushButton::clicked, this, &RepeaterPopup::btnPlaybackClicked);
+  connect(m_playbackController, &PlaybackController::playbackFinished, this, &RepeaterPopup::playbackFinished);
 }
 
 void
@@ -113,13 +105,11 @@ RepeaterPopup::generatePlaybackStrategy()
 {
   int fromSurah = ui->cmbFromSurah->currentIndex() + 1;
   int fromVerse = ui->cmbFromVerse->currentIndex() + 1;
-  Verse start = Verse(
-    m_quranService->versePage(fromSurah, fromVerse), fromSurah, fromVerse);
+  Verse start = Verse(m_quranService->versePage(fromSurah, fromVerse), fromSurah, fromVerse);
 
   int toSurah = ui->cmbToSurah->currentIndex() + 1;
   int toVerse = ui->cmbToVerse->currentIndex() + 1;
-  Verse end =
-    Verse(m_quranService->versePage(toSurah, toVerse), toSurah, toVerse);
+  Verse end = Verse(m_quranService->versePage(toSurah, toVerse), toSurah, toVerse);
 
   int frequency = ui->spnVerseFrequency->value();
   int postVersePauseSeconds = ui->spnPostVersePause->value();
@@ -130,13 +120,12 @@ RepeaterPopup::generatePlaybackStrategy()
     return nullopt;
   }
   if (frequency < 1 || repetitions < 1) {
-    showErrorMessagebox(
-      tr("Verse frequency and repetitions must be more than 0"));
+    showErrorMessagebox(tr("Verse frequency and repetitions must be more than 0"));
     return nullopt;
   }
 
-  return shared_ptr<SetPlaybackStrategy>(new SetPlaybackStrategy(
-    start, end, repetitions, frequency, postVersePauseSeconds));
+  return shared_ptr<SetPlaybackStrategy>(
+    new SetPlaybackStrategy(start, end, repetitions, frequency, postVersePauseSeconds));
 }
 
 void
@@ -167,8 +156,7 @@ RepeaterPopup::setValidatorsRange(int bottom, int top)
 void
 RepeaterPopup::activeVerseChanged()
 {
-  if (m_playbackStrategy.has_value() &&
-      !m_playbackStrategy->get()->verseInRange(m_currVerse))
+  if (m_playbackStrategy.has_value() && !m_playbackStrategy->get()->verseInRange(m_currVerse))
     playbackFinished();
 }
 
@@ -176,9 +164,8 @@ void
 RepeaterPopup::setToggleState(bool checked)
 {
   ui->btnTogglePlayback->setChecked(checked);
-  ui->btnTogglePlayback->setIcon(checked
-                                   ? m_awesome.icon(fa::fa_solid, fa::fa_stop)
-                                   : m_awesome.icon(fa::fa_solid, fa::fa_play));
+  ui->btnTogglePlayback->setIcon(checked ? m_awesome.icon(fa::fa_solid, fa::fa_stop)
+                                         : m_awesome.icon(fa::fa_solid, fa::fa_play));
 }
 
 void
@@ -197,13 +184,12 @@ RepeaterPopup::adjustPosition()
 {
   QPushButton* btnRepeat = parentWidget()->findChild<QPushButton*>("btnRepeat");
   if (!btnRepeat) {
-    qCritical() << "Repeat button not found";
+    qCritical("Failed to get pointer to QPushButton with ID: btnRepeat");
     return;
   }
   QPoint topLeft;
   if (layoutDirection() == Qt::LeftToRight) {
-    topLeft = btnRepeat->mapTo(parentWidget(),
-                               QPoint(btnRepeat->width(), btnRepeat->height()));
+    topLeft = btnRepeat->mapTo(parentWidget(), QPoint(btnRepeat->width(), btnRepeat->height()));
     topLeft.setX(topLeft.x() - width() + 10);
   } else {
     topLeft = btnRepeat->mapTo(parentWidget(), QPoint(0, btnRepeat->height()));

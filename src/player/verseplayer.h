@@ -120,14 +120,13 @@ signals:
   void missingVerseFile(const Reciter reciter, int surah);
 
 private:
-  Verse& m_activeVerse;    ///< Current active verse.
-  Configuration& m_config; ///< Reference to the Configuration instance.
-  QDir m_reciterDir;       ///< Directory of the current reciter's recitations.
-  bool m_isOn = false;     ///< Indicates whether the player is on.
-  QString m_verseFile;     ///< Filename of the current verse.
-  Reciter m_reciter;       ///< The currently selected reciter.
-  QPointer<QAudioOutput>
-    m_output; ///< Pointer to the QAudioOutput object for playback control.
+  Verse& m_activeVerse;            ///< Current active verse.
+  Configuration& m_config;         ///< Reference to the Configuration instance.
+  QDir m_reciterDir;               ///< Directory of the current reciter's recitations.
+  bool m_isOn = false;             ///< Indicates whether the player is on.
+  QString m_verseFile;             ///< Filename of the current verse.
+  Reciter m_reciter;               ///< The currently selected reciter.
+  QPointer<QAudioOutput> m_output; ///< Pointer to the QAudioOutput object for playback control.
 };
 
 #endif // VERSEPLAYER_H

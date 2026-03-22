@@ -85,17 +85,13 @@ private slots:
   void mediaStatusChanged(QMediaPlayer::MediaStatus status);
 
 private:
-  Verse& m_current; ///< Reference to the current verse being played.
-  Navigator&
-    m_navigator; ///< Reference to the Navigator for managing verse navigation.
-  std::shared_ptr<PlaybackStrategy>
-    m_defaultStrategy; ///< Shared pointer to the default playback strategy.
-  std::shared_ptr<PlaybackStrategy>
-    m_strategy; ///< Shared pointer to the current playback strategy.
-  QPointer<VersePlayer>
-    m_player; ///< Pointer to the VersePlayer used for playback.
-  QPointer<QTimer> m_nextVerseTimer; ///< Pointer to the QTimer used to schedule
-                                     ///< playing next verse.
+  Verse& m_current;                                    ///< Reference to the current verse being played.
+  Navigator& m_navigator;                              ///< Reference to the Navigator for managing verse navigation.
+  std::shared_ptr<PlaybackStrategy> m_defaultStrategy; ///< Shared pointer to the default playback strategy.
+  std::shared_ptr<PlaybackStrategy> m_strategy;        ///< Shared pointer to the current playback strategy.
+  QPointer<VersePlayer> m_player;                      ///< Pointer to the VersePlayer used for playback.
+  QPointer<QTimer> m_nextVerseTimer;                   ///< Pointer to the QTimer used to schedule
+                                                       ///< playing next verse.
 };
 
 #endif // PLAYBACKCONTROLLER_H

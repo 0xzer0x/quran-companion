@@ -18,19 +18,15 @@ SearchDialog::SearchDialog(QWidget* parent)
   , m_quranService(ServiceFactory::quranService())
   , m_glyphService(ServiceFactory::glyphService())
 {
-  setWindowIcon(StyleManager::getInstance().awesome().icon(
-    fa::fa_solid, fa::fa_magnifying_glass));
+  setWindowIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_magnifying_glass));
   ui->setupUi(this);
   ui->frmNavBtns->setLayoutDirection(Qt::LeftToRight);
-  ui->btnNext->setIcon(StyleManager::getInstance().awesome().icon(
-    fa::fa_solid, fa::fa_arrow_left));
-  ui->btnPrev->setIcon(StyleManager::getInstance().awesome().icon(
-    fa::fa_solid, fa::fa_arrow_right));
+  ui->btnNext->setIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_arrow_left));
+  ui->btnPrev->setIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_arrow_right));
   ui->btnNext->setDisabled(true);
   ui->btnPrev->setDisabled(true);
 
-  ui->btnTransfer->setIcon(StyleManager::getInstance().awesome().icon(
-    fa::fa_solid, fa::fa_arrow_right_arrow_left));
+  ui->btnTransfer->setIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_arrow_right_arrow_left));
   ui->listViewAllSurahs->setModel(&m_modelAllSurahs);
   ui->listViewSelected->setModel(&m_modelSelectedSurahs);
   if (m_config.language() == QLocale::Arabic)
@@ -47,10 +43,7 @@ SearchDialog::setupConnections()
   connect(ui->btnSrch, &QPushButton::clicked, this, &SearchDialog::getResults);
   connect(ui->btnNext, &QPushButton::clicked, this, &SearchDialog::moveFwd);
   connect(ui->btnPrev, &QPushButton::clicked, this, &SearchDialog::moveBwd);
-  connect(ui->btnTransfer,
-          &QPushButton::clicked,
-          this,
-          &SearchDialog::btnTransferClicked);
+  connect(ui->btnTransfer, &QPushButton::clicked, this, &SearchDialog::btnTransferClicked);
 }
 
 void
@@ -78,14 +71,12 @@ SearchDialog::getResults()
       ui->spnEndPage->setValue(range[0]);
     range[1] = ui->spnEndPage->value();
 
-    m_currResults = m_quranService->searchVerses(
-      m_searchText, range, ui->chkWholeWord->isChecked());
+    m_currResults = m_quranService->searchVerses(m_searchText, range, ui->chkWholeWord->isChecked());
   } else {
-    m_currResults = m_quranService->searchSurahs(
-      m_searchText, m_selectedSurahMap.values(), ui->chkWholeWord->isChecked());
+    m_currResults =
+      m_quranService->searchSurahs(m_searchText, m_selectedSurahMap.values(), ui->chkWholeWord->isChecked());
   }
-  ui->lbResultCount->setText(QString::number(m_currResults.size()) +
-                             tr(" Search results"));
+  ui->lbResultCount->setText(QString::number(m_currResults.size()) + tr(" Search results"));
   m_startResult = 0;
   showResults();
 }
@@ -101,8 +92,7 @@ SearchDialog::verseClicked()
 void
 SearchDialog::showResults()
 {
-  int endIdx = m_currResults.size() > m_startResult + 25 ? m_startResult + 25
-                                                         : m_currResults.size();
+  int endIdx = m_currResults.size() > m_startResult + 25 ? m_startResult + 25 : m_currResults.size();
 
   if (m_startResult == 0)
     ui->btnPrev->setDisabled(true);
@@ -115,16 +105,14 @@ SearchDialog::showResults()
 
   for (int i = m_startResult; i < endIdx; i++) {
     Verse v = m_currResults.at(i);
-    QString fontName =
-      FontManager::getInstance().verseFontname(m_config.verseType(), v.page());
+    QString fontName = FontManager::getInstance().verseFontname(m_config.verseType(), v.page());
 
     VerseFrame* vFrame = new VerseFrame(ui->srclResults);
     QLabel* lbInfo = new QLabel(vFrame);
     ClickableLabel* clkLb = new ClickableLabel(vFrame);
 
-    QString info = tr("Surah: ") +
-                   m_quranService->surahNames().at(v.surah() - 1) + " - " +
-                   tr("Verse: ") + QString::number(v.number());
+    QString info = tr("Surah: ") + m_quranService->surahNames().at(v.surah() - 1) + " - " + tr("Verse: ") +
+                   QString::number(v.number());
     QString glyphs = m_config.verseType() == ConfigurationSchema::Qcf
                        ? m_glyphService->getVerseGlyphs(v.surah(), v.number())
                        : m_quranService->verseText(v.surah(), v.number());
@@ -135,8 +123,7 @@ SearchDialog::showResults()
     lbInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     clkLb->setMargin(5);
-    clkLb->setObjectName(QString::number(v.page()) + '-' +
-                         QString::number(v.surah()) + '-' +
+    clkLb->setObjectName(QString::number(v.page()) + '-' + QString::number(v.surah()) + '-' +
                          QString::number(v.number()));
     clkLb->setFont(QFont(fontName, 15));
     clkLb->setText(glyphs);
@@ -187,8 +174,7 @@ void
 SearchDialog::fillListView()
 {
   for (int i = 1; i <= 114; i++) {
-    QStandardItem* surah =
-      new QStandardItem(m_quranService->surahNames().at(i - 1));
+    QStandardItem* surah = new QStandardItem(m_quranService->surahNames().at(i - 1));
     m_modelAllSurahs.invisibleRootItem()->appendRow(surah);
   }
 }
@@ -196,10 +182,8 @@ SearchDialog::fillListView()
 void
 SearchDialog::btnTransferClicked()
 {
-  QModelIndexList selectedAdd =
-    ui->listViewAllSurahs->selectionModel()->selectedRows();
-  QModelIndexList selectedRem =
-    ui->listViewSelected->selectionModel()->selectedRows();
+  QModelIndexList selectedAdd = ui->listViewAllSurahs->selectionModel()->selectedRows();
+  QModelIndexList selectedRem = ui->listViewSelected->selectionModel()->selectedRows();
   QList<QString> removed;
 
   foreach (const QModelIndex& midx, selectedAdd) {
@@ -208,8 +192,7 @@ SearchDialog::btnTransferClicked()
     // KEY: visible surah name - VALUE: surah number
     int sIdx = m_quranService->surahNames().indexOf(midx.data().toString());
     m_selectedSurahMap.insert(midx.data().toString(), sIdx + 1);
-    m_modelSelectedSurahs.appendRow(
-      new QStandardItem(midx.data().toString())); // add surah to selected view
+    m_modelSelectedSurahs.appendRow(new QStandardItem(midx.data().toString())); // add surah to selected view
   }
 
   foreach (const QModelIndex& remIdx, selectedRem) {

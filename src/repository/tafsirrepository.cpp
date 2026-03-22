@@ -23,7 +23,7 @@ TafsirRepository::open()
 {
   setDatabaseName(m_tafsirFile.absoluteFilePath());
   if (!QSqlDatabase::open())
-    qFatal("Error opening tafsir db");
+    qFatal("Failed to open tafsir DB, file: %s", qPrintable(m_tafsirFile.absoluteFilePath()));
 }
 
 DbConnection::Type
@@ -41,8 +41,7 @@ TafsirRepository::loadTafsir()
 bool
 TafsirRepository::setCurrentTafsir(const ::Tafsir tafsir)
 {
-  const QDir& baseDir =
-    tafsir.isExtra() ? m_dirMgr.downloadsDir() : m_dirMgr.assetsDir();
+  const QDir& baseDir = tafsir.isExtra() ? m_dirMgr.downloadsDir() : m_dirMgr.assetsDir();
   QString path = "tafasir/" + tafsir.filename();
   if (!baseDir.exists(path))
     return false;

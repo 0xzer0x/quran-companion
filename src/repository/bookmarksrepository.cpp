@@ -18,9 +18,8 @@ BookmarksRepository::BookmarksRepository()
 {
   BookmarksRepository::open();
   QSqlQuery dbQuery(*this);
-  dbQuery.exec(
-    "CREATE TABLE IF NOT EXISTS khatmah(id INTEGER PRIMARY KEY "
-    "AUTOINCREMENT, name TEXT, page INTEGER, surah INTEGER, number INTEGER)");
+  dbQuery.exec("CREATE TABLE IF NOT EXISTS khatmah(id INTEGER PRIMARY KEY "
+               "AUTOINCREMENT, name TEXT, page INTEGER, surah INTEGER, number INTEGER)");
 
   dbQuery.exec("CREATE TABLE IF NOT EXISTS favorites(id INTEGER PRIMARY KEY "
                "AUTOINCREMENT,"
@@ -36,7 +35,7 @@ BookmarksRepository::open()
 {
   setDatabaseName(m_configDir.absoluteFilePath("bookmarks.db"));
   if (!QSqlDatabase::open())
-    qFatal("Error opening bookmarks db");
+    qFatal("Failed to open bookmarks DB, file: %s", qPrintable(m_configDir.absoluteFilePath("bookmarks.db")));
 }
 
 DbConnection::Type
@@ -49,14 +48,13 @@ bool
 BookmarksRepository::saveActiveKhatmah(const Verse& verse)
 {
   QSqlQuery dbQuery(*this);
-  QString q = QString::asprintf(
-    "UPDATE khatmah SET page=%i, surah=%i, number=%i WHERE id=%i",
-    verse.page(),
-    verse.surah(),
-    verse.number(),
-    m_activeKhatmah);
+  QString q = QString::asprintf("UPDATE khatmah SET page=%i, surah=%i, number=%i WHERE id=%i",
+                                verse.page(),
+                                verse.surah(),
+                                verse.number(),
+                                m_activeKhatmah);
   if (!dbQuery.exec(q)) {
-    qCritical() << "Couldn't save position in mushaf";
+    qCritical("Failed to execute SQL statment, error: %s", qPrintable(lastError().text()));
     return false;
   }
   if (!commit())
@@ -71,7 +69,7 @@ BookmarksRepository::getAllKhatmah() const
   QList<int> res;
   QSqlQuery dbQuery(*this);
   if (!dbQuery.exec("SELECT id FROM khatmah"))
-    qCritical() << "Couldn't execute sql query: " << dbQuery.lastQuery();
+    qCritical("Failed to execute SQL statment, error: %s", qPrintable(lastError().text()));
 
   while (dbQuery.next())
     res.append(dbQuery.value(0).toInt());
@@ -84,7 +82,7 @@ BookmarksRepository::getKhatmahName(const int id) const
 {
   QSqlQuery dbQuery(*this);
   if (!dbQuery.exec("SELECT name FROM khatmah WHERE id=" + QString::number(id)))
-    qCritical() << "Couldn't execute sql query: " << dbQuery.lastQuery();
+    qCritical("Failed to execute SQL statment, error: %s", qPrintable(lastError().text()));
 
   dbQuery.next();
   return dbQuery.value(0).toString();
@@ -95,10 +93,9 @@ BookmarksRepository::loadVerse(const int khatmahId) const
 {
   QSqlQuery dbQuery(*this);
 
-  QString q = QString::asprintf(
-    "SELECT page,surah,number FROM khatmah WHERE id=%i", khatmahId);
+  QString q = QString::asprintf("SELECT page,surah,number FROM khatmah WHERE id=%i", khatmahId);
   if (!dbQuery.exec(q)) {
-    qCritical() << "Couldn't execute getPosition SQL query!";
+    qCritical("Failed to execute SQL statment, error: %s", qPrintable(lastError().text()));
     return std::nullopt;
   }
   if (!dbQuery.next())
@@ -111,19 +108,15 @@ BookmarksRepository::loadVerse(const int khatmahId) const
 }
 
 int
-BookmarksRepository::addKhatmah(const Verse& verse,
-                                const QString name,
-                                const int id) const
+BookmarksRepository::addKhatmah(const Verse& verse, const QString name, const int id) const
 {
   QSqlQuery dbQuery(*this);
   QString q;
   if (id == -1) {
     q = "INSERT INTO khatmah(name, page, surah, number) VALUES ('%0', %1, %2, "
         "%3)";
-    dbQuery.prepare(q.arg(name,
-                          QString::number(verse.page()),
-                          QString::number(verse.surah()),
-                          QString::number(verse.number())));
+    dbQuery.prepare(
+      q.arg(name, QString::number(verse.page()), QString::number(verse.surah()), QString::number(verse.number())));
   } else {
     q = "REPLACE INTO khatmah VALUES "
         "(%0, "
@@ -136,8 +129,7 @@ BookmarksRepository::addKhatmah(const Verse& verse,
   }
 
   if (!dbQuery.exec()) {
-    qCritical() << "Couldn't create new khatmah entry!";
-    qDebug() << lastError();
+    qCritical("Failed to create new khatmah entry, error: %s", qPrintable(lastError().text()));
     return -1;
   }
 
@@ -155,8 +147,7 @@ BookmarksRepository::editKhatmahName(const int khatmahId, QString newName)
   QSqlQuery dbQuery(*this);
   QString q = "SELECT DISTINCT id FROM khatmah WHERE name='%0'";
   if (!dbQuery.exec(q.arg(newName))) {
-    qCritical() << "Couldn't execute sql query: " << dbQuery.lastQuery();
-    qDebug() << lastError();
+    qCritical("Failed to execute SQL query, error: %s", qPrintable(lastError().text()));
     return false;
   }
   if (dbQuery.next())
@@ -164,8 +155,7 @@ BookmarksRepository::editKhatmahName(const int khatmahId, QString newName)
 
   q = "UPDATE khatmah SET name='%0' WHERE id=%1";
   if (!dbQuery.exec(q.arg(newName, QString::number(khatmahId)))) {
-    qCritical() << "Couldn't rename khatmah entry!";
-    qDebug() << lastError();
+    qCritical("Failed to rename khatmah entry, error: %s", qPrintable(lastError().text()));
     return false;
   }
 
@@ -178,7 +168,7 @@ BookmarksRepository::removeKhatmah(const int id) const
 {
   QSqlQuery dbQuery(*this);
   if (!dbQuery.exec(QString::asprintf("DELETE FROM khatmah WHERE id=%i", id)))
-    qDebug() << "Couldn't execute query: " << dbQuery.lastQuery();
+    qCritical("Failed to execute SQL query, error: %s", qPrintable(lastError().text()));
 }
 
 QList<Verse>
@@ -192,12 +182,10 @@ BookmarksRepository::bookmarkedVerses(int surahIdx) const
 
   dbQuery.prepare(q.append(" ORDER BY surah, number"));
   if (!dbQuery.exec())
-    qCritical() << "Couldn't execute bookmarkedVerses SELECT query";
+    qCritical("Failed to execute SQL statment, error: %s", qPrintable(lastError().text()));
 
   while (dbQuery.next()) {
-    results.append(Verse(dbQuery.value(0).toInt(),
-                         dbQuery.value(1).toInt(),
-                         dbQuery.value(2).toInt()));
+    results.append(Verse(dbQuery.value(0).toInt(), dbQuery.value(1).toInt(), dbQuery.value(2).toInt()));
   }
 
   return results;
@@ -208,14 +196,15 @@ BookmarksRepository::isBookmarked(const Verse& verse) const
 {
   QSqlQuery dbQuery(*this);
 
-  dbQuery.prepare(
-    "SELECT page FROM favorites WHERE page=:p AND surah=:s AND number=:n");
+  dbQuery.prepare("SELECT page FROM favorites WHERE page=:p AND surah=:s AND number=:n");
   dbQuery.bindValue(0, verse.page());
   dbQuery.bindValue(1, verse.surah());
   dbQuery.bindValue(2, verse.number());
 
   if (!dbQuery.exec()) {
-    qWarning() << "Couldn't check if verse is bookmarked";
+    qWarning("Failed to check if verse is bookmarked, verse: %s, error: %s",
+             qPrintable(verse.toString()),
+             qPrintable(lastError().text()));
     return false;
   }
 
@@ -229,14 +218,14 @@ BookmarksRepository::addBookmark(const Verse& verse)
 {
   QSqlQuery dbQuery(*this);
 
-  dbQuery.prepare(
-    "INSERT INTO favorites(page, surah, number) VALUES (:p, :s, :n)");
+  dbQuery.prepare("INSERT INTO favorites(page, surah, number) VALUES (:p, :s, :n)");
   dbQuery.bindValue(0, verse.page());
   dbQuery.bindValue(1, verse.surah());
   dbQuery.bindValue(2, verse.number());
 
   if (!dbQuery.exec()) {
-    qWarning() << "Couldn't add verse to bookmarks db";
+    qWarning(
+      "Failed to bookmark verse, verse: %s, error: %s", qPrintable(verse.toString()), qPrintable(lastError().text()));
     return false;
   }
 
@@ -248,14 +237,15 @@ bool
 BookmarksRepository::removeBookmark(const Verse& verse)
 {
   QSqlQuery dbQuery(*this);
-  dbQuery.prepare(
-    "DELETE FROM favorites WHERE page=:p AND surah=:s AND number=:n");
+  dbQuery.prepare("DELETE FROM favorites WHERE page=:p AND surah=:s AND number=:n");
   dbQuery.bindValue(0, verse.page());
   dbQuery.bindValue(1, verse.surah());
   dbQuery.bindValue(2, verse.number());
 
   if (!dbQuery.exec()) {
-    qWarning() << "Couldn't remove verse from bookmarks";
+    qWarning("Failed to remove verse from bookmarks, verse: %s, error: %s",
+             qPrintable(verse.toString()),
+             qPrintable(lastError().text()));
     return false;
   }
 
@@ -276,7 +266,7 @@ BookmarksRepository::saveThoughts(Verse& verse, const QString& text)
   dbQuery.bindValue(4, text);
 
   if (!dbQuery.exec())
-    qCritical() << "SQL statement execution error:" << dbQuery.lastError();
+    qCritical("Failed to execute SQL statment, error: %s", qPrintable(lastError().text()));
 
   commit();
 }
@@ -285,14 +275,13 @@ QString
 BookmarksRepository::getThoughts(const Verse& verse) const
 {
   QSqlQuery dbQuery(*this);
-  dbQuery.prepare(
-    "SELECT text FROM thoughts WHERE page=:p AND surah=:s AND number=:n");
+  dbQuery.prepare("SELECT text FROM thoughts WHERE page=:p AND surah=:s AND number=:n");
   dbQuery.bindValue(0, verse.page());
   dbQuery.bindValue(1, verse.surah());
   dbQuery.bindValue(2, verse.number());
 
   if (!dbQuery.exec())
-    qCritical() << "SQL statement execution error:" << dbQuery.lastError();
+    qCritical("Failed to execute SQL statment, error: %s", qPrintable(lastError().text()));
 
   dbQuery.next();
   return dbQuery.value(0).toString();
@@ -305,9 +294,7 @@ BookmarksRepository::allThoughts() const
   QSqlQuery dbQuery(*this);
   dbQuery.exec("SELECT page,surah,number,text FROM thoughts WHERE text!=''");
   while (dbQuery.next()) {
-    const Verse verse(dbQuery.value(0).toInt(),
-                      dbQuery.value(1).toInt(),
-                      dbQuery.value(2).toInt());
+    const Verse verse(dbQuery.value(0).toInt(), dbQuery.value(1).toInt(), dbQuery.value(2).toInt());
 
     all.append({ verse, dbQuery.value(3).toString() });
   }

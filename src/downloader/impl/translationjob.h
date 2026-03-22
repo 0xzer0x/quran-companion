@@ -21,8 +21,7 @@ public:
   QString name() override;
 
 private:
-  QList<QSharedPointer<Translation>>& m_translations =
-    Translation::translations;
+  QList<QSharedPointer<Translation>>& m_translations = Translation::translations;
   QPointer<TaskDownloader> m_taskDlr;
   QNetworkAccessManager m_netMgr;
   TranslationTask m_task;

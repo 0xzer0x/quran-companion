@@ -7,14 +7,10 @@ VersionChecker::VersionChecker(QObject* parent)
   : QObject(parent)
   , m_notifier(this)
 {
-  m_versionReq.setUrl(QUrl::fromEncoded(
-    "https://raw.githubusercontent.com/0xzer0x/quran-companion/main/VERSION"));
+  m_versionReq.setUrl(QUrl::fromEncoded("https://raw.githubusercontent.com/0xzer0x/quran-companion/main/VERSION"));
   m_versionReq.setTransferTimeout(1500);
 
-  connect(&m_netMgr,
-          &QNetworkAccessManager::finished,
-          this,
-          &VersionChecker::handleReply);
+  connect(&m_netMgr, &QNetworkAccessManager::finished, this, &VersionChecker::handleReply);
 }
 
 void
@@ -26,8 +22,7 @@ VersionChecker::checkUpdates()
 void
 VersionChecker::handleReply(QPointer<QNetworkReply> reply)
 {
-  int status =
-    reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+  int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
   if (status != 200)
     return;
 

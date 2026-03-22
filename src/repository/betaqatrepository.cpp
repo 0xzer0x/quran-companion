@@ -1,4 +1,5 @@
 #include "betaqatrepository.h"
+#include <QSqlError>
 #include <QSqlQuery>
 
 BetaqatRepository&
@@ -21,7 +22,7 @@ BetaqatRepository::open()
 {
   setDatabaseName(m_assetsDir.absoluteFilePath("betaqat.db"));
   if (!QSqlDatabase::open())
-    qFatal("Error opening betaqat db");
+    qFatal("Failed to open betaqat DB, file: %s", qPrintable(m_assetsDir.absoluteFilePath("betaqat.db")));
 }
 
 DbConnection::Type
@@ -42,7 +43,7 @@ BetaqatRepository::getBetaqa(const int surah) const
 
   dbQuery.bindValue(0, surah);
   if (!dbQuery.exec()) {
-    qCritical() << "Error occurred during getBetaqa SQL statment exec";
+    qCritical("Failed to execute SQL statment, error: %s", qPrintable(lastError().text()));
   }
 
   dbQuery.next();

@@ -57,8 +57,7 @@ BetaqaViewer::center()
   this->resize(w, h);
   m_sizeAnim->setEndValue(size());
 
-  QPoint center(((parentWidget()->width() / 2) - (w / 2)),
-                ((parentWidget()->height() / 2) - (h / 2)));
+  QPoint center(((parentWidget()->width() / 2) - (w / 2)), ((parentWidget()->height() / 2) - (h / 2)));
   move(center);
 }
 

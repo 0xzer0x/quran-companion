@@ -35,9 +35,8 @@ ShortcutHandler::populateDescriptionMap()
       if (reader.name().toString() == "shortcut") {
         QString key = reader.attributes().value("key").toString();
         QString defBind = reader.attributes().value("default").toString();
-        QString desc = QCoreApplication::translate(
-          "SettingsDialog",
-          reader.attributes().value("description").toLatin1());
+        QString desc =
+          QCoreApplication::translate("SettingsDialog", reader.attributes().value("description").toLatin1());
 
         m_shortcutsDescription.insert(key, desc);
         m_config.setShortcutIfNotExists(key, defBind);
@@ -64,13 +63,9 @@ ShortcutHandler::createShortcuts(QObject* context)
 void
 ShortcutHandler::setupConnections()
 {
-  connect(m_shortcuts.value("Quit"),
-          &QShortcut::activated,
-          qApp,
-          &QApplication::quit);
+  connect(m_shortcuts.value("Quit"), &QShortcut::activated, qApp, &QApplication::quit);
   for (const auto& connection : {
-         make_pair("TogglePlayerControls",
-                   &ShortcutHandler::togglePlayerControls),
+         make_pair("TogglePlayerControls", &ShortcutHandler::togglePlayerControls),
          make_pair("ToggleReaderView", &ShortcutHandler::toggleReaderView),
          make_pair("ToggleMenubar", &ShortcutHandler::toggleMenubar),
          make_pair("ToggleNavDock", &ShortcutHandler::toggleNavDock),
@@ -98,10 +93,7 @@ ShortcutHandler::setupConnections()
          make_pair("ContentDialog", &ShortcutHandler::openContent),
          make_pair("CopyDialog", &ShortcutHandler::openAdvancedCopy),
        }) {
-    connect(m_shortcuts.value(connection.first),
-            &QShortcut::activated,
-            this,
-            connection.second);
+    connect(m_shortcuts.value(connection.first), &QShortcut::activated, this, connection.second);
   }
 }
 

@@ -76,19 +76,16 @@ protected:
   void closeEvent(QCloseEvent* event) override;
 
 private:
-  Ui::VerseDialog*
-    ui; ///< Pointer to the user interface components of the dialog. //
-  Configuration&
-    m_config; ///< Reference to the application configuration instance. //
-  Navigator& m_navigator; ///< Reference to the navigator instance for handling
-                          ///< verse navigation. //
-  const QuranService* m_quranService; ///< Pointer to the Quran service for
-                                      ///< fetching verse texts. //
-  const TranslationService*
-    m_translationService; ///< Pointer to the translation service for fetching
-                          ///< translations. //
-  QFile m_timestampFile;  ///< File for logging the timestamp and details of the
-                          ///< Verse of the Day. //
+  Ui::VerseDialog* ui;                            ///< Pointer to the user interface components of the dialog. //
+  Configuration& m_config;                        ///< Reference to the application configuration instance. //
+  Navigator& m_navigator;                         ///< Reference to the navigator instance for handling
+                                                  ///< verse navigation. //
+  const QuranService* m_quranService;             ///< Pointer to the Quran service for
+                                                  ///< fetching verse texts. //
+  const TranslationService* m_translationService; ///< Pointer to the translation service for fetching
+                                                  ///< translations. //
+  QFile m_timestampFile;                          ///< File for logging the timestamp and details of the
+                                                  ///< Verse of the Day. //
   /**
    * @brief Generates a new Verse of the Day (VOTD) and updates the VOTD HTML.
    */
@@ -119,9 +116,8 @@ private:
    */
   void updateLabels();
 
-  Verse m_votd; ///< The current Verse of the Day (VOTD). */
-  QDateTime m_now =
-    QDateTime::currentDateTime(); ///< The current date and time. */
+  Verse m_votd;                                   ///< The current Verse of the Day (VOTD). */
+  QDateTime m_now = QDateTime::currentDateTime(); ///< The current date and time. */
 };
 
 #endif // VERSEDIALOG_H

@@ -15,7 +15,7 @@ Reciter::populateReciters()
 {
   QFile recitersFile(":/resources/reciters.xml");
   if (!recitersFile.open(QIODevice::ReadOnly))
-    qFatal("Couldn't Open Reciters XML, Exiting");
+    qFatal("Faile to open reciters XML file");
 
   QXmlStreamReader reader(&recitersFile);
   while (!reader.atEnd() && !reader.hasError()) {
@@ -24,16 +24,14 @@ Reciter::populateReciters()
       if (reader.name().toString() == "reciter") {
         QString id = reader.attributes().value("id").toString();
         QString baseDirName = reader.attributes().value("dirname").toString();
-        QString displayName = QCoreApplication::translate(
-          "MainWindow", reader.attributes().value("display").toLatin1());
+        QString displayName =
+          QCoreApplication::translate("MainWindow", reader.attributes().value("display").toLatin1());
         QString baseUrl = reader.attributes().value("url").toString();
         QString basmallahPath =
-          DirManager::getInstance().basmallahDir().absoluteFilePath(
-            reader.attributes().value("basmallah").toString());
+          DirManager::getInstance().basmallahDir().absoluteFilePath(reader.attributes().value("basmallah").toString());
         bool downloadById = reader.attributes().value("downloadById").toInt();
 
-        reciters.append(Reciter(
-          id, baseDirName, displayName, basmallahPath, baseUrl, downloadById));
+        reciters.append(Reciter(id, baseDirName, displayName, basmallahPath, baseUrl, downloadById));
       }
     }
   }
@@ -45,11 +43,9 @@ Reciter::populateReciters()
   QCollator collator;
   collator.setCaseSensitivity(Qt::CaseInsensitive);
   collator.setNumericMode(true);
-  std::sort(reciters.begin(),
-            reciters.end(),
-            [&collator](const Reciter& a, const Reciter& b) {
-              return collator.compare(a.displayName(), b.displayName()) < 0;
-            });
+  std::sort(reciters.begin(), reciters.end(), [&collator](const Reciter& a, const Reciter& b) {
+    return collator.compare(a.displayName(), b.displayName()) < 0;
+  });
 
   // create reciters directories
   QString temp = "recitations/%0";
@@ -65,10 +61,9 @@ Reciter::findById(const QString id)
 {
   std::optional<Reciter> reciter = std::nullopt;
 
-  const auto iterator =
-    std::find_if(Reciter::reciters.constBegin(),
-                 Reciter::reciters.constEnd(),
-                 [&id](const Reciter& reciter) { return reciter.id() == id; });
+  const auto iterator = std::find_if(Reciter::reciters.constBegin(),
+                                     Reciter::reciters.constEnd(),
+                                     [&id](const Reciter& reciter) { return reciter.id() == id; });
 
   // NOTE: Dereference iterator if found
   if (iterator != Reciter::reciters.constEnd()) {
@@ -87,22 +82,16 @@ Reciter::indexForReciter(const Reciter& reciter)
 const Reciter
 Reciter::defaultReciter()
 {
-  const QString defaultId =
-    ConfigurationSchema::getInstance().getDefault("Reciter").value().toString();
+  const QString defaultId = ConfigurationSchema::getInstance().getDefault("Reciter").value().toString();
 
   const std::optional<const Reciter> reciter = Reciter::findById(defaultId);
   if (!reciter.has_value()) {
-    qFatal() << "Failed to find default reciter using id:" << defaultId;
+    qFatal("Default reciter not found, ID: %s", qPrintable(defaultId));
   }
   return reciter.value();
 }
 
-Reciter::Reciter(QString id,
-                 QString dir,
-                 QString display,
-                 QString basmallah,
-                 QString url,
-                 bool downloadById)
+Reciter::Reciter(QString id, QString dir, QString display, QString basmallah, QString url, bool downloadById)
   : m_id(id)
   , m_baseDirName(dir)
   , m_displayName(display)

@@ -14,6 +14,8 @@ public:
   explicit Logger(QObject* parent = nullptr);
   static QString filename;
   static QFile logFile;
+  static int maxFileAge;
+  static int maxFileSize;
 
   static bool startLogger(QString parentDir);
   static void stopLogger();

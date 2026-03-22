@@ -14,8 +14,7 @@ VersePlayer::VersePlayer(QObject* parent)
   , m_output(new QAudioOutput(this))
   , m_activeVerse(Verse::getCurrent())
   , m_reciter(m_config.reciter())
-  , m_reciterDir(
-      DirManager::getInstance().downloadsDir().absoluteFilePath("recitations"))
+  , m_reciterDir(DirManager::getInstance().downloadsDir().absoluteFilePath("recitations"))
 {
   setAudioOutput(m_output);
 
@@ -106,7 +105,8 @@ VersePlayer::setVerseFile(const QString& newVerseFilename)
 
   QFileInfo verseFile(m_reciterDir.filePath(newVerseFilename));
   if (!verseFile.exists() || verseFile.size() == 0) {
-    qDebug() << "file " + newVerseFilename + " is missing.";
+    qInfo(
+      "Recitation file not found, reciter: %s, file: %s", qPrintable(m_reciter.id()), qPrintable(verseFile.fileName()));
     emit missingVerseFile(m_reciter, m_activeVerse.surah());
     return false;
   }

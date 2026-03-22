@@ -1,5 +1,6 @@
 #include "jsondataexporter.h"
 #include <QJsonArray>
+#include <qhashfunctions.h>
 #include <service/servicefactory.h>
 
 JsonDataExporter::JsonDataExporter()
@@ -85,9 +86,8 @@ JsonDataExporter::save()
 {
   QFile jsonFile(m_file.absoluteFilePath());
   if (!jsonFile.open(QIODevice::WriteOnly)) {
-    qWarning() << "Failed to open JSON file for writing";
-    emit UserDataExporter::error(
-      IOError, "Failed to open json file: " + m_file.absoluteFilePath());
+    qWarning("Failed to open JSON file: %s", qPrintable(m_file.absoluteFilePath()));
+    emit UserDataExporter::error(IOError, "Failed to open json file: " + m_file.absoluteFilePath());
     return false;
   }
 
