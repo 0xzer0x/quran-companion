@@ -24,8 +24,13 @@ PlayerControls::PlayerControls(QWidget* parent,
 {
   ui->setupUi(this);
   loadIcons();
+  loadReciters();
   setupConnections();
+}
 
+void
+PlayerControls::loadReciters()
+{
   foreach (const Reciter& r, m_reciters)
     ui->cmbReciter->addItem(r.displayName(), r.id());
 

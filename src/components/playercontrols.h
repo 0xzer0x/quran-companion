@@ -117,6 +117,10 @@ private:
    */
   void loadIcons();
   /**
+   * @brief load reciters into the reciters combobox
+   */
+  void loadReciters();
+  /**
    * @brief connect ShortcutHandler signals to their corresponding slots
    */
   void setupConnections();
