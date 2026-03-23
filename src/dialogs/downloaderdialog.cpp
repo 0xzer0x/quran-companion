@@ -22,8 +22,7 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, JobManager* manager)
 
 {
   ui->setupUi(this);
-  setWindowIcon(
-    StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_download));
+  setWindowIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_download));
 
   // treeview setup
   m_surahDisplayNames = m_quranService->surahNames();
@@ -42,46 +41,19 @@ DownloaderDialog::DownloaderDialog(QWidget* parent, JobManager* manager)
 void
 DownloaderDialog::setupConnections()
 {
-  connect(ui->btnAddToQueue,
-          &QPushButton::clicked,
-          this,
-          &DownloaderDialog::addToQueue);
+  connect(ui->btnAddToQueue, &QPushButton::clicked, this, &DownloaderDialog::addToQueue);
 
-  connect(ui->btnDownloads,
-          &QPushButton::clicked,
-          this,
-          &DownloaderDialog::openDownloadsDir);
+  connect(ui->btnDownloads, &QPushButton::clicked, this, &DownloaderDialog::openDownloadsDir);
 
-  connect(ui->btnStopQueue,
-          &QPushButton::clicked,
-          this,
-          &DownloaderDialog::btnStopClicked);
+  connect(ui->btnStopQueue, &QPushButton::clicked, this, &DownloaderDialog::btnStopClicked);
 
-  connect(ui->btnClearQueue,
-          &QPushButton::clicked,
-          this,
-          &DownloaderDialog::clearQueue);
+  connect(ui->btnClearQueue, &QPushButton::clicked, this, &DownloaderDialog::clearQueue);
 
-  connect(m_jobMgr,
-          &JobManager::jobCompleted,
-          this,
-          &DownloaderDialog::downloadCompleted);
-  connect(m_jobMgr,
-          &JobManager::filesFound,
-          this,
-          &DownloaderDialog::downloadCompleted);
-  connect(m_jobMgr,
-          &JobManager::jobAborted,
-          this,
-          &DownloaderDialog::downloadAborted);
-  connect(m_jobMgr,
-          &JobManager::jobFailed,
-          this,
-          &DownloaderDialog::topTaskDownloadError);
-  connect(m_jobMgr,
-          &JobManager::downloadSpeedUpdated,
-          this,
-          &DownloaderDialog::updateDownloadSpeed);
+  connect(m_jobMgr, &JobManager::jobCompleted, this, &DownloaderDialog::downloadCompleted);
+  connect(m_jobMgr, &JobManager::filesFound, this, &DownloaderDialog::downloadCompleted);
+  connect(m_jobMgr, &JobManager::jobAborted, this, &DownloaderDialog::downloadAborted);
+  connect(m_jobMgr, &JobManager::jobFailed, this, &DownloaderDialog::topTaskDownloadError);
+  connect(m_jobMgr, &JobManager::downloadSpeedUpdated, this, &DownloaderDialog::updateDownloadSpeed);
 }
 
 void
@@ -96,8 +68,7 @@ DownloaderDialog::populateTreeModel()
     recitations->appendRow(item);
 
     for (int j = 1; j <= 114; j++) {
-      QStandardItem* suraItem =
-        new QStandardItem(m_surahDisplayNames.at(j - 1));
+      QStandardItem* suraItem = new QStandardItem(m_surahDisplayNames.at(j - 1));
       suraItem->setData("surah", Qt::UserRole);
 
       QList<QStandardItem*> rw;
@@ -110,8 +81,7 @@ DownloaderDialog::populateTreeModel()
   m_treeModel.invisibleRootItem()->appendRow(recitations);
 
   // tafsir submenu
-  QStandardItem* tafsir =
-    new QStandardItem(QCoreApplication::translate("SettingsDialog", "Tafsir"));
+  QStandardItem* tafsir = new QStandardItem(QCoreApplication::translate("SettingsDialog", "Tafsir"));
   tafsir->setData("tafsir", Qt::UserRole);
   m_treeModel.invisibleRootItem()->appendRow(tafsir);
   // -- tafasir
@@ -126,8 +96,7 @@ DownloaderDialog::populateTreeModel()
   }
 
   // translation submenu
-  QStandardItem* translation = new QStandardItem(
-    QCoreApplication::translate("SettingsDialog", "Translation"));
+  QStandardItem* translation = new QStandardItem(QCoreApplication::translate("SettingsDialog", "Translation"));
   tafsir->setData("translation", Qt::UserRole);
   m_treeModel.invisibleRootItem()->appendRow(translation);
   // -- translations
@@ -147,8 +116,7 @@ DownloaderDialog::populateTreeModel()
   extras->setData("extras", Qt::UserRole);
   m_treeModel.invisibleRootItem()->appendRow(extras);
   // -- qcf 2
-  QStandardItem* qcf =
-    new QStandardItem(QCoreApplication::translate("SettingsDialog", "QCF V2"));
+  QStandardItem* qcf = new QStandardItem(QCoreApplication::translate("SettingsDialog", "QCF V2"));
   qcf->setData("qcf", Qt::UserRole);
   extras->appendRow(qcf);
 }
@@ -190,15 +158,15 @@ DownloaderDialog::addToQueue()
       enqueueSurah(parent, current + 1);
     // tafasir
     else if (i.data(Qt::UserRole).toString() == "tadb") {
-      QSharedPointer<ContentJob> job = QSharedPointer<ContentJob>::create(
-        DownloadJob::TafsirFile, i.data(Qt::UserRole + 1).toInt());
+      QSharedPointer<ContentJob> job =
+        QSharedPointer<ContentJob>::create(DownloadJob::TafsirFile, i.data(Qt::UserRole + 1).toInt());
       m_jobMgr->addJob(job);
       addTaskProgress(job);
     }
     // translation
     else if (i.data(Qt::UserRole).toString() == "trdb") {
-      QSharedPointer<ContentJob> job = QSharedPointer<ContentJob>::create(
-        DownloadJob::TranslationFile, i.data(Qt::UserRole + 1).toInt());
+      QSharedPointer<ContentJob> job =
+        QSharedPointer<ContentJob>::create(DownloadJob::TranslationFile, i.data(Qt::UserRole + 1).toInt());
       m_jobMgr->addJob(job);
       addTaskProgress(job);
     }
@@ -250,8 +218,7 @@ DownloaderDialog::addTaskProgress(QSharedPointer<DownloadJob> job)
   downInfo->addWidget(downSpeed);
   prgFrm->layout()->addItem(downInfo);
 
-  DownloadProgressBar* dpb =
-    new DownloadProgressBar(prgFrm, job->type(), total);
+  DownloadProgressBar* dpb = new DownloadProgressBar(prgFrm, job->type(), total);
   prgFrm->layout()->addWidget(dpb);
   m_frameLst.append(prgFrm);
 
@@ -261,13 +228,11 @@ DownloaderDialog::addTaskProgress(QSharedPointer<DownloadJob> job)
 void
 DownloaderDialog::enqueueSurah(int reciter, int surah)
 {
-  bool currentlyDownloading =
-    m_downloadingSurahs.value(reciter).contains(surah);
+  bool currentlyDownloading = m_downloadingSurahs.value(reciter).contains(surah);
   if (currentlyDownloading)
     return;
 
-  QSharedPointer<SurahJob> sj =
-    QSharedPointer<SurahJob>::create(reciter, surah);
+  QSharedPointer<SurahJob> sj = QSharedPointer<SurahJob>::create(reciter, surah);
   addToDownloading(reciter, surah);
   addTaskProgress(sj);
   m_jobMgr->addJob(sj);
@@ -281,14 +246,10 @@ DownloaderDialog::setCurrentBar()
 
   m_currentLb = m_frameLst.at(0)->findChild<QLabel*>("DownloadInfo");
   m_currDownSpeedLb = m_frameLst.at(0)->findChild<QLabel*>("DownloadSpeed");
-  m_currentLb->setText(tr("Downloading: ") +
-                       m_currentLb->parent()->objectName());
+  m_currentLb->setText(tr("Downloading: ") + m_currentLb->parent()->objectName());
   m_currentBar = m_frameLst.at(0)->findChild<DownloadProgressBar*>();
 
-  connect(m_jobMgr,
-          &JobManager::jobProgressed,
-          m_currentBar,
-          &DownloadProgressBar::updateProgress);
+  connect(m_jobMgr, &JobManager::jobProgressed, m_currentBar, &DownloadProgressBar::updateProgress);
 }
 
 void
@@ -309,16 +270,14 @@ DownloaderDialog::selectDownload(DownloadJob::Type type, QPair<int, int> info)
   } else if (type == DownloadJob::Qcf) {
     parent = m_treeModel.index(m_treeModel.rowCount() - 1, 0);
     task = m_treeModel.index(0, 0, parent);
-  } else if (type == DownloadJob::TafsirFile ||
-             type == DownloadJob::TranslationFile) {
+  } else if (type == DownloadJob::TafsirFile || type == DownloadJob::TranslationFile) {
     parent = m_treeModel.index(m_treeModel.rowCount() - 2 - !info.first, 0);
     // remove default db indices from current index as defaults are not
     // downloadable
     if (!info.first)
       info.second -= info.second > m_tafasir.indexOf(Tafsir::findById("sa3dy"));
     else
-      info.second -= 1 + (info.second > m_translations.indexOf(
-                                          Translation::findById("en_khattab")));
+      info.second -= 1 + (info.second > m_translations.indexOf(Translation::findById("en_khattab")));
     task = m_treeModel.index(info.second, 0, parent);
   }
 
@@ -327,8 +286,7 @@ DownloaderDialog::selectDownload(DownloadJob::Type type, QPair<int, int> info)
     ui->treeView->expand(m_treeModel.index(0, 0));
   ui->treeView->expand(parent);
   selector->clearSelection();
-  selector->select(task,
-                   QItemSelectionModel::Rows | QItemSelectionModel::Select);
+  selector->select(task, QItemSelectionModel::Rows | QItemSelectionModel::Select);
 }
 
 void
@@ -365,10 +323,7 @@ DownloaderDialog::downloadCompleted(QSharedPointer<DownloadJob> finished)
   m_currentBar->setStyling(DownloadProgressBar::completed);
   m_currentLb->setText(m_currentLb->parent()->objectName());
   m_currDownSpeedLb->setText(tr("Download Completed"));
-  disconnect(m_jobMgr,
-             &JobManager::jobProgressed,
-             m_currentBar,
-             &DownloadProgressBar::updateProgress);
+  disconnect(m_jobMgr, &JobManager::jobProgressed, m_currentBar, &DownloadProgressBar::updateProgress);
 
   if (finished->type() == DownloadJob::Recitation) {
     QSharedPointer<SurahJob> sj = finished.dynamicCast<SurahJob>();
@@ -388,10 +343,7 @@ DownloaderDialog::topTaskDownloadError(QSharedPointer<DownloadJob> failed)
   m_currentBar->setStyling(DownloadProgressBar::aborted);
   m_currentLb->setText(m_currentLb->parent()->objectName());
   m_currDownSpeedLb->setText(tr("Download Failed"));
-  disconnect(m_jobMgr,
-             &JobManager::jobProgressed,
-             m_currentBar,
-             &DownloadProgressBar::updateProgress);
+  disconnect(m_jobMgr, &JobManager::jobProgressed, m_currentBar, &DownloadProgressBar::updateProgress);
 
   if (failed->type() == DownloadJob::Recitation) {
     QSharedPointer<SurahJob> sj = failed.dynamicCast<SurahJob>();
@@ -408,8 +360,7 @@ DownloaderDialog::topTaskDownloadError(QSharedPointer<DownloadJob> failed)
 void
 DownloaderDialog::openDownloadsDir()
 {
-  QUrl url = QUrl::fromLocalFile(
-    DirManager::getInstance().downloadsDir().absolutePath());
+  QUrl url = QUrl::fromLocalFile(DirManager::getInstance().downloadsDir().absolutePath());
   QDesktopServices::openUrl(url);
 }
 

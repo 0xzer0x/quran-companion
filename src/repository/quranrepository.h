@@ -131,9 +131,7 @@ public:
    * matches.
    * @return A list of verses that match the search text.
    */
-  QList<Verse> searchSurahs(QString searchText,
-                            const QList<int> surahs,
-                            const bool whole = false) const;
+  QList<Verse> searchSurahs(QString searchText, const QList<int> surahs, const bool whole = false) const;
   /**
    * @brief Search for verses within a specified page range that match a given
    * text.
@@ -182,10 +180,9 @@ private:
   /**
    * @brief Execute a SQL query and handle errors.
    * @param query The SQL query to execute.
-   * @param errMsg Error message to log if the query fails.
    * @return True if the query was successful, false otherwise.
    */
-  bool executeQuery(QSqlQuery& query, QString errMsg) const;
+  bool executeQuery(QSqlQuery& query) const;
   /**
    * @brief Reference to the singleton Configuration instance.
    */

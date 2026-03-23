@@ -25,15 +25,14 @@ QcfTask::operator=(const QcfTask other)
 QUrl
 QcfTask::url() const
 {
-  return QUrl::fromEncoded(
-    ("https://github.com/0xzer0x/quran-companion-extras/raw/main/QCFV2/QCF2" +
-     QString::number(m_page).rightJustified(3, '0') + ".ttf")
-      .toLatin1());
+  return QUrl::fromEncoded(("https://github.com/0xzer0x/quran-companion-extras/raw/main/QCFV2/QCF2" +
+                            QString::number(m_page).rightJustified(3, '0') + ".ttf")
+                             .toLatin1());
 }
 
 QFileInfo
 QcfTask::destination() const
 {
-  return QFileInfo(m_downloadsDir.absoluteFilePath(
-    "QCFV2/QCF2" + QString::number(m_page).rightJustified(3, '0') + ".ttf"));
+  return QFileInfo(
+    m_downloadsDir.absoluteFilePath("QCFV2/QCF2" + QString::number(m_page).rightJustified(3, '0') + ".ttf"));
 }

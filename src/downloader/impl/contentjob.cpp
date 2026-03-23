@@ -17,12 +17,8 @@ ContentJob::ContentJob(Type type, int idx)
 
   connect(&m_taskDlr, &TaskDownloader::completed, this, &DownloadJob::finished);
   connect(&m_taskDlr, &TaskDownloader::taskError, this, &DownloadJob::failed);
-  connect(
-    &m_taskDlr, &TaskDownloader::progressed, this, &DownloadJob::progressed);
-  connect(&m_taskDlr,
-          &TaskDownloader::downloadSpeedUpdated,
-          this,
-          &DownloadJob::downloadSpeedUpdated);
+  connect(&m_taskDlr, &TaskDownloader::progressed, this, &DownloadJob::progressed);
+  connect(&m_taskDlr, &TaskDownloader::downloadSpeedUpdated, this, &DownloadJob::downloadSpeedUpdated);
 }
 
 void
@@ -74,9 +70,7 @@ ContentJob::type()
 QString
 ContentJob::name()
 {
-  return m_type == DownloadJob::TafsirFile
-           ? m_tafasir.at(m_idx).displayName()
-           : m_translations.at(m_idx).displayName();
+  return m_type == DownloadJob::TafsirFile ? m_tafasir.at(m_idx).displayName() : m_translations.at(m_idx).displayName();
 }
 
 ContentJob::~ContentJob()

@@ -18,11 +18,7 @@ ConfigurationSchema::ConfigurationSchema()
 {
   QHash<QString, QVariant> general = {
     make_pair("Language", (int)QLocale::English),
-    make_pair("Theme",
-              QGuiApplication::styleHints()->colorScheme() ==
-                  Qt::ColorScheme::Dark
-                ? 2
-                : 0),
+    make_pair("Theme", QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark ? 2 : 0),
     make_pair("VOTD", true),
     make_pair("MissingFileWarning", true),
     make_pair("DownloadsDir", QVariant()),
@@ -33,18 +29,12 @@ ConfigurationSchema::ConfigurationSchema()
     make_pair("VisibleMenubar", true),
   };
   QHash<QString, QVariant> reader = {
-    make_pair("Mode", 0),
-    make_pair("QCF", 1),
-    make_pair("VerseType", 0),
-    make_pair("VerseFontSize", 20),
-    make_pair("FGHighlight", 1),
-    make_pair("AdaptiveFont", true),
-    make_pair("QCF1Size", 22),
-    make_pair("QCF2Size", 20),
-    make_pair("Khatmah", 0),
-    make_pair("SideContentFont", QFont("Expo Arabic", 14)),
-    make_pair("Tafsir", "sa3dy"),
-    make_pair("Translation", "en_khattab"),
+    make_pair("Mode", 0),         make_pair("QCF", 1),
+    make_pair("VerseType", 0),    make_pair("VerseFontSize", 20),
+    make_pair("FGHighlight", 1),  make_pair("AdaptiveFont", true),
+    make_pair("QCF1Size", 22),    make_pair("QCF2Size", 20),
+    make_pair("Khatmah", 0),      make_pair("SideContentFont", QFont("Expo Arabic", 14)),
+    make_pair("Tafsir", "sa3dy"), make_pair("Translation", "en_khattab"),
   };
 
   m_schema = {

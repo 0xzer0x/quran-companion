@@ -14,8 +14,7 @@ public:
 
   QPair<int, int> pageMetadata(const int page) const override;
 
-  std::optional<QPair<int, int>> getRubStartingInPage(
-    const int page) const override;
+  std::optional<QPair<int, int>> getRubStartingInPage(const int page) const override;
 
   int getVersePage(const int& surahIdx, const int& verse) const override;
 
@@ -39,13 +38,9 @@ public:
 
   QList<int> searchSurahNames(QString text) const override;
 
-  QList<Verse> searchSurahs(QString searchText,
-                            const QList<int> surahs,
-                            const bool whole) const override;
+  QList<Verse> searchSurahs(QString searchText, const QList<int> surahs, const bool whole) const override;
 
-  QList<Verse> searchVerses(QString searchText,
-                            const int range[],
-                            const bool whole) const override;
+  QList<Verse> searchVerses(QString searchText, const int range[], const bool whole) const override;
 
   Verse randomVerse() const override;
 

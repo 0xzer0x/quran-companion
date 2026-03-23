@@ -76,8 +76,8 @@ protected:
   void closeEvent(QCloseEvent* event);
 
 signals:
-  void missingTafsir(QString id);
-  void missingTranslation(QString id);
+  void missingTafsir(const ::Tafsir tafsir);
+  void missingTranslation(const ::Translation translation);
 
 private slots:
   /**
@@ -131,14 +131,6 @@ private:
    * @brief pointer to implementation of GlyphService
    */
   const GlyphService* m_glyphService;
-  /**
-   * @brief reference to the static QList of available tafasir
-   */
-  const QList<::Tafsir>& m_tafasir;
-  /**
-   * @brief reference to the static QList of available translations
-   */
-  const QList<::Translation>& m_translations;
   /**
    * @brief loads the QFont selected for the side content
    */
@@ -205,14 +197,13 @@ private:
    */
   Mode m_currMode;
   /**
-   * @brief index of the currently shown Tafsir in Tafsir::tafasir
+   * @brief The currently shown ::Tafsir
    */
-  QString m_tafsir;
+  ::Tafsir m_tafsir;
   /**
-   * @brief index of the currently shown Translation in
-   * Translation::translations
+   * @brief The currently shown ::Translation
    */
-  QString m_translation;
+  ::Translation m_translation;
   /**
    * @brief fixed font size for the verse text displayed above the tafsir.
    */

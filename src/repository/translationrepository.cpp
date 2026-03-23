@@ -12,7 +12,7 @@ TranslationRepository::TranslationRepository()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "TranslationCon"))
   , m_dirMgr(DirManager::getInstance())
   , m_config(Configuration::getInstance())
-  , m_translations(Translation::translations)
+  , m_currTranslation(m_config.translation())
 {
 }
 
@@ -21,7 +21,7 @@ TranslationRepository::open()
 {
   setDatabaseName(m_translationFile.absoluteFilePath());
   if (!QSqlDatabase::open())
-    qFatal("Error opening translation db");
+    qFatal("Failed to open translation DB, file: %s", qPrintable(m_translationFile.absoluteFilePath()));
 }
 
 DbConnection::Type
@@ -33,32 +33,19 @@ TranslationRepository::type()
 void
 TranslationRepository::loadTranslation()
 {
-  QString curr = m_config.settings().value("Reader/Translation").toString();
-  bool isNum;
-  curr.toInt(&isNum);
-  if (isNum) {
-    curr = m_translations.at(curr.toInt()).id();
-    m_config.settings().setValue("Reader/Translation", curr);
-  }
-
-  setCurrentTranslation(curr);
+  setCurrentTranslation(m_config.translation());
 }
 
 bool
-TranslationRepository::setCurrentTranslation(QString id)
+TranslationRepository::setCurrentTranslation(const ::Translation translation)
 {
-  std::optional<::Translation> translation = Translation::findById(id);
-  if (!translation.has_value())
-    return false;
-
-  m_currTranslation = translation.value();
-  const QDir& baseDir = m_currTranslation->isExtra()
-                          ? DirManager::getInstance().downloadsDir()
-                          : DirManager::getInstance().assetsDir();
-  QString path = "translations/" + m_currTranslation->filename();
+  const QDir& baseDir =
+    translation.isExtra() ? DirManager::getInstance().downloadsDir() : DirManager::getInstance().assetsDir();
+  QString path = "translations/" + translation.filename();
   if (!baseDir.exists(path))
     return false;
 
+  m_currTranslation = translation;
   m_translationFile.setFile(baseDir.filePath(path));
   TranslationRepository::open();
   return true;
@@ -81,7 +68,7 @@ TranslationRepository::getTranslation(const int sIdx, const int vIdx) const
   return dbQuery.value(0).toString();
 }
 
-std::optional<const ::Translation>
+const ::Translation
 TranslationRepository::currTranslation() const
 {
   return m_currTranslation;

@@ -117,21 +117,21 @@ private slots:
    * list
    * @param surah
    */
-  void missingRecitationFileWarn(const Reciter* const reciter, int surah);
+  void missingRecitationFileWarn(const Reciter reciter, int surah);
   /**
    * @brief display a warning messagebox when QCF2 files are not found
    */
   void missingQCF();
   /**
-   * @brief display a warning messagebox when a tafsir db file is not found
-   * @param id - missing Tafsir id
+   * @brief Display a warning messagebox when a ::Tafsir db file is not found
+   * @param tafsir - missing ::Tafsir
    */
-  void missingTafsir(QString id);
+  void missingTafsir(Tafsir tafsir);
   /**
-   * @brief display a warning messagebox when a translation db file is not found
-   * @param id - missing Translation id
+   * @brief Display a warning messagebox when a translation db file is not found
+   * @param translation - missing ::Translation
    */
-  void missingTranslation(QString id);
+  void missingTranslation(Translation translation);
   /**
    * @brief set the systray icon tooltip text according to the currently playing
    * recitation
@@ -281,14 +281,6 @@ private:
    * @brief reference to the singleton TranslationRepository instance
    */
   const TranslationService* m_translationService;
-  /**
-   * @brief reference to the static QList of available reciters
-   */
-  const QList<Reciter>& m_reciters;
-  /**
-   * @brief reference to the static QList of available tafasir
-   */
-  const QList<Tafsir>& m_tafasir;
   /**
    * @brief initalizes different parts used by the app
    */

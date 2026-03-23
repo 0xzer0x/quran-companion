@@ -44,7 +44,7 @@ StyleManager::loadTheme()
   }
 
   if (!palette.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    qCritical() << "Couldn't Read Color palette xml";
+    qCritical("Failed to read color palette XML, file: %s", qPrintable(palette.fileName()));
   }
 
   QXmlStreamReader paletteReader(&palette);
@@ -60,8 +60,7 @@ StyleManager::loadTheme()
       else {
         QPalette::ColorRole role;
         int red, green, blue;
-        role = static_cast<QPalette::ColorRole>(
-          paletteReader.attributes().value("role").toInt());
+        role = static_cast<QPalette::ColorRole>(paletteReader.attributes().value("role").toInt());
         red = paletteReader.attributes().value("red").toInt();
         green = paletteReader.attributes().value("green").toInt();
         blue = paletteReader.attributes().value("blue").toInt();

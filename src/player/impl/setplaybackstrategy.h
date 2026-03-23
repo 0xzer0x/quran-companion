@@ -9,11 +9,7 @@
 class SetPlaybackStrategy : public PlaybackStrategy
 {
 public:
-  SetPlaybackStrategy(Verse start,
-                      Verse end,
-                      int repeatCount = 1,
-                      int verseFrequency = 1,
-                      int postVersePause = 0);
+  SetPlaybackStrategy(Verse start, Verse end, int repeatCount = 1, int verseFrequency = 1, int postVersePause = 0);
 
   Verse start() override;
   Verse stop() override;

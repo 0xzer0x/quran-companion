@@ -11,17 +11,40 @@ DirManager::getInstance()
 
 DirManager::DirManager()
 {
-  m_downloadsDir.setPath(
-    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
-    QDir::separator() + "QuranCompanion");
-  m_configDir.setPath(
-    QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) +
-    QDir::separator() + "QuranCompanion");
-  m_assetsDir.setPath(QApplication::applicationDirPath() + QDir::separator() +
-                      "assets");
+  m_downloadsDir.setPath(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QDir::separator() +
+                         "QuranCompanion");
+  m_configDir.setPath(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + QDir::separator() +
+                      "QuranCompanion");
+
+  // WARN: Required runtime directories
+  m_basmallahDir = resolveRuntimeDataDir("bismillah");
+  m_assetsDir = resolveRuntimeDataDir("assets");
   m_fontsDir.setPath(m_assetsDir.absoluteFilePath("fonts"));
-  m_basmallahDir.setPath(QApplication::applicationDirPath() +
-                         QDir::separator() + "bismillah");
+}
+
+QDir
+DirManager::resolveRuntimeDataDir(const QString& subdir)
+{
+// NOTE: Expected directory layout on linux:
+// <prefix>
+//    ├── bin/
+//    │   └── quran-companion
+//    └── share/
+//        └── quran-companion/
+//            ├── assets/
+//            └── bismillah/
+#ifdef Q_OS_LINUX
+  static const QDir linuxDataDir(
+    QStringList({ QApplication::applicationDirPath(), "..", "share", "quran-companion" }).join(QDir::separator()));
+  QDir candidate(linuxDataDir.absoluteFilePath(subdir));
+  if (candidate.exists()) {
+    return candidate;
+  }
+#endif
+
+  // WARN: Fallback to application binary location
+  static const QDir defaultDataDir(QApplication::applicationDirPath());
+  return QDir(defaultDataDir.absoluteFilePath(subdir));
 }
 
 void

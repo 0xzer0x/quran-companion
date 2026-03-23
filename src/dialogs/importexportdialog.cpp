@@ -3,28 +3,18 @@
 
 #include <QMessageBox>
 
-ImportExportDialog::ImportExportDialog(
-  QWidget* parent,
-  QSharedPointer<UserDataImporter> importer,
-  QSharedPointer<UserDataExporter> exporter)
+ImportExportDialog::ImportExportDialog(QWidget* parent,
+                                       QSharedPointer<UserDataImporter> importer,
+                                       QSharedPointer<UserDataExporter> exporter)
   : ui(new Ui::ImportExportDialog)
   , m_importer(importer)
   , m_exporter(exporter)
   , QDialog(parent)
 {
   ui->setupUi(this);
-  connect(ui->buttonBox,
-          &QDialogButtonBox::clicked,
-          this,
-          &ImportExportDialog::dialogButtonClicked);
-  connect(m_importer.data(),
-          &UserDataImporter::error,
-          this,
-          &ImportExportDialog::importError);
-  connect(m_exporter.data(),
-          &UserDataExporter::error,
-          this,
-          &ImportExportDialog::exportError);
+  connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &ImportExportDialog::dialogButtonClicked);
+  connect(m_importer.data(), &UserDataImporter::error, this, &ImportExportDialog::importError);
+  connect(m_exporter.data(), &UserDataExporter::error, this, &ImportExportDialog::exportError);
 }
 
 void

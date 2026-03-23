@@ -9,18 +9,16 @@ VerseDialog::VerseDialog(QWidget* parent)
   , m_navigator(Navigator::getInstance())
   , m_quranService(ServiceFactory::quranService())
   , m_translationService(ServiceFactory::translationService())
-  , m_timestampFile(
-      DirManager::getInstance().configDir().absoluteFilePath("votd.log"))
+  , m_timestampFile(DirManager::getInstance().configDir().absoluteFilePath("votd.log"))
 {
   ui->setupUi(this);
 
-  QFont sideFont =
-    qvariant_cast<QFont>(m_config.settings().value("Reader/SideContentFont"));
+  QFont sideFont = m_config.sideContentFont();
   ui->lbContent->setFont(sideFont);
   ui->lbInfo->setFont(sideFont);
   ui->lbVerse->setFont(QFont("kfgqpc_hafs_uthmanic _script", 20));
 
-  if (m_config.settings().value("VOTD").toBool())
+  if (m_config.showVerseOfTheDay())
     showVOTD(true);
 }
 
@@ -41,11 +39,10 @@ VerseDialog::votdShown()
   if (!m_timestampFile.exists())
     return false;
   if (!m_timestampFile.open(QIODevice::ReadOnly)) {
-    qWarning() << "Couldn't open votd.log file for daily notification check";
+    qWarning("Failed to open file for daily notification check: %s", qPrintable(m_timestampFile.fileName()));
     return false;
   }
-  lastTimestamp =
-    QDateTime::fromString(m_timestampFile.readLine().trimmed(), Qt::ISODate);
+  lastTimestamp = QDateTime::fromString(m_timestampFile.readLine().trimmed(), Qt::ISODate);
 
   m_timestampFile.close();
   return lastTimestamp.daysTo(m_now) <= 0;
@@ -61,7 +58,7 @@ void
 VerseDialog::readVerseOfTheDay()
 {
   if (!m_timestampFile.open(QIODevice::ReadOnly)) {
-    qWarning() << "Couldn't open votd.log file for daily notification check";
+    qWarning("Failed to open file for daily notification check: %s", qPrintable(m_timestampFile.fileName()));
     return;
   }
   m_timestampFile.seek(20);
@@ -75,7 +72,7 @@ void
 VerseDialog::writeTimestamp()
 {
   if (!m_timestampFile.open(QIODevice::WriteOnly)) {
-    qWarning() << "Couldn't open votd.log file for writing timestamp";
+    qWarning("Failed to open file for daily notification check: %s", qPrintable(m_timestampFile.fileName()));
     return;
   }
   m_timestampFile.seek(0);
@@ -88,15 +85,11 @@ VerseDialog::writeTimestamp()
 void
 VerseDialog::updateLabels()
 {
-  ui->lbVerse->setText(
-    "ﵩ " + m_quranService->verseText(m_votd.surah(), m_votd.number()) + " ﵨ");
-  ui->lbContent->setText(
-    m_translationService->getTranslation(m_votd.surah(), m_votd.number()));
-  ui->lbInfo->setText(
-    QCoreApplication::translate("BookmarksDialog", "Surah: ") +
-    m_quranService->surahName(m_votd.surah()) + " - " +
-    QCoreApplication::translate("BookmarksDialog", "Verse: ") +
-    QString::number(m_votd.number()));
+  ui->lbVerse->setText("ﵩ " + m_quranService->verseText(m_votd.surah(), m_votd.number()) + " ﵨ");
+  ui->lbContent->setText(m_translationService->getTranslation(m_votd.surah(), m_votd.number()));
+  ui->lbInfo->setText(QCoreApplication::translate("BookmarksDialog", "Surah: ") +
+                      m_quranService->surahName(m_votd.surah()) + " - " +
+                      QCoreApplication::translate("BookmarksDialog", "Verse: ") + QString::number(m_votd.number()));
 }
 
 void

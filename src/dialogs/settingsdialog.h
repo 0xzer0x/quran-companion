@@ -47,8 +47,7 @@ public:
    * @param parent - pointer to parent widget
    * @param vPlayerPtr - pointer to VersePlayer instance used for playback
    */
-  explicit SettingsDialog(QWidget* parent = nullptr,
-                          VersePlayer* vPlayerPtr = nullptr);
+  explicit SettingsDialog(QWidget* parent = nullptr, VersePlayer* vPlayerPtr = nullptr);
   ~SettingsDialog();
 
 public slots:
@@ -226,8 +225,6 @@ private:
   Ui::SettingsDialog* ui;
   Configuration& m_config;
   const QDir& m_downloadsDir;
-  const QList<Tafsir>& m_tafasir;
-  const QList<Translation>& m_translations;
   const QMap<QString, QString>& m_shortcutDescription;
   /**
    * @brief connects signals and slots for different UI
@@ -265,11 +262,6 @@ private:
    * SettingsDialog::m_audioDevices.
    */
   int m_audioOutIdx;
-  /**
-   * @brief DBManager::Translation enum value mapped to the translation index in
-   * the combobox.
-   */
-  int m_translation;
   /**
    * @brief ConfigurationSchema::VerseType configuration value
    */
@@ -316,6 +308,10 @@ private:
    * @brief boolean flag to indicate that foreground highlighting is active.
    */
   bool m_fgHighlight = true;
+  /**
+   * @brief The currently selected ::Translation.
+   */
+  Translation m_translation;
   /**
    * @brief pointer to VersePlayer instance.
    */

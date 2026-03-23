@@ -13,7 +13,7 @@ TafsirRepository::TafsirRepository()
   : QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", "TafsirCon"))
   , m_config(Configuration::getInstance())
   , m_dirMgr(DirManager::getInstance())
-  , m_tafasir(Tafsir::tafasir)
+  , m_currTafsir(m_config.tafsir())
 {
   loadTafsir();
 }
@@ -23,7 +23,7 @@ TafsirRepository::open()
 {
   setDatabaseName(m_tafsirFile.absoluteFilePath());
   if (!QSqlDatabase::open())
-    qFatal("Error opening tafsir db");
+    qFatal("Failed to open tafsir DB, file: %s", qPrintable(m_tafsirFile.absoluteFilePath()));
 }
 
 DbConnection::Type
@@ -35,33 +35,21 @@ TafsirRepository::type()
 void
 TafsirRepository::loadTafsir()
 {
-  QString curr = m_config.settings().value("Reader/Tafsir").toString();
-  bool isNum;
-  curr.toInt(&isNum);
-  if (isNum) {
-    curr = m_tafasir.at(curr.toInt()).id();
-    m_config.settings().setValue("Reader/Tafsir", curr);
-  }
-
-  setCurrentTafsir(curr);
+  setCurrentTafsir(m_config.tafsir());
 }
 
 bool
-TafsirRepository::setCurrentTafsir(QString id)
+TafsirRepository::setCurrentTafsir(const ::Tafsir tafsir)
 {
-  std::optional<::Tafsir> tafsir = Tafsir::findById(id);
-  if (!tafsir.has_value())
-    return false;
-
-  m_currTafsir = tafsir.value();
-  const QDir& baseDir =
-    m_currTafsir->isExtra() ? m_dirMgr.downloadsDir() : m_dirMgr.assetsDir();
-  QString path = "tafasir/" + m_currTafsir->filename();
+  const QDir& baseDir = tafsir.isExtra() ? m_dirMgr.downloadsDir() : m_dirMgr.assetsDir();
+  QString path = "tafasir/" + tafsir.filename();
   if (!baseDir.exists(path))
     return false;
 
+  m_currTafsir = tafsir;
   m_tafsirFile.setFile(baseDir.filePath(path));
   TafsirRepository::open();
+
   return true;
 }
 
@@ -82,8 +70,8 @@ TafsirRepository::getTafsir(const int sIdx, const int vIdx)
   return dbQuery.value(0).toString();
 }
 
-std::optional<const Tafsir>
+const Tafsir
 TafsirRepository::currTafsir() const
 {
-  return m_currTafsir.value();
+  return m_currTafsir;
 }

@@ -21,8 +21,7 @@ public:
    * @return optional value of a QPair of the rub number relative to the hizb
    * and the hizb number relative to the mushaf
    */
-  virtual std::optional<QPair<int, int>> getRubStartingInPage(
-    const int page) const = 0;
+  virtual std::optional<QPair<int, int>> getRubStartingInPage(const int page) const = 0;
   /**
    * @brief gets the page where the verse is found
    * @param surahIdx - sura number
@@ -102,9 +101,7 @@ public:
    * @param whole - boolean value to search for whole words only
    * @return QList of Verse instances representing the search results
    */
-  virtual QList<Verse> searchSurahs(QString searchText,
-                                    const QList<int> surahs,
-                                    const bool whole = false) const = 0;
+  virtual QList<Verse> searchSurahs(QString searchText, const QList<int> surahs, const bool whole = false) const = 0;
   /**
    * @brief search a range of pages for the given search text
    * @param searchText - text to search for

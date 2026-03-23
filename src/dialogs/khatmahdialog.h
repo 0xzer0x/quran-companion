@@ -91,19 +91,16 @@ private:
    */
   QPointer<InputField> loadKhatmah(const int id);
 
-  Ui::KhatmahDialog* ui;        ///< Pointer to the UI elements of the dialog.
-  const Verse& m_currVerse;     ///< Reference to the current active verse.
-  QuranService* m_quranService; ///< Pointer to the QuranService instance.
+  Ui::KhatmahDialog* ui;            ///< Pointer to the UI elements of the dialog.
+  const Verse& m_currVerse;         ///< Reference to the current active verse.
+  QuranService* m_quranService;     ///< Pointer to the QuranService instance.
   KhatmahService* m_khatmahService; ///< Pointer to the KhatmahService instance.
-  Configuration& m_config; ///< Reference to the Configuration instance.
-  Navigator& m_navigator;  ///< Reference to the Navigator instance.
-  QPointer<QFrame>
-    m_currActive; ///< Pointer to the currently active Khatmah QFrame.
-  QList<QPointer<QFrame>>
-    m_frmLst; ///< List of all QFrame(s) loaded for different Khatmah entries.
-  QList<int> m_khatmahIds; ///< List of all available Khatmah IDs.
-  QHash<int, QString>
-    m_names; ///< Hash map of Khatmah IDs and their associated names.
+  Configuration& m_config;          ///< Reference to the Configuration instance.
+  Navigator& m_navigator;           ///< Reference to the Navigator instance.
+  QPointer<QFrame> m_currActive;    ///< Pointer to the currently active Khatmah QFrame.
+  QList<QPointer<QFrame>> m_frmLst; ///< List of all QFrame(s) loaded for different Khatmah entries.
+  QList<int> m_khatmahIds;          ///< List of all available Khatmah IDs.
+  QHash<int, QString> m_names;      ///< Hash map of Khatmah IDs and their associated names.
 };
 
 #endif // KHATMAHDIALOG_H

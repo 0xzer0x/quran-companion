@@ -9,10 +9,7 @@ QcfJob::QcfJob()
 {
   connect(&m_taskDlr, &TaskDownloader::completed, this, &QcfJob::taskFinished);
   connect(&m_taskDlr, &TaskDownloader::taskError, this, &QcfJob::taskFailed);
-  connect(&m_taskDlr,
-          &TaskDownloader::downloadSpeedUpdated,
-          this,
-          &DownloadJob::downloadSpeedUpdated);
+  connect(&m_taskDlr, &TaskDownloader::downloadSpeedUpdated, this, &DownloadJob::downloadSpeedUpdated);
 }
 
 void

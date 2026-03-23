@@ -15,16 +15,9 @@ TaskDownloader::process(DownloadTask* task, QNetworkAccessManager* manager)
 {
   m_task = task;
   if (m_reply) {
-    disconnect(
-      m_reply, &QNetworkReply::finished, this, &TaskDownloader::finish);
-    disconnect(m_reply,
-               &QNetworkReply::downloadProgress,
-               this,
-               &TaskDownloader::progressed);
-    disconnect(m_reply,
-               &QNetworkReply::downloadProgress,
-               this,
-               &TaskDownloader::taskProgress);
+    disconnect(m_reply, &QNetworkReply::finished, this, &TaskDownloader::finish);
+    disconnect(m_reply, &QNetworkReply::downloadProgress, this, &TaskDownloader::progressed);
+    disconnect(m_reply, &QNetworkReply::downloadProgress, this, &TaskDownloader::taskProgress);
   }
 
   QNetworkRequest req(m_task->url());
@@ -33,14 +26,8 @@ TaskDownloader::process(DownloadTask* task, QNetworkAccessManager* manager)
   m_startTime = QTime::currentTime();
 
   connect(m_reply, &QNetworkReply::finished, this, &TaskDownloader::finish);
-  connect(m_reply,
-          &QNetworkReply::downloadProgress,
-          this,
-          &TaskDownloader::progressed);
-  connect(m_reply,
-          &QNetworkReply::downloadProgress,
-          this,
-          &TaskDownloader::taskProgress);
+  connect(m_reply, &QNetworkReply::downloadProgress, this, &TaskDownloader::progressed);
+  connect(m_reply, &QNetworkReply::downloadProgress, this, &TaskDownloader::taskProgress);
 }
 
 void
@@ -87,13 +74,13 @@ TaskDownloader::finish()
 void
 TaskDownloader::handleError(QNetworkReply::NetworkError err)
 {
+  qInfo("Failed to download file, error: %s", qPrintable(m_reply->errorString()));
   switch (err) {
     case QNetworkReply::OperationCanceledError:
-      qInfo() << m_reply->errorString();
       break;
     default:
-      qInfo() << m_reply->errorString();
       emit taskError();
+      break;
   }
 }
 
@@ -108,7 +95,7 @@ TaskDownloader::saveFile()
 
   QFile localFile(m_task->destination().absoluteFilePath());
   if (!localFile.open(QIODevice::WriteOnly)) {
-    qWarning() << "Couldn't open file:" << m_task->destination();
+    qWarning("Failed to open file: %s", qPrintable(m_task->destination().absoluteFilePath()));
     return false;
   }
 

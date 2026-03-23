@@ -12,9 +12,9 @@ TafsirServiceSqlImpl::loadTafsir()
 }
 
 bool
-TafsirServiceSqlImpl::setCurrentTafsir(QString id)
+TafsirServiceSqlImpl::setCurrentTafsir(const Tafsir tafsir)
 {
-  return m_tafsirRepository.setCurrentTafsir(id);
+  return m_tafsirRepository.setCurrentTafsir(tafsir);
 }
 
 QString
@@ -23,7 +23,7 @@ TafsirServiceSqlImpl::getTafsir(const int sIdx, const int vIdx)
   return m_tafsirRepository.getTafsir(sIdx, vIdx);
 }
 
-std::optional<const Tafsir>
+const Tafsir
 TafsirServiceSqlImpl::currTafsir() const
 {
   return m_tafsirRepository.currTafsir();

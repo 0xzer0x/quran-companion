@@ -92,12 +92,11 @@ public:
   void navigateToPreviousJuz();
 
 private:
-  Navigator();        ///< Private constructor for singleton pattern.
-  Verse& m_currVerse; ///< Reference to the current verse being displayed.
-  const QuranService* m_quranService; ///< Pointer to the Quran service for
-                                      ///< accessing verse information.
-  QList<VerseObserver*>
-    m_verseObservers; ///< List of observers to be notified of verse changes.
+  Navigator();                            ///< Private constructor for singleton pattern.
+  Verse& m_currVerse;                     ///< Reference to the current verse being displayed.
+  const QuranService* m_quranService;     ///< Pointer to the Quran service for
+                                          ///< accessing verse information.
+  QList<VerseObserver*> m_verseObservers; ///< List of observers to be notified of verse changes.
 };
 
 #endif // NAVIGATOR_H

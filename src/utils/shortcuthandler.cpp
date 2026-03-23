@@ -28,7 +28,6 @@ ShortcutHandler::populateDescriptionMap()
   if (!shortcuts.open(QIODevice::ReadOnly))
     qCritical("Couldn't Open Shortcuts XML");
 
-  m_config.settings().beginGroup("Shortcuts");
   QXmlStreamReader reader(&shortcuts);
   while (!reader.atEnd() && !reader.hasError()) {
     QXmlStreamReader::TokenType token = reader.readNext();
@@ -36,18 +35,15 @@ ShortcutHandler::populateDescriptionMap()
       if (reader.name().toString() == "shortcut") {
         QString key = reader.attributes().value("key").toString();
         QString defBind = reader.attributes().value("default").toString();
-        QString desc = QCoreApplication::translate(
-          "SettingsDialog",
-          reader.attributes().value("description").toLatin1());
+        QString desc =
+          QCoreApplication::translate("SettingsDialog", reader.attributes().value("description").toLatin1());
 
         m_shortcutsDescription.insert(key, desc);
-        if (!m_config.settings().contains(key))
-          m_config.settings().setValue(key, defBind);
+        m_config.setShortcutIfNotExists(key, defBind);
       }
     }
   }
 
-  m_config.settings().endGroup();
   shortcuts.close();
 }
 
@@ -55,8 +51,7 @@ void
 ShortcutHandler::createShortcuts(QObject* context)
 {
   foreach (const QString& key, m_shortcutsDescription.keys()) {
-    QKeySequence seq = qvariant_cast<QKeySequence>(
-      m_config.settings().value("Shortcuts/" + key));
+    QKeySequence seq = m_config.shortcutKeySequence(key);
     m_shortcuts.insert(key, new QShortcut(seq, context));
   }
   m_shortcuts.value("TogglePlayback")->setContext(Qt::ApplicationShortcut);
@@ -68,13 +63,9 @@ ShortcutHandler::createShortcuts(QObject* context)
 void
 ShortcutHandler::setupConnections()
 {
-  connect(m_shortcuts.value("Quit"),
-          &QShortcut::activated,
-          qApp,
-          &QApplication::quit);
+  connect(m_shortcuts.value("Quit"), &QShortcut::activated, qApp, &QApplication::quit);
   for (const auto& connection : {
-         make_pair("TogglePlayerControls",
-                   &ShortcutHandler::togglePlayerControls),
+         make_pair("TogglePlayerControls", &ShortcutHandler::togglePlayerControls),
          make_pair("ToggleReaderView", &ShortcutHandler::toggleReaderView),
          make_pair("ToggleMenubar", &ShortcutHandler::toggleMenubar),
          make_pair("ToggleNavDock", &ShortcutHandler::toggleNavDock),
@@ -102,18 +93,14 @@ ShortcutHandler::setupConnections()
          make_pair("ContentDialog", &ShortcutHandler::openContent),
          make_pair("CopyDialog", &ShortcutHandler::openAdvancedCopy),
        }) {
-    connect(m_shortcuts.value(connection.first),
-            &QShortcut::activated,
-            this,
-            connection.second);
+    connect(m_shortcuts.value(connection.first), &QShortcut::activated, this, connection.second);
   }
 }
 
 void
 ShortcutHandler::shortcutChanged(QString key)
 {
-  m_shortcuts.value(key)->setKey(
-    qvariant_cast<QKeySequence>(m_config.settings().value("Shortcuts/" + key)));
+  m_shortcuts.value(key)->setKey(m_config.shortcutKeySequence(key));
 }
 
 const QMap<QString, QString>&

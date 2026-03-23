@@ -48,10 +48,10 @@ public:
   void loadTafsir();
   /**
    * @brief Set the current tafsir based on its ID.
-   * @param id The ID of the tafsir to set as the current tafsir.
+   * @param tafsir - The ::Tafsir to set as the current tafsir.
    * @return True if the tafsir was successfully set, false otherwise.
    */
-  bool setCurrentTafsir(QString id);
+  bool setCurrentTafsir(const ::Tafsir tafsir);
   /**
    * @brief Get the tafsir text for a specific surah and verse.
    * @param sIdx The index of the surah.
@@ -61,10 +61,9 @@ public:
   QString getTafsir(const int sIdx, const int vIdx);
   /**
    * @brief Get the currently selected tafsir.
-   * @return An optional containing the current tafsir if set; otherwise, an
-   * empty optional.
+   * @return The currently selected ::Tafsir.
    */
-  std::optional<const ::Tafsir> currTafsir() const;
+  const ::Tafsir currTafsir() const;
 
 private:
   /**
@@ -72,27 +71,18 @@ private:
    * Initializes the database connection and sets up the available tafasir list.
    */
   TafsirRepository();
-
   /**
    * @brief Reference to the singleton Configuration instance.
    */
   Configuration& m_config;
-
   /**
    * @brief Reference to the singleton DirManager instance.
    */
   const DirManager& m_dirMgr;
-
   /**
-   * @brief Reference to the static QList of available tafasir.
+   * @brief The currently selected Tafsir.
    */
-  const QList<::Tafsir>& m_tafasir;
-
-  /**
-   * @brief Optional pointer to the currently selected Tafsir.
-   */
-  std::optional<::Tafsir> m_currTafsir;
-
+  ::Tafsir m_currTafsir;
   /**
    * @brief Path to the currently active tafsir database file.
    */

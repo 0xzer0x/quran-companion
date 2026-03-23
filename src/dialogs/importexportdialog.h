@@ -97,12 +97,10 @@ private slots:
   void accept();
 
 private:
-  Ui::ImportExportDialog* ui; ///< Pointer to the dialog's UI.
-  QSharedPointer<UserDataImporter>
-    m_importer; ///< Shared pointer to the UserDataImporter instance.
-  QSharedPointer<UserDataExporter>
-    m_exporter; ///< Shared pointer to the UserDataExporter instance.
-  Mode m_mode;  ///< Current mode of the dialog (Import or Export).
+  Ui::ImportExportDialog* ui;                  ///< Pointer to the dialog's UI.
+  QSharedPointer<UserDataImporter> m_importer; ///< Shared pointer to the UserDataImporter instance.
+  QSharedPointer<UserDataExporter> m_exporter; ///< Shared pointer to the UserDataExporter instance.
+  Mode m_mode;                                 ///< Current mode of the dialog (Import or Export).
   /**
    * @brief Updates the state of the import checkboxes based on the import file.
    */

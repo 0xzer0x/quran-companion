@@ -14,8 +14,7 @@ CopyDialog::CopyDialog(QWidget* parent)
   ui->setupUi(this);
   ui->cmbCopyFrom->setValidator(m_verseValidator);
   ui->cmbCopyTo->setValidator(m_verseValidator);
-  connect(
-    ui->buttonBox, &QDialogButtonBox::accepted, this, &CopyDialog::copyRange);
+  connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &CopyDialog::copyRange);
 }
 
 void
@@ -28,8 +27,7 @@ CopyDialog::copyVerseText(const Verse v)
   text = text.trimmed();
   text = "{" + text + "}";
   text += ' ';
-  text +=
-    "[" + m_quranService->surahNames().at(v.surah() - 1) + ":" + vNum + "]";
+  text += "[" + m_quranService->surahNames().at(v.surah() - 1) + ":" + vNum + "]";
   clip->setText(text);
   m_notifier.copied();
 }
@@ -39,10 +37,8 @@ CopyDialog::copyRange()
 {
   int from = ui->cmbCopyFrom->currentText().toInt();
   int to = ui->cmbCopyTo->currentText().toInt();
-  if (to < from || from <= 0 || from > m_currVerse.surahCount() || to <= 0 ||
-      to > m_currVerse.surahCount()) {
-    QMessageBox::warning(
-      this, tr("Invalid range"), tr("The entered verse range is invalid"));
+  if (to < from || from <= 0 || from > m_currVerse.surahCount() || to <= 0 || to > m_currVerse.surahCount()) {
+    QMessageBox::warning(this, tr("Invalid range"), tr("The entered verse range is invalid"));
     return;
   }
 
@@ -55,8 +51,7 @@ CopyDialog::copyRange()
     final.append(text);
   }
 
-  final +=
-    "} [" + m_quranService->surahNames().at(m_currVerse.surah() - 1) + "]";
+  final += "} [" + m_quranService->surahNames().at(m_currVerse.surah() - 1) + "]";
   clip->setText(final);
   m_notifier.copied();
 }

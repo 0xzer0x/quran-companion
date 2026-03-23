@@ -137,7 +137,7 @@ The application can be downloaded in any of the available packages (snap, flatpa
  <a href='https://flathub.org/apps/io.github._0xzer0x.qurancompanion'>
     <img width='240' alt='Download Flatpak' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/>
  </a>
- <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.5.0/Quran_Companion-1.5.0-x86_64.AppImage'>
+ <a href='https://github.com/0xzer0x/quran-companion/releases/download/v1.5.1/Quran_Companion-1.5.1-x86_64.AppImage'>
     <img width='260' alt='Download AppImage' src='https://docs.appimage.org/_images/download-appimage-banner.svg' style='border-radius: 10px'/>
  </a>
  <a href="https://snapcraft.io/quran-companion">
@@ -280,7 +280,7 @@ Distributed under the [Waqf General Public License](https://ojuba.org/waqf-2.0:%
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [latest-release]: https://github.com/0xzer0x/quran-companion/releases/latest
-[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.5.0/Quran_Companion-1.5.0-x86_64-setup.exe
+[win-installer]: https://github.com/0xzer0x/quran-companion/releases/download/v1.5.1/Quran_Companion-1.5.1-x86_64-setup.exe
 [translation-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Translations
 [recitations-wiki]: https://github.com/0xzer0x/quran-companion/wiki/Contributing-Recitations
-[macos-dmg-url]: https://github.com/0xzer0x/quran-companion/releases/download/v1.5.0/Quran_Companion-1.5.0-x86_64.dmg
+[macos-dmg-url]: https://github.com/0xzer0x/quran-companion/releases/download/v1.5.1/Quran_Companion-1.5.1-x86_64.dmg

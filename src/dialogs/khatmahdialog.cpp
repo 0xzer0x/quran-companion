@@ -15,16 +15,11 @@ KhatmahDialog::KhatmahDialog(QWidget* parent)
   , m_khatmahService(ServiceFactory::khatmahService())
 {
   ui->setupUi(this);
-  setWindowIcon(
-    StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_list));
-  ui->lbCurrKhatmah->setText(
-    m_khatmahService->getKhatmahName(m_khatmahService->activeKhatmah()));
+  setWindowIcon(StyleManager::getInstance().awesome().icon(fa::fa_solid, fa::fa_list));
+  ui->lbCurrKhatmah->setText(m_khatmahService->getKhatmahName(m_khatmahService->activeKhatmah()));
   loadAll();
 
-  connect(ui->btnStartKhatmah,
-          &QPushButton::clicked,
-          this,
-          &KhatmahDialog::startNewKhatmah);
+  connect(ui->btnStartKhatmah, &QPushButton::clicked, this, &KhatmahDialog::startNewKhatmah);
 }
 
 QPointer<InputField>
@@ -45,8 +40,7 @@ KhatmahDialog::loadKhatmah(const int id)
   QHBoxLayout* frmLayout = new QHBoxLayout();
   QVBoxLayout* lbLayout = new QVBoxLayout();
   QVBoxLayout* btnLayout = new QVBoxLayout();
-  InputField* ifName =
-    new InputField(frame, m_khatmahService->getKhatmahName(id));
+  InputField* ifName = new InputField(frame, m_khatmahService->getKhatmahName(id));
   QLabel* lbPosition = new QLabel(frame);
   QPushButton* activate = new QPushButton(tr("Set as active"), frame);
   QPushButton* remove = new QPushButton(tr("Remove"), frame);
@@ -54,8 +48,7 @@ KhatmahDialog::loadKhatmah(const int id)
   remove->setObjectName("remove");
   activate->setCursor(Qt::PointingHandCursor);
   remove->setCursor(Qt::PointingHandCursor);
-  activate->setStyleSheet(
-    "QPushButton { min-width: 150px; max-width: 150px; }");
+  activate->setStyleSheet("QPushButton { min-width: 150px; max-width: 150px; }");
   remove->setStyleSheet("QPushButton { min-width: 150px; max-width: 150px; }");
   if (id == m_khatmahService->activeKhatmah()) {
     m_currActive = frame;
@@ -63,9 +56,8 @@ KhatmahDialog::loadKhatmah(const int id)
     remove->setDisabled(true);
   }
 
-  QString info = tr("Surah: ") +
-                 m_quranService->surahNames().at(v.surah() - 1) + " - " +
-                 tr("Verse: ") + QString::number(v.number());
+  QString info = tr("Surah: ") + m_quranService->surahNames().at(v.surah() - 1) + " - " + tr("Verse: ") +
+                 QString::number(v.number());
   lbPosition->setText(info);
 
   activate->setFocusPolicy(Qt::NoFocus);
@@ -95,8 +87,7 @@ KhatmahDialog::loadKhatmah(const int id)
 
   connect(ifName, &InputField::rename, this, &KhatmahDialog::renameKhatmah);
   connect(remove, &QPushButton::clicked, this, &KhatmahDialog::removeKhatmah);
-  connect(
-    activate, &QPushButton::clicked, this, &KhatmahDialog::setActiveKhatmah);
+  connect(activate, &QPushButton::clicked, this, &KhatmahDialog::setActiveKhatmah);
   return ifName;
 }
 
@@ -105,8 +96,7 @@ KhatmahDialog::loadAll()
 {
   m_khatmahIds = m_khatmahService->getAllKhatmah();
   for (int i = 0; i < m_khatmahIds.size(); i++) {
-    m_names.insert(m_khatmahIds.at(i),
-                   m_khatmahService->getKhatmahName(m_khatmahIds.at(i)));
+    m_names.insert(m_khatmahIds.at(i), m_khatmahService->getKhatmahName(m_khatmahIds.at(i)));
     loadKhatmah(m_khatmahIds.at(i));
   }
 }
@@ -154,12 +144,12 @@ void
 KhatmahDialog::setActiveKhatmah()
 {
   QFrame* newActive = qobject_cast<QFrame*>(sender()->parent());
-  QVariant id = newActive->objectName();
+  const int id = newActive->objectName().toInt();
 
-  m_config.settings().setValue("Reader/Khatmah", id);
+  m_config.setKhatmahId(id);
   m_khatmahService->saveActiveKhatmah(m_currVerse);
-  m_khatmahService->setActiveKhatmah(id.toInt());
-  Verse v = m_khatmahService->loadVerse(id.toInt()).value();
+  m_khatmahService->setActiveKhatmah(id);
+  Verse v = m_khatmahService->loadVerse(id).value();
 
   newActive->findChild<QPushButton*>("activate")->setEnabled(false);
   newActive->findChild<QPushButton*>("remove")->setEnabled(false);
@@ -167,7 +157,7 @@ KhatmahDialog::setActiveKhatmah()
   m_currActive->findChild<QPushButton*>("remove")->setEnabled(true);
   m_currActive = newActive;
 
-  ui->lbCurrKhatmah->setText(m_khatmahService->getKhatmahName(id.toInt()));
+  ui->lbCurrKhatmah->setText(m_khatmahService->getKhatmahName(id));
   m_navigator.navigateToVerse(v);
 }
 

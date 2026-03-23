@@ -23,6 +23,7 @@ public:
   Verse(const Verse& cp) = default;
   explicit Verse(int page, int surah, int number);
 
+  QString toString() const;
   QList<int> toList() const;
   void update(const Verse& v);
   void update(const QList<int>& vInfo);

@@ -16,15 +16,11 @@ class Reciter
 public:
   static QList<Reciter> reciters;
   static void populateReciters();
-  static const Reciter* reciterById(const QString id);
-  static const int indexForReciter(const Reciter* const reciter);
+  static std::optional<Reciter> findById(const QString id);
+  static const int indexForReciter(const Reciter& reciter);
+  static const Reciter defaultReciter();
 
-  explicit Reciter(QString id,
-                   QString dir,
-                   QString display,
-                   QString basmallah,
-                   QString url,
-                   bool downloadById = false);
+  explicit Reciter(QString id, QString dir, QString display, QString basmallah, QString url, bool downloadById = false);
 
   // NOTE: Override copy operator
   Reciter& operator=(const Reciter& r);

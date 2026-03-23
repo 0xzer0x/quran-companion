@@ -30,9 +30,7 @@ KhatmahServiceSqlImpl::getKhatmahName(const int id) const
 }
 
 int
-KhatmahServiceSqlImpl::addKhatmah(const Verse& verse,
-                                  const QString name,
-                                  const int id) const
+KhatmahServiceSqlImpl::addKhatmah(const Verse& verse, const QString name, const int id) const
 {
   return m_khatmahRepository.addKhatmah(verse, name, id);
 }

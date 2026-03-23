@@ -14,13 +14,13 @@ public:
   explicit Logger(QObject* parent = nullptr);
   static QString filename;
   static QFile logFile;
+  static int maxFileAge;
+  static int maxFileSize;
 
   static bool startLogger(QString parentDir);
   static void stopLogger();
   static void attach();
-  static void handler(QtMsgType type,
-                      const QMessageLogContext& context,
-                      const QString& msg);
+  static void handler(QtMsgType type, const QMessageLogContext& context, const QString& msg);
 };
 
 #endif // LOGGER_H

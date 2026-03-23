@@ -35,9 +35,7 @@ public:
    * @param id - id of khatmah to replace, -1 means do not replace (default: -1)
    * @return id of newly added khatmah or id parameter if defined
    */
-  virtual int addKhatmah(const Verse& verse,
-                         const QString name,
-                         const int id = -1) const = 0;
+  virtual int addKhatmah(const Verse& verse, const QString name, const int id = -1) const = 0;
   /**
    * @brief rename the khatmah with the given id to newName
    * @param khatmahId - id of khatmah to rename

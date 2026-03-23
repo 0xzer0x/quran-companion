@@ -7,10 +7,10 @@ IDI_ICON1 ICON "resources/logo.ico"
   0 FILEFLAGS 0x0L FILEFLAGSMASK 0x3fL FILEOS 0x00040004L FILETYPE 0x1L FILESUBTYPE 0x0L BEGIN
     BLOCK "StringFileInfo" BEGIN BLOCK "000004b0" BEGIN VALUE "CompanyName",
   "Youssef Fathy" VALUE "FileDescription", "Quran Companion" VALUE "FileVersion",
-  "1.5.0.0" VALUE "LegalCopyright",
+  "1.5.1.0" VALUE "LegalCopyright",
   "Copyright (C) 2026 Youssef Fathy" VALUE "InternalName",
   "qurancompanion" VALUE "OriginalFilename",
   "quran-companion.exe" VALUE "ProductName",
   "Quran Companion" VALUE "ProductVersion",
-  "1.5.0.0" END END BLOCK "VarFileInfo" BEGIN VALUE "Translation", 0x0,
+  "1.5.1.0" END END BLOCK "VarFileInfo" BEGIN VALUE "Translation", 0x0,
   1200 END END

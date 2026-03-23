@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QFile>
 #include <QXmlStreamReader>
+#include <utils/configurationschema.h>
 #include <utils/dirmanager.h>
 
 QList<Translation> Translation::translations;
@@ -46,10 +47,25 @@ Translation::findById(QString id)
   return result;
 }
 
-Translation::Translation(QString id,
-                         QString display,
-                         QString filename,
-                         bool isExtra)
+const int
+Translation::indexForTranslation(const Translation& translation)
+{
+  return Translation::translations.indexOf(translation);
+}
+
+const Translation
+Translation::defaultTranslation()
+{
+  const QString defaultId = ConfigurationSchema::getInstance().getDefault("Reader/Translation").value().toString();
+  ;
+  const std::optional<const Translation> translation = Translation::findById(defaultId);
+  if (!translation.has_value()) {
+    qFatal("Failed to find translation using default ID: %s", qPrintable(defaultId));
+  }
+  return translation.value();
+}
+
+Translation::Translation(QString id, QString display, QString filename, bool isExtra)
   : Content(id, display, filename, isExtra)
 {
 }
@@ -69,7 +85,6 @@ Translation::operator!=(const Translation& v2) const
 bool
 Translation::isAvailable() const
 {
-  const QDir& baseDir = isExtra() ? DirManager::getInstance().downloadsDir()
-                                  : DirManager::getInstance().assetsDir();
+  const QDir& baseDir = isExtra() ? DirManager::getInstance().downloadsDir() : DirManager::getInstance().assetsDir();
   return baseDir.exists("translations/" + filename());
 }

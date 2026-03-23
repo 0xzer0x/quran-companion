@@ -25,8 +25,7 @@ class RepeaterPopup
   Q_OBJECT
 
 public:
-  explicit RepeaterPopup(QWidget* parent,
-                         QPointer<PlaybackController> playbackcontroller);
+  explicit RepeaterPopup(QWidget* parent, QPointer<PlaybackController> playbackcontroller);
   ~RepeaterPopup();
 
   void activeVerseChanged() override;

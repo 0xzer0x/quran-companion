@@ -60,7 +60,6 @@ ServiceFactory::tafsirService()
 TranslationService*
 ServiceFactory::translationService()
 {
-  static TranslationServiceSqlImpl translationService =
-    TranslationServiceSqlImpl();
+  static TranslationServiceSqlImpl translationService = TranslationServiceSqlImpl();
   return (TranslationService*)&translationService;
 }

@@ -47,8 +47,7 @@ public:
    * @param manager Pointer to the JobManager instance used for managing
    * DownloadJob(s).
    */
-  explicit DownloaderDialog(QWidget* parent = nullptr,
-                            JobManager* manager = nullptr);
+  explicit DownloaderDialog(QWidget* parent = nullptr, JobManager* manager = nullptr);
   ~DownloaderDialog();
 
 public slots:
@@ -90,8 +89,7 @@ public slots:
    * @param info Metainfo for the download task, with a default value of
    * QPair<int, int>(0, 1).
    */
-  void selectDownload(DownloadJob::Type type,
-                      QPair<int, int> info = QPair<int, int>(0, 1));
+  void selectDownload(DownloadJob::Type type, QPair<int, int> info = QPair<int, int>(0, 1));
   /**
    * @brief Stops downloading tasks and clears the downloads scroll area
    * (including completed tasks).
