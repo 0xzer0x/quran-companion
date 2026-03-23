@@ -1,6 +1,6 @@
 name: quran-companion
 base: core24
-version: 1.5.0
+version: 1.5.1
 title: Quran Companion
 summary: Read and listen to the Quran
 description: Quran Companion is a cross-platform Quran reader and player with recitation download capabilities, verse highlighting, re-sizable Quran font, and a variety of tafsir books and translations.
