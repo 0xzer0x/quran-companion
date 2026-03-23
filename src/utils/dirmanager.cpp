@@ -25,19 +25,26 @@ DirManager::DirManager()
 QDir
 DirManager::resolveRuntimeDataDir(const QString& subdir)
 {
-  // NOTE: Look for the specified runtime directory in
-  // <binary-location>/../share/quran-companion
-  QDir qcDataDir(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator() + "share" +
-                 QDir::separator() + "quran-companion");
-
-  QDir candidate(qcDataDir.absoluteFilePath(subdir));
+// NOTE: Expected directory layout on linux:
+// <prefix>
+//    ├── bin/
+//    │   └── quran-companion
+//    └── share/
+//        └── quran-companion/
+//            ├── assets/
+//            └── bismillah/
+#ifdef Q_OS_LINUX
+  static const QDir linuxDataDir(
+    QStringList({ QApplication::applicationDirPath(), "..", "share", "quran-companion" }).join(QDir::separator()));
+  QDir candidate(linuxDataDir.absoluteFilePath(subdir));
   if (candidate.exists()) {
     return candidate;
   }
+#endif
 
   // WARN: Fallback to application binary location
-  QDir fallback(QApplication::applicationDirPath());
-  return QDir(fallback.absoluteFilePath(subdir));
+  static const QDir defaultDataDir(QApplication::applicationDirPath());
+  return QDir(defaultDataDir.absoluteFilePath(subdir));
 }
 
 void
