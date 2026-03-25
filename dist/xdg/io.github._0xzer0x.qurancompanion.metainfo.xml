@@ -55,6 +55,13 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release date="2026-03-25" version="1.5.2" >
+      <description>
+        <ul>
+          <li>Fix: Incorrect missing tafsir checking</li>
+        </ul>
+      </description>
+    </release>
     <release date="2026-03-23" version="1.5.1" >
       <description>
         <ul>
