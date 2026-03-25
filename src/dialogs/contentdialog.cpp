@@ -58,9 +58,10 @@ ContentDialog::showVerseTafsir(const Verse& v)
     reload = false;
   }
 
-  if (m_tafsirService->currTafsir().isAvailable()) {
+  const ::Tafsir tafsir = m_tafsirService->currTafsir();
+  if (!tafsir.isAvailable()) {
     reload = true;
-    emit missingTafsir(m_tafsirService->currTafsir());
+    emit missingTafsir(tafsir);
     return;
   }
 
