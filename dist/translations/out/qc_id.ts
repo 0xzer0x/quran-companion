@@ -109,11 +109,11 @@
     </message>
     <message>
       <source>Mohammad Al-Tablaway</source>
-      <translation type="unfinished">Mohammad Al-Tablaway</translation>
+      <translation>Mohammad Al-Tablaway</translation>
     </message>
     <message>
       <source>Ahmed Neana</source>
-      <translation type="unfinished">Ahmed Neana</translation>
+      <translation>Ahmed Neana</translation>
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="17"/>
@@ -385,11 +385,11 @@
     </message>
     <message>
       <source>Increase the playback speed</source>
-      <translation type="unfinished">Increase the playback speed</translation>
+      <translation>Tingkatkan kecepatan pemutaran</translation>
     </message>
     <message>
       <source>Decrease the playback speed</source>
-      <translation type="unfinished">Decrease the playback speed</translation>
+      <translation>Kurangi kecepatan pemutaran</translation>
     </message>
     <message>
       <source>Toggle reader view</source>
