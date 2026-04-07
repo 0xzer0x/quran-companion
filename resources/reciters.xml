@@ -28,4 +28,5 @@
   <reciter basmallah="warsh-yassin-al-jazaery.mp3" dirname="Yassin_Al-Jazaery_(Warsh)" display="Yassin Al-Jazaery (Warsh)" id="warsh-yassin-al-jazaery" url="https://everyayah.com/data/warsh/warsh_yassin_al_jazaery_64kbps/" downloadById="0"></reciter>
   <reciter basmallah="tablaway.mp3" dirname="Mohammad_Al-Tablaway" display="Mohammad Al-Tablaway" id="tablaway" url="https://everyayah.com/data/Mohammad_al_Tablaway_128kbps/" downloadById="0"></reciter>
   <reciter basmallah="neana.mp3" dirname="Ahmed_Neana" display="Ahmed Neana" id="neana" url="https://everyayah.com/data/Ahmed_Neana_128kbps/" downloadById="0"></reciter>
+  <reciter basmallah="sudais.mp3" dirname="Abdurrahmaan_As-Sudais" display="Abdurrahmaan As-Sudais" id="sudais" url="https://cdn.islamic.network/quran/audio/64/ar.abdurrahmaansudais/" downloadById="1"></reciter>
 </reciters>
