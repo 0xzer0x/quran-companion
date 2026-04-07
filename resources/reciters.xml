@@ -2,7 +2,7 @@
 <reciters>
   <reciter basmallah="husary.mp3" dirname="Al-Husary" display="Al-Husary" id="husary" url="https://cdn.islamic.network/quran/audio/64/ar.husary/" downloadById="1"></reciter>
   <reciter basmallah="husary.mp3" dirname="Al-Husary_(Qasr)" display="Al-Husary (Qasr)" id="husary-qasr" url="https://gitlab.com/0xzer0x/qc-audio/-/raw/main/husary_qasr_64kbps/" downloadById="0"></reciter>
-  <reciter basmallah="husary.mp3" dirname="Al-Husary_(Mujawwad)" display="Al-Husary (Mujawwad)" id="husary-mujawwad" url="https://cdn.islamic.network/quran/audio/64/ar.husarymujawwad/" downloadById="1"></reciter>
+  <reciter basmallah="husary.mp3" dirname="Al-Husary_(Mujawwad)" display="Al-Husary (Mujawwad)" id="husary-mujawwad" url="https://everyayah.com/data/Husary_Mujawwad_64kbps/" downloadById="0"></reciter>
   <reciter basmallah="abdul-basit.mp3" dirname="Abdul-Basit" display="Abdul-Basit" id="abdul-basit" url="https://cdn.islamic.network/quran/audio/64/ar.abdulbasitmurattal/" downloadById="1"></reciter>
   <reciter basmallah="abdul-basit.mp3" dirname="Abdul-Basit_(Mujawwad)" display="Abdul-Basit (Mujawwad)" id="abdul-basit-mujawwad" url="https://cdn.islamic.network/quran/audio/64/ar.abdulsamad/" downloadById="1"></reciter>
   <reciter basmallah="menshawi.mp3" dirname="Menshawi" display="Menshawi" id="menshawi" url="https://cdn.islamic.network/quran/audio/128/ar.minshawi/" downloadById="1"></reciter>
