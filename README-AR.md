@@ -102,17 +102,17 @@
 
 ### الصور
 
-![ar_light.png](screenshots/ar_light.png)
+![ar_light.webp](screenshots/ar_light.webp)
 
-![ar_dark.png](screenshots/ar_dark.png)
+![ar_dark.webp](screenshots/ar_dark.webp)
 
 #### الواجهة الإنجليزية
 
-![light.png](screenshots/light.png)
+![light.webp](screenshots/light.webp)
 
-![two-page.png](screenshots/two-pages.png)
+![two-page.png](screenshots/two-pages.webp)
 
-![dark.png](screenshots/dark.png)
+![dark.webp](screenshots/dark.webp)
 
 <p align="left">(<a href="#readme-top">عد إلى الأعلى</a>)</p>
 
