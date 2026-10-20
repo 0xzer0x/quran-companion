@@ -34,6 +34,12 @@ MainWindow::MainWindow(QWidget* parent)
   loadVerse();
   loadComponents();
 
+  if (m_config.windowGeometry().isNull()) {
+    m_config.setWindowGeometry(saveGeometry());
+  } else {
+    restoreGeometry(m_config.windowGeometry());
+  }
+
   if (m_config.windowState().isNull()) {
     m_config.setWindowState(saveState());
   } else {
@@ -708,6 +714,7 @@ MainWindow::resizeEvent(QResizeEvent* event)
 void
 MainWindow::saveReaderState()
 {
+  m_config.setWindowGeometry(saveGeometry());
   m_config.setWindowState(saveState());
   m_config.setReciter(m_playerControls->currentReciter());
   m_config.sync();
