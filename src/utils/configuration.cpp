@@ -146,6 +146,12 @@ Configuration::windowState() const
   return m_settings.value("Window/State").toByteArray();
 }
 
+const QByteArray
+Configuration::windowGeometry() const
+{
+  return m_settings.value("Window/Geometry").toByteArray();
+}
+
 const bool
 Configuration::menuBarVisible() const
 {
@@ -215,6 +221,12 @@ void
 Configuration::setWindowState(const QByteArray windowState)
 {
   m_settings.setValue("Window/State", windowState);
+}
+
+void
+Configuration::setWindowGeometry(const QByteArray geometry)
+{
+  m_settings.setValue("Window/Geometry", geometry);
 }
 
 void

@@ -34,6 +34,7 @@ public:
   const Tafsir tafsir() const;
   const Translation translation() const;
   const QByteArray windowState() const;
+  const QByteArray windowGeometry() const;
   const QKeySequence shortcutKeySequence(const QString name) const;
   const QFont sideContentFont() const;
   const QLocale::Language language() const;
@@ -44,6 +45,7 @@ public:
   void setTafsir(const Tafsir tafsir);
   void setTranslation(Translation translation);
   void setWindowState(const QByteArray windowState);
+  void setWindowGeometry(const QByteArray geometry);
   void setMenuBarVisible(const bool visible);
   void setKhatmahId(const int id);
   void setAdaptiveReaderFont(const bool enabled);
