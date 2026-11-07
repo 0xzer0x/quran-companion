@@ -116,6 +116,9 @@ aube = { path = ".mise/locks/npm-crowdin-cli/5.6.0", digest = "sha256:defa099ac1
 backend = "npm:@crowdin/cli"
 specifiers = ["5.6.0"]
 
+[tools."npm:@crowdin/cli".provenance]
+repository = "github.com/crowdin/crowdin-cli"
+
 [[tools."pipx:aqtinstall"]]
 version = "3.3.0"
 backend = "pipx:aqtinstall"
