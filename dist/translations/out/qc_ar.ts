@@ -117,7 +117,7 @@
     </message>
     <message>
       <source>Abdurrahmaan As-Sudais</source>
-      <translation type="unfinished">Abdurrahmaan As-Sudais</translation>
+      <translation>عبد الرحمن السديس</translation>
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="17"/>
@@ -236,7 +236,7 @@
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="516"/>
       <source>Share as image</source>
-      <translation type="unfinished">Share as image</translation>
+      <translation>المشاركة كصورة</translation>
     </message>
     <message>
       <location filename="../../../src/components/mainwindow.ui" line="527"/>
@@ -498,7 +498,7 @@
     </message>
     <message>
       <source>Open the share as image dialog</source>
-      <translation type="unfinished">Open the share as image dialog</translation>
+      <translation>فتح نافذة المشاركة كصورة</translation>
     </message>
     <message>
       <source>Quit</source>
@@ -1238,7 +1238,7 @@
     <message>
       <location filename="../../../src/widgets/quranpagebrowser.cpp" line="387"/>
       <source>Share as image</source>
-      <translation type="unfinished">Share as image</translation>
+      <translation>المشاركة كصورة</translation>
     </message>
     <message>
       <location filename="../../../src/widgets/quranpagebrowser.cpp" line="388"/>
@@ -1437,7 +1437,7 @@
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.ui" line="14"/>
       <source>Share as image</source>
-      <translation type="unfinished">Share as image</translation>
+      <translation>المشاركة كصورة</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.ui" line="42"/>
@@ -1452,23 +1452,23 @@
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.ui" line="74"/>
       <source>Beneath each verse</source>
-      <translation type="unfinished">Beneath each verse</translation>
+      <translation>تحت كل آية</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.ui" line="87"/>
       <source>Verse font size</source>
-      <translation type="unfinished">Verse font size</translation>
+      <translation>حجم خط الآية</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.ui" line="97"/>
       <location filename="../../../src/dialogs/shareimagedialog.ui" line="126"/>
       <source> px</source>
-      <translation type="unfinished"> px</translation>
+      <translation> بكسل</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.ui" line="116"/>
       <source>Content font size</source>
-      <translation type="unfinished">Content font size</translation>
+      <translation>حجم خط المحتوى</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.ui" line="145"/>
@@ -1493,22 +1493,22 @@
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.cpp" line="87"/>
       <source>Nothing</source>
-      <translation type="unfinished">Nothing</translation>
+      <translation>لا شيء</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.cpp" line="91"/>
       <source>Tafsir: %1</source>
-      <translation type="unfinished">Tafsir: %1</translation>
+      <translation>تفسير: %1</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.cpp" line="97"/>
       <source>Translation: %1</source>
-      <translation type="unfinished">Translation: %1</translation>
+      <translation>ترجمة: %1</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.cpp" line="158"/>
       <source>The selected verse range is invalid</source>
-      <translation type="unfinished">The selected verse range is invalid</translation>
+      <translation>نطاق الآيات الذي تم إدخاله غير صالح</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.cpp" line="202"/>
@@ -1518,7 +1518,7 @@
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.cpp" line="267"/>
       <source>Save image</source>
-      <translation type="unfinished">Save image</translation>
+      <translation>حفظ الصورة</translation>
     </message>
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.cpp" line="271"/>
@@ -1528,7 +1528,7 @@
     <message>
       <location filename="../../../src/dialogs/shareimagedialog.cpp" line="271"/>
       <source>Couldn&apos;t save the image</source>
-      <translation type="unfinished">Couldn&apos;t save the image</translation>
+      <translation>تعذّر حفظ الصورة</translation>
     </message>
   </context>
   <context>
