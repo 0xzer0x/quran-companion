@@ -1,13 +1,9 @@
 name: Build
 on:
-  pull_request:
-    paths-ignore:
-      - "**.md"
-      - "screenshots/**"
   workflow_call:
     inputs:
       ref:
-        description: "Commit to build"
+        description: Commit to build
         type: string
         required: true
 concurrency:
