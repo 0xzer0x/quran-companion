@@ -187,13 +187,12 @@ jobs:
 
       - name: Make DMG
         run: |-
-          find "${QT_PLUGIN_PATH}/sqldrivers" -mindepth 1 \
-            -not -name 'libqsqlite.dylib' \
-            -not -name 'libqsqlite.dylib.dSYM' \
-            -delete
-
           cd "${{github.workspace}}/build"
           macdeployqt "Quran Companion.app"
+          # NOTE: keep only the SQLite driver, others need external libs that aren't bundled
+          find "Quran Companion.app/Contents/PlugIns/sqldrivers" -mindepth 1 \
+            -not -name 'libqsqlite.dylib' \
+            -delete
           # NOTE: ad-hoc sign the whole bundle, otherwise Gatekeeper reports it as damaged
           codesign --force --deep --sign - "Quran Companion.app"
           codesign --verify --deep --strict "Quran Companion.app"
