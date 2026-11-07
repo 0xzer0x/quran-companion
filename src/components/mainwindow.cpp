@@ -206,6 +206,7 @@ void
 MainWindow::connectReader()
 {
   connect(m_reader, &QuranReader::copyVerseText, m_cpyDlg, &CopyDialog::copyVerseText);
+  connect(m_reader, &QuranReader::shareVerseImage, m_shareImageDlg, &ShareImageDialog::showVerse);
   connect(m_reader, &QuranReader::showVerseTafsir, m_contentDlg, &ContentDialog::showVerseTafsir);
   connect(m_reader, &QuranReader::showVerseTranslation, m_contentDlg, &ContentDialog::showVerseTranslation);
   connect(m_reader, &QuranReader::showVerseThoughts, m_contentDlg, &ContentDialog::showVerseThoughts);

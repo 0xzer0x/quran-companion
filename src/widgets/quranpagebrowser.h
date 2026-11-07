@@ -46,6 +46,7 @@ public:
     Translation,   ///< show the translation for the verse
     Thoughts,      ///< show user thoughts for the verse
     Copy,          ///< copy the verse text to clipboard
+    ShareImage,    ///< share the verse as an image
     AddBookmark,   ///< add the verse to bookmarks
     RemoveBookmark ///< remove the verse from bookmarks
   };
@@ -238,6 +239,10 @@ private:
    * @brief QAction for copy functionality
    */
   QPointer<QAction> m_actCopy;
+  /**
+   * @brief QAction for sharing the verse as an image
+   */
+  QPointer<QAction> m_actShareImage;
   /**
    * @brief QAction for verse selection functionality
    */

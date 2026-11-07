@@ -329,6 +329,7 @@ QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
   lmbMenu.addAction(m_actThoughts);
   lmbMenu.addSeparator();
   lmbMenu.addAction(m_actCopy);
+  lmbMenu.addAction(m_actShareImage);
   if (favoriteVerse) {
     lmbMenu.addAction(m_actRemBookmark);
   } else {
@@ -350,6 +351,8 @@ QuranPageBrowser::lmbVerseMenu(bool favoriteVerse)
     actionIdx = Action::Thoughts;
   else if (chosen == m_actCopy)
     actionIdx = Action::Copy;
+  else if (chosen == m_actShareImage)
+    actionIdx = Action::ShareImage;
   else if (chosen == m_actAddBookmark)
     actionIdx = Action::AddBookmark;
   else if (chosen == m_actRemBookmark)
@@ -381,6 +384,7 @@ QuranPageBrowser::createActions()
   m_actZoomIn = new QAction(tr("Zoom In"), this);
   m_actZoomOut = new QAction(tr("Zoom Out"), this);
   m_actCopy = new QAction(tr("Copy Verse"), this);
+  m_actShareImage = new QAction(tr("Share as image"), this);
   m_actSelect = new QAction(tr("Select"), this);
   m_actPlay = new QAction(tr("Play"), this);
   m_actTafsir = new QAction(tr("Tafsir"), this);
@@ -396,6 +400,7 @@ QuranPageBrowser::createActions()
   m_actTranslation->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_language));
   m_actThoughts->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_comment));
   m_actCopy->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_clipboard));
+  m_actShareImage->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_image));
   m_actAddBookmark->setIcon(m_styleMgr.awesome().icon(fa_regular, fa_bookmark));
   m_actRemBookmark->setIcon(m_styleMgr.awesome().icon(fa_solid, fa_bookmark));
   connect(m_actZoomIn, &QAction::triggered, this, &QuranPageBrowser::actionZoomIn);

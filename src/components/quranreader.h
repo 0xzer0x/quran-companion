@@ -103,6 +103,7 @@ public slots:
 signals:
   void showBetaqa(int surah);
   void copyVerseText(const Verse& v);
+  void shareVerseImage(const Verse& v);
   void showVerseTafsir(const Verse& v);
   void showVerseTranslation(const Verse& v);
   void showVerseThoughts(const Verse& v);
