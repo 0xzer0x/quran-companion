@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.ref }}
           submodules: true
@@ -31,7 +31,7 @@ jobs:
         run: echo "APP_VER=$(cat VERSION)" >> "$GITHUB_ENV"
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
         with:
           cache: true
           host: linux
@@ -103,7 +103,7 @@ jobs:
           Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: appimage
           path: "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage"
@@ -113,7 +113,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.ref }}
           submodules: true
@@ -122,7 +122,7 @@ jobs:
         run: echo "APP_VER=$(cat VERSION)" >> "$GITHUB_ENV"
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
         with:
           cache: true
           host: mac
@@ -166,7 +166,7 @@ jobs:
           fi
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: dmg
           path: "Quran_Companion-${{env.APP_VER}}-arm64.dmg"
@@ -178,7 +178,7 @@ jobs:
       BUNDLE_DIR: '${{ github.workspace }}\bundle'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.ref }}
           submodules: true
@@ -187,11 +187,17 @@ jobs:
         shell: pwsh
         run: '"APP_VER=$((Get-Content VERSION -TotalCount 1).Trim())" >> $env:GITHUB_ENV'
 
+      # NOTE: ilammy/msvc-dev-cmd still targets the deprecated Node 20 runtime
       - name: Setup MSVC environment
-        uses: ilammy/msvc-dev-cmd@v1
+        shell: pwsh
+        run: |
+          $vs = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          cmd /c "`"$vs\VC\Auxiliary\Build\vcvars64.bat`" >nul && set" |
+            Where-Object { $name, $value = $_ -split '=', 2; [Environment]::GetEnvironmentVariable($name) -ne $value } |
+            Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
         with:
           cache: true
           host: windows
@@ -250,7 +256,7 @@ jobs:
           Pop-Location
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: installer
           path: "${{ env.BUNDLE_DIR }}/Quran_Companion-${{ env.APP_VER }}-x86_64-setup.exe"
