@@ -2,6 +2,28 @@
 
 lockfile_version = 4
 
+[[tools."aqua:orhun/git-cliff"]]
+version = "2.14.2"
+backend = "aqua:orhun/git-cliff"
+specifiers = ["2.14.2"]
+
+[tools."aqua:orhun/git-cliff"."platforms.linux-x64"]
+checksum = "sha256:24f397c733add5390fdceee3a2088588ab0d5f944ce00d34cb7029b888cf2db4"
+checksum_source = "mise-versions"
+url = "https://github.com/orhun/git-cliff/releases/download/v2.14.2/git-cliff-2.14.2-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/orhun/git-cliff/releases/assets/573483509"
+
+[tools."aqua:orhun/git-cliff"."platforms.macos-arm64"]
+checksum = "sha256:a0be97e237d440d34c5e508ec21d070b2c85cbb8be48a46a56f9a4e8bd247f05"
+url = "https://github.com/orhun/git-cliff/releases/download/v2.14.2/git-cliff-2.14.2-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/orhun/git-cliff/releases/assets/573487203"
+
+[tools."aqua:orhun/git-cliff"."platforms.macos-x64"]
+checksum = "sha256:4e647d2deb152aca1e987f225cf42b080b991dd98f3bce4027ef95446d982ac3"
+checksum_source = "mise-versions"
+url = "https://github.com/orhun/git-cliff/releases/download/v2.14.2/git-cliff-2.14.2-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/orhun/git-cliff/releases/assets/573484837"
+
 [[tools."aqua:oxc-project/oxc/oxfmt"]]
 version = "0.77.0"
 backend = "aqua:oxc-project/oxc/oxfmt"

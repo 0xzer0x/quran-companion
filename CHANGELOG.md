@@ -1,11 +1,11 @@
-<div dir='rtl'>
+# Changelog
 
-### التحديثات 💭
+All notable changes to this project are documented in this file.
 
-- تصليح مشكلة في التأكد من وجود التفسير المختار
+## [1.5.2] - 2026-03-25
 
-</div>
+### Bug Fixes
 
-### What's Changed 💭
+- **dialogs:** Incorrect condition for missing tafsir checking
 
-- Fixed incorrect missing tafsir checking logic
+Older releases are listed on the [releases page](https://github.com/0xzer0x/quran-companion/releases).

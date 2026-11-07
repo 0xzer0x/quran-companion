@@ -1,0 +1,263 @@
+name: Build
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: Commit to build
+        type: string
+        required: true
+concurrency:
+  # NOTE: only PR builds are cancelled, release builds get a unique group
+  group: "build-${{ github.head_ref || github.run_id }}"
+  cancel-in-progress: true
+env:
+  BUILD_TYPE: Release
+  QT_INSTALL_VERSION: 6.10.2
+  QT_INSTALL_MODULES: >-
+    qtimageformats
+    qtmultimedia
+    qtnetworkauth
+jobs:
+  build-appimage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref }}
+          submodules: true
+
+      - name: Set application version
+        run: echo "APP_VER=$(cat VERSION)" >> "$GITHUB_ENV"
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
+        with:
+          cache: true
+          host: linux
+          target: desktop
+          arch: linux_gcc_64
+          version: "${{ env.QT_INSTALL_VERSION }}"
+          modules: "${{ env.QT_INSTALL_MODULES }}"
+
+      - name: Install tools
+        run: |-
+          sudo apt update -y && sudo apt install wget fuse libxcb-cursor0 appstream appstream-util ninja-build -y
+          wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+          wget https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage
+          chmod +x linuxdeployqt-continuous-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+
+      - name: Prepare AppDir
+        run: >-
+          mkdir -p QuranCompanion.AppDir/usr/{bin,share/{applications,metainfo,icons/hicolor/256x256/apps}}
+
+          cp
+          ${{github.workspace}}/dist/xdg/io.github._0xzer0x.qurancompanion.desktop
+          QuranCompanion.AppDir/
+
+          cp ${{github.workspace}}/dist/xdg/logo256.png
+          QuranCompanion.AppDir/io.github._0xzer0x.qurancompanion.png
+
+          cp
+          ${{github.workspace}}/dist/xdg/io.github._0xzer0x.qurancompanion.desktop
+          QuranCompanion.AppDir/usr/share/applications/
+
+          cp ${{github.workspace}}/dist/xdg/logo256.png
+          QuranCompanion.AppDir/usr/share/icons/hicolor/256x256/apps/io.github._0xzer0x.qurancompanion.png
+
+          cp ${{github.workspace}}/dist/xdg/io.github._0xzer0x.qurancompanion.metainfo.xml
+          QuranCompanion.AppDir/usr/share/metainfo/io.github._0xzer0x.qurancompanion.appdata.xml
+
+          echo -e "[Paths]\nPlugins = ../plugins\nLibraries = ../lib\nImports =
+          ../qml\nQml2Imports = ../qml" > QuranCompanion.AppDir/usr/bin/qt.conf
+
+      - name: Configure
+        run: >-
+          cmake -B ${{github.workspace}}/build
+          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: "cmake --build ${{github.workspace}}/build"
+
+      - name: Install
+        run: >-
+          cmake --install ${{github.workspace}}/build --prefix
+          QuranCompanion.AppDir/usr
+
+      - name: Run linuxdeployqt
+        run: >-
+          find "${QT_PLUGIN_PATH}/imageformats" -name 'libqtiff.so' -type f -delete
+
+          find "${QT_PLUGIN_PATH}/sqldrivers" -not -name 'libqsqlite.so' -type f -delete
+
+          ${{github.workspace}}/linuxdeployqt-continuous-x86_64.AppImage
+          QuranCompanion.AppDir/usr/bin/quran-companion
+          -unsupported-allow-new-glibc -qmake=$(which qmake) -no-translations
+          -extra-plugins=sqldrivers,iconengines,imageformats,multimedia,networkinformation,platforms,platformthemes,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations,egldeviceintegrations
+          -verbose=1
+
+      - name: Make AppImage
+        run: >-
+          ${{github.workspace}}/appimagetool-x86_64.AppImage -n QuranCompanion.AppDir
+          Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: appimage
+          path: "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage"
+          retention-days: 7
+
+  build-dmg:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref }}
+          submodules: true
+
+      - name: Set application version
+        run: echo "APP_VER=$(cat VERSION)" >> "$GITHUB_ENV"
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
+        with:
+          cache: true
+          host: mac
+          target: desktop
+          arch: clang_64
+          version: "${{ env.QT_INSTALL_VERSION }}"
+          modules: "${{ env.QT_INSTALL_MODULES }}"
+
+      - name: Install tools
+        run: |-
+          brew install graphicsmagick imagemagick
+          npm install --global create-dmg
+
+      - name: Configure
+        run: >-
+          cmake -B ${{github.workspace}}/build
+          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+      - name: Make DMG
+        run: |-
+          cd "${{github.workspace}}/build"
+          macdeployqt "Quran Companion.app"
+          # NOTE: keep only the SQLite driver, others need external libs that aren't bundled
+          find "Quran Companion.app/Contents/PlugIns/sqldrivers" -mindepth 1 \
+            -not -name 'libqsqlite.dylib' \
+            -delete
+          # NOTE: ad-hoc sign the whole bundle, otherwise Gatekeeper reports it as damaged
+          codesign --force --deep --sign - "Quran Companion.app"
+          codesign --verify --deep --strict "Quran Companion.app"
+          create-dmg --dmg-title="Install Quran Companion" "Quran Companion.app" || true
+
+          QC_DMG="$(find . -maxdepth 1 -name "Quran Companion*.dmg" | head -n 1)"
+          if [[ -n "${QC_DMG}" ]]; then
+            mv "${QC_DMG}" "${{ github.workspace }}/Quran_Companion-${{env.APP_VER}}-arm64.dmg"
+          else
+            echo "DMG file not found!"
+            exit 1
+          fi
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: dmg
+          path: "Quran_Companion-${{env.APP_VER}}-arm64.dmg"
+          retention-days: 7
+
+  build-installer:
+    runs-on: windows-latest
+    env:
+      BUNDLE_DIR: '${{ github.workspace }}\bundle'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref }}
+          submodules: true
+
+      - name: Set application version
+        shell: pwsh
+        run: '"APP_VER=$((Get-Content VERSION -TotalCount 1).Trim())" >> $env:GITHUB_ENV'
+
+      # NOTE: ilammy/msvc-dev-cmd still targets the deprecated Node 20 runtime
+      - name: Setup MSVC environment
+        shell: pwsh
+        run: |
+          $vs = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          cmd /c "`"$vs\VC\Auxiliary\Build\vcvars64.bat`" >nul && set" |
+            Where-Object { $name, $value = $_ -split '=', 2; [Environment]::GetEnvironmentVariable($name) -ne $value } |
+            Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
+        with:
+          cache: true
+          host: windows
+          target: desktop
+          arch: win64_msvc2022_64
+          version: "${{ env.QT_INSTALL_VERSION }}"
+          modules: "${{ env.QT_INSTALL_MODULES }}"
+
+      - name: Install NSIS
+        shell: pwsh
+        run: |
+          choco install nsis -y
+          $env:Path += ';C:\Program Files (x86)\NSIS'
+          'C:\Program Files (x86)\NSIS' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+          $nsisVersion = (& makensis /VERSION 2>&1 | Select-Object -First 1).Trim()
+          Write-Host "NSIS version: $nsisVersion"
+
+      - name: Configure
+        shell: pwsh
+        run: cmake -G Ninja -DCMAKE_BUILD_TYPE="${{ env.BUILD_TYPE }}" -B build
+
+      - name: Build
+        shell: pwsh
+        run: cmake --build build --config "${{ env.BUILD_TYPE }}"
+
+      - name: Install to bundle directory
+        shell: pwsh
+        run: |-
+          cmake --install build --config "${{ env.BUILD_TYPE }}" --prefix "${{ env.BUNDLE_DIR }}"
+
+          # FIX: Required for proper displaying of Arabic text in installer
+          $bundle = "${{ env.BUNDLE_DIR }}\bin"
+          $licenses = @(
+            "license-en.txt",
+            "license-ar.txt"
+          )
+          foreach ($file in $licenses) {
+            $src = Join-Path "${{ github.workspace }}" $file
+            $dst = Join-Path $bundle $file
+            # Rewrite license file as UTF-8 with BOM
+            $content = Get-Content $src -Raw
+            Set-Content -Path $dst -Value $content -Encoding utf8BOM
+          }
+
+      - name: Run windeployqt
+        shell: pwsh
+        run: windeployqt.exe -no-translations --release --dir "${{ env.BUNDLE_DIR }}\bin" "${{ env.BUNDLE_DIR }}\bin\quran-companion.exe"
+
+      - name: Build NSIS installer
+        shell: pwsh
+        run: |-
+          Push-Location "${{ env.BUNDLE_DIR }}\bin"
+          Copy-Item -Path "${{ github.workspace }}\dist\windows\installer\installer.nsi" -Destination "installer.nsi" -Force
+          makensis /V4 /DAPPVER="${{ env.APP_VER }}" /DOUTFILE="${{ env.BUNDLE_DIR }}\Quran_Companion-${{ env.APP_VER }}-x86_64-setup.exe" installer.nsi
+          Pop-Location
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: installer
+          path: "${{ env.BUNDLE_DIR }}/Quran_Companion-${{ env.APP_VER }}-x86_64-setup.exe"
+          retention-days: 7

@@ -1,9 +1,21 @@
 cmake_minimum_required(VERSION 3.22)
 
+# NOTE: VERSION is the single source of truth for the application version
+file(STRINGS VERSION QC_VERSION LIMIT_COUNT 1)
+set_property(
+  DIRECTORY
+  APPEND
+  PROPERTY CMAKE_CONFIGURE_DEPENDS VERSION)
+
+# NOTE: must precede project(); matches the minimum macOS supported by Qt 6.10
+set(CMAKE_OSX_DEPLOYMENT_TARGET
+    "13.0"
+    CACHE STRING "Minimum macOS version")
+
 project(
   quran-companion
   LANGUAGES CXX
-  VERSION 1.5.2
+  VERSION ${QC_VERSION}
   DESCRIPTION "Quran reader and player"
   HOMEPAGE_URL "https://0xzer0x.github.io/projects/quran-companion/")
 
@@ -223,9 +235,14 @@ set(PROJECT_SOURCES
     src/widgets/repeaterpopup.ui
     resources.qrc
     resources/logo.icns
-    qurancompanion.rc)
+    ${CMAKE_CURRENT_BINARY_DIR}/qurancompanion.rc)
+
+configure_file(qurancompanion.rc.in qurancompanion.rc @ONLY)
 
 qt_add_executable(quran-companion MANUAL_FINALIZATION ${PROJECT_SOURCES})
+
+target_compile_definitions(quran-companion
+                           PRIVATE QC_VERSION="${PROJECT_VERSION}")
 
 target_link_libraries(
   quran-companion PRIVATE Qt6::Widgets Qt6::Sql Qt6::Multimedia Qt6::Network
