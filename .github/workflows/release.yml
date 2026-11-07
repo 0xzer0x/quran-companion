@@ -152,7 +152,7 @@ jobs:
     runs-on: macos-14
     environment:
       name: MacOS - DMG
-      url: https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Quran_Companion-${{ needs.prepare.outputs.version }}-x86_64.dmg
+      url: https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Quran_Companion-${{ needs.prepare.outputs.version }}-arm64.dmg
     env:
       APP_VER: "${{ needs.prepare.outputs.version }}"
     steps:
@@ -187,18 +187,20 @@ jobs:
 
       - name: Make DMG
         run: |-
-          find "${QT_PLUGIN_PATH}/sqldrivers" -mindepth 1 \
-            -not -name 'libqsqlite.dylib' \
-            -not -name 'libqsqlite.dylib.dSYM' \
-            -delete
-
           cd "${{github.workspace}}/build"
-          macdeployqt quran-companion.app
-          create-dmg --dmg-title="Install Quran Companion" quran-companion.app || true
+          macdeployqt "Quran Companion.app"
+          # NOTE: keep only the SQLite driver, others need external libs that aren't bundled
+          find "Quran Companion.app/Contents/PlugIns/sqldrivers" -mindepth 1 \
+            -not -name 'libqsqlite.dylib' \
+            -delete
+          # NOTE: ad-hoc sign the whole bundle, otherwise Gatekeeper reports it as damaged
+          codesign --force --deep --sign - "Quran Companion.app"
+          codesign --verify --deep --strict "Quran Companion.app"
+          create-dmg --dmg-title="Install Quran Companion" "Quran Companion.app" || true
 
           QC_DMG="$(find . -maxdepth 1 -name "Quran Companion*.dmg" | head -n 1)"
           if [[ -n "${QC_DMG}" ]]; then
-            mv "${QC_DMG}" "${{ github.workspace }}/Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
+            mv "${QC_DMG}" "${{ github.workspace }}/Quran_Companion-${{env.APP_VER}}-arm64.dmg"
           else
             echo "DMG file not found!"
             exit 1
@@ -208,7 +210,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dmg
-          path: "Quran_Companion-${{env.APP_VER}}-x86_64.dmg"
+          path: "Quran_Companion-${{env.APP_VER}}-arm64.dmg"
           retention-days: 7
 
   build-installer:
@@ -326,7 +328,7 @@ jobs:
       - name: Verify artifacts
         run: |-
           echo "::group::Checking release artifacts"
-          if [[ ! -f "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" || ! -f "Quran_Companion-${{env.APP_VER}}-x86_64.dmg" || ! -f "Quran_Companion-${{env.APP_VER}}-x86_64-setup.exe" ]]; then
+          if [[ ! -f "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" || ! -f "Quran_Companion-${{env.APP_VER}}-arm64.dmg" || ! -f "Quran_Companion-${{env.APP_VER}}-x86_64-setup.exe" ]]; then
             echo "::error title=Missing Artifact::One of the platform build artifacts is missing"
             echo -e "Files listing:\n$(ls -la)" >&2
             exit 1
@@ -338,13 +340,13 @@ jobs:
         with:
           subject-path: |
             Quran_Companion-${{env.APP_VER}}-x86_64.AppImage
-            Quran_Companion-${{env.APP_VER}}-x86_64.dmg
+            Quran_Companion-${{env.APP_VER}}-arm64.dmg
             Quran_Companion-${{env.APP_VER}}-x86_64-setup.exe
 
       - name: Generate checksums
         run: |-
           b2sum "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage" > "Quran_Companion-${{env.APP_VER}}-x86_64.AppImage.b2sum"
-          b2sum "Quran_Companion-${{env.APP_VER}}-x86_64.dmg" > "Quran_Companion-${{env.APP_VER}}-x86_64.dmg.b2sum"
+          b2sum "Quran_Companion-${{env.APP_VER}}-arm64.dmg" > "Quran_Companion-${{env.APP_VER}}-arm64.dmg.b2sum"
           b2sum "Quran_Companion-${{env.APP_VER}}-x86_64-setup.exe" > "Quran_Companion-${{env.APP_VER}}-x86_64-setup.exe.b2sum"
 
       - name: Release

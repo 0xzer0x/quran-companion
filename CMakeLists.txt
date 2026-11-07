@@ -234,6 +234,7 @@ elseif(APPLE)
   set_target_properties(
     quran-companion
     PROPERTIES
+      OUTPUT_NAME "Quran Companion"
       MACOSX_BUNDLE_ICON_FILE "logo.icns"
       MACOSX_BUNDLE_BUNDLE_NAME "Quran Companion"
       MACOSX_BUNDLE_GUI_IDENTIFIER "io.github._0xzer0x.qurancompanion"
@@ -265,7 +266,7 @@ install(
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if(APPLE)
-  set(QC_RUNTIME_DATAROOT "quran-companion.app/Contents/MacOS")
+  set(QC_RUNTIME_DATAROOT "Quran Companion.app/Contents/MacOS")
   message(STATUS "Copying runtime assets to ${QC_RUNTIME_DATAROOT}")
   file(INSTALL assets DESTINATION ${QC_RUNTIME_DATAROOT})
   file(INSTALL bismillah DESTINATION ${QC_RUNTIME_DATAROOT})
