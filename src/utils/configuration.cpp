@@ -104,7 +104,9 @@ Configuration::qcfVersion() const
 const int
 Configuration::qcfFontSize() const
 {
-  return m_settings.value("Reader/QCF" + QString::number(m_qcfVersion) + "Size", 22).toInt();
+  QString sizeKey = "Reader/QCF" + QString::number(m_qcfVersion) + "Size";
+
+  return m_settings.value(sizeKey, ConfigurationSchema::getInstance().getDefault(sizeKey).value()).toInt();
 }
 
 const int
