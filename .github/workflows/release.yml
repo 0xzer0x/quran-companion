@@ -194,6 +194,9 @@ jobs:
 
           cd "${{github.workspace}}/build"
           macdeployqt quran-companion.app
+          # NOTE: ad-hoc sign the whole bundle, otherwise Gatekeeper reports it as damaged
+          codesign --force --deep --sign - quran-companion.app
+          codesign --verify --deep --strict quran-companion.app
           create-dmg --dmg-title="Install Quran Companion" quran-companion.app || true
 
           QC_DMG="$(find . -maxdepth 1 -name "Quran Companion*.dmg" | head -n 1)"
