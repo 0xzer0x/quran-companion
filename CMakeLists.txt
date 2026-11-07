@@ -7,6 +7,11 @@ set_property(
   APPEND
   PROPERTY CMAKE_CONFIGURE_DEPENDS VERSION)
 
+# NOTE: must precede project(); matches the minimum macOS supported by Qt 6.10
+set(CMAKE_OSX_DEPLOYMENT_TARGET
+    "13.0"
+    CACHE STRING "Minimum macOS version")
+
 project(
   quran-companion
   LANGUAGES CXX
