@@ -28,6 +28,7 @@ This document explains how to:
 - [Internationalization](#internationalization)
 - [Recitations](#recitations)
 - [Quran Content](#quran-content)
+- [Releases](#releases)
 - [Documentation](#documentation)
 - [License](#license)
 
@@ -212,13 +213,13 @@ cmake --build .
 ├── CONTRIBUTING.md                   Contribution guidelines (how to build, PRs, content contribution, etc.).
 ├── README-AR.md                      Arabic README.
 ├── README.md                         Primary README (English).
-├── VERSION                           Current application version used by release automation.
+├── VERSION                           Application version, single source of truth (bumped by release automation).
 ├── crowdin.yml                       Crowdin configuration for translation management.
 ├── license-ar.txt                    License (Arabic, authoritative per README).
 ├── license-en.txt                    License (English translation).
 ├── mise.toml                         mise dev tools, build environment and tasks (setup, build, run, fmt, ...).
 ├── mise.lock                         Pinned tool versions, checksums and download URLs (`mise install --locked`).
-├── qurancompanion.rc                 Windows resource file (icon/version metadata for Windows builds).
+├── qurancompanion.rc.in              Windows resource file template (icon/version metadata for Windows builds).
 └── resources.qrc                     Qt resource collection file defining what gets bundled from resources/.
 ```
 
@@ -289,6 +290,9 @@ If your commit fixes an issue, you can reference it in the footer:
 ```text
 Refs: #123
 ```
+
+Commit types also drive releases: `feat` bumps the minor version, `fix`, `perf` and `crowdin` bump the patch version, and
+breaking changes bump the major version. Other types are not user-facing and don't appear in the changelog.
 
 <p align="right">(<a href="#md-top">back to top</a>)</p>
 
@@ -406,6 +410,27 @@ CREATE TABLE IF NOT EXISTS "content" (
 
 <p align="right">(<a href="#md-top">back to top</a>)</p>
 
+## Releases
+
+Releases are fully automated by the **Release** workflow (`.github/workflows/release.yml`), run manually on `main`:
+
+1. Computes the next version from the conventional commits since the latest `vX.Y.Z` tag, does nothing if none of them
+   are user-facing.
+2. Updates `VERSION`, `CHANGELOG.md`, the metainfo release notes and `snap/snapcraft.yaml`, and commits them to a
+   temporary `release/vX.Y.Z` branch.
+3. Builds the AppImage, DMG and Windows installer from that commit. Any failure halts the release.
+4. Fast-forwards `main` and creates the tag in a single atomic push, publishes the GitHub release and the AUR package.
+
+Snap builds from `main` and Flathub from the latest tag, so both only pick up releases that built successfully.
+
+`VERSION` is the single source of the application version, never edit it by hand. Preview the next release with:
+
+```sh
+mise run release:preview
+```
+
+<p align="right">(<a href="#md-top">back to top</a>)</p>
+
 ## Documentation
 
 ### Doxygen
@@ -414,7 +439,7 @@ Doxygen docs can be generated from `docs/`:
 
 ```sh
 cd docs
-doxygen
+QC_VERSION="$(cat ../VERSION)" doxygen
 ```
 
 By default, output is HTML (you can change `Doxyfile` to generate other formats).

@@ -9,6 +9,7 @@ node = "26.13.0"
 "pipx:cmakelang" = { version = "0.6.13", extras = "YAML" }
 "aqua:oxc-project/oxc/oxfmt" = "0.77.0"
 "npm:@crowdin/cli" = "5.6.0"
+"aqua:orhun/git-cliff" = "2.14.2"
 
 [env]
 BUILD_DIR = "{{ config_root }}/build"
@@ -50,6 +51,10 @@ run = 'cmake -S "{{ config_root }}" -B "$BUILD_DIR"'
 [tasks.build]
 depends = ["generate"]
 run = 'cmake --build "$BUILD_DIR" --config "$CMAKE_BUILD_TYPE"'
+
+[tasks."release:preview"]
+description = "Preview the next release version and changelog"
+run = "git cliff --unreleased --bump --strip header"
 
 [tasks."template.ts"]
 run = "{{ config_root }}/dist/translations/generate-template"

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Bumps the version and release notes from the conventional commits since the latest tag.
+# Prints the new version, or nothing when there are no user-facing changes to release.
+
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+METAINFO="dist/xdg/io.github._0xzer0x.qurancompanion.metainfo.xml"
+
+CHANGES="$(git cliff --unreleased --context | jq '[.[].commits[]] | length')"
+if [[ "${CHANGES}" -eq 0 ]]; then
+  exit 0
+fi
+
+TAG="$(git cliff --bumped-version)"
+VERSION="${TAG#v}"
+
+echo "${VERSION}" >VERSION
+# NOTE: snapcraft needs a literal version, it builds the matching vX.Y.Z tag
+sed -i.bak -E "s/^version: .*/version: ${VERSION}/" snap/snapcraft.yaml && rm snap/snapcraft.yaml.bak
+git cliff --unreleased --tag "${TAG}" --prepend CHANGELOG.md >/dev/null
+
+RELEASE_ITEMS="$(git cliff --unreleased --tag "${TAG}" --strip all --body \
+  '{% for group, commits in commits | group_by(attribute="group") %}{% for commit in commits %}          <li>{{ commit.message | upper_first | escape_xml }}</li>
+{% endfor %}{% endfor %}')"
+RELEASE_DATE="$(date -u +%F)" RELEASE_VERSION="${VERSION}" RELEASE_ITEMS="${RELEASE_ITEMS}" awk '
+  { print }
+  /<releases>/ {
+    printf "    <release date=\"%s\" version=\"%s\">\n", ENVIRON["RELEASE_DATE"], ENVIRON["RELEASE_VERSION"]
+    print "      <description>\n        <ul>\n" ENVIRON["RELEASE_ITEMS"] "\n        </ul>\n      </description>\n    </release>"
+  }
+' "${METAINFO}" >"${METAINFO}.new"
+mv "${METAINFO}.new" "${METAINFO}"
+
+echo "${VERSION}"
