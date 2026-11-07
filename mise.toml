@@ -56,7 +56,7 @@ run = 'cmake --build "$BUILD_DIR" --config "$CMAKE_BUILD_TYPE"'
 description = "Preview the next release version and changelog"
 run = "git cliff --unreleased --bump --strip header"
 
-[tasks."template.ts"]
+[tasks."i18n:template"]
 run = "{{ config_root }}/dist/translations/generate-template"
 
 [tasks.run]
