@@ -46,6 +46,7 @@ public:
     Translation,   ///< show the translation for the verse
     Thoughts,      ///< show user thoughts for the verse
     Copy,          ///< copy the verse text to clipboard
+    ShareImage,    ///< share the verse as an image
     AddBookmark,   ///< add the verse to bookmarks
     RemoveBookmark ///< remove the verse from bookmarks
   };
@@ -56,6 +57,13 @@ public:
    * @param initPage - inital page to load
    */
   QuranPageBrowser(QWidget* parent = nullptr, int initPage = 1);
+  /**
+   * @brief generate QImage for the frame containing the surah name, black on
+   * white like a printed mushaf
+   * @param surah - surah number
+   * @return QImage of the surah frame
+   */
+  static QImage surahFrame(int surah);
   /**
    * @brief sets m_fontSize to the fontsize in the settings file
    */
@@ -165,13 +173,6 @@ private:
    */
   QSize calcPageLineSize(QStringList& lines);
   /**
-   * @brief generate QImage for the frame containing the surah name to insert in
-   * the page
-   * @param surah - surah number
-   * @return QImage of the surah frame
-   */
-  QImage surahFrame(int surah);
-  /**
    * @brief utility to set the href url for the text from the current cursor
    * position to the position given
    * @param cursor - pointer to the current QTextCursor used for inserting text
@@ -238,6 +239,10 @@ private:
    * @brief QAction for copy functionality
    */
   QPointer<QAction> m_actCopy;
+  /**
+   * @brief QAction for sharing the verse as an image
+   */
+  QPointer<QAction> m_actShareImage;
   /**
    * @brief QAction for verse selection functionality
    */

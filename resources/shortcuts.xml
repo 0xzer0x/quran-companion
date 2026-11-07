@@ -27,5 +27,6 @@
   <shortcut default="T" description="Open the tafsir for the current active verse" key="ContentDialog"></shortcut>
   <shortcut default="D" description="Open the download manager dialog" key="DownloaderDialog"></shortcut>
   <shortcut default="'" description="Open the advanced copy dialog" key="CopyDialog"></shortcut>
+  <shortcut default="I" description="Open the share as image dialog" key="ShareImageDialog"></shortcut>
   <shortcut default="Ctrl+Q" description="Quit" key="Quit"></shortcut>
 </shortcuts>

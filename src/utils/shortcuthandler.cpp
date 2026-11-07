@@ -92,6 +92,7 @@ ShortcutHandler::setupConnections()
          make_pair("SettingsDialog", &ShortcutHandler::openSettings),
          make_pair("ContentDialog", &ShortcutHandler::openContent),
          make_pair("CopyDialog", &ShortcutHandler::openAdvancedCopy),
+         make_pair("ShareImageDialog", &ShortcutHandler::openShareImage),
        }) {
     connect(m_shortcuts.value(connection.first), &QShortcut::activated, this, connection.second);
   }

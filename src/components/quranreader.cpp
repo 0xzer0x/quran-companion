@@ -393,6 +393,9 @@ QuranReader::verseAnchorClicked(const QUrl& hrefUrl)
     case QuranPageBrowser::Copy:
       emit copyVerseText(v);
       break;
+    case QuranPageBrowser::ShareImage:
+      emit shareVerseImage(v);
+      break;
     case QuranPageBrowser::AddBookmark:
       m_bookmarkService->addBookmark(v, false);
       break;

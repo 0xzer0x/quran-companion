@@ -111,6 +111,7 @@
     <addaction name="actionFind"/>
     <addaction name="actionTafsir"/>
     <addaction name="actionAdvancedCopy"/>
+    <addaction name="actionShareImage"/>
     <addaction name="actionVOTD"/>
     <addaction name="separator"/>
     <addaction name="actionReaderViewToggle"/>
@@ -508,6 +509,11 @@
   <action name="actionAdvancedCopy">
    <property name="text">
     <string>Advanced copy</string>
+   </property>
+  </action>
+  <action name="actionShareImage">
+   <property name="text">
+    <string>Share as image</string>
    </property>
   </action>
   <action name="actionReaderViewToggle">

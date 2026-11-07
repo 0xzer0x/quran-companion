@@ -89,6 +89,9 @@ set(PROJECT_SOURCES
     src/dialogs/copydialog.h
     src/dialogs/copydialog.cpp
     src/dialogs/copydialog.ui
+    src/dialogs/shareimagedialog.h
+    src/dialogs/shareimagedialog.cpp
+    src/dialogs/shareimagedialog.ui
     src/dialogs/aboutdialog.h
     src/dialogs/aboutdialog.h
     src/dialogs/aboutdialog.cpp
@@ -249,29 +252,21 @@ elseif(APPLE)
                               PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 endif()
 
-if(NOT APPLE)
-  # WARN: Required for development builds to run
-  add_custom_command(
-    TARGET quran-companion
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets
-            $<TARGET_FILE_DIR:quran-companion>/assets
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/bismillah
-            $<TARGET_FILE_DIR:quran-companion>/bismillah)
-endif()
+# WARN: Required for development builds to run
+add_custom_command(
+  TARGET quran-companion
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets
+          $<TARGET_FILE_DIR:quran-companion>/assets
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/bismillah
+          $<TARGET_FILE_DIR:quran-companion>/bismillah)
 
 install(
   TARGETS quran-companion
   BUNDLE DESTINATION .
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-if(APPLE)
-  set(QC_RUNTIME_DATAROOT "Quran Companion.app/Contents/MacOS")
-  message(STATUS "Copying runtime assets to ${QC_RUNTIME_DATAROOT}")
-  file(INSTALL assets DESTINATION ${QC_RUNTIME_DATAROOT})
-  file(INSTALL bismillah DESTINATION ${QC_RUNTIME_DATAROOT})
-
-elseif(LINUX)
+if(LINUX)
   set(QC_RUNTIME_DATAROOT ${CMAKE_INSTALL_DATAROOTDIR}/quran-companion)
   message(STATUS "Installing runtime assets to ${QC_RUNTIME_DATAROOT}")
   install(DIRECTORY assets DESTINATION ${QC_RUNTIME_DATAROOT})

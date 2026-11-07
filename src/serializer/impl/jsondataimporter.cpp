@@ -15,8 +15,8 @@ JsonDataImporter::importBookmarks()
 {
   if (!validArray("bookmarks"))
     return;
-  QJsonArray arr = m_fileObj.value("bookmarks").toArray();
-  foreach (const QJsonValue& item, arr) {
+  const QJsonArray arr = m_fileObj.value("bookmarks").toArray();
+  for (const QJsonValue& item : arr) {
     Verse bookmark = verseFromJson(item.toObject());
     if (bookmark.page() < 1 || bookmark.surah() < 1 || bookmark.number() < 1)
       continue;
@@ -30,8 +30,8 @@ JsonDataImporter::importKhatmah()
 {
   if (!validArray("khatmah"))
     return;
-  QJsonArray arr = m_fileObj.value("khatmah").toArray();
-  foreach (const QJsonValue& item, arr) {
+  const QJsonArray arr = m_fileObj.value("khatmah").toArray();
+  for (const QJsonValue& item : arr) {
     QPair<QString, Verse> khatmah = khatmahFromJson(item.toObject());
     if (!khatmah.first.isEmpty())
       m_khatmahService->addKhatmah(khatmah.second, khatmah.first);
@@ -43,8 +43,8 @@ JsonDataImporter::importThoughts()
 {
   if (!validArray("thoughts"))
     return;
-  QJsonArray arr = m_fileObj.value("thoughts").toArray();
-  foreach (const QJsonValue& item, arr) {
+  const QJsonArray arr = m_fileObj.value("thoughts").toArray();
+  for (const QJsonValue& item : arr) {
     QPair<Verse, QString> thought = thoughtFromJson(item.toObject());
     if (!thought.second.isEmpty())
       m_thoughtsService->saveThoughts(thought.first, thought.second);

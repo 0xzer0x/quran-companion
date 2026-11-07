@@ -26,6 +26,7 @@
 #include <dialogs/khatmahdialog.h>
 #include <dialogs/searchdialog.h>
 #include <dialogs/settingsdialog.h>
+#include <dialogs/shareimagedialog.h>
 #include <dialogs/versedialog.h>
 #include <player/verseplayer.h>
 #include <service/bookmarkservice.h>
@@ -166,6 +167,10 @@ private slots:
    * @brief open the CopyDialog, create instance if not set
    */
   void actionAdvancedCopyTriggered();
+  /**
+   * @brief open the ShareImageDialog for the current surah
+   */
+  void actionShareImageTriggered();
   /**
    * @brief open the ContentDialog for the current Verse
    */
@@ -446,6 +451,10 @@ private:
    * @brief pointer to CopyDialog instance
    */
   QPointer<CopyDialog> m_cpyDlg;
+  /**
+   * @brief pointer to ShareImageDialog instance
+   */
+  QPointer<ShareImageDialog> m_shareImageDlg;
   /**
    * @brief pointer to DownloaderDialog instance
    */
