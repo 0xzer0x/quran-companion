@@ -1,0 +1,71 @@
+[tools]
+cmake = "4.4.5"
+ninja = "1.13.2"
+python = "3.13.18"
+uv = "0.13.7"
+node = "26.13.0"
+"pipx:aqtinstall" = "3.3.0"
+"pipx:clang-format" = "23.1.5"
+"pipx:cmakelang" = { version = "0.6.13", extras = "YAML" }
+"aqua:oxc-project/oxc/oxfmt" = "0.77.0"
+"npm:@crowdin/cli" = "5.6.0"
+
+[env]
+BUILD_DIR = "{{ config_root }}/build"
+CMAKE_BUILD_TYPE = "Debug"
+CMAKE_GENERATOR = "Ninja Multi-Config"
+CMAKE_EXPORT_COMPILE_COMMANDS = "1"
+QT_VERSION = "6.10.2"
+QT_ROOT = "{{ env.HOME }}/Qt"
+QT_HOST = "{% if os() == 'macos' %}mac{% else %}linux{% endif %}"
+QT_ARCH = "{% if os() == 'macos' %}clang_64{% else %}linux_gcc_64{% endif %}"
+CMAKE_PREFIX_PATH = "{{ env.QT_ROOT }}/{{ env.QT_VERSION }}/{% if os() == 'macos' %}macos{% else %}gcc_64{% endif %}"
+_.path = ["{{ env.CMAKE_PREFIX_PATH }}/bin"]
+
+[tasks.setup]
+description = "Install dev tools and Qt"
+run = ["mise install --locked", { task = "qt:install" }]
+
+[tasks."qt:install"]
+description = "Install Qt and required modules via aqtinstall"
+run = """
+test -d "$CMAKE_PREFIX_PATH" || aqt install-qt "$QT_HOST" desktop "$QT_VERSION" "$QT_ARCH" \
+  --outputdir "$QT_ROOT" -m qtimageformats qtmultimedia qtnetworkauth
+"""
+
+[tasks.fmt]
+description = "Format C++, CMake and markdown/yaml sources"
+run = [
+  "git ls-files '*.cpp' '*.h' | xargs clang-format -i",
+  "git ls-files 'CMakeLists.txt' '*.cmake' | xargs cmake-format -i",
+  "oxfmt",
+]
+
+[tasks.clean]
+run = 'cmake --build "$BUILD_DIR" --target clean'
+
+[tasks.generate]
+run = 'cmake -S "{{ config_root }}" -B "$BUILD_DIR"'
+
+[tasks.build]
+depends = ["generate"]
+run = 'cmake --build "$BUILD_DIR" --config "$CMAKE_BUILD_TYPE"'
+
+[tasks."template.ts"]
+run = "{{ config_root }}/dist/translations/generate-template"
+
+[tasks.run]
+run = """
+if [ "$(uname)" = Darwin ]; then
+  exec "$BUILD_DIR/$CMAKE_BUILD_TYPE/Quran Companion.app/Contents/MacOS/Quran Companion"
+fi
+exec "$BUILD_DIR/$CMAKE_BUILD_TYPE/quran-companion"
+"""
+
+[tasks.designer]
+description = "Open Qt Designer (edit .ui files)"
+run = '"$CMAKE_PREFIX_PATH/bin/{% if os() == "macos" %}Designer.app/Contents/MacOS/Designer{% else %}designer{% endif %}"'
+
+[tasks.linguist]
+description = "Open Qt Linguist (edit .ts translation files)"
+run = '"$CMAKE_PREFIX_PATH/bin/{% if os() == "macos" %}Linguist.app/Contents/MacOS/Linguist{% else %}linguist{% endif %}"'
