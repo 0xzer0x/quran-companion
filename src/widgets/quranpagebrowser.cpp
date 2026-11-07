@@ -68,16 +68,13 @@ QuranPageBrowser::surahFrame(int surah)
   QString frmText;
   frmText.append("ﰦ");
   frmText.append("ﮌ");
-  frmText.append(m_glyphService->getSurahNameGlyph(surah));
+  frmText.append(ServiceFactory::glyphService()->getSurahNameGlyph(surah));
 
   // draw on top of the image the surah name text
   QPainter p(&baseImage);
   p.setPen(QPen(Qt::black));
   p.setFont(QFont("QCF_BSML", 85));
   p.drawText(drawingRect, Qt::AlignCenter, frmText);
-
-  if (m_config.darkMode())
-    baseImage.invertPixels();
 
   return baseImage;
 }
@@ -236,6 +233,8 @@ QuranPageBrowser::constructPage(int pageNo, bool forceCustomSize)
       // generate frame for surah
       int surah = l.split('_').at(1).toInt();
       QImage surahFrame = this->surahFrame(surah);
+      if (m_config.darkMode())
+        surahFrame.invertPixels();
       // insert the surah image in the document
       textCursor.insertBlock(m_pageFormat, m_bodyTextFormat);
       textCursor.insertImage(surahFrame.scaledToWidth(m_pageLineSize.width() + 5, Qt::SmoothTransformation));

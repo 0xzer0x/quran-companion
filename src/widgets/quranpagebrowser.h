@@ -57,6 +57,13 @@ public:
    */
   QuranPageBrowser(QWidget* parent = nullptr, int initPage = 1);
   /**
+   * @brief generate QImage for the frame containing the surah name, black on
+   * white like a printed mushaf
+   * @param surah - surah number
+   * @return QImage of the surah frame
+   */
+  static QImage surahFrame(int surah);
+  /**
    * @brief sets m_fontSize to the fontsize in the settings file
    */
   void updateFontSize();
@@ -164,13 +171,6 @@ private:
    * @return QSize of a single page line
    */
   QSize calcPageLineSize(QStringList& lines);
-  /**
-   * @brief generate QImage for the frame containing the surah name to insert in
-   * the page
-   * @param surah - surah number
-   * @return QImage of the surah frame
-   */
-  QImage surahFrame(int surah);
   /**
    * @brief utility to set the href url for the text from the current cursor
    * position to the position given
