@@ -20,15 +20,15 @@ options=(!strip !debug)
 
 prepare() {
   chmod +x "${srcdir}/Quran_Companion-${pkgver}-x86_64.AppImage"
-  "${srcdir}/Quran_Companion-${pkgver}-x86_64.AppImage" --appimage-extract usr/share
+  "${srcdir}/Quran_Companion-${pkgver}-x86_64.AppImage" --appimage-extract 'share/**'
 }
 
 package() {
   mkdir -p "${pkgdir}"/usr/{bin,share/{applications,metainfo,icons/hicolor/256x256/apps}}
 
-  install -Dm644 -t "${pkgdir}/usr/share/applications" "${srcdir}/squashfs-root/usr/share/applications/io.github._0xzer0x.qurancompanion.desktop"
-  install -Dm644 -t "${pkgdir}/usr/share/metainfo" "${srcdir}/squashfs-root/usr/share/metainfo/io.github._0xzer0x.qurancompanion.appdata.xml"
-  install -Dm644 -t "${pkgdir}/usr/share/icons/hicolor/256x256/apps" "${srcdir}/squashfs-root/usr/share/icons/hicolor/256x256/apps/io.github._0xzer0x.qurancompanion.png"
+  install -Dm644 -t "${pkgdir}/usr/share/applications" "${srcdir}/squashfs-root/share/applications/io.github._0xzer0x.qurancompanion.desktop"
+  install -Dm644 -t "${pkgdir}/usr/share/metainfo" "${srcdir}/squashfs-root/share/metainfo/io.github._0xzer0x.qurancompanion.appdata.xml"
+  install -Dm644 -t "${pkgdir}/usr/share/icons/hicolor/256x256/apps" "${srcdir}/squashfs-root/share/icons/hicolor/256x256/apps/io.github._0xzer0x.qurancompanion.png"
   install -Dm755 "${srcdir}/Quran_Companion-${pkgver}-x86_64.AppImage" "${pkgdir}/opt/quran-companion/quran_companion.AppImage"
 
   ln -sf /opt/quran-companion/quran_companion.AppImage "${pkgdir}/usr/bin/quran-companion"

@@ -18,6 +18,7 @@ compile_commands.json
 !update_translations.sh
 !docs/Doxyfile
 !dist/windows/*installer/
+!dist/appimage/*.sh
 
 # Devenv
 .devenv*
