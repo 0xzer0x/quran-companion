@@ -64,6 +64,7 @@ signals:
   void openSettings();
   void openContent();
   void openAdvancedCopy();
+  void openShareImage();
 
 private:
   Configuration& m_config;

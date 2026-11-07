@@ -89,6 +89,9 @@ set(PROJECT_SOURCES
     src/dialogs/copydialog.h
     src/dialogs/copydialog.cpp
     src/dialogs/copydialog.ui
+    src/dialogs/shareimagedialog.h
+    src/dialogs/shareimagedialog.cpp
+    src/dialogs/shareimagedialog.ui
     src/dialogs/aboutdialog.h
     src/dialogs/aboutdialog.h
     src/dialogs/aboutdialog.cpp

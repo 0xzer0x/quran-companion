@@ -69,6 +69,7 @@ MainWindow::loadIcons()
   ui->actionBookmarks->setIcon(awesome.icon(fa_solid, fa_bookmark));
   ui->actionPereferences->setIcon(awesome.icon(fa_solid, fa_gear));
   ui->actionAdvancedCopy->setIcon(awesome.icon(fa_solid, fa_clipboard));
+  ui->actionShareImage->setIcon(awesome.icon(fa_solid, fa_image));
   ui->actionReaderViewToggle->setIcon(awesome.icon(fa_solid, fa_columns));
   ui->actionUpdates->setIcon(awesome.icon(fa_solid, fa_arrow_rotate_right));
   ui->actionImport->setIcon(awesome.icon(fa_solid, fa_file_arrow_down));
@@ -104,6 +105,7 @@ MainWindow::loadComponents()
   m_betaqaViewer = new BetaqaViewer(this);
   m_verseDlg = new VerseDialog(this);
   m_cpyDlg = new CopyDialog(this);
+  m_shareImageDlg = new ShareImageDialog(this);
   m_systemTray = new SystemTray(this);
   m_contentDlg = new ContentDialog(this);
   m_jobMgr = new JobManager(this);
@@ -175,6 +177,7 @@ MainWindow::setupShortcuts()
          make_pair(&ShortcutHandler::openSettings, &MainWindow::actionPrefTriggered),
          make_pair(&ShortcutHandler::openContent, &MainWindow::actionTafsirTriggered),
          make_pair(&ShortcutHandler::openAdvancedCopy, &MainWindow::actionAdvancedCopyTriggered),
+         make_pair(&ShortcutHandler::openShareImage, &MainWindow::actionShareImageTriggered),
        }) {
     connect(&m_shortcutHandler, connection.first, this, connection.second);
   }
@@ -268,6 +271,7 @@ MainWindow::connectMenubar()
          make_pair(ui->actionImport, &MainWindow::importUserData),
          make_pair(ui->actionExport, &MainWindow::exportUserData),
          make_pair(ui->actionAdvancedCopy, &MainWindow::actionAdvancedCopyTriggered),
+         make_pair(ui->actionShareImage, &MainWindow::actionShareImageTriggered),
        }) {
     connect(connection.first, &QAction::triggered, this, connection.second);
   }
@@ -571,6 +575,12 @@ void
 MainWindow::actionAdvancedCopyTriggered()
 {
   m_cpyDlg->show();
+}
+
+void
+MainWindow::actionShareImageTriggered()
+{
+  m_shareImageDlg->show();
 }
 
 void
