@@ -13,6 +13,7 @@ public:
   static StyleManager& getInstance();
 
   void loadTheme();
+  static QPalette themePalette(int themeId);
   fa::QtAwesome& awesome();
   const QDir& themeResources() const;
 

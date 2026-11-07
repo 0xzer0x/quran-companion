@@ -16,33 +16,41 @@ StyleManager::StyleManager()
 {
 }
 
+namespace {
+// resource directory and file name (without extension) of each theme, indexed by theme id
+const QList<QPair<QString, QString>> THEMES = {
+  { ":/resources/light/", "light" },
+  { ":/resources/light/", "sepia" },
+  { ":/resources/dark/", "dark" },
+};
+}
+
 void
 StyleManager::loadTheme()
 {
   qApp->setStyle(QStyleFactory::create("Fusion"));
 
-  QPalette themeColors;
-  QFile styles, palette;
-  switch (m_config.themeId()) {
-    case 0:
-      m_themeResources.setPath(":/resources/light/");
-      styles.setFileName(m_themeResources.filePath("light.qss"));
-      palette.setFileName(m_themeResources.filePath("light.xml"));
-      break;
+  const auto [dir, name] = THEMES.value(m_config.themeId());
+  m_themeResources.setPath(dir);
+  qApp->setPalette(themePalette(m_config.themeId()));
 
-    case 1:
-      m_themeResources.setPath(":/resources/light/");
-      styles.setFileName(m_themeResources.filePath("sepia.qss"));
-      palette.setFileName(m_themeResources.filePath("sepia.xml"));
-      break;
-
-    case 2:
-      m_themeResources.setPath(":/resources/dark/");
-      styles.setFileName(m_themeResources.filePath("dark.qss"));
-      palette.setFileName(m_themeResources.filePath("dark.xml"));
-      break;
+  // load stylesheet
+  QFile styles(m_themeResources.filePath(name + ".qss"));
+  if (styles.open(QIODevice::ReadOnly)) {
+    qApp->setStyleSheet(styles.readAll());
+    styles.close();
   }
 
+  m_awesome = new fa::QtAwesome(qApp);
+  m_awesome->initFontAwesome();
+}
+
+QPalette
+StyleManager::themePalette(int themeId)
+{
+  const auto [dir, name] = THEMES.value(themeId);
+  QPalette themeColors;
+  QFile palette(QDir(dir).filePath(name + ".xml"));
   if (!palette.open(QIODevice::ReadOnly | QIODevice::Text)) {
     qCritical("Failed to read color palette XML, file: %s", qPrintable(palette.fileName()));
   }
@@ -71,16 +79,7 @@ StyleManager::loadTheme()
   }
 
   palette.close();
-  qApp->setPalette(themeColors);
-
-  // load stylesheet
-  if (styles.open(QIODevice::ReadOnly)) {
-    qApp->setStyleSheet(styles.readAll());
-    styles.close();
-  }
-
-  m_awesome = new fa::QtAwesome(qApp);
-  m_awesome->initFontAwesome();
+  return themeColors;
 }
 
 fa::QtAwesome&
