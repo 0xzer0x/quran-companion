@@ -19,13 +19,8 @@ compile_commands.json
 !docs/Doxyfile
 !dist/windows/*installer/
 
-# Devenv
-.devenv*
-devenv.local.nix
-devenv.local.yaml
+# aqtinstall
+aqtinstall.log
 
-# direnv
-.direnv
-
-# pre-commit
-.pre-commit-config.yaml
+# mise
+mise.local.toml
