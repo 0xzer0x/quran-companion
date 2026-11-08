@@ -55,6 +55,31 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release date="2026-11-08" version="1.6.0">
+      <description>
+        <ul>
+          <li>Add abdurrahmaan as-sudais</li>
+          <li>Add share as image dialog</li>
+          <li>Add share as image to the verse menu</li>
+          <li>Husary mujawwad source has mixed recitations in surah al-baqrah</li>
+          <li>Typo in russian language name</li>
+          <li>Correct stale version metadata to match v1.5.2</li>
+          <li>Remove stray latin &apos;e&apos; from Russian language label</li>
+          <li>Use schema default for QCF font size instead of hardcoded 22</li>
+          <li>Use range-based for over QJsonArray in data importer</li>
+          <li>Copy runtime assets after build on macOS too</li>
+          <li>Use macos latest</li>
+          <li>Macos compatibility with versions older than build system</li>
+          <li>Update Indonesian translation</li>
+          <li>Update Spanish translation</li>
+          <li>Update Arabic translation</li>
+          <li>Update Russian translation</li>
+          <li>Update Turkish translation</li>
+          <li>Update Indonesian translation</li>
+          <li>Update Arabic translation</li>
+        </ul>
+      </description>
+    </release>
     <release date="2026-03-25" version="1.5.2" >
       <description>
         <ul>
