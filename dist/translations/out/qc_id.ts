@@ -116,8 +116,12 @@
       <translation>Ahmed Neana</translation>
     </message>
     <message>
+      <source>Abdurrahmaan As-Sudais</source>
+      <translation type="unfinished">Abdurrahmaan As-Sudais</translation>
+    </message>
+    <message>
       <location filename="../../../src/components/mainwindow.ui" line="17"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="578"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="472"/>
       <location filename="../../../src/components/systemtray.cpp" line="15"/>
       <source>Quran Companion</source>
       <translation>Teman Quran</translation>
@@ -128,171 +132,176 @@
       <translation>Tampilan</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="121"/>
+      <location filename="../../../src/components/mainwindow.ui" line="122"/>
       <source>Edit</source>
       <translation>Edit</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="130"/>
+      <location filename="../../../src/components/mainwindow.ui" line="131"/>
       <source>File</source>
       <translation>File</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="141"/>
+      <location filename="../../../src/components/mainwindow.ui" line="142"/>
       <source>Help</source>
       <translation>Bantuan</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="179"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="415"/>
+      <location filename="../../../src/components/mainwindow.ui" line="180"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="317"/>
       <source>Navigation</source>
       <translation>Navigasi</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="194"/>
+      <location filename="../../../src/components/mainwindow.ui" line="195"/>
       <source>Juz</source>
       <translation>Juz</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="362"/>
+      <location filename="../../../src/components/mainwindow.ui" line="363"/>
       <source>Page</source>
       <translation>Halaman</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="376"/>
+      <location filename="../../../src/components/mainwindow.ui" line="377"/>
       <source>Verse</source>
       <translation>Ayat</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="395"/>
+      <location filename="../../../src/components/mainwindow.ui" line="396"/>
       <source>Search surah</source>
       <translation>Cari Surah</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="436"/>
+      <location filename="../../../src/components/mainwindow.ui" line="437"/>
       <source>Preferences</source>
       <translation>Pengaturan</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="445"/>
+      <location filename="../../../src/components/mainwindow.ui" line="446"/>
       <source>Download manager</source>
       <translation>Kelola Unduhan</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="455"/>
+      <location filename="../../../src/components/mainwindow.ui" line="456"/>
       <source>Exit</source>
       <translation>Keluar</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="464"/>
+      <location filename="../../../src/components/mainwindow.ui" line="465"/>
       <source>Find</source>
       <translation>Cari</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="469"/>
+      <location filename="../../../src/components/mainwindow.ui" line="470"/>
       <source>Check for updates</source>
       <translation>Cek versi terbaru</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="474"/>
+      <location filename="../../../src/components/mainwindow.ui" line="475"/>
       <source>Bookmarks</source>
       <translation>Penanda</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="479"/>
+      <location filename="../../../src/components/mainwindow.ui" line="480"/>
       <source>About Quran Companion</source>
       <translation>Tentang Teman Quran</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="487"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="720"/>
+      <location filename="../../../src/components/mainwindow.ui" line="488"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="609"/>
       <source>About Qt</source>
       <translation>Tentang Qt</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="495"/>
+      <location filename="../../../src/components/mainwindow.ui" line="496"/>
       <source>Tafsir</source>
       <translation>Tafsir</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="500"/>
+      <location filename="../../../src/components/mainwindow.ui" line="501"/>
       <source>Verse of the day</source>
       <translation>Ayat hari ini</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="505"/>
+      <location filename="../../../src/components/mainwindow.ui" line="506"/>
       <source>Khatmah</source>
       <translation>Khatmah</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="510"/>
+      <location filename="../../../src/components/mainwindow.ui" line="511"/>
       <source>Advanced copy</source>
       <translation>Penyalinan</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="521"/>
+      <location filename="../../../src/components/mainwindow.ui" line="516"/>
+      <source>Share as image</source>
+      <translation type="unfinished">Share as image</translation>
+    </message>
+    <message>
+      <location filename="../../../src/components/mainwindow.ui" line="527"/>
       <source>Toggle reader view</source>
       <translation>Ubah tampilan pembaca</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="526"/>
+      <location filename="../../../src/components/mainwindow.ui" line="532"/>
       <source>Import</source>
       <translation>Impor</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="531"/>
+      <location filename="../../../src/components/mainwindow.ui" line="537"/>
       <source>Export</source>
       <translation>Ekspor</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.ui" line="542"/>
+      <location filename="../../../src/components/mainwindow.ui" line="548"/>
       <source>Player controls</source>
       <translation>Kontrol player</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="86"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="88"/>
       <source>Default</source>
       <translation>Default</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="574"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="469"/>
       <source>Now playing: </source>
       <translation>Sedang diputar: </translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="575"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="470"/>
       <source>Surah </source>
       <translation>Surah </translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="599"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="613"/>
-      <location filename="../../../src/components/mainwindow.cpp" line="628"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="492"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="504"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="516"/>
       <source>Files Missing</source>
       <translation>Berkas Kurang</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="600"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="492"/>
       <source>The selected font files are missing, would you like to download it?</source>
       <translation>Berkas font yang dipilih tidak ditemukan, apakah anda ingin mengunduhnya?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="614"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="504"/>
       <source>The selected tafsir is missing, would you like to download it?</source>
       <translation>Tafsir yang dipilih tidak ditemukan, apakah anda ingin mengunduhnya?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="629"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="516"/>
       <source>The selected translation is missing, would you like to download it?</source>
       <translation>Terjemahan yang dipilih tidak ditemukan, apakah anda ingin mengunduhnya?</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="647"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="531"/>
       <source>Recitation not found</source>
       <translation>Qiraah tidak ditemukan</translation>
     </message>
     <message>
-      <location filename="../../../src/components/mainwindow.cpp" line="648"/>
+      <location filename="../../../src/components/mainwindow.cpp" line="532"/>
       <source>The recitation files for the current surah is missing, would you like to download it?</source>
       <translation>Berkas qiraah untuk surah saat ini tidak ditemukan, apakah anda ingin mengunduhnya?</translation>
     </message>
@@ -488,6 +497,10 @@
       <translation>Buka dialog penyalinan lanjutan</translation>
     </message>
     <message>
+      <source>Open the share as image dialog</source>
+      <translation type="unfinished">Open the share as image dialog</translation>
+    </message>
+    <message>
       <source>Quit</source>
       <translation>Hentikan</translation>
     </message>
@@ -604,8 +617,8 @@
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="282"/>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="151"/>
-      <location filename="../../../src/downloader/impl/qcfjob.cpp" line="117"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="119"/>
+      <location filename="../../../src/downloader/impl/qcfjob.cpp" line="114"/>
       <source>QCF V2</source>
       <translation>QCF V2</translation>
     </message>
@@ -653,7 +666,7 @@
     </message>
     <message>
       <location filename="../../../src/dialogs/settingsdialog.ui" line="629"/>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="130"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="99"/>
       <source>Translation</source>
       <translation>Terjemahan</translation>
     </message>
@@ -663,68 +676,68 @@
       <translation>Pintasan</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="56"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="84"/>
+      <source>Tafsir</source>
+      <translation>Tafsir</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="49"/>
       <source>Description</source>
       <translation>Deskripsi</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="56"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="49"/>
       <source>Key</source>
       <translation>Tombol</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="165"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="150"/>
       <source>Select directory</source>
       <translation>Pilih direktori</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="173"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="156"/>
       <source>Invalid path</source>
       <translation>Lokasi tidak valid</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="174"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="156"/>
       <source>The chosen path is not valid. Please select a writable path.</source>
       <translation>Lokasi yang dipilih tidak sah. Mohon pilih lokasi yang bisa ditulisi.</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="190"/>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="205"/>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="220"/>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="255"/>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="275"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="171"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="184"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="197"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="231"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="250"/>
       <source>Restart required</source>
       <translation>Diperlukan restart</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="191"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="171"/>
       <source>Application theme was changed, restart now?</source>
       <translation>Tema aplikasi sudah diganti, muat ulang sekarang?</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="206"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="184"/>
       <source>Application language was changed, restart now?</source>
       <translation>Bahasa pengantar aplikasi sudah diubah, muat ulang sekarang?</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="221"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="197"/>
       <source>Application downloads path was changed, restart now?</source>
       <translation>Lokasi unduhan sudah diubah, muat ulang sekarang?</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="255"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="231"/>
       <source>Reading mode was changed, restart now?</source>
       <translation>Mode pembaca sudah diubah, muat ulang sekarang?</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/settingsdialog.cpp" line="276"/>
+      <location filename="../../../src/dialogs/settingsdialog.cpp" line="250"/>
       <source>Restart is required to load new quran font, restart now?</source>
       <translation>Diperlukan restart untuk memuat font quran baru, muat ulang sekarang?</translation>
-    </message>
-    <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="114"/>
-      <source>Tafsir</source>
-      <translation>Tafsir</translation>
     </message>
   </context>
   <context>
@@ -795,27 +808,27 @@
       <translation>Pustaka</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.cpp" line="22"/>
+      <location filename="../../../src/dialogs/aboutdialog.cpp" line="21"/>
       <source>Licensed under the</source>
       <translation>Di bawah lisensi</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.cpp" line="22"/>
+      <location filename="../../../src/dialogs/aboutdialog.cpp" line="21"/>
       <source>Waqf General Public License</source>
       <translation>Lisensi Publik Umum Waqf</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.cpp" line="23"/>
+      <location filename="../../../src/dialogs/aboutdialog.cpp" line="22"/>
       <source>Project Homepage</source>
       <translation>Situs Aplikasi</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.cpp" line="25"/>
+      <location filename="../../../src/dialogs/aboutdialog.cpp" line="23"/>
       <source>Report a bug/Request a feature</source>
       <translation>Laporan Kesalahan/Permintaan Fitur</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/aboutdialog.cpp" line="27"/>
+      <location filename="../../../src/dialogs/aboutdialog.cpp" line="24"/>
       <source>Contribute to translations</source>
       <translation>Kontribusi pada terjemahan</translation>
     </message>
@@ -848,34 +861,34 @@
       <translation>Kanan</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="58"/>
+      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="49"/>
       <source>No bookmarks available. Start bookmarking verses to see them here.</source>
       <translation>Belum ada penanda yang tersedia. Mulai tandai ayat tertentu untuk bisa masuk daftar di sini.</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="126"/>
+      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="114"/>
       <source>Go to verse</source>
       <translation>Ke ayat</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="127"/>
+      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="115"/>
       <source>Remove</source>
       <translation>Hapus</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="140"/>
-      <location filename="../../../src/dialogs/versedialog.cpp" line="96"/>
+      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="124"/>
+      <location filename="../../../src/dialogs/versedialog.cpp" line="90"/>
       <source>Surah: </source>
       <translation>Surah: </translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="142"/>
-      <location filename="../../../src/dialogs/versedialog.cpp" line="98"/>
+      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="124"/>
+      <location filename="../../../src/dialogs/versedialog.cpp" line="92"/>
       <source>Verse: </source>
       <translation>Ayat: </translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="186"/>
+      <location filename="../../../src/dialogs/bookmarksdialog.cpp" line="167"/>
       <source>All</source>
       <translation>Semua</translation>
     </message>
@@ -888,7 +901,7 @@
       <translation>Ayat sudah dimasukkan ke daftar penanda</translation>
     </message>
     <message>
-      <location filename="../../../src/notifiers/bookmarksnotifier.cpp" line="20"/>
+      <location filename="../../../src/notifiers/bookmarksnotifier.cpp" line="19"/>
       <source>Verse removed from bookmarks</source>
       <translation>Ayat sudah dikeluarkan dari daftar penanda</translation>
     </message>
@@ -936,12 +949,12 @@
       <translation>Kanan</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/contentdialog.cpp" line="130"/>
+      <location filename="../../../src/dialogs/contentdialog.cpp" line="115"/>
       <source>Surah: </source>
       <translation>Surah: </translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/contentdialog.cpp" line="132"/>
+      <location filename="../../../src/dialogs/contentdialog.cpp" line="115"/>
       <source>Verse: </source>
       <translation>Ayat: </translation>
     </message>
@@ -969,12 +982,12 @@
       <translation>Sampai</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/copydialog.cpp" line="45"/>
+      <location filename="../../../src/dialogs/copydialog.cpp" line="41"/>
       <source>Invalid range</source>
       <translation>Rentang tidak sah</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/copydialog.cpp" line="45"/>
+      <location filename="../../../src/dialogs/copydialog.cpp" line="41"/>
       <source>The entered verse range is invalid</source>
       <translation>Rentang ayat yang dimasukkan tidak sah</translation>
     </message>
@@ -982,7 +995,7 @@
   <context>
     <name>CopyNotifier</name>
     <message>
-      <location filename="../../../src/notifiers/copynotifier.cpp" line="13"/>
+      <location filename="../../../src/notifiers/copynotifier.cpp" line="12"/>
       <source>Verse text copied to clipboard</source>
       <translation>Teks ayat sudah disalin ke klipbor</translation>
     </message>
@@ -990,18 +1003,18 @@
   <context>
     <name>DownloadManager</name>
     <message>
-      <location filename="../../../src/downloader/impl/taskdownloader.cpp" line="63"/>
+      <location filename="../../../src/downloader/impl/taskdownloader.cpp" line="50"/>
       <source>bytes</source>
       <translation>bita</translation>
     </message>
     <message>
-      <location filename="../../../src/downloader/impl/taskdownloader.cpp" line="65"/>
-      <location filename="../../../src/widgets/downloadprogressbar.cpp" line="21"/>
+      <location filename="../../../src/downloader/impl/taskdownloader.cpp" line="52"/>
+      <location filename="../../../src/widgets/downloadprogressbar.cpp" line="19"/>
       <source>KB</source>
       <translation>KB</translation>
     </message>
     <message>
-      <location filename="../../../src/downloader/impl/taskdownloader.cpp" line="69"/>
+      <location filename="../../../src/downloader/impl/taskdownloader.cpp" line="56"/>
       <source>MB</source>
       <translation>MB</translation>
     </message>
@@ -1034,52 +1047,52 @@
       <translation>stop</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="31"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="30"/>
       <source>Name</source>
       <translation>Nama</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="32"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="31"/>
       <source>Number</source>
       <translation>Nomor</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="91"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="63"/>
       <source>Recitations</source>
       <translation>Qiraah</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="145"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="114"/>
       <source>Extras</source>
       <translation>Tambahan</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="146"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="115"/>
       <source>Additional files</source>
       <translation>Berkas tambahan</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="226"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="194"/>
       <source> // Surah: </source>
       <translation> // Surah: </translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="284"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="249"/>
       <source>Downloading: </source>
       <translation>Mengunduh: </translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="297"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="258"/>
       <source>/sec</source>
       <translation>/detik</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="367"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="325"/>
       <source>Download Completed</source>
       <translation>Unduhan Selesai</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="390"/>
+      <location filename="../../../src/dialogs/downloaderdialog.cpp" line="345"/>
       <source>Download Failed</source>
       <translation>Unduhan Gagal</translation>
     </message>
@@ -1107,18 +1120,18 @@
       <translation>Ide</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/importexportdialog.cpp" line="129"/>
+      <location filename="../../../src/dialogs/importexportdialog.cpp" line="119"/>
       <source>The following error occured during import</source>
       <translation>Terjadi kesalahan berikut saat mengimpor</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/importexportdialog.cpp" line="130"/>
-      <location filename="../../../src/dialogs/importexportdialog.cpp" line="138"/>
+      <location filename="../../../src/dialogs/importexportdialog.cpp" line="120"/>
+      <location filename="../../../src/dialogs/importexportdialog.cpp" line="128"/>
       <source>Error</source>
       <translation>Error</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/importexportdialog.cpp" line="137"/>
+      <location filename="../../../src/dialogs/importexportdialog.cpp" line="127"/>
       <source>The following error occured during export</source>
       <translation>Terjadi kesalahan berikut saat mengekspor</translation>
     </message>
@@ -1126,12 +1139,12 @@
   <context>
     <name>JobNotifier</name>
     <message>
-      <location filename="../../../src/notifiers/jobnotifier.cpp" line="13"/>
+      <location filename="../../../src/notifiers/jobnotifier.cpp" line="12"/>
       <source>Download Completed</source>
       <translation>Unduhan Selesai</translation>
     </message>
     <message>
-      <location filename="../../../src/notifiers/jobnotifier.cpp" line="21"/>
+      <location filename="../../../src/notifiers/jobnotifier.cpp" line="19"/>
       <source>Download Failed</source>
       <translation>Unduhan Gagal</translation>
     </message>
@@ -1159,27 +1172,27 @@
       <translation>Mulai khatmah baru</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/khatmahdialog.cpp" line="51"/>
+      <location filename="../../../src/dialogs/khatmahdialog.cpp" line="45"/>
       <source>Set as active</source>
       <translation>Jadikan aktif</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/khatmahdialog.cpp" line="52"/>
+      <location filename="../../../src/dialogs/khatmahdialog.cpp" line="46"/>
       <source>Remove</source>
       <translation>Hapus</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/khatmahdialog.cpp" line="66"/>
+      <location filename="../../../src/dialogs/khatmahdialog.cpp" line="59"/>
       <source>Surah: </source>
       <translation>Surah: </translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/khatmahdialog.cpp" line="68"/>
+      <location filename="../../../src/dialogs/khatmahdialog.cpp" line="59"/>
       <source>Verse: </source>
       <translation>Ayat: </translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/khatmahdialog.cpp" line="118"/>
+      <location filename="../../../src/dialogs/khatmahdialog.cpp" line="108"/>
       <source>Khatmah </source>
       <translation>Khatmah </translation>
     </message>
@@ -1208,52 +1221,57 @@
   <context>
     <name>QuranPageBrowser</name>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="401"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="384"/>
       <source>Zoom In</source>
       <translation>Perbesar</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="402"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="385"/>
       <source>Zoom Out</source>
       <translation>Perkecil</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="403"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="386"/>
       <source>Copy Verse</source>
       <translation>Salin Ayat</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="404"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="387"/>
+      <source>Share as image</source>
+      <translation type="unfinished">Share as image</translation>
+    </message>
+    <message>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="388"/>
       <source>Select</source>
       <translation>Pilih</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="405"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="389"/>
       <source>Play</source>
       <translation>Putar</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="406"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="390"/>
       <source>Tafsir</source>
       <translation>Tafsir</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="407"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="391"/>
       <source>Translation</source>
       <translation>Terjemahan</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="408"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="392"/>
       <source>Thoughts</source>
       <translation>Ide</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="409"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="393"/>
       <source>Add Bookmark</source>
       <translation>Tambah Ke Bookmark</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="410"/>
+      <location filename="../../../src/widgets/quranpagebrowser.cpp" line="394"/>
       <source>Remove Bookmark</source>
       <translation>Hapus Penanda</translation>
     </message>
@@ -1316,12 +1334,12 @@
       <translation>Pengulangan</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/repeaterpopup.cpp" line="129"/>
+      <location filename="../../../src/widgets/repeaterpopup.cpp" line="119"/>
       <source>End verse cannot be before start verse</source>
       <translation>Ayat akhir tidak bisa sebelum ayat mulai</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/repeaterpopup.cpp" line="134"/>
+      <location filename="../../../src/widgets/repeaterpopup.cpp" line="123"/>
       <source>Verse frequency and repetitions must be more than 0</source>
       <translation>Frekuensi dan pengulangan ayat harus lebih dari 0</translation>
     </message>
@@ -1399,30 +1417,129 @@
       <translation>Surah</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/searchdialog.cpp" line="88"/>
+      <location filename="../../../src/dialogs/searchdialog.cpp" line="79"/>
       <source> Search results</source>
       <translation> Hasil pencarian</translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/searchdialog.cpp" line="125"/>
+      <location filename="../../../src/dialogs/searchdialog.cpp" line="114"/>
       <source>Surah: </source>
       <translation>Surah: </translation>
     </message>
     <message>
-      <location filename="../../../src/dialogs/searchdialog.cpp" line="127"/>
+      <location filename="../../../src/dialogs/searchdialog.cpp" line="114"/>
       <source>Verse: </source>
       <translation>Ayat: </translation>
     </message>
   </context>
   <context>
+    <name>ShareImageDialog</name>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="14"/>
+      <source>Share as image</source>
+      <translation type="unfinished">Share as image</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="42"/>
+      <source>From</source>
+      <translation>Dari</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="56"/>
+      <source>To</source>
+      <translation>Sampai</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="74"/>
+      <source>Beneath each verse</source>
+      <translation type="unfinished">Beneath each verse</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="87"/>
+      <source>Verse font size</source>
+      <translation type="unfinished">Verse font size</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="97"/>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="126"/>
+      <source> px</source>
+      <translation type="unfinished"> px</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="116"/>
+      <source>Content font size</source>
+      <translation type="unfinished">Content font size</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="145"/>
+      <source>Theme</source>
+      <translation>Tema</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="156"/>
+      <source>Light</source>
+      <translation>Cerah</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="161"/>
+      <source>Sepia</source>
+      <translation>Sepia</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.ui" line="166"/>
+      <source>Dark</source>
+      <translation>Gelap</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.cpp" line="87"/>
+      <source>Nothing</source>
+      <translation type="unfinished">Nothing</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.cpp" line="91"/>
+      <source>Tafsir: %1</source>
+      <translation type="unfinished">Tafsir: %1</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.cpp" line="97"/>
+      <source>Translation: %1</source>
+      <translation type="unfinished">Translation: %1</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.cpp" line="158"/>
+      <source>The selected verse range is invalid</source>
+      <translation type="unfinished">The selected verse range is invalid</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.cpp" line="202"/>
+      <source>Quran Companion</source>
+      <translation>Teman Quran</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.cpp" line="267"/>
+      <source>Save image</source>
+      <translation type="unfinished">Save image</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.cpp" line="271"/>
+      <source>Error</source>
+      <translation>Error</translation>
+    </message>
+    <message>
+      <location filename="../../../src/dialogs/shareimagedialog.cpp" line="271"/>
+      <source>Couldn&apos;t save the image</source>
+      <translation type="unfinished">Couldn&apos;t save the image</translation>
+    </message>
+  </context>
+  <context>
     <name>ShortcutDelegate</name>
     <message>
-      <location filename="../../../src/widgets/shortcutdelegate.h" line="15"/>
+      <location filename="../../../src/widgets/shortcutdelegate.h" line="14"/>
       <source>Shortcut Conflict</source>
       <translation>Konflik Pintasan</translation>
     </message>
     <message>
-      <location filename="../../../src/widgets/shortcutdelegate.h" line="16"/>
+      <location filename="../../../src/widgets/shortcutdelegate.h" line="15"/>
       <source>The key sequence chosen is already reserved, try again</source>
       <translation>Tombol yang dipilih sudah digunakan, silakan pilih yang lain</translation>
     </message>
@@ -1468,12 +1585,12 @@
   <context>
     <name>UpdateNotifier</name>
     <message>
-      <location filename="../../../src/notifiers/updatenotifier.cpp" line="10"/>
+      <location filename="../../../src/notifiers/updatenotifier.cpp" line="9"/>
       <source>Update available</source>
       <translation>Pembaruan tersedia</translation>
     </message>
     <message>
-      <location filename="../../../src/notifiers/updatenotifier.cpp" line="18"/>
+      <location filename="../../../src/notifiers/updatenotifier.cpp" line="16"/>
       <source>You are running the latest version</source>
       <translation>Anda sudah menjalankan versi terbaru</translation>
     </message>
