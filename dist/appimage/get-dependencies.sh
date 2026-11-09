@@ -2,8 +2,6 @@
 
 set -eu
 
-ARCH=$(uname -m)
-
 echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
 pacman -Syu --noconfirm --needed \
@@ -21,6 +19,10 @@ echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
 get-debloated-pkgs --add-common --prefer-nano ffmpeg-mini
 
+echo "Qt version used for this build:"
+echo "---------------------------------------------------------------"
+pacman -Q qt6-base qt6-multimedia qt6-multimedia-ffmpeg ffmpeg
+
 echo "Building Quran Companion..."
 echo "---------------------------------------------------------------"
 cmake -B ./build -G Ninja \
@@ -29,5 +31,3 @@ cmake -B ./build -G Ninja \
 	-DCMAKE_INSTALL_LIBDIR=lib
 cmake --build ./build -j"$(nproc)"
 cmake --install ./build
-
-cat ./VERSION > ~/version

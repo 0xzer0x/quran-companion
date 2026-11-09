@@ -4,11 +4,12 @@ set -eu
 
 ARCH=$(uname -m)
 VERSION=${VERSION:-$(cat ./VERSION)}
+REPO=${GITHUB_REPOSITORY:-0xzer0x/quran-companion}
 export ARCH VERSION
 export OUTPATH=./dist
 export OUTNAME="Quran_Companion-$VERSION-$ARCH.AppImage"
 export ADD_HOOKS="self-updater.hook"
-export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}|latest|*$ARCH.AppImage.zsync"
+export UPINFO="gh-releases-zsync|${REPO%/*}|${REPO#*/}|latest|*$ARCH.AppImage.zsync"
 export DESKTOP=./dist/xdg/io.github._0xzer0x.qurancompanion.desktop
 export ICON="${TMPDIR:-/tmp}/io.github._0xzer0x.qurancompanion.png"
 export DEPLOY_PULSE=1

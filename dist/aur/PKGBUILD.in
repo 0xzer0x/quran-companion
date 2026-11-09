@@ -20,7 +20,7 @@ options=(!strip !debug)
 
 prepare() {
   chmod +x "${srcdir}/Quran_Companion-${pkgver}-x86_64.AppImage"
-  "${srcdir}/Quran_Companion-${pkgver}-x86_64.AppImage" --appimage-extract 'share/**'
+  "${srcdir}/Quran_Companion-${pkgver}-x86_64.AppImage" --appimage-extract 'share/**/io.github*'
 }
 
 package() {

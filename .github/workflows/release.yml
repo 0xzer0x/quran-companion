@@ -58,7 +58,7 @@ jobs:
     environment:
       name: Linux - AppImage
       url: https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Quran_Companion-${{ needs.prepare.outputs.version }}-x86_64.AppImage
-    container: ghcr.io/pkgforge-dev/archlinux:latest
+    container: ghcr.io/pkgforge-dev/archlinux@sha256:8c1909633d5b6f615e99f63d77adfd80f796f555c622a74890a0f7e753a9bb74
     env:
       APP_VER: "${{ needs.prepare.outputs.version }}"
     steps:
