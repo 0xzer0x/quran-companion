@@ -35,11 +35,6 @@ cp -v ./dist/xdg/io.github._0xzer0x.qurancompanion.metainfo.xml \
 cp -v ./dist/xdg/logo256.png \
 	./AppDir/share/icons/hicolor/256x256/apps/io.github._0xzer0x.qurancompanion.png
 
-# DirManager resolves its databases, fonts and recitations from
-# <binary dir>/../share/quran-companion. The real binary lives in shared/bin
-# (bin/quran-companion is a sharun hardlink), so shared/ needs a share dir
-ln -sfn ../share ./AppDir/shared/share
-
 # Turn AppDir into AppImage
 quick-sharun --make-appimage
 
