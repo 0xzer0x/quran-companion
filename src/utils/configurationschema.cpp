@@ -26,6 +26,7 @@ ConfigurationSchema::ConfigurationSchema()
   };
   QHash<QString, QVariant> window = {
     make_pair("State", QVariant()),
+    make_pair("Geometry", QVariant()),
     make_pair("VisibleMenubar", true),
   };
   QHash<QString, QVariant> reader = {
